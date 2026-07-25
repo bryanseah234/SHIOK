@@ -37,6 +37,10 @@ def run_task(name: str, extra: list[str]) -> int:
         cmd = [sys.executable, "-m", "pytest"] + extra
         res = subprocess.run(cmd)
         return res.returncode
+    if name in ("check", "ingest"):
+        cmd = [sys.executable, "-m", "pipeline.fetch", name] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
 
     print(f"not implemented: {name} — {STUBS[name]}")
     return 0

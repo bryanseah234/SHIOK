@@ -2,7 +2,8 @@
 .env
 
 # immutable raw data + caches (large, regenerable, never committed)
-raw/
+raw/*
+!raw/manifest.json
 logs/
 
 # generated artifacts (deployed via `vercel deploy`, not git)

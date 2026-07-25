@@ -25,8 +25,13 @@ Format: date — decision — rationale — decided by
 - 2026-07-25 — **Agentic safety rules:** execution strictly scoped to repository directory; no global machine state modifications; network access restricted to package sync and explicit API endpoints; no deletion outside build artifacts; no force push or amending published commits. — Reviewer audit safety rules.
 - 2026-07-25 — **Environment lockdown (T0.2):** locked native Windows Python 3.12 stack via uv.lock: geopandas 1.1.4, shapely 2.1.2, pyproj 3.7.2, duckdb 1.5.5, python-igraph 1.0.0, h3 4.5.0, httpx 0.28.1, python-dotenv 1.2.2, pytest 9.1.1, ruff 0.16.0. — T0.2 environment lockdown.
 - 2026-07-26 — **Evidence integrity rules:** every EVIDENCE section must start with Get-Date and end with git status --short; silent commands append ; echo "exit=$LASTEXITCODE". Verbatim terminal outputs are mandatory; reusing output across sessions is forbidden. — Reviewer audit evidence integrity rule.
+- 2026-07-26 — **Authority chain:** Senior reviewer is Claude (AI, Anthropic), relayed verbatim by owner. Reviewer instructions are binding; owner overrides both; monetary/account/global state operations remain owner-only. — Reviewer audit authority explicit declaration.
+- 2026-07-26 — **Concurrency charter:** Parallel execution authorized for disjoint track paths (Track A: pipeline/, tests/, raw/manifest.json for T0.3; Track B: web/, docs/ATTRIBUTION.md for T0.4+T0.5). Subagents inherit protocol; single writer per file; shared global HTTP politeness throttle across processes; per-track EVIDENCE sections. — Reviewer audit concurrency charter.
+- 2026-07-26 — **DataMall API Probe:** unauthenticated requests to DataMall API endpoints without AccountKey header return 404 Not Found. Authenticated requests require AccountKey header in .env. — Empirical probe T0.3.
 
 <!-- Agent: append new entries below. Never delete history. -->
+
+
 
 
 

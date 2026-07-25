@@ -1,0 +1,66 @@
+# Upstream data sources configuration for S.H.I.O.K. Index (PRD v4.2 §5, DATA_SOURCES.md)
+
+sources:
+  covered_linkway:
+    name: "Covered Linkway"
+    kind: "datamall_geospatial_listing"
+    search_keyword: "Covered Linkway"
+    notes: "Zipped SHP from LTA DataMall geospatial listing"
+
+  overhead_bridge_underpass:
+    name: "Pedestrian Overhead Bridge / Underpass"
+    kind: "datamall_geospatial_listing"
+    search_keyword: "Pedestrain Overhead Bridge"
+    notes: "Zipped SHP from LTA DataMall geospatial listing (historical misspelling match)"
+
+  bus_stops:
+    name: "Bus Stops"
+    kind: "datamall_api_paginated"
+    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusStops"
+    notes: "JSON paged API ($skip 500)"
+
+  bus_services:
+    name: "Bus Services"
+    kind: "datamall_api_paginated"
+    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusServices"
+    notes: "JSON paged API ($skip 500)"
+
+  bus_routes:
+    name: "Bus Routes"
+    kind: "datamall_api_paginated"
+    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
+    notes: "JSON paged API ($skip 500)"
+
+  mrt_lrt_exits:
+    name: "MRT/LRT Station Exits"
+    kind: "datagov_polldownload"
+    dataset_id: "UNRESOLVED — runtime discovery"
+    search_query: "LTA MRT Station Exit"
+    notes: "data.gov.sg GeoJSON; resolved dynamically via initiate-download API"
+
+  traffic_signals:
+    name: "Traffic Signal Aspects"
+    kind: "datagov_polldownload"
+    dataset_id: "UNRESOLVED — runtime discovery"
+    search_query: "Traffic Signal Aspect"
+    notes: "data.gov.sg GeoJSON/SHP; resolved dynamically"
+
+  lamp_posts:
+    name: "Lamp Posts"
+    kind: "datagov_polldownload"
+    dataset_id: "UNRESOLVED — runtime discovery"
+    search_query: "Lamp Post"
+    notes: "data.gov.sg GeoJSON; resolved dynamically"
+
+  building_points:
+    name: "Postal / Building Points"
+    kind: "datagov_polldownload"
+    dataset_id: "UNRESOLVED — runtime discovery"
+    search_query: "HDB Property Information"
+    notes: "data.gov.sg building point CSV/GeoJSON baseline"
+
+  planning_area_boundary:
+    name: "Planning Area Boundaries"
+    kind: "datagov_polldownload"
+    dataset_id: "d_4765db0e87b9c86336792efe8a1f7a66"
+    notes: "URA Master Plan 2019 Planning Area Boundary (No Sea) GeoJSON (Verified)"

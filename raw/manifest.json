@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-07-25T17:46:33.864992+00:00",
+  "sources": {
+    "planning_area_boundary": {
+      "bytes": 2092229,
+      "etag": "\"92c3546419bd5e2a6d51fa478ac344d6-1\"",
+      "fetched_at": "2026-07-25T17:46:33.838024+00:00",
+      "last_modified": "Fri, 05 Dec 2025 02:07:56 GMT",
+      "sha256": "f23856251b467089f788d0fff72ef5a38e753f21aa69b4352401d7ed50d380cc",
+      "source_name": "Planning Area Boundaries",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_4765db0e87b9c86336792efe8a1f7a66.geojson?AWSAccessKeyId=ASIAU7LWPY2WJBXD2E7Z&Expires=1785005192&Signature=ALYWWq0CwRkLXp%2FVma%2FmWVEpcn0%3D&X-Amzn-Trace-Id=Root%3D1-6a64f678-3734bea95631708703d8b83d%3BParent%3D23489a06ade3e3a9%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22MasterPlan2019PlanningAreaBoundaryNoSea.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEFoaDmFwLXNvdXRoZWFzdC0xIkcwRQIhAKS600MppdJrSUtnYZ8Jx8%2Bd7uwb1484sQZc1ILP5p2WAiA%2Bef4Af7XwK7g10OVritqnaQ5iIP46N32mNtdB313EJiq1BAgjEAQaDDM0MjIzNTI2ODc4MCIMW155P1ZbKJjE0RH2KpIETkZgP66ZiAAZViWbCfYS9mGakmYUYLcAJCg9R7FdkYvPZQIren7OK0voA8vitmeC59CvANYgxVUBvJ5RaM5c15RVVNiWXuWUZlZM50sxmBqP6BS7S%2Balep6LPRf4CA8MaluA2nA11%2B7JupCo1HURYCh43qpEbroHFc%2FyL2VpvxfRjx%2FqsDp0k5LGzPJLA%2FHLKbKUEoSQ%2B1lSTzK5bFdG%2BLF4w%2FLzvtRmm%2FktYWYs29FLzxSksKqz1pcKENfyXTrQkq8xAWhcPQZk%2Bgy1aR1D6JipIqkmGBTy0R8YDa7sWeiCOhCYTtUYEKNnsL8%2Baz2kOBMyl0dguOUzi1XrmCHeDhMKWeemVkd9CWsFIxo%2BWtOxVEJt7l382izIR%2B6tlUK7ucRUjnzAUbsgqOxoopy179sJMAeO%2B36kK2vz3CYQ55Qnpc3GAg%2BL8I%2BWcZxfJv8MBDEHfrQ%2FgI7zsv7MgrHtkHxQZQQmFXJgvrV5FyCiR6QAv93WO17OKqu6Xp3EkjzRX60uu9RmJJqTfr5FID9dTFhBn4doZYLQM5lhEUOrh3W5AaYlvrclFWoEVJtQEfCChsTrp%2FSEMBPRCEJdZ9nb66jXm%2B9TMyZVKVYWOCiTMDvu%2FTLGQXpRpjSEq6OfgEJw4MbLCdI1zwCnHUPdqbEdpY1LBfUfgnmje%2BETamldhgEhpcs3Xxmlq0gSLWXsW9dmgDIw6%2BiT0wY6ogF0PVciGiHg8p%2BS81pPWbtqP9c%2B6ozMFcs09tKkcH51kQQAnj%2FL0KZr6ymepAQCxwSyATfzHHIm6JdQMSu9CC%2FxUXTegB39%2BQPM0A6kuIjTiOZz4L0IDf%2B96nBJ0nQ6uJ2YusUhlYTN4s8HRZI5HGBsCeY6uHF10BScRJwT86%2FOcVVbTX%2BvX08RsaaGzlydjsYHoxcLqF0lDSX9LfdE1Ut5D3k%3D"
+    }
+  }
+}
