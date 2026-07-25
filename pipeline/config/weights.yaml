@@ -1,0 +1,7 @@
+# S.H.I.O.K. Index scoring weights (PRD v4.2 §7 - LOCKED)
+weights:
+  transit_access: 0.35
+  bus_connectivity: 0.20
+  rain_shelter: 0.25
+  heat_comfort: 0.15
+  crossing_friction: 0.05

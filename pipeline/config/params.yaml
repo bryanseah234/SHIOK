@@ -1,0 +1,17 @@
+# S.H.I.O.K. Index pipeline parameters (PRD v4.2 §7, §15)
+shelter_lambda: 0.6
+detour_budget: 1.25
+transit_access:
+  full_credit_m: 400
+  linear_floor_m: 800
+  score_at_800m: 40
+  zero_credit_m: 1200
+  bus_interchange_full_credit_m: 200
+bus_connectivity:
+  routed_max_m: 250
+  full_credit_wait_min: 2
+  zero_credit_wait_min: 15
+crossing_friction:
+  dbscan_eps_m: 20
+  dbscan_min_samples: 2
+  penalty_per_crossing: 20

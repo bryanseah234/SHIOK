@@ -1,23 +1,28 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
-.vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-files
-*.bclicense
-*.flf
-#Test results file
-TestResults.xml
+# secrets
+.env
+
+# immutable raw data + caches (large, regenerable, never committed)
+raw/
+logs/
+
+# generated artifacts (deployed via `vercel deploy`, not git)
+web/public/data/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# node / next
+node_modules/
+.next/
+out/
+
+# vercel project link
+.vercel/
+
+# os
+.DS_Store
+Thumbs.db
