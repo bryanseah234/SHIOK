@@ -15,3 +15,7 @@ crossing_friction:
   dbscan_eps_m: 20
   dbscan_min_samples: 2
   penalty_per_crossing: 20
+onemap:
+  rate_limit_burst_ceiling: 8
+  client_delay_sec: 0.25
+  server_proxy_throttle_per_min: 30

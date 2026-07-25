@@ -1,19 +1,23 @@
-# Attribution matrix — T0.5 deliverable
+# Attribution Matrix — S.H.I.O.K. Index (T0.5)
 
-Complete the Placement column, finalize exact wording against each licence's current text,
-and wire the site footer + map-corner components. Launch-gating per PRD §11.
+Complete dataset licensing and attribution requirements per PRD v4.2 §11 and DATA_SOURCES.md.
 
-| Dataset / service | Licence / terms | Required attribution (draft wording — verify) | Placement |
-|---|---|---|---|
-| LTA DataMall — Covered Linkway, Overhead Bridge/Underpass, Bus Stops/Services/Routes | Singapore Open Data Licence + DataMall API ToS | Attribution naming LTA as source under the Singapore Open Data Licence | Site footer + open-dataset README (TODO wire) |
-| data.gov.sg — MRT/LRT exits, traffic signals, lamp posts, postal/buildings, MP2019 Planning Area Boundary (URA) | Singapore Open Data Licence | Attribution naming the source agency (LTA / URA) under the Singapore Open Data Licence | Site footer + README (TODO) |
-| OneMap / SLA — basemap tiles, search | OneMap API Terms of Service | OneMap/SLA attribution line rendered on the map | Map corner (TODO) |
-| OpenStreetMap — pedestrian network (incl. Citymapper covered-linkway import) | ODbL | "© OpenStreetMap contributors"; published route geometries offered under ODbL | Map corner + README + dataset licence note (TODO) |
-| Overture Maps — building heights (Phase 4) | Verify per theme at ingest | TBD | — |
-| NParks — tree data (Phase 4) | Verify before ingest | TBD | — |
+| # | Dataset / Service | Licence / Terms | Required Attribution Text | Placement |
+|---|---|---|---|---|
+| 1 | LTA DataMall — Covered Linkway | Singapore Open Data Licence v1.0 | "Contains information from Covered Linkway dataset accessed from LTA DataMall under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 2 | LTA DataMall — Pedestrian Overhead Bridge / Underpass | Singapore Open Data Licence v1.0 | "Contains information from Pedestrian Overhead Bridge/Underpass dataset accessed from LTA DataMall under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 3 | LTA DataMall — Bus Stops | Singapore Open Data Licence v1.0 + DataMall API ToS | "Contains information from Bus Stops API accessed from LTA DataMall under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 4 | LTA DataMall — Bus Services | Singapore Open Data Licence v1.0 + DataMall API ToS | "Contains information from Bus Services API accessed from LTA DataMall under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 5 | LTA DataMall — Bus Routes | Singapore Open Data Licence v1.0 + DataMall API ToS | "Contains information from Bus Routes API accessed from LTA DataMall under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 6 | data.gov.sg — LTA MRT Station Exits | Singapore Open Data Licence v1.0 | "Contains information from LTA MRT Station Exit dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 7 | data.gov.sg — Traffic Signal Aspects | Singapore Open Data Licence v1.0 | "Contains information from Traffic Signal Aspect dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 8 | data.gov.sg — Lamp Posts | Singapore Open Data Licence v1.0 | "Contains information from Lamp Post dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 9 | data.gov.sg — Postal / Building Points | Singapore Open Data Licence v1.0 | "Contains information from Building Information datasets accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 10 | OpenStreetMap — Pedestrian Network | ODbL (Open Database License) | "© OpenStreetMap contributors. Route geometries published under ODbL." | Map corner & dataset README |
+| 11 | Overture Maps — Buildings / Transportation (Phase 4) | ODbL / Permissive | "Contains data from Overture Maps Foundation." | Dataset README |
+| 12 | URA — MP2019 Planning Area Boundary (No Sea) | Singapore Open Data Licence v1.0 | "Contains information from URA Master Plan 2019 Planning Area Boundary dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 13 | SLA OneMap — Basemap tiles & Search Proxy | OneMap API Terms of Service | "Basemap & Geocoding © Singapore Land Authority (OneMap)." | Map corner & search footer |
 
-Notes:
-- The open dataset bundle (GitHub Releases, Phase 3) needs its own LICENSE/README carrying
-  all of the above plus the ODbL notice for geometries.
-- Non-commercial declaration (PRD §11) is a product policy, not a licence — restate it in
-  the site footer alongside attribution.
+### Non-Commercial Policy Declaration
+
+S.H.I.O.K. Index is a free, non-commercial civic project. It carries no advertisements, accepts no donations, and offers no paid services. Hosted on Vercel Hobby tier in accordance with non-commercial usage terms.
