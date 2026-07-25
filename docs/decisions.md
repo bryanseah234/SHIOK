@@ -23,8 +23,10 @@ Format: date — decision — rationale — decided by
 - 2026-07-25 — **Non-packaged workspace:** pyproject.toml sets `[tool.uv] package = false` (repo is scripts + configs, not an installable distribution). — Reviewer-approved preemptive fix T0.1.
 - 2026-07-25 — **Task reporting protocol:** every task report ends with an EVIDENCE section containing verbatim terminal output for each AC command. — Reviewer audit protocol amendment.
 - 2026-07-25 — **Agentic safety rules:** execution strictly scoped to repository directory; no global machine state modifications; network access restricted to package sync and explicit API endpoints; no deletion outside build artifacts; no force push or amending published commits. — Reviewer audit safety rules.
+- 2026-07-25 — **Environment lockdown (T0.2):** locked native Windows Python 3.12 stack via uv.lock: geopandas 1.1.4, shapely 2.1.2, pyproj 3.7.2, duckdb 1.5.5, python-igraph 1.0.0, h3 4.5.0, httpx 0.28.1, python-dotenv 1.2.2, pytest 9.1.1, ruff 0.16.0. — T0.2 environment lockdown.
 
 <!-- Agent: append new entries below. Never delete history. -->
+
 
 
 
