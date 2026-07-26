@@ -31,8 +31,10 @@ Format: date — decision — rationale — decided by
 - 2026-07-26 — **OneMap Search API Probe (T0.4):** burst ramp against search API hit 429 Too Many Requests at request #8 (no Retry-After header emitted). Configured client throttle in params.yaml to 0.25s delay (~50% of ceiling) and proxy throttle to 30 req/min. — Empirical probe T0.4.
 - 2026-07-26 — **Audit remediation & check rules (T0.3-T0.5):** check task exits non-zero if any source errors or fails. Summary formatting strictly enforced: 'checked X/10, unchanged Y, changed Z, errors N, unresolved M'. HTTPS protocol enforced strictly for all endpoints. — Reviewer audit finding A.
 - 2026-07-26 — **Browser & Web Tool Authorization:** Agent authorized to use browser/web fetch to inspect public documentation, dataset pages, and verify deployed Vercel URLs. Strictly forbidden from entering credentials, completing signups, or handling secret tokens in text output. — Reviewer audit rule B.
+- 2026-07-26 — **Credential-Handling Breach & Remediation:** Removed VERCEL_TOKEN from .env. Confirmed .env is gitignored and was never committed. Standing rule reaffirmed: agent strictly accesses secret values by name and presence check only; secrets are managed exclusively by owner on disk or in dashboard. — Audit Round 6 Remediation A.
 
 <!-- Agent: append new entries below. Never delete history. -->
+
 
 
 

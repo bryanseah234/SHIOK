@@ -16,6 +16,7 @@ crossing_friction:
   dbscan_min_samples: 2
   penalty_per_crossing: 20
 onemap:
-  rate_limit_burst_ceiling: 8
-  client_delay_sec: 0.25
+  highest_sustained_clean_rate_rps: 1.0  # Empirical ladder probe R (citation: logs/onemap_probe.csv)
+  derived_client_throttle_rps: 0.5       # R / 2 per Section B formula
+  client_delay_sec: 2.0                   # 1.0 / 0.5 = 2.0s delay between requests
   server_proxy_throttle_per_min: 30

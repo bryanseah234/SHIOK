@@ -17,24 +17,27 @@ sources:
     name: "Bus Stops"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
-    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
+    verified: "2026-07-26"
+    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
 
   bus_services:
     name: "Bus Services"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusServices"
-    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
+    verified: "2026-07-26"
+    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
 
   bus_routes:
     name: "Bus Routes"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
-    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
+    verified: "2026-07-26"
+    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
 
   mrt_lrt_exits:
     name: "MRT/LRT Station Exits"
     kind: "datagov_polldownload"
-    dataset_id: "UNRESOLVED — runtime discovery"
+    dataset_id: "d_4765db0e87b9c86336792efe8a1f7a66"
     search_query: "LTA MRT Station Exit"
     notes: "data.gov.sg GeoJSON; resolved dynamically via initiate-download API"
 
