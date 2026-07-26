@@ -120,7 +120,13 @@ def resolve_datagov_download_url(dataset_id: str) -> str:
 def run_check(sources: dict[str, Any]) -> int:
     manifest = load_manifest()
     existing_sources: dict[str, Any] = manifest.get("sources", {})
-    changes_detected = []
+
+    total_sources = len(sources)
+    checked_count = 0
+    unchanged_count = 0
+    changed_count = 0
+    error_count = 0
+    unresolved_count = 0
 
     print("Checking upstream datasets for changes...")
 
@@ -132,9 +138,11 @@ def run_check(sources: dict[str, Any]) -> int:
         if kind == "datagov_polldownload":
             dataset_id = spec.get("dataset_id")
             if dataset_id == "UNRESOLVED — runtime discovery":
+                unresolved_count += 1
                 print(f"[{key}] {name}: Skipped (runtime discovery unresolved)")
                 continue
 
+            checked_count += 1
             try:
                 download_url = resolve_datagov_download_url(dataset_id)
                 headers = get_headers()
@@ -146,6 +154,7 @@ def run_check(sources: dict[str, Any]) -> int:
                 with httpx.Client(timeout=60.0, follow_redirects=True) as client:
                     resp = client.get(download_url, headers=headers)
                     if resp.status_code == 304:
+                        unchanged_count += 1
                         print(f"[{key}] {name}: unchanged (304 Not Modified)")
                         continue
 
@@ -154,35 +163,42 @@ def run_check(sources: dict[str, Any]) -> int:
 
                     sha256 = hashlib.sha256(content).hexdigest()
                     if current_entry.get("sha256") != sha256:
-                        changes_detected.append(key)
+                        changed_count += 1
                         print(f"[{key}] {name}: CHANGED (hash mismatch)")
                     else:
+                        unchanged_count += 1
                         print(f"[{key}] {name}: unchanged")
             except (httpx.HTTPError, ValueError, OSError) as e:
+                error_count += 1
                 print(f"[{key}] {name}: Error during check: {e}")
 
         elif kind == "datamall_api_paginated":
+            checked_count += 1
             try:
                 endpoint = spec.get("endpoint", "")
                 payload_bytes, _ = fetch_datamall_api(endpoint, key)
                 sha256 = hashlib.sha256(payload_bytes).hexdigest()
                 if current_entry.get("sha256") != sha256:
-                    changes_detected.append(key)
+                    changed_count += 1
                     print(f"[{key}] {name}: CHANGED (hash mismatch)")
                 else:
+                    unchanged_count += 1
                     print(f"[{key}] {name}: unchanged")
             except (httpx.HTTPError, ValueError, OSError) as e:
+                error_count += 1
                 print(f"[{key}] {name}: Error during check: {e}")
 
         else:
+            unresolved_count += 1
             print(f"[{key}] {name}: Stub check (listing/probe required)")
 
-    if not changes_detected:
-        print("Summary: no changes detected across checked sources.")
-        return 0
-    else:
-        print(f"Summary: {len(changes_detected)} source(s) changed: {', '.join(changes_detected)}")
+    print(
+        f"Summary: checked {checked_count}/{total_sources}, unchanged {unchanged_count}, changed {changed_count}, errors {error_count}, unresolved {unresolved_count}"
+    )
+
+    if error_count > 0 or changed_count > 0:
         return 1
+    return 0
 
 
 def run_ingest(sources: dict[str, Any]) -> int:

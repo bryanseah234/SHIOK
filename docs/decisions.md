@@ -29,8 +29,11 @@ Format: date — decision — rationale — decided by
 - 2026-07-26 — **Concurrency charter:** Parallel execution authorized for disjoint track paths (Track A: pipeline/, tests/, raw/manifest.json for T0.3; Track B: web/, docs/ATTRIBUTION.md for T0.4+T0.5). Subagents inherit protocol; single writer per file; shared global HTTP politeness throttle across processes; per-track EVIDENCE sections. — Reviewer audit concurrency charter.
 - 2026-07-26 — **DataMall API Probe:** unauthenticated requests to DataMall API endpoints without AccountKey header return 404 Not Found. Authenticated requests require AccountKey header in .env. — Empirical probe T0.3.
 - 2026-07-26 — **OneMap Search API Probe (T0.4):** burst ramp against search API hit 429 Too Many Requests at request #8 (no Retry-After header emitted). Configured client throttle in params.yaml to 0.25s delay (~50% of ceiling) and proxy throttle to 30 req/min. — Empirical probe T0.4.
+- 2026-07-26 — **Audit remediation & check rules (T0.3-T0.5):** check task exits non-zero if any source errors or fails. Summary formatting strictly enforced: 'checked X/10, unchanged Y, changed Z, errors N, unresolved M'. HTTPS protocol enforced strictly for all endpoints. — Reviewer audit finding A.
+- 2026-07-26 — **Browser & Web Tool Authorization:** Agent authorized to use browser/web fetch to inspect public documentation, dataset pages, and verify deployed Vercel URLs. Strictly forbidden from entering credentials, completing signups, or handling secret tokens in text output. — Reviewer audit rule B.
 
 <!-- Agent: append new entries below. Never delete history. -->
+
 
 
 

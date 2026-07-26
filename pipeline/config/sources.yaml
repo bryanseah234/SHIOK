@@ -16,20 +16,20 @@ sources:
   bus_stops:
     name: "Bus Stops"
     kind: "datamall_api_paginated"
-    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusStops"
-    notes: "JSON paged API ($skip 500)"
+    endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
+    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
 
   bus_services:
     name: "Bus Services"
     kind: "datamall_api_paginated"
-    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusServices"
-    notes: "JSON paged API ($skip 500)"
+    endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusServices"
+    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
 
   bus_routes:
     name: "Bus Routes"
     kind: "datamall_api_paginated"
-    endpoint: "http://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
-    notes: "JSON paged API ($skip 500)"
+    endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
+    notes: "JSON paged API ($skip 500) — HTTPS enforced per Rule A.2"
 
   mrt_lrt_exits:
     name: "MRT/LRT Station Exits"
