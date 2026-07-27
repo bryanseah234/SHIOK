@@ -8,7 +8,7 @@ import json
 import os
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any, cast
 
@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 from dotenv import load_dotenv
 
-from pipeline.routing import route_worker
+from pipeline.routing import RoutingGraph, route_worker
 
 load_dotenv()
 
@@ -54,12 +54,12 @@ def load_manifest() -> dict[str, Any]:
     with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
         data: Any = json.load(f)
     if not isinstance(data, dict):
-        raise ValueError(f"expected JSON object in {MANIFEST_PATH}")
+        raise TypeError(f"expected JSON object in {MANIFEST_PATH}")
     return cast(dict[str, Any], data)
 
 
 def save_manifest(manifest: dict[str, Any]) -> None:
-    manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
+    manifest["generated_at"] = datetime.now(UTC).isoformat()
     with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, sort_keys=True)
 
@@ -82,7 +82,7 @@ def fetch_paginated(endpoint: str, page_delay_sec: float = 0.15) -> list[dict[st
             response.raise_for_status()
             page = response.json().get("value", [])
             if not isinstance(page, list):
-                raise ValueError(f"unexpected DataMall page shape for {endpoint}")
+                raise TypeError(f"unexpected DataMall page shape for {endpoint}")
             records.extend(cast(list[dict[str, Any]], page))
             if len(page) < DATAMALL_PAGE_SIZE:
                 break
@@ -119,7 +119,7 @@ def write_api_records_to_raw(
         "bytes": len(content),
         "etag": None,
         "last_modified": None,
-        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "fetched_at": datetime.now(UTC).isoformat(),
     }
     save_manifest(manifest)
     return sha256
@@ -152,7 +152,7 @@ def raw_json_from_manifest(source_key: str) -> list[dict[str, Any]] | None:
     with open(path, "r", encoding="utf-8") as f:
         payload: Any = json.load(f)
     if not isinstance(payload, dict) or not isinstance(payload.get("value"), list):
-        raise ValueError(f"unexpected raw bus payload shape: {path}")
+        raise TypeError(f"unexpected raw bus payload shape: {path}")
     return cast(list[dict[str, Any]], payload["value"])
 
 
@@ -240,7 +240,7 @@ class BusConnectivityIndex:
     @classmethod
     def from_raw_data(
         cls, nodes: list[tuple[float, float]], node_xy: np.ndarray
-    ) -> "BusConnectivityIndex | None":
+    ) -> BusConnectivityIndex | None:
         bus_stops = raw_json_from_manifest("bus_stops")
         bus_services = raw_json_from_manifest("bus_services")
         bus_routes = raw_json_from_manifest("bus_routes")
@@ -299,6 +299,7 @@ class BusConnectivityIndex:
         edges_dict: dict[str, list[Any]],
         routed_max_m: float,
         straight_line_radius_m: float | None = None,
+        routing_graph: RoutingGraph | None = None,
     ) -> BusConnectivityResult:
         radius = (
             straight_line_radius_m if straight_line_radius_m is not None else routed_max_m + 125.0
@@ -311,14 +312,11 @@ class BusConnectivityIndex:
         for candidate in candidates:
             candidate_by_node.setdefault(candidate.graph_node, []).append(candidate)
 
-        route_results = route_worker(
-            (
-                edges_dict,
-                {origin_node: sorted(candidate_by_node)},
-                0.0,
-                1.0,
-            )
-        )
+        od_pairs = {origin_node: sorted(candidate_by_node)}
+        if routing_graph is None:
+            route_results = route_worker((edges_dict, od_pairs, 0.0, 1.0))
+        else:
+            route_results = routing_graph.route(od_pairs, 0.0, 1.0, include_geometry=False)
 
         qualifying_headways: dict[tuple[str, int], float] = {}
         routed_stop_count = 0

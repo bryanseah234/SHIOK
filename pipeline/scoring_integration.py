@@ -18,7 +18,7 @@ from shapely.geometry import MultiLineString
 from shapely.ops import linemerge, unary_union
 
 from pipeline.bus import BusConnectivityIndex, BusConnectivityResult
-from pipeline.routing import prepare_edges_for_routing, route_worker
+from pipeline.routing import RoutingGraph, prepare_edges_for_routing
 from pipeline.scoring import (
     NO_TRANSIT_IN_RANGE,
     NOT_YET_SCORED,
@@ -57,10 +57,11 @@ class ScoringContext:
     params: dict[str, Any]
     weights: dict[str, float]
     edges_dict: dict[str, list[Any]]
+    routing_graph: RoutingGraph
     nodes: list[tuple[float, float]]
     node_xy: np.ndarray
     mrt_exits_gdf: gpd.GeoDataFrame
-    crossing_counter: "CrossingCounter"
+    crossing_counter: CrossingCounter
     bus_index: BusConnectivityIndex | None
     network_path: Path
     postal_universe_path: Path | None = None
@@ -70,7 +71,7 @@ def load_yaml(path: Path) -> dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
         data: Any = yaml.safe_load(f)
     if not isinstance(data, dict):
-        raise ValueError(f"expected YAML mapping in {path}")
+        raise TypeError(f"expected YAML mapping in {path}")
     return cast(dict[str, Any], data)
 
 
@@ -86,7 +87,7 @@ def load_manifest() -> dict[str, Any]:
     with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
         data: Any = json.load(f)
     if not isinstance(data, dict):
-        raise ValueError(f"expected JSON object in {MANIFEST_PATH}")
+        raise TypeError(f"expected JSON object in {MANIFEST_PATH}")
     return cast(dict[str, Any], data)
 
 
@@ -304,7 +305,7 @@ class CrossingCounter:
         return self.signals_gdf is not None
 
     @classmethod
-    def from_raw_data(cls, params: dict[str, Any]) -> "CrossingCounter":
+    def from_raw_data(cls, params: dict[str, Any]) -> CrossingCounter:
         crossing_params = params.get("crossing_friction", {})
         eps_m = float(crossing_params.get("dbscan_eps_m", 20.0))
         min_samples = int(crossing_params.get("dbscan_min_samples", 2))
@@ -563,7 +564,8 @@ def load_scoring_context(
     postal_universe_path: Path | None = None,
 ) -> ScoringContext:
     params, weights = load_params_and_weights()
-    _, edges_dict, nodes, node_xy = load_network_inputs(network_path=network_path)
+    edges_df, edges_dict, nodes, node_xy = load_network_inputs(network_path=network_path)
+    routing_graph = RoutingGraph.from_prepared_edges(edges_df)
     mrt_exits_gdf = load_mrt_exits()
     crossing_counter = CrossingCounter.from_raw_data(params)
     bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
@@ -571,6 +573,7 @@ def load_scoring_context(
         params=params,
         weights=weights,
         edges_dict=edges_dict,
+        routing_graph=routing_graph,
         nodes=nodes,
         node_xy=node_xy,
         mrt_exits_gdf=mrt_exits_gdf,
@@ -645,6 +648,7 @@ def score_postal_row(
     postal_row: pd.Series,
     mrt_exits_gdf: gpd.GeoDataFrame,
     edges_dict: dict[str, list[Any]],
+    routing_graph: RoutingGraph,
     nodes: list[tuple[float, float]],
     node_xy: np.ndarray,
     params: dict[str, Any],
@@ -676,6 +680,7 @@ def score_postal_row(
             origin_node,
             edges_dict,
             float(params["bus_connectivity"]["routed_max_m"]),
+            routing_graph=routing_graph,
         )
         provenance["bus_connectivity"] = {
             "expected_wait_min": (
@@ -703,13 +708,11 @@ def score_postal_row(
             destinations.append(candidate.graph_node)
             candidate_by_destination[candidate.graph_node] = candidate
 
-    route_results = route_worker(
-        (
-            edges_dict,
-            {origin_node: destinations},
-            float(params["shelter_lambda"]),
-            float(params["detour_budget"]),
-        )
+    route_results = routing_graph.route(
+        {origin_node: destinations},
+        float(params["shelter_lambda"]),
+        float(params["detour_budget"]),
+        include_geometry=True,
     )
 
     candidate_scores = []
@@ -775,6 +778,7 @@ def score_postal_gdf(
                 postal_row,
                 context.mrt_exits_gdf,
                 context.edges_dict,
+                context.routing_graph,
                 context.nodes,
                 context.node_xy,
                 context.params,

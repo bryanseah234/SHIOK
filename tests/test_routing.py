@@ -1,4 +1,4 @@
-from pipeline.routing import route_worker
+from pipeline.routing import RoutingGraph, route_worker
 
 
 def test_routing_detour_cap():
@@ -82,3 +82,28 @@ def test_routing_lambda_zero():
     assert res[0]["length_m"] == 20.0
     assert res[0]["covered_m"] == 0.0
     assert res[0]["covered_ratio"] == 0.0
+
+
+def test_reusable_routing_graph_matches_route_worker():
+    edges_dict = {
+        "u": [0, 1, 0, 3, 4],
+        "v": [1, 2, 3, 4, 2],
+        "length_m": [10.0, 10.0, 10.0, 10.0, 2.0],
+        "is_covered": [0, 0, 1, 1, 1],
+    }
+    od_pairs = {0: [2]}
+
+    worker_result = route_worker((edges_dict, od_pairs, 0.6, 1.25))[0]
+    graph_result = RoutingGraph.from_edges_dict(edges_dict).route(
+        od_pairs,
+        0.6,
+        1.25,
+        include_geometry=False,
+    )[0]
+
+    assert graph_result["routing_type"] == worker_result["routing_type"]
+    assert graph_result["length_m"] == worker_result["length_m"]
+    assert graph_result["covered_m"] == worker_result["covered_m"]
+    assert graph_result["covered_ratio"] == worker_result["covered_ratio"]
+    assert graph_result["geometry"] is None
+    assert graph_result["path_edges"] == []

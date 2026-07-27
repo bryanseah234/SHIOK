@@ -1,10 +1,13 @@
-import pandas as pd
-import igraph as ig
-import yaml
-from pathlib import Path
 from multiprocessing import Pool, cpu_count
+from pathlib import Path
+
 import geopandas as gpd
+import igraph as ig
+import pandas as pd
+import yaml
 from shapely import wkt
+from shapely.geometry import MultiLineString
+from shapely.ops import linemerge
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = PROJECT_ROOT / "pipeline" / "config" / "params.yaml"
@@ -80,94 +83,131 @@ def build_graph(edges_df):
     return g, node_mapping, reverse_mapping
 
 
-def route_worker(args):
-    """Worker function for multiprocessing."""
-    edges_dict, od_pairs, shelter_lambda, detour_budget = args
-    edges_df = prepare_edges_for_routing(pd.DataFrame(edges_dict))
+class RoutingGraph:
+    """Reusable igraph routing context for repeated same-network route queries."""
 
-    g, node_map, rev_map = build_graph(edges_df)
-    component_membership = g.connected_components(mode="weak").membership
+    def __init__(self, edges_df):
+        self.edges_df = prepare_edges_for_routing(edges_df)
+        self.graph, self.node_map, self.reverse_map = build_graph(self.edges_df)
+        self.component_membership = self.graph.connected_components(mode="weak").membership
+        self.lengths = [float(value) for value in self.graph.es["length_m"]]
+        self.covered = [bool(value) for value in self.graph.es["is_covered"]]
+        self.geometries = (
+            list(self.graph.es["geometry"]) if "geometry" in self.graph.edge_attributes() else None
+        )
+        self._sheltered_costs_by_lambda = {}
 
-    g.es["sheltered_cost"] = [
-        L * (1.0 + shelter_lambda * (1.0 - c)) for L, c in zip(g.es["length_m"], g.es["is_covered"])
-    ]
+    @classmethod
+    def from_edges_dict(cls, edges_dict):
+        return cls(pd.DataFrame(edges_dict))
 
-    results = []
+    @classmethod
+    def from_prepared_edges(cls, edges_df):
+        obj = cls.__new__(cls)
+        obj.edges_df = edges_df
+        obj.graph, obj.node_map, obj.reverse_map = build_graph(edges_df)
+        obj.component_membership = obj.graph.connected_components(mode="weak").membership
+        obj.lengths = [float(value) for value in obj.graph.es["length_m"]]
+        obj.covered = [bool(value) for value in obj.graph.es["is_covered"]]
+        obj.geometries = (
+            list(obj.graph.es["geometry"]) if "geometry" in obj.graph.edge_attributes() else None
+        )
+        obj._sheltered_costs_by_lambda = {}
+        return obj
 
-    for origin, destinations in od_pairs.items():
-        if origin not in node_map:
-            continue
-        origin_idx = node_map[origin]
-        origin_component = component_membership[origin_idx]
+    def sheltered_costs(self, shelter_lambda):
+        lambda_key = float(shelter_lambda)
+        if lambda_key not in self._sheltered_costs_by_lambda:
+            self._sheltered_costs_by_lambda[lambda_key] = [
+                length * (1.0 + lambda_key * (1.0 - float(covered)))
+                for length, covered in zip(self.lengths, self.covered)
+            ]
+        return self._sheltered_costs_by_lambda[lambda_key]
 
-        valid_destinations = [
-            d
-            for d in destinations
-            if d in node_map and component_membership[node_map[d]] == origin_component
+    def geometry_for_epath(self, epath):
+        if self.geometries is None:
+            return None
+        lines = [
+            self.geometries[edge_id] for edge_id in epath if self.geometries[edge_id] is not None
         ]
-        dest_indices = [node_map[d] for d in valid_destinations]
+        if not lines:
+            return None
+        return linemerge(MultiLineString(lines))
 
-        if not dest_indices:
-            continue
+    def path_edges_for_epath(self, epath):
+        if self.geometries is None:
+            return []
+        return [
+            {
+                "length_m": float(self.lengths[edge_id]),
+                "is_covered": bool(self.covered[edge_id]),
+                "geometry": self.geometries[edge_id],
+            }
+            for edge_id in epath
+        ]
 
-        paths_shortest = g.get_shortest_paths(
-            origin_idx, to=dest_indices, weights="length_m", output="epath"
+    def route(self, od_pairs, shelter_lambda, detour_budget, include_geometry=True):
+        sheltered_weights = (
+            self.lengths if float(shelter_lambda) == 0.0 else self.sheltered_costs(shelter_lambda)
         )
-        paths_sheltered = g.get_shortest_paths(
-            origin_idx, to=dest_indices, weights="sheltered_cost", output="epath"
-        )
+        results = []
 
-        for dest, epath_short, epath_shelt in zip(
-            valid_destinations, paths_shortest, paths_sheltered
-        ):
-            if not epath_short:
+        for origin, destinations in od_pairs.items():
+            if origin not in self.node_map:
+                continue
+            origin_idx = self.node_map[origin]
+            origin_component = self.component_membership[origin_idx]
+
+            valid_destinations = [
+                destination
+                for destination in destinations
+                if destination in self.node_map
+                and self.component_membership[self.node_map[destination]] == origin_component
+            ]
+            dest_indices = [self.node_map[destination] for destination in valid_destinations]
+
+            if not dest_indices:
                 continue
 
-            len_short = sum(g.es[e]["length_m"] for e in epath_short)
-
-            if not epath_shelt:
-                final_epath = epath_short
-                routing_type = "shortest_fallback"
-            else:
-                len_shelt = sum(g.es[e]["length_m"] for e in epath_shelt)
-                if len_shelt <= detour_budget * len_short:
-                    final_epath = epath_shelt
-                    routing_type = "sheltered"
-                else:
-                    final_epath = epath_short
-                    routing_type = "shortest_due_to_detour"
-
-            final_length = sum(g.es[e]["length_m"] for e in final_epath)
-            final_covered = sum(g.es[e]["length_m"] for e in final_epath if g.es[e]["is_covered"])
-            cov_short = sum(g.es[e]["length_m"] for e in epath_short if g.es[e]["is_covered"])
-            sheltered_length = (
-                sum(g.es[e]["length_m"] for e in epath_shelt) if epath_shelt else None
+            paths_shortest = self.graph.get_shortest_paths(
+                origin_idx, to=dest_indices, weights=self.lengths, output="epath"
+            )
+            paths_sheltered = self.graph.get_shortest_paths(
+                origin_idx, to=dest_indices, weights=sheltered_weights, output="epath"
             )
 
-            def geometry_for_epath(epath):
-                if "geometry" not in g.edge_attributes():
-                    return None
-                lines = [g.es[e]["geometry"] for e in epath if g.es[e]["geometry"] is not None]
-                if not lines:
-                    return None
-                from shapely.geometry import MultiLineString
-                from shapely.ops import linemerge
+            for dest, epath_short, epath_shelt in zip(
+                valid_destinations, paths_shortest, paths_sheltered
+            ):
+                if not epath_short:
+                    continue
 
-                return linemerge(MultiLineString(lines))
+                len_short = sum(self.lengths[edge_id] for edge_id in epath_short)
 
-            path_edges = []
-            if "geometry" in g.edge_attributes():
-                for edge_id in final_epath:
-                    path_edges.append(
-                        {
-                            "length_m": float(g.es[edge_id]["length_m"]),
-                            "is_covered": bool(g.es[edge_id]["is_covered"]),
-                            "geometry": g.es[edge_id]["geometry"],
-                        }
-                    )
+                if not epath_shelt:
+                    final_epath = epath_short
+                    routing_type = "shortest_fallback"
+                else:
+                    len_shelt = sum(self.lengths[edge_id] for edge_id in epath_shelt)
+                    if len_shelt <= float(detour_budget) * len_short:
+                        final_epath = epath_shelt
+                        routing_type = "sheltered"
+                    else:
+                        final_epath = epath_short
+                        routing_type = "shortest_due_to_detour"
 
-            results.append(
-                {
+                final_length = sum(self.lengths[edge_id] for edge_id in final_epath)
+                final_covered = sum(
+                    self.lengths[edge_id] for edge_id in final_epath if self.covered[edge_id]
+                )
+                cov_short = sum(
+                    self.lengths[edge_id] for edge_id in epath_short if self.covered[edge_id]
+                )
+                sheltered_length = (
+                    sum(self.lengths[edge_id] for edge_id in epath_shelt) if epath_shelt else None
+                )
+
+                result = {
                     "origin": origin,
                     "destination": dest,
                     "routing_type": routing_type,
@@ -177,13 +217,28 @@ def route_worker(args):
                     "shortest_length_m": len_short,
                     "shortest_covered_ratio": cov_short / len_short if len_short > 0 else 0.0,
                     "sheltered_length_m": sheltered_length,
-                    "geometry": geometry_for_epath(final_epath),
-                    "shortest_geometry": geometry_for_epath(epath_short),
-                    "path_edges": path_edges,
+                    "geometry": None,
+                    "shortest_geometry": None,
+                    "path_edges": [],
                 }
-            )
+                if include_geometry:
+                    result["geometry"] = self.geometry_for_epath(final_epath)
+                    result["shortest_geometry"] = self.geometry_for_epath(epath_short)
+                    result["path_edges"] = self.path_edges_for_epath(final_epath)
+                results.append(result)
 
-    return results
+        return results
+
+
+def route_worker(args):
+    """Worker function for multiprocessing."""
+    edges_dict, od_pairs, shelter_lambda, detour_budget = args
+    return RoutingGraph.from_edges_dict(edges_dict).route(
+        od_pairs,
+        shelter_lambda,
+        detour_budget,
+        include_geometry=True,
+    )
 
 
 def run_routing_batch(network_path, od_pairs):
