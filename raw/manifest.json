@@ -1,6 +1,15 @@
 {
-  "generated_at": "2026-07-27T12:52:08.469093+00:00",
+  "generated_at": "2026-07-27T13:52:00.558754+00:00",
   "sources": {
+    "acra_registered_entities": {
+      "bytes": 231948757,
+      "etag": null,
+      "fetched_at": "2026-07-27T13:52:00.558754+00:00",
+      "last_modified": null,
+      "sha256": "5d18dbe22516ee9ce4f3ad9e86f54dbe8ae1b2306e2bc9b3ec03fc8bd9aae892",
+      "source_name": "Entities Registered with ACRA",
+      "url_as_discovered": "https://api-open.data.gov.sg/v1/public/api/datasets/d_3f960c10fed6145404ca7b821f263b87/initiate-download"
+    },
     "building_points": {
       "bytes": 57012074,
       "etag": "\"dc2b820605a8a986c1bbfe5700ff9032-6\"",
@@ -90,6 +99,15 @@
       "sha256": "f23856251b467089f788d0fff72ef5a38e753f21aa69b4352401d7ed50d380cc",
       "source_name": "Planning Area Boundaries (MP2019 No Sea)",
       "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_4765db0e87b9c86336792efe8a1f7a66.geojson?AWSAccessKeyId=ASIAU7LWPY2WHOV6TT2F&Expires=1785055849&Signature=G8VZRHCM5liDjphivKjOxAQtWZw%3D&X-Amzn-Trace-Id=Root%3D1-6a65bc59-512ff0f32a8172d45f6161d7%3BParent%3D8eab53236be81ff0%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22MasterPlan2019PlanningAreaBoundaryNoSea.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaDmFwLXNvdXRoZWFzdC0xIkgwRgIhANuRjFuJew2biTgP1bhhWySwZet4ef%2F%2BGw5yuv2ABawrAiEA1YfWQ5B%2BlZbhUG%2BK4yD0bYOHGpyeE%2B7BRIswMunVzOcqtQQIMRAEGgwzNDIyMzUyNjg3ODAiDCVhN1S0vwXsX%2Fho1iqSBGqsu4yERlirrAfrftsTI16mDRo8%2FUgRGbmDMiX7IUpgDHh%2FBtGHRnbsCvVK2NJhwBuiW%2FF5HP92Rn9%2BGz%2FZdkeZWB75HBXK3ni6sFJ6YGtlSQzBHgUsk5UCEbNKqpAKmy23P9Q%2BlaGaudKu8DABye505IU7YDoNyMTVnvBA%2B98kxcSiHs1rcX095PVunnIeI3iy6s1NNESZDdGUfwFiVc7euF8Mx9g2TxgdrEH6LlX329%2FcYAxk7pgpDQabGsJ8sZnLNiusTt%2F%2BbHRR7hPxuDeU%2BXblnB0Ri3uaPKH7h%2FkSORlzMl8mJkTpk9Ll%2Frkw8dVE9Doa5pHrTnqOlEDfJybVsThtG4WO7v3mm6KjNqwyAGFrOirJNPRHu8xFV0c27lkerTjY9noKdocK0qO3t58aSgzwh7SBUIKDYXdeDMITOHoBiu2isxWvoEI%2FMvxIlGeaeM9q7%2BSOL5Vt7HJBoIHiLIZaqZtpEooRSPc%2BLrIfw2hbtGLYE1jWE0olmSgW5hfSPBuiZNXkx26gfO5FIUR0%2FmwpHGQw2Bh9fgdOq%2BQI5z5oaHRCUv5wM9LcGLm2TOssVpYs509gh%2FWWf4LacLJldiNFhs4tDRTfrpt5vLDwdrhJzxsGdzdAkDseNqT7q5kGERZSH8XdkIQ%2F086xCC0MhXAIIZasVv7SoHpBD8uK0xEmWvvRXJLYBnFfSOYo854YMMT3ltMGOqEBB8%2B%2BWz8%2B8ACcNU1ZS9cI59UKws0xuL3WUKqd%2BViT%2F49WfA%2FuiVaER8T9%2Fbkdw3Xz0Mb0ottaZ2E2mLSpguhA%2BRbu5D7jfs9oldJHKN1uSMhA4Xh6PHbE1plFdbAb6axLzkFW0qP%2F%2Bpo%2FcjvueBKQH13DgcED2%2F4b0iJOOC75k0iFXSLns25djRxAYTa2Y1XECet0Zb%2BHdu%2FgUXfSzDrkWkc%3D"
+    },
+    "postal_universe_onemap_2020": {
+      "bytes": 5945389,
+      "etag": null,
+      "fetched_at": "2026-07-27T13:37:42.732614+00:00",
+      "last_modified": null,
+      "sha256": "847ceebce6a9a8f5ca7e8ee32f6d857583c8d8025a0606be685411899ba59841",
+      "source_name": "OneMap-derived Singapore postal dump, accessed 10 Jun 2020 by xuancong84",
+      "url_as_discovered": "https://raw.githubusercontent.com/xuancong84/singapore-address-heatmap/master/singpostcode.json.gz"
     },
     "traffic_signals": {
       "bytes": 1337159,

@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: check | ingest | network | route | score | export | validate | publish | test | shell
+Tasks: check | ingest | network | route | score | postal-universe | export | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -20,6 +20,7 @@ STUBS = {
     "network": "build conflated graph + QA report (T1.1)",
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
     "score": "apply pipeline/config/weights.yaml (T1.4)",
+    "postal-universe": "build deterministic postal-code universe candidates",
     "export": "scores/{area}.json + geom/h3/{cell}.json + manifest (T1.5)",
     "validate": "golden set + OneMap comparison; blocks publish (T1.7)",
     "publish": "vercel deploy --prod --archive=tgz (only deploy path)",
@@ -48,6 +49,10 @@ def run_task(name: str, extra: list[str]) -> int:
         return res.returncode
     if name == "score":
         cmd = [sys.executable, "-m", "pipeline.scoring_integration"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
+    if name == "postal-universe":
+        cmd = [sys.executable, "-m", "pipeline.postal_universe"] + extra
         res = subprocess.run(cmd)
         return res.returncode
 
