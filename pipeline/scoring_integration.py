@@ -371,6 +371,7 @@ def score_candidate_route(
     crossing_count: int | None,
     bus_expected_wait_min: float | None = None,
     bus_data_available: bool = False,
+    include_geometry: bool = False,
 ) -> dict[str, Any]:
     access: SubscoreValue = score_transit_access(
         float(route_result["shortest_length_m"]),
@@ -410,7 +411,7 @@ def score_candidate_route(
     sheltered_m = float(route_result["length_m"])
     detour_pct = ((sheltered_m / shortest_m) - 1.0) * 100.0 if shortest_m > 0 else 0.0
 
-    return {
+    candidate_score: dict[str, Any] = {
         "candidate": candidate,
         "total": composite,
         "subscores": {
@@ -445,6 +446,13 @@ def score_candidate_route(
         "exposure_gaps": exposure_gaps_from_path_edges(route_result.get("path_edges", [])),
         "crossing_count": crossing_count,
     }
+    if include_geometry:
+        candidate_score["_geometry"] = {
+            "shortest": route_result.get("shortest_geometry"),
+            "sheltered": route_result.get("geometry"),
+            "exposure_gap_edges": route_result.get("path_edges", []),
+        }
+    return candidate_score
 
 
 def build_provenance(
@@ -522,7 +530,7 @@ def assemble_score_record(
     )
     has_pending_subscores = any(value is None for value in best["subscores"].values())
 
-    return {
+    record = {
         "postal": postal,
         "state": "SCORED_PARTIAL" if has_pending_subscores else "SCORED",
         "total": round(float(best["total"]), 1),
@@ -533,6 +541,21 @@ def assemble_score_record(
         "data_as_of": data_as_of,
         "provenance": provenance,
     }
+    if "_geometry" in best:
+        record["_geometry"] = best["_geometry"]
+    return record
+
+
+def add_private_origin(record: dict[str, Any], postal_point: Any) -> dict[str, Any]:
+    transformer = Transformer.from_crs("EPSG:3414", "EPSG:4326", always_xy=True)
+    lon, lat = transformer.transform(postal_point.x, postal_point.y)
+    record["_origin"] = {
+        "lat": round(float(lat), 9),
+        "lon": round(float(lon), 9),
+        "x": round(float(postal_point.x), 3),
+        "y": round(float(postal_point.y), 3),
+    }
+    return record
 
 
 def score_postal_row(
@@ -545,6 +568,7 @@ def score_postal_row(
     weights: dict[str, float],
     crossing_counter: CrossingCounter,
     bus_index: BusConnectivityIndex | None = None,
+    include_geometry: bool = False,
 ) -> dict[str, Any]:
     postal = str(postal_row["postal_code"])
     origin_node, origin_snap_m = nearest_graph_node(postal_row.geometry, nodes, node_xy)
@@ -578,7 +602,8 @@ def score_postal_row(
         }
 
     if not candidates:
-        return assemble_score_record(postal, [], data_as_of, provenance)
+        record = assemble_score_record(postal, [], data_as_of, provenance)
+        return add_private_origin(record, postal_row.geometry) if include_geometry else record
 
     destinations: list[tuple[float, float]] = []
     candidate_by_destination: dict[tuple[float, float], CandidateNode] = {}
@@ -609,15 +634,18 @@ def score_postal_row(
                 crossing_count,
                 bus_expected_wait_min=bus_result.expected_wait_min if bus_result else None,
                 bus_data_available=bus_data_available,
+                include_geometry=include_geometry,
             )
         )
 
-    return assemble_score_record(postal, candidate_scores, data_as_of, provenance)
+    record = assemble_score_record(postal, candidate_scores, data_as_of, provenance)
+    return add_private_origin(record, postal_row.geometry) if include_geometry else record
 
 
 def score_postals(
     postal_codes: list[str] | None = None,
     limit: int = 5,
+    include_geometry: bool = False,
 ) -> list[dict[str, Any]]:
     params, weights = load_params_and_weights()
     _, edges_dict, nodes, node_xy = load_network_inputs()
@@ -641,6 +669,7 @@ def score_postals(
                 weights,
                 crossing_counter,
                 bus_index,
+                include_geometry,
             )
         )
         if postal_codes is None and len(records) >= limit:

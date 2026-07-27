@@ -35,6 +35,8 @@ def run_task(name: str, extra: list[str]) -> int:
         if rc != 0:
             print("publish blocked: validate failed", file=sys.stderr)
             return rc
+        print(f"not implemented: {name} — {STUBS[name]}", file=sys.stderr)
+        return 1
     if name == "test":
         cmd = [sys.executable, "-m", "pytest"] + extra
         res = subprocess.run(cmd)
@@ -53,6 +55,14 @@ def run_task(name: str, extra: list[str]) -> int:
         return res.returncode
     if name == "postal-universe":
         cmd = [sys.executable, "-m", "pipeline.postal_universe"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
+    if name == "export":
+        cmd = [sys.executable, "-m", "pipeline.export", "export"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
+    if name == "validate":
+        cmd = [sys.executable, "-m", "pipeline.export", "validate"] + extra
         res = subprocess.run(cmd)
         return res.returncode
 

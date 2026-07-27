@@ -144,18 +144,16 @@ def route_worker(args):
                 sum(g.es[e]["length_m"] for e in epath_shelt) if epath_shelt else None
             )
 
-            # Reconstruct geometry if available
-            path_geom = None
-            if "geometry" in g.edge_attributes():
-                lines = [
-                    g.es[e]["geometry"] for e in final_epath if g.es[e]["geometry"] is not None
-                ]
-                if lines:
-                    from shapely.ops import linemerge
-                    from shapely.geometry import MultiLineString
+            def geometry_for_epath(epath):
+                if "geometry" not in g.edge_attributes():
+                    return None
+                lines = [g.es[e]["geometry"] for e in epath if g.es[e]["geometry"] is not None]
+                if not lines:
+                    return None
+                from shapely.geometry import MultiLineString
+                from shapely.ops import linemerge
 
-                    merged = linemerge(MultiLineString(lines))
-                    path_geom = merged
+                return linemerge(MultiLineString(lines))
 
             path_edges = []
             if "geometry" in g.edge_attributes():
@@ -179,7 +177,8 @@ def route_worker(args):
                     "shortest_length_m": len_short,
                     "shortest_covered_ratio": cov_short / len_short if len_short > 0 else 0.0,
                     "sheltered_length_m": sheltered_length,
-                    "geometry": path_geom,
+                    "geometry": geometry_for_epath(final_epath),
+                    "shortest_geometry": geometry_for_epath(epath_short),
                     "path_edges": path_edges,
                 }
             )

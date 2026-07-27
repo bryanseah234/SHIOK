@@ -30,6 +30,7 @@ describe("mock score records", () => {
   const records = readJson<ScoreRecord[]>("scores/ANG_MO_KIO.json");
   const VALID_STATES: ScoreState[] = [
     "SCORED",
+    "SCORED_PARTIAL",
     "NOT_YET_SCORED",
     "NO_TRANSIT_IN_RANGE",
   ];
