@@ -5,11 +5,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+import pyarrow as pa
 import pyarrow.parquet as pq
 import yaml
 
 from pipeline.network_qa import validate_network_qa
-
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 PROCESSED_DIR = PROJECT_ROOT / "processed"
@@ -24,7 +24,7 @@ def load_json(path: Path) -> dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
         payload: Any = json.load(f)
     if not isinstance(payload, dict):
-        raise ValueError(f"expected JSON object: {path}")
+        raise TypeError(f"expected JSON object: {path}")
     return payload
 
 
@@ -46,7 +46,7 @@ def load_onemap_delay(params_path: Path = PARAMS_PATH) -> tuple[float, list[str]
 
 
 def format_duration(seconds: float) -> str:
-    total_seconds = int(round(seconds))
+    total_seconds = round(seconds)
     days, remainder = divmod(total_seconds, 86400)
     hours, remainder = divmod(remainder, 3600)
     minutes, secs = divmod(remainder, 60)
@@ -109,7 +109,7 @@ def build_batch_plan(
     else:
         try:
             summary = load_json(summary_path)
-        except (OSError, ValueError, json.JSONDecodeError) as exc:
+        except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             errors.append(f"could not read postal universe summary: {exc}")
 
     universe_rows = None
@@ -118,7 +118,7 @@ def build_batch_plan(
     else:
         try:
             universe_rows = parquet_row_count(universe_path)
-        except Exception as exc:  # pragma: no cover - pyarrow exception types vary by platform
+        except (OSError, pa.ArrowException) as exc:
             errors.append(f"could not read postal universe parquet metadata: {exc}")
 
     summary_total = summary.get("total_unique_postals")
@@ -135,7 +135,17 @@ def build_batch_plan(
 
     needs_geocode = int(summary.get("needs_geocode") or 0)
     ready_to_score = int(summary.get("ready_to_score") or 0)
-    wall_clock_seconds = float(needs_geocode) * float(onemap_delay_sec)
+    geocode_fill = summary.get("geocode_fill") if isinstance(summary, dict) else None
+    geocode_fill_complete = (
+        isinstance(geocode_fill, dict)
+        and geocode_fill.get("ok") is True
+        and int(geocode_fill.get("queued_postals") or 0)
+        == int(geocode_fill.get("http_requests") or 0)
+        + int(geocode_fill.get("cache_successes") or 0)
+        + int(geocode_fill.get("cache_failures") or 0)
+    )
+    remaining_geocode_requests = 0 if geocode_fill_complete else needs_geocode
+    wall_clock_seconds = float(remaining_geocode_requests) * float(onemap_delay_sec)
 
     island_ok, island_summary = validate_network_qa(qa_path, debug_path)
     summary_warnings = [str(item) for item in summary.get("warnings", []) if isinstance(item, str)]
@@ -151,6 +161,10 @@ def build_batch_plan(
         blockers.append("island-wide network QA is not green")
     if requires_universe_approval:
         blockers.append("postal universe uses third-party OneMap-derived 2020 source")
+    if geocode_fill_complete and needs_geocode:
+        warnings.append(
+            f"{needs_geocode} source-derived postals remain unresolved after bounded OneMap geocode"
+        )
 
     full_batch_allowed_now = False
 
@@ -177,16 +191,30 @@ def build_batch_plan(
         },
         "bounded_geocoding": {
             "consumer": "OneMap search API",
-            "scope": "source-derived postals with NEEDS_GEOCODE only",
+            "scope": (
+                "completed bounded fill; remaining NEEDS_GEOCODE rows stay NOT_YET_SCORED"
+                if geocode_fill_complete
+                else "source-derived postals with NEEDS_GEOCODE only"
+            ),
             "will_bruteforce": False,
             "delay_seconds": float(onemap_delay_sec),
-            "requests": needs_geocode,
+            "requests": remaining_geocode_requests,
             "minimum_wall_clock_seconds": wall_clock_seconds,
             "minimum_wall_clock_human": format_duration(wall_clock_seconds),
+            "completed_fill": geocode_fill if geocode_fill_complete else None,
+            "unresolved_after_bounded_geocode": needs_geocode if geocode_fill_complete else None,
         },
         "scoring_batch": {
             "would_score_without_geocoding": ready_to_score,
-            "would_score_after_bounded_geocoding": ready_to_score + needs_geocode,
+            "would_score_after_bounded_geocoding": (
+                ready_to_score if geocode_fill_complete else ready_to_score + needs_geocode
+            ),
+            "would_emit_records": universe_rows,
+            "would_emit_not_yet_scored": (
+                needs_geocode
+                if geocode_fill_complete
+                else max((universe_rows or 0) - ready_to_score, 0)
+            ),
             "uses_python_igraph": True,
             "uses_project_conflated_graph": True,
             "epsg_internal": "EPSG:3414",

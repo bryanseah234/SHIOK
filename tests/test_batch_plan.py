@@ -103,6 +103,59 @@ def test_batch_plan_reports_bounded_geocoding_and_keeps_gate_closed(tmp_path: Pa
     assert report["checkpoint_gates"]["full_batch_allowed_now"] is False
 
 
+def test_batch_plan_treats_completed_geocode_fill_remaining_rows_as_unresolved(
+    tmp_path: Path,
+):
+    summary_path = tmp_path / "summary.json"
+    universe_path = tmp_path / "universe.parquet"
+    params_path = tmp_path / "params.yaml"
+    qa_path = tmp_path / "conflation_qa_island.json"
+    debug_path = tmp_path / "island_debug.geojson"
+    write_json(
+        summary_path,
+        {
+            "generated_at": "2026-07-27T10:00:00+00:00",
+            "mode": "candidate_full_registered",
+            "total_unique_postals": 3,
+            "ready_to_score": 2,
+            "needs_geocode": 1,
+            "geocode_fill": {
+                "ok": True,
+                "queued_postals": 2,
+                "http_requests": 2,
+                "cache_successes": 0,
+                "cache_failures": 0,
+                "filled_successes": 1,
+                "status_counts": {"SUCCESS": 1, "NOT_FOUND": 1},
+            },
+            "source_stats": [],
+            "source_only_counts": {},
+            "warnings": [],
+        },
+    )
+    write_universe(universe_path, rows=3)
+    write_params(params_path, delay=2.0)
+    write_island_qa(qa_path)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+    ok, report = build_batch_plan(
+        mode="candidate_full_registered",
+        summary_path=summary_path,
+        universe_path=universe_path,
+        params_path=params_path,
+        qa_path=qa_path,
+        debug_path=debug_path,
+    )
+
+    assert ok, report
+    assert report["bounded_geocoding"]["requests"] == 0
+    assert report["bounded_geocoding"]["unresolved_after_bounded_geocode"] == 1
+    assert report["scoring_batch"]["would_score_after_bounded_geocoding"] == 2
+    assert report["scoring_batch"]["would_emit_records"] == 3
+    assert report["scoring_batch"]["would_emit_not_yet_scored"] == 1
+    assert "1 source-derived postals remain unresolved" in report["warnings"][0]
+
+
 def test_batch_plan_reports_missing_island_qa_as_blocker_not_artifact_error(tmp_path: Path):
     summary_path = tmp_path / "summary.json"
     universe_path = tmp_path / "universe.parquet"

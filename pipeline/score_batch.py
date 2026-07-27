@@ -2,18 +2,21 @@ from __future__ import annotations
 
 import argparse
 import json
-from datetime import datetime, timezone
+from collections.abc import Callable
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 import geopandas as gpd
+import pandas as pd
 
 from pipeline.network_qa import validate_network_qa
+from pipeline.scoring import NOT_YET_SCORED
 from pipeline.scoring_integration import (
     NETWORK_PATH,
-    PROJECT_ROOT,
     PROCESSED_DIR,
-    load_postal_universe_points,
+    PROJECT_ROOT,
+    load_manifest,
     load_scoring_context,
     score_postal_gdf,
 )
@@ -88,6 +91,91 @@ def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
     return safe
 
 
+def source_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if hasattr(value, "tolist") and not isinstance(value, str):
+        value = value.tolist()
+    if isinstance(value, list | tuple | set):
+        return [str(item) for item in value if str(item)]
+    return [str(value)] if str(value) else []
+
+
+def load_postal_universe_batch_rows(
+    universe_path: Path,
+    limit: int | None,
+    include_unscored: bool,
+) -> pd.DataFrame:
+    if not universe_path.is_file():
+        raise FileNotFoundError(f"postal universe not found: {universe_path}")
+    rows = pd.read_parquet(universe_path)
+    rows["postal_code"] = rows["postal_code"].astype(str).str.zfill(6)
+    if not include_unscored:
+        rows = rows[rows["status"] == "READY_TO_SCORE"].copy()
+    rows = rows.sort_values("postal_code", kind="stable").reset_index(drop=True)
+    if limit is not None:
+        rows = rows.head(int(limit)).copy()
+    return rows
+
+
+def ready_rows_to_gdf(rows: pd.DataFrame) -> gpd.GeoDataFrame:
+    ready = rows[
+        (rows["status"] == "READY_TO_SCORE") & rows["x"].notna() & rows["y"].notna()
+    ].copy()
+    return gpd.GeoDataFrame(
+        ready,
+        geometry=gpd.points_from_xy(ready["x"], ready["y"]),
+        crs="EPSG:3414",
+    )
+
+
+def display_path(path: Path) -> str:
+    try:
+        return str(path.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def json_nullable(value: Any) -> Any:
+    if value is None:
+        return None
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        return value
+    return value
+
+
+def not_yet_scored_record(
+    row: pd.Series,
+    postal_universe_path: Path,
+    data_as_of: str | None,
+) -> dict[str, Any]:
+    source_status = str(row.get("status") or NOT_YET_SCORED)
+    return {
+        "postal": str(row["postal_code"]),
+        "state": NOT_YET_SCORED,
+        "total": None,
+        "subscores": None,
+        "best_node": None,
+        "paths": None,
+        "exposure_gaps": None,
+        "data_as_of": data_as_of,
+        "provenance": {
+            "postal_universe": display_path(postal_universe_path),
+            "source_status": source_status,
+            "coordinate_source": json_nullable(row.get("coordinate_source")),
+            "sources": source_list(row.get("sources")),
+            "reason": (
+                "missing_coordinates_after_bounded_geocode"
+                if source_status == "NEEDS_GEOCODE"
+                else f"unscorable_source_status:{source_status}"
+            ),
+        },
+    }
+
+
 def validate_full_batch_gate(
     *,
     full_batch: bool,
@@ -144,13 +232,13 @@ def build_score_batch(
         return False, {"ok": False, "errors": gate_errors, "island_network_qa": qa_report}
 
     requested_limit = None if full_batch else limit
-    postal_gdf = load_postal_universe_points(
+    postal_rows = load_postal_universe_batch_rows(
         postal_universe_path,
-        limit=requested_limit,
-    ).sort_values("postal_code", kind="stable")
-    postal_gdf = postal_gdf.reset_index(drop=True)
+        requested_limit,
+        include_unscored=full_batch,
+    )
 
-    chunks = chunk_slices(len(postal_gdf), chunk_size)
+    chunks = chunk_slices(len(postal_rows), chunk_size)
     report: dict[str, Any] = {
         "ok": True,
         "dry_run": dry_run,
@@ -159,13 +247,16 @@ def build_score_batch(
         "postal_universe": str(postal_universe_path),
         "network": str(network_path),
         "output_dir": str(output_dir),
-        "selected_postals": int(len(postal_gdf)),
+        "selected_postals": len(postal_rows),
+        "ready_postals_selected": int((postal_rows["status"] == "READY_TO_SCORE").sum()),
+        "unscored_postals_selected": int((postal_rows["status"] != "READY_TO_SCORE").sum()),
         "chunk_size": chunk_size,
         "chunk_count": len(chunks),
         "chunks_written": 0,
         "chunks_skipped_existing": 0,
         "records_written": 0,
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "not_yet_scored_records_written": 0,
+        "generated_at": datetime.now(UTC).isoformat(),
         "island_network_qa": qa_report,
         "errors": [],
         "chunks": [],
@@ -174,8 +265,9 @@ def build_score_batch(
         return True, report
 
     context = context_loader(network_path, postal_universe_path)
+    data_as_of = load_manifest().get("generated_at")
     for chunk_index, (start, end) in enumerate(chunks, start=1):
-        chunk = postal_gdf.iloc[start:end].copy()
+        chunk = postal_rows.iloc[start:end].copy()
         postals = [str(item) for item in chunk["postal_code"].tolist()]
         path = chunk_path(output_dir, chunk_index, postals)
         expected_postals = postals
@@ -192,13 +284,25 @@ def build_score_batch(
             )
             continue
 
-        records = [
+        ready_gdf = ready_rows_to_gdf(chunk)
+        scored_records = [
             json_safe_score_record(record)
-            for record in score_chunker(chunk, context, include_geometry, None)
+            for record in score_chunker(ready_gdf, context, include_geometry, None)
         ]
+        scored_by_postal = {str(record["postal"]): record for record in scored_records}
+        records = []
+        for _, row in chunk.iterrows():
+            postal = str(row["postal_code"])
+            if postal in scored_by_postal:
+                records.append(scored_by_postal[postal])
+            else:
+                records.append(not_yet_scored_record(row, postal_universe_path, data_as_of))
         bytes_written = write_json(path, records)
         report["chunks_written"] += 1
         report["records_written"] += len(records)
+        report["not_yet_scored_records_written"] += sum(
+            1 for record in records if record.get("state") == NOT_YET_SCORED
+        )
         report["chunks"].append(
             {
                 "index": chunk_index,

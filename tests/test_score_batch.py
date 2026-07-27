@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import pandas as pd
@@ -11,6 +12,7 @@ from pipeline.score_batch import (
     read_chunk_postals,
     validate_full_batch_gate,
 )
+from pipeline.scoring import NOT_YET_SCORED
 
 
 def write_universe(path: Path) -> None:
@@ -124,6 +126,43 @@ def test_score_batch_writes_chunks_and_manifest_then_resumes(tmp_path: Path):
     assert resumed["chunks_written"] == 0
     assert resumed["chunks_skipped_existing"] == 2
     assert resumed["records_written"] == 3
+
+
+def test_full_score_batch_emits_not_yet_records_for_unresolved_postals(tmp_path: Path, monkeypatch):
+    universe_path = tmp_path / "postal_universe.parquet"
+    output_dir = tmp_path / "scores"
+    write_universe(universe_path)
+    monkeypatch.setattr(
+        "pipeline.score_batch.validate_full_batch_gate",
+        lambda **_kwargs: (True, {"ok": True, "summary": {}}, []),
+    )
+    monkeypatch.setattr(
+        "pipeline.score_batch.load_manifest",
+        lambda: {"generated_at": "2026-07-28T00:00:00+00:00"},
+    )
+
+    ok, report = build_score_batch(
+        postal_universe_path=universe_path,
+        output_dir=output_dir,
+        full_batch=True,
+        confirm_full_batch=True,
+        chunk_size=4,
+        context_loader=fake_context_loader,
+        score_chunker=fake_score_chunker,
+    )
+
+    assert ok, report
+    assert report["selected_postals"] == 4
+    assert report["ready_postals_selected"] == 3
+    assert report["unscored_postals_selected"] == 1
+    assert report["records_written"] == 4
+    assert report["not_yet_scored_records_written"] == 1
+
+    records = json.loads(Path(report["chunks"][0]["path"]).read_text(encoding="utf-8"))
+    unresolved = next(record for record in records if record["postal"] == "000002")
+    assert unresolved["state"] == NOT_YET_SCORED
+    assert unresolved["total"] is None
+    assert unresolved["provenance"]["reason"] == "missing_coordinates_after_bounded_geocode"
 
 
 def test_score_batch_dry_run_does_not_create_outputs(tmp_path: Path):
