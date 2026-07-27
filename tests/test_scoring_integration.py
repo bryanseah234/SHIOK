@@ -143,6 +143,42 @@ def test_record_assembly_marks_missing_bus_data_partial_without_fabricating_subs
     assert record["exposure_gaps"][0]["len_m"] == 160.0
 
 
+def test_record_assembly_scores_real_zero_bus_as_zero_not_partial():
+    candidate = CandidateNode(
+        node_type="mrt_lrt_exit",
+        name="TEST MRT STATION Exit 1",
+        station_name="TEST MRT STATION",
+        exit_code="Exit 1",
+        graph_node=(100.0, 0.0),
+        straight_line_m=300.0,
+        snap_distance_m=2.0,
+    )
+    route_result = {
+        "routing_type": "sheltered",
+        "length_m": 300.0,
+        "covered_m": 300.0,
+        "covered_ratio": 1.0,
+        "shortest_length_m": 300.0,
+        "shortest_covered_ratio": 1.0,
+        "path_edges": [],
+    }
+
+    candidate_score = score_candidate_route(
+        candidate,
+        route_result,
+        PARAMS,
+        WEIGHTS,
+        crossing_count=0,
+        bus_expected_wait_min=None,
+        bus_data_available=True,
+    )
+    record = assemble_score_record("123456", [candidate_score], None, {})
+
+    assert record["state"] == "SCORED"
+    assert record["subscores"]["bus"] == 0.0
+    assert record["total"] == 80.0
+
+
 def test_record_assembly_selects_highest_scoring_candidate():
     low = {
         "total": 62.0,

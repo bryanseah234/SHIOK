@@ -13,6 +13,8 @@ import httpx
 import yaml  # type: ignore[import-untyped]
 from dotenv import load_dotenv
 
+from pipeline.bus import fetch_paginated, write_api_records_to_raw
+
 load_dotenv()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -211,13 +213,17 @@ def run_check(sources: dict[str, Any]) -> int:
                     error_count += 1
                     print(f"[{key}] {name}: Error discovering url: {e}")
                     continue
-            except httpx.HTTPError as e:
-                if getattr(e, "response", None) and e.response.status_code == 401:
+            except httpx.HTTPStatusError as e:
+                if e.response.status_code == 401:
                     blocked_count += 1
                     print(
                         f"[{key}] {name}: BLOCKED — owner key pending (401 Unauthorized from DataMall)"
                     )
                     continue
+                error_count += 1
+                print(f"[{key}] {name}: Error discovering url: {e}")
+                continue
+            except httpx.HTTPError as e:
                 error_count += 1
                 print(f"[{key}] {name}: Error discovering url: {e}")
                 continue
@@ -313,7 +319,22 @@ def run_ingest(sources: dict[str, Any]) -> int:
         kind = spec.get("kind")
         name = spec.get("name")
 
-        if kind == "datamall_geospatial_listing":
+        if kind == "datamall_api_paginated":
+            endpoint = spec.get("endpoint", "")
+            if not endpoint:
+                continue
+            try:
+                records = fetch_paginated(endpoint)
+                sha256 = write_api_records_to_raw(key, name, endpoint, records)
+                manifest = load_manifest()
+                manifest_sources = manifest.setdefault("sources", {})
+                print(
+                    f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{key}.json ({len(records)} records)"
+                )
+            except (httpx.HTTPError, ValueError, OSError) as e:
+                print(f"[{key}] Error ingesting {name}: {e}")
+
+        elif kind == "datamall_geospatial_listing":
             keyword = spec.get("search_keyword", "")
             current_entry = manifest_sources.get(key, {})
             try:

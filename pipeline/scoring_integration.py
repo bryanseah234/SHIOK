@@ -17,6 +17,7 @@ from pyproj import Transformer
 from shapely.geometry import MultiLineString
 from shapely.ops import linemerge, unary_union
 
+from pipeline.bus import BusConnectivityIndex, BusConnectivityResult
 from pipeline.routing import prepare_edges_for_routing, route_worker
 from pipeline.scoring import (
     NO_TRANSIT_IN_RANGE,
@@ -414,7 +415,11 @@ def score_candidate_route(
         "total": composite,
         "subscores": {
             "access": round_nullable_score(access),
-            "bus": round_nullable_score(bus) if bus_data_available else None,
+            "bus": (
+                0.0
+                if bus_data_available and bus == NO_TRANSIT_IN_RANGE
+                else round_nullable_score(bus) if bus_data_available else None
+            ),
             "rain": round_nullable_score(rain),
             "heat": round_nullable_score(heat),
             "crossing": round_nullable_score(crossing),
@@ -461,6 +466,9 @@ def build_provenance(
                 "covered_linkway",
                 "overhead_bridge_underpass",
                 "traffic_signals",
+                "bus_stops",
+                "bus_services",
+                "bus_routes",
             }
         },
         "routing": {
@@ -536,13 +544,38 @@ def score_postal_row(
     params: dict[str, Any],
     weights: dict[str, float],
     crossing_counter: CrossingCounter,
+    bus_index: BusConnectivityIndex | None = None,
 ) -> dict[str, Any]:
     postal = str(postal_row["postal_code"])
     origin_node, origin_snap_m = nearest_graph_node(postal_row.geometry, nodes, node_xy)
     candidates = select_mrt_exit_candidates(postal_row.geometry, mrt_exits_gdf, nodes, node_xy)
-    provenance = build_provenance(params, crossing_counter, bus_data_available=False)
+    bus_data_available = bus_index is not None
+    provenance = build_provenance(params, crossing_counter, bus_data_available=bus_data_available)
     provenance["origin_snap_distance_m"] = round(origin_snap_m, 1)
     data_as_of = load_manifest().get("generated_at")
+
+    bus_result: BusConnectivityResult | None = None
+    if bus_index is not None:
+        bus_result = bus_index.expected_wait_for_postal(
+            postal_row.geometry,
+            origin_node,
+            edges_dict,
+            float(params["bus_connectivity"]["routed_max_m"]),
+        )
+        provenance["bus_connectivity"] = {
+            "expected_wait_min": (
+                round(bus_result.expected_wait_min, 3)
+                if bus_result.expected_wait_min is not None
+                else None
+            ),
+            "routed_stop_count": bus_result.routed_stop_count,
+            "service_count": bus_result.service_count,
+            "nearest_routed_m": (
+                round(bus_result.nearest_routed_m, 1)
+                if bus_result.nearest_routed_m is not None
+                else None
+            ),
+        }
 
     if not candidates:
         return assemble_score_record(postal, [], data_as_of, provenance)
@@ -574,7 +607,8 @@ def score_postal_row(
                 params,
                 weights,
                 crossing_count,
-                bus_data_available=False,
+                bus_expected_wait_min=bus_result.expected_wait_min if bus_result else None,
+                bus_data_available=bus_data_available,
             )
         )
 
@@ -589,6 +623,7 @@ def score_postals(
     _, edges_dict, nodes, node_xy = load_network_inputs()
     mrt_exits_gdf = load_mrt_exits()
     crossing_counter = CrossingCounter.from_raw_data(params)
+    bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
 
     postal_limit = None if postal_codes else max(limit * 4, limit)
     postal_gdf = load_postal_points(postal_codes=postal_codes, limit=postal_limit)
@@ -605,6 +640,7 @@ def score_postals(
                 params,
                 weights,
                 crossing_counter,
+                bus_index,
             )
         )
         if postal_codes is None and len(records) >= limit:

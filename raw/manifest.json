@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T14:39:38.668919+00:00",
+  "generated_at": "2026-07-27T12:52:08.469093+00:00",
   "sources": {
     "building_points": {
       "bytes": 57012074,
@@ -9,6 +9,33 @@
       "sha256": "7c987511548de3a82da403cabca02702031e02ade8703a9e401417883dfeb702",
       "source_name": "HDB Existing Building",
       "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_16b157c52ed637edd6ba1232e026258d.geojson?AWSAccessKeyId=ASIAU7LWPY2WHOV6TT2F&Expires=1785055836&Signature=XIg5fM%2FwtbOlWMorLXoIkBkWLOU%3D&X-Amzn-Trace-Id=Root%3D1-6a65bc4c-56ceeaa43dc7bd2a59c228db%3BParent%3D73e76f52680ebe9e%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22HDBExistingBuilding.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaDmFwLXNvdXRoZWFzdC0xIkgwRgIhANuRjFuJew2biTgP1bhhWySwZet4ef%2F%2BGw5yuv2ABawrAiEA1YfWQ5B%2BlZbhUG%2BK4yD0bYOHGpyeE%2B7BRIswMunVzOcqtQQIMRAEGgwzNDIyMzUyNjg3ODAiDCVhN1S0vwXsX%2Fho1iqSBGqsu4yERlirrAfrftsTI16mDRo8%2FUgRGbmDMiX7IUpgDHh%2FBtGHRnbsCvVK2NJhwBuiW%2FF5HP92Rn9%2BGz%2FZdkeZWB75HBXK3ni6sFJ6YGtlSQzBHgUsk5UCEbNKqpAKmy23P9Q%2BlaGaudKu8DABye505IU7YDoNyMTVnvBA%2B98kxcSiHs1rcX095PVunnIeI3iy6s1NNESZDdGUfwFiVc7euF8Mx9g2TxgdrEH6LlX329%2FcYAxk7pgpDQabGsJ8sZnLNiusTt%2F%2BbHRR7hPxuDeU%2BXblnB0Ri3uaPKH7h%2FkSORlzMl8mJkTpk9Ll%2Frkw8dVE9Doa5pHrTnqOlEDfJybVsThtG4WO7v3mm6KjNqwyAGFrOirJNPRHu8xFV0c27lkerTjY9noKdocK0qO3t58aSgzwh7SBUIKDYXdeDMITOHoBiu2isxWvoEI%2FMvxIlGeaeM9q7%2BSOL5Vt7HJBoIHiLIZaqZtpEooRSPc%2BLrIfw2hbtGLYE1jWE0olmSgW5hfSPBuiZNXkx26gfO5FIUR0%2FmwpHGQw2Bh9fgdOq%2BQI5z5oaHRCUv5wM9LcGLm2TOssVpYs509gh%2FWWf4LacLJldiNFhs4tDRTfrpt5vLDwdrhJzxsGdzdAkDseNqT7q5kGERZSH8XdkIQ%2F086xCC0MhXAIIZasVv7SoHpBD8uK0xEmWvvRXJLYBnFfSOYo854YMMT3ltMGOqEBB8%2B%2BWz8%2B8ACcNU1ZS9cI59UKws0xuL3WUKqd%2BViT%2F49WfA%2FuiVaER8T9%2Fbkdw3Xz0Mb0ottaZ2E2mLSpguhA%2BRbu5D7jfs9oldJHKN1uSMhA4Xh6PHbE1plFdbAb6axLzkFW0qP%2F%2Bpo%2FcjvueBKQH13DgcED2%2F4b0iJOOC75k0iFXSLns25djRxAYTa2Y1XECet0Zb%2BHdu%2FgUXfSzDrkWkc%3D"
+    },
+    "bus_routes": {
+      "bytes": 6211748,
+      "etag": null,
+      "fetched_at": "2026-07-27T12:52:05.789605+00:00",
+      "last_modified": null,
+      "sha256": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+      "source_name": "Bus Routes",
+      "url_as_discovered": "https://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
+    },
+    "bus_services": {
+      "bytes": 185358,
+      "etag": null,
+      "fetched_at": "2026-07-27T12:52:06.210491+00:00",
+      "last_modified": null,
+      "sha256": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+      "source_name": "Bus Services",
+      "url_as_discovered": "https://datamall2.mytransport.sg/ltaodataservice/BusServices"
+    },
+    "bus_stops": {
+      "bytes": 719050,
+      "etag": null,
+      "fetched_at": "2026-07-27T12:52:08.469093+00:00",
+      "last_modified": null,
+      "sha256": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+      "source_name": "Bus Stops",
+      "url_as_discovered": "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
     },
     "covered_linkway": {
       "bytes": 1096785,
