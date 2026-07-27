@@ -4,6 +4,7 @@ import yaml
 from pathlib import Path
 from multiprocessing import Pool, cpu_count
 import geopandas as gpd
+from shapely import wkt
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = PROJECT_ROOT / "pipeline" / "config" / "params.yaml"
@@ -12,6 +13,52 @@ CONFIG_PATH = PROJECT_ROOT / "pipeline" / "config" / "params.yaml"
 def load_params():
     with open(CONFIG_PATH, "r") as f:
         return yaml.safe_load(f)
+
+
+def prepare_edges_for_routing(edges_df):
+    """Normalize edge geometry, endpoints, and metre lengths for routing."""
+    edges_df = edges_df.copy()
+
+    if "geometry" in edges_df.columns:
+        edges_df["geometry"] = edges_df["geometry"].apply(
+            lambda geom: wkt.loads(geom) if isinstance(geom, str) else geom
+        )
+
+        def get_coords(geom):
+            if geom is not None and hasattr(geom, "is_empty") and not geom.is_empty:
+                coords = geom.coords
+                return (
+                    (round(coords[0][0], 2), round(coords[0][1], 2)),
+                    (round(coords[-1][0], 2), round(coords[-1][1], 2)),
+                )
+            return None, None
+
+        coords = edges_df["geometry"].apply(get_coords)
+        edges_df["u"] = [coord[0] for coord in coords]
+        edges_df["v"] = [coord[1] for coord in coords]
+        edges_df = edges_df.dropna(subset=["u", "v"])
+    else:
+        edges_df = edges_df[(edges_df["u"] != -1) & (edges_df["v"] != -1)]
+
+    if "length_m" not in edges_df.columns:
+        edges_df["length_m"] = pd.NA
+
+    length_m = pd.to_numeric(edges_df["length_m"], errors="coerce")
+    if "length" in edges_df.columns:
+        length_m = length_m.fillna(pd.to_numeric(edges_df["length"], errors="coerce"))
+    if "geometry" in edges_df.columns:
+        geom_lengths = edges_df["geometry"].apply(
+            lambda geom: (
+                geom.length
+                if geom is not None and hasattr(geom, "is_empty") and not geom.is_empty
+                else pd.NA
+            )
+        )
+        length_m = length_m.fillna(pd.to_numeric(geom_lengths, errors="coerce"))
+
+    edges_df["length_m"] = length_m.fillna(1.0).clip(lower=0.0)
+    edges_df["is_covered"] = edges_df["is_covered"].fillna(0).astype(int)
+    return edges_df
 
 
 def build_graph(edges_df):
@@ -36,11 +83,14 @@ def build_graph(edges_df):
 def route_worker(args):
     """Worker function for multiprocessing."""
     edges_dict, od_pairs, shelter_lambda, detour_budget = args
-    edges_df = pd.DataFrame(edges_dict)
+    edges_df = prepare_edges_for_routing(pd.DataFrame(edges_dict))
 
     g, node_map, rev_map = build_graph(edges_df)
+    component_membership = g.connected_components(mode="weak").membership
 
-    g.es["sheltered_cost"] = g.es["length_m"] * (1.0 + shelter_lambda * (1.0 - g.es["is_covered"]))
+    g.es["sheltered_cost"] = [
+        L * (1.0 + shelter_lambda * (1.0 - c)) for L, c in zip(g.es["length_m"], g.es["is_covered"])
+    ]
 
     results = []
 
@@ -48,8 +98,13 @@ def route_worker(args):
         if origin not in node_map:
             continue
         origin_idx = node_map[origin]
+        origin_component = component_membership[origin_idx]
 
-        valid_destinations = [d for d in destinations if d in node_map]
+        valid_destinations = [
+            d
+            for d in destinations
+            if d in node_map and component_membership[node_map[d]] == origin_component
+        ]
         dest_indices = [node_map[d] for d in valid_destinations]
 
         if not dest_indices:
@@ -85,6 +140,9 @@ def route_worker(args):
             final_length = sum(g.es[e]["length_m"] for e in final_epath)
             final_covered = sum(g.es[e]["length_m"] for e in final_epath if g.es[e]["is_covered"])
             cov_short = sum(g.es[e]["length_m"] for e in epath_short if g.es[e]["is_covered"])
+            sheltered_length = (
+                sum(g.es[e]["length_m"] for e in epath_shelt) if epath_shelt else None
+            )
 
             # Reconstruct geometry if available
             path_geom = None
@@ -99,6 +157,17 @@ def route_worker(args):
                     merged = linemerge(MultiLineString(lines))
                     path_geom = merged
 
+            path_edges = []
+            if "geometry" in g.edge_attributes():
+                for edge_id in final_epath:
+                    path_edges.append(
+                        {
+                            "length_m": float(g.es[edge_id]["length_m"]),
+                            "is_covered": bool(g.es[edge_id]["is_covered"]),
+                            "geometry": g.es[edge_id]["geometry"],
+                        }
+                    )
+
             results.append(
                 {
                     "origin": origin,
@@ -109,7 +178,9 @@ def route_worker(args):
                     "covered_ratio": final_covered / final_length if final_length > 0 else 0.0,
                     "shortest_length_m": len_short,
                     "shortest_covered_ratio": cov_short / len_short if len_short > 0 else 0.0,
+                    "sheltered_length_m": sheltered_length,
                     "geometry": path_geom,
+                    "path_edges": path_edges,
                 }
             )
 
@@ -123,9 +194,8 @@ def run_routing_batch(network_path, od_pairs):
 
     print(f"Loading network from {network_path}...")
     edges_df = pd.read_parquet(network_path)
-    edges_df = edges_df[(edges_df["u"] != -1) & (edges_df["v"] != -1)]
+    edges_df = prepare_edges_for_routing(edges_df)
 
-    # We include geometry for debug rendering!
     cols = ["u", "v", "length_m", "is_covered"]
     if "geometry" in edges_df.columns:
         cols.append("geometry")

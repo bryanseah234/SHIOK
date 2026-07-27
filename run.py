@@ -6,6 +6,7 @@ Tasks: check | ingest | network | route | score | export | validate | publish | 
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
+
 import argparse
 import subprocess
 import sys
@@ -43,6 +44,10 @@ def run_task(name: str, extra: list[str]) -> int:
         return res.returncode
     if name == "network":
         cmd = [sys.executable, "-m", "pipeline.network"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
+    if name == "score":
+        cmd = [sys.executable, "-m", "pipeline.scoring_integration"] + extra
         res = subprocess.run(cmd)
         return res.returncode
 
