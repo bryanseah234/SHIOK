@@ -153,6 +153,35 @@ def load_postal_points(
     return gdf.to_crs("EPSG:3414")
 
 
+def load_postal_universe_points(
+    universe_path: Path,
+    postal_codes: list[str] | None = None,
+    limit: int | None = None,
+) -> gpd.GeoDataFrame:
+    if not universe_path.is_file():
+        raise FileNotFoundError(f"postal universe not found: {universe_path}")
+
+    rows = pd.read_parquet(universe_path)
+    rows["postal_code"] = rows["postal_code"].astype(str).str.zfill(6)
+    rows = rows[rows["status"] == "READY_TO_SCORE"].copy()
+
+    if postal_codes:
+        normalized = [str(postal).zfill(6) for postal in postal_codes]
+        order = {postal: index for index, postal in enumerate(normalized)}
+        rows = rows[rows["postal_code"].isin(order)].copy()
+        rows["order"] = rows["postal_code"].map(order)
+        rows = rows.sort_values("order", kind="stable").drop(columns=["order"])
+    elif limit is not None:
+        rows = rows.sort_values("postal_code", kind="stable").head(int(limit))
+
+    rows = rows.dropna(subset=["x", "y"]).copy()
+    return gpd.GeoDataFrame(
+        rows,
+        geometry=gpd.points_from_xy(rows["x"], rows["y"]),
+        crs="EPSG:3414",
+    )
+
+
 def load_mrt_exits() -> gpd.GeoDataFrame:
     path = raw_file_from_manifest("mrt_lrt_exits", "mrt_lrt_exits.geojson")
     if path is None:
@@ -459,9 +488,16 @@ def build_provenance(
     params: dict[str, Any],
     crossing_counter: CrossingCounter,
     bus_data_available: bool,
+    network_path: Path = NETWORK_PATH,
+    postal_universe_path: Path | None = None,
 ) -> dict[str, Any]:
     manifest = load_manifest()
     sources = manifest.get("sources", {})
+    network_label = (
+        str(network_path.relative_to(PROJECT_ROOT))
+        if network_path.is_relative_to(PROJECT_ROOT)
+        else str(network_path)
+    )
     return {
         "manifest": "raw/manifest.json",
         "source_hashes": {
@@ -480,10 +516,20 @@ def build_provenance(
             }
         },
         "routing": {
-            "network": "processed/network.parquet",
+            "network": network_label,
             "shelter_lambda": params["shelter_lambda"],
             "detour_budget": params["detour_budget"],
         },
+        "postal_universe": (
+            str(postal_universe_path.relative_to(PROJECT_ROOT))
+            if postal_universe_path is not None
+            and postal_universe_path.is_relative_to(PROJECT_ROOT)
+            else (
+                str(postal_universe_path)
+                if postal_universe_path is not None
+                else "raw/geocode_cache.db"
+            )
+        ),
         "subscore_status": {
             "access": "real_routed_shortest_distance",
             "bus": "real" if bus_data_available else "pending_lta_datamall_account_key",
@@ -569,12 +615,20 @@ def score_postal_row(
     crossing_counter: CrossingCounter,
     bus_index: BusConnectivityIndex | None = None,
     include_geometry: bool = False,
+    network_path: Path = NETWORK_PATH,
+    postal_universe_path: Path | None = None,
 ) -> dict[str, Any]:
     postal = str(postal_row["postal_code"])
     origin_node, origin_snap_m = nearest_graph_node(postal_row.geometry, nodes, node_xy)
     candidates = select_mrt_exit_candidates(postal_row.geometry, mrt_exits_gdf, nodes, node_xy)
     bus_data_available = bus_index is not None
-    provenance = build_provenance(params, crossing_counter, bus_data_available=bus_data_available)
+    provenance = build_provenance(
+        params,
+        crossing_counter,
+        bus_data_available=bus_data_available,
+        network_path=network_path,
+        postal_universe_path=postal_universe_path,
+    )
     provenance["origin_snap_distance_m"] = round(origin_snap_m, 1)
     data_as_of = load_manifest().get("generated_at")
 
@@ -644,17 +698,26 @@ def score_postal_row(
 
 def score_postals(
     postal_codes: list[str] | None = None,
-    limit: int = 5,
+    limit: int | None = 5,
     include_geometry: bool = False,
+    network_path: Path = NETWORK_PATH,
+    postal_universe_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     params, weights = load_params_and_weights()
-    _, edges_dict, nodes, node_xy = load_network_inputs()
+    _, edges_dict, nodes, node_xy = load_network_inputs(network_path=network_path)
     mrt_exits_gdf = load_mrt_exits()
     crossing_counter = CrossingCounter.from_raw_data(params)
     bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
 
-    postal_limit = None if postal_codes else max(limit * 4, limit)
-    postal_gdf = load_postal_points(postal_codes=postal_codes, limit=postal_limit)
+    postal_limit = None if postal_codes or limit is None else max(limit * 4, limit)
+    if postal_universe_path is not None:
+        postal_gdf = load_postal_universe_points(
+            postal_universe_path,
+            postal_codes=postal_codes,
+            limit=postal_limit,
+        )
+    else:
+        postal_gdf = load_postal_points(postal_codes=postal_codes, limit=postal_limit)
 
     records: list[dict[str, Any]] = []
     for _, postal_row in postal_gdf.iterrows():
@@ -670,21 +733,85 @@ def score_postals(
                 crossing_counter,
                 bus_index,
                 include_geometry,
+                network_path,
+                postal_universe_path,
             )
         )
-        if postal_codes is None and len(records) >= limit:
+        if postal_codes is None and limit is not None and len(records) >= limit:
             break
     return records
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Score pilot postals on real routed paths.")
+    parser = argparse.ArgumentParser(description="Score postals on real routed paths.")
     parser.add_argument("--postal", action="append", dest="postals", help="Postal code to score")
     parser.add_argument("--limit", type=int, default=5, help="Number of cache postals to score")
+    parser.add_argument("--postal-universe", type=Path, help="processed/postal_universe_*.parquet")
+    parser.add_argument("--network", type=Path, default=NETWORK_PATH)
+    parser.add_argument("--include-geometry", action="store_true")
+    parser.add_argument("--output", type=Path, help="Write score records JSON instead of printing")
+    parser.add_argument(
+        "--full-batch",
+        action="store_true",
+        help="Score all eligible rows from --postal-universe; requires --confirm-full-batch.",
+    )
+    parser.add_argument(
+        "--confirm-full-batch",
+        action="store_true",
+        help="Required with --full-batch after human checkpoint approval.",
+    )
     args = parser.parse_args()
 
-    records = score_postals(postal_codes=args.postals, limit=args.limit)
-    print(json.dumps(records, indent=2, sort_keys=True))
+    if args.full_batch:
+        if not args.confirm_full_batch:
+            print(
+                json.dumps(
+                    {
+                        "ok": False,
+                        "error": "full scoring batch requires --confirm-full-batch after checkpoint approval",
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+            return 1
+        if args.postal_universe is None:
+            print(
+                json.dumps(
+                    {
+                        "ok": False,
+                        "error": "--full-batch requires --postal-universe",
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+            return 1
+
+    records = score_postals(
+        postal_codes=args.postals,
+        limit=None if args.full_batch else args.limit,
+        include_geometry=args.include_geometry,
+        network_path=args.network,
+        postal_universe_path=args.postal_universe,
+    )
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        with open(args.output, "w", encoding="utf-8") as f:
+            json.dump(records, f, indent=2, sort_keys=True)
+        print(
+            json.dumps(
+                {
+                    "ok": True,
+                    "output": str(args.output),
+                    "records": len(records),
+                },
+                indent=2,
+                sort_keys=True,
+            )
+        )
+    else:
+        print(json.dumps(records, indent=2, sort_keys=True))
     return 0
 
 

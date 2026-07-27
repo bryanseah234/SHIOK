@@ -1,11 +1,17 @@
+from pathlib import Path
+
 import geopandas as gpd
 import numpy as np
+import pandas as pd
 from shapely.geometry import LineString, Point
 
 from pipeline.routing import route_worker
 from pipeline.scoring_integration import (
     CandidateNode,
+    CrossingCounter,
     assemble_score_record,
+    build_provenance,
+    load_postal_universe_points,
     score_candidate_route,
     select_mrt_exit_candidates,
 )
@@ -199,6 +205,62 @@ def test_record_assembly_selects_highest_scoring_candidate():
 
     assert record["best_node"]["name"] == "COVERED EXIT"
     assert record["total"] == 75.0
+
+
+def test_load_postal_universe_points_filters_ready_rows_and_preserves_requested_order(
+    tmp_path: Path,
+):
+    universe_path = tmp_path / "postal_universe.parquet"
+    pd.DataFrame(
+        [
+            {
+                "postal_code": "000001",
+                "status": "READY_TO_SCORE",
+                "x": 100.0,
+                "y": 200.0,
+            },
+            {
+                "postal_code": "000002",
+                "status": "NEEDS_GEOCODE",
+                "x": None,
+                "y": None,
+            },
+            {
+                "postal_code": "000003",
+                "status": "READY_TO_SCORE",
+                "x": 300.0,
+                "y": 400.0,
+            },
+        ]
+    ).to_parquet(universe_path, index=False)
+
+    points = load_postal_universe_points(
+        universe_path,
+        postal_codes=["000003", "000002", "000001"],
+    )
+
+    assert points.crs.to_epsg() == 3414
+    assert points["postal_code"].tolist() == ["000003", "000001"]
+    assert [(point.x, point.y) for point in points.geometry] == [(300.0, 400.0), (100.0, 200.0)]
+
+
+def test_build_provenance_records_selected_network_and_postal_universe_paths():
+    crossing_counter = CrossingCounter(None, None, eps_m=20.0, min_samples=2)
+
+    provenance = build_provenance(
+        PARAMS,
+        crossing_counter,
+        bus_data_available=True,
+        network_path=Path("processed/network_island.parquet"),
+        postal_universe_path=Path("processed/postal_universe_candidate_full_registered.parquet"),
+    )
+
+    assert provenance["routing"]["network"] == "processed\\network_island.parquet"
+    assert (
+        provenance["postal_universe"]
+        == "processed\\postal_universe_candidate_full_registered.parquet"
+    )
+    assert provenance["subscore_status"]["bus"] == "real"
 
 
 def test_route_worker_coalesces_length_column_into_length_m():
