@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: check | ingest | network | network-qa | route | score | postal-universe | export | validate | publish | test | shell
+Tasks: batch-plan | check | ingest | network | network-qa | route | score | postal-universe | export | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -21,6 +21,7 @@ STUBS = {
     "network-qa": "validate conflation QA report acceptance gates",
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
     "score": "apply pipeline/config/weights.yaml (T1.4)",
+    "batch-plan": "dry-run full postal geocode/scoring batch plan (checkpoint C)",
     "postal-universe": "build deterministic postal-code universe candidates",
     "export": "scores/{area}.json + geom/h3/{cell}.json + manifest (T1.5)",
     "validate": "golden set + OneMap comparison; blocks publish (T1.7)",
@@ -31,6 +32,10 @@ STUBS = {
 
 
 def run_task(name: str, extra: list[str]) -> int:
+    if name == "batch-plan":
+        cmd = [sys.executable, "-m", "pipeline.batch_plan"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
     if name == "publish":
         cmd = [sys.executable, "-m", "pipeline.publish"] + extra
         res = subprocess.run(cmd)
