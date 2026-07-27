@@ -27,6 +27,7 @@ export async function fetchManifest(): Promise<Manifest> {
 
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
 let _areaIndex: Record<string, string[]> | null = null;
+let _geomIndex: Record<string, string[]> | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
@@ -67,15 +68,37 @@ export async function fetchScoreForPostal(
 // ---------------------------------------------------------------------------
 export async function fetchGeomForPostal(
   postal: string,
-  lat: number,
-  lng: number
+  lat?: number,
+  lng?: number
 ): Promise<PostalGeom | null> {
-  const cell = latLngToCell(lat, lng, 8);
-  const res = await fetch(`${DATA_BASE}geom/h3/${cell}.json`);
-  if (!res.ok) {
-    console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
-    return null;
+  if (typeof lat === "number" && typeof lng === "number") {
+    const cell = latLngToCell(lat, lng, 8);
+    const res = await fetch(`${DATA_BASE}geom/h3/${cell}.json`);
+    if (!res.ok) {
+      console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
+      return null;
+    }
+    const records: PostalGeom[] = await res.json();
+    return records.find((r) => r.postal === postal) ?? null;
   }
-  const records: PostalGeom[] = await res.json();
-  return records.find((r) => r.postal === postal) ?? null;
+
+  if (!DATA_BASE.includes("/mock/")) return null;
+
+  if (!_geomIndex) {
+    const res = await fetch(`${DATA_BASE}geom/index.json`);
+    if (!res.ok) return null;
+    _geomIndex = await res.json();
+  }
+
+  for (const [cell, children] of Object.entries(_geomIndex ?? {})) {
+    const shardIds = Array.from(new Set([cell, ...children]));
+    for (const shardId of shardIds) {
+      const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
+      if (!res.ok) continue;
+      const records: PostalGeom[] = await res.json();
+      const found = records.find((r) => r.postal === postal);
+      if (found) return found;
+    }
+  }
+  return null;
 }
