@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: check | ingest | network | route | score | postal-universe | export | validate | publish | test | shell
+Tasks: check | ingest | network | network-qa | route | score | postal-universe | export | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -18,6 +18,7 @@ STUBS = {
     "check": "fetch listings, hash, diff vs manifest (T0.3)",
     "ingest": "download changed sources to raw/ (T0.3)",
     "network": "build conflated graph + QA report (T1.1)",
+    "network-qa": "validate conflation QA report acceptance gates",
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
     "score": "apply pipeline/config/weights.yaml (T1.4)",
     "postal-universe": "build deterministic postal-code universe candidates",
@@ -47,6 +48,10 @@ def run_task(name: str, extra: list[str]) -> int:
         return res.returncode
     if name == "network":
         cmd = [sys.executable, "-m", "pipeline.network"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
+    if name == "network-qa":
+        cmd = [sys.executable, "-m", "pipeline.network_qa"] + extra
         res = subprocess.run(cmd)
         return res.returncode
     if name == "score":
