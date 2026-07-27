@@ -6,6 +6,7 @@ from pipeline.export import (
     encode_polyline,
     export_static_artifacts,
     slugify_area,
+    validate_export_batch_args,
     validate_static_artifacts,
 )
 
@@ -77,3 +78,35 @@ def test_validate_rejects_missing_required_artifacts(tmp_path: Path):
 
     assert not ok
     assert "missing required file: manifest.json" in report["errors"]
+
+
+def test_validate_export_batch_args_blocks_full_batch_without_checkpoint_confirmation():
+    errors = validate_export_batch_args(
+        full_batch=True,
+        confirm_full_batch=False,
+        postal_universe_path=Path("processed/postal_universe_official_current.parquet"),
+    )
+
+    assert errors == [
+        "full export batch requires --confirm-full-batch after checkpoint approval",
+    ]
+
+
+def test_validate_export_batch_args_requires_postal_universe_for_full_batch():
+    errors = validate_export_batch_args(
+        full_batch=True,
+        confirm_full_batch=True,
+        postal_universe_path=None,
+    )
+
+    assert errors == ["--full-batch requires --postal-universe"]
+
+
+def test_validate_export_batch_args_accepts_non_batch_default():
+    errors = validate_export_batch_args(
+        full_batch=False,
+        confirm_full_batch=False,
+        postal_universe_path=None,
+    )
+
+    assert errors == []

@@ -19,7 +19,7 @@ from shapely.geometry import MultiLineString, Point
 from shapely.ops import linemerge
 
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
-from pipeline.scoring_integration import raw_file_from_manifest, score_postals
+from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EXPORT_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated"
@@ -450,6 +450,22 @@ def validate_static_artifacts(
     return not errors, report
 
 
+def validate_export_batch_args(
+    *,
+    full_batch: bool,
+    confirm_full_batch: bool,
+    postal_universe_path: Path | None,
+) -> list[str]:
+    errors: list[str] = []
+    if not full_batch:
+        return errors
+    if not confirm_full_batch:
+        errors.append("full export batch requires --confirm-full-batch after checkpoint approval")
+    if postal_universe_path is None:
+        errors.append("--full-batch requires --postal-universe")
+    return errors
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Export or validate static web data artifacts.")
     subparsers = parser.add_subparsers(dest="action", required=True)
@@ -458,16 +474,48 @@ def main() -> int:
     export_parser.add_argument("--postal", action="append", dest="postals")
     export_parser.add_argument("--limit", type=int, default=5)
     export_parser.add_argument("--output", type=Path, default=DEFAULT_EXPORT_DIR)
+    export_parser.add_argument("--postal-universe", type=Path)
+    export_parser.add_argument("--network", type=Path, default=NETWORK_PATH)
+    export_parser.add_argument(
+        "--full-batch",
+        action="store_true",
+        help="Export all eligible rows from --postal-universe; requires --confirm-full-batch.",
+    )
+    export_parser.add_argument(
+        "--confirm-full-batch",
+        action="store_true",
+        help="Required with --full-batch after human checkpoint approval.",
+    )
 
     validate_parser = subparsers.add_parser("validate")
     validate_parser.add_argument("--input", type=Path, default=DEFAULT_VALIDATE_DIR)
 
     args = parser.parse_args()
     if args.action == "export":
+        guard_errors = validate_export_batch_args(
+            full_batch=bool(args.full_batch),
+            confirm_full_batch=bool(args.confirm_full_batch),
+            postal_universe_path=args.postal_universe,
+        )
+        if guard_errors:
+            print(
+                json.dumps(
+                    {
+                        "ok": False,
+                        "errors": guard_errors,
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+            return 1
+
         records = score_postals(
             postal_codes=args.postals,
-            limit=int(args.limit),
+            limit=None if args.full_batch else int(args.limit),
             include_geometry=True,
+            network_path=args.network,
+            postal_universe_path=args.postal_universe,
         )
         report = export_static_artifacts(records, output_dir=args.output)
         print(json.dumps(report, indent=2, sort_keys=True))
