@@ -12,12 +12,12 @@ def main() -> int:
     parser.add_argument(
         "--area",
         default="pilot",
-        choices=["pilot"],
-        help="Network scope to build. Island-wide support is not implemented yet.",
+        choices=["pilot", "island"],
+        help="Network scope to build.",
     )
-    parser.parse_args()
+    args = parser.parse_args()
 
-    run_build()
+    run_build(args.area)
     return 0
 
 

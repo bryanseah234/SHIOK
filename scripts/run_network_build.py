@@ -22,6 +22,7 @@ PROCESSED_DIR = PROJECT_ROOT / "processed"
 QA_DIR.mkdir(exist_ok=True, parents=True)
 PROCESSED_DIR.mkdir(exist_ok=True, parents=True)
 PILOT_AREAS = ["Toa Payoh", "Bukit Timah", "Downtown Core"]
+VALID_SCOPES = {"pilot", "island"}
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -29,6 +30,13 @@ def find_raw_file(pattern: str) -> Path | None:
         if path.is_file():
             return path
     return None
+
+
+def require_raw_file(pattern: str) -> Path:
+    path = find_raw_file(pattern)
+    if path is None:
+        raise FileNotFoundError(f"raw file not found: {pattern}")
+    return path
 
 
 def extract_longest_linestring(geom):
@@ -58,19 +66,43 @@ def get_skeleton(poly):
         return LineString([p1, furthest])
 
 
-def run_build():
+def selected_planning_areas(
+    pa_gdf: gpd.GeoDataFrame, scope: str
+) -> tuple[gpd.GeoDataFrame, list[str]]:
+    if scope == "pilot":
+        selected = pa_gdf[
+            pa_gdf["PLN_AREA_N"].str.upper().isin([pa.upper() for pa in PILOT_AREAS])
+        ].copy()
+        area_names = PILOT_AREAS
+    elif scope == "island":
+        selected = pa_gdf.copy()
+        area_names = sorted(str(name) for name in selected["PLN_AREA_N"].dropna().unique())
+    else:
+        raise ValueError(f"unknown network scope: {scope}")
+
+    return selected, area_names
+
+
+def run_build(scope: str = "pilot"):
+    if scope not in VALID_SCOPES:
+        raise ValueError(f"unknown network scope: {scope}")
+
     QA_DIR.mkdir(exist_ok=True)
+    print(f"Building pedestrian network scope: {scope}")
+    qa_path = QA_DIR / f"conflation_qa_{scope}.json"
+    debug_path = QA_DIR / f"{scope}_debug.geojson"
+    network_path = PROCESSED_DIR / (
+        "network.parquet" if scope == "pilot" else "network_island.parquet"
+    )
 
     # Load boundaries
-    boundary_path = find_raw_file("planning_area_boundary.geojson")
+    boundary_path = require_raw_file("planning_area_boundary.geojson")
     pa_gdf = gpd.read_file(boundary_path).to_crs(epsg=3414)
-    pa_boundary = pa_gdf[
-        pa_gdf["PLN_AREA_N"].str.upper().isin([pa.upper() for pa in PILOT_AREAS])
-    ].copy()
+    pa_boundary, area_names = selected_planning_areas(pa_gdf, scope)
     union_poly = pa_boundary.geometry.union_all().buffer(500)
 
     # Load LTA linkways
-    zip_path = find_raw_file("covered_linkway.zip")
+    zip_path = require_raw_file("covered_linkway.zip")
     tmp_dir = Path(tempfile.mkdtemp())
     with zipfile.ZipFile(zip_path, "r") as z:
         z.extractall(tmp_dir)
@@ -81,7 +113,7 @@ def run_build():
     )
 
     # Load OSM
-    osm_path = find_raw_file("*.osm.pbf")
+    osm_path = require_raw_file("*.osm.pbf")
     bbox_poly = gpd.GeoSeries([union_poly], crs="EPSG:3414").to_crs(epsg=4326).iloc[0]
     osm = OSM(str(osm_path), bounding_box=bbox_poly)
 
@@ -508,7 +540,7 @@ def run_build():
     print("============================================================")
     per_area_classification = {}
     per_area_match_pct = {}
-    for area in PILOT_AREAS:
+    for area in area_names:
         a_gdf = lta_gdf[lta_gdf["PLN_AREA_N"].str.upper() == area.upper()]
         counts = a_gdf["class"].value_counts()
         count_dict = {
@@ -598,7 +630,7 @@ def run_build():
         "covered_edge_length_m_union": float(covered_union_length),
         "flags": flags,
     }
-    with open(QA_DIR / "conflation_qa_pilot.json", "w") as f:
+    with open(qa_path, "w") as f:
         json.dump(qa_report, f, indent=2)
 
     debug_export = lta_gdf[["geometry", "class"]].copy().to_crs(epsg=4326)
@@ -606,13 +638,13 @@ def run_build():
         se = gpd.GeoDataFrame(synth_edges, crs="EPSG:3414").to_crs(epsg=4326)
         se["class"] = "SYNTHESIZED: " + se["synth_class"]
         debug_export = pd.concat([debug_export, se[["geometry", "class"]]], ignore_index=True)
-    debug_export.to_file(QA_DIR / "pilot_debug.geojson", driver="GeoJSON")
+    debug_export.to_file(debug_path, driver="GeoJSON")
 
     # Save network for routing!
     edges_export = pd.DataFrame(edges_gdf.copy())
     if "geometry" in edges_export.columns:
         edges_export["geometry"] = edges_export["geometry"].apply(lambda x: x.wkt if x else None)
-    edges_export.to_parquet(PROCESSED_DIR / "network.parquet")
+    edges_export.to_parquet(network_path)
 
 
 if __name__ == "__main__":
