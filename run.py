@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | check | ingest | network | network-preflight | network-qa | route | score | score-batch | postal-universe | export | validate | publish | test | shell
+Tasks: batch-plan | check | ingest | network | network-preflight | network-qa | route | score | score-batch | postal-universe | geocode-universe | export | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -10,6 +10,7 @@ Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 import argparse
 import subprocess
 import sys
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,6 +26,7 @@ STUBS = {
     "score-batch": "resumable postal scoring batch runner",
     "batch-plan": "dry-run full postal geocode/scoring batch plan (checkpoint C)",
     "postal-universe": "build deterministic postal-code universe candidates",
+    "geocode-universe": "bounded OneMap geocode fill for source-derived postal gaps",
     "export": "scores/{area}.json + geom/h3/{cell}.json + manifest (T1.5)",
     "validate": "golden set + OneMap comparison; blocks publish (T1.7)",
     "publish": "vercel deploy --prod --archive=tgz (only deploy path)",
@@ -34,54 +36,36 @@ STUBS = {
 
 
 def run_task(name: str, extra: list[str]) -> int:
+    def run_module(module: str, module_args: list[str] | None = None) -> int:
+        cmd = [sys.executable, "-m", module] + (module_args or []) + extra
+        return subprocess.run(cmd, check=False).returncode
+
     if name == "batch-plan":
-        cmd = [sys.executable, "-m", "pipeline.batch_plan"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.batch_plan")
     if name == "publish":
-        cmd = [sys.executable, "-m", "pipeline.publish"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.publish")
     if name == "test":
-        cmd = [sys.executable, "-m", "pytest"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pytest")
     if name in ("check", "ingest"):
-        cmd = [sys.executable, "-m", "pipeline.fetch", name] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.fetch", [name])
     if name == "network":
-        cmd = [sys.executable, "-m", "pipeline.network"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.network")
     if name == "network-preflight":
-        cmd = [sys.executable, "-m", "pipeline.network_preflight"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.network_preflight")
     if name == "network-qa":
-        cmd = [sys.executable, "-m", "pipeline.network_qa"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.network_qa")
     if name == "score":
-        cmd = [sys.executable, "-m", "pipeline.scoring_integration"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.scoring_integration")
     if name == "score-batch":
-        cmd = [sys.executable, "-m", "pipeline.score_batch"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.score_batch")
     if name == "postal-universe":
-        cmd = [sys.executable, "-m", "pipeline.postal_universe"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.postal_universe")
+    if name == "geocode-universe":
+        return run_module("pipeline.geocode_universe")
     if name == "export":
-        cmd = [sys.executable, "-m", "pipeline.export", "export"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.export", ["export"])
     if name == "validate":
-        cmd = [sys.executable, "-m", "pipeline.export", "validate"] + extra
-        res = subprocess.run(cmd)
-        return res.returncode
+        return run_module("pipeline.export", ["validate"])
 
     print(f"not implemented: {name} — {STUBS[name]}")
     return 0
