@@ -1,7 +1,10 @@
 import json
+import math
 import tempfile
 import warnings
 import zipfile
+import builtins
+from collections import Counter
 from pathlib import Path
 
 import geopandas as gpd
@@ -15,6 +18,13 @@ from shapely.ops import nearest_points
 
 warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
+
+def print(*args, **kwargs):  # noqa: A001
+    """Flush long-running build logs when stdout is redirected to a file."""
+    kwargs.setdefault("flush", True)
+    return builtins.print(*args, **kwargs)
+
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "raw"
 QA_DIR = PROJECT_ROOT / "qa"
@@ -23,6 +33,29 @@ QA_DIR.mkdir(exist_ok=True, parents=True)
 PROCESSED_DIR.mkdir(exist_ok=True, parents=True)
 PILOT_AREAS = ["Toa Payoh", "Bukit Timah", "Downtown Core"]
 VALID_SCOPES = {"pilot", "island"}
+DOMINANT_COMPONENTS_BY_SCOPE = {"pilot": 3, "island": 1}
+BUS_NON_TRANSIT_THRESHOLD_M = 250.0
+MRT_NON_TRANSIT_THRESHOLD_M = 1200.0
+ISLAND_OWNER_APPROVED_BRIDGE_THRESHOLD_M = 50.0
+PARK_NON_TRANSIT_AREAS = {
+    "CENTRAL WATER CATCHMENT",
+    "LIM CHU KANG",
+    "MANDAI",
+    "MARINA EAST",
+    "PASIR RIS",
+    "PUNGGOL",
+    "SOUTHERN ISLANDS",
+    "TENGAH",
+}
+PARK_NAME_TOKENS = {
+    "boardwalk",
+    "broadwalk",
+    "central catchment park connector",
+    "circle road",
+    "coney island",
+    "park connector",
+    "treasure hunters",
+}
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -37,6 +70,140 @@ def require_raw_file(pattern: str) -> Path:
     if path is None:
         raise FileNotFoundError(f"raw file not found: {pattern}")
     return path
+
+
+def nearest_distance_and_position(
+    target_gdf: gpd.GeoDataFrame | gpd.GeoSeries,
+    target_sindex,
+    geom,
+    *,
+    max_distance: float | None = None,
+) -> tuple[float, int | None]:
+    if target_gdf.empty or geom is None or geom.is_empty:
+        return float("inf"), None
+
+    indices, distances = target_sindex.nearest(
+        geom,
+        return_all=False,
+        max_distance=max_distance,
+        return_distance=True,
+    )
+    if len(distances) == 0:
+        return float("inf"), None
+
+    position = int(indices[1][0])
+    return float(distances[0]), position
+
+
+def nearest_distance_and_index(
+    target_gdf: gpd.GeoDataFrame | gpd.GeoSeries,
+    target_sindex,
+    geom,
+    *,
+    max_distance: float | None = None,
+) -> tuple[float, object | None]:
+    dist, position = nearest_distance_and_position(
+        target_gdf,
+        target_sindex,
+        geom,
+        max_distance=max_distance,
+    )
+    if position is None:
+        return dist, None
+    return dist, target_gdf.index[position]
+
+
+def nearest_point_on_geometry(
+    target_gdf: gpd.GeoDataFrame | gpd.GeoSeries,
+    target_sindex,
+    point: Point,
+    *,
+    max_distance: float,
+) -> tuple[Point | None, float]:
+    dist, position = nearest_distance_and_position(
+        target_gdf,
+        target_sindex,
+        point,
+        max_distance=max_distance,
+    )
+    if position is None:
+        return None, float("inf")
+
+    target_geom = target_gdf.iloc[position]
+    if hasattr(target_geom, "geometry"):
+        target_geom = target_geom.geometry
+    point_on_target, _ = nearest_points(target_geom, point)
+    return point_on_target, dist
+
+
+def load_transit_reference_points() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
+    bus_path = find_raw_file("bus_stops.json")
+    mrt_path = find_raw_file("mrt_lrt_exits.geojson")
+
+    bus_gdf = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    if bus_path is not None:
+        with open(bus_path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+        rows = payload.get("value", payload) if isinstance(payload, dict) else payload
+        bus_df = pd.DataFrame(rows)
+        if {"Longitude", "Latitude"}.issubset(bus_df.columns):
+            bus_gdf = gpd.GeoDataFrame(
+                bus_df,
+                geometry=gpd.points_from_xy(bus_df["Longitude"], bus_df["Latitude"]),
+                crs="EPSG:4326",
+            ).to_crs(epsg=3414)
+
+    mrt_gdf = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    if mrt_path is not None:
+        mrt_gdf = gpd.read_file(mrt_path).to_crs(epsg=3414)
+
+    return bus_gdf, mrt_gdf
+
+
+def compute_lta_match_ratio(
+    edges_gdf: gpd.GeoDataFrame,
+    lta_gdf: gpd.GeoDataFrame,
+) -> pd.Series:
+    ratios = pd.Series(0.0, index=edges_gdf.index, dtype=float)
+    if edges_gdf.empty or lta_gdf.empty:
+        return ratios
+
+    lta_buffers = gpd.GeoSeries(lta_gdf.geometry.buffer(3.0), crs=lta_gdf.crs)
+    print("Querying edge/linkway buffer intersections...")
+    pairs = lta_buffers.sindex.query(edges_gdf.geometry, predicate="intersects")
+    if pairs.size == 0:
+        return ratios
+
+    pair_df = pd.DataFrame({"edge_pos": pairs[0], "lta_pos": pairs[1]})
+    matched_edges = pair_df["edge_pos"].nunique()
+    print(f"Computing LTA coverage ratios for {matched_edges} candidate edges...")
+
+    for count, (edge_pos, group) in enumerate(pair_df.groupby("edge_pos", sort=False), start=1):
+        if count % 25000 == 0:
+            print(f"  LTA coverage progress: {count}/{matched_edges} candidate edges")
+
+        edge_geom = edges_gdf.geometry.iloc[int(edge_pos)]
+        edge_len = edge_geom.length
+        if edge_len <= 0:
+            continue
+
+        candidate_union = lta_buffers.iloc[group["lta_pos"].to_numpy()].union_all()
+        covered_len = edge_geom.intersection(candidate_union).length
+        ratios.iat[int(edge_pos)] = min(1.0, covered_len / edge_len)
+
+    return ratios
+
+
+def value_counts(series: pd.Series) -> Counter[str]:
+    return Counter(
+        str(value).strip()
+        for value in series.dropna()
+        if str(value).strip() and str(value).strip().lower() not in {"nan", "none"}
+    )
+
+
+def format_top_counts(counts: Counter[str], limit: int = 3) -> str:
+    return ", ".join(f"{key}={value}" for key, value in counts.most_common(limit))
 
 
 def extract_longest_linestring(geom):
@@ -89,6 +256,7 @@ def run_build(scope: str = "pilot"):
 
     QA_DIR.mkdir(exist_ok=True)
     print(f"Building pedestrian network scope: {scope}")
+    dominant_component_count = DOMINANT_COMPONENTS_BY_SCOPE[scope]
     qa_path = QA_DIR / f"conflation_qa_{scope}.json"
     debug_path = QA_DIR / f"{scope}_debug.geojson"
     network_path = PROCESSED_DIR / (
@@ -100,6 +268,9 @@ def run_build(scope: str = "pilot"):
     pa_gdf = gpd.read_file(boundary_path).to_crs(epsg=3414)
     pa_boundary, area_names = selected_planning_areas(pa_gdf, scope)
     union_poly = pa_boundary.geometry.union_all().buffer(500)
+    print(
+        f"Loaded {len(pa_boundary)} planning areas; dominant components={dominant_component_count}"
+    )
 
     # Load LTA linkways
     zip_path = require_raw_file("covered_linkway.zip")
@@ -111,6 +282,7 @@ def run_build(scope: str = "pilot"):
     lta_gdf = gpd.sjoin(
         lta_gdf, pa_boundary[["PLN_AREA_N", "geometry"]], how="inner", predicate="intersects"
     )
+    print(f"Loaded {len(lta_gdf)} LTA covered-linkway polygons in scope")
 
     # Load OSM
     osm_path = require_raw_file("*.osm.pbf")
@@ -122,6 +294,7 @@ def run_build(scope: str = "pilot"):
         network_type="walking",
         extra_attributes=["covered", "tunnel", "indoor", "layer", "level"],
     )
+    print(f"Loaded OSM walking network: nodes={len(nodes)}, edges={len(edges)}")
 
     edges_full_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
     boundary_line = union_poly.boundary
@@ -144,6 +317,201 @@ def run_build(scope: str = "pilot"):
 
     edges_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
     nodes_gdf = gpd.GeoDataFrame(nodes, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
+    print(f"Filtered OSM walking edges: {len(edges_gdf)}")
+    dropped_edges_gdf = edges_full_gdf[~edges_full_gdf.index.isin(edges_gdf.index)].copy()
+    print(
+        f"Filtered access/foot-forbidden OSM edges retained for QA evidence: {len(dropped_edges_gdf)}"
+    )
+
+    bus_refs, mrt_refs = load_transit_reference_points()
+    bus_sindex = bus_refs.sindex if not bus_refs.empty else None
+    mrt_sindex = mrt_refs.sindex if not mrt_refs.empty else None
+    print(
+        f"Loaded transit reference points: bus_stops={len(bus_refs)}, mrt_lrt_exits={len(mrt_refs)}"
+    )
+
+    def component_area_name(comp_geom) -> str:
+        centroid_gdf = gpd.GeoDataFrame(
+            {"id": [0]},
+            geometry=[comp_geom.centroid],
+            crs="EPSG:3414",
+        )
+        joined = gpd.sjoin(
+            centroid_gdf,
+            pa_boundary[["PLN_AREA_N", "geometry"]],
+            how="left",
+            predicate="within",
+        )
+        area = joined.iloc[0].get("PLN_AREA_N")
+        return str(area) if pd.notna(area) else "UNKNOWN"
+
+    def component_edge_rows(comp, graph: nx.Graph, edges_df: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+        edge_indices = [data["idx"] for _, _, data in graph.edges(nbunch=list(comp), data=True)]
+        if not edge_indices:
+            return edges_df.iloc[0:0]
+        return edges_df.loc[edge_indices]
+
+    def classify_residual_component(
+        comp,
+        comp_geom,
+        edges_df: gpd.GeoDataFrame,
+        graph: nx.Graph,
+        gap_dist: float,
+        centroid_4326: Point,
+    ) -> tuple[str, str]:
+        area_name = component_area_name(comp_geom)
+        sub_edges = component_edge_rows(comp, graph, edges_df)
+        edge_count = max(len(sub_edges), 1)
+        highway_counts = value_counts(sub_edges.get("highway", pd.Series(dtype=object)))
+        access_counts = value_counts(sub_edges.get("access", pd.Series(dtype=object)))
+        foot_counts = value_counts(sub_edges.get("foot", pd.Series(dtype=object)))
+        service_counts = value_counts(sub_edges.get("service", pd.Series(dtype=object)))
+        name_counts = value_counts(sub_edges.get("name", pd.Series(dtype=object)))
+        name_text = " ".join(name_counts).lower()
+
+        # Boundary distance
+        dist_to_boundary = comp_geom.distance(boundary_line)
+        if dist_to_boundary < 20.0:
+            return "CLIP_EDGE", f"dist_to_boundary={dist_to_boundary:.2f}m (<20m)"
+
+        # Filtered-out access-controlled edges touching the component.
+        touching_dropped = []
+        if "access" in dropped_edges_gdf.columns and not dropped_edges_gdf.empty:
+            xmin, ymin, xmax, ymax = comp_geom.bounds
+            possible_matches = dropped_edges_gdf.cx[xmin:xmax, ymin:ymax]
+            for _, row_d in possible_matches.iterrows():
+                if (
+                    row_d.geometry
+                    and not row_d.geometry.is_empty
+                    and comp_geom.distance(row_d.geometry) < 1.0
+                ):
+                    touching_dropped.append(row_d)
+
+        private_ways = [r for r in touching_dropped if r.get("access") in ["private", "no"]]
+        if len(private_ways) >= 2:
+            ways_info = []
+            for r in private_ways[:2]:
+                h = r.get("highway", "NA")
+                a = r.get("access", "NA")
+                ways_info.append(f"highway={h}/access={a}")
+            return "PRIVATE_ESTATE", f"enclosed by: {', '.join(ways_info)}"
+
+        private_access_values = {"private", "no", "customers", "permit"}
+        private_access = [key for key in access_counts if key.lower() in private_access_values]
+        private_foot = [key for key in foot_counts if key.lower() in {"private", "no"}]
+        if private_access or private_foot:
+            evidence_parts = []
+            if private_access:
+                evidence_parts.append(f"access tags: {format_top_counts(access_counts)}")
+            if private_foot:
+                evidence_parts.append(f"foot tags: {format_top_counts(foot_counts)}")
+            evidence_parts.append(f"area={area_name}")
+            return "PRIVATE_ESTATE", "; ".join(evidence_parts)
+
+        service_ratio = highway_counts.get("service", 0) / edge_count
+        internal_service_count = sum(
+            service_counts.get(key, 0) for key in ["driveway", "parking_aisle"]
+        )
+        if service_ratio >= 0.75 and (gap_dist > 30.0 or internal_service_count >= 10):
+            evidence = (
+                f"service-road-only/internal component; area={area_name}; "
+                f"highway tags: {format_top_counts(highway_counts)}"
+            )
+            if service_counts:
+                evidence += f"; service tags: {format_top_counts(service_counts)}"
+            return "PRIVATE_ESTATE", evidence
+
+        if area_name == "CHANGI" and (
+            "airport" in name_text
+            or any(token in name_text for token in ["t3 ", "t4 ", "terminal"])
+            or highway_counts.get("corridor", 0)
+            or highway_counts.get("elevator", 0)
+            or highway_counts.get("pedestrian", 0)
+        ):
+            evidence = (
+                "Changi airport terminal/access-controlled component; "
+                f"highway tags: {format_top_counts(highway_counts)}"
+            )
+            if name_counts:
+                evidence += f"; names: {format_top_counts(name_counts)}"
+            return "PRIVATE_ESTATE", evidence
+
+        if area_name == "WESTERN WATER CATCHMENT" and (
+            service_ratio >= 0.5 or highway_counts.get("unclassified", 0)
+        ):
+            return (
+                "PRIVATE_ESTATE",
+                f"Western Water Catchment service/military-access component; "
+                f"highway tags: {format_top_counts(highway_counts)}",
+            )
+
+        owner_overrides = {
+            (1.32963, 103.81428): (
+                "PRIVATE_ESTATE",
+                "Owner-confirmed private residential road",
+            ),
+            (1.34287, 103.86311): (
+                "PRIVATE_ESTATE",
+                "Owner-confirmed private residential road",
+            ),
+            (1.33567, 103.81491): (
+                "ISOLATED_NON_TRANSIT",
+                "Owner-confirmed forested area without transit relevance",
+            ),
+            (1.34347, 103.87766): (
+                "ISOLATED_NON_TRANSIT",
+                "Owner-confirmed self-contained park loop",
+            ),
+        }
+        for (oy, ox), (oclass, oevid) in owner_overrides.items():
+            if abs(centroid_4326.y - oy) < 0.001 and abs(centroid_4326.x - ox) < 0.001:
+                return oclass, oevid
+
+        bus_dist = float("inf")
+        mrt_dist = float("inf")
+        if bus_sindex is not None:
+            bus_dist, _ = nearest_distance_and_index(bus_refs, bus_sindex, comp_geom)
+        if mrt_sindex is not None:
+            mrt_dist, _ = nearest_distance_and_index(mrt_refs, mrt_sindex, comp_geom)
+
+        if (
+            math.isfinite(bus_dist)
+            and math.isfinite(mrt_dist)
+            and bus_dist > BUS_NON_TRANSIT_THRESHOLD_M
+            and mrt_dist > MRT_NON_TRANSIT_THRESHOLD_M
+        ):
+            return (
+                "ISOLATED_NON_TRANSIT",
+                f"nearest_bus_stop={bus_dist:.1f}m (>{BUS_NON_TRANSIT_THRESHOLD_M:.0f}m), "
+                f"nearest_mrt_lrt_exit={mrt_dist:.1f}m "
+                f"(>{MRT_NON_TRANSIT_THRESHOLD_M:.0f}m)",
+            )
+
+        path_track_ratio = (
+            highway_counts.get("path", 0)
+            + highway_counts.get("track", 0)
+            + highway_counts.get("footway", 0)
+        ) / edge_count
+        if any(token in name_text for token in PARK_NAME_TOKENS):
+            return (
+                "ISOLATED_NON_TRANSIT",
+                f"named park/attraction path component in {area_name}; "
+                f"names: {format_top_counts(name_counts)}",
+            )
+        if area_name in PARK_NON_TRANSIT_AREAS and path_track_ratio >= 0.70 and gap_dist > 50.0:
+            return (
+                "ISOLATED_NON_TRANSIT",
+                f"park/track component in {area_name}; "
+                f"highway tags: {format_top_counts(highway_counts)}",
+            )
+        if math.isfinite(bus_dist) and bus_dist > BUS_NON_TRANSIT_THRESHOLD_M and gap_dist > 100.0:
+            return (
+                "ISOLATED_NON_TRANSIT",
+                f"standalone component with no bus stop inside D3 range; "
+                f"nearest_bus_stop={bus_dist:.1f}m, gap_to_main={gap_dist:.1f}m, area={area_name}",
+            )
+
+        return "REAL_DISCONNECTION", ""
 
     edges_gdf["is_covered"] = 0
     native_covered_mask = pd.Series(False, index=edges_gdf.index)
@@ -169,21 +537,38 @@ def run_build(scope: str = "pilot"):
             G_pre.add_edge(u, v, idx=idx)
 
     components_pre = sorted(nx.connected_components(G_pre), key=len, reverse=True)
-    if len(components_pre) > 3:
-        main_comps = components_pre[:3]
+    if len(components_pre) > dominant_component_count:
+        main_comps = components_pre[:dominant_component_count]
         main_geom = gpd.GeoSeries([Point(n) for comp in main_comps for n in comp]).union_all()
         synthetic_edges = []
+        bridge_threshold = 5.0 if scope == "pilot" else ISLAND_OWNER_APPROVED_BRIDGE_THRESHOLD_M
         print("\n--- SYNTHESIZING OSM GAPS ---")
-        for comp in components_pre[3:]:
+        for comp in components_pre[dominant_component_count:]:
             if len(comp) > 50:
                 comp_geom = gpd.GeoSeries([Point(n) for n in comp]).union_all()
                 p_comp, p_main = nearest_points(comp_geom, main_geom)
                 dist = p_comp.distance(p_main)
                 p_comp_4326 = gpd.GeoSeries([p_comp], crs="EPSG:3414").to_crs(epsg=4326).iloc[0]
+                centroid_4326 = (
+                    gpd.GeoSeries([comp_geom.centroid], crs="EPSG:3414").to_crs(epsg=4326).iloc[0]
+                )
+                comp_class, evidence = classify_residual_component(
+                    comp,
+                    comp_geom,
+                    edges_gdf,
+                    G_pre,
+                    dist,
+                    centroid_4326,
+                )
 
-                if dist < 5.0:
+                if comp_class == "REAL_DISCONNECTION" and dist <= bridge_threshold:
+                    bridge_reason = (
+                        "auto"
+                        if dist < 5.0
+                        else f"owner-approved island residual bridge <= {bridge_threshold:.0f}m"
+                    )
                     print(
-                        f"Auto-bridging size {len(comp)} component at ({p_comp_4326.y:.5f}, {p_comp_4326.x:.5f}) with gap {dist:.2f}m"
+                        f"Auto-bridging size {len(comp)} component at ({p_comp_4326.y:.5f}, {p_comp_4326.x:.5f}) with gap {dist:.2f}m ({bridge_reason})"
                     )
                     synthetic_edges.append(
                         {
@@ -192,6 +577,10 @@ def run_build(scope: str = "pilot"):
                             "is_covered": 0,
                             "covered": "no",
                         }
+                    )
+                elif comp_class != "REAL_DISCONNECTION":
+                    print(
+                        f"Skipping bridge for size {len(comp)} component at ({p_comp_4326.y:.5f}, {p_comp_4326.x:.5f}) classified {comp_class}: {evidence}"
                     )
                 elif dist <= 15.0:
                     print(
@@ -224,14 +613,14 @@ def run_build(scope: str = "pilot"):
         components = sorted(nx.connected_components(G), key=len, reverse=True)
         sizes = [len(c) for c in components]
 
-        main_comps = components[:3]
+        main_comps = components[:dominant_component_count]
         main_geom = None
         if main_comps:
             main_geom = gpd.GeoSeries([Point(n) for comp in main_comps for n in comp]).union_all()
 
         residual_info = []
-        if len(components) > 3:
-            for comp in components[3:]:
+        if len(components) > dominant_component_count:
+            for comp in components[dominant_component_count:]:
                 if len(comp) > 50:
                     comp_geom = gpd.GeoSeries([Point(n) for n in comp]).union_all()
 
@@ -248,75 +637,14 @@ def run_build(scope: str = "pilot"):
                         .iloc[0]
                     )
 
-                    # Boundary distance
-                    dist_to_boundary = comp_geom.distance(boundary_line)
-
-                    # Dropped edges enclosing it
-                    comp_edge_indices = set()
-                    for u, v, data in G.edges(nbunch=list(comp), data=True):
-                        comp_edge_indices.add(data["idx"])
-
-                    # Filtered out edges that touch this component
-                    touching_dropped = []
-                    if "access" in edges_full_gdf.columns:
-                        dropped_edges = edges_full_gdf[~edges_full_gdf.index.isin(edges_df.index)]
-                        # Fast bbox check
-                        xmin, ymin, xmax, ymax = comp_geom.bounds
-                        possible_matches = dropped_edges.cx[xmin:xmax, ymin:ymax]
-                        for _, row_d in possible_matches.iterrows():
-                            if (
-                                row_d.geometry
-                                and not row_d.geometry.is_empty
-                                and comp_geom.distance(row_d.geometry) < 1.0
-                            ):
-                                touching_dropped.append(row_d)
-
-                    c_class = "REAL_DISCONNECTION"
-                    evidence = ""
-
-                    if dist_to_boundary < 20.0:
-                        c_class = "CLIP_EDGE"
-                        evidence = f"dist_to_boundary={dist_to_boundary:.2f}m (<20m)"
-                    else:
-                        private_ways = [
-                            r for r in touching_dropped if r.get("access") in ["private", "no"]
-                        ]
-                        if len(private_ways) >= 2:
-                            c_class = "PRIVATE_ESTATE"
-                            ways_info = []
-                            for r in private_ways[:2]:
-                                h = r.get("highway", "NA")
-                                a = r.get("access", "NA")
-                                ways_info.append(f"highway={h}/access={a}")
-                            evidence = f"enclosed by: {', '.join(ways_info)}"
-
-                        if c_class == "REAL_DISCONNECTION":
-                            owner_overrides = {
-                                (1.32963, 103.81428): (
-                                    "PRIVATE_ESTATE",
-                                    "Owner-confirmed private residential road",
-                                ),
-                                (1.34287, 103.86311): (
-                                    "PRIVATE_ESTATE",
-                                    "Owner-confirmed private residential road",
-                                ),
-                                (1.33567, 103.81491): (
-                                    "ISOLATED_NON_TRANSIT",
-                                    "Owner-confirmed forested area without transit relevance",
-                                ),
-                                (1.34347, 103.87766): (
-                                    "ISOLATED_NON_TRANSIT",
-                                    "Owner-confirmed self-contained park loop",
-                                ),
-                            }
-                            for (oy, ox), (oclass, oevid) in owner_overrides.items():
-                                if (
-                                    abs(centroid_4326.y - oy) < 0.001
-                                    and abs(centroid_4326.x - ox) < 0.001
-                                ):
-                                    c_class = oclass
-                                    evidence = oevid
-                                    break
+                    c_class, evidence = classify_residual_component(
+                        comp,
+                        comp_geom,
+                        edges_df,
+                        G,
+                        gap_dist,
+                        centroid_4326,
+                    )
 
                     residual_info.append(
                         {
@@ -361,16 +689,15 @@ def run_build(scope: str = "pilot"):
     print(f"\nMean edge length: {edges_gdf.geometry.length.mean():.2f}m")
 
     # Also 60% intersection logic for attribution (used for downstream scoring, NOT classification)
-    lta_buffer = lta_gdf.geometry.union_all().buffer(3)
-    lta_matches = edges_gdf.geometry.intersection(lta_buffer)
-    match_ratio = lta_matches.length / edges_gdf.geometry.length
+    match_ratio = compute_lta_match_ratio(edges_gdf, lta_gdf)
     lta_match_mask = match_ratio >= 0.60
     lta_match_edge_length = edges_gdf.loc[lta_match_mask, "geometry"].length.sum()
-    edges_gdf.loc[match_ratio >= 0.60, "is_covered"] = 1
+    edges_gdf.loc[lta_match_mask, "is_covered"] = 1
     native_covered_edge_length = edges_gdf.loc[native_covered_mask, "geometry"].length.sum()
 
     # Classification uses NATIVE covered osm
     native_covered_osm = edges_gdf[native_covered_mask].copy()
+    native_covered_sindex = native_covered_osm.sindex if not native_covered_osm.empty else None
 
     # Check underground tags for all edges
     ug_mask = pd.Series(False, index=edges_gdf.index)
@@ -384,17 +711,29 @@ def run_build(scope: str = "pilot"):
         ug_mask |= edges_gdf["indoor"].isin(["yes"])
 
     ug_osm = edges_gdf[ug_mask].copy()
+    ug_sindex = ug_osm.sindex if not ug_osm.empty else None
 
     # Classification
     lta_gdf["class"] = "UNKNOWN"
     lta_gdf["dist_to_covered"] = 999.0
     lta_gdf["perimeter_div_2"] = lta_gdf.geometry.length / 2.0
 
-    for idx, row in lta_gdf.iterrows():
-        if native_covered_osm.empty:
+    print(f"Classifying {len(lta_gdf)} LTA linkway polygons by nearest represented shelter...")
+    for pos, (idx, row) in enumerate(lta_gdf.iterrows(), start=1):
+        if pos % 1000 == 0:
+            print(f"  LTA classification progress: {pos}/{len(lta_gdf)}")
+
+        if native_covered_sindex is None:
             dist = 999.0
         else:
-            dist = native_covered_osm.distance(row.geometry).min()
+            dist, _ = nearest_distance_and_index(
+                native_covered_osm,
+                native_covered_sindex,
+                row.geometry,
+                max_distance=10.0,
+            )
+            if not math.isfinite(dist):
+                dist = 999.0
         lta_gdf.at[idx, "dist_to_covered"] = dist
 
         if dist <= 3.0:
@@ -403,12 +742,17 @@ def run_build(scope: str = "pilot"):
             lta_gdf.at[idx, "class"] = "OFFSET"
         else:
             # Unrepresented -> Check underground
-            if not ug_osm.empty:
-                ug_dist = ug_osm.distance(row.geometry).min()
+            if ug_sindex is not None:
+                ug_dist, nearest_ug_idx = nearest_distance_and_index(
+                    ug_osm,
+                    ug_sindex,
+                    row.geometry,
+                    max_distance=10.0,
+                )
                 if ug_dist <= 10.0:
                     lta_gdf.at[idx, "class"] = "UNDERGROUND_OR_INDOOR"
-                    nearest_ug_idx = ug_osm.distance(row.geometry).idxmin()
-                    edges_gdf.at[nearest_ug_idx, "is_covered"] = 1
+                    if nearest_ug_idx is not None:
+                        edges_gdf.at[nearest_ug_idx, "is_covered"] = 1
                 else:
                     lta_gdf.at[idx, "class"] = "UNREPRESENTED-surface"
             else:
@@ -418,10 +762,15 @@ def run_build(scope: str = "pilot"):
     synth_edges = []
     unsnapped_count = 0
     needs_manual_count = 0
-    nodes_geom = nodes_gdf.geometry.union_all()
-    edges_geom = edges_gdf.geometry.union_all()
+    nodes_sindex = nodes_gdf.sindex
+    edges_sindex = edges_gdf.sindex
 
-    for idx, row in lta_gdf.iterrows():
+    synth_candidates = lta_gdf[lta_gdf["class"].isin(["OFFSET", "UNREPRESENTED-surface"])]
+    print(f"Synthesizing/snapping {len(synth_candidates)} eligible linkway polygons...")
+    for pos, (idx, row) in enumerate(synth_candidates.iterrows(), start=1):
+        if pos % 250 == 0:
+            print(f"  Synthesis progress: {pos}/{len(synth_candidates)}")
+
         if row["class"] not in ["OFFSET", "UNREPRESENTED-surface"]:
             continue
 
@@ -435,35 +784,37 @@ def run_build(scope: str = "pilot"):
         coords = list(line.coords)
         start_pt, end_pt = Point(coords[0]), Point(coords[-1])
 
-        p_nearest_s, _ = nearest_points(nodes_geom, start_pt)
-        p_nearest_e, _ = nearest_points(nodes_geom, end_pt)
-
-        d_s_node = start_pt.distance(p_nearest_s)
-        d_e_node = end_pt.distance(p_nearest_e)
-
         if row["class"] == "OFFSET":
             cap = min(11.0, row["dist_to_covered"] + 1.0)
 
             # If nodes are too far, try to snap to nearest edge and project
-            p_edge_s, _ = nearest_points(edges_geom, start_pt)
-            p_edge_e, _ = nearest_points(edges_geom, end_pt)
-            d_s_edge = start_pt.distance(p_edge_s)
-            d_e_edge = end_pt.distance(p_edge_e)
+            p_nearest_s, d_s_node = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=cap
+            )
+            p_nearest_e, d_e_node = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=cap
+            )
+            p_edge_s, d_s_edge = nearest_point_on_geometry(
+                edges_gdf.geometry, edges_sindex, start_pt, max_distance=cap
+            )
+            p_edge_e, d_e_edge = nearest_point_on_geometry(
+                edges_gdf.geometry, edges_sindex, end_pt, max_distance=cap
+            )
 
             snapped_s = False
             snapped_e = False
 
-            if d_s_node <= cap:
+            if p_nearest_s is not None and d_s_node <= cap:
                 coords[0] = (p_nearest_s.x, p_nearest_s.y)
                 snapped_s = True
-            elif d_s_edge <= cap:
+            elif p_edge_s is not None and d_s_edge <= cap:
                 coords[0] = (p_edge_s.x, p_edge_s.y)
                 snapped_s = True
 
-            if d_e_node <= cap:
+            if p_nearest_e is not None and d_e_node <= cap:
                 coords[-1] = (p_nearest_e.x, p_nearest_e.y)
                 snapped_e = True
-            elif d_e_edge <= cap:
+            elif p_edge_e is not None and d_e_edge <= cap:
                 coords[-1] = (p_edge_e.x, p_edge_e.y)
                 snapped_e = True
 
@@ -487,25 +838,33 @@ def run_build(scope: str = "pilot"):
 
         elif row["class"] == "UNREPRESENTED-surface":
             # 2m node snap or 5m edge split
-            p_edge_s, _ = nearest_points(edges_geom, start_pt)
-            p_edge_e, _ = nearest_points(edges_geom, end_pt)
-            d_s_edge = start_pt.distance(p_edge_s)
-            d_e_edge = end_pt.distance(p_edge_e)
+            p_nearest_s, d_s_node = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=2.0
+            )
+            p_nearest_e, d_e_node = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=2.0
+            )
+            p_edge_s, d_s_edge = nearest_point_on_geometry(
+                edges_gdf.geometry, edges_sindex, start_pt, max_distance=5.0
+            )
+            p_edge_e, d_e_edge = nearest_point_on_geometry(
+                edges_gdf.geometry, edges_sindex, end_pt, max_distance=5.0
+            )
 
             snapped_s = False
             snapped_e = False
 
-            if d_s_node <= 2.0:
+            if p_nearest_s is not None and d_s_node <= 2.0:
                 coords[0] = (p_nearest_s.x, p_nearest_s.y)
                 snapped_s = True
-            elif d_s_edge <= 5.0:
+            elif p_edge_s is not None and d_s_edge <= 5.0:
                 coords[0] = (p_edge_s.x, p_edge_s.y)
                 snapped_s = True
 
-            if d_e_node <= 2.0:
+            if p_nearest_e is not None and d_e_node <= 2.0:
                 coords[-1] = (p_nearest_e.x, p_nearest_e.y)
                 snapped_e = True
-            elif d_e_edge <= 5.0:
+            elif p_edge_e is not None and d_e_edge <= 5.0:
                 coords[-1] = (p_edge_e.x, p_edge_e.y)
                 snapped_e = True
 

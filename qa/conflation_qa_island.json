@@ -1,0 +1,1722 @@
+{
+  "nodes": 644801,
+  "edges": 715641,
+  "mean_edge_length_m": 18.283548793135804,
+  "connected_components_count": 5558,
+  "top_5_component_sizes": [
+    601111,
+    1946,
+    1470,
+    1402,
+    1295
+  ],
+  "osm_only_top_3_component_node_share_pct": 94.19812563220559,
+  "top_3_component_node_share_pct": 93.75404194472404,
+  "residual_components_gt_50_osm_only": [
+    {
+      "size": 1946,
+      "lat": 1.4122527714997921,
+      "lon": 103.9585274468816,
+      "gap_m": 1214.5300479197665,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=no, highway=footway/access=no"
+    },
+    {
+      "size": 1470,
+      "lat": 1.3601062664571488,
+      "lon": 103.98967266161351,
+      "gap_m": 814.8300856620393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 1402,
+      "lat": 1.3465643102644393,
+      "lon": 103.98481022610086,
+      "gap_m": 382.70996916725227,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=secondary/access=no, highway=secondary/access=no"
+    },
+    {
+      "size": 1295,
+      "lat": 1.4029392635587101,
+      "lon": 103.67921331762497,
+      "gap_m": 28.552528784684434,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 1117,
+      "lat": 1.2312437601813122,
+      "lon": 103.76433793557518,
+      "gap_m": 4697.838385523709,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=1230, footway=1"
+    },
+    {
+      "size": 790,
+      "lat": 1.224848234752636,
+      "lon": 103.85170878320905,
+      "gap_m": 1261.792136486831,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=3655.8m (>250m), nearest_mrt_lrt_exit=4270.9m (>1200m)"
+    },
+    {
+      "size": 741,
+      "lat": 1.4033874902212444,
+      "lon": 103.79115934747232,
+      "gap_m": 1.6510905486995433,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 564,
+      "lat": 1.248326515713861,
+      "lon": 103.67558334119833,
+      "gap_m": 1999.866088641938,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=tertiary/access=private, highway=tertiary/access=private"
+    },
+    {
+      "size": 531,
+      "lat": 1.413848767641839,
+      "lon": 103.8460311310469,
+      "gap_m": 27.08101179793776,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=private, highway=service/access=private"
+    },
+    {
+      "size": 410,
+      "lat": 1.4270563039699635,
+      "lon": 103.73265499347481,
+      "gap_m": 15.510438420630734,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=847.6m (>250m), nearest_mrt_lrt_exit=2832.7m (>1200m)"
+    },
+    {
+      "size": 385,
+      "lat": 1.4110522045412623,
+      "lon": 103.92081329019047,
+      "gap_m": 110.64988251236508,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=no, highway=footway/access=no"
+    },
+    {
+      "size": 376,
+      "lat": 1.2040464893164582,
+      "lon": 103.77216268824516,
+      "gap_m": 6050.565407406152,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=388, footway=16, steps=1"
+    },
+    {
+      "size": 317,
+      "lat": 1.3348311713800898,
+      "lon": 103.67230277260266,
+      "gap_m": 15.689518794404067,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=no, highway=service/access=no"
+    },
+    {
+      "size": 317,
+      "lat": 1.2662189496305234,
+      "lon": 103.81503616554302,
+      "gap_m": 5.641498028007445,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 302,
+      "lat": 1.3178643516337236,
+      "lon": 103.96877832929877,
+      "gap_m": 19.93481627705965,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=785.9m (>250m), nearest_mrt_lrt_exit=1709.4m (>1200m)"
+    },
+    {
+      "size": 302,
+      "lat": 1.4060672690734606,
+      "lon": 103.78175981055064,
+      "gap_m": 3.0489670381919733,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 285,
+      "lat": 1.3381621289149763,
+      "lon": 103.79585058811594,
+      "gap_m": 10.56106528717393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 275,
+      "lat": 1.2543857605505895,
+      "lon": 103.8231009021302,
+      "gap_m": 12.842947481009814,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 189,
+      "lat": 1.385946932853883,
+      "lon": 103.84127082436912,
+      "gap_m": 24.309092948937263,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 185,
+      "lat": 1.3145276710362552,
+      "lon": 104.0037782715758,
+      "gap_m": 23.17098401018023,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=tertiary/access=private, highway=tertiary/access=private"
+    },
+    {
+      "size": 183,
+      "lat": 1.2898410602567043,
+      "lon": 103.87252304875203,
+      "gap_m": 164.07351675392533,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in MARINA EAST; highway tags: path=184"
+    },
+    {
+      "size": 163,
+      "lat": 1.3648856451799047,
+      "lon": 103.72320870948803,
+      "gap_m": 149.66816962868626,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in TENGAH; highway tags: track=75, footway=59, path=35"
+    },
+    {
+      "size": 148,
+      "lat": 1.2139788103049975,
+      "lon": 103.83467692282424,
+      "gap_m": 2830.8572754556158,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=4397.4m (>250m), nearest_mrt_lrt_exit=5690.3m (>1200m)"
+    },
+    {
+      "size": 142,
+      "lat": 1.4090772422694844,
+      "lon": 103.8130892285739,
+      "gap_m": 18.74272658926488,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 141,
+      "lat": 1.2234981648175347,
+      "lon": 103.86039032838653,
+      "gap_m": 2726.484276316298,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=4593.8m (>250m), nearest_mrt_lrt_exit=5047.9m (>1200m)"
+    },
+    {
+      "size": 131,
+      "lat": 1.2062461957065673,
+      "lon": 103.79529944797622,
+      "gap_m": 5190.342580389084,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=146"
+    },
+    {
+      "size": 131,
+      "lat": 1.2671188215667384,
+      "lon": 103.81229754006021,
+      "gap_m": 2.795889840458969,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 130,
+      "lat": 1.3296274054102828,
+      "lon": 103.81428132828144,
+      "gap_m": 16.98995585632782,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 127,
+      "lat": 1.381896592669604,
+      "lon": 103.91183418791721,
+      "gap_m": 24.69655846469494,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "access tags: permit=37; area=SENGKANG"
+    },
+    {
+      "size": 122,
+      "lat": 1.4250850184162323,
+      "lon": 103.82107608956767,
+      "gap_m": 101.95067140534239,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=private"
+    },
+    {
+      "size": 115,
+      "lat": 1.3356724672334848,
+      "lon": 103.81490939834168,
+      "gap_m": 54.974066613268015,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 110,
+      "lat": 1.395459996860844,
+      "lon": 103.75113602663174,
+      "gap_m": 10.35438554429455,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 106,
+      "lat": 1.4372271764509073,
+      "lon": 103.81340800211395,
+      "gap_m": 21.882598108998117,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=track/access=no"
+    },
+    {
+      "size": 106,
+      "lat": 1.348285502584753,
+      "lon": 103.77201935634558,
+      "gap_m": 4.170191842108167,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 106,
+      "lat": 1.336454082153132,
+      "lon": 103.66573977676974,
+      "gap_m": 583.4133273246355,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=unclassified/access=private, highway=service/access=private"
+    },
+    {
+      "size": 103,
+      "lat": 1.4204679171257162,
+      "lon": 103.6887146581557,
+      "gap_m": 42.27749874341865,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=private, highway=service/access=no"
+    },
+    {
+      "size": 100,
+      "lat": 1.3542891986485357,
+      "lon": 103.69592101253495,
+      "gap_m": 12.413738357158028,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 97,
+      "lat": 1.2968794826412273,
+      "lon": 103.88318394722933,
+      "gap_m": 21.07240138190409,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 97,
+      "lat": 1.2426801455787715,
+      "lon": 103.83667692400007,
+      "gap_m": 214.57970943218322,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 95,
+      "lat": 1.2094559280560275,
+      "lon": 103.72421358773396,
+      "gap_m": 9385.756951263971,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=9688.6m (>250m), nearest_mrt_lrt_exit=9900.1m (>1200m)"
+    },
+    {
+      "size": 94,
+      "lat": 1.3872471964031565,
+      "lon": 103.77634564141722,
+      "gap_m": 73.21666272099506,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in CENTRAL WATER CATCHMENT; highway tags: path=93"
+    },
+    {
+      "size": 94,
+      "lat": 1.3882411265362438,
+      "lon": 103.85252709653554,
+      "gap_m": 49.608194887534744,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 93,
+      "lat": 1.413007198096617,
+      "lon": 103.87713583285549,
+      "gap_m": 60.997786845096805,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 88,
+      "lat": 1.3653281788254958,
+      "lon": 103.8767742008645,
+      "gap_m": 7.690253571895633,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 86,
+      "lat": 1.4334763278859537,
+      "lon": 103.70326503245494,
+      "gap_m": 23.00280200323618,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=private, highway=track/access=private"
+    },
+    {
+      "size": 85,
+      "lat": 1.4241781111414396,
+      "lon": 103.71776242442961,
+      "gap_m": 28.326229893861907,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=no, highway=residential/access=no"
+    },
+    {
+      "size": 84,
+      "lat": 1.3736712438028769,
+      "lon": 103.76054714331667,
+      "gap_m": 109.11577154564004,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 83,
+      "lat": 1.343200665280905,
+      "lon": 103.72252610146495,
+      "gap_m": 19.286186766699288,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "named park/attraction path component in JURONG EAST; names: Jurong Lake Floating Broadwalk=58"
+    },
+    {
+      "size": 80,
+      "lat": 1.2566920125458008,
+      "lon": 103.83406878908986,
+      "gap_m": 223.48678372556984,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 80,
+      "lat": 1.2725163607798191,
+      "lon": 103.73804040289298,
+      "gap_m": 2653.4292690215057,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 79,
+      "lat": 1.3434687511156695,
+      "lon": 103.87765897502075,
+      "gap_m": 6.821092287898642,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed self-contained park loop"
+    },
+    {
+      "size": 78,
+      "lat": 1.2938070225979472,
+      "lon": 103.87713185625928,
+      "gap_m": 231.58491488004947,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "standalone component with no bus stop inside D3 range; nearest_bus_stop=286.0m, gap_to_main=231.6m, area=MARINE PARADE"
+    },
+    {
+      "size": 76,
+      "lat": 1.309675507117023,
+      "lon": 103.81112412451398,
+      "gap_m": 37.00881651715157,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "named park/attraction path component in TANGLIN; names: Circle road=27"
+    },
+    {
+      "size": 75,
+      "lat": 1.3843668642274167,
+      "lon": 103.98334766139054,
+      "gap_m": 68.40939262995829,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 74,
+      "lat": 1.3956096202354273,
+      "lon": 103.77648469877316,
+      "gap_m": 122.50063061061944,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=no, highway=path/access=no"
+    },
+    {
+      "size": 74,
+      "lat": 1.4052725471051686,
+      "lon": 103.79413505461865,
+      "gap_m": 298.6374286655996,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 74,
+      "lat": 1.4059126033887084,
+      "lon": 103.78046640454835,
+      "gap_m": 43.48713142988352,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=364.4m (>250m), nearest_mrt_lrt_exit=2307.4m (>1200m)"
+    },
+    {
+      "size": 74,
+      "lat": 1.4243350930756933,
+      "lon": 103.80426718140797,
+      "gap_m": 38.084726597420456,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=MANDAI; highway tags: service=79; service tags: parking_aisle=1"
+    },
+    {
+      "size": 73,
+      "lat": 1.4200916787305042,
+      "lon": 103.76314388859254,
+      "gap_m": 22.29646833021467,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=unclassified/access=private, highway=unclassified/access=private"
+    },
+    {
+      "size": 73,
+      "lat": 1.3128085980786515,
+      "lon": 103.95490476400349,
+      "gap_m": 16.994122513388987,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=493.2m (>250m), nearest_mrt_lrt_exit=1326.1m (>1200m)"
+    },
+    {
+      "size": 71,
+      "lat": 1.2766808454545864,
+      "lon": 103.73458439442764,
+      "gap_m": 2387.1019764769144,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=78"
+    },
+    {
+      "size": 71,
+      "lat": 1.4012473993680665,
+      "lon": 103.95297261107733,
+      "gap_m": 1848.5945203045462,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=2054.0m (>250m), nearest_mrt_lrt_exit=3029.0m (>1200m)"
+    },
+    {
+      "size": 70,
+      "lat": 1.3064245239932208,
+      "lon": 103.71170732451743,
+      "gap_m": 11.884485685127025,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=primary/access=private, highway=primary/access=private"
+    },
+    {
+      "size": 69,
+      "lat": 1.4071248014518354,
+      "lon": 103.79151120132273,
+      "gap_m": 3.306508732784032,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=316.1m (>250m), nearest_mrt_lrt_exit=2048.4m (>1200m)"
+    },
+    {
+      "size": 68,
+      "lat": 1.4230862673641262,
+      "lon": 103.71504446653108,
+      "gap_m": 214.2261870080285,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=LIM CHU KANG; highway tags: service=74"
+    },
+    {
+      "size": 63,
+      "lat": 1.4054237136157612,
+      "lon": 103.81339623886899,
+      "gap_m": 51.67724837875892,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 62,
+      "lat": 1.317675333196943,
+      "lon": 104.01104994490089,
+      "gap_m": 191.403736901868,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=CHANGI; highway tags: service=63"
+    },
+    {
+      "size": 61,
+      "lat": 1.3586275177092786,
+      "lon": 103.81912795158323,
+      "gap_m": 10.058121096903813,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=948.6m (>250m), nearest_mrt_lrt_exit=1395.5m (>1200m)"
+    },
+    {
+      "size": 58,
+      "lat": 1.3825750432660093,
+      "lon": 103.98430181656587,
+      "gap_m": 330.1616175450994,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=438.1m (>250m), nearest_mrt_lrt_exit=2623.4m (>1200m)"
+    },
+    {
+      "size": 57,
+      "lat": 1.3997723845183825,
+      "lon": 103.69641343445998,
+      "gap_m": 48.67065337552046,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 57,
+      "lat": 1.3303318012737322,
+      "lon": 103.76276039023801,
+      "gap_m": 35.49603358123036,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.2584387136076687,
+      "lon": 103.83005309478827,
+      "gap_m": 293.5470553420696,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.2825916268401731,
+      "lon": 103.80348404858286,
+      "gap_m": 30.318009499303756,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.420483970907777,
+      "lon": 103.90841372025851,
+      "gap_m": 9.834658102849492,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 55,
+      "lat": 1.3428701393926366,
+      "lon": 103.86310766242066,
+      "gap_m": 21.272783080734072,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 55,
+      "lat": 1.4082226748196909,
+      "lon": 103.80944409923049,
+      "gap_m": 91.33482358882011,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=YISHUN; highway tags: service=54"
+    },
+    {
+      "size": 55,
+      "lat": 1.4038410898924014,
+      "lon": 103.7807943824816,
+      "gap_m": 21.266428943292844,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=569.5m (>250m), nearest_mrt_lrt_exit=2130.8m (>1200m)"
+    },
+    {
+      "size": 54,
+      "lat": 1.32991495802152,
+      "lon": 103.67026988304092,
+      "gap_m": 32.24610674174369,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN WATER CATCHMENT; highway tags: service=54; service tags: parking_aisle=21"
+    }
+  ],
+  "residual_components_gt_50_final": [
+    {
+      "size": 1946,
+      "lat": 1.4122527714997921,
+      "lon": 103.9585274468816,
+      "gap_m": 1214.5300479197665,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=no, highway=footway/access=no"
+    },
+    {
+      "size": 1470,
+      "lat": 1.3601062664571488,
+      "lon": 103.98967266161351,
+      "gap_m": 814.8300856620393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 1402,
+      "lat": 1.3465643102644393,
+      "lon": 103.98481022610086,
+      "gap_m": 382.70996916725227,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=secondary/access=no, highway=secondary/access=no"
+    },
+    {
+      "size": 1295,
+      "lat": 1.4029392635587101,
+      "lon": 103.67921331762497,
+      "gap_m": 28.552528784684434,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 1117,
+      "lat": 1.2312437601813122,
+      "lon": 103.76433793557518,
+      "gap_m": 4697.838385523709,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=1230, footway=1"
+    },
+    {
+      "size": 790,
+      "lat": 1.224848234752636,
+      "lon": 103.85170878320905,
+      "gap_m": 1261.792136486831,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=3655.8m (>250m), nearest_mrt_lrt_exit=4270.9m (>1200m)"
+    },
+    {
+      "size": 741,
+      "lat": 1.4033874902212444,
+      "lon": 103.79115934747232,
+      "gap_m": 1.6510905486995433,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 564,
+      "lat": 1.248326515713861,
+      "lon": 103.67558334119833,
+      "gap_m": 1999.866088641938,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=tertiary/access=private, highway=tertiary/access=private"
+    },
+    {
+      "size": 531,
+      "lat": 1.413848767641839,
+      "lon": 103.8460311310469,
+      "gap_m": 27.08101179793776,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=private, highway=service/access=private"
+    },
+    {
+      "size": 410,
+      "lat": 1.4270563039699635,
+      "lon": 103.73265499347481,
+      "gap_m": 15.510438420630734,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=847.6m (>250m), nearest_mrt_lrt_exit=2832.7m (>1200m)"
+    },
+    {
+      "size": 385,
+      "lat": 1.4110522045412623,
+      "lon": 103.92081329019047,
+      "gap_m": 110.64988251236508,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=no, highway=footway/access=no"
+    },
+    {
+      "size": 376,
+      "lat": 1.2040464893164582,
+      "lon": 103.77216268824516,
+      "gap_m": 6050.565407406152,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=388, footway=16, steps=1"
+    },
+    {
+      "size": 317,
+      "lat": 1.3348311713800898,
+      "lon": 103.67230277260266,
+      "gap_m": 15.689518794404067,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=no, highway=service/access=no"
+    },
+    {
+      "size": 317,
+      "lat": 1.2662189496305234,
+      "lon": 103.81503616554302,
+      "gap_m": 5.641498028007445,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 302,
+      "lat": 1.3178643516337236,
+      "lon": 103.96877832929877,
+      "gap_m": 19.93481627705965,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=785.9m (>250m), nearest_mrt_lrt_exit=1709.4m (>1200m)"
+    },
+    {
+      "size": 302,
+      "lat": 1.4060672690734606,
+      "lon": 103.78175981055064,
+      "gap_m": 3.0489670381919733,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 285,
+      "lat": 1.3381621289149763,
+      "lon": 103.79585058811594,
+      "gap_m": 10.56106528717393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 275,
+      "lat": 1.2543857605505895,
+      "lon": 103.8231009021302,
+      "gap_m": 12.842947481009814,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 189,
+      "lat": 1.385946932853883,
+      "lon": 103.84127082436912,
+      "gap_m": 24.309092948937263,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 185,
+      "lat": 1.3145276710362552,
+      "lon": 104.0037782715758,
+      "gap_m": 23.17098401018023,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=tertiary/access=private, highway=tertiary/access=private"
+    },
+    {
+      "size": 183,
+      "lat": 1.2898410602567043,
+      "lon": 103.87252304875203,
+      "gap_m": 164.07351675392533,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in MARINA EAST; highway tags: path=184"
+    },
+    {
+      "size": 163,
+      "lat": 1.3648856451799047,
+      "lon": 103.72320870948803,
+      "gap_m": 149.66816962868626,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in TENGAH; highway tags: track=75, footway=59, path=35"
+    },
+    {
+      "size": 148,
+      "lat": 1.2139788103049975,
+      "lon": 103.83467692282424,
+      "gap_m": 2830.8572754556158,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=4397.4m (>250m), nearest_mrt_lrt_exit=5690.3m (>1200m)"
+    },
+    {
+      "size": 142,
+      "lat": 1.4090772422694844,
+      "lon": 103.8130892285739,
+      "gap_m": 18.74272658926488,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 141,
+      "lat": 1.2234981648175347,
+      "lon": 103.86039032838653,
+      "gap_m": 2726.484276316298,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=4593.8m (>250m), nearest_mrt_lrt_exit=5047.9m (>1200m)"
+    },
+    {
+      "size": 131,
+      "lat": 1.2062461957065673,
+      "lon": 103.79529944797622,
+      "gap_m": 5190.342580389084,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=146"
+    },
+    {
+      "size": 131,
+      "lat": 1.2671188215667384,
+      "lon": 103.81229754006021,
+      "gap_m": 2.795889840458969,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 130,
+      "lat": 1.3296274054102828,
+      "lon": 103.81428132828144,
+      "gap_m": 16.98995585632782,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 127,
+      "lat": 1.381896592669604,
+      "lon": 103.91183418791721,
+      "gap_m": 24.69655846469494,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "access tags: permit=37; area=SENGKANG"
+    },
+    {
+      "size": 122,
+      "lat": 1.4250850184162323,
+      "lon": 103.82107608956767,
+      "gap_m": 101.95067140534239,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=private"
+    },
+    {
+      "size": 115,
+      "lat": 1.3356724672334848,
+      "lon": 103.81490939834168,
+      "gap_m": 54.974066613268015,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 110,
+      "lat": 1.395459996860844,
+      "lon": 103.75113602663174,
+      "gap_m": 10.35438554429455,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 106,
+      "lat": 1.4372271764509073,
+      "lon": 103.81340800211395,
+      "gap_m": 21.882598108998117,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=track/access=no"
+    },
+    {
+      "size": 106,
+      "lat": 1.348285502584753,
+      "lon": 103.77201935634558,
+      "gap_m": 4.170191842108167,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 106,
+      "lat": 1.336454082153132,
+      "lon": 103.66573977676974,
+      "gap_m": 583.4133273246355,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=unclassified/access=private, highway=service/access=private"
+    },
+    {
+      "size": 103,
+      "lat": 1.4204679171257162,
+      "lon": 103.6887146581557,
+      "gap_m": 42.27749874341865,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=private, highway=service/access=no"
+    },
+    {
+      "size": 100,
+      "lat": 1.3542891986485357,
+      "lon": 103.69592101253495,
+      "gap_m": 12.413738357158028,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 97,
+      "lat": 1.2968794826412273,
+      "lon": 103.88318394722933,
+      "gap_m": 21.07240138190409,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 97,
+      "lat": 1.2426801455787715,
+      "lon": 103.83667692400007,
+      "gap_m": 214.57970943218322,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 95,
+      "lat": 1.2094559280560275,
+      "lon": 103.72421358773396,
+      "gap_m": 9385.756951263971,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=9688.6m (>250m), nearest_mrt_lrt_exit=9900.1m (>1200m)"
+    },
+    {
+      "size": 94,
+      "lat": 1.3872471964031565,
+      "lon": 103.77634564141722,
+      "gap_m": 73.21666272099506,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "park/track component in CENTRAL WATER CATCHMENT; highway tags: path=93"
+    },
+    {
+      "size": 94,
+      "lat": 1.3882411265362438,
+      "lon": 103.85252709653554,
+      "gap_m": 49.608194887534744,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 93,
+      "lat": 1.413007198096617,
+      "lon": 103.87713583285549,
+      "gap_m": 60.997786845096805,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 88,
+      "lat": 1.3653281788254958,
+      "lon": 103.8767742008645,
+      "gap_m": 7.690253571895633,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 86,
+      "lat": 1.4334763278859537,
+      "lon": 103.70326503245494,
+      "gap_m": 23.00280200323618,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=track/access=private, highway=track/access=private"
+    },
+    {
+      "size": 85,
+      "lat": 1.4241781111414396,
+      "lon": 103.71776242442961,
+      "gap_m": 28.326229893861907,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=no, highway=residential/access=no"
+    },
+    {
+      "size": 84,
+      "lat": 1.3736712438028769,
+      "lon": 103.76054714331667,
+      "gap_m": 109.11577154564004,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 83,
+      "lat": 1.343200665280905,
+      "lon": 103.72252610146495,
+      "gap_m": 19.286186766699288,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "named park/attraction path component in JURONG EAST; names: Jurong Lake Floating Broadwalk=58"
+    },
+    {
+      "size": 80,
+      "lat": 1.2566920125458008,
+      "lon": 103.83406878908986,
+      "gap_m": 223.48678372556984,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 80,
+      "lat": 1.2725163607798191,
+      "lon": 103.73804040289298,
+      "gap_m": 2653.4292690215057,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 79,
+      "lat": 1.3434687511156695,
+      "lon": 103.87765897502075,
+      "gap_m": 6.821092287898642,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed self-contained park loop"
+    },
+    {
+      "size": 78,
+      "lat": 1.2938070225979472,
+      "lon": 103.87713185625928,
+      "gap_m": 231.58491488004947,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "standalone component with no bus stop inside D3 range; nearest_bus_stop=286.0m, gap_to_main=231.6m, area=MARINE PARADE"
+    },
+    {
+      "size": 76,
+      "lat": 1.309675507117023,
+      "lon": 103.81112412451398,
+      "gap_m": 37.00881651715157,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "named park/attraction path component in TANGLIN; names: Circle road=27"
+    },
+    {
+      "size": 75,
+      "lat": 1.3843668642274167,
+      "lon": 103.98334766139054,
+      "gap_m": 68.40939262995829,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 74,
+      "lat": 1.3956096202354273,
+      "lon": 103.77648469877316,
+      "gap_m": 122.50063061061944,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=path/access=no, highway=path/access=no"
+    },
+    {
+      "size": 74,
+      "lat": 1.4052725471051686,
+      "lon": 103.79413505461865,
+      "gap_m": 298.6374286655996,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 74,
+      "lat": 1.4059126033887084,
+      "lon": 103.78046640454835,
+      "gap_m": 43.48713142988352,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=364.4m (>250m), nearest_mrt_lrt_exit=2307.4m (>1200m)"
+    },
+    {
+      "size": 74,
+      "lat": 1.4243350930756933,
+      "lon": 103.80426718140797,
+      "gap_m": 38.084726597420456,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=MANDAI; highway tags: service=79; service tags: parking_aisle=1"
+    },
+    {
+      "size": 73,
+      "lat": 1.4200916787305042,
+      "lon": 103.76314388859254,
+      "gap_m": 22.29646833021467,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=unclassified/access=private, highway=unclassified/access=private"
+    },
+    {
+      "size": 73,
+      "lat": 1.3128085980786515,
+      "lon": 103.95490476400349,
+      "gap_m": 16.994122513388987,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=493.2m (>250m), nearest_mrt_lrt_exit=1326.1m (>1200m)"
+    },
+    {
+      "size": 71,
+      "lat": 1.2766808454545864,
+      "lon": 103.73458439442764,
+      "gap_m": 2387.1019764769144,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN ISLANDS; highway tags: service=78"
+    },
+    {
+      "size": 71,
+      "lat": 1.4012473993680665,
+      "lon": 103.95297261107733,
+      "gap_m": 1848.5945203045462,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=2054.0m (>250m), nearest_mrt_lrt_exit=3029.0m (>1200m)"
+    },
+    {
+      "size": 70,
+      "lat": 1.3064245239932208,
+      "lon": 103.71170732451743,
+      "gap_m": 11.884485685127025,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=primary/access=private, highway=primary/access=private"
+    },
+    {
+      "size": 69,
+      "lat": 1.4071248014518354,
+      "lon": 103.79151120132273,
+      "gap_m": 3.306508732784032,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=316.1m (>250m), nearest_mrt_lrt_exit=2048.4m (>1200m)"
+    },
+    {
+      "size": 68,
+      "lat": 1.4230862673641262,
+      "lon": 103.71504446653108,
+      "gap_m": 214.2261870080285,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=LIM CHU KANG; highway tags: service=74"
+    },
+    {
+      "size": 63,
+      "lat": 1.4054237136157612,
+      "lon": 103.81339623886899,
+      "gap_m": 51.67724837875892,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 62,
+      "lat": 1.317675333196943,
+      "lon": 104.01104994490089,
+      "gap_m": 191.403736901868,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=CHANGI; highway tags: service=63"
+    },
+    {
+      "size": 61,
+      "lat": 1.3586275177092786,
+      "lon": 103.81912795158323,
+      "gap_m": 10.058121096903813,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=948.6m (>250m), nearest_mrt_lrt_exit=1395.5m (>1200m)"
+    },
+    {
+      "size": 58,
+      "lat": 1.3825750432660093,
+      "lon": 103.98430181656587,
+      "gap_m": 330.1616175450994,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=438.1m (>250m), nearest_mrt_lrt_exit=2623.4m (>1200m)"
+    },
+    {
+      "size": 57,
+      "lat": 1.3997723845183825,
+      "lon": 103.69641343445998,
+      "gap_m": 48.67065337552046,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 57,
+      "lat": 1.3303318012737322,
+      "lon": 103.76276039023801,
+      "gap_m": 35.49603358123036,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=residential/access=private, highway=residential/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.2584387136076687,
+      "lon": 103.83005309478827,
+      "gap_m": 293.5470553420696,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.2825916268401731,
+      "lon": 103.80348404858286,
+      "gap_m": 30.318009499303756,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 56,
+      "lat": 1.420483970907777,
+      "lon": 103.90841372025851,
+      "gap_m": 9.834658102849492,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
+    },
+    {
+      "size": 55,
+      "lat": 1.3428701393926366,
+      "lon": 103.86310766242066,
+      "gap_m": 21.272783080734072,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 55,
+      "lat": 1.4082226748196909,
+      "lon": 103.80944409923049,
+      "gap_m": 91.33482358882011,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=YISHUN; highway tags: service=54"
+    },
+    {
+      "size": 55,
+      "lat": 1.4038410898924014,
+      "lon": 103.7807943824816,
+      "gap_m": 21.266428943292844,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "nearest_bus_stop=569.5m (>250m), nearest_mrt_lrt_exit=2130.8m (>1200m)"
+    },
+    {
+      "size": 54,
+      "lat": 1.32991495802152,
+      "lon": 103.67026988304092,
+      "gap_m": 32.24610674174369,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "service-road-only/internal component; area=WESTERN WATER CATCHMENT; highway tags: service=54; service tags: parking_aisle=21"
+    }
+  ],
+  "real_disconnection_count_osm_only": 0,
+  "real_disconnection_count_final": 0,
+  "per_area_classification_counts": {
+    "ANG MO KIO": {
+      "ALIGNED": 69,
+      "OFFSET": 7,
+      "UNREPRESENTED-surface": 106,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 83
+    },
+    "BEDOK": {
+      "ALIGNED": 197,
+      "OFFSET": 10,
+      "UNREPRESENTED-surface": 50,
+      "UNDERGROUND_OR_INDOOR": 4,
+      "NEEDS_MANUAL": 53
+    },
+    "BISHAN": {
+      "ALIGNED": 49,
+      "OFFSET": 2,
+      "UNREPRESENTED-surface": 62,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 33
+    },
+    "BOON LAY": {
+      "ALIGNED": 6,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "BUKIT BATOK": {
+      "ALIGNED": 209,
+      "OFFSET": 20,
+      "UNREPRESENTED-surface": 37,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 53
+    },
+    "BUKIT MERAH": {
+      "ALIGNED": 220,
+      "OFFSET": 24,
+      "UNREPRESENTED-surface": 37,
+      "UNDERGROUND_OR_INDOOR": 3,
+      "NEEDS_MANUAL": 38
+    },
+    "BUKIT PANJANG": {
+      "ALIGNED": 166,
+      "OFFSET": 20,
+      "UNREPRESENTED-surface": 78,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 73
+    },
+    "BUKIT TIMAH": {
+      "ALIGNED": 108,
+      "OFFSET": 14,
+      "UNREPRESENTED-surface": 92,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 21
+    },
+    "CENTRAL WATER CATCHMENT": {
+      "ALIGNED": 1,
+      "OFFSET": 1,
+      "UNREPRESENTED-surface": 6,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "CHANGI": {
+      "ALIGNED": 11,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "CHANGI BAY": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "CHOA CHU KANG": {
+      "ALIGNED": 217,
+      "OFFSET": 15,
+      "UNREPRESENTED-surface": 48,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 46
+    },
+    "CLEMENTI": {
+      "ALIGNED": 117,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 18,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 8
+    },
+    "DOWNTOWN CORE": {
+      "ALIGNED": 16,
+      "OFFSET": 10,
+      "UNREPRESENTED-surface": 25,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 13
+    },
+    "GEYLANG": {
+      "ALIGNED": 136,
+      "OFFSET": 19,
+      "UNREPRESENTED-surface": 103,
+      "UNDERGROUND_OR_INDOOR": 10,
+      "NEEDS_MANUAL": 100
+    },
+    "HOUGANG": {
+      "ALIGNED": 105,
+      "OFFSET": 14,
+      "UNREPRESENTED-surface": 91,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 39
+    },
+    "JURONG EAST": {
+      "ALIGNED": 112,
+      "OFFSET": 2,
+      "UNREPRESENTED-surface": 12,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 18
+    },
+    "JURONG WEST": {
+      "ALIGNED": 194,
+      "OFFSET": 21,
+      "UNREPRESENTED-surface": 33,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 41
+    },
+    "KALLANG": {
+      "ALIGNED": 94,
+      "OFFSET": 13,
+      "UNREPRESENTED-surface": 135,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 112
+    },
+    "LIM CHU KANG": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "MANDAI": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 3,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "MARINA EAST": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "MARINA SOUTH": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "MARINE PARADE": {
+      "ALIGNED": 13,
+      "OFFSET": 1,
+      "UNREPRESENTED-surface": 31,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 6
+    },
+    "MUSEUM": {
+      "ALIGNED": 17,
+      "OFFSET": 1,
+      "UNREPRESENTED-surface": 12,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "NEWTON": {
+      "ALIGNED": 5,
+      "OFFSET": 1,
+      "UNREPRESENTED-surface": 3,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 8
+    },
+    "NORTH-EASTERN ISLANDS": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "NOVENA": {
+      "ALIGNED": 62,
+      "OFFSET": 3,
+      "UNREPRESENTED-surface": 28,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 40
+    },
+    "ORCHARD": {
+      "ALIGNED": 14,
+      "OFFSET": 1,
+      "UNREPRESENTED-surface": 8,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 8
+    },
+    "OUTRAM": {
+      "ALIGNED": 3,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 9,
+      "UNDERGROUND_OR_INDOOR": 6,
+      "NEEDS_MANUAL": 7
+    },
+    "PASIR RIS": {
+      "ALIGNED": 84,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 27,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 22
+    },
+    "PAYA LEBAR": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 1,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "PIONEER": {
+      "ALIGNED": 32,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "PUNGGOL": {
+      "ALIGNED": 72,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 53,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 16
+    },
+    "QUEENSTOWN": {
+      "ALIGNED": 176,
+      "OFFSET": 26,
+      "UNREPRESENTED-surface": 108,
+      "UNDERGROUND_OR_INDOOR": 3,
+      "NEEDS_MANUAL": 44
+    },
+    "RIVER VALLEY": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 9,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 5
+    },
+    "ROCHOR": {
+      "ALIGNED": 38,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 39,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 41
+    },
+    "SELETAR": {
+      "ALIGNED": 9,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 2,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "SEMBAWANG": {
+      "ALIGNED": 61,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 23,
+      "UNDERGROUND_OR_INDOOR": 5,
+      "NEEDS_MANUAL": 22
+    },
+    "SENGKANG": {
+      "ALIGNED": 155,
+      "OFFSET": 29,
+      "UNREPRESENTED-surface": 150,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 70
+    },
+    "SERANGOON": {
+      "ALIGNED": 82,
+      "OFFSET": 9,
+      "UNREPRESENTED-surface": 35,
+      "UNDERGROUND_OR_INDOOR": 2,
+      "NEEDS_MANUAL": 25
+    },
+    "SIMPANG": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "SINGAPORE RIVER": {
+      "ALIGNED": 12,
+      "OFFSET": 2,
+      "UNREPRESENTED-surface": 7,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "SOUTHERN ISLANDS": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "STRAITS VIEW": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 1,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "SUNGEI KADUT": {
+      "ALIGNED": 11,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 4,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 1
+    },
+    "TAMPINES": {
+      "ALIGNED": 270,
+      "OFFSET": 15,
+      "UNREPRESENTED-surface": 63,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 49
+    },
+    "TANGLIN": {
+      "ALIGNED": 33,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 17,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 8
+    },
+    "TENGAH": {
+      "ALIGNED": 1,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "TOA PAYOH": {
+      "ALIGNED": 143,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 88,
+      "UNDERGROUND_OR_INDOOR": 3,
+      "NEEDS_MANUAL": 45
+    },
+    "TUAS": {
+      "ALIGNED": 7,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "WESTERN ISLANDS": {
+      "ALIGNED": 0,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 0,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 0
+    },
+    "WESTERN WATER CATCHMENT": {
+      "ALIGNED": 2,
+      "OFFSET": 0,
+      "UNREPRESENTED-surface": 2,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 2
+    },
+    "WOODLANDS": {
+      "ALIGNED": 82,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 152,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 83
+    },
+    "YISHUN": {
+      "ALIGNED": 95,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 44,
+      "UNDERGROUND_OR_INDOOR": 2,
+      "NEEDS_MANUAL": 54
+    }
+  },
+  "per_area_match_pct": {
+    "ANG MO KIO": 33.28778696322613,
+    "BEDOK": 69.91431983929343,
+    "BISHAN": 40.128173633478575,
+    "BOON LAY": 100.0,
+    "BUKIT BATOK": 73.79967956019986,
+    "BUKIT MERAH": 77.07411967607058,
+    "BUKIT PANJANG": 56.16586048600104,
+    "BUKIT TIMAH": 47.69503746040615,
+    "CENTRAL WATER CATCHMENT": 14.706602866544205,
+    "CHANGI": 100.0,
+    "CHANGI BAY": 0.0,
+    "CHOA CHU KANG": 74.57551911378756,
+    "CLEMENTI": 84.88114018933123,
+    "DOWNTOWN CORE": 29.095823332663752,
+    "GEYLANG": 44.59923075447904,
+    "HOUGANG": 41.9713169767212,
+    "JURONG EAST": 83.95695715837323,
+    "JURONG WEST": 72.82699938670191,
+    "KALLANG": 33.831520337709215,
+    "LIM CHU KANG": 0.0,
+    "MANDAI": 0.0,
+    "MARINA EAST": 0.0,
+    "MARINA SOUTH": 0.0,
+    "MARINE PARADE": 23.16722467013463,
+    "MUSEUM": 50.87367042224731,
+    "NEWTON": 34.54236730303393,
+    "NORTH-EASTERN ISLANDS": 0.0,
+    "NOVENA": 49.045337466749714,
+    "ORCHARD": 46.932552795198035,
+    "OUTRAM": 16.592016545829296,
+    "PASIR RIS": 55.10422380064903,
+    "PAYA LEBAR": 0.0,
+    "PIONEER": 99.43370482205538,
+    "PUNGGOL": 60.56435103145298,
+    "QUEENSTOWN": 55.12011416766072,
+    "RIVER VALLEY": 0.0,
+    "ROCHOR": 25.42141042870396,
+    "SELETAR": 78.3888304535671,
+    "SEMBAWANG": 63.4732247305227,
+    "SENGKANG": 43.26989871515633,
+    "SERANGOON": 54.05182448321175,
+    "SIMPANG": 0.0,
+    "SINGAPORE RIVER": 66.45977236306132,
+    "SOUTHERN ISLANDS": 0.0,
+    "STRAITS VIEW": 0.0,
+    "SUNGEI KADUT": 78.40650670678238,
+    "TAMPINES": 75.42240882917076,
+    "TANGLIN": 62.43681986055587,
+    "TENGAH": 100.0,
+    "TOA PAYOH": 60.13496315837735,
+    "TUAS": 100.0,
+    "WESTERN ISLANDS": 0.0,
+    "WESTERN WATER CATCHMENT": 42.89608296244759,
+    "WOODLANDS": 34.590121506491656,
+    "YISHUN": 51.02194691328997
+  },
+  "linkway_total_length_m": 247228.38652377267,
+  "synthesized_length_m": 1401.9632961893635,
+  "synthesized_pct_of_total": 0.5670721375898942,
+  "unsnapped_endpoints_count": 1294,
+  "needs_manual_count": 1294,
+  "covered_edge_length_m_osm_tags": 595247.9797038393,
+  "covered_edge_length_m_lta_match": 172046.66690036235,
+  "covered_edge_length_m_union": 676577.2875768103,
+  "flags": []
+}
