@@ -29,3 +29,5 @@ out/
 # os
 .DS_Store
 Thumbs.db
+.codebuddy/
+.vscode/
