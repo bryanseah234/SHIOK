@@ -1,9 +1,19 @@
 /**
  * DATA ACCESS MODULE
- * To switch from mock to real data, change DATA_BASE to "/data/":
- *   const DATA_BASE = "/data/";
+ * Production cutover sets NEXT_PUBLIC_DATA_BASE="/data/" after checkpoint approval.
+ * Default remains mock data for local/dev builds.
  */
-export const DATA_BASE = "/data/mock/";
+export function normalizeDataBase(value?: string): string {
+  const raw = value?.trim();
+  if (!raw) return "/data/mock/";
+  const withLeadingSlash =
+    raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")
+      ? raw
+      : `/${raw}`;
+  return withLeadingSlash.endsWith("/") ? withLeadingSlash : `${withLeadingSlash}/`;
+}
+
+export const DATA_BASE = normalizeDataBase(process.env.NEXT_PUBLIC_DATA_BASE);
 
 import type { ScoreRecord, PostalGeom, Manifest } from "./types";
 import { latLngToCell } from "h3-js";
