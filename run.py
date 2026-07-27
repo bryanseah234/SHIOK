@@ -32,12 +32,9 @@ STUBS = {
 
 def run_task(name: str, extra: list[str]) -> int:
     if name == "publish":
-        rc = run_task("validate", [])
-        if rc != 0:
-            print("publish blocked: validate failed", file=sys.stderr)
-            return rc
-        print(f"not implemented: {name} — {STUBS[name]}", file=sys.stderr)
-        return 1
+        cmd = [sys.executable, "-m", "pipeline.publish"] + extra
+        res = subprocess.run(cmd)
+        return res.returncode
     if name == "test":
         cmd = [sys.executable, "-m", "pytest"] + extra
         res = subprocess.run(cmd)
