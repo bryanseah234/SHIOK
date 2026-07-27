@@ -52,6 +52,20 @@ class CandidateNode:
     snap_distance_m: float
 
 
+@dataclass(frozen=True)
+class ScoringContext:
+    params: dict[str, Any]
+    weights: dict[str, float]
+    edges_dict: dict[str, list[Any]]
+    nodes: list[tuple[float, float]]
+    node_xy: np.ndarray
+    mrt_exits_gdf: gpd.GeoDataFrame
+    crossing_counter: "CrossingCounter"
+    bus_index: BusConnectivityIndex | None
+    network_path: Path
+    postal_universe_path: Path | None = None
+
+
 def load_yaml(path: Path) -> dict[str, Any]:
     with open(path, "r", encoding="utf-8") as f:
         data: Any = yaml.safe_load(f)
@@ -544,6 +558,29 @@ def build_provenance(
     }
 
 
+def load_scoring_context(
+    network_path: Path = NETWORK_PATH,
+    postal_universe_path: Path | None = None,
+) -> ScoringContext:
+    params, weights = load_params_and_weights()
+    _, edges_dict, nodes, node_xy = load_network_inputs(network_path=network_path)
+    mrt_exits_gdf = load_mrt_exits()
+    crossing_counter = CrossingCounter.from_raw_data(params)
+    bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
+    return ScoringContext(
+        params=params,
+        weights=weights,
+        edges_dict=edges_dict,
+        nodes=nodes,
+        node_xy=node_xy,
+        mrt_exits_gdf=mrt_exits_gdf,
+        crossing_counter=crossing_counter,
+        bus_index=bus_index,
+        network_path=network_path,
+        postal_universe_path=postal_universe_path,
+    )
+
+
 def assemble_score_record(
     postal: str,
     candidate_scores: list[dict[str, Any]],
@@ -703,12 +740,6 @@ def score_postals(
     network_path: Path = NETWORK_PATH,
     postal_universe_path: Path | None = None,
 ) -> list[dict[str, Any]]:
-    params, weights = load_params_and_weights()
-    _, edges_dict, nodes, node_xy = load_network_inputs(network_path=network_path)
-    mrt_exits_gdf = load_mrt_exits()
-    crossing_counter = CrossingCounter.from_raw_data(params)
-    bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
-
     postal_limit = None if postal_codes or limit is None else max(limit * 4, limit)
     if postal_universe_path is not None:
         postal_gdf = load_postal_universe_points(
@@ -719,25 +750,43 @@ def score_postals(
     else:
         postal_gdf = load_postal_points(postal_codes=postal_codes, limit=postal_limit)
 
+    context = load_scoring_context(
+        network_path=network_path,
+        postal_universe_path=postal_universe_path,
+    )
+    return score_postal_gdf(
+        postal_gdf,
+        context,
+        include_geometry=include_geometry,
+        limit=None if postal_codes else limit,
+    )
+
+
+def score_postal_gdf(
+    postal_gdf: gpd.GeoDataFrame,
+    context: ScoringContext,
+    include_geometry: bool = False,
+    limit: int | None = None,
+) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for _, postal_row in postal_gdf.iterrows():
         records.append(
             score_postal_row(
                 postal_row,
-                mrt_exits_gdf,
-                edges_dict,
-                nodes,
-                node_xy,
-                params,
-                weights,
-                crossing_counter,
-                bus_index,
+                context.mrt_exits_gdf,
+                context.edges_dict,
+                context.nodes,
+                context.node_xy,
+                context.params,
+                context.weights,
+                context.crossing_counter,
+                context.bus_index,
                 include_geometry,
-                network_path,
-                postal_universe_path,
+                context.network_path,
+                context.postal_universe_path,
             )
         )
-        if postal_codes is None and limit is not None and len(records) >= limit:
+        if limit is not None and len(records) >= limit:
             break
     return records
 
