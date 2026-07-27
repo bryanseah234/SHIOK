@@ -1,0 +1,39 @@
+import { postalGeomToRouteGeoJson } from "../route-geojson";
+import type { PostalGeom } from "../types";
+
+describe("postalGeomToRouteGeoJson", () => {
+  it("converts encoded route geometry into MapLibre line collections", () => {
+    const geom: PostalGeom = {
+      postal: "560123",
+      shortest: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      sheltered: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+      exposure_gaps: [
+        {
+          geom: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+          len_m: 42,
+          label: "open segment",
+        },
+      ],
+    };
+
+    const route = postalGeomToRouteGeoJson(geom);
+
+    expect(route.shortest.features[0].geometry.coordinates).toEqual([
+      [-120.2, 38.5],
+      [-120.95, 40.7],
+      [-126.453, 43.252],
+    ]);
+    expect(route.sheltered.features[0].properties.kind).toBe("sheltered");
+    expect(route.exposureGaps.features[0].properties).toMatchObject({
+      kind: "exposure_gap",
+      label: "open segment",
+      len_m: 42,
+    });
+    expect(route.bounds).toEqual([
+      [-126.453, 38.5],
+      [-120.2, 43.252],
+    ]);
+    expect(route.center?.[0]).toBeCloseTo(-123.3265);
+    expect(route.center?.[1]).toBeCloseTo(40.876);
+  });
+});

@@ -1,4 +1,5 @@
 import React from "react";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 export const metadata = {
   title: "S.H.I.O.K. Index — Singapore Walk-to-Transit Comfort Score",

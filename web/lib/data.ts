@@ -27,16 +27,16 @@ export async function fetchManifest(): Promise<Manifest> {
 
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
 let _areaIndex: Record<string, string[]> | null = null;
-let _geomIndex: Record<string, string[]> | null = null;
+let _geomIndex: Record<string, unknown> | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
-  const res = await fetch(`${DATA_BASE}scores/index.json`);
-  if (!res.ok) {
-    // Graceful fallback for mock: derive from the single mock file
+  if (DATA_BASE.includes("/mock/")) {
     _areaIndex = { ANG_MO_KIO: ["560123", "560456", "560789", "018989", "627961"] };
     return _areaIndex;
   }
+  const res = await fetch(`${DATA_BASE}scores/index.json`);
+  if (!res.ok) throw new Error(`score index fetch failed: ${res.status}`);
   _areaIndex = await res.json();
   return _areaIndex!;
 }
@@ -91,8 +91,17 @@ export async function fetchGeomForPostal(
   }
 
   for (const [cell, children] of Object.entries(_geomIndex ?? {})) {
-    const shardIds = Array.from(new Set([cell, ...children]));
-    for (const shardId of shardIds) {
+    if (!Array.isArray(children)) continue;
+
+    const parentRes = await fetch(`${DATA_BASE}geom/h3/${cell}.json`);
+    if (parentRes.ok) {
+      const records: PostalGeom[] = await parentRes.json();
+      const found = records.find((r) => r.postal === postal);
+      if (found) return found;
+    }
+
+    for (const shardId of children) {
+      if (typeof shardId !== "string") continue;
       const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
       if (!res.ok) continue;
       const records: PostalGeom[] = await res.json();

@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { DATA_BASE, fetchGeomForPostal, fetchManifest, fetchScoreForPostal } from "../lib/data";
 import type { Manifest, PostalGeom, ScoreRecord, Subscores } from "../lib/types";
-import { decodePolyline, type LatLng } from "../lib/polyline";
+import { RouteEvidenceMap } from "../components/route-evidence-map";
 
 interface SearchResult {
   BUILDING: string;
@@ -84,76 +84,6 @@ function formatScore(value: number | null | undefined): string {
   return typeof value === "number" ? value.toFixed(1) : "Pending";
 }
 
-function projectPoints(paths: LatLng[][], width: number, height: number): LatLng[][] {
-  const all = paths.flat();
-  if (all.length === 0) return paths;
-  const lats = all.map(([lat]) => lat);
-  const lngs = all.map(([, lng]) => lng);
-  const minLat = Math.min(...lats);
-  const maxLat = Math.max(...lats);
-  const minLng = Math.min(...lngs);
-  const maxLng = Math.max(...lngs);
-  const latRange = Math.max(maxLat - minLat, 0.00001);
-  const lngRange = Math.max(maxLng - minLng, 0.00001);
-  const pad = 24;
-
-  return paths.map((path) =>
-    path.map(([lat, lng]) => {
-      const x = pad + ((lng - minLng) / lngRange) * (width - pad * 2);
-      const y = pad + ((maxLat - lat) / latRange) * (height - pad * 2);
-      return [y, x];
-    })
-  );
-}
-
-function svgPath(points: LatLng[]): string {
-  return points.map(([y, x], index) => `${index === 0 ? "M" : "L"}${x.toFixed(1)} ${y.toFixed(1)}`).join(" ");
-}
-
-function RoutePreview({ geom }: { geom: PostalGeom | null }) {
-  const width = 560;
-  const height = 280;
-  const paths = useMemo(() => {
-    if (!geom) return null;
-    const shortest = decodePolyline(geom.shortest);
-    const sheltered = decodePolyline(geom.sheltered);
-    const gaps = geom.exposure_gaps.map((gap) => decodePolyline(gap.geom));
-    const [shortestProjected, shelteredProjected, ...gapProjected] = projectPoints(
-      [shortest, sheltered, ...gaps],
-      width,
-      height
-    );
-    return { shortestProjected, shelteredProjected, gapProjected };
-  }, [geom]);
-
-  if (!geom || !paths) {
-    return (
-      <div style={emptyBoxStyle}>
-        <strong>Route evidence unavailable</strong>
-        <span>Geometry appears when a scored postal has a matching route shard.</span>
-      </div>
-    );
-  }
-
-  return (
-    <div style={routePanelStyle}>
-      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Route evidence preview" style={{ width: "100%", height: "100%" }}>
-        <rect x="0" y="0" width={width} height={height} fill="#f8fafc" />
-        <path d={svgPath(paths.shortestProjected)} fill="none" stroke="#64748b" strokeWidth="6" strokeDasharray="8 7" strokeLinecap="round" strokeLinejoin="round" />
-        <path d={svgPath(paths.shelteredProjected)} fill="none" stroke="#0284c7" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-        {paths.gapProjected.map((gap, index) => (
-          <path key={index} d={svgPath(gap)} fill="none" stroke="#dc2626" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
-        ))}
-      </svg>
-      <div style={legendStyle}>
-        <span><i style={{ background: "#0284c7" }} />Sheltered route</span>
-        <span><i style={{ background: "#64748b" }} />Shortest route</span>
-        <span><i style={{ background: "#dc2626" }} />Exposed gaps</span>
-      </div>
-    </div>
-  );
-}
-
 function ScorePanel({ selection, manifest }: { selection: LoadedSelection | null; manifest: Manifest | null }) {
   if (!selection) {
     return (
@@ -227,7 +157,7 @@ function ScorePanel({ selection, manifest }: { selection: LoadedSelection | null
         </div>
       )}
 
-      <RoutePreview geom={selection.geom} />
+      <RouteEvidenceMap geom={selection.geom} />
 
       {score.exposure_gaps && score.exposure_gaps.length > 0 && (
         <div style={gapListStyle}>
@@ -355,7 +285,7 @@ export default function Home() {
           <div style={resultListStyle}>
             {results.map((item, idx) => (
               <button key={`${item.POSTAL}-${idx}`} type="button" onClick={() => loadSelection(item)} style={resultButtonStyle}>
-                <span>
+                <span style={resultTextStyle}>
                   <strong>{resultTitle(item)}</strong>
                   <small>{resultSubtitle(item)}</small>
                 </span>
@@ -500,6 +430,13 @@ const resultButtonStyle: React.CSSProperties = {
   color: "#0f172a",
 };
 
+const resultTextStyle: React.CSSProperties = {
+  minWidth: 0,
+  display: "flex",
+  flexDirection: "column",
+  gap: "4px",
+};
+
 const postalPillStyle: React.CSSProperties = {
   fontSize: "12px",
   color: "#475569",
@@ -586,25 +523,6 @@ const metricStyle: React.CSSProperties = {
   flexDirection: "column",
   gap: "3px",
   fontSize: "13px",
-};
-
-const routePanelStyle: React.CSSProperties = {
-  border: "1px solid #d8dee7",
-  borderRadius: "8px",
-  overflow: "hidden",
-  height: "320px",
-  marginBottom: "14px",
-};
-
-const legendStyle: React.CSSProperties = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "12px",
-  padding: "8px 10px",
-  borderTop: "1px solid #d8dee7",
-  background: "#ffffff",
-  color: "#475569",
-  fontSize: "12px",
 };
 
 const emptyBoxStyle: React.CSSProperties = {
