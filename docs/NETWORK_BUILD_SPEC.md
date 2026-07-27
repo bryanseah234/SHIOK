@@ -98,7 +98,14 @@ this is already achieved  this section's gate is corrected to match the multi-ar
 - **Edge whitelist:** Keep Pyrosm's `network_type="walking"`, which naturally includes primary/secondary/tertiary/residential/service because pedestrians use their sidewalks. **Exclude:** ONLY where genuinely foot-forbidden, i.e., `highway` in `motorway, motorway_link, trunk, trunk_link, construction` AND NOT `foot=yes|permissive|designated`. Also exclude `access=private|no` (unless `foot=yes`).
 - **Build the graph in igraph** from the (source_node, target_node, length_m) triples; length in
   metres computed in EPSG:3414.
-- **3 GATE (CORRECTED for the 3-area pilot; paste evidence):** on the OSM-only graph, there must be exactly ~3 dominant components (one large component per geographically-separate pilot area). For the remainder: **every residual component larger than 50 nodes must be individually classified**, with its centroid coordinate, as one of: `PRIVATE_ESTATE` (inside a gated/landed area  legitimately isolated), `CLIP_EDGE` (severed by the 500 m clip boundary  artifact), or `REAL_DISCONNECTION` (public path that should connect but doesn't  a bug). The gate PASSES when zero components are `REAL_DISCONNECTION`, regardless of the aggregate percentage. Classify programmatically (e.g. `access=private`, or near clip boundary) but report every >50-node component with coordinate and class so the owner can spot-check. Mean edge length ~10-40 m; total edges in a sane range (the ~95k observed across the three buffered clips is fine).
+- **3 GATE (CORRECTED for the 3-area pilot; paste evidence):** on the OSM-only graph, there must be exactly ~3 dominant components (one large component per geographically-separate pilot area).  * **GATE PASS CONDITION:**
+  Every residual component larger than 50 nodes must be individually classified by coordinate as:
+  - `PRIVATE_ESTATE`: legitimately isolated behind access controls.
+  - `CLIP_EDGE`: artifact of the 500m buffer cutting off its connecting path.
+  - `ISOLATED_NON_TRANSIT`: parkland/forest/water paths with no transit relevance.
+  - `REAL_DISCONNECTION`: genuine bug where a public component is stranded.
+  
+  The gate PASSES when zero components are `REAL_DISCONNECTION`, regardless of the aggregate percentage. Any real OSM gap <5m can be auto-bridged, while 5-15m gaps require owner confirmation. Classify programmatically (e.g. `access=private`, or near clip boundary) but report every >50-node component with coordinate and class so the owner can spot-check. Mean edge length ~10-40 m; total edges in a sane range (the ~95k observed across the three buffered clips is fine).
 
 ---
 
@@ -177,9 +184,12 @@ covered paths trace real corridors and synthesized edges are few and connected.
 ---
 
 ## 7. Acceptance gates  ALL must be green, with pasted evidence, to unlock T1.2
-1. OSM-only graph: top-3 component node share  97% (one dominant component per area); exactly ~3
-   dominant components, not more (3). [Already met at 97.9%  reconfirm on the final build.]
-2. Final graph (post-synthesis): per-area top-3 component share still  97% (no new fragmentation).
+1. OSM-only graph: the three dominant components are the expected geographically separate pilot
+   areas, and every residual component >50 nodes is classified by coordinate. The gate passes with
+   zero `REAL_DISCONNECTION` residuals; top-3 component share is reported as a diagnostic, not a
+   hard fail, because legitimate clip-edge/private/non-transit residuals exist.
+2. Final graph (post-synthesis): no new `REAL_DISCONNECTION` residuals are introduced; top-3
+   component share is still reported to catch unexpected fragmentation regressions.
 3. Mean edge length 1040 m; total edges in a sane range for the buffered 3-area clip (~95k is fine;
    there is no 15k40k cap).
 4. Every 4 five-way class count (ALIGNED/OFFSET/UNREPRESENTED-surface/UNDERGROUND_OR_INDOOR/

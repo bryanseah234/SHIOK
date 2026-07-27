@@ -1,19 +1,250 @@
 {
   "nodes": 77652,
-  "edges": 86057,
-  "mean_edge_length_m": 17.687512949999732,
-  "connected_components_count": 698,
+  "edges": 86061,
+  "mean_edge_length_m": 17.686830010876896,
+  "connected_components_count": 694,
   "top_5_component_sizes": [
-    28041,
-    25815,
-    17806,
+    28093,
+    25921,
+    18023,
     412,
     285
   ],
-  "top_3_component_node_share_pct": 92.2860969453459,
+  "osm_only_top_3_component_node_share_pct": 93.18867021207768,
+  "top_3_component_node_share_pct": 92.76902075928501,
+  "residual_components_gt_50_osm_only": [
+    {
+      "size": 412,
+      "lat": 1.3426878408679015,
+      "lon": 103.81030558662563,
+      "gap_m": 256.0027019388651,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=6.69m (<20m)"
+    },
+    {
+      "size": 285,
+      "lat": 1.3381621289149763,
+      "lon": 103.79585058811594,
+      "gap_m": 10.56106528717393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 252,
+      "lat": 1.3374656215646665,
+      "lon": 103.81972437250913,
+      "gap_m": 295.1675219261068,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=1.54m (<20m)"
+    },
+    {
+      "size": 130,
+      "lat": 1.3296274054102828,
+      "lon": 103.81428132828144,
+      "gap_m": 16.98995585632782,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 115,
+      "lat": 1.3356724672334848,
+      "lon": 103.81490939834168,
+      "gap_m": 163.71149867984244,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 89,
+      "lat": 1.3299753851183247,
+      "lon": 103.76305908030997,
+      "gap_m": 16.211233759341734,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=1.13m (<20m)"
+    },
+    {
+      "size": 87,
+      "lat": 1.3066121453815138,
+      "lon": 103.86670477359814,
+      "gap_m": 57.81653829139157,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=14.63m (<20m)"
+    },
+    {
+      "size": 82,
+      "lat": 1.3486523866545157,
+      "lon": 103.8435604297168,
+      "gap_m": 8.244865068634605,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=10.24m (<20m)"
+    },
+    {
+      "size": 79,
+      "lat": 1.3434687511156695,
+      "lon": 103.87765897502075,
+      "gap_m": 6.821092287898642,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed self-contained park loop"
+    },
+    {
+      "size": 57,
+      "lat": 1.3303318012737322,
+      "lon": 103.76276039023801,
+      "gap_m": 49.72487908481949,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=7.68m (<20m)"
+    },
+    {
+      "size": 55,
+      "lat": 1.3428701393926366,
+      "lon": 103.86310766242066,
+      "gap_m": 21.272783080734072,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 52,
+      "lat": 1.3400571327794983,
+      "lon": 103.81661963570257,
+      "gap_m": 472.0738512139834,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=6.90m (<20m)"
+    }
+  ],
+  "residual_components_gt_50_final": [
+    {
+      "size": 412,
+      "lat": 1.3426878408679015,
+      "lon": 103.81030558662563,
+      "gap_m": 256.0027019388651,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=6.69m (<20m)"
+    },
+    {
+      "size": 285,
+      "lat": 1.3381621289149763,
+      "lon": 103.79585058811594,
+      "gap_m": 10.56106528717393,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=no, highway=service/access=no"
+    },
+    {
+      "size": 252,
+      "lat": 1.3374656215646665,
+      "lon": 103.81972437250913,
+      "gap_m": 295.1675219261068,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=1.54m (<20m)"
+    },
+    {
+      "size": 130,
+      "lat": 1.3296274054102828,
+      "lon": 103.81428132828144,
+      "gap_m": 16.98995585632782,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 115,
+      "lat": 1.3356724672334848,
+      "lon": 103.81490939834168,
+      "gap_m": 163.71149867984244,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 89,
+      "lat": 1.3299753851183247,
+      "lon": 103.76305908030997,
+      "gap_m": 16.211233759341734,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=1.13m (<20m)"
+    },
+    {
+      "size": 87,
+      "lat": 1.3066121453815138,
+      "lon": 103.86670477359814,
+      "gap_m": 57.81653829139157,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=14.63m (<20m)"
+    },
+    {
+      "size": 82,
+      "lat": 1.3486523866545157,
+      "lon": 103.8435604297168,
+      "gap_m": 8.244865068634605,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=10.24m (<20m)"
+    },
+    {
+      "size": 79,
+      "lat": 1.3434687511156695,
+      "lon": 103.87765897502075,
+      "gap_m": 6.821092287898642,
+      "class": "ISOLATED_NON_TRANSIT",
+      "evidence": "Owner-confirmed self-contained park loop"
+    },
+    {
+      "size": 57,
+      "lat": 1.3303318012737322,
+      "lon": 103.76276039023801,
+      "gap_m": 49.72487908481949,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=7.68m (<20m)"
+    },
+    {
+      "size": 55,
+      "lat": 1.3428701393926366,
+      "lon": 103.86310766242066,
+      "gap_m": 21.272783080734072,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "Owner-confirmed private residential road"
+    },
+    {
+      "size": 52,
+      "lat": 1.3400571327794983,
+      "lon": 103.81661963570257,
+      "gap_m": 472.0738512139834,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=6.90m (<20m)"
+    }
+  ],
+  "real_disconnection_count_osm_only": 0,
+  "real_disconnection_count_final": 0,
+  "per_area_classification_counts": {
+    "Toa Payoh": {
+      "ALIGNED": 143,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 88,
+      "UNDERGROUND_OR_INDOOR": 3,
+      "NEEDS_MANUAL": 45
+    },
+    "Bukit Timah": {
+      "ALIGNED": 108,
+      "OFFSET": 14,
+      "UNREPRESENTED-surface": 92,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 21
+    },
+    "Downtown Core": {
+      "ALIGNED": 16,
+      "OFFSET": 10,
+      "UNREPRESENTED-surface": 25,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 13
+    }
+  },
+  "per_area_match_pct": {
+    "Toa Payoh": 60.13496315837735,
+    "Bukit Timah": 47.69503746040615,
+    "Downtown Core": 29.095823332663752
+  },
   "linkway_total_length_m": 22835.062438990713,
   "synthesized_length_m": 154.29110684129967,
   "synthesized_pct_of_total": 0.6756763081052437,
   "unsnapped_endpoints_count": 79,
-  "needs_manual_count": 79
+  "needs_manual_count": 79,
+  "covered_edge_length_m_osm_tags": 102517.30464490506,
+  "covered_edge_length_m_lta_match": 17496.612595219947,
+  "covered_edge_length_m_union": 112689.34422003098,
+  "flags": []
 }

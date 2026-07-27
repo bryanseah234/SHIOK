@@ -5,6 +5,7 @@
 raw/*
 !raw/manifest.json
 logs/
+processed/
 
 # generated artifacts (deployed via `vercel deploy`, not git)
 web/public/data/
