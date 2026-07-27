@@ -60,6 +60,34 @@ def write_json(path: Path, payload: Any) -> int:
     return len(content)
 
 
+def json_safe_geometry(value: Any) -> Any:
+    if value is None:
+        return None
+    wkt = getattr(value, "wkt", None)
+    return str(wkt) if isinstance(wkt, str) else value
+
+
+def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
+    safe = dict(record)
+    geometry_payload = safe.get("_geometry")
+    if not isinstance(geometry_payload, dict):
+        return safe
+
+    safe_geometry = dict(geometry_payload)
+    safe_geometry["shortest"] = json_safe_geometry(safe_geometry.get("shortest"))
+    safe_geometry["sheltered"] = json_safe_geometry(safe_geometry.get("sheltered"))
+    edges = []
+    for edge in safe_geometry.get("exposure_gap_edges", []):
+        if not isinstance(edge, dict):
+            continue
+        safe_edge = dict(edge)
+        safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
+        edges.append(safe_edge)
+    safe_geometry["exposure_gap_edges"] = edges
+    safe["_geometry"] = safe_geometry
+    return safe
+
+
 def validate_full_batch_gate(
     *,
     full_batch: bool,
@@ -164,7 +192,10 @@ def build_score_batch(
             )
             continue
 
-        records = score_chunker(chunk, context, include_geometry, None)
+        records = [
+            json_safe_score_record(record)
+            for record in score_chunker(chunk, context, include_geometry, None)
+        ]
         bytes_written = write_json(path, records)
         report["chunks_written"] += 1
         report["records_written"] += len(records)

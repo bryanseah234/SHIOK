@@ -2,12 +2,15 @@ from pathlib import Path
 
 from shapely.geometry import LineString
 
+from pipeline.score_batch import json_safe_score_record
 from pipeline.export import (
     encode_polyline,
     export_static_artifacts,
+    load_score_batch_records,
     slugify_area,
     validate_export_batch_args,
     validate_static_artifacts,
+    write_json,
 )
 
 
@@ -71,6 +74,43 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert ok, validation
     assert validation["indexed_postals"] == 2
     assert validation["geometry_postals"] == 2
+
+
+def test_load_score_batch_records_reads_chunks_in_order_and_rejects_duplicates(tmp_path: Path):
+    records_dir = tmp_path / "batch"
+    chunks_dir = records_dir / "chunks"
+    write_json(
+        chunks_dir / "chunk_00002_654321_654321.json",
+        [json_safe_score_record(sample_record("654321"))],
+    )
+    write_json(
+        chunks_dir / "chunk_00001_123456_123456.json",
+        [json_safe_score_record(sample_record("123456"))],
+    )
+
+    records = load_score_batch_records(records_dir)
+
+    assert [record["postal"] for record in records] == ["123456", "654321"]
+
+    write_json(
+        chunks_dir / "chunk_00003_123456_123456.json",
+        [json_safe_score_record(sample_record("123456"))],
+    )
+    try:
+        load_score_batch_records(records_dir)
+    except ValueError as exc:
+        assert str(exc) == "duplicate postal across score batch chunks: 123456"
+    else:
+        raise AssertionError("duplicate postal was accepted")
+
+
+def test_load_score_batch_records_requires_chunks_directory(tmp_path: Path):
+    try:
+        load_score_batch_records(tmp_path / "missing")
+    except FileNotFoundError as exc:
+        assert "score batch chunks directory not found" in str(exc)
+    else:
+        raise AssertionError("missing chunks directory was accepted")
 
 
 def test_validate_rejects_missing_required_artifacts(tmp_path: Path):

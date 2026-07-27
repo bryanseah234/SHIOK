@@ -17,6 +17,7 @@ import h3
 from pyproj import Transformer
 from shapely.geometry import MultiLineString, Point
 from shapely.ops import linemerge
+from shapely import wkt as shapely_wkt
 
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
 from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
@@ -57,6 +58,8 @@ def svy21_to_wgs84_transformer() -> Transformer:
 
 
 def geometry_to_lat_lon_pairs(geometry: Any) -> list[tuple[float, float]]:
+    if isinstance(geometry, str):
+        geometry = shapely_wkt.loads(geometry)
     if geometry is None or getattr(geometry, "is_empty", True):
         return []
 
@@ -108,11 +111,13 @@ def encode_geometry(geometry: Any) -> str:
 
 
 def merged_geometry(edges: list[dict[str, Any]]) -> Any:
-    geometries = [
-        edge["geometry"]
-        for edge in edges
-        if edge.get("geometry") is not None and not edge["geometry"].is_empty
-    ]
+    geometries = []
+    for edge in edges:
+        geometry = edge.get("geometry")
+        if isinstance(geometry, str):
+            geometry = shapely_wkt.loads(geometry)
+        if geometry is not None and not geometry.is_empty:
+            geometries.append(geometry)
     if not geometries:
         return None
     return linemerge(MultiLineString(geometries)) if len(geometries) > 1 else geometries[0]
@@ -329,6 +334,34 @@ def read_json(path: Path) -> Any:
         return json.load(f)
 
 
+def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
+    chunks_dir = records_dir / "chunks"
+    if not chunks_dir.is_dir():
+        raise FileNotFoundError(f"score batch chunks directory not found: {chunks_dir}")
+
+    chunk_paths = sorted(chunks_dir.glob("chunk_*.json"))
+    if not chunk_paths:
+        raise FileNotFoundError(f"no score batch chunk JSON files found in {chunks_dir}")
+
+    records: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for path in chunk_paths:
+        payload = read_json(path)
+        if not isinstance(payload, list):
+            raise ValueError(f"score batch chunk must contain a list: {path}")
+        for item in payload:
+            if not isinstance(item, dict):
+                raise ValueError(f"score batch chunk record must be an object: {path}")
+            postal = str(item.get("postal", ""))
+            if not postal:
+                raise ValueError(f"score batch chunk record missing postal: {path}")
+            if postal in seen:
+                raise ValueError(f"duplicate postal across score batch chunks: {postal}")
+            seen.add(postal)
+            records.append(item)
+    return sorted(records, key=lambda item: str(item["postal"]))
+
+
 def validate_score_record(record: dict[str, Any], errors: list[str], context: str) -> None:
     state = record.get("state")
     if state not in VALID_STATES:
@@ -474,6 +507,11 @@ def main() -> int:
     export_parser.add_argument("--postal", action="append", dest="postals")
     export_parser.add_argument("--limit", type=int, default=5)
     export_parser.add_argument("--output", type=Path, default=DEFAULT_EXPORT_DIR)
+    export_parser.add_argument(
+        "--records-dir",
+        type=Path,
+        help="Read pre-scored score-batch chunks instead of scoring live.",
+    )
     export_parser.add_argument("--postal-universe", type=Path)
     export_parser.add_argument("--network", type=Path, default=NETWORK_PATH)
     export_parser.add_argument(
@@ -510,13 +548,29 @@ def main() -> int:
             )
             return 1
 
-        records = score_postals(
-            postal_codes=args.postals,
-            limit=None if args.full_batch else int(args.limit),
-            include_geometry=True,
-            network_path=args.network,
-            postal_universe_path=args.postal_universe,
-        )
+        if args.records_dir is not None:
+            try:
+                records = load_score_batch_records(args.records_dir)
+            except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+                print(
+                    json.dumps(
+                        {
+                            "ok": False,
+                            "errors": [str(exc)],
+                        },
+                        indent=2,
+                        sort_keys=True,
+                    )
+                )
+                return 1
+        else:
+            records = score_postals(
+                postal_codes=args.postals,
+                limit=None if args.full_batch else int(args.limit),
+                include_geometry=True,
+                network_path=args.network,
+                postal_universe_path=args.postal_universe,
+            )
         report = export_static_artifacts(records, output_dir=args.output)
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0

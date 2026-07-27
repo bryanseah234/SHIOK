@@ -1,11 +1,13 @@
 from pathlib import Path
 
 import pandas as pd
+from shapely.geometry import LineString
 
 from pipeline.score_batch import (
     build_score_batch,
     chunk_path,
     chunk_slices,
+    json_safe_score_record,
     read_chunk_postals,
     validate_full_batch_gate,
 )
@@ -143,3 +145,26 @@ def test_score_batch_dry_run_does_not_create_outputs(tmp_path: Path):
     assert report["dry_run"] is True
     assert report["chunk_count"] == 2
     assert not output_dir.exists()
+
+
+def test_json_safe_score_record_serializes_shapely_geometries():
+    record = {
+        "postal": "123456",
+        "_geometry": {
+            "shortest": LineString([(0, 0), (1, 1)]),
+            "sheltered": LineString([(0, 0), (2, 2)]),
+            "exposure_gap_edges": [
+                {
+                    "length_m": 1.0,
+                    "is_covered": False,
+                    "geometry": LineString([(0, 0), (1, 0)]),
+                }
+            ],
+        },
+    }
+
+    safe = json_safe_score_record(record)
+
+    assert safe["_geometry"]["shortest"] == "LINESTRING (0 0, 1 1)"
+    assert safe["_geometry"]["sheltered"] == "LINESTRING (0 0, 2 2)"
+    assert safe["_geometry"]["exposure_gap_edges"][0]["geometry"] == "LINESTRING (0 0, 1 0)"
