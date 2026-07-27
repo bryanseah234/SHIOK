@@ -1,0 +1,19 @@
+{
+  "nodes": 77652,
+  "edges": 86057,
+  "mean_edge_length_m": 17.687512949999732,
+  "connected_components_count": 698,
+  "top_5_component_sizes": [
+    28041,
+    25815,
+    17806,
+    412,
+    285
+  ],
+  "top_3_component_node_share_pct": 92.2860969453459,
+  "linkway_total_length_m": 22835.062438990713,
+  "synthesized_length_m": 154.29110684129967,
+  "synthesized_pct_of_total": 0.6756763081052437,
+  "unsnapped_endpoints_count": 79,
+  "needs_manual_count": 79
+}
