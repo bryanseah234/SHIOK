@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T13:52:00.558754+00:00",
+  "generated_at": "2026-07-27T14:27:44.431017+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -108,6 +108,15 @@
       "sha256": "847ceebce6a9a8f5ca7e8ee32f6d857583c8d8025a0606be685411899ba59841",
       "source_name": "OneMap-derived Singapore postal dump, accessed 10 Jun 2020 by xuancong84",
       "url_as_discovered": "https://raw.githubusercontent.com/xuancong84/singapore-address-heatmap/master/singpostcode.json.gz"
+    },
+    "sla_dwelling_information": {
+      "bytes": 610849,
+      "etag": null,
+      "fetched_at": "2026-07-27T14:27:44.431017+00:00",
+      "last_modified": null,
+      "sha256": "a520d2a54bf628c83a11c21ca63ee1cd46386fc0aadb896911133c0742150271",
+      "source_name": "SLA Dwelling Information",
+      "url_as_discovered": "https://api-open.data.gov.sg/v1/public/api/datasets/d_e4495201ba4f77fa2ef9855bad6d2cd1/initiate-download"
     },
     "traffic_signals": {
       "bytes": 1337159,

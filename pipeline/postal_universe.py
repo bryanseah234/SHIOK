@@ -38,6 +38,9 @@ ONEMAP_2020_RAW_NAME = "postal_universe_onemap_2020.json.gz"
 ACRA_SOURCE_KEY = "acra_registered_entities"
 ACRA_DATASET_ID = "d_3f960c10fed6145404ca7b821f263b87"
 ACRA_RAW_NAME = "acra_registered_entities.csv"
+SLA_DWELLING_SOURCE_KEY = "sla_dwelling_information"
+SLA_DWELLING_DATASET_ID = "d_e4495201ba4f77fa2ef9855bad6d2cd1"
+SLA_DWELLING_RAW_NAME = "sla_dwelling_information.geojson"
 OFFICIAL_CURRENT_PARQUET = PROCESSED_DIR / "postal_universe_official_current.parquet"
 OFFICIAL_CURRENT_SUMMARY = PROCESSED_DIR / "postal_universe_official_current_summary.json"
 
@@ -188,6 +191,7 @@ def find_raw_file(pattern: str) -> Path:
 def source_priority(source_key: str) -> int:
     return {
         "hdb_existing_building": 10,
+        SLA_DWELLING_SOURCE_KEY: 15,
         "osm_addr_postcode": 20,
         ONEMAP_2020_SOURCE_KEY: 30,
         ACRA_SOURCE_KEY: 90,
@@ -297,6 +301,46 @@ def ensure_acra_raw(download_missing: bool) -> Path:
             "Entities Registered with ACRA",
             initiate_url,
             ACRA_RAW_NAME,
+            response.content,
+        )
+
+
+def ensure_sla_dwelling_raw(download_missing: bool) -> Path:
+    path = raw_file_from_manifest(SLA_DWELLING_SOURCE_KEY, SLA_DWELLING_RAW_NAME)
+    if path is not None:
+        return path
+
+    tmp_path = TMP_DIR / "sla_dwelling_information.geojson"
+    if tmp_path.is_file():
+        return write_download_to_hashed_raw(
+            SLA_DWELLING_SOURCE_KEY,
+            "SLA Dwelling Information",
+            f"https://api-open.data.gov.sg/v1/public/api/datasets/{SLA_DWELLING_DATASET_ID}/initiate-download",
+            SLA_DWELLING_RAW_NAME,
+            tmp_path.read_bytes(),
+        )
+
+    if not download_missing:
+        raise FileNotFoundError(
+            f"{SLA_DWELLING_SOURCE_KEY} not in raw manifest; rerun with --download-missing"
+        )
+
+    initiate_url = f"https://api-open.data.gov.sg/v1/public/api/datasets/{SLA_DWELLING_DATASET_ID}/initiate-download"
+    with httpx.Client(timeout=60.0, follow_redirects=True, headers={"User-Agent": USER_AGENT}) as c:
+        initiate = c.get(initiate_url)
+        initiate.raise_for_status()
+        download_url = str(initiate.json().get("data", {}).get("url", ""))
+        if not download_url:
+            raise ValueError(
+                f"data.gov.sg did not return a download URL for {SLA_DWELLING_DATASET_ID}"
+            )
+        response = c.get(download_url)
+        response.raise_for_status()
+        return write_download_to_hashed_raw(
+            SLA_DWELLING_SOURCE_KEY,
+            "SLA Dwelling Information",
+            initiate_url,
+            SLA_DWELLING_RAW_NAME,
             response.content,
         )
 
@@ -419,6 +463,51 @@ def iter_hdb_existing_building_rows(path: Path) -> tuple[list[SourceRow], Source
         records_with_coordinates=len(coordinate_postals),
         path=display_path(path),
         sha256=sha256_file(path),
+    )
+
+
+def iter_sla_dwelling_rows(path: Path) -> tuple[list[SourceRow], SourceStats]:
+    gdf = gpd.read_file(path).to_crs("EPSG:3414")
+    rows: list[SourceRow] = []
+    seen: set[str] = set()
+    emitted: set[str] = set()
+    coordinate_postals: set[str] = set()
+    for _, row in gdf.iterrows():
+        postal = normalize_postal_code(row.get("POSTAL_CODE"))
+        if postal is None or row.geometry is None or row.geometry.is_empty:
+            continue
+        seen.add(postal)
+        point = row.geometry.representative_point()
+        lat, lon = xy_to_lat_lon(float(point.x), float(point.y))
+        if not valid_singapore_lat_lon(lat, lon):
+            continue
+        coordinate_postals.add(postal)
+        if postal in emitted:
+            continue
+        emitted.add(postal)
+        block = str(row.get("HOUSE_BLK_NO", "")).strip()
+        street = str(row.get("STREET_NAME", "")).strip()
+        rows.append(
+            SourceRow(
+                postal_code=postal,
+                source_key=SLA_DWELLING_SOURCE_KEY,
+                priority=15,
+                lat=lat,
+                lon=lon,
+                x=float(point.x),
+                y=float(point.y),
+                address=" ".join(part for part in (block, street) if part) or None,
+                road_name=street or None,
+            )
+        )
+    return rows, SourceStats(
+        source_key=SLA_DWELLING_SOURCE_KEY,
+        raw_records=len(gdf),
+        valid_unique_postals=len(seen),
+        records_with_coordinates=len(coordinate_postals),
+        path=display_path(path),
+        sha256=sha256_file(path),
+        url=f"https://data.gov.sg/datasets/{SLA_DWELLING_DATASET_ID}/view",
     )
 
 
@@ -609,6 +698,7 @@ def official_current_cache() -> tuple[list[SourceRow], list[SourceStats]] | None
     stats_by_key = {stat.source_key: stat for stat in stats}
     expected_hashes = {
         "hdb_existing_building": manifest_sha256("building_points"),
+        SLA_DWELLING_SOURCE_KEY: manifest_sha256(SLA_DWELLING_SOURCE_KEY),
         "osm_addr_postcode": manifest_sha256("osm_extract"),
     }
     for source_key, expected_hash in expected_hashes.items():
@@ -671,6 +761,18 @@ def build_universe(
         print(
             f"[postal-universe] HDB: {hdb_stats.valid_unique_postals} unique, "
             f"{hdb_stats.records_with_coordinates} with coordinates",
+            flush=True,
+        )
+
+        print("[postal-universe] loading SLA dwelling postals...", flush=True)
+        sla_dwelling_rows, sla_dwelling_stats = iter_sla_dwelling_rows(
+            ensure_sla_dwelling_raw(download_missing)
+        )
+        all_rows.extend(sla_dwelling_rows)
+        stats.append(sla_dwelling_stats)
+        print(
+            f"[postal-universe] SLA Dwelling: {sla_dwelling_stats.valid_unique_postals} unique, "
+            f"{sla_dwelling_stats.records_with_coordinates} with coordinates",
             flush=True,
         )
 

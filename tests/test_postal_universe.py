@@ -6,9 +6,11 @@ from pathlib import Path
 from pipeline.postal_universe import (
     ACRA_SOURCE_KEY,
     ONEMAP_2020_SOURCE_KEY,
+    SLA_DWELLING_SOURCE_KEY,
     SourceRow,
     iter_acra_rows,
     iter_onemap_2020_rows,
+    iter_sla_dwelling_rows,
     merge_source_rows,
     normalize_postal_code,
 )
@@ -85,6 +87,44 @@ def test_iter_acra_rows_filters_registered_policy(tmp_path: Path):
     assert registered_stats.valid_unique_postals == 1
     assert {row.postal_code for row in all_rows} == {"189648", "670481"}
     assert all_stats.valid_unique_postals == 2
+
+
+def test_iter_sla_dwelling_rows_extracts_postal_coordinates(tmp_path: Path):
+    path = tmp_path / "sla_dwelling_information.geojson"
+    payload = {
+        "type": "FeatureCollection",
+        "name": "SLA_DWELLING_INFORMATION_PUB",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.870820413, 1.408262367]},
+                "properties": {
+                    "POSTAL_CODE": "798409",
+                    "HOUSE_BLK_NO": "6",
+                    "STREET_NAME": "OXFORD STREET",
+                    "D_TYPE": "Terrace House",
+                    "NO_OF_UNITS": 1,
+                },
+            },
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.849615, 1.275804635]},
+                "properties": {"POSTAL_CODE": "bad"},
+            },
+        ],
+    }
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    rows, stats = iter_sla_dwelling_rows(path)
+
+    assert stats.source_key == SLA_DWELLING_SOURCE_KEY
+    assert stats.raw_records == 2
+    assert stats.valid_unique_postals == 1
+    assert stats.records_with_coordinates == 1
+    assert rows[0].postal_code == "798409"
+    assert rows[0].source_key == SLA_DWELLING_SOURCE_KEY
+    assert rows[0].road_name == "OXFORD STREET"
+    assert rows[0].address == "6 OXFORD STREET"
 
 
 def test_merge_source_rows_prefers_current_coordinates_and_keeps_source_membership():

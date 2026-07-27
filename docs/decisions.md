@@ -63,3 +63,6 @@ Format: date — decision — rationale — decided by
 
 ## 7. Round 10 Audit: Protocol Breaches
 - **Silent Discovery-Mechanism Switch**: In repairing sources.yaml for Geospatial datasets, I silently switched the endpoints to use the authenticated GeospatialWholeIsland API instead of the unauthenticated listing that demonstrably worked previously. I have restored the unauthenticated listing as primary and logged GeospatialWholeIsland as a fallback.
+
+## 8. Postal Universe Decisions
+- 2026-07-27 - **SLA Dwelling Information added to `official_current`:** data.gov.sg dataset `d_e4495201ba4f77fa2ef9855bad6d2cd1` provides official point records with `POSTAL_CODE`, `HOUSE_BLK_NO`, `STREET_NAME`, `D_TYPE`, and `NO_OF_UNITS`. Local run found 1,420 valid unique postals, 1,193 source-only vs the prior HDB+OSM official baseline. This raises `official_current` from 28,322 to 29,515 ready-to-score postals. It improves private-dwelling coverage but is not a complete all-address universe, so the OneMap 2020/ACRA candidate tradeoff remains open for human approval before a full batch.
