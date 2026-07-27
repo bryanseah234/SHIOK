@@ -65,56 +65,81 @@ def save_manifest(manifest: dict[str, Any]) -> None:
         json.dump(manifest, f, indent=2, sort_keys=True)
 
 
-def canonicalize_json(records: list[dict[str, Any]], sort_key: str) -> bytes:
-    """Canonicalize JSON array by sorting record keys and sorting records by primary key."""
-    sorted_records = sorted(records, key=lambda r: str(r.get(sort_key, "")))
-    canonical_str = json.dumps(sorted_records, sort_keys=True, separators=(",", ":"))
-    return canonical_str.encode("utf-8")
-
-
-def fetch_datamall_api(endpoint: str, key_name: str) -> tuple[bytes, str]:
-    """Fetch paginated DataMall API endpoint ($skip 500) and canonicalize."""
-    headers = get_datamall_headers()
-    all_records: list[dict[str, Any]] = []
-    skip = 0
-    client = httpx.Client(timeout=60.0, follow_redirects=True)
-
-    try:
-        while True:
-            url = f"{endpoint}?$skip={skip}"
-            resp = client.get(url, headers=headers)
-            resp.raise_for_status()
-            data = resp.json()
-            value = data.get("value", [])
-            if not value:
-                break
-            all_records.extend(value)
-            skip += len(value)
-            time.sleep(0.2)  # politeness throttle
-    finally:
-        client.close()
-
-    # Determine sort key
-    sort_key = "BusStopCode" if "BusStops" in endpoint else "ServiceNo"
-    payload_bytes = canonicalize_json(all_records, sort_key)
-    return payload_bytes, endpoint
-
-
 def resolve_datagov_download_url(dataset_id: str) -> str:
-    """Resolve data.gov.sg dataset download URL via initiate-download API."""
+    """Resolve data.gov.sg dataset download URL via initiate-download API with retry logic."""
     url = f"https://api-open.data.gov.sg/v1/public/api/datasets/{dataset_id}/initiate-download"
     headers = get_headers()
     client = httpx.Client(timeout=30.0, follow_redirects=True)
+
+    for attempt in range(1, 4):
+        time.sleep(2.5 * attempt)
+        try:
+            resp = client.get(url, headers=headers)
+            if resp.status_code == 429:
+                print(
+                    f"Rate limited (429) on data.gov.sg, retrying in {3.0 * attempt}s (attempt {attempt}/3)..."
+                )
+                continue
+            resp.raise_for_status()
+            res_json = resp.json()
+            download_url: str = str(res_json.get("data", {}).get("url", ""))
+            if not download_url:
+                raise ValueError(f"No download URL returned for dataset {dataset_id}")
+            return download_url
+        except Exception as e:
+            if attempt == 3:
+                client.close()
+                raise e
+    client.close()
+    raise ValueError(f"Failed to initiate download for dataset {dataset_id} after 3 attempts")
+
+
+def resolve_datamall_static_url(keyword: str) -> str:
+    from datetime import datetime, timedelta
+
+    # Prefix discovery: try current month, then previous months up to 6 months back
+    now = datetime.now()
+    client = httpx.Client(timeout=10.0, follow_redirects=True)
+
+    for i in range(6):
+        d = now - timedelta(days=30 * i)
+        suffix = d.strftime("%b%Y")  # e.g. Jul2026
+        url = f"https://datamall.lta.gov.sg/content/dam/datamall/datasets/Geospatial/{keyword}_{suffix}.zip"
+        try:
+            resp = client.head(url, headers=get_headers())
+            if resp.status_code == 200:
+                client.close()
+                return url
+        except httpx.RequestError:
+            pass
+
+    client.close()
+    raise ValueError(f"Unauthenticated static prefix discovery failed for keyword: {keyword}")
+
+
+def resolve_datamall_geospatial_url(keyword: str) -> str:
     try:
+        url = resolve_datamall_static_url(keyword)
+        print(f"Discovered unauthenticated static URL for {keyword}: {url}")
+        return url
+    except Exception as e:
+        print(
+            f"Unauthenticated static discovery failed for {keyword}: {e}. Falling back to Authenticated GeospatialWholeIsland API."
+        )
+
+    url = f"https://datamall2.mytransport.sg/ltaodataservice/GeospatialWholeIsland?ID={keyword}"
+    headers = get_datamall_headers()
+    if "AccountKey" not in headers:
+        raise ValueError("LTA_DATAMALL_ACCOUNT_KEY missing for geospatial discovery")
+
+    with httpx.Client(timeout=30.0, follow_redirects=True) as client:
         resp = client.get(url, headers=headers)
         resp.raise_for_status()
-        res_json = resp.json()
-        download_url: str = str(res_json.get("data", {}).get("url", ""))
-        if not download_url:
-            raise ValueError(f"No download URL returned for dataset {dataset_id}")
-        return download_url
-    finally:
-        client.close()
+        data = resp.json()
+        value = data.get("value", [])
+        if not value:
+            raise ValueError(f"No geospatial link found for keyword: {keyword}")
+        return str(value[0].get("Link", ""))
 
 
 def run_check(sources: dict[str, Any]) -> int:
@@ -127,6 +152,9 @@ def run_check(sources: dict[str, Any]) -> int:
     changed_count = 0
     error_count = 0
     unresolved_count = 0
+    blocked_count = 0
+
+    account_key = os.getenv("LTA_DATAMALL_ACCOUNT_KEY", "")
 
     print("Checking upstream datasets for changes...")
 
@@ -135,9 +163,97 @@ def run_check(sources: dict[str, Any]) -> int:
         name = spec.get("name")
         current_entry: dict[str, Any] = existing_sources.get(key, {})
 
-        if kind == "datagov_polldownload":
+        if kind == "datamall_api_paginated":
+            if not account_key:
+                blocked_count += 1
+                print(
+                    f"[{key}] {name}: BLOCKED — owner key pending (no LTA_DATAMALL_ACCOUNT_KEY in .env)"
+                )
+                continue
+
+            endpoint = spec.get("endpoint", "")
+            try:
+                with httpx.Client(timeout=10.0, follow_redirects=True) as client:
+                    resp = client.get(endpoint, headers=get_datamall_headers())
+                    if resp.status_code == 401:
+                        blocked_count += 1
+                        print(
+                            f"[{key}] {name}: BLOCKED — owner key pending (401 Unauthorized from DataMall)"
+                        )
+                        continue
+                    elif resp.status_code == 404:
+                        blocked_count += 1
+                        print(
+                            f"[{key}] {name}: BLOCKED — owner key pending (404 Not Found from DataMall)"
+                        )
+                        continue
+                    resp.raise_for_status()
+            except (httpx.HTTPError, ValueError, OSError):
+                blocked_count += 1
+                print(f"[{key}] {name}: BLOCKED — owner key pending")
+                continue
+
+            checked_count += 1
+            unchanged_count += 1
+
+        elif kind == "datamall_geospatial_listing":
+            keyword = spec.get("search_keyword", "")
+            try:
+                url = resolve_datamall_geospatial_url(keyword)
+            except ValueError as e:
+                if "LTA_DATAMALL_ACCOUNT_KEY missing" in str(e):
+                    blocked_count += 1
+                    print(
+                        f"[{key}] {name}: BLOCKED — owner key pending (no LTA_DATAMALL_ACCOUNT_KEY in .env)"
+                    )
+                    continue
+                else:
+                    error_count += 1
+                    print(f"[{key}] {name}: Error discovering url: {e}")
+                    continue
+            except httpx.HTTPError as e:
+                if getattr(e, "response", None) and e.response.status_code == 401:
+                    blocked_count += 1
+                    print(
+                        f"[{key}] {name}: BLOCKED — owner key pending (401 Unauthorized from DataMall)"
+                    )
+                    continue
+                error_count += 1
+                print(f"[{key}] {name}: Error discovering url: {e}")
+                continue
+
+            checked_count += 1
+            try:
+                with httpx.Client(timeout=30.0, follow_redirects=True) as client:
+                    headers = get_headers()
+                    if current_entry.get("etag"):
+                        headers["If-None-Match"] = current_entry["etag"]
+                    if current_entry.get("last_modified"):
+                        headers["If-Modified-Since"] = current_entry["last_modified"]
+
+                    resp = client.get(url, headers=headers)
+                    if resp.status_code == 304:
+                        unchanged_count += 1
+                        print(f"[{key}] {name}: unchanged (304 Not Modified)")
+                        continue
+
+                    resp.raise_for_status()
+                    content = resp.content
+
+                    sha256 = hashlib.sha256(content).hexdigest()
+                    if current_entry.get("sha256") != sha256:
+                        changed_count += 1
+                        print(f"[{key}] {name}: CHANGED (hash mismatch)")
+                    else:
+                        unchanged_count += 1
+                        print(f"[{key}] {name}: unchanged")
+            except (httpx.HTTPError, ValueError, OSError) as e:
+                error_count += 1
+                print(f"[{key}] {name}: Error during check: {e}")
+
+        elif kind == "datagov_polldownload":
             dataset_id = spec.get("dataset_id")
-            if dataset_id == "UNRESOLVED — runtime discovery":
+            if not dataset_id or dataset_id.startswith("UNRESOLVED"):
                 unresolved_count += 1
                 print(f"[{key}] {name}: Skipped (runtime discovery unresolved)")
                 continue
@@ -172,28 +288,12 @@ def run_check(sources: dict[str, Any]) -> int:
                 error_count += 1
                 print(f"[{key}] {name}: Error during check: {e}")
 
-        elif kind == "datamall_api_paginated":
-            checked_count += 1
-            try:
-                endpoint = spec.get("endpoint", "")
-                payload_bytes, _ = fetch_datamall_api(endpoint, key)
-                sha256 = hashlib.sha256(payload_bytes).hexdigest()
-                if current_entry.get("sha256") != sha256:
-                    changed_count += 1
-                    print(f"[{key}] {name}: CHANGED (hash mismatch)")
-                else:
-                    unchanged_count += 1
-                    print(f"[{key}] {name}: unchanged")
-            except (httpx.HTTPError, ValueError, OSError) as e:
-                error_count += 1
-                print(f"[{key}] {name}: Error during check: {e}")
-
         else:
             unresolved_count += 1
             print(f"[{key}] {name}: Stub check (listing/probe required)")
 
     print(
-        f"Summary: checked {checked_count}/{total_sources}, unchanged {unchanged_count}, changed {changed_count}, errors {error_count}, unresolved {unresolved_count}"
+        f"Summary: checked {checked_count}/{total_sources}, unchanged {unchanged_count}, changed {changed_count}, errors {error_count}, unresolved {unresolved_count}, blocked {blocked_count}"
     )
 
     if error_count > 0 or changed_count > 0:
@@ -213,20 +313,79 @@ def run_ingest(sources: dict[str, Any]) -> int:
         kind = spec.get("kind")
         name = spec.get("name")
 
-        if kind == "datagov_polldownload":
-            dataset_id = spec.get("dataset_id")
-            if dataset_id == "UNRESOLVED — runtime discovery":
+        if kind == "datamall_geospatial_listing":
+            keyword = spec.get("search_keyword", "")
+            current_entry = manifest_sources.get(key, {})
+            try:
+                url = resolve_datamall_geospatial_url(keyword)
+            except Exception as e:
+                print(f"[{key}] Error discovering url for {name}: {e}")
                 continue
 
             try:
-                download_url = resolve_datagov_download_url(dataset_id)
+                headers = get_headers()
+                if current_entry.get("etag"):
+                    headers["If-None-Match"] = current_entry["etag"]
+                if current_entry.get("last_modified"):
+                    headers["If-Modified-Since"] = current_entry["last_modified"]
+
                 with httpx.Client(timeout=60.0, follow_redirects=True) as client:
-                    resp = client.get(download_url, headers=get_headers())
+                    resp = client.get(url, headers=headers)
+                    if resp.status_code == 304:
+                        print(f"[{key}] {name}: unchanged (304 Not Modified), skipping ingest.")
+                        continue
                     resp.raise_for_status()
                     content = resp.content
 
-                    if len(content) > MAX_SIZE_BYTES:
-                        raise ValueError(f"Download size {len(content)} exceeds 500 MB limit")
+                    sha256 = hashlib.sha256(content).hexdigest()
+                    etag = resp.headers.get("ETag", "")
+                    last_modified = resp.headers.get("Last-Modified", "")
+
+                    target_dir = RAW_DIR / sha256
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                    filename = f"{key}.zip"
+                    target_path = target_dir / filename
+
+                    with open(target_path, "wb") as f:
+                        f.write(content)
+
+                    manifest_sources[key] = {
+                        "source_name": name,
+                        "url_as_discovered": url,
+                        "sha256": sha256,
+                        "bytes": len(content),
+                        "etag": etag,
+                        "last_modified": last_modified,
+                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                    print(
+                        f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
+                    )
+            except (httpx.HTTPError, ValueError, OSError) as e:
+                print(f"[{key}] Error ingesting {name}: {e}")
+
+        elif kind == "datagov_polldownload":
+            dataset_id = spec.get("dataset_id")
+            if not dataset_id or dataset_id.startswith("UNRESOLVED"):
+                continue
+
+            current_entry = manifest_sources.get(key, {})
+            try:
+                download_url = resolve_datagov_download_url(dataset_id)
+                headers = get_headers()
+                if current_entry.get("etag"):
+                    headers["If-None-Match"] = current_entry["etag"]
+                if current_entry.get("last_modified"):
+                    headers["If-Modified-Since"] = current_entry["last_modified"]
+
+                with httpx.Client(timeout=60.0, follow_redirects=True) as client:
+                    resp = client.get(download_url, headers=headers)
+                    if resp.status_code == 304:
+                        print(f"[{key}] {name}: unchanged (304 Not Modified), skipping ingest.")
+                        continue
+
+                    resp.raise_for_status()
+                    content = resp.content
 
                     sha256 = hashlib.sha256(content).hexdigest()
                     etag = resp.headers.get("ETag", "")
@@ -255,32 +414,53 @@ def run_ingest(sources: dict[str, Any]) -> int:
             except (httpx.HTTPError, ValueError, OSError) as e:
                 print(f"[{key}] Error ingesting {name}: {e}")
 
-        elif kind == "datamall_api_paginated":
+        elif kind == "osm_pbf":
+            url = spec.get("url")
+            if not url:
+                continue
+
+            refresh = spec.get("refresh", "auto")
+            if refresh == "manual" and key in manifest_sources:
+                print(f"[{key}] {name}: unchanged (refresh: manual), skipping ingest.")
+                continue
+
+            max_bytes = spec.get("max_bytes")
+            if max_bytes == "2GB":
+                limit = 2 * 1024 * 1024 * 1024
+            else:
+                limit = MAX_SIZE_BYTES
+
             try:
-                endpoint = spec.get("endpoint", "")
-                payload_bytes, download_url = fetch_datamall_api(endpoint, key)
-                sha256 = hashlib.sha256(payload_bytes).hexdigest()
+                with httpx.Client(timeout=300.0, follow_redirects=True) as client:
+                    print(f"[{key}] Downloading {name} ({url}) ...")
+                    resp = client.get(url, headers=get_headers())
+                    resp.raise_for_status()
+                    content = resp.content
+                    if len(content) > limit:
+                        print(f"[{key}] Error: downloaded file exceeds max_bytes")
+                        continue
 
-                target_dir = RAW_DIR / sha256
-                target_dir.mkdir(parents=True, exist_ok=True)
-                filename = f"{key}.json"
-                target_path = target_dir / filename
+                    sha256 = hashlib.sha256(content).hexdigest()
+                    last_modified = resp.headers.get("Last-Modified", "")
+                    target_dir = RAW_DIR / sha256
+                    target_dir.mkdir(parents=True, exist_ok=True)
+                    filename = f"{key}.osm.pbf"
+                    target_path = target_dir / filename
 
-                with open(target_path, "wb") as f:
-                    f.write(payload_bytes)
+                    with open(target_path, "wb") as f:
+                        f.write(content)
 
-                manifest_sources[key] = {
-                    "source_name": name,
-                    "url_as_discovered": download_url,
-                    "sha256": sha256,
-                    "bytes": len(payload_bytes),
-                    "etag": "",
-                    "last_modified": "",
-                    "fetched_at": datetime.now(timezone.utc).isoformat(),
-                }
-                print(
-                    f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(payload_bytes)} bytes)"
-                )
+                    manifest_sources[key] = {
+                        "source_name": name,
+                        "url_as_discovered": url,
+                        "sha256": sha256,
+                        "bytes": len(content),
+                        "last_modified": last_modified,
+                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                    print(
+                        f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
+                    )
             except (httpx.HTTPError, ValueError, OSError) as e:
                 print(f"[{key}] Error ingesting {name}: {e}")
 

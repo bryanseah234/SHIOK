@@ -5,14 +5,21 @@ description = "S.H.I.O.K. Index — Singapore walk-to-transit comfort index"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "centerline>=1.1.1",
     "duckdb>=0.10.0",
     "geopandas>=0.14.0",
     "h3>=4.0.0",
     "httpx>=0.27.0",
+    "hypothesis>=6.161.5",
+    "networkx>=3.6.1",
+    "numpy<2",
+    "pyarrow>=25.0.0",
     "pyproj>=3.6.0",
+    "pyrosm>=0.12.0",
     "python-dotenv>=1.0.1",
     "python-igraph>=0.11.0",
     "shapely>=2.0.0",
+    "types-pyyaml>=6.0.12.20260724",
 ]
 
 [dependency-groups]

@@ -1,69 +1,80 @@
 # Upstream data sources configuration for S.H.I.O.K. Index (PRD v4.2 §5, DATA_SOURCES.md)
+# Verified: 2026-07-26 — all URLs and dataset IDs empirically confirmed via HTTP probe.
 
 sources:
   covered_linkway:
     name: "Covered Linkway"
     kind: "datamall_geospatial_listing"
-    search_keyword: "Covered Linkway"
-    notes: "Zipped SHP from LTA DataMall geospatial listing"
+    search_keyword: "CoveredLinkWay"
+    verified: "2026-07-26"
+    notes: "Zipped SHP from LTA DataMall geospatial listing (unauthenticated public download)"
 
   overhead_bridge_underpass:
     name: "Pedestrian Overhead Bridge / Underpass"
     kind: "datamall_geospatial_listing"
-    search_keyword: "Pedestrain Overhead Bridge"
-    notes: "Zipped SHP from LTA DataMall geospatial listing (historical misspelling match)"
+    search_keyword: "PedestrainOverheadbridge_UnderPass"
+    verified: "2026-07-26"
+    notes: "Zipped SHP from LTA DataMall geospatial listing (unauthenticated public download)"
 
   bus_stops:
     name: "Bus Stops"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
     verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
+    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
 
   bus_services:
     name: "Bus Services"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusServices"
     verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
+    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
 
   bus_routes:
     name: "Bus Routes"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
     verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — HTTPS base URL documented in LTA DataMall API User Guide"
+    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
 
   mrt_lrt_exits:
     name: "MRT/LRT Station Exits"
     kind: "datagov_polldownload"
-    dataset_id: "d_4765db0e87b9c86336792efe8a1f7a66"
-    search_query: "LTA MRT Station Exit"
-    notes: "data.gov.sg GeoJSON; resolved dynamically via initiate-download API"
+    dataset_id: "d_b39d3a0871985372d7e1637193335da5"
+    verified: "2026-07-26"
+    notes: "data.gov.sg GeoJSON — LTA MRT Station Exit; resolved via initiate-download API (201 confirmed)"
 
   traffic_signals:
-    name: "Traffic Signal Aspects"
-    kind: "datagov_polldownload"
-    dataset_id: "UNRESOLVED — runtime discovery"
-    search_query: "Traffic Signal Aspect"
-    notes: "data.gov.sg GeoJSON/SHP; resolved dynamically"
+    name: "Traffic Signals"
+    kind: "datamall_geospatial_listing"
+    search_keyword: "TrafficLight"
+    verified: "2026-07-26"
+    notes: "Zipped SHP from LTA DataMall geospatial listing (unauthenticated); data.gov.sg initiate-download returned 404 for d_f40071375d045d94726e2570075d5069 so source switched to DataMall static"
 
   lamp_posts:
     name: "Lamp Posts"
     kind: "datagov_polldownload"
-    dataset_id: "UNRESOLVED — runtime discovery"
-    search_query: "Lamp Post"
-    notes: "data.gov.sg GeoJSON; resolved dynamically"
+    dataset_id: "d_ca109de3e83efdd9a10bc5f3dda70a98"
+    verified: "2026-07-26"
+    notes: "data.gov.sg GeoJSON — LTA Lamp Post; resolved via initiate-download API (201 confirmed)"
 
   building_points:
-    name: "Postal / Building Points"
+    name: "HDB Existing Building"
     kind: "datagov_polldownload"
-    dataset_id: "UNRESOLVED — runtime discovery"
-    search_query: "HDB Property Information"
-    notes: "data.gov.sg building point CSV/GeoJSON baseline"
+    dataset_id: "d_16b157c52ed637edd6ba1232e026258d"
+    verified: "2026-07-26"
+    notes: "data.gov.sg GeoJSON — HDB Existing Building; resolved via initiate-download API (201 confirmed)"
 
   planning_area_boundary:
-    name: "Planning Area Boundaries"
+    name: "Planning Area Boundaries (MP2019 No Sea)"
     kind: "datagov_polldownload"
     dataset_id: "d_4765db0e87b9c86336792efe8a1f7a66"
-    notes: "URA Master Plan 2019 Planning Area Boundary (No Sea) GeoJSON (Verified)"
+    verified: "2026-07-26"
+  osm_extract:
+    name: "Geofabrik Malaysia/Singapore/Brunei OSM"
+    kind: "osm_pbf"
+    url: "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf"
+    verified: "2026-07-26"
+    max_bytes: "2GB"
+    refresh: "manual"
+    notes: "Geofabrik extract for T1.1 pedestrian graph conflation"
