@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import { DATA_BASE, fetchGeomForPostal, fetchManifest, fetchScoreForPostal } from "../lib/data";
+import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal } from "../lib/data";
 import type { Manifest, PostalGeom, ScoreRecord, Subscores } from "../lib/types";
 import { RouteEvidenceMap, type RouteDisplayMode, type RouteMapItem } from "../components/route-evidence-map";
 import styles from "./page.module.css";
@@ -20,8 +20,6 @@ interface LoadedSelection {
   score: ScoreRecord | null;
   geom: PostalGeom | null;
 }
-
-type CompareSlot = "primary" | "comparison";
 
 const SUBSCORE_LABELS: Array<[keyof Subscores, string]> = [
   ["access", "Access"],
@@ -58,10 +56,6 @@ function toProperCase(value: string): string {
     .replace(/\bHdb\b/g, "HDB");
 }
 
-function formatState(value: string): string {
-  return toProperCase(value.replaceAll("_", " "));
-}
-
 function scoreClass(total: number | null): string {
   if (total === null) return styles.scoreMuted;
   if (total >= 80) return styles.scoreGood;
@@ -86,16 +80,11 @@ function routeSame(selection: LoadedSelection | null): boolean {
   );
 }
 
-function scoreTitle(selection: LoadedSelection | null): string {
-  if (!selection) return "Search Singapore";
-  return resultTitle(selection.result);
+function postalTitle(selection: LoadedSelection): string {
+  return `Postal ${selection.result.POSTAL}`;
 }
 
-function buildRouteItems(
-  primary: LoadedSelection | null,
-  comparison: LoadedSelection | null,
-  compareMode: boolean
-): RouteMapItem[] {
+function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
   const items: RouteMapItem[] = [];
   if (primary?.geom) {
     items.push({
@@ -103,14 +92,6 @@ function buildRouteItems(
       label: resultTitle(primary.result),
       geom: primary.geom,
       color: "#007a78",
-    });
-  }
-  if (compareMode && comparison?.geom) {
-    items.push({
-      id: "comparison",
-      label: resultTitle(comparison.result),
-      geom: comparison.geom,
-      color: "#b45309",
     });
   }
   return items;
@@ -170,38 +151,17 @@ function ScoreCard({
   manifest,
   routeMode,
   setRouteMode,
-  compareMode,
-  slotLabel,
-  isActive = false,
-  onActivate,
 }: {
   selection: LoadedSelection | null;
   manifest: Manifest | null;
   routeMode: RouteDisplayMode;
   setRouteMode: (mode: RouteDisplayMode) => void;
-  compareMode: boolean;
-  slotLabel?: string;
-  isActive?: boolean;
-  onActivate?: () => void;
 }) {
-  const cardClass = `${styles.scoreCard} ${isActive ? styles.scoreCardActive : ""}`;
-  const slotControl = slotLabel ? (
-    <div className={styles.cardSlotRow}>
-      <span>{slotLabel}</span>
-      {onActivate && (
-        <button type="button" onClick={onActivate}>
-          {isActive ? "Searching here" : "Search here"}
-        </button>
-      )}
-    </div>
-  ) : null;
-
   if (!selection) {
     return (
-      <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
-        {slotControl}
+      <section className={styles.scoreCard} aria-label="Score panel">
         <div className={styles.emptyState}>
-          <strong>{slotLabel ? `Add postal ${slotLabel}` : "Find a postal code"}</strong>
+          <strong>Find a postal code</strong>
           <span>Search any Singapore address to see its walk-to-transit comfort score.</span>
         </div>
       </section>
@@ -211,9 +171,8 @@ function ScoreCard({
   const { score } = selection;
   if (!score) {
     return (
-      <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
-        {slotControl}
-        <h2>{scoreTitle(selection)}</h2>
+      <section className={styles.scoreCard} aria-label="Score panel">
+        <h2>{postalTitle(selection)}</h2>
         <div className={styles.emptyState}>
           <strong>Not yet scored</strong>
           <span>This postal is not in the current score bundle.</span>
@@ -234,13 +193,10 @@ function ScoreCard({
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
 
   return (
-    <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
-      {slotControl}
+    <section className={styles.scoreCard} aria-label="Score panel">
       <div className={styles.scoreHeader}>
         <div>
-          <p className={styles.eyebrow}>{formatState(score.state)}</p>
-          <h2>{scoreTitle(selection)}</h2>
-          <p>{resultSubtitle(selection.result)}</p>
+          <h2>{postalTitle(selection)}</h2>
         </div>
         <div className={`${styles.scoreBadge} ${scoreClass(score.total)}`}>
           <strong>{formatScore(score.total)}</strong>
@@ -256,7 +212,7 @@ function ScoreCard({
       <RouteModeControl
         mode={routeMode}
         setMode={setRouteMode}
-        disabled={compareMode}
+        disabled={false}
         sameRoute={sameRoute}
       />
 
@@ -319,27 +275,16 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [primary, setPrimary] = useState<LoadedSelection | null>(null);
-  const [comparison, setComparison] = useState<LoadedSelection | null>(null);
-  const [activeSlot, setActiveSlot] = useState<CompareSlot>("primary");
-  const [compareMode, setCompareMode] = useState(false);
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const mapRoutes = useMemo(
-    () => buildRouteItems(primary, comparison, compareMode),
-    [primary, comparison, compareMode]
-  );
-  const mapRouteMode = compareMode ? "shiokest" : routeSame(primary) ? "shiokest" : routeMode;
-  const showDetailOverlay = compareMode || Boolean(primary);
+  const mapRoutes = useMemo(() => buildRouteItems(primary), [primary]);
+  const mapRouteMode = routeSame(primary) ? "shiokest" : routeMode;
+  const showDetailOverlay = Boolean(primary);
 
-  const storeSelection = (slot: CompareSlot, selection: LoadedSelection) => {
-    if (slot === "comparison") setComparison(selection);
-    else setPrimary(selection);
-  };
-
-  const loadSelection = async (result: SearchResult, slot: CompareSlot = activeSlot) => {
+  const loadSelection = async (result: SearchResult) => {
     const postal = normalizePostal(result.POSTAL);
     if (!postal) {
       setError("Selected result has no usable postal code.");
@@ -356,7 +301,7 @@ export default function Home() {
         fetchGeomForPostal(postal, Number.isFinite(lat) ? lat : undefined, Number.isFinite(lng) ? lng : undefined),
       ]);
       setManifest(loadedManifest);
-      storeSelection(slot, { result: { ...result, POSTAL: postal }, score, geom });
+      setPrimary({ result: { ...result, POSTAL: postal }, score, geom });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load score data.");
     } finally {
@@ -401,35 +346,24 @@ export default function Home() {
     }
   };
 
-  const toggleCompare = () => {
-    const next = !compareMode;
-    setCompareMode(next);
-    if (next) {
-      setActiveSlot(primary ? "comparison" : "primary");
-      setRouteMode("shiokest");
-    } else {
-      setActiveSlot("primary");
-    }
-  };
-
   return (
     <main className={styles.appShell}>
-      <RouteEvidenceMap routes={mapRoutes} mode={mapRouteMode} compareMode={compareMode} />
+      <RouteEvidenceMap routes={mapRoutes} mode={mapRouteMode} />
 
       <section className={styles.searchOverlay} aria-label="Address search">
         <div className={styles.brandRow}>
           <div>
             <h1>S.H.I.O.K. Index</h1>
             <p>Singapore walk-to-transit comfort</p>
+            <p className={styles.sourceLine}>Data: LTA, data.gov.sg, OneMap, OSM</p>
           </div>
-          <span>{DATA_BASE.includes("/mock/") ? "Mock" : "Live data"}</span>
         </div>
 
         <form onSubmit={handleSearch} className={styles.searchForm}>
           <input
             id="postal-search-input"
             type="text"
-            placeholder={compareMode ? `Search for ${activeSlot === "primary" ? "A" : "B"}` : "Search address or postal"}
+            placeholder="Search address or postal"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="Search address or postal"
@@ -438,23 +372,6 @@ export default function Home() {
             {loading ? "Loading" : "Search"}
           </button>
         </form>
-
-        <div className={styles.toolbarRow}>
-          <button
-            type="button"
-            className={compareMode ? styles.toolbarActive : undefined}
-            onClick={toggleCompare}
-            aria-pressed={compareMode}
-          >
-            Compare
-          </button>
-        </div>
-
-        {compareMode && (
-          <div className={styles.compareHint}>
-            Search will fill postal {activeSlot === "primary" ? "A" : "B"}.
-          </div>
-        )}
 
         {error && <div className={styles.errorBox}>{error}</div>}
 
@@ -471,48 +388,18 @@ export default function Home() {
             ))}
           </div>
         )}
-      </section>
 
-      {showDetailOverlay && (
-        <aside className={`${styles.detailOverlay} ${compareMode ? styles.compareDetailOverlay : ""}`}>
-          {compareMode ? (
-            <div className={styles.compareScoreGrid}>
-              <ScoreCard
-                selection={primary}
-                manifest={manifest}
-                routeMode={mapRouteMode}
-                setRouteMode={setRouteMode}
-                compareMode={compareMode}
-                slotLabel="A"
-                isActive={activeSlot === "primary"}
-                onActivate={() => setActiveSlot("primary")}
-              />
-              <ScoreCard
-                selection={comparison}
-                manifest={manifest}
-                routeMode={mapRouteMode}
-                setRouteMode={setRouteMode}
-                compareMode={compareMode}
-                slotLabel="B"
-                isActive={activeSlot === "comparison"}
-                onActivate={() => setActiveSlot("comparison")}
-              />
-            </div>
-          ) : (
+        {showDetailOverlay && (
+          <aside className={styles.detailOverlay}>
             <ScoreCard
               selection={primary}
               manifest={manifest}
               routeMode={mapRouteMode}
               setRouteMode={setRouteMode}
-              compareMode={compareMode}
             />
-          )}
-        </aside>
-      )}
-
-      <footer className={styles.footer}>
-        Data: LTA, data.gov.sg, OneMap, OSM. Free civic project.
-      </footer>
+          </aside>
+        )}
+      </section>
     </main>
   );
 }

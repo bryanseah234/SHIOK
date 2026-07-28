@@ -22,28 +22,33 @@ const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
   [104.13, 1.49],
 ];
 
+const ONE_MAP_TILE_BOUNDS = [103.596, 1.1443, 104.4309, 1.4835] as [number, number, number, number];
+
 const ONE_MAP_STYLE: StyleSpecification = {
   version: 8,
   sources: {
     onemap: {
       type: "raster",
-      tiles: ["https://www.onemap.gov.sg/maps/tiles/Default_HD/{z}/{x}/{y}.png"],
-      tileSize: 256,
+      tiles: ["https://www.onemap.gov.sg/maps/tiles/Grey_HD/{z}/{x}/{y}.png"],
+      tileSize: 128,
+      bounds: ONE_MAP_TILE_BOUNDS,
+      minzoom: 8,
+      maxzoom: 20,
       attribution: "© OneMap, Singapore Land Authority",
     },
   },
   layers: [
     {
+      id: "background",
+      type: "background",
+      paint: {
+        "background-color": "#eef0ed",
+      },
+    },
+    {
       id: "onemap",
       type: "raster",
       source: "onemap",
-      paint: {
-        "raster-opacity": 0.72,
-        "raster-saturation": -0.7,
-        "raster-contrast": -0.25,
-        "raster-brightness-min": 0.08,
-        "raster-brightness-max": 0.92,
-      },
     },
   ],
 };
@@ -102,8 +107,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 8,
-        "line-opacity": 0.82,
+        "line-width": 5.2,
+        "line-opacity": 0.72,
       },
       layout: {
         "line-cap": "round",
@@ -119,9 +124,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#34413d",
-        "line-width": 5.5,
+        "line-width": 3,
         "line-opacity": 0.78,
-        "line-dasharray": [1.1, 1.4],
+        "line-dasharray": [0.75, 1.5],
       },
       layout: {
         "line-cap": "round",
@@ -137,8 +142,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 10,
-        "line-opacity": 0.88,
+        "line-width": 6.8,
+        "line-opacity": 0.76,
       },
       layout: {
         "line-cap": "round",
@@ -154,7 +159,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": ["get", "color"],
-        "line-width": 7,
+        "line-width": 4.4,
         "line-opacity": 0.94,
       },
       layout: {
@@ -171,8 +176,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 11,
-        "line-opacity": 0.9,
+        "line-width": 6.8,
+        "line-opacity": 0.82,
       },
       layout: {
         "line-cap": "round",
@@ -188,9 +193,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 8.5,
+        "line-width": 4.2,
         "line-opacity": 0.96,
-        "line-dasharray": [0.55, 1.05],
+        "line-dasharray": [0.45, 1.25],
       },
       layout: {
         "line-cap": "round",
@@ -277,11 +282,9 @@ function boundsFor(points: [number, number][]): [[number, number], [number, numb
 export function RouteEvidenceMap({
   routes,
   mode,
-  compareMode = false,
 }: {
   routes: RouteMapItem[];
   mode: RouteDisplayMode;
-  compareMode?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -339,15 +342,13 @@ export function RouteEvidenceMap({
       const isCompact = map.getContainer().clientWidth < 700;
       map.fitBounds(routeData.bounds, {
         padding: isCompact
-          ? { top: 230, right: 28, bottom: 360, left: 28 }
-          : compareMode
-            ? { top: 180, right: 70, bottom: 180, left: 70 }
-            : { top: 150, right: 460, bottom: 80, left: 460 },
+          ? { top: 430, right: 28, bottom: 96, left: 28 }
+          : { top: 150, right: 80, bottom: 80, left: 460 },
         duration: 350,
         maxZoom: 18,
       });
     }
-  }, [compareMode, loaded, routeData]);
+  }, [loaded, routeData]);
 
   return (
     <div className={styles.mapShell}>

@@ -6,9 +6,7 @@
   color: #17211f;
 }
 
-.searchOverlay,
-.detailOverlay,
-.footer {
+.searchOverlay {
   position: absolute;
   z-index: 2;
 }
@@ -17,15 +15,17 @@
   top: 18px;
   left: 18px;
   width: min(430px, calc(100vw - 36px));
+  max-height: calc(100vh - 36px);
+  overflow: auto;
   display: grid;
   gap: 10px;
+  padding-right: 2px;
 }
 
 .brandRow,
 .scoreCard,
 .resultList,
-.errorBox,
-.compareHint {
+.errorBox {
   border: 1px solid rgba(62, 75, 70, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
@@ -34,10 +34,6 @@
 }
 
 .brandRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 18px;
   padding: 14px;
 }
 
@@ -61,14 +57,8 @@
   font-size: 13px;
 }
 
-.brandRow span {
-  flex: 0 0 auto;
-  border: 1px solid #cbd7d1;
-  border-radius: 999px;
-  padding: 6px 9px;
-  color: #3d514b;
-  font-size: 12px;
-  font-weight: 700;
+.sourceLine {
+  font-size: 11px !important;
 }
 
 .searchForm {
@@ -79,9 +69,7 @@
 
 .searchForm input,
 .searchForm button,
-.toolbarRow button,
 .segmented button,
-.miniScore,
 .resultList button {
   font: inherit;
 }
@@ -110,37 +98,6 @@
 .searchForm button:disabled {
   cursor: wait;
   opacity: 0.7;
-}
-
-.toolbarRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.toolbarRow button {
-  border: 1px solid rgba(62, 75, 70, 0.24);
-  border-radius: 8px;
-  padding: 8px 10px;
-  color: #20352f;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 24px rgba(20, 33, 29, 0.1);
-  font-size: 13px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.toolbarRow .toolbarActive {
-  border-color: #007a78;
-  color: #005f5d;
-  background: #e6f5f2;
-}
-
-.compareHint {
-  padding: 9px 11px;
-  color: #61716b;
-  font-size: 12px;
-  font-weight: 800;
 }
 
 .resultList {
@@ -201,71 +158,13 @@
 }
 
 .detailOverlay {
-  top: 18px;
-  right: 18px;
-  width: min(430px, calc(100vw - 36px));
-  max-height: calc(100vh - 74px);
+  width: 100%;
+  max-height: min(62vh, 620px);
   overflow: auto;
-}
-
-.compareDetailOverlay {
-  width: min(850px, calc(100vw - 36px));
-}
-
-.compareScoreGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  align-items: start;
 }
 
 .scoreCard {
   padding: 14px;
-}
-
-.scoreCardActive {
-  border-color: rgba(0, 122, 120, 0.58);
-  box-shadow:
-    0 0 0 3px rgba(0, 122, 120, 0.14),
-    0 18px 42px rgba(20, 33, 29, 0.16);
-}
-
-.cardSlotRow {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.cardSlotRow span {
-  width: 28px;
-  height: 28px;
-  border-radius: 999px;
-  display: inline-grid;
-  place-items: center;
-  color: #fff;
-  background: #17211f;
-  font-size: 13px;
-  font-weight: 900;
-}
-
-.cardSlotRow button {
-  border: 1px solid #cbd7d1;
-  border-radius: 999px;
-  padding: 7px 10px;
-  color: #20352f;
-  background: #fff;
-  font: inherit;
-  font-size: 12px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.scoreCardActive .cardSlotRow button {
-  border-color: #007a78;
-  color: #005f5d;
-  background: #e6f5f2;
 }
 
 .scoreHeader {
@@ -273,14 +172,6 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 14px;
   align-items: start;
-}
-
-.eyebrow {
-  margin: 0 0 4px;
-  color: #007a78;
-  font-size: 11px;
-  font-weight: 900;
-  text-transform: none;
 }
 
 .scoreCard h2 {
@@ -484,18 +375,6 @@
   padding: 18px;
 }
 
-.footer {
-  right: 12px;
-  bottom: 10px;
-  max-width: min(520px, calc(100vw - 24px));
-  border-radius: 999px;
-  padding: 7px 10px;
-  color: #4e5f59;
-  background: rgba(255, 255, 255, 0.86);
-  font-size: 11px;
-  box-shadow: 0 10px 28px rgba(20, 33, 29, 0.12);
-}
-
 @media (max-width: 940px) {
   .appShell {
     overflow: hidden;
@@ -506,6 +385,7 @@
     left: 10px;
     right: 10px;
     width: auto;
+    max-height: calc(100vh - 20px);
   }
 
   .brandRow {
@@ -516,32 +396,9 @@
     font-size: 19px;
   }
 
-  .toolbarRow {
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    padding-bottom: 2px;
-  }
-
-  .toolbarRow button {
-    flex: 0 0 auto;
-  }
-
   .detailOverlay {
-    top: auto;
-    left: 10px;
-    right: 10px;
-    bottom: 48px;
     width: auto;
-    max-height: 43vh;
-    border-radius: 8px 8px 0 0;
-  }
-
-  .compareDetailOverlay {
-    max-height: 54vh;
-  }
-
-  .compareScoreGrid {
-    grid-template-columns: 1fr;
+    max-height: 52vh;
   }
 
   .scoreCard {
@@ -555,14 +412,6 @@
   .subscoreRow {
     grid-template-columns: 1fr;
     gap: 5px;
-  }
-
-  .footer {
-    left: 10px;
-    right: 10px;
-    bottom: 6px;
-    max-width: none;
-    text-align: center;
   }
 }
 

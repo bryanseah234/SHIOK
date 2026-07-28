@@ -58,3 +58,21 @@ coverage tradeoff.
 - OneMap API brute-force enumeration remains forbidden. The only acceptable
   OneMap API use for remaining gaps is bounded geocoding of source-derived
   postals at the ratified 0.5 req/s throttle.
+
+## Source Scan From 2026-07-28
+
+No new free authoritative all-postal-code source was found.
+
+- HDB Property Information on data.gov.sg still directs users to SingPost for
+  postal-code information and notes that charges may apply.
+- SingPost advertises the SGLocate address dataset as a business data solution,
+  not a free open-data download.
+- SLA lists Address Point under licensable digitised land information, not a
+  free bulk open-data file.
+- Commercial postal-code vendors exist, but they conflict with the $0 budget.
+- Community OneMap dumps remain useful evidence for candidate coverage, but they
+  are stale third-party snapshots and must stay warning-gated.
+
+Therefore the current honest production posture remains: ship the scored
+source-derived universe, expose `NOT_YET_SCORED`/missing states honestly, and do
+not claim complete ~140k coverage until a legitimate source is accepted.

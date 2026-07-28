@@ -37,8 +37,8 @@
 
 .legend i {
   display: inline-block;
-  width: 27px;
-  height: 4px;
+  width: 24px;
+  height: 3px;
   border-radius: 999px;
 }
 
@@ -47,17 +47,17 @@
 }
 
 .shortestLine {
-  background: repeating-linear-gradient(90deg, #34413d 0 7px, transparent 7px 11px);
+  background: repeating-linear-gradient(90deg, #34413d 0 4px, transparent 4px 8px);
 }
 
 .gapLine {
-  background: repeating-linear-gradient(90deg, #c4332b 0 6px, transparent 6px 10px);
+  background: repeating-linear-gradient(90deg, #c4332b 0 3px, transparent 3px 7px);
 }
 
 @media (max-width: 940px) {
   .legend {
     left: 10px;
-    bottom: calc(48vh + 48px);
+    bottom: 10px;
     border-radius: 8px;
   }
 }
