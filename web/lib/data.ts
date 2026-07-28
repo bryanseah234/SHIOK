@@ -1,14 +1,11 @@
 /**
  * DATA ACCESS MODULE
- * Production cutover sets NEXT_PUBLIC_DATA_BASE="/data/" after checkpoint approval.
- * Default remains mock data for local/dev builds.
+ * Defaults to the latest validated static score bundle.
  */
 export function normalizeDataBase(value?: string): string {
   const raw = value?.trim();
   if (!raw) {
-    return process.env.NODE_ENV === "production"
-      ? "/data/generated_20260728_1124/"
-      : "/data/mock/";
+    return "/data/generated_20260728_1405/";
   }
   const withLeadingSlash =
     raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")
@@ -23,6 +20,7 @@ import type { ScoreRecord, PostalGeom, Manifest } from "./types";
 import { latLngToCell } from "h3-js";
 
 type GeomIndex = Record<string, string[]>;
+type GeomPostalIndex = Record<string, string>;
 
 // ---------------------------------------------------------------------------
 // Manifest
@@ -44,13 +42,10 @@ export async function fetchManifest(): Promise<Manifest> {
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
 let _areaIndex: Record<string, string[]> | null = null;
 let _geomIndex: GeomIndex | null = null;
+let _geomPostalIndex: GeomPostalIndex | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
-  if (DATA_BASE.includes("/mock/")) {
-    _areaIndex = { ANG_MO_KIO: ["560123", "560456", "560789", "018989", "627961"] };
-    return _areaIndex;
-  }
   const res = await fetch(`${DATA_BASE}scores/index.json`);
   if (!res.ok) throw new Error(`score index fetch failed: ${res.status}`);
   _areaIndex = await res.json();
@@ -84,6 +79,14 @@ async function getGeomIndex(): Promise<GeomIndex | null> {
   return _geomIndex;
 }
 
+async function getGeomPostalIndex(): Promise<GeomPostalIndex | null> {
+  if (_geomPostalIndex) return _geomPostalIndex;
+  const res = await fetch(`${DATA_BASE}geom/postal-index.json`);
+  if (!res.ok) return null;
+  _geomPostalIndex = (await res.json()) as GeomPostalIndex;
+  return _geomPostalIndex;
+}
+
 async function fetchGeomShard(shardId: string): Promise<PostalGeom[] | null> {
   const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
   if (!res.ok) return null;
@@ -101,6 +104,14 @@ export async function fetchGeomForPostal(
   lat?: number,
   lng?: number
 ): Promise<PostalGeom | null> {
+  const postalIndex = await getGeomPostalIndex();
+  const indexedShard = postalIndex?.[postal];
+  if (indexedShard) {
+    const records = await fetchGeomShard(indexedShard);
+    const match = records?.find((r) => r.postal === postal);
+    if (match) return match;
+  }
+
   if (typeof lat === "number" && typeof lng === "number") {
     const cell = latLngToCell(lat, lng, 8);
     const parentRecords = await fetchGeomShard(cell);
@@ -120,20 +131,5 @@ export async function fetchGeomForPostal(
     return null;
   }
 
-  if (!DATA_BASE.includes("/mock/")) return null;
-
-  const geomIndex = await getGeomIndex();
-
-  for (const [cell, children] of Object.entries(geomIndex ?? {})) {
-    const parentRecords = await fetchGeomShard(cell);
-    const parentMatch = parentRecords?.find((r) => r.postal === postal);
-    if (parentMatch) return parentMatch;
-
-    for (const shardId of children) {
-      const childRecords = await fetchGeomShard(shardId);
-      const childMatch = childRecords?.find((r) => r.postal === postal);
-      if (childMatch) return childMatch;
-    }
-  }
   return null;
 }

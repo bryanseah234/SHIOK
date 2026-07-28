@@ -293,6 +293,7 @@ def export_static_artifacts(
     )
 
     geom_index: dict[str, list[str]] = {}
+    geom_postal_index: dict[str, str] = {}
     geom_by_cell: dict[str, list[dict[str, Any]]] = defaultdict(list)
     geom_origin_by_postal: dict[str, tuple[float, float]] = {}
     for record in records:
@@ -311,6 +312,8 @@ def export_static_artifacts(
         if json_size(cell_records) <= geom_promotion_threshold_bytes:
             geom_index[cell] = []
             geom_shard_records[cell].extend(cell_records)
+            for item in cell_records:
+                geom_postal_index[str(item["postal"])] = cell
             continue
 
         children: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -319,6 +322,7 @@ def export_static_artifacts(
             child = h3.latlng_to_cell(lat, lon, 9)
             children[child].append(item)
             geom_shard_records[child].append(item)
+            geom_postal_index[str(item["postal"])] = child
         geom_index[cell] = sorted(children)
 
     for shard, shard_records in sorted(geom_shard_records.items()):
@@ -328,6 +332,9 @@ def export_static_artifacts(
 
     written_files[rel_key(output_dir / "geom" / "index.json", output_dir)] = write_json(
         output_dir / "geom" / "index.json", geom_index
+    )
+    written_files[rel_key(output_dir / "geom" / "postal-index.json", output_dir)] = write_json(
+        output_dir / "geom" / "postal-index.json", dict(sorted(geom_postal_index.items()))
     )
 
     data_as_of_values = sorted(
@@ -352,6 +359,7 @@ def export_static_artifacts(
         },
         "geom": {
             "index": "geom/index.json",
+            "postal_index": "geom/postal-index.json",
             "h3_resolution": 8,
             "promoted_resolution": 9,
             "promotion_threshold_bytes": geom_promotion_threshold_bytes,

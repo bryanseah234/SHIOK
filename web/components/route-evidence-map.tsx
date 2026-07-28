@@ -185,18 +185,15 @@ export function RouteEvidenceMap({ geom }: { geom: PostalGeom | null }) {
     }
   }, [loaded, routeData]);
 
-  if (!geom) {
-    return (
-      <div style={emptyBoxStyle}>
-        <strong>Route evidence unavailable</strong>
-        <span>Geometry appears when a scored postal has a matching route shard.</span>
-      </div>
-    );
-  }
-
   return (
     <div style={mapShellStyle}>
       <div ref={containerRef} aria-label="Route evidence map" role="img" style={mapCanvasStyle} />
+      {!geom && (
+        <div style={emptyOverlayStyle}>
+          <strong>Search a postal or address</strong>
+          <span>Routes draw here when the postal has a scored transit path.</span>
+        </div>
+      )}
       <div style={legendStyle}>
         <span style={legendItemStyle}>
           <i style={{ ...legendLineStyle, background: "#0284c7" }} />
@@ -219,8 +216,8 @@ const mapShellStyle: React.CSSProperties = {
   border: "1px solid #d8dee7",
   borderRadius: "8px",
   overflow: "hidden",
-  height: "360px",
-  marginBottom: "14px",
+  height: "min(72vh, 760px)",
+  minHeight: "520px",
   position: "relative",
   background: "#eef2f7",
 };
@@ -261,17 +258,22 @@ const legendLineStyle: React.CSSProperties = {
   borderRadius: "999px",
 };
 
-const emptyBoxStyle: React.CSSProperties = {
-  minHeight: "180px",
-  border: "1px dashed #cbd5e1",
+const emptyOverlayStyle: React.CSSProperties = {
+  position: "absolute",
+  left: "50%",
+  top: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "min(340px, calc(100% - 40px))",
+  border: "1px solid rgba(148, 163, 184, 0.45)",
   borderRadius: "8px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   gap: "6px",
-  color: "#64748b",
+  color: "#334155",
   textAlign: "center",
-  padding: "20px",
-  marginBottom: "14px",
+  padding: "16px",
+  background: "rgba(255, 255, 255, 0.95)",
+  boxShadow: "0 16px 40px rgba(15, 23, 42, 0.16)",
 };

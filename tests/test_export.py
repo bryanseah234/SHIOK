@@ -91,6 +91,11 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert ok, validation
     assert validation["indexed_postals"] == 2
     assert validation["geometry_postals"] == 2
+    postal_index = json.loads((tmp_path / "geom" / "postal-index.json").read_text())
+    for postal in ["123456", "654321"]:
+        shard = postal_index[postal]
+        shard_records = json.loads((tmp_path / "geom" / "h3" / f"{shard}.json").read_text())
+        assert postal in {record["postal"] for record in shard_records}
 
 
 def test_export_splits_large_score_files(tmp_path: Path):

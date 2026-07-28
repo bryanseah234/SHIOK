@@ -20,32 +20,7 @@ interface LoadedSelection {
   geom: PostalGeom | null;
 }
 
-const DEMO_RESULTS: SearchResult[] = [
-  {
-    BUILDING: "High coverage demo",
-    ROAD_NAME: "Mock data",
-    POSTAL: "560123",
-    LATITUDE: "1.36959",
-    LONGITUDE: "103.84932",
-    SEARCHVAL: "S560123",
-  },
-  {
-    BUILDING: "Mid coverage demo",
-    ROAD_NAME: "Mock data",
-    POSTAL: "560456",
-    LATITUDE: "1.37008",
-    LONGITUDE: "103.84698",
-    SEARCHVAL: "S560456",
-  },
-  {
-    BUILDING: "Low coverage demo",
-    ROAD_NAME: "Mock data",
-    POSTAL: "560789",
-    LATITUDE: "1.37142",
-    LONGITUDE: "103.84472",
-    SEARCHVAL: "S560789",
-  },
-];
+const QUICK_POSTALS = ["276342", "560234", "311130", "678052"];
 
 const SUBSCORE_LABELS: Array<[keyof Subscores, string]> = [
   ["access", "Transit access"],
@@ -90,7 +65,7 @@ function ScorePanel({ selection, manifest }: { selection: LoadedSelection | null
       <section style={panelStyle}>
         <div style={emptyBoxStyle}>
           <strong>Select an address</strong>
-          <span>Search for a Singapore address or use a demo postal to view the score record.</span>
+          <span>Search for a Singapore address or postal to view its comfort score.</span>
         </div>
       </section>
     );
@@ -157,8 +132,6 @@ function ScorePanel({ selection, manifest }: { selection: LoadedSelection | null
         </div>
       )}
 
-      <RouteEvidenceMap geom={selection.geom} />
-
       {score.exposure_gaps && score.exposure_gaps.length > 0 && (
         <div style={gapListStyle}>
           {score.exposure_gaps.slice(0, 4).map((gap, index) => (
@@ -184,7 +157,7 @@ function Metric({ label, value }: { label: string; value: string }) {
 
 export default function Home() {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<SearchResult[]>(DEMO_RESULTS);
+  const [results, setResults] = useState<SearchResult[]>([]);
   const [selection, setSelection] = useState<LoadedSelection | null>(null);
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
@@ -265,7 +238,8 @@ export default function Home() {
       </header>
 
       <main style={mainStyle}>
-        <section style={searchPanelStyle}>
+        <aside style={sidebarStyle}>
+          <section style={searchPanelStyle}>
           <form onSubmit={handleSearch} style={formStyle}>
             <input
               id="postal-search-input"
@@ -282,6 +256,26 @@ export default function Home() {
 
           {error && <div style={errorStyle}>{error}</div>}
 
+          <div style={quickPostalsStyle}>
+            {QUICK_POSTALS.map((postal) => (
+              <button
+                key={postal}
+                type="button"
+                onClick={() => loadSelection({
+                  BUILDING: `Postal ${postal}`,
+                  ROAD_NAME: "Direct lookup",
+                  POSTAL: postal,
+                  LATITUDE: "",
+                  LONGITUDE: "",
+                  SEARCHVAL: `S${postal}`,
+                })}
+                style={quickPostalButtonStyle}
+              >
+                S{postal}
+              </button>
+            ))}
+          </div>
+
           <div style={resultListStyle}>
             {results.map((item, idx) => (
               <button key={`${item.POSTAL}-${idx}`} type="button" onClick={() => loadSelection(item)} style={resultButtonStyle}>
@@ -293,9 +287,14 @@ export default function Home() {
               </button>
             ))}
           </div>
-        </section>
+          </section>
 
-        <ScorePanel selection={selection} manifest={manifest} />
+          <ScorePanel selection={selection} manifest={manifest} />
+        </aside>
+
+        <section style={mapPanelStyle}>
+          <RouteEvidenceMap geom={selection?.geom ?? null} />
+        </section>
       </main>
 
       <footer style={footerStyle}>
@@ -354,26 +353,38 @@ const modePillStyle: React.CSSProperties = {
 const mainStyle: React.CSSProperties = {
   flex: 1,
   display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+  gridTemplateColumns: "minmax(320px, 420px) minmax(420px, 1fr)",
   gap: "20px",
   width: "100%",
-  maxWidth: "1180px",
+  maxWidth: "1440px",
   margin: "0 auto",
   padding: "24px",
+  alignItems: "start",
+  overflowX: "auto",
+};
+
+const sidebarStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "14px",
+  minWidth: 0,
+};
+
+const mapPanelStyle: React.CSSProperties = {
+  minWidth: 0,
 };
 
 const searchPanelStyle: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
-  gap: "16px",
+  gap: "12px",
 };
 
 const panelStyle: React.CSSProperties = {
   background: "#ffffff",
   border: "1px solid #d8dee7",
   borderRadius: "8px",
-  padding: "20px",
-  minHeight: "560px",
+  padding: "16px",
 };
 
 const formStyle: React.CSSProperties = {
@@ -409,6 +420,23 @@ const errorStyle: React.CSSProperties = {
   background: "#fef2f2",
   color: "#991b1b",
   fontSize: "14px",
+};
+
+const quickPostalsStyle: React.CSSProperties = {
+  display: "flex",
+  flexWrap: "wrap",
+  gap: "8px",
+};
+
+const quickPostalButtonStyle: React.CSSProperties = {
+  border: "1px solid #cbd5e1",
+  borderRadius: "8px",
+  background: "#ffffff",
+  color: "#334155",
+  padding: "8px 10px",
+  fontSize: "13px",
+  fontWeight: 600,
+  cursor: "pointer",
 };
 
 const resultListStyle: React.CSSProperties = {
