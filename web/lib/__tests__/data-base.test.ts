@@ -1,4 +1,4 @@
-import { normalizeDataBase } from "../data";
+import { DEFAULT_DATA_BASE, normalizeDataBase } from "../data";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 describe("normalizeDataBase", () => {
@@ -7,9 +7,9 @@ describe("normalizeDataBase", () => {
   });
 
   it("defaults to generated data", () => {
-    expect(normalizeDataBase()).toBe("/data/generated_20260728_1405/");
-    expect(normalizeDataBase("")).toBe("/data/generated_20260728_1405/");
-    expect(normalizeDataBase("   ")).toBe("/data/generated_20260728_1405/");
+    expect(normalizeDataBase()).toBe(DEFAULT_DATA_BASE);
+    expect(normalizeDataBase("")).toBe(DEFAULT_DATA_BASE);
+    expect(normalizeDataBase("   ")).toBe(DEFAULT_DATA_BASE);
   });
 
   it("normalizes relative and absolute paths", () => {

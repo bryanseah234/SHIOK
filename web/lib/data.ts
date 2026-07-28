@@ -2,10 +2,12 @@
  * DATA ACCESS MODULE
  * Defaults to the latest validated static score bundle.
  */
+export const DEFAULT_DATA_BASE = "/data/generated_20260729_0438/";
+
 export function normalizeDataBase(value?: string): string {
   const raw = value?.trim();
   if (!raw) {
-    return "/data/generated_20260728_1405/";
+    return DEFAULT_DATA_BASE;
   }
   const withLeadingSlash =
     raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")

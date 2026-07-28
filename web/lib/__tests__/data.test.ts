@@ -2,7 +2,7 @@ import type { Manifest, PostalGeom, ScoreRecord, ScoreState } from "../types";
 import { readFileSync } from "fs";
 import { join } from "path";
 
-const DATA_DIR = join(__dirname, "../../public/data/generated_20260728_1405");
+const DATA_DIR = join(__dirname, "../../public/data/generated_20260729_0438");
 
 function readJson<T>(rel: string): T {
   return JSON.parse(readFileSync(join(DATA_DIR, rel), "utf-8")) as T;
@@ -18,7 +18,7 @@ describe("generated data bundle", () => {
       expect.objectContaining({ record_count: 124032 })
     );
     expect(Object.keys(scoreIndex).length).toBeGreaterThan(50);
-    expect(Object.keys(geomPostalIndex).length).toBe(78281);
+    expect(Object.keys(geomPostalIndex).length).toBe(78718);
   });
 
   it("score shards conform to the public score record shape", () => {
