@@ -1,5 +1,5 @@
 # S.H.I.O.K. Index pipeline parameters (PRD v4.2 §7, §15)
-shelter_lambda: 0.6
+shelter_lambda: 2.0
 detour_budget: 1.25
 transit_access:
   full_credit_m: 400

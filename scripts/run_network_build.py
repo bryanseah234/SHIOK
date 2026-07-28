@@ -59,6 +59,8 @@ PARK_NAME_TOKENS = {
 }
 APPROVED_CORRECTION_STATUSES = {"approved"}
 COVERED_CORRECTION_VALUES = {"1", "true", "yes", "covered"}
+HDB_VOID_DECK_BUILDING_TAGS = {"apartments", "residential"}
+OSM_ROOF_SHELTER_TAGS = {"roof", "canopy"}
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -163,38 +165,53 @@ def load_transit_reference_points() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]
     return bus_gdf, mrt_gdf
 
 
-def compute_lta_match_ratio(
+def compute_polygon_match_ratio(
     edges_gdf: gpd.GeoDataFrame,
-    lta_gdf: gpd.GeoDataFrame,
+    polygon_gdf: gpd.GeoDataFrame,
+    *,
+    buffer_m: float = 3.0,
+    label: str = "shelter polygons",
 ) -> pd.Series:
     ratios = pd.Series(0.0, index=edges_gdf.index, dtype=float)
-    if edges_gdf.empty or lta_gdf.empty:
+    if edges_gdf.empty or polygon_gdf.empty:
         return ratios
 
-    lta_buffers = gpd.GeoSeries(lta_gdf.geometry.buffer(3.0), crs=lta_gdf.crs)
-    print("Querying edge/linkway buffer intersections...")
-    pairs = lta_buffers.sindex.query(edges_gdf.geometry, predicate="intersects")
+    polygon_buffers = gpd.GeoSeries(polygon_gdf.geometry.buffer(buffer_m), crs=polygon_gdf.crs)
+    print(f"Querying edge/{label} buffer intersections...")
+    pairs = polygon_buffers.sindex.query(edges_gdf.geometry, predicate="intersects")
     if pairs.size == 0:
         return ratios
 
-    pair_df = pd.DataFrame({"edge_pos": pairs[0], "lta_pos": pairs[1]})
+    pair_df = pd.DataFrame({"edge_pos": pairs[0], "polygon_pos": pairs[1]})
     matched_edges = pair_df["edge_pos"].nunique()
-    print(f"Computing LTA coverage ratios for {matched_edges} candidate edges...")
+    print(f"Computing {label} coverage ratios for {matched_edges} candidate edges...")
 
     for count, (edge_pos, group) in enumerate(pair_df.groupby("edge_pos", sort=False), start=1):
         if count % 25000 == 0:
-            print(f"  LTA coverage progress: {count}/{matched_edges} candidate edges")
+            print(f"  {label} coverage progress: {count}/{matched_edges} candidate edges")
 
         edge_geom = edges_gdf.geometry.iloc[int(edge_pos)]
         edge_len = edge_geom.length
         if edge_len <= 0:
             continue
 
-        candidate_union = lta_buffers.iloc[group["lta_pos"].to_numpy()].union_all()
+        candidate_union = polygon_buffers.iloc[group["polygon_pos"].to_numpy()].union_all()
         covered_len = edge_geom.intersection(candidate_union).length
         ratios.iat[int(edge_pos)] = min(1.0, covered_len / edge_len)
 
     return ratios
+
+
+def compute_lta_match_ratio(
+    edges_gdf: gpd.GeoDataFrame,
+    lta_gdf: gpd.GeoDataFrame,
+) -> pd.Series:
+    return compute_polygon_match_ratio(
+        edges_gdf,
+        lta_gdf,
+        buffer_m=3.0,
+        label="LTA shelter",
+    )
 
 
 def value_counts(series: pd.Series) -> Counter[str]:
@@ -218,6 +235,28 @@ def extract_longest_linestring(geom):
             return None
         return max(lines, key=lambda line: line.length)
     return None
+
+
+def graph_nodes_from_edges(edges_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+    nodes: list[tuple[float, float]] = []
+    for geom in edges_gdf.geometry:
+        if geom is None or geom.is_empty:
+            continue
+        coords = list(geom.coords)
+        if not coords:
+            continue
+        nodes.append((round(coords[0][0], 2), round(coords[0][1], 2)))
+        nodes.append((round(coords[-1][0], 2), round(coords[-1][1], 2)))
+    node_df = pd.DataFrame({"node": nodes}).drop_duplicates("node")
+    return gpd.GeoDataFrame(
+        node_df,
+        geometry=[Point(x, y) for x, y in node_df["node"]],
+        crs="EPSG:3414",
+    )
+
+
+def six_digit_postcode(series: pd.Series) -> pd.Series:
+    return series.astype("string").str.extract(r"(\d{6})", expand=False)
 
 
 def correction_value_is_true(value) -> bool:
@@ -336,6 +375,198 @@ def build_audited_correction_edges(
     return gpd.GeoDataFrame(correction_edges, geometry="geometry", crs="EPSG:3414"), report()
 
 
+def load_first_shapefile_from_zip(zip_path: Path) -> gpd.GeoDataFrame:
+    tmp_dir = Path(tempfile.mkdtemp())
+    with zipfile.ZipFile(zip_path, "r") as z:
+        z.extractall(tmp_dir)
+    shp_files = list(tmp_dir.rglob("*.shp"))
+    if not shp_files:
+        raise FileNotFoundError(f"zip contains no shapefile: {zip_path}")
+    return gpd.read_file(shp_files[0])
+
+
+def load_overhead_bridge_underpass_polygons(
+    pa_boundary: gpd.GeoDataFrame,
+) -> gpd.GeoDataFrame:
+    zip_path = find_raw_file("overhead_bridge_underpass.zip")
+    if zip_path is None:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    bridge_gdf = load_first_shapefile_from_zip(zip_path).to_crs(epsg=3414)
+    bridge_gdf = gpd.sjoin(
+        bridge_gdf,
+        pa_boundary[["PLN_AREA_N", "geometry"]],
+        how="inner",
+        predicate="intersects",
+    )
+    bridge_gdf["source_layer"] = "overhead_bridge_underpass"
+    return bridge_gdf
+
+
+def load_hdb_building_points(union_poly) -> gpd.GeoDataFrame:
+    path = find_raw_file("building_points.geojson")
+    if path is None:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    hdb_gdf = gpd.read_file(path).to_crs(epsg=3414)
+    hdb_gdf = hdb_gdf[hdb_gdf.geometry.intersects(union_poly)].copy()
+    if "POSTAL_COD" in hdb_gdf.columns:
+        hdb_gdf["postal_code"] = six_digit_postcode(hdb_gdf["POSTAL_COD"])
+    else:
+        hdb_gdf["postal_code"] = pd.NA
+    return hdb_gdf
+
+
+def split_osm_building_shelter_layers(
+    osm_buildings_gdf: gpd.GeoDataFrame | None,
+    hdb_points_gdf: gpd.GeoDataFrame,
+) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
+    empty = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    if osm_buildings_gdf is None or osm_buildings_gdf.empty:
+        return empty, empty
+
+    buildings = osm_buildings_gdf.copy()
+    if buildings.crs is None:
+        buildings = buildings.set_crs(epsg=4326)
+    buildings = buildings.to_crs(epsg=3414)
+    building_tag = buildings.get("building", pd.Series("", index=buildings.index))
+    building_tag = building_tag.astype(str).str.strip().str.lower()
+    polygon_mask = buildings.geometry.geom_type.isin(["Polygon", "MultiPolygon"])
+
+    roof_gdf = buildings[polygon_mask & building_tag.isin(OSM_ROOF_SHELTER_TAGS)].copy()
+    roof_gdf["source_layer"] = "osm_building_roof"
+
+    if hdb_points_gdf.empty:
+        return roof_gdf, empty
+
+    hdb_postcodes = set(hdb_points_gdf["postal_code"].dropna().astype(str))
+    postcode = (
+        six_digit_postcode(buildings["addr:postcode"])
+        if "addr:postcode" in buildings.columns
+        else pd.Series(pd.NA, index=buildings.index)
+    )
+    residential_mask = building_tag.isin(HDB_VOID_DECK_BUILDING_TAGS)
+    postcode_match = postcode.isin(hdb_postcodes)
+    hdb_by_postcode = buildings[polygon_mask & residential_mask & postcode_match].copy()
+
+    hdb_by_point = empty
+    if not hdb_points_gdf.empty:
+        joined = gpd.sjoin(
+            buildings[polygon_mask & residential_mask],
+            hdb_points_gdf[["postal_code", "geometry"]],
+            how="inner",
+            predicate="contains",
+        )
+        if not joined.empty:
+            hdb_by_point = joined.drop(columns=["index_right"]).copy()
+
+    hdb_footprints = pd.concat([hdb_by_postcode, hdb_by_point], ignore_index=False)
+    if hdb_footprints.empty:
+        return roof_gdf, empty
+    hdb_footprints = hdb_footprints[~hdb_footprints.index.duplicated(keep="first")].copy()
+    hdb_footprints["source_layer"] = "inferred_hdb_void_deck"
+    hdb_footprints["postal_code"] = postcode.loc[hdb_footprints.index].values
+    return roof_gdf, hdb_footprints
+
+
+def build_hdb_void_deck_edges(
+    hdb_footprints_gdf: gpd.GeoDataFrame,
+    graph_nodes_gdf: gpd.GeoDataFrame,
+    *,
+    node_search_m: float = 8.0,
+    min_line_m: float = 12.0,
+    max_line_m: float = 95.0,
+    min_inside_ratio: float = 0.65,
+    max_edges_per_building: int = 2,
+    max_candidate_nodes: int = 12,
+) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
+    empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    report: dict[str, object] = {
+        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "buildings_with_edges": 0,
+        "added_edges": 0,
+        "length_m": 0.0,
+        "node_search_m": node_search_m,
+        "min_inside_ratio": min_inside_ratio,
+        "source": "hdb_points_plus_osm_residential_footprints",
+        "confidence": "inferred",
+    }
+    if hdb_footprints_gdf.empty or graph_nodes_gdf.empty:
+        return empty_edges, report
+
+    node_sindex = graph_nodes_gdf.sindex
+    void_edges = []
+    buildings_with_edges = 0
+    for idx, row in hdb_footprints_gdf.iterrows():
+        footprint = row.geometry
+        if footprint is None or footprint.is_empty or footprint.area < 200 or footprint.area > 6000:
+            continue
+
+        possible = node_sindex.query(footprint.buffer(node_search_m), predicate="intersects")
+        if len(possible) < 2:
+            continue
+        candidates = graph_nodes_gdf.iloc[possible].copy()
+        candidates["dist"] = candidates.geometry.distance(footprint)
+        candidates = candidates[candidates["dist"] <= node_search_m].sort_values("dist")
+        candidates = candidates.head(max_candidate_nodes)
+        if len(candidates) < 2:
+            continue
+
+        pair_candidates = []
+        candidate_rows = list(candidates.itertuples())
+        for left_index, left in enumerate(candidate_rows):
+            for right_index, right in enumerate(candidate_rows):
+                if right_index <= left_index:
+                    continue
+                line = LineString([left.geometry, right.geometry])
+                length_m = line.length
+                if length_m < min_line_m or length_m > max_line_m:
+                    continue
+                inside_ratio = line.intersection(footprint.buffer(1.5)).length / length_m
+                if inside_ratio >= min_inside_ratio:
+                    pair_candidates.append((inside_ratio, length_m, left.node, right.node, line))
+
+        used_nodes = set()
+        building_edge_count = 0
+        for inside_ratio, length_m, u_node, v_node, line in sorted(
+            pair_candidates, key=lambda item: (-item[0], -item[1])
+        ):
+            if u_node in used_nodes or v_node in used_nodes:
+                continue
+            void_edges.append(
+                {
+                    "geometry": line,
+                    "is_covered": 1,
+                    "is_synthesized": 1,
+                    "length_m": length_m,
+                    "u": -1,
+                    "v": -1,
+                    "covered": "yes",
+                    "highway": "inferred_hdb_void_deck",
+                    "synth_class": "INFERRED_HDB_VOID_DECK",
+                    "source_layer": "inferred_hdb_void_deck",
+                    "confidence": "inferred",
+                    "postal_code": row.get("postal_code", ""),
+                    "osm_building_id": row.get("id", idx),
+                    "inside_ratio": float(inside_ratio),
+                }
+            )
+            used_nodes.update([u_node, v_node])
+            building_edge_count += 1
+            if building_edge_count >= max_edges_per_building:
+                break
+
+        if building_edge_count:
+            buildings_with_edges += 1
+
+    if not void_edges:
+        report["buildings_with_edges"] = buildings_with_edges
+        return empty_edges, report
+    edges_gdf = gpd.GeoDataFrame(void_edges, geometry="geometry", crs="EPSG:3414")
+    report["buildings_with_edges"] = buildings_with_edges
+    report["added_edges"] = int(len(edges_gdf))
+    report["length_m"] = float(edges_gdf.geometry.length.sum())
+    return edges_gdf, report
+
+
 def get_skeleton(poly):
     try:
         # Some very thin polygons cause Voronoi errors in centerline
@@ -391,17 +622,20 @@ def run_build(scope: str = "pilot"):
         f"Loaded {len(pa_boundary)} planning areas; dominant components={dominant_component_count}"
     )
 
-    # Load LTA linkways
+    # Load LTA covered shelter polygons
     zip_path = require_raw_file("covered_linkway.zip")
-    tmp_dir = Path(tempfile.mkdtemp())
-    with zipfile.ZipFile(zip_path, "r") as z:
-        z.extractall(tmp_dir)
-    shp_files = list(tmp_dir.rglob("*.shp"))
-    lta_gdf = gpd.read_file(shp_files[0]).to_crs(epsg=3414)
+    lta_gdf = load_first_shapefile_from_zip(zip_path).to_crs(epsg=3414)
     lta_gdf = gpd.sjoin(
         lta_gdf, pa_boundary[["PLN_AREA_N", "geometry"]], how="inner", predicate="intersects"
     )
-    print(f"Loaded {len(lta_gdf)} LTA covered-linkway polygons in scope")
+    lta_gdf["source_layer"] = "covered_linkway"
+    bridge_gdf = load_overhead_bridge_underpass_polygons(pa_boundary)
+    lta_gdf = pd.concat([lta_gdf, bridge_gdf], ignore_index=True)
+    print(
+        "Loaded LTA shelter polygons in scope: "
+        f"covered_linkways={len(lta_gdf[lta_gdf['source_layer'] == 'covered_linkway'])}, "
+        f"overhead_underpass={len(bridge_gdf)}, total={len(lta_gdf)}"
+    )
 
     # Load OSM
     osm_path = require_raw_file("*.osm.pbf")
@@ -414,6 +648,11 @@ def run_build(scope: str = "pilot"):
         extra_attributes=["covered", "tunnel", "indoor", "layer", "level"],
     )
     print(f"Loaded OSM walking network: nodes={len(nodes)}, edges={len(edges)}")
+    try:
+        osm_buildings = osm.get_buildings()
+    except Exception as exc:  # noqa: BLE001 - pyrosm building extraction can fail on bad relations.
+        print(f"Warning: failed to load OSM buildings for shelter inference: {exc}")
+        osm_buildings = None
 
     edges_full_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
     boundary_line = union_poly.boundary
@@ -436,10 +675,28 @@ def run_build(scope: str = "pilot"):
 
     edges_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
     nodes_gdf = gpd.GeoDataFrame(nodes, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
+    graph_nodes_gdf = graph_nodes_from_edges(edges_gdf)
     print(f"Filtered OSM walking edges: {len(edges_gdf)}")
+    print(f"Filtered OSM graph nodes from retained edges: {len(graph_nodes_gdf)}")
     dropped_edges_gdf = edges_full_gdf[~edges_full_gdf.index.isin(edges_gdf.index)].copy()
     print(
         f"Filtered access/foot-forbidden OSM edges retained for QA evidence: {len(dropped_edges_gdf)}"
+    )
+
+    hdb_points_gdf = load_hdb_building_points(union_poly)
+    roof_gdf, hdb_footprints_gdf = split_osm_building_shelter_layers(
+        (
+            gpd.GeoDataFrame(osm_buildings, geometry="geometry", crs="EPSG:4326")
+            if osm_buildings is not None and not osm_buildings.empty
+            else None
+        ),
+        hdb_points_gdf,
+    )
+    print(
+        "Loaded building shelter inference layers: "
+        f"hdb_points={len(hdb_points_gdf)}, "
+        f"osm_roof_canopy_polygons={len(roof_gdf)}, "
+        f"hdb_void_deck_candidate_footprints={len(hdb_footprints_gdf)}"
     )
 
     bus_refs, mrt_refs = load_transit_reference_points()
@@ -645,9 +902,44 @@ def run_build(scope: str = "pilot"):
 
     edges_gdf.loc[native_covered_mask, "is_covered"] = 1
 
+    roof_match_ratio = compute_polygon_match_ratio(
+        edges_gdf,
+        roof_gdf,
+        buffer_m=3.0,
+        label="OSM roof/canopy",
+    )
+    roof_match_mask = roof_match_ratio >= 0.50
+    roof_match_edge_length = float(edges_gdf.loc[roof_match_mask, "geometry"].length.sum())
+    edges_gdf.loc[roof_match_mask, "is_covered"] = 1
+    print(
+        f"OSM roof/canopy covered attribution: edges={int(roof_match_mask.sum())}, "
+        f"length={roof_match_edge_length:.1f}m"
+    )
+
+    hdb_void_edges_gdf, hdb_void_report = build_hdb_void_deck_edges(
+        hdb_footprints_gdf,
+        graph_nodes_gdf,
+    )
+    hdb_void_length_m = (
+        float(hdb_void_edges_gdf.geometry.length.sum()) if not hdb_void_edges_gdf.empty else 0.0
+    )
+    print(
+        "Inferred HDB void-deck connectors: "
+        f"candidate_buildings={hdb_void_report['candidate_buildings']}, "
+        f"buildings_with_edges={hdb_void_report['buildings_with_edges']}, "
+        f"added={hdb_void_report['added_edges']}, "
+        f"length={hdb_void_length_m:.1f}m"
+    )
+    if not hdb_void_edges_gdf.empty:
+        edges_gdf = pd.concat([edges_gdf, hdb_void_edges_gdf], ignore_index=True)
+        native_covered_mask = pd.concat(
+            [native_covered_mask, pd.Series([False] * len(hdb_void_edges_gdf))],
+            ignore_index=True,
+        )
+
     correction_edges_gdf, correction_report = build_audited_correction_edges(
         load_audited_shelter_corrections(),
-        nodes_gdf,
+        graph_nodes_gdf,
     )
     correction_report["path"] = str(AUDITED_SHELTER_CORRECTIONS_PATH.relative_to(PROJECT_ROOT))
     correction_length_m = (
@@ -1127,8 +1419,11 @@ def run_build(scope: str = "pilot"):
         "needs_manual_count": needs_manual_count,
         "covered_edge_length_m_osm_tags": float(native_covered_edge_length),
         "covered_edge_length_m_lta_match": float(lta_match_edge_length),
+        "covered_edge_length_m_osm_roof_canopy": roof_match_edge_length,
+        "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
         "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
+        "inferred_hdb_void_deck": hdb_void_report,
         "audited_shelter_corrections": correction_report,
         "flags": flags,
     }
@@ -1144,6 +1439,14 @@ def run_build(scope: str = "pilot"):
         ce = correction_edges_gdf.to_crs(epsg=4326)
         ce["class"] = "AUDITED_SHELTER_CORRECTION"
         debug_export = pd.concat([debug_export, ce[["geometry", "class"]]], ignore_index=True)
+    if not hdb_void_edges_gdf.empty:
+        he = hdb_void_edges_gdf.to_crs(epsg=4326)
+        he["class"] = "INFERRED_HDB_VOID_DECK"
+        debug_export = pd.concat([debug_export, he[["geometry", "class"]]], ignore_index=True)
+    if not roof_gdf.empty:
+        re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
+        re["class"] = "OSM_ROOF_CANOPY"
+        debug_export = pd.concat([debug_export, re[["geometry", "class"]]], ignore_index=True)
     debug_export.to_file(debug_path, driver="GeoJSON")
 
     # Save network for routing!

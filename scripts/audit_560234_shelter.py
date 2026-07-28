@@ -195,20 +195,29 @@ def route_diagnostics(route_3414: LineString, score: dict[str, Any]) -> dict[str
     mayflower_candidates = [
         candidate for candidate in candidates if "MAYFLOWER" in candidate.station_name.upper()
     ]
+    best_node = score["best_node"]
+    best_candidate = next(
+        (
+            candidate
+            for candidate in mayflower_candidates
+            if candidate.station_name == best_node["station"]
+            and candidate.exit_code == best_node["exit"]
+        ),
+        None,
+    )
 
     lambda_sweep: list[dict[str, Any]] = []
-    od_pairs = {origin_node: [candidate.graph_node for candidate in mayflower_candidates]}
+    sweep_candidates = [best_candidate] if best_candidate is not None else mayflower_candidates
+    od_pairs = {origin_node: [candidate.graph_node for candidate in sweep_candidates]}
     for lambda_value in [0, 0.6, 1.5, 3, 6, 12, 30]:
         results = routing_graph.route(
             od_pairs, shelter_lambda=lambda_value, detour_budget=10.0, include_geometry=False
         )
         if not results:
             continue
-        best = sorted(results, key=lambda item: (-float(item["covered_ratio"]), item["length_m"]))[
-            0
-        ]
+        best = sorted(results, key=lambda item: item["length_m"])[0]
         candidate = next(
-            (item for item in mayflower_candidates if item.graph_node == best.get("destination")),
+            (item for item in sweep_candidates if item.graph_node == best.get("destination")),
             None,
         )
         lambda_sweep.append(
@@ -233,7 +242,6 @@ def route_diagnostics(route_3414: LineString, score: dict[str, Any]) -> dict[str
         lambda geom: wkt.loads(geom) if isinstance(geom, str) else geom
     )
     covered_gdf = gpd.GeoDataFrame(covered_edges, geometry="geometry", crs="EPSG:3414")
-    best_node = score["best_node"]
     best_exit = mrt_exits[
         (mrt_exits["STATION_NA"] == best_node["station"])
         & (mrt_exits["EXIT_CODE"] == best_node["exit"])
@@ -252,6 +260,7 @@ def route_diagnostics(route_3414: LineString, score: dict[str, Any]) -> dict[str
             }
             for candidate in mayflower_candidates
         ],
+        "lambda_sweep_destination": best_candidate.name if best_candidate else None,
         "lambda_sweep": lambda_sweep,
         "nearest_covered_to_origin_m": round(
             float(covered_gdf.geometry.distance(origin_point).min()), 1

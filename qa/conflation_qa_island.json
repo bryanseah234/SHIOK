@@ -1,17 +1,17 @@
 {
-  "nodes": 644801,
-  "edges": 715641,
-  "mean_edge_length_m": 18.283548793135804,
-  "connected_components_count": 5558,
+  "nodes": 645064,
+  "edges": 721323,
+  "mean_edge_length_m": 18.475973336184758,
+  "connected_components_count": 4941,
   "top_5_component_sizes": [
-    601111,
+    604443,
     1946,
     1470,
     1402,
     1295
   ],
-  "osm_only_top_3_component_node_share_pct": 94.19812563220559,
-  "top_3_component_node_share_pct": 93.75404194472404,
+  "osm_only_top_3_component_node_share_pct": 94.7126182390045,
+  "top_3_component_node_share_pct": 94.23235523917006,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1268,67 +1268,67 @@
   "real_disconnection_count_final": 0,
   "per_area_classification_counts": {
     "ANG MO KIO": {
-      "ALIGNED": 69,
+      "ALIGNED": 80,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 106,
+      "UNREPRESENTED-surface": 122,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 83
+      "NEEDS_MANUAL": 87
     },
     "BEDOK": {
-      "ALIGNED": 197,
-      "OFFSET": 10,
-      "UNREPRESENTED-surface": 50,
+      "ALIGNED": 227,
+      "OFFSET": 11,
+      "UNREPRESENTED-surface": 56,
       "UNDERGROUND_OR_INDOOR": 4,
-      "NEEDS_MANUAL": 53
+      "NEEDS_MANUAL": 59
     },
     "BISHAN": {
-      "ALIGNED": 49,
+      "ALIGNED": 59,
       "OFFSET": 2,
-      "UNREPRESENTED-surface": 62,
+      "UNREPRESENTED-surface": 75,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 33
+      "NEEDS_MANUAL": 37
     },
     "BOON LAY": {
-      "ALIGNED": 6,
+      "ALIGNED": 10,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 0,
+      "UNREPRESENTED-surface": 4,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 0
     },
     "BUKIT BATOK": {
-      "ALIGNED": 209,
+      "ALIGNED": 226,
       "OFFSET": 20,
-      "UNREPRESENTED-surface": 37,
+      "UNREPRESENTED-surface": 40,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 53
+      "NEEDS_MANUAL": 52
     },
     "BUKIT MERAH": {
-      "ALIGNED": 220,
-      "OFFSET": 24,
-      "UNREPRESENTED-surface": 37,
+      "ALIGNED": 252,
+      "OFFSET": 26,
+      "UNREPRESENTED-surface": 46,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 38
+      "NEEDS_MANUAL": 40
     },
     "BUKIT PANJANG": {
-      "ALIGNED": 166,
+      "ALIGNED": 178,
       "OFFSET": 20,
-      "UNREPRESENTED-surface": 78,
+      "UNREPRESENTED-surface": 83,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 73
+      "NEEDS_MANUAL": 74
     },
     "BUKIT TIMAH": {
-      "ALIGNED": 108,
-      "OFFSET": 14,
-      "UNREPRESENTED-surface": 92,
+      "ALIGNED": 132,
+      "OFFSET": 15,
+      "UNREPRESENTED-surface": 103,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 21
+      "NEEDS_MANUAL": 23
     },
     "CENTRAL WATER CATCHMENT": {
-      "ALIGNED": 1,
+      "ALIGNED": 2,
       "OFFSET": 1,
-      "UNREPRESENTED-surface": 6,
+      "UNREPRESENTED-surface": 8,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 1
+      "NEEDS_MANUAL": 2
     },
     "CHANGI": {
       "ALIGNED": 11,
@@ -1345,60 +1345,60 @@
       "NEEDS_MANUAL": 0
     },
     "CHOA CHU KANG": {
-      "ALIGNED": 217,
+      "ALIGNED": 229,
       "OFFSET": 15,
-      "UNREPRESENTED-surface": 48,
+      "UNREPRESENTED-surface": 50,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 46
     },
     "CLEMENTI": {
-      "ALIGNED": 117,
+      "ALIGNED": 141,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 18,
+      "UNREPRESENTED-surface": 22,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 8
+      "NEEDS_MANUAL": 10
     },
     "DOWNTOWN CORE": {
-      "ALIGNED": 16,
-      "OFFSET": 10,
-      "UNREPRESENTED-surface": 25,
+      "ALIGNED": 38,
+      "OFFSET": 12,
+      "UNREPRESENTED-surface": 31,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 13
+      "NEEDS_MANUAL": 20
     },
     "GEYLANG": {
-      "ALIGNED": 136,
-      "OFFSET": 19,
-      "UNREPRESENTED-surface": 103,
-      "UNDERGROUND_OR_INDOOR": 10,
-      "NEEDS_MANUAL": 100
+      "ALIGNED": 147,
+      "OFFSET": 21,
+      "UNREPRESENTED-surface": 120,
+      "UNDERGROUND_OR_INDOOR": 12,
+      "NEEDS_MANUAL": 105
     },
     "HOUGANG": {
-      "ALIGNED": 105,
+      "ALIGNED": 135,
       "OFFSET": 14,
-      "UNREPRESENTED-surface": 91,
+      "UNREPRESENTED-surface": 103,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 39
+      "NEEDS_MANUAL": 40
     },
     "JURONG EAST": {
-      "ALIGNED": 112,
+      "ALIGNED": 140,
       "OFFSET": 2,
-      "UNREPRESENTED-surface": 12,
+      "UNREPRESENTED-surface": 22,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 18
+      "NEEDS_MANUAL": 21
     },
     "JURONG WEST": {
-      "ALIGNED": 194,
+      "ALIGNED": 205,
       "OFFSET": 21,
-      "UNREPRESENTED-surface": 33,
+      "UNREPRESENTED-surface": 34,
       "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 41
     },
     "KALLANG": {
-      "ALIGNED": 94,
+      "ALIGNED": 109,
       "OFFSET": 13,
-      "UNREPRESENTED-surface": 135,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 112
+      "UNREPRESENTED-surface": 146,
+      "UNDERGROUND_OR_INDOOR": 2,
+      "NEEDS_MANUAL": 117
     },
     "LIM CHU KANG": {
       "ALIGNED": 0,
@@ -1410,7 +1410,7 @@
     "MANDAI": {
       "ALIGNED": 0,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 3,
+      "UNREPRESENTED-surface": 5,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 1
     },
@@ -1424,30 +1424,30 @@
     "MARINA SOUTH": {
       "ALIGNED": 0,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 0,
+      "UNREPRESENTED-surface": 1,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 0
     },
     "MARINE PARADE": {
-      "ALIGNED": 13,
-      "OFFSET": 1,
-      "UNREPRESENTED-surface": 31,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 6
-    },
-    "MUSEUM": {
       "ALIGNED": 17,
       "OFFSET": 1,
-      "UNREPRESENTED-surface": 12,
+      "UNREPRESENTED-surface": 38,
+      "UNDERGROUND_OR_INDOOR": 0,
+      "NEEDS_MANUAL": 15
+    },
+    "MUSEUM": {
+      "ALIGNED": 22,
+      "OFFSET": 2,
+      "UNREPRESENTED-surface": 14,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 1
     },
     "NEWTON": {
-      "ALIGNED": 5,
+      "ALIGNED": 7,
       "OFFSET": 1,
-      "UNREPRESENTED-surface": 3,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 8
+      "UNREPRESENTED-surface": 4,
+      "UNDERGROUND_OR_INDOOR": 2,
+      "NEEDS_MANUAL": 10
     },
     "NORTH-EASTERN ISLANDS": {
       "ALIGNED": 0,
@@ -1457,74 +1457,74 @@
       "NEEDS_MANUAL": 0
     },
     "NOVENA": {
-      "ALIGNED": 62,
-      "OFFSET": 3,
-      "UNREPRESENTED-surface": 28,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 40
+      "ALIGNED": 79,
+      "OFFSET": 4,
+      "UNREPRESENTED-surface": 44,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 48
     },
     "ORCHARD": {
-      "ALIGNED": 14,
+      "ALIGNED": 23,
       "OFFSET": 1,
-      "UNREPRESENTED-surface": 8,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 8
+      "UNREPRESENTED-surface": 10,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 10
     },
     "OUTRAM": {
-      "ALIGNED": 3,
-      "OFFSET": 4,
-      "UNREPRESENTED-surface": 9,
+      "ALIGNED": 14,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 14,
       "UNDERGROUND_OR_INDOOR": 6,
       "NEEDS_MANUAL": 7
     },
     "PASIR RIS": {
-      "ALIGNED": 84,
+      "ALIGNED": 93,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 27,
+      "UNREPRESENTED-surface": 28,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 22
+      "NEEDS_MANUAL": 27
     },
     "PAYA LEBAR": {
       "ALIGNED": 0,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 1,
+      "UNREPRESENTED-surface": 3,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 1
+      "NEEDS_MANUAL": 2
     },
     "PIONEER": {
-      "ALIGNED": 32,
+      "ALIGNED": 38,
       "OFFSET": 0,
       "UNREPRESENTED-surface": 0,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 1
     },
     "PUNGGOL": {
-      "ALIGNED": 72,
+      "ALIGNED": 83,
       "OFFSET": 5,
-      "UNREPRESENTED-surface": 53,
-      "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 16
+      "UNREPRESENTED-surface": 56,
+      "UNDERGROUND_OR_INDOOR": 1,
+      "NEEDS_MANUAL": 17
     },
     "QUEENSTOWN": {
-      "ALIGNED": 176,
+      "ALIGNED": 206,
       "OFFSET": 26,
-      "UNREPRESENTED-surface": 108,
+      "UNREPRESENTED-surface": 118,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 44
+      "NEEDS_MANUAL": 46
     },
     "RIVER VALLEY": {
-      "ALIGNED": 0,
+      "ALIGNED": 1,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 9,
+      "UNREPRESENTED-surface": 11,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 5
     },
     "ROCHOR": {
-      "ALIGNED": 38,
+      "ALIGNED": 40,
       "OFFSET": 6,
-      "UNREPRESENTED-surface": 39,
+      "UNREPRESENTED-surface": 41,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 41
+      "NEEDS_MANUAL": 42
     },
     "SELETAR": {
       "ALIGNED": 9,
@@ -1534,25 +1534,25 @@
       "NEEDS_MANUAL": 0
     },
     "SEMBAWANG": {
-      "ALIGNED": 61,
+      "ALIGNED": 65,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 23,
+      "UNREPRESENTED-surface": 24,
       "UNDERGROUND_OR_INDOOR": 5,
       "NEEDS_MANUAL": 22
     },
     "SENGKANG": {
-      "ALIGNED": 155,
-      "OFFSET": 29,
-      "UNREPRESENTED-surface": 150,
+      "ALIGNED": 179,
+      "OFFSET": 30,
+      "UNREPRESENTED-surface": 159,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 70
+      "NEEDS_MANUAL": 72
     },
     "SERANGOON": {
-      "ALIGNED": 82,
+      "ALIGNED": 105,
       "OFFSET": 9,
-      "UNREPRESENTED-surface": 35,
+      "UNREPRESENTED-surface": 44,
       "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 25
+      "NEEDS_MANUAL": 26
     },
     "SIMPANG": {
       "ALIGNED": 0,
@@ -1562,11 +1562,11 @@
       "NEEDS_MANUAL": 0
     },
     "SINGAPORE RIVER": {
-      "ALIGNED": 12,
+      "ALIGNED": 21,
       "OFFSET": 2,
-      "UNREPRESENTED-surface": 7,
+      "UNREPRESENTED-surface": 11,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 1
+      "NEEDS_MANUAL": 2
     },
     "SOUTHERN ISLANDS": {
       "ALIGNED": 0,
@@ -1583,44 +1583,44 @@
       "NEEDS_MANUAL": 1
     },
     "SUNGEI KADUT": {
-      "ALIGNED": 11,
+      "ALIGNED": 16,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 4,
+      "UNREPRESENTED-surface": 6,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 1
     },
     "TAMPINES": {
-      "ALIGNED": 270,
+      "ALIGNED": 296,
       "OFFSET": 15,
-      "UNREPRESENTED-surface": 63,
+      "UNREPRESENTED-surface": 68,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 49
+      "NEEDS_MANUAL": 56
     },
     "TANGLIN": {
-      "ALIGNED": 33,
+      "ALIGNED": 43,
       "OFFSET": 6,
-      "UNREPRESENTED-surface": 17,
-      "UNDERGROUND_OR_INDOOR": 0,
+      "UNREPRESENTED-surface": 26,
+      "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 8
     },
     "TENGAH": {
-      "ALIGNED": 1,
+      "ALIGNED": 2,
       "OFFSET": 0,
       "UNREPRESENTED-surface": 0,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 0
     },
     "TOA PAYOH": {
-      "ALIGNED": 143,
-      "OFFSET": 5,
-      "UNREPRESENTED-surface": 88,
+      "ALIGNED": 169,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 98,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 45
+      "NEEDS_MANUAL": 53
     },
     "TUAS": {
       "ALIGNED": 7,
       "OFFSET": 0,
-      "UNREPRESENTED-surface": 0,
+      "UNREPRESENTED-surface": 1,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 0
     },
@@ -1632,91 +1632,112 @@
       "NEEDS_MANUAL": 0
     },
     "WESTERN WATER CATCHMENT": {
-      "ALIGNED": 2,
+      "ALIGNED": 5,
       "OFFSET": 0,
       "UNREPRESENTED-surface": 2,
       "UNDERGROUND_OR_INDOOR": 0,
       "NEEDS_MANUAL": 2
     },
     "WOODLANDS": {
-      "ALIGNED": 82,
-      "OFFSET": 6,
-      "UNREPRESENTED-surface": 152,
+      "ALIGNED": 96,
+      "OFFSET": 7,
+      "UNREPRESENTED-surface": 160,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 83
+      "NEEDS_MANUAL": 85
     },
     "YISHUN": {
-      "ALIGNED": 95,
-      "OFFSET": 4,
-      "UNREPRESENTED-surface": 44,
-      "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 54
+      "ALIGNED": 102,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 47,
+      "UNDERGROUND_OR_INDOOR": 3,
+      "NEEDS_MANUAL": 55
     }
   },
   "per_area_match_pct": {
-    "ANG MO KIO": 33.28778696322613,
-    "BEDOK": 69.91431983929343,
-    "BISHAN": 40.128173633478575,
-    "BOON LAY": 100.0,
-    "BUKIT BATOK": 73.79967956019986,
-    "BUKIT MERAH": 77.07411967607058,
-    "BUKIT PANJANG": 56.16586048600104,
-    "BUKIT TIMAH": 47.69503746040615,
-    "CENTRAL WATER CATCHMENT": 14.706602866544205,
+    "ANG MO KIO": 34.22338495547219,
+    "BEDOK": 72.03837224615978,
+    "BISHAN": 41.07078061873243,
+    "BOON LAY": 63.39688482131437,
+    "BUKIT BATOK": 75.31867107196298,
+    "BUKIT MERAH": 75.6859694196867,
+    "BUKIT PANJANG": 58.56295381023424,
+    "BUKIT TIMAH": 52.72212019949962,
+    "CENTRAL WATER CATCHMENT": 26.540441834032414,
     "CHANGI": 100.0,
     "CHANGI BAY": 0.0,
-    "CHOA CHU KANG": 74.57551911378756,
-    "CLEMENTI": 84.88114018933123,
-    "DOWNTOWN CORE": 29.095823332663752,
-    "GEYLANG": 44.59923075447904,
-    "HOUGANG": 41.9713169767212,
-    "JURONG EAST": 83.95695715837323,
-    "JURONG WEST": 72.82699938670191,
-    "KALLANG": 33.831520337709215,
+    "CHOA CHU KANG": 75.59959874781227,
+    "CLEMENTI": 83.37054481265987,
+    "DOWNTOWN CORE": 41.609230442167835,
+    "GEYLANG": 42.82789169604111,
+    "HOUGANG": 52.31245185141351,
+    "JURONG EAST": 78.3727676250737,
+    "JURONG WEST": 74.68234153428646,
+    "KALLANG": 35.59795517005083,
     "LIM CHU KANG": 0.0,
     "MANDAI": 0.0,
     "MARINA EAST": 0.0,
     "MARINA SOUTH": 0.0,
-    "MARINE PARADE": 23.16722467013463,
-    "MUSEUM": 50.87367042224731,
-    "NEWTON": 34.54236730303393,
+    "MARINE PARADE": 19.984892274809546,
+    "MUSEUM": 59.973424393993945,
+    "NEWTON": 33.12677635920529,
     "NORTH-EASTERN ISLANDS": 0.0,
-    "NOVENA": 49.045337466749714,
-    "ORCHARD": 46.932552795198035,
-    "OUTRAM": 16.592016545829296,
-    "PASIR RIS": 55.10422380064903,
+    "NOVENA": 50.99033685367341,
+    "ORCHARD": 57.63914721050508,
+    "OUTRAM": 41.14346311080101,
+    "PASIR RIS": 57.01125094244925,
     "PAYA LEBAR": 0.0,
-    "PIONEER": 99.43370482205538,
-    "PUNGGOL": 60.56435103145298,
-    "QUEENSTOWN": 55.12011416766072,
-    "RIVER VALLEY": 0.0,
-    "ROCHOR": 25.42141042870396,
+    "PIONEER": 99.69573444087487,
+    "PUNGGOL": 64.12081673327765,
+    "QUEENSTOWN": 60.47189591810683,
+    "RIVER VALLEY": 10.647641453732462,
+    "ROCHOR": 26.620594348912785,
     "SELETAR": 78.3888304535671,
-    "SEMBAWANG": 63.4732247305227,
-    "SENGKANG": 43.26989871515633,
-    "SERANGOON": 54.05182448321175,
+    "SEMBAWANG": 65.77762259370527,
+    "SENGKANG": 47.77925913231423,
+    "SERANGOON": 62.18094542865536,
     "SIMPANG": 0.0,
-    "SINGAPORE RIVER": 66.45977236306132,
+    "SINGAPORE RIVER": 67.98108178003086,
     "SOUTHERN ISLANDS": 0.0,
     "STRAITS VIEW": 0.0,
-    "SUNGEI KADUT": 78.40650670678238,
-    "TAMPINES": 75.42240882917076,
-    "TANGLIN": 62.43681986055587,
+    "SUNGEI KADUT": 78.58716735554697,
+    "TAMPINES": 75.74637204648728,
+    "TANGLIN": 59.619519904802885,
     "TENGAH": 100.0,
-    "TOA PAYOH": 60.13496315837735,
-    "TUAS": 100.0,
+    "TOA PAYOH": 64.44062156604485,
+    "TUAS": 92.67414085615982,
     "WESTERN ISLANDS": 0.0,
-    "WESTERN WATER CATCHMENT": 42.89608296244759,
-    "WOODLANDS": 34.590121506491656,
-    "YISHUN": 51.02194691328997
+    "WESTERN WATER CATCHMENT": 77.92605903820522,
+    "WOODLANDS": 40.72510042698599,
+    "YISHUN": 51.11933549450095
   },
-  "linkway_total_length_m": 247228.38652377267,
-  "synthesized_length_m": 1401.9632961893635,
-  "synthesized_pct_of_total": 0.5670721375898942,
-  "unsnapped_endpoints_count": 1294,
-  "needs_manual_count": 1294,
+  "linkway_total_length_m": 330472.5149498257,
+  "synthesized_length_m": 1601.1733834363538,
+  "synthesized_pct_of_total": 0.4845103029761653,
+  "unsnapped_endpoints_count": 1389,
+  "needs_manual_count": 1389,
   "covered_edge_length_m_osm_tags": 595247.9797038393,
-  "covered_edge_length_m_lta_match": 172046.66690036235,
-  "covered_edge_length_m_union": 676577.2875768103,
+  "covered_edge_length_m_lta_match": 234568.6933416578,
+  "covered_edge_length_m_osm_roof_canopy": 33911.718571337784,
+  "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
+  "covered_edge_length_m_audited_corrections": 0.0,
+  "covered_edge_length_m_union": 967351.2114418731,
+  "inferred_hdb_void_deck": {
+    "candidate_buildings": 8544,
+    "buildings_with_edges": 3393,
+    "added_edges": 5422,
+    "length_m": 242523.1376465145,
+    "node_search_m": 8.0,
+    "min_inside_ratio": 0.65,
+    "source": "hdb_points_plus_osm_residential_footprints",
+    "confidence": "inferred"
+  },
+  "audited_shelter_corrections": {
+    "approved_features": 0,
+    "candidate_lines": 0,
+    "added_edges": 0,
+    "skipped_edges": 0,
+    "snap_max_m": 8.0,
+    "path": "data\\audited_shelter_corrections.geojson"
+  },
   "flags": []
 }

@@ -22,38 +22,38 @@ Current graph coverage near the shipped Shiokest route:
 [
   {
     "threshold_m": 5,
-    "edge_count": 74,
-    "covered_edge_count": 5,
-    "edge_len_m": 1218.3,
-    "covered_len_m": 87.0
+    "edge_count": 75,
+    "covered_edge_count": 8,
+    "edge_len_m": 1284.4,
+    "covered_len_m": 165.7
   },
   {
     "threshold_m": 10,
-    "edge_count": 121,
-    "covered_edge_count": 5,
-    "edge_len_m": 2026.4,
-    "covered_len_m": 87.0
+    "edge_count": 122,
+    "covered_edge_count": 9,
+    "edge_len_m": 2092.6,
+    "covered_len_m": 170.1
   },
   {
     "threshold_m": 20,
-    "edge_count": 209,
-    "covered_edge_count": 21,
-    "edge_len_m": 3342.3,
-    "covered_len_m": 264.9
+    "edge_count": 210,
+    "covered_edge_count": 26,
+    "edge_len_m": 3408.5,
+    "covered_len_m": 355.3
   },
   {
     "threshold_m": 50,
-    "edge_count": 399,
-    "covered_edge_count": 23,
-    "edge_len_m": 5895.0,
-    "covered_len_m": 279.0
+    "edge_count": 408,
+    "covered_edge_count": 38,
+    "edge_len_m": 6476.7,
+    "covered_len_m": 954.8
   },
   {
     "threshold_m": 100,
-    "edge_count": 618,
-    "covered_edge_count": 31,
-    "edge_len_m": 8833.3,
-    "covered_len_m": 390.3
+    "edge_count": 631,
+    "covered_edge_count": 52,
+    "edge_len_m": 9445.2,
+    "covered_len_m": 1117.6
   }
 ]
 ```
@@ -105,6 +105,7 @@ Current graph coverage near the shipped Shiokest route:
       "snap_distance_m": 2.3
     }
   ],
+  "lambda_sweep_destination": "MAYFLOWER MRT STATION Exit 5",
   "lambda_sweep": [
     {
       "lambda": 0,
@@ -112,8 +113,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 834.5,
       "shortest_m": 834.5,
       "extra_walk_m": 0.0,
-      "covered_m": 25.6,
-      "covered_ratio_pct": 3.1,
+      "covered_m": 38.2,
+      "covered_ratio_pct": 4.6,
       "within_25pct_detour": true
     },
     {
@@ -122,8 +123,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 834.5,
       "shortest_m": 834.5,
       "extra_walk_m": 0.0,
-      "covered_m": 25.6,
-      "covered_ratio_pct": 3.1,
+      "covered_m": 38.2,
+      "covered_ratio_pct": 4.6,
       "within_25pct_detour": true
     },
     {
@@ -132,8 +133,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 889.4,
       "shortest_m": 834.5,
       "extra_walk_m": 54.9,
-      "covered_m": 123.5,
-      "covered_ratio_pct": 13.9,
+      "covered_m": 136.1,
+      "covered_ratio_pct": 15.3,
       "within_25pct_detour": true
     },
     {
@@ -142,8 +143,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 889.4,
       "shortest_m": 834.5,
       "extra_walk_m": 54.9,
-      "covered_m": 123.5,
-      "covered_ratio_pct": 13.9,
+      "covered_m": 136.1,
+      "covered_ratio_pct": 15.3,
       "within_25pct_detour": true
     },
     {
@@ -152,8 +153,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 889.4,
       "shortest_m": 834.5,
       "extra_walk_m": 54.9,
-      "covered_m": 123.5,
-      "covered_ratio_pct": 13.9,
+      "covered_m": 136.1,
+      "covered_ratio_pct": 15.3,
       "within_25pct_detour": true
     },
     {
@@ -162,8 +163,8 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 889.4,
       "shortest_m": 834.5,
       "extra_walk_m": 54.9,
-      "covered_m": 123.5,
-      "covered_ratio_pct": 13.9,
+      "covered_m": 136.1,
+      "covered_ratio_pct": 15.3,
       "within_25pct_detour": true
     },
     {
@@ -172,25 +173,35 @@ Current graph coverage near the shipped Shiokest route:
       "length_m": 889.4,
       "shortest_m": 834.5,
       "extra_walk_m": 54.9,
-      "covered_m": 123.5,
-      "covered_ratio_pct": 13.9,
+      "covered_m": 136.1,
+      "covered_ratio_pct": 15.3,
       "within_25pct_detour": true
     }
   ],
-  "nearest_covered_to_origin_m": 55.2,
+  "nearest_covered_to_origin_m": 9.8,
   "nearest_covered_to_best_exit_m": 38.7,
-  "covered_edges_within_30m_of_route": 23,
-  "covered_len_within_30m_of_route": 279.0
+  "covered_edges_within_30m_of_route": 32,
+  "covered_len_within_30m_of_route": 696.8
 }
 ```
 
 ## Initial Classification
 
 - The shipped score is not a frontend display bug: the score artifact itself reports only 25.6 m covered.
-- Covered graph edges do exist near the route corridor: within 20 m there are 21 covered edges totalling about 264.9 m.
-- The current shelter lambda is also too weak for this case: lambda 0.6 leaves the sheltered route identical to shortest, while lambda 1.5+ finds a valid +55 m route within the 25% detour cap and lifts covered ratio from 3.1% to 13.9%.
-- Lambda tuning alone does not solve the owner-verified ground truth: even lambda 30 only reaches 13.9% covered, and the nearest covered graph edge is 55.2 m from the postal origin and 38.7 m from Exit 5.
-- Root-cause classification: mixed algorithm/data issue. Raise lambda only after a broader safety sweep, and separately investigate missing/disconnected/untagged HDB void-deck, overpass, and final-MRT-approach shelter geometry. Do not hardcode a postal-specific score override.
+- Covered graph edges do exist near the route corridor: within 20 m there are 26 covered edges totalling about 355.3 m.
+- The original shelter lambda was too weak for this case: lambda 0.6 leaves the sheltered route identical to shortest, while lambda 1.5+ finds a valid +55 m route within the 25% detour cap.
+- After rebuilding the island network with overhead/underpass polygons, OSM roof/canopy attribution, and inferred HDB void-deck connectors, the Exit 5 route improves from the shipped 3.1% covered to 15.3% covered at lambda 2.0.
+- Lambda tuning and inferred public-housing shelter still do not solve the owner-verified ground truth: even lambda 30 reaches only 15.3% covered, and the nearest covered graph edge is 9.8 m from the postal origin and 38.7 m from Exit 5.
+- Root-cause classification: mixed algorithm/data issue. The general model is improved, but the known fully sheltered HDB/overpass path still lacks routable covered geometry in available sources. Do not hardcode a postal-specific score override.
+
+## Implemented General Fixes
+
+- `shelter_lambda` raised from 0.6 to 2.0, still bounded by the PRD 25% detour cap.
+- LTA overhead bridge / underpass polygons are now included in shelter conflation, not only crossing-friction exemption.
+- OSM `building=roof|canopy` polygons now mark intersecting pedestrian edges as covered.
+- HDB void decks are inferred only from HDB building points matched to OSM residential footprints, then emitted as short covered pass-through connectors with strict geometric caps.
+
+The rebuilt island QA is green: zero real disconnections, no flags, 5,422 inferred HDB void-deck connectors, 3,631 roof/canopy-attributed edges, and 923 overhead/underpass polygons included in the shelter layer.
 
 ## Files
 

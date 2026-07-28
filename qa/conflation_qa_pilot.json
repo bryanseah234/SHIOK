@@ -1,17 +1,17 @@
 {
-  "nodes": 77652,
-  "edges": 86061,
-  "mean_edge_length_m": 17.686830010876896,
-  "connected_components_count": 694,
+  "nodes": 77685,
+  "edges": 86617,
+  "mean_edge_length_m": 17.845954318348216,
+  "connected_components_count": 643,
   "top_5_component_sizes": [
-    28093,
-    25921,
-    18023,
+    28348,
+    25937,
+    17886,
     412,
     285
   ],
-  "osm_only_top_3_component_node_share_pct": 93.18867021207768,
-  "top_3_component_node_share_pct": 92.76902075928501,
+  "osm_only_top_3_component_node_share_pct": 93.35429525251348,
+  "top_3_component_node_share_pct": 92.90210465340799,
   "residual_components_gt_50_osm_only": [
     {
       "size": 412,
@@ -38,12 +38,20 @@
       "evidence": "dist_to_boundary=1.54m (<20m)"
     },
     {
+      "size": 137,
+      "lat": 1.3021558277942553,
+      "lon": 103.87259884119388,
+      "gap_m": 4.012542834660342,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=2.00m (<20m)"
+    },
+    {
       "size": 130,
       "lat": 1.3296274054102828,
       "lon": 103.81428132828144,
       "gap_m": 16.98995585632782,
       "class": "PRIVATE_ESTATE",
-      "evidence": "Owner-confirmed private residential road"
+      "evidence": "enclosed by: highway=service/access=private, highway=residential/access=private"
     },
     {
       "size": 115,
@@ -52,6 +60,14 @@
       "gap_m": 163.71149867984244,
       "class": "ISOLATED_NON_TRANSIT",
       "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 106,
+      "lat": 1.348285502584753,
+      "lon": 103.77201935634558,
+      "gap_m": 4.170191842108167,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
     },
     {
       "size": 89,
@@ -108,6 +124,14 @@
       "gap_m": 472.0738512139834,
       "class": "CLIP_EDGE",
       "evidence": "dist_to_boundary=6.90m (<20m)"
+    },
+    {
+      "size": 52,
+      "lat": 1.3481221222774797,
+      "lon": 103.8501072500699,
+      "gap_m": 2.858548582758883,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=16.01m (<20m)"
     }
   ],
   "residual_components_gt_50_final": [
@@ -136,12 +160,20 @@
       "evidence": "dist_to_boundary=1.54m (<20m)"
     },
     {
+      "size": 137,
+      "lat": 1.3021558277942553,
+      "lon": 103.87259884119388,
+      "gap_m": 4.012542834660342,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=2.00m (<20m)"
+    },
+    {
       "size": 130,
       "lat": 1.3296274054102828,
       "lon": 103.81428132828144,
       "gap_m": 16.98995585632782,
       "class": "PRIVATE_ESTATE",
-      "evidence": "Owner-confirmed private residential road"
+      "evidence": "enclosed by: highway=service/access=private, highway=residential/access=private"
     },
     {
       "size": 115,
@@ -150,6 +182,14 @@
       "gap_m": 163.71149867984244,
       "class": "ISOLATED_NON_TRANSIT",
       "evidence": "Owner-confirmed forested area without transit relevance"
+    },
+    {
+      "size": 106,
+      "lat": 1.348285502584753,
+      "lon": 103.77201935634558,
+      "gap_m": 4.170191842108167,
+      "class": "PRIVATE_ESTATE",
+      "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
     },
     {
       "size": 89,
@@ -206,45 +246,74 @@
       "gap_m": 472.0738512139834,
       "class": "CLIP_EDGE",
       "evidence": "dist_to_boundary=6.90m (<20m)"
+    },
+    {
+      "size": 52,
+      "lat": 1.3481221222774797,
+      "lon": 103.8501072500699,
+      "gap_m": 2.858548582758883,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=16.01m (<20m)"
     }
   ],
   "real_disconnection_count_osm_only": 0,
   "real_disconnection_count_final": 0,
   "per_area_classification_counts": {
     "Toa Payoh": {
-      "ALIGNED": 143,
-      "OFFSET": 5,
-      "UNREPRESENTED-surface": 88,
+      "ALIGNED": 169,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 98,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 45
+      "NEEDS_MANUAL": 53
     },
     "Bukit Timah": {
-      "ALIGNED": 108,
-      "OFFSET": 14,
-      "UNREPRESENTED-surface": 92,
+      "ALIGNED": 132,
+      "OFFSET": 15,
+      "UNREPRESENTED-surface": 103,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 21
+      "NEEDS_MANUAL": 23
     },
     "Downtown Core": {
-      "ALIGNED": 16,
-      "OFFSET": 10,
-      "UNREPRESENTED-surface": 25,
+      "ALIGNED": 38,
+      "OFFSET": 12,
+      "UNREPRESENTED-surface": 31,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 13
+      "NEEDS_MANUAL": 20
     }
   },
   "per_area_match_pct": {
-    "Toa Payoh": 60.13496315837735,
-    "Bukit Timah": 47.69503746040615,
-    "Downtown Core": 29.095823332663752
+    "Toa Payoh": 64.44062156604485,
+    "Bukit Timah": 52.72212019949962,
+    "Downtown Core": 41.609230442167835
   },
-  "linkway_total_length_m": 22835.062438990713,
-  "synthesized_length_m": 154.29110684129967,
-  "synthesized_pct_of_total": 0.6756763081052437,
-  "unsnapped_endpoints_count": 79,
-  "needs_manual_count": 79,
+  "linkway_total_length_m": 33897.93725341413,
+  "synthesized_length_m": 173.8805920497825,
+  "synthesized_pct_of_total": 0.5129533126157098,
+  "unsnapped_endpoints_count": 96,
+  "needs_manual_count": 96,
   "covered_edge_length_m_osm_tags": 102517.30464490506,
-  "covered_edge_length_m_lta_match": 17496.612595219947,
-  "covered_edge_length_m_union": 112689.34422003098,
+  "covered_edge_length_m_lta_match": 28311.261216196097,
+  "covered_edge_length_m_osm_roof_canopy": 5558.918096331083,
+  "covered_edge_length_m_inferred_hdb_void_deck": 23608.199424341896,
+  "covered_edge_length_m_audited_corrections": 0.0,
+  "covered_edge_length_m_union": 144756.320185743,
+  "inferred_hdb_void_deck": {
+    "candidate_buildings": 673,
+    "buildings_with_edges": 330,
+    "added_edges": 528,
+    "length_m": 23608.199424341896,
+    "node_search_m": 8.0,
+    "min_inside_ratio": 0.65,
+    "source": "hdb_points_plus_osm_residential_footprints",
+    "confidence": "inferred"
+  },
+  "audited_shelter_corrections": {
+    "approved_features": 0,
+    "candidate_lines": 0,
+    "added_edges": 0,
+    "skipped_edges": 0,
+    "snap_max_m": 8.0,
+    "path": "data\\audited_shelter_corrections.geojson"
+  },
   "flags": []
 }

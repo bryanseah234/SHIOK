@@ -231,10 +231,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#2f5f8f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.1, 18, 3.6],
-        "circle-opacity": 0.74,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.2, 18, 3.6],
+        "circle-opacity": 0.76,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 0.8,
+        "circle-stroke-width": 0.75,
       },
     });
   }
@@ -248,10 +248,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
         "circle-color": "#436b5f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15.4, 1.9, 18, 3.4],
-        "circle-opacity": 0.72,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.2, 18, 3.6],
+        "circle-opacity": 0.76,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 0.65,
+        "circle-stroke-width": 0.75,
       },
     });
   }
