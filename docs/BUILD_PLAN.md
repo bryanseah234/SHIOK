@@ -71,6 +71,13 @@ AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works;
 - Island-wide SHIOK map layer after MVP: optional comfort heatmap, shelter overlay, Rain Mode coverage, and browse-before-search visual coverage. This is separate from the OneMap basemap; it likely requires PMTiles or another static tile artifact plus a free-tier serving plan.
 - Public route geometry contract upgrade: export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps.
 
+**Open production-readiness backlog — owner tabled on 2026-07-28.**
+- Complete the 2,000-postal OneMap validation gate from PRD §2/§12: stratified sample, cached OneMap walk-route responses, median ≤ 10%, p95 ≤ 25%, and publish blocked if thresholds fail.
+- Close the legitimate full-postal-universe gap: find a real source for the remaining gap toward ~140k Singapore postals, or continue shipping honest `NOT_YET_SCORED` states without brute-forcing OneMap.
+- Run and fix the Lighthouse/accessibility pass: Lighthouse a11y ≥ 90, keyboard-only walkthrough, text equivalents for map answers, reduced-motion support, and mobile readability.
+- Add top-2 plain-language reasons per score, e.g. "Low because: 180 m exposed near the canal; 1 uncovered crossing."
+- Keep the island-wide SHIOK tile layer / Rain Mode as an optional later feature after the selected-route UX and validation gates are stable.
+
 **T1.7 — Validation harness (pilot gate).**
 Stratified 200-postal sample across the 3 areas; compare shortest-path distance vs OneMap `routeType=walk` (throttle from the T0.4 probe; responses cached by OD-pair hash in `raw/validation/`; resumable after interrupt). Report median + p95 deviation per area. Golden set: 15 hand-verified addresses with expected score ranges; wire into `python run.py validate`.
 AC: median ≤ 10% and p95 ≤ 25% per area (if an area fails: investigate conflation first; only then propose OneMap-fallback for that area to owner); golden set green; validate blocks publish on failure (hard-coded in run.py).
