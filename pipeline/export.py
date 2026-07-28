@@ -31,8 +31,11 @@ GEOM_PROMOTION_THRESHOLD_BYTES = 250 * 1024
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
 
 
-def slugify_area(value: str | None) -> str:
-    text = (value or "UNKNOWN").strip().upper()
+def slugify_area(value: Any) -> str:
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        text = "UNKNOWN"
+    else:
+        text = str(value).strip().upper()
     slug = re.sub(r"[^A-Z0-9]+", "_", text).strip("_")
     return slug or "UNKNOWN"
 
@@ -179,7 +182,7 @@ def public_score_record(record: dict[str, Any]) -> dict[str, Any]:
 
 def load_planning_area_lookup(records: list[dict[str, Any]]) -> dict[str, str]:
     explicit = {
-        str(record["postal"]): slugify_area(str(record["_area"]))
+        str(record["postal"]): slugify_area(record["_area"])
         for record in records
         if "_area" in record
     }
@@ -221,10 +224,45 @@ def state_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
+def score_record_shards(
+    area: str,
+    records: list[dict[str, Any]],
+    max_bytes: int = MAX_FILE_BYTES,
+) -> list[tuple[str, list[dict[str, Any]]]]:
+    records = sorted(records, key=lambda item: str(item["postal"]))
+    if json_size(records) <= max_bytes:
+        return [(area, records)]
+
+    shards: list[tuple[str, list[dict[str, Any]]]] = []
+    start = 0
+    shard_index = 1
+    while start < len(records):
+        low = 1
+        high = len(records) - start
+        best = 0
+        while low <= high:
+            mid = (low + high) // 2
+            candidate = records[start : start + mid]
+            if json_size(candidate) <= max_bytes:
+                best = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+        if best == 0:
+            postal = records[start].get("postal")
+            raise ValueError(f"single score record exceeds {max_bytes} bytes: {postal}")
+        shard_records = records[start : start + best]
+        shards.append((f"{area}_PART_{shard_index:03d}", shard_records))
+        start += best
+        shard_index += 1
+    return shards
+
+
 def export_static_artifacts(
     records: list[dict[str, Any]],
     output_dir: Path = DEFAULT_EXPORT_DIR,
     geom_promotion_threshold_bytes: int = GEOM_PROMOTION_THRESHOLD_BYTES,
+    score_shard_max_bytes: int = MAX_FILE_BYTES,
 ) -> dict[str, Any]:
     records = sorted(records, key=lambda item: str(item["postal"]))
     area_lookup = load_planning_area_lookup(records)
@@ -235,7 +273,6 @@ def export_static_artifacts(
         postal = str(record["postal"])
         area = area_lookup.get(postal, "UNKNOWN")
         scores_by_area[area].append(public_score_record(record))
-        score_index[area].append(postal)
 
     output_dir.mkdir(parents=True, exist_ok=True)
     scores_dir = output_dir / "scores"
@@ -243,9 +280,13 @@ def export_static_artifacts(
 
     written_files: dict[str, int] = {}
     for area, area_records in sorted(scores_by_area.items()):
-        written_files[rel_key(scores_dir / f"{area}.json", output_dir)] = write_json(
-            scores_dir / f"{area}.json", area_records
-        )
+        for shard, shard_records in score_record_shards(
+            area, area_records, max_bytes=score_shard_max_bytes
+        ):
+            written_files[rel_key(scores_dir / f"{shard}.json", output_dir)] = write_json(
+                scores_dir / f"{shard}.json", shard_records
+            )
+            score_index[shard].extend(str(record["postal"]) for record in shard_records)
     written_files[rel_key(scores_dir / "index.json", output_dir)] = write_json(
         scores_dir / "index.json",
         {key: sorted(value) for key, value in sorted(score_index.items())},
@@ -304,7 +345,8 @@ def export_static_artifacts(
             "state_counts": state_counts(records),
         },
         "scores": {
-            "areas": sorted(scores_by_area),
+            "planning_areas": sorted(scores_by_area),
+            "shards": sorted(score_index),
             "index": "scores/index.json",
         },
         "geom": {
@@ -323,6 +365,7 @@ def export_static_artifacts(
         "record_count": len(records),
         "state_counts": state_counts(records),
         "score_area_count": len(scores_by_area),
+        "score_shard_count": len(score_index),
         "geom_shard_count": len([path for path in written_files if path.startswith("geom/h3")]),
         "file_count": len(written_files),
         "written_files": dict(sorted(written_files.items())),

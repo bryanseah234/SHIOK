@@ -47,9 +47,25 @@ def sample_record(postal: str = "123456") -> dict:
     }
 
 
+def unscored_record(postal: str) -> dict:
+    return {
+        "postal": postal,
+        "state": "NOT_YET_SCORED",
+        "total": None,
+        "subscores": None,
+        "best_node": None,
+        "paths": None,
+        "exposure_gaps": None,
+        "data_as_of": "2026-07-27T00:00:00+00:00",
+        "provenance": {"reason": "test"},
+        "_area": "Large Area",
+    }
+
+
 def test_slugify_area():
     assert slugify_area("Downtown Core") == "DOWNTOWN_CORE"
     assert slugify_area(None) == "UNKNOWN"
+    assert slugify_area(float("nan")) == "UNKNOWN"
 
 
 def test_encode_polyline_known_google_example():
@@ -74,6 +90,19 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert ok, validation
     assert validation["indexed_postals"] == 2
     assert validation["geometry_postals"] == 2
+
+
+def test_export_splits_large_score_files(tmp_path: Path):
+    records = [unscored_record(f"1000{i:02d}") for i in range(40)]
+
+    report = export_static_artifacts(records, output_dir=tmp_path, score_shard_max_bytes=1200)
+    ok, validation = validate_static_artifacts(tmp_path)
+
+    assert report["score_area_count"] == 1
+    assert report["score_shard_count"] > 1
+    assert ok, validation
+    for path in (tmp_path / "scores").glob("LARGE_AREA_PART_*.json"):
+        assert path.stat().st_size <= 1200
 
 
 def test_load_score_batch_records_reads_chunks_in_order_and_rejects_duplicates(tmp_path: Path):
