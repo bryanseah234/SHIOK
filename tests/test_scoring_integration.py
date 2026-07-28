@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 import geopandas as gpd
@@ -11,6 +12,7 @@ from pipeline.scoring_integration import (
     CrossingCounter,
     assemble_score_record,
     build_provenance,
+    json_safe_score_record,
     load_postal_universe_points,
     score_candidate_route,
     select_mrt_exit_candidates,
@@ -275,3 +277,26 @@ def test_route_worker_coalesces_length_column_into_length_m():
 
     assert result[0]["length_m"] == 18.0
     assert result[0]["covered_m"] == 7.0
+
+
+def test_json_safe_score_record_serializes_private_geometry_payload():
+    record = {
+        "postal": "123456",
+        "_geometry": {
+            "shortest": LineString([(0.0, 0.0), (1.0, 0.0)]),
+            "sheltered": LineString([(0.0, 0.0), (0.0, 1.0)]),
+            "exposure_gap_edges": [
+                {
+                    "length_m": 1.0,
+                    "geometry": LineString([(1.0, 1.0), (2.0, 2.0)]),
+                }
+            ],
+        },
+    }
+
+    safe = json_safe_score_record(record)
+
+    json.dumps(safe, sort_keys=True)
+    assert safe["_geometry"]["shortest"] == "LINESTRING (0 0, 1 0)"
+    assert safe["_geometry"]["sheltered"] == "LINESTRING (0 0, 0 1)"
+    assert safe["_geometry"]["exposure_gap_edges"][0]["geometry"] == "LINESTRING (1 1, 2 2)"

@@ -632,6 +632,39 @@ def assemble_score_record(
     return record
 
 
+def json_safe_geometry(value: Any) -> Any:
+    if value is None:
+        return None
+    wkt_value = getattr(value, "wkt", None)
+    return wkt_value if isinstance(wkt_value, str) else value
+
+
+def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
+    safe = dict(record)
+    geometry_payload = safe.get("_geometry")
+    if not isinstance(geometry_payload, dict):
+        return safe
+
+    safe_geometry = dict(geometry_payload)
+    safe_geometry["shortest"] = json_safe_geometry(safe_geometry.get("shortest"))
+    safe_geometry["sheltered"] = json_safe_geometry(safe_geometry.get("sheltered"))
+
+    exposure_gap_edges = safe_geometry.get("exposure_gap_edges")
+    if isinstance(exposure_gap_edges, list):
+        safe_edges: list[Any] = []
+        for edge in exposure_gap_edges:
+            if not isinstance(edge, dict):
+                safe_edges.append(edge)
+                continue
+            safe_edge = dict(edge)
+            safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
+            safe_edges.append(safe_edge)
+        safe_geometry["exposure_gap_edges"] = safe_edges
+
+    safe["_geometry"] = safe_geometry
+    return safe
+
+
 def add_private_origin(record: dict[str, Any], postal_point: Any) -> dict[str, Any]:
     transformer = Transformer.from_crs("EPSG:3414", "EPSG:4326", always_xy=True)
     lon, lat = transformer.transform(postal_point.x, postal_point.y)
@@ -848,10 +881,11 @@ def main() -> int:
         network_path=args.network,
         postal_universe_path=args.postal_universe,
     )
+    output_records = [json_safe_score_record(record) for record in records]
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         with open(args.output, "w", encoding="utf-8") as f:
-            json.dump(records, f, indent=2, sort_keys=True)
+            json.dump(output_records, f, indent=2, sort_keys=True)
         print(
             json.dumps(
                 {
@@ -864,7 +898,7 @@ def main() -> int:
             )
         )
     else:
-        print(json.dumps(records, indent=2, sort_keys=True))
+        print(json.dumps(output_records, indent=2, sort_keys=True))
     return 0
 
 
