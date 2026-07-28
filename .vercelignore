@@ -1,4 +1,7 @@
 .git/
+.env*
+.hypothesis
+.hypothesis/
 .venv/
 .mypy_cache/
 .pytest_cache/
