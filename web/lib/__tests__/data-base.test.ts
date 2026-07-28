@@ -1,10 +1,20 @@
 import { normalizeDataBase } from "../data";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 describe("normalizeDataBase", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("defaults to mock data", () => {
     expect(normalizeDataBase()).toBe("/data/mock/");
     expect(normalizeDataBase("")).toBe("/data/mock/");
     expect(normalizeDataBase("   ")).toBe("/data/mock/");
+  });
+
+  it("defaults production builds to generated data", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    expect(normalizeDataBase()).toBe("/data/generated/");
   });
 
   it("normalizes relative and absolute paths", () => {
