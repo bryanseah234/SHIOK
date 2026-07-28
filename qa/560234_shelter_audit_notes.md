@@ -203,6 +203,22 @@ Current graph coverage near the shipped Shiokest route:
 
 The rebuilt island QA is green: zero real disconnections, no flags, 5,422 inferred HDB void-deck connectors, 3,631 roof/canopy-attributed edges, and 923 overhead/underpass polygons included in the shelter layer.
 
+## 2026-07-29 Follow-Up
+
+Implemented an additional conservative HDB block-anchor model:
+
+- Official HDB/residential footprint representative points are connected to nearby graph nodes only when the short connector stays inside a 3 m HDB footprint buffer.
+- Island QA remains green after rebuild: zero final REAL_DISCONNECTION components, `flags=[]`, synthesized LTA surface length 1,604.3 m / 0.49% of LTA total.
+- New HDB anchor evidence: 10,546 inferred anchor edges, 264,991.2 m total, 5,940 buildings with anchor edges.
+- Postal 560234 improved only marginally: total 19.6/100, shortest 832.5 m, Shiokest 887.3 m, covered 149.0 m / 16.8%.
+
+Rejected for production without calibration:
+
+- A broad HDB precinct-buffer connector prototype can produce more plausible 560234 routes, e.g. roughly 550-600 m to Exit 5 and 35-42% covered with 20 m buffered HDB clusters.
+- That prototype creates dense inferred connector meshes and is not safe to ship as rain shelter without a calibration gate, because it may treat open HDB courtyards/frontages as covered.
+
+Current root cause after the safe patch: the owner-verified sheltered route is still not fully represented by public routable geometry. The remaining work is a calibrated HDB precinct/void-deck model or audited source-backed correction geometry, not a frontend or scoring-formula bug.
+
 ## Files
 
 - `qa/560234_shelter_audit.geojson`

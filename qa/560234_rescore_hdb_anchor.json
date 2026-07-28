@@ -1,0 +1,92 @@
+[
+  {
+    "best_node": {
+      "exit": "Exit 5",
+      "name": "MAYFLOWER MRT STATION Exit 5",
+      "routed_m": 832.5,
+      "snap_distance_m": 11.9,
+      "station": "MAYFLOWER MRT STATION",
+      "straight_line_m": 398.6,
+      "type": "mrt_lrt_exit"
+    },
+    "data_as_of": "2026-07-27T14:27:44.431017+00:00",
+    "exposure_gaps": [
+      {
+        "label": "exposed gap near 1.36687, 103.83678",
+        "len_m": 52.6,
+        "location": {
+          "lat": 1.366875,
+          "lon": 103.836781
+        }
+      },
+      {
+        "label": "exposed gap near 1.36683, 103.83617",
+        "len_m": 370.0,
+        "location": {
+          "lat": 1.366825,
+          "lon": 103.836174
+        }
+      },
+      {
+        "label": "exposed gap near 1.36959, 103.83684",
+        "len_m": 315.8,
+        "location": {
+          "lat": 1.369588,
+          "lon": 103.836842
+        }
+      }
+    ],
+    "paths": {
+      "covered_m": 149.0,
+      "covered_ratio": 0.168,
+      "detour_pct": 6.6,
+      "routing_type": "sheltered",
+      "sheltered_m": 887.3,
+      "shortest_covered_ratio": 0.061,
+      "shortest_m": 832.5
+    },
+    "postal": "560234",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 12.6,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_only_until_phase_4",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    "state": "SCORED",
+    "subscores": {
+      "access": 36.8,
+      "bus": 0.0,
+      "crossing": 0.0,
+      "heat": 16.8,
+      "rain": 16.8
+    },
+    "total": 19.6
+  }
+]

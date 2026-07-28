@@ -14,7 +14,7 @@ from centerline.geometry import Centerline
 from pyrosm import OSM
 from shapely.errors import ShapelyDeprecationWarning
 from shapely.geometry import LineString, MultiLineString, Point
-from shapely.ops import nearest_points
+from shapely.ops import nearest_points, substring
 
 warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
@@ -139,6 +139,85 @@ def nearest_point_on_geometry(
         target_geom = target_geom.geometry
     point_on_target, _ = nearest_points(target_geom, point)
     return point_on_target, dist
+
+
+def nearest_point_and_index_on_geometry(
+    target_gdf: gpd.GeoDataFrame | gpd.GeoSeries,
+    target_sindex,
+    point: Point,
+    *,
+    max_distance: float,
+) -> tuple[Point | None, float, object | None]:
+    dist, position = nearest_distance_and_position(
+        target_gdf,
+        target_sindex,
+        point,
+        max_distance=max_distance,
+    )
+    if position is None:
+        return None, float("inf"), None
+
+    target_geom = target_gdf.iloc[position]
+    if hasattr(target_geom, "geometry"):
+        target_geom = target_geom.geometry
+    point_on_target, _ = nearest_points(target_geom, point)
+    return point_on_target, dist, target_gdf.index[position]
+
+
+def split_edges_at_points(
+    edges_gdf: gpd.GeoDataFrame,
+    split_points_by_edge: dict[object, list[Point]],
+    *,
+    min_segment_m: float = 0.05,
+) -> gpd.GeoDataFrame:
+    """Split host edges at synthetic snap points so snapped links are routable."""
+    if not split_points_by_edge:
+        return edges_gdf
+
+    split_rows = []
+    drop_indices = []
+    for edge_idx, split_points in split_points_by_edge.items():
+        if edge_idx not in edges_gdf.index:
+            continue
+        row = edges_gdf.loc[edge_idx]
+        geom = row.geometry
+        if geom is None or geom.is_empty or geom.length <= 0:
+            continue
+
+        distances = []
+        for point in split_points:
+            distance = float(geom.project(point))
+            if min_segment_m < distance < geom.length - min_segment_m:
+                distances.append(distance)
+        unique_distances = sorted({round(distance, 6) for distance in distances})
+        if not unique_distances:
+            continue
+
+        start = 0.0
+        segments = []
+        for end in unique_distances + [float(geom.length)]:
+            segment = substring(geom, start, end)
+            start = end
+            if isinstance(segment, LineString) and segment.length >= min_segment_m:
+                segments.append(segment)
+        if len(segments) < 2:
+            continue
+
+        drop_indices.append(edge_idx)
+        for segment in segments:
+            split_row = row.copy()
+            split_row["geometry"] = segment
+            split_row["length_m"] = float(segment.length)
+            if "length" in split_row.index:
+                split_row["length"] = float(segment.length)
+            split_rows.append(split_row)
+
+    if not split_rows:
+        return edges_gdf
+
+    retained = edges_gdf.drop(index=drop_indices)
+    split_gdf = gpd.GeoDataFrame(split_rows, geometry="geometry", crs=edges_gdf.crs)
+    return pd.concat([retained, split_gdf], ignore_index=True)
 
 
 def load_transit_reference_points() -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame]:
@@ -567,6 +646,103 @@ def build_hdb_void_deck_edges(
     return edges_gdf, report
 
 
+def build_hdb_void_deck_anchor_edges(
+    hdb_footprints_gdf: gpd.GeoDataFrame,
+    graph_nodes_gdf: gpd.GeoDataFrame,
+    *,
+    node_search_m: float = 8.0,
+    coverage_buffer_m: float = 3.0,
+    min_line_m: float = 2.0,
+    max_line_m: float = 45.0,
+    min_inside_ratio: float = 0.60,
+    max_edges_per_building: int = 2,
+    max_candidate_nodes: int = 10,
+) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
+    empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    report: dict[str, object] = {
+        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "buildings_with_edges": 0,
+        "added_edges": 0,
+        "length_m": 0.0,
+        "node_search_m": node_search_m,
+        "coverage_buffer_m": coverage_buffer_m,
+        "min_inside_ratio": min_inside_ratio,
+        "source": "hdb_points_plus_residential_footprints",
+        "confidence": "inferred",
+    }
+    if hdb_footprints_gdf.empty or graph_nodes_gdf.empty:
+        return empty_edges, report
+
+    node_sindex = graph_nodes_gdf.sindex
+    anchor_edges = []
+    buildings_with_edges = 0
+    for idx, row in hdb_footprints_gdf.iterrows():
+        footprint = row.geometry
+        if footprint is None or footprint.is_empty or footprint.area < 200 or footprint.area > 6000:
+            continue
+
+        anchor = footprint.representative_point()
+        sheltered_area = footprint.buffer(coverage_buffer_m)
+        possible = node_sindex.query(
+            sheltered_area.buffer(node_search_m),
+            predicate="intersects",
+        )
+        if len(possible) == 0:
+            continue
+
+        candidates = graph_nodes_gdf.iloc[possible].copy()
+        candidates["dist"] = candidates.geometry.distance(footprint)
+        candidates = candidates[candidates["dist"] <= node_search_m].sort_values("dist")
+        candidates = candidates.head(max_candidate_nodes)
+        if candidates.empty:
+            continue
+
+        building_edge_count = 0
+        for candidate in candidates.itertuples():
+            line = LineString([anchor, candidate.geometry])
+            length_m = float(line.length)
+            if length_m < min_line_m or length_m > max_line_m:
+                continue
+            inside_ratio = line.intersection(sheltered_area).length / length_m
+            if inside_ratio < min_inside_ratio:
+                continue
+
+            anchor_edges.append(
+                {
+                    "geometry": line,
+                    "is_covered": 1,
+                    "is_synthesized": 1,
+                    "length_m": length_m,
+                    "u": -1,
+                    "v": -1,
+                    "covered": "yes",
+                    "highway": "inferred_hdb_void_deck_anchor",
+                    "synth_class": "INFERRED_HDB_VOID_DECK_ANCHOR",
+                    "source_layer": "inferred_hdb_void_deck",
+                    "confidence": "inferred",
+                    "postal_code": row.get("postal_code", ""),
+                    "osm_building_id": row.get("id", idx),
+                    "inside_ratio": float(inside_ratio),
+                }
+            )
+            building_edge_count += 1
+            if building_edge_count >= max_edges_per_building:
+                break
+
+        if building_edge_count:
+            buildings_with_edges += 1
+
+    if not anchor_edges:
+        report["buildings_with_edges"] = buildings_with_edges
+        return empty_edges, report
+
+    edges_gdf = gpd.GeoDataFrame(anchor_edges, geometry="geometry", crs="EPSG:3414")
+    report["buildings_with_edges"] = buildings_with_edges
+    report["added_edges"] = int(len(edges_gdf))
+    report["length_m"] = float(edges_gdf.geometry.length.sum())
+    return edges_gdf, report
+
+
 def get_skeleton(poly):
     try:
         # Some very thin polygons cause Voronoi errors in centerline
@@ -920,8 +1096,15 @@ def run_build(scope: str = "pilot"):
         hdb_footprints_gdf,
         graph_nodes_gdf,
     )
+    hdb_anchor_edges_gdf, hdb_anchor_report = build_hdb_void_deck_anchor_edges(
+        hdb_footprints_gdf,
+        graph_nodes_gdf,
+    )
     hdb_void_length_m = (
         float(hdb_void_edges_gdf.geometry.length.sum()) if not hdb_void_edges_gdf.empty else 0.0
+    )
+    hdb_anchor_length_m = (
+        float(hdb_anchor_edges_gdf.geometry.length.sum()) if not hdb_anchor_edges_gdf.empty else 0.0
     )
     print(
         "Inferred HDB void-deck connectors: "
@@ -930,10 +1113,23 @@ def run_build(scope: str = "pilot"):
         f"added={hdb_void_report['added_edges']}, "
         f"length={hdb_void_length_m:.1f}m"
     )
+    print(
+        "Inferred HDB void-deck anchors: "
+        f"candidate_buildings={hdb_anchor_report['candidate_buildings']}, "
+        f"buildings_with_edges={hdb_anchor_report['buildings_with_edges']}, "
+        f"added={hdb_anchor_report['added_edges']}, "
+        f"length={hdb_anchor_length_m:.1f}m"
+    )
     if not hdb_void_edges_gdf.empty:
         edges_gdf = pd.concat([edges_gdf, hdb_void_edges_gdf], ignore_index=True)
         native_covered_mask = pd.concat(
             [native_covered_mask, pd.Series([False] * len(hdb_void_edges_gdf))],
+            ignore_index=True,
+        )
+    if not hdb_anchor_edges_gdf.empty:
+        edges_gdf = pd.concat([edges_gdf, hdb_anchor_edges_gdf], ignore_index=True)
+        native_covered_mask = pd.concat(
+            [native_covered_mask, pd.Series([False] * len(hdb_anchor_edges_gdf))],
             ignore_index=True,
         )
 
@@ -1193,6 +1389,7 @@ def run_build(scope: str = "pilot"):
 
     # Synthesize edges
     synth_edges = []
+    synth_edge_split_points: dict[object, list[Point]] = {}
     unsnapped_count = 0
     needs_manual_count = 0
     nodes_sindex = nodes_gdf.sindex
@@ -1227,10 +1424,10 @@ def run_build(scope: str = "pilot"):
             p_nearest_e, d_e_node = nearest_point_on_geometry(
                 nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=cap
             )
-            p_edge_s, d_s_edge = nearest_point_on_geometry(
+            p_edge_s, d_s_edge, edge_idx_s = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, start_pt, max_distance=cap
             )
-            p_edge_e, d_e_edge = nearest_point_on_geometry(
+            p_edge_e, d_e_edge, edge_idx_e = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, end_pt, max_distance=cap
             )
 
@@ -1242,6 +1439,8 @@ def run_build(scope: str = "pilot"):
                 snapped_s = True
             elif p_edge_s is not None and d_s_edge <= cap:
                 coords[0] = (p_edge_s.x, p_edge_s.y)
+                if edge_idx_s is not None:
+                    synth_edge_split_points.setdefault(edge_idx_s, []).append(p_edge_s)
                 snapped_s = True
 
             if p_nearest_e is not None and d_e_node <= cap:
@@ -1249,6 +1448,8 @@ def run_build(scope: str = "pilot"):
                 snapped_e = True
             elif p_edge_e is not None and d_e_edge <= cap:
                 coords[-1] = (p_edge_e.x, p_edge_e.y)
+                if edge_idx_e is not None:
+                    synth_edge_split_points.setdefault(edge_idx_e, []).append(p_edge_e)
                 snapped_e = True
 
             if not snapped_s or not snapped_e:
@@ -1277,10 +1478,10 @@ def run_build(scope: str = "pilot"):
             p_nearest_e, d_e_node = nearest_point_on_geometry(
                 nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=2.0
             )
-            p_edge_s, d_s_edge = nearest_point_on_geometry(
+            p_edge_s, d_s_edge, edge_idx_s = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, start_pt, max_distance=5.0
             )
-            p_edge_e, d_e_edge = nearest_point_on_geometry(
+            p_edge_e, d_e_edge, edge_idx_e = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, end_pt, max_distance=5.0
             )
 
@@ -1292,6 +1493,8 @@ def run_build(scope: str = "pilot"):
                 snapped_s = True
             elif p_edge_s is not None and d_s_edge <= 5.0:
                 coords[0] = (p_edge_s.x, p_edge_s.y)
+                if edge_idx_s is not None:
+                    synth_edge_split_points.setdefault(edge_idx_s, []).append(p_edge_s)
                 snapped_s = True
 
             if p_nearest_e is not None and d_e_node <= 2.0:
@@ -1299,6 +1502,8 @@ def run_build(scope: str = "pilot"):
                 snapped_e = True
             elif p_edge_e is not None and d_e_edge <= 5.0:
                 coords[-1] = (p_edge_e.x, p_edge_e.y)
+                if edge_idx_e is not None:
+                    synth_edge_split_points.setdefault(edge_idx_e, []).append(p_edge_e)
                 snapped_e = True
 
             if not snapped_s or not snapped_e:
@@ -1320,6 +1525,13 @@ def run_build(scope: str = "pilot"):
                 )
 
     if synth_edges:
+        split_count_before = len(edges_gdf)
+        edges_gdf = split_edges_at_points(edges_gdf, synth_edge_split_points)
+        split_count_delta = len(edges_gdf) - split_count_before
+        print(
+            "Split host edges for synthesized shelter snaps: "
+            f"host_edges={len(synth_edge_split_points)}, added_segments_delta={split_count_delta}"
+        )
         synth_gdf = gpd.GeoDataFrame(synth_edges, crs="EPSG:3414")
         edges_gdf = pd.concat([edges_gdf, synth_gdf], ignore_index=True)
 
@@ -1421,9 +1633,11 @@ def run_build(scope: str = "pilot"):
         "covered_edge_length_m_lta_match": float(lta_match_edge_length),
         "covered_edge_length_m_osm_roof_canopy": roof_match_edge_length,
         "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
+        "covered_edge_length_m_inferred_hdb_void_deck_anchors": hdb_anchor_length_m,
         "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
         "inferred_hdb_void_deck": hdb_void_report,
+        "inferred_hdb_void_deck_anchors": hdb_anchor_report,
         "audited_shelter_corrections": correction_report,
         "flags": flags,
     }
@@ -1443,6 +1657,10 @@ def run_build(scope: str = "pilot"):
         he = hdb_void_edges_gdf.to_crs(epsg=4326)
         he["class"] = "INFERRED_HDB_VOID_DECK"
         debug_export = pd.concat([debug_export, he[["geometry", "class"]]], ignore_index=True)
+    if not hdb_anchor_edges_gdf.empty:
+        hae = hdb_anchor_edges_gdf.to_crs(epsg=4326)
+        hae["class"] = "INFERRED_HDB_VOID_DECK_ANCHOR"
+        debug_export = pd.concat([debug_export, hae[["geometry", "class"]]], ignore_index=True)
     if not roof_gdf.empty:
         re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
         re["class"] = "OSM_ROOF_CANOPY"

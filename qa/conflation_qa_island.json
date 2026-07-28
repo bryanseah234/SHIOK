@@ -1,17 +1,17 @@
 {
-  "nodes": 645064,
-  "edges": 721323,
-  "mean_edge_length_m": 18.475973336184758,
-  "connected_components_count": 4941,
+  "nodes": 651125,
+  "edges": 735413,
+  "mean_edge_length_m": 18.482319409174487,
+  "connected_components_count": 3216,
   "top_5_component_sizes": [
-    604443,
+    613945,
     1946,
     1470,
     1402,
     1295
   ],
-  "osm_only_top_3_component_node_share_pct": 94.7126182390045,
-  "top_3_component_node_share_pct": 94.23235523917006,
+  "osm_only_top_3_component_node_share_pct": 94.79185166081635,
+  "top_3_component_node_share_pct": 94.81451334229219,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1347,9 +1347,9 @@
     "CHOA CHU KANG": {
       "ALIGNED": 229,
       "OFFSET": 15,
-      "UNREPRESENTED-surface": 50,
+      "UNREPRESENTED-surface": 51,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 46
+      "NEEDS_MANUAL": 45
     },
     "CLEMENTI": {
       "ALIGNED": 141,
@@ -1591,10 +1591,10 @@
     },
     "TAMPINES": {
       "ALIGNED": 296,
-      "OFFSET": 15,
+      "OFFSET": 16,
       "UNREPRESENTED-surface": 68,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 56
+      "NEEDS_MANUAL": 55
     },
     "TANGLIN": {
       "ALIGNED": 43,
@@ -1648,9 +1648,9 @@
     "YISHUN": {
       "ALIGNED": 102,
       "OFFSET": 5,
-      "UNREPRESENTED-surface": 47,
+      "UNREPRESENTED-surface": 48,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 55
+      "NEEDS_MANUAL": 54
     }
   },
   "per_area_match_pct": {
@@ -1711,16 +1711,17 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1601.1733834363538,
-  "synthesized_pct_of_total": 0.4845103029761653,
-  "unsnapped_endpoints_count": 1389,
-  "needs_manual_count": 1389,
+  "synthesized_length_m": 1604.3313089058738,
+  "synthesized_pct_of_total": 0.4854658818296743,
+  "unsnapped_endpoints_count": 1386,
+  "needs_manual_count": 1386,
   "covered_edge_length_m_osm_tags": 595247.9797038393,
-  "covered_edge_length_m_lta_match": 234568.6933416578,
+  "covered_edge_length_m_lta_match": 234657.00475747936,
   "covered_edge_length_m_osm_roof_canopy": 33911.718571337784,
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
+  "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 967351.2114418731,
+  "covered_edge_length_m_union": 1232344.9553493191,
   "inferred_hdb_void_deck": {
     "candidate_buildings": 8544,
     "buildings_with_edges": 3393,
@@ -1729,6 +1730,17 @@
     "node_search_m": 8.0,
     "min_inside_ratio": 0.65,
     "source": "hdb_points_plus_osm_residential_footprints",
+    "confidence": "inferred"
+  },
+  "inferred_hdb_void_deck_anchors": {
+    "candidate_buildings": 8544,
+    "buildings_with_edges": 5940,
+    "added_edges": 10546,
+    "length_m": 264991.1536549765,
+    "node_search_m": 8.0,
+    "coverage_buffer_m": 3.0,
+    "min_inside_ratio": 0.6,
+    "source": "hdb_points_plus_residential_footprints",
     "confidence": "inferred"
   },
   "audited_shelter_corrections": {
