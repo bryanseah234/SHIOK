@@ -72,6 +72,9 @@ AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works;
 - Public route geometry contract upgrade: export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps.
 
 **Open production-readiness backlog — owner tabled on 2026-07-28.**
+- Improve compare mode UX: comparing A and B should show two score cards at once, with the map focused on both selected `Shiokest` routes and a clear active/inspect affordance for each address.
+- Reduce map visual noise so routes are easier to see: investigate a toned-down OneMap style, raster desaturation/opacity treatment, or a neutral overlay that preserves attribution and legibility while making route evidence visually dominant.
+- Remove preset/demo postal-code chips from the production UI; search should be the primary entry point, with no mock/preset-looking shortcuts.
 - Audit and fix owner-verified shelter false negatives, starting with `S560234` → Mayflower MRT Exit 5: current output marks only 25.6 m / 3.1% covered, but local ground truth says the walk can use sheltered overpass and HDB block/void-deck paths. Diagnose whether the failure is missing graph geometry, missing `is_covered` attribution, disconnected covered edges, origin/exit snapping, or shelter-lambda/detour tuning before changing scores.
 - Complete the 2,000-postal OneMap validation gate from PRD §2/§12: stratified sample, cached OneMap walk-route responses, median ≤ 10%, p95 ≤ 25%, and publish blocked if thresholds fail.
 - Close the legitimate full-postal-universe gap: find a real source for the remaining gap toward ~140k Singapore postals, or continue shipping honest `NOT_YET_SCORED` states without brute-forcing OneMap.
