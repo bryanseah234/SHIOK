@@ -18,6 +18,8 @@ export const DATA_BASE = normalizeDataBase(process.env.NEXT_PUBLIC_DATA_BASE);
 import type { ScoreRecord, PostalGeom, Manifest } from "./types";
 import { latLngToCell } from "h3-js";
 
+type GeomIndex = Record<string, string[]>;
+
 // ---------------------------------------------------------------------------
 // Manifest
 // ---------------------------------------------------------------------------
@@ -37,7 +39,7 @@ export async function fetchManifest(): Promise<Manifest> {
 
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
 let _areaIndex: Record<string, string[]> | null = null;
-let _geomIndex: Record<string, unknown> | null = null;
+let _geomIndex: GeomIndex | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
@@ -70,6 +72,20 @@ export async function fetchScoreForPostal(
   return null;
 }
 
+async function getGeomIndex(): Promise<GeomIndex | null> {
+  if (_geomIndex) return _geomIndex;
+  const res = await fetch(`${DATA_BASE}geom/index.json`);
+  if (!res.ok) return null;
+  _geomIndex = (await res.json()) as GeomIndex;
+  return _geomIndex;
+}
+
+async function fetchGeomShard(shardId: string): Promise<PostalGeom[] | null> {
+  const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
+  if (!res.ok) return null;
+  return res.json() as Promise<PostalGeom[]>;
+}
+
 // ---------------------------------------------------------------------------
 // Geometry
 // The client resolves which H3 res-8 shard to fetch using the postal's lat/lng
@@ -83,40 +99,36 @@ export async function fetchGeomForPostal(
 ): Promise<PostalGeom | null> {
   if (typeof lat === "number" && typeof lng === "number") {
     const cell = latLngToCell(lat, lng, 8);
-    const res = await fetch(`${DATA_BASE}geom/h3/${cell}.json`);
-    if (!res.ok) {
-      console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
-      return null;
+    const parentRecords = await fetchGeomShard(cell);
+    const parentMatch = parentRecords?.find((r) => r.postal === postal);
+    if (parentMatch) return parentMatch;
+
+    const index = await getGeomIndex();
+    for (const child of index?.[cell] ?? []) {
+      const childRecords = await fetchGeomShard(child);
+      const childMatch = childRecords?.find((r) => r.postal === postal);
+      if (childMatch) return childMatch;
     }
-    const records: PostalGeom[] = await res.json();
-    return records.find((r) => r.postal === postal) ?? null;
+
+    if (!parentRecords && !(index?.[cell]?.length)) {
+      console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
+    }
+    return null;
   }
 
   if (!DATA_BASE.includes("/mock/")) return null;
 
-  if (!_geomIndex) {
-    const res = await fetch(`${DATA_BASE}geom/index.json`);
-    if (!res.ok) return null;
-    _geomIndex = await res.json();
-  }
+  const geomIndex = await getGeomIndex();
 
-  for (const [cell, children] of Object.entries(_geomIndex ?? {})) {
-    if (!Array.isArray(children)) continue;
-
-    const parentRes = await fetch(`${DATA_BASE}geom/h3/${cell}.json`);
-    if (parentRes.ok) {
-      const records: PostalGeom[] = await parentRes.json();
-      const found = records.find((r) => r.postal === postal);
-      if (found) return found;
-    }
+  for (const [cell, children] of Object.entries(geomIndex ?? {})) {
+    const parentRecords = await fetchGeomShard(cell);
+    const parentMatch = parentRecords?.find((r) => r.postal === postal);
+    if (parentMatch) return parentMatch;
 
     for (const shardId of children) {
-      if (typeof shardId !== "string") continue;
-      const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
-      if (!res.ok) continue;
-      const records: PostalGeom[] = await res.json();
-      const found = records.find((r) => r.postal === postal);
-      if (found) return found;
+      const childRecords = await fetchGeomShard(shardId);
+      const childMatch = childRecords?.find((r) => r.postal === postal);
+      if (childMatch) return childMatch;
     }
   }
   return null;
