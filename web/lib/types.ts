@@ -69,8 +69,10 @@ export interface Manifest {
 
 export interface TransitPoiProperties {
   id: string;
-  kind: "mrt_exit" | "bus_stop";
+  kind: "mrt_station" | "mrt_exit" | "bus_stop";
   name: string;
+  label?: string;
+  exit_count?: number;
   station?: string;
   exit?: string;
   code?: string;

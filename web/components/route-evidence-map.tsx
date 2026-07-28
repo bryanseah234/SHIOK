@@ -29,8 +29,8 @@ const ONE_MAP_STYLE: StyleSpecification = {
   sources: {
     onemap: {
       type: "raster",
-      tiles: ["https://www.onemap.gov.sg/maps/tiles/GreyLite/{z}/{x}/{y}.png"],
-      tileSize: 256,
+      tiles: ["https://www.onemap.gov.sg/maps/tiles/Grey_HD/{z}/{x}/{y}.png"],
+      tileSize: 128,
       bounds: ONE_MAP_TILE_BOUNDS,
       minzoom: 8,
       maxzoom: 20,
@@ -96,11 +96,20 @@ function escapeHtml(value: string): string {
 }
 
 function poiPopupHtml(properties: Record<string, unknown>): string {
-  const kind = properties.kind === "bus_stop" ? "Bus stop" : "MRT/LRT exit";
+  const kind =
+    properties.kind === "bus_stop"
+      ? "Bus stop"
+      : properties.kind === "mrt_station"
+        ? "MRT/LRT station"
+        : "MRT/LRT exit";
   const title = typeof properties.name === "string" ? toProperCase(properties.name) : kind;
   const meta =
     properties.kind === "bus_stop"
       ? [properties.code, properties.road].filter((value): value is string => typeof value === "string")
+      : properties.kind === "mrt_station"
+        ? [typeof properties.exit_count === "number" ? `${properties.exit_count} exits` : ""].filter(
+            (value): value is string => value.length > 0
+          )
       : [properties.station, properties.exit].filter((value): value is string => typeof value === "string");
   return `<strong style="display:block;color:#17211f;font-size:12px;line-height:1.25">${escapeHtml(
     title
@@ -181,19 +190,34 @@ function ensureRouteLayers(map: maplibregl.Map) {
     }
   }
 
-  if (!map.getLayer("bus-stop-dot")) {
+  if (!map.getLayer("mrt-station-halo")) {
     map.addLayer({
-      id: "bus-stop-dot",
+      id: "mrt-station-halo",
       type: "circle",
       source: "transit-pois",
-      minzoom: 15,
-      filter: ["==", ["get", "kind"], "bus_stop"],
+      minzoom: 11.4,
+      filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
-        "circle-color": "#5f766f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 1.7, 18, 3.1],
-        "circle-opacity": 0.56,
+        "circle-color": "#ffffff",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.4, 5.4, 17, 8.5],
+        "circle-opacity": 0.92,
+      },
+    });
+  }
+
+  if (!map.getLayer("mrt-station-dot")) {
+    map.addLayer({
+      id: "mrt-station-dot",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 11.4,
+      filter: ["==", ["get", "kind"], "mrt_station"],
+      paint: {
+        "circle-color": "#245b8d",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.4, 3.5, 17, 5.5],
+        "circle-opacity": 0.92,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 0.7,
+        "circle-stroke-width": 1,
       },
     });
   }
@@ -203,14 +227,31 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 12,
+      minzoom: 15,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#2f5f8f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 3.6, 17, 5.2],
-        "circle-opacity": 0.86,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.1, 18, 3.6],
+        "circle-opacity": 0.74,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 1.1,
+        "circle-stroke-width": 0.8,
+      },
+    });
+  }
+
+  if (!map.getLayer("bus-stop-dot")) {
+    map.addLayer({
+      id: "bus-stop-dot",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 15.4,
+      filter: ["==", ["get", "kind"], "bus_stop"],
+      paint: {
+        "circle-color": "#436b5f",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15.4, 1.9, 18, 3.4],
+        "circle-opacity": 0.72,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 0.65,
       },
     });
   }
@@ -319,6 +360,56 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
+  if (!map.getLayer("mrt-station-label")) {
+    map.addLayer({
+      id: "mrt-station-label",
+      type: "symbol",
+      source: "transit-pois",
+      minzoom: 12.2,
+      filter: ["==", ["get", "kind"], "mrt_station"],
+      layout: {
+        "text-field": ["get", "label"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 12.2, 10, 17, 12],
+        "text-offset": [0, 1.1],
+        "text-anchor": "top",
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-optional": true,
+      },
+      paint: {
+        "text-color": "#1d3f60",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.4,
+        "text-halo-blur": 0.2,
+      },
+    });
+  }
+
+  if (!map.getLayer("bus-stop-label")) {
+    map.addLayer({
+      id: "bus-stop-label",
+      type: "symbol",
+      source: "transit-pois",
+      minzoom: 16,
+      filter: ["==", ["get", "kind"], "bus_stop"],
+      layout: {
+        "text-field": ["get", "name"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 16, 9.2, 18, 10.4],
+        "text-offset": [0, 0.9],
+        "text-anchor": "top",
+        "text-allow-overlap": false,
+        "text-ignore-placement": false,
+        "text-optional": true,
+      },
+      paint: {
+        "text-color": "#38564d",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.25,
+        "text-halo-blur": 0.15,
+      },
+    });
+  }
+
   if (!map.getLayer("transit-node-halo")) {
     map.addLayer({
       id: "transit-node-halo",
@@ -358,7 +449,13 @@ function pointCoordinates(event: maplibregl.MapLayerMouseEvent): LngLat | null {
 }
 
 function bindPoiInteractions(map: maplibregl.Map, Popup: PopupConstructor) {
-  for (const layerId of ["mrt-exit-dot", "bus-stop-dot"]) {
+  for (const layerId of [
+    "mrt-station-dot",
+    "mrt-station-label",
+    "mrt-exit-dot",
+    "bus-stop-dot",
+    "bus-stop-label",
+  ]) {
     map.on("mouseenter", layerId, () => {
       map.getCanvas().style.cursor = "pointer";
     });
@@ -544,7 +641,7 @@ export function RouteEvidenceMap({
           ? { top: 300, right: 24, bottom: 90, left: 24 }
           : { top: 150, right: 80, bottom: 90, left: 390 },
         duration: 350,
-        maxZoom: 16.2,
+        maxZoom: 16.6,
       });
     }
   }, [loaded, routeData, transitPoiData]);

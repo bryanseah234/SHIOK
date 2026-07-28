@@ -431,6 +431,7 @@ def build_transit_poi_collection(
     provenance: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     features: list[dict[str, Any]] = []
+    station_groups: dict[str, dict[str, Any]] = {}
 
     if isinstance(mrt_geojson, dict):
         for feature in mrt_geojson.get("features", []):
@@ -450,6 +451,11 @@ def build_transit_poi_collection(
             exit_code = str(properties.get("EXIT_CODE", "")).strip()
             object_id = str(properties.get("OBJECTID", "")).strip()
             name = " ".join(part for part in [station, exit_code] if part).strip()
+            if station:
+                group = station_groups.setdefault(station, {"points": [], "exits": []})
+                group["points"].append(point)
+                if exit_code:
+                    group["exits"].append(exit_code)
             features.append(
                 {
                     "type": "Feature",
@@ -463,6 +469,28 @@ def build_transit_poi_collection(
                     },
                 }
             )
+
+    for station, group in sorted(station_groups.items()):
+        points = group["points"]
+        if not points:
+            continue
+        lon = sum(point[0] for point in points) / len(points)
+        lat = sum(point[1] for point in points) / len(points)
+        station_id = re.sub(r"[^A-Z0-9]+", "_", station.upper()).strip("_")
+        label = re.sub(r"\s+(MRT|LRT)\s+STATION$", "", station, flags=re.IGNORECASE).strip()
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [round(lon, 8), round(lat, 8)]},
+                "properties": {
+                    "id": f"station:{station_id or len(features)}",
+                    "kind": "mrt_station",
+                    "name": station,
+                    "label": label or station,
+                    "exit_count": len(set(group["exits"])),
+                },
+            }
+        )
 
     bus_rows: Any = []
     if isinstance(bus_payload, dict):
@@ -697,6 +725,7 @@ def validate_static_artifacts(
                         errors.append(f"transit/pois.json:{index}: missing coordinates")
                     if not isinstance(properties, dict) or properties.get("kind") not in {
                         "mrt_exit",
+                        "mrt_station",
                         "bus_stop",
                     }:
                         errors.append(f"transit/pois.json:{index}: invalid kind")

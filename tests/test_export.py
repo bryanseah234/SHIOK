@@ -133,16 +133,23 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
     )
 
     assert collection["type"] == "FeatureCollection"
-    assert len(collection["features"]) == 2
+    assert len(collection["features"]) == 3
     kinds = {feature["properties"]["kind"] for feature in collection["features"]}
-    assert kinds == {"mrt_exit", "bus_stop"}
+    assert kinds == {"mrt_station", "mrt_exit", "bus_stop"}
     mrt = next(
         feature for feature in collection["features"] if feature["properties"]["kind"] == "mrt_exit"
+    )
+    station = next(
+        feature
+        for feature in collection["features"]
+        if feature["properties"]["kind"] == "mrt_station"
     )
     bus = next(
         feature for feature in collection["features"] if feature["properties"]["kind"] == "bus_stop"
     )
     assert mrt["properties"]["name"] == "MAYFLOWER MRT STATION Exit 5"
+    assert station["properties"]["label"] == "MAYFLOWER"
+    assert station["properties"]["exit_count"] == 1
     assert bus["properties"]["code"] == "55089"
 
 
