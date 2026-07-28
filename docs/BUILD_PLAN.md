@@ -72,6 +72,7 @@ AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works;
 - Public route geometry contract upgrade: export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps.
 
 **Open production-readiness backlog — owner tabled on 2026-07-28.**
+- Keep Vercel automatic Git deployments as the target workflow, but make them production-safe first: set/verify the Vercel project root directory as `web` and choose a real static-data strategy for Git builds (`web/public/data` committed, downloaded from an approved artifact source, or served from a stable data deployment) so future commits cannot deploy a UI without score data.
 - Improve compare mode UX: comparing A and B should show two score cards at once, with the map focused on both selected `Shiokest` routes and a clear active/inspect affordance for each address.
 - Reduce map visual noise so routes are easier to see: investigate a toned-down OneMap style, raster desaturation/opacity treatment, or a neutral overlay that preserves attribution and legibility while making route evidence visually dominant.
 - Remove preset/demo postal-code chips from the production UI; search should be the primary entry point, with no mock/preset-looking shortcuts.

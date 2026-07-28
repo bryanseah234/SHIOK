@@ -23,8 +23,6 @@ interface LoadedSelection {
 
 type CompareSlot = "primary" | "comparison";
 
-const QUICK_POSTALS = ["276342", "560234", "311130", "678052"];
-
 const SUBSCORE_LABELS: Array<[keyof Subscores, string]> = [
   ["access", "Access"],
   ["rain", "Rain"],
@@ -173,18 +171,37 @@ function ScoreCard({
   routeMode,
   setRouteMode,
   compareMode,
+  slotLabel,
+  isActive = false,
+  onActivate,
 }: {
   selection: LoadedSelection | null;
   manifest: Manifest | null;
   routeMode: RouteDisplayMode;
   setRouteMode: (mode: RouteDisplayMode) => void;
   compareMode: boolean;
+  slotLabel?: string;
+  isActive?: boolean;
+  onActivate?: () => void;
 }) {
+  const cardClass = `${styles.scoreCard} ${isActive ? styles.scoreCardActive : ""}`;
+  const slotControl = slotLabel ? (
+    <div className={styles.cardSlotRow}>
+      <span>{slotLabel}</span>
+      {onActivate && (
+        <button type="button" onClick={onActivate}>
+          {isActive ? "Searching here" : "Search here"}
+        </button>
+      )}
+    </div>
+  ) : null;
+
   if (!selection) {
     return (
-      <section className={styles.scoreCard} aria-label="Score panel">
+      <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
+        {slotControl}
         <div className={styles.emptyState}>
-          <strong>Find a postal code</strong>
+          <strong>{slotLabel ? `Add postal ${slotLabel}` : "Find a postal code"}</strong>
           <span>Search any Singapore address to see its walk-to-transit comfort score.</span>
         </div>
       </section>
@@ -194,7 +211,8 @@ function ScoreCard({
   const { score } = selection;
   if (!score) {
     return (
-      <section className={styles.scoreCard} aria-label="Score panel">
+      <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
+        {slotControl}
         <h2>{scoreTitle(selection)}</h2>
         <div className={styles.emptyState}>
           <strong>Not yet scored</strong>
@@ -216,7 +234,8 @@ function ScoreCard({
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
 
   return (
-    <section className={styles.scoreCard} aria-label="Score panel">
+    <section className={cardClass} aria-label={`${slotLabel ?? ""} score panel`.trim()}>
+      {slotControl}
       <div className={styles.scoreHeader}>
         <div>
           <p className={styles.eyebrow}>{formatState(score.state)}</p>
@@ -296,30 +315,6 @@ function Metric({ label, value }: { label: string; value: string }) {
   );
 }
 
-function MiniScore({
-  label,
-  selection,
-  active,
-  onActivate,
-}: {
-  label: string;
-  selection: LoadedSelection | null;
-  active: boolean;
-  onActivate: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      className={`${styles.miniScore} ${active ? styles.miniScoreActive : ""}`}
-      onClick={onActivate}
-    >
-      <span>{label}</span>
-      <strong>{selection ? scoreTitle(selection) : "Add postal"}</strong>
-      <em>{selection?.score?.total != null ? `${Math.round(selection.score.total)}/100` : "Pending"}</em>
-    </button>
-  );
-}
-
 export default function Home() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -332,12 +327,12 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const activeSelection = activeSlot === "comparison" ? comparison : primary;
   const mapRoutes = useMemo(
     () => buildRouteItems(primary, comparison, compareMode),
     [primary, comparison, compareMode]
   );
   const mapRouteMode = compareMode ? "shiokest" : routeSame(primary) ? "shiokest" : routeMode;
+  const showDetailOverlay = compareMode || Boolean(primary);
 
   const storeSelection = (slot: CompareSlot, selection: LoadedSelection) => {
     if (slot === "comparison") setComparison(selection);
@@ -453,28 +448,11 @@ export default function Home() {
           >
             Compare
           </button>
-          {QUICK_POSTALS.map((postal) => (
-            <button
-              key={postal}
-              type="button"
-              onClick={() => loadSelection({
-                BUILDING: `Postal ${postal}`,
-                ROAD_NAME: "Direct lookup",
-                POSTAL: postal,
-                LATITUDE: "",
-                LONGITUDE: "",
-                SEARCHVAL: `S${postal}`,
-              })}
-            >
-              S{postal}
-            </button>
-          ))}
         </div>
 
         {compareMode && (
-          <div className={styles.compareSlots}>
-            <MiniScore label="A" selection={primary} active={activeSlot === "primary"} onActivate={() => setActiveSlot("primary")} />
-            <MiniScore label="B" selection={comparison} active={activeSlot === "comparison"} onActivate={() => setActiveSlot("comparison")} />
+          <div className={styles.compareHint}>
+            Search will fill postal {activeSlot === "primary" ? "A" : "B"}.
           </div>
         )}
 
@@ -495,15 +473,42 @@ export default function Home() {
         )}
       </section>
 
-      <aside className={styles.detailOverlay}>
-        <ScoreCard
-          selection={compareMode ? activeSelection : primary}
-          manifest={manifest}
-          routeMode={mapRouteMode}
-          setRouteMode={setRouteMode}
-          compareMode={compareMode}
-        />
-      </aside>
+      {showDetailOverlay && (
+        <aside className={`${styles.detailOverlay} ${compareMode ? styles.compareDetailOverlay : ""}`}>
+          {compareMode ? (
+            <div className={styles.compareScoreGrid}>
+              <ScoreCard
+                selection={primary}
+                manifest={manifest}
+                routeMode={mapRouteMode}
+                setRouteMode={setRouteMode}
+                compareMode={compareMode}
+                slotLabel="A"
+                isActive={activeSlot === "primary"}
+                onActivate={() => setActiveSlot("primary")}
+              />
+              <ScoreCard
+                selection={comparison}
+                manifest={manifest}
+                routeMode={mapRouteMode}
+                setRouteMode={setRouteMode}
+                compareMode={compareMode}
+                slotLabel="B"
+                isActive={activeSlot === "comparison"}
+                onActivate={() => setActiveSlot("comparison")}
+              />
+            </div>
+          ) : (
+            <ScoreCard
+              selection={primary}
+              manifest={manifest}
+              routeMode={mapRouteMode}
+              setRouteMode={setRouteMode}
+              compareMode={compareMode}
+            />
+          )}
+        </aside>
+      )}
 
       <footer className={styles.footer}>
         Data: LTA, data.gov.sg, OneMap, OSM. Free civic project.

@@ -37,6 +37,13 @@ const ONE_MAP_STYLE: StyleSpecification = {
       id: "onemap",
       type: "raster",
       source: "onemap",
+      paint: {
+        "raster-opacity": 0.72,
+        "raster-saturation": -0.7,
+        "raster-contrast": -0.25,
+        "raster-brightness-min": 0.08,
+        "raster-brightness-max": 0.92,
+      },
     },
   ],
 };
@@ -88,6 +95,23 @@ function ensureRouteLayers(map: maplibregl.Map) {
     }
   }
 
+  if (!map.getLayer("shortest-route-casing")) {
+    map.addLayer({
+      id: "shortest-route-casing",
+      type: "line",
+      source: "shortest-route",
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 8,
+        "line-opacity": 0.82,
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
+    });
+  }
+
   if (!map.getLayer("shortest-route-line")) {
     map.addLayer({
       id: "shortest-route-line",
@@ -95,9 +119,26 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#34413d",
-        "line-width": 5,
-        "line-opacity": 0.72,
+        "line-width": 5.5,
+        "line-opacity": 0.78,
         "line-dasharray": [1.1, 1.4],
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
+    });
+  }
+
+  if (!map.getLayer("shiokest-route-casing")) {
+    map.addLayer({
+      id: "shiokest-route-casing",
+      type: "line",
+      source: "shiokest-route",
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 10,
+        "line-opacity": 0.88,
       },
       layout: {
         "line-cap": "round",
@@ -113,8 +154,25 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": ["get", "color"],
-        "line-width": 6,
+        "line-width": 7,
         "line-opacity": 0.94,
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
+    });
+  }
+
+  if (!map.getLayer("exposure-gap-casing")) {
+    map.addLayer({
+      id: "exposure-gap-casing",
+      type: "line",
+      source: "exposure-gaps",
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 11,
+        "line-opacity": 0.9,
       },
       layout: {
         "line-cap": "round",
@@ -130,7 +188,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 8,
+        "line-width": 8.5,
         "line-opacity": 0.96,
         "line-dasharray": [0.55, 1.05],
       },
@@ -294,12 +352,6 @@ export function RouteEvidenceMap({
   return (
     <div className={styles.mapShell}>
       <div ref={containerRef} aria-label="Route evidence map" role="img" className={styles.mapCanvas} />
-      {routes.length === 0 && (
-        <div className={styles.emptyOverlay}>
-          <strong>Search a postal or address</strong>
-          <span>Shiokest routes draw here over the OneMap basemap.</span>
-        </div>
-      )}
       {routes.length > 0 && (
         <div className={styles.legend} aria-label="Map legend">
           {(mode === "shiokest" || mode === "both") && (

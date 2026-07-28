@@ -24,7 +24,8 @@
 .brandRow,
 .scoreCard,
 .resultList,
-.errorBox {
+.errorBox,
+.compareHint {
   border: 1px solid rgba(62, 75, 70, 0.18);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
@@ -135,45 +136,11 @@
   background: #e6f5f2;
 }
 
-.compareSlots {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
-
-.miniScore {
-  min-width: 0;
-  border: 1px solid rgba(62, 75, 70, 0.2);
-  border-radius: 8px;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 8px;
-  color: #20352f;
-  background: rgba(255, 255, 255, 0.96);
-  text-align: left;
-  cursor: pointer;
-}
-
-.miniScore span,
-.miniScore em {
+.compareHint {
+  padding: 9px 11px;
   color: #61716b;
   font-size: 12px;
-  font-style: normal;
   font-weight: 800;
-}
-
-.miniScore strong {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: 13px;
-}
-
-.miniScoreActive {
-  border-color: #007a78;
-  box-shadow: 0 0 0 3px rgba(0, 122, 120, 0.16);
 }
 
 .resultList {
@@ -241,8 +208,64 @@
   overflow: auto;
 }
 
+.compareDetailOverlay {
+  width: min(850px, calc(100vw - 36px));
+}
+
+.compareScoreGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
 .scoreCard {
   padding: 14px;
+}
+
+.scoreCardActive {
+  border-color: rgba(0, 122, 120, 0.58);
+  box-shadow:
+    0 0 0 3px rgba(0, 122, 120, 0.14),
+    0 18px 42px rgba(20, 33, 29, 0.16);
+}
+
+.cardSlotRow {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.cardSlotRow span {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  color: #fff;
+  background: #17211f;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.cardSlotRow button {
+  border: 1px solid #cbd7d1;
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #20352f;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.scoreCardActive .cardSlotRow button {
+  border-color: #007a78;
+  color: #005f5d;
+  background: #e6f5f2;
 }
 
 .scoreHeader {
@@ -513,6 +536,14 @@
     border-radius: 8px 8px 0 0;
   }
 
+  .compareDetailOverlay {
+    max-height: 54vh;
+  }
+
+  .compareScoreGrid {
+    grid-template-columns: 1fr;
+  }
+
   .scoreCard {
     padding: 12px;
   }
@@ -539,10 +570,6 @@
   .searchForm button {
     min-height: 46px;
     padding: 0 12px;
-  }
-
-  .compareSlots {
-    grid-template-columns: 1fr;
   }
 
   .scoreBadge {
