@@ -29,6 +29,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "raw"
 QA_DIR = PROJECT_ROOT / "qa"
 PROCESSED_DIR = PROJECT_ROOT / "processed"
+AUDITED_SHELTER_CORRECTIONS_PATH = PROJECT_ROOT / "data" / "audited_shelter_corrections.geojson"
 QA_DIR.mkdir(exist_ok=True, parents=True)
 PROCESSED_DIR.mkdir(exist_ok=True, parents=True)
 PILOT_AREAS = ["Toa Payoh", "Bukit Timah", "Downtown Core"]
@@ -56,6 +57,8 @@ PARK_NAME_TOKENS = {
     "park connector",
     "treasure hunters",
 }
+APPROVED_CORRECTION_STATUSES = {"approved"}
+COVERED_CORRECTION_VALUES = {"1", "true", "yes", "covered"}
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -215,6 +218,122 @@ def extract_longest_linestring(geom):
             return None
         return max(lines, key=lambda line: line.length)
     return None
+
+
+def correction_value_is_true(value) -> bool:
+    if isinstance(value, bool):
+        return value
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return False
+    return str(value).strip().lower() in COVERED_CORRECTION_VALUES
+
+
+def load_audited_shelter_corrections(
+    path: Path = AUDITED_SHELTER_CORRECTIONS_PATH,
+) -> gpd.GeoDataFrame:
+    """Load only source-backed, approved covered correction lines."""
+    empty = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    if not path.is_file():
+        return empty
+
+    corrections = gpd.read_file(path)
+    if corrections.empty:
+        return empty
+    if corrections.crs is None:
+        corrections = corrections.set_crs(epsg=4326)
+    corrections = corrections.to_crs(epsg=3414)
+
+    status = corrections.get("status", pd.Series("", index=corrections.index))
+    covered = corrections.get(
+        "is_covered",
+        corrections.get("covered", pd.Series(False, index=corrections.index)),
+    )
+    geom_type = corrections.geometry.geom_type
+    approved_mask = status.astype(str).str.strip().str.lower().isin(APPROVED_CORRECTION_STATUSES)
+    covered_mask = covered.map(correction_value_is_true)
+    line_mask = geom_type.isin(["LineString", "MultiLineString"])
+    return corrections.loc[approved_mask & covered_mask & line_mask].copy()
+
+
+def build_audited_correction_edges(
+    corrections_gdf: gpd.GeoDataFrame,
+    nodes_gdf: gpd.GeoDataFrame,
+    *,
+    snap_max_m: float = 8.0,
+) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
+    """Convert approved correction lines into covered graph edges snapped to existing nodes."""
+    empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    approved_features = int(len(corrections_gdf))
+    candidate_lines = 0
+    added_edges = 0
+    skipped_edges = 0
+
+    def report() -> dict[str, object]:
+        return {
+            "approved_features": approved_features,
+            "candidate_lines": candidate_lines,
+            "added_edges": added_edges,
+            "skipped_edges": skipped_edges,
+            "snap_max_m": float(snap_max_m),
+        }
+
+    if corrections_gdf.empty or nodes_gdf.empty:
+        return empty_edges, report()
+
+    nodes_sindex = nodes_gdf.sindex
+    correction_edges = []
+    for idx, row in corrections_gdf.iterrows():
+        geom = row.geometry
+        lines = list(geom.geoms) if isinstance(geom, MultiLineString) else [geom]
+        for line_index, line in enumerate(lines):
+            candidate_lines += 1
+            if not isinstance(line, LineString) or line.is_empty or line.length <= 0:
+                skipped_edges += 1
+                continue
+
+            coords = list(line.coords)
+            start_pt, end_pt = Point(coords[0]), Point(coords[-1])
+            snapped_start, _ = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=snap_max_m
+            )
+            snapped_end, _ = nearest_point_on_geometry(
+                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=snap_max_m
+            )
+
+            if snapped_start is None or snapped_end is None:
+                skipped_edges += 1
+                continue
+
+            coords[0] = (snapped_start.x, snapped_start.y)
+            coords[-1] = (snapped_end.x, snapped_end.y)
+            snapped_line = LineString(coords)
+            if snapped_line.length <= 0:
+                skipped_edges += 1
+                continue
+
+            audit_id = row.get("audit_id", row.get("id", idx))
+            if len(lines) > 1:
+                audit_id = f"{audit_id}:{line_index}"
+            correction_edges.append(
+                {
+                    "geometry": snapped_line,
+                    "is_covered": 1,
+                    "is_synthesized": 1,
+                    "length_m": snapped_line.length,
+                    "u": -1,
+                    "v": -1,
+                    "covered": "yes",
+                    "highway": "audited_shelter_correction",
+                    "synth_class": "AUDITED_SHELTER_CORRECTION",
+                    "audit_id": audit_id,
+                    "audit_source": row.get("source", row.get("evidence_url", "")),
+                }
+            )
+            added_edges += 1
+
+    if not correction_edges:
+        return empty_edges, report()
+    return gpd.GeoDataFrame(correction_edges, geometry="geometry", crs="EPSG:3414"), report()
 
 
 def get_skeleton(poly):
@@ -525,6 +644,28 @@ def run_build(scope: str = "pilot"):
         native_covered_mask |= edges_gdf["indoor"].isin(["yes"])
 
     edges_gdf.loc[native_covered_mask, "is_covered"] = 1
+
+    correction_edges_gdf, correction_report = build_audited_correction_edges(
+        load_audited_shelter_corrections(),
+        nodes_gdf,
+    )
+    correction_report["path"] = str(AUDITED_SHELTER_CORRECTIONS_PATH.relative_to(PROJECT_ROOT))
+    correction_length_m = (
+        float(correction_edges_gdf.geometry.length.sum()) if not correction_edges_gdf.empty else 0.0
+    )
+    print(
+        "Audited shelter corrections: "
+        f"approved={correction_report['approved_features']}, "
+        f"added={correction_report['added_edges']}, "
+        f"skipped={correction_report['skipped_edges']}, "
+        f"length={correction_length_m:.1f}m"
+    )
+    if not correction_edges_gdf.empty:
+        edges_gdf = pd.concat([edges_gdf, correction_edges_gdf], ignore_index=True)
+        native_covered_mask = pd.concat(
+            [native_covered_mask, pd.Series([False] * len(correction_edges_gdf))],
+            ignore_index=True,
+        )
 
     # SYNTHESIZE REAL OSM GAPS
     G_pre = nx.Graph()
@@ -986,7 +1127,9 @@ def run_build(scope: str = "pilot"):
         "needs_manual_count": needs_manual_count,
         "covered_edge_length_m_osm_tags": float(native_covered_edge_length),
         "covered_edge_length_m_lta_match": float(lta_match_edge_length),
+        "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
+        "audited_shelter_corrections": correction_report,
         "flags": flags,
     }
     with open(qa_path, "w") as f:
@@ -997,6 +1140,10 @@ def run_build(scope: str = "pilot"):
         se = gpd.GeoDataFrame(synth_edges, crs="EPSG:3414").to_crs(epsg=4326)
         se["class"] = "SYNTHESIZED: " + se["synth_class"]
         debug_export = pd.concat([debug_export, se[["geometry", "class"]]], ignore_index=True)
+    if not correction_edges_gdf.empty:
+        ce = correction_edges_gdf.to_crs(epsg=4326)
+        ce["class"] = "AUDITED_SHELTER_CORRECTION"
+        debug_export = pd.concat([debug_export, ce[["geometry", "class"]]], ignore_index=True)
     debug_export.to_file(debug_path, driver="GeoJSON")
 
     # Save network for routing!

@@ -1,0 +1,7 @@
+{
+  "type": "FeatureCollection",
+  "name": "audited_shelter_corrections",
+  "schema": "shiok-audited-shelter-corrections-v1",
+  "usage": "Only source-backed covered pedestrian correction lines with status=approved and covered/is_covered=true are ingested. Empty by default.",
+  "features": []
+}
