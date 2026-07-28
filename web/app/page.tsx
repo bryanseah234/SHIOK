@@ -176,6 +176,35 @@ function RouteModeControl({
   );
 }
 
+function InlineRouteLegend({ mode, sameRoute }: { mode: RouteDisplayMode; sameRoute: boolean }) {
+  const showShiokest = mode === "shiokest" || mode === "both" || sameRoute;
+  const showShortest = !sameRoute && (mode === "shortest" || mode === "both");
+  const showExposed = mode !== "shortest" || sameRoute;
+
+  return (
+    <div className={styles.inlineLegend} aria-label="Map legend">
+      {showShiokest && (
+        <span>
+          <i className={styles.shiokestLine} />
+          Shiokest
+        </span>
+      )}
+      {showShortest && (
+        <span>
+          <i className={styles.shortestLine} />
+          Shortest
+        </span>
+      )}
+      {showExposed && (
+        <span>
+          <i className={styles.gapLine} />
+          Exposed
+        </span>
+      )}
+    </div>
+  );
+}
+
 function ScoreCard({
   selection,
   manifest,
@@ -237,10 +266,11 @@ function ScoreCard({
           <p>{stationName}</p>
         </div>
         <div className={`${styles.scoreBadge} ${scoreClass(score.total)}`}>
-          <strong>{formatScore(score.total)}</strong>
-          <span>/100</span>
+          <strong>{formatScoreWithMax(score.total)}</strong>
         </div>
       </div>
+
+      <InlineRouteLegend mode={routeMode} sameRoute={sameRoute} />
 
       <div className={styles.summaryGrid}>
         <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />

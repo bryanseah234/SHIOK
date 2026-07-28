@@ -353,28 +353,6 @@ export function RouteEvidenceMap({
   return (
     <div className={styles.mapShell}>
       <div ref={containerRef} aria-label="Route evidence map" role="img" className={styles.mapCanvas} />
-      {routes.length > 0 && (
-        <div className={styles.legend} aria-label="Map legend">
-          {(mode === "shiokest" || mode === "both") && (
-            <span>
-              <i className={styles.shiokestLine} />
-              Shiokest
-            </span>
-          )}
-          {(mode === "shortest" || mode === "both") && (
-            <span>
-              <i className={styles.shortestLine} />
-              Shortest
-            </span>
-          )}
-          {(mode === "shiokest" || mode === "both") && (
-            <span>
-              <i className={styles.gapLine} />
-              Exposed
-            </span>
-          )}
-        </div>
-      )}
     </div>
   );
 }

@@ -181,23 +181,20 @@
 }
 
 .scoreBadge {
-  min-width: 68px;
+  min-width: 74px;
   border: 1px solid currentColor;
   border-radius: 8px;
-  padding: 6px 7px;
-  display: grid;
-  justify-items: center;
+  padding: 7px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
 }
 
 .scoreBadge strong {
-  font-size: 24px;
-}
-
-.scoreBadge span {
-  margin-top: 2px;
-  font-size: 10px;
+  font-size: 19px;
   font-weight: 900;
+  white-space: nowrap;
 }
 
 .scoreGood {
@@ -260,6 +257,42 @@
   background: #f6faf8;
   font-size: 12px;
   font-weight: 800;
+}
+
+.inlineLegend {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: #43564f;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.inlineLegend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.inlineLegend i {
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+}
+
+.shiokestLine {
+  background: #007a78;
+}
+
+.shortestLine {
+  background: repeating-linear-gradient(90deg, #34413d 0 3px, transparent 3px 7px);
+}
+
+.gapLine {
+  background: repeating-linear-gradient(90deg, #c4332b 0 2px, transparent 2px 6px);
 }
 
 .summaryGrid {
@@ -479,11 +512,11 @@
   }
 
   .scoreBadge {
-    min-width: 62px;
+    min-width: 70px;
   }
 
   .scoreBadge strong {
-    font-size: 22px;
+    font-size: 18px;
   }
 
   .summaryGrid,
