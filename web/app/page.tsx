@@ -29,6 +29,14 @@ const SUBSCORE_LABELS: Array<[keyof Subscores, string]> = [
   ["crossing", "Crossings"],
 ];
 
+const REASON_COPY: Record<keyof Subscores, { low: string; high: string }> = {
+  access: { low: "Longer walk to transit", high: "Short walk to transit" },
+  rain: { low: "Mostly exposed to rain", high: "Good rain shelter coverage" },
+  heat: { low: "Low shade and shelter comfort", high: "Better heat comfort" },
+  bus: { low: "Limited bus connectivity", high: "Strong bus connectivity" },
+  crossing: { low: "More crossing friction", high: "Easy crossing profile" },
+};
+
 function normalizePostal(value: string): string | null {
   const trimmed = value.trim();
   if (!/^\d{1,6}$/.test(trimmed)) return null;
@@ -67,9 +75,17 @@ function formatScore(value: number | null | undefined): string {
   return typeof value === "number" ? `${Math.round(value)}` : "Pending";
 }
 
+function formatScoreWithMax(value: number | null | undefined): string {
+  return typeof value === "number" ? `${Math.round(value)}/100` : "Pending";
+}
+
 function formatDistance(value: number | undefined): string {
   if (typeof value !== "number") return "Pending";
   return value >= 1000 ? `${(value / 1000).toFixed(1)} km` : `${Math.round(value)} m`;
+}
+
+function formatPercent(value: number | null): string {
+  return typeof value === "number" ? `${value}%` : "Pending";
 }
 
 function routeSame(selection: LoadedSelection | null): boolean {
@@ -95,6 +111,28 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
     });
   }
   return items;
+}
+
+function scoreReasons(score: ScoreRecord): string[] {
+  if (!score.paths || !score.best_node) return ["No routed transit stop nearby", "Score is pending route evidence"];
+  if (!score.subscores) return ["Score breakdown pending", "Route evidence available"];
+
+  const values = SUBSCORE_LABELS.map(([key]) => ({
+    key,
+    value: score.subscores?.[key] ?? 0,
+  })).sort((a, b) => a.value - b.value);
+
+  const lowReasons = values.filter((item) => item.value < 55).map((item) => REASON_COPY[item.key].low);
+  if (lowReasons.length >= 2) return lowReasons.slice(0, 2);
+  if (lowReasons.length === 1) {
+    const strongest = [...values].reverse()[0];
+    return [lowReasons[0], REASON_COPY[strongest.key].high];
+  }
+
+  return [...values]
+    .reverse()
+    .slice(0, 2)
+    .map((item) => REASON_COPY[item.key].high);
 }
 
 function RouteModeControl({
@@ -133,14 +171,6 @@ function RouteModeControl({
         onClick={() => setMode("shortest")}
       >
         Shortest
-      </button>
-      <button
-        type="button"
-        className={mode === "both" ? styles.segmentedActive : undefined}
-        disabled={disabled}
-        onClick={() => setMode("both")}
-      >
-        Both
       </button>
     </div>
   );
@@ -186,17 +216,25 @@ function ScoreCard({
     score.paths && typeof score.paths.shortest_m === "number" && typeof score.paths.sheltered_m === "number"
       ? Math.max(0, score.paths.sheltered_m - score.paths.shortest_m)
       : null;
-  const coveredRatio = Math.round((score.paths?.covered_ratio ?? 0) * 100);
-  const shortestCoveredRatio = Math.round((score.paths?.shortest_covered_ratio ?? 0) * 100);
+  const coveredRatio = score.paths?.covered_ratio !== undefined ? Math.round(score.paths.covered_ratio * 100) : null;
+  const shortestCoveredRatio =
+    score.paths?.shortest_covered_ratio !== undefined ? Math.round(score.paths.shortest_covered_ratio * 100) : null;
   const selectedDistance =
     routeMode === "shortest" && !sameRoute ? score.paths?.shortest_m : score.paths?.sheltered_m;
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
+  const selectedRouteLabel = routeMode === "shortest" && !sameRoute ? "Shortest walk" : "Shiokest walk";
+  const stationName = toProperCase(score.best_node?.name ?? "No transit found nearby");
+  const reasons = scoreReasons(score);
+  const dataDate = manifest?.data_as_of
+    ? new Date(manifest.data_as_of).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })
+    : "Pending";
 
   return (
     <section className={styles.scoreCard} aria-label="Score panel">
       <div className={styles.scoreHeader}>
         <div>
           <h2>{postalTitle(selection)}</h2>
+          <p>{stationName}</p>
         </div>
         <div className={`${styles.scoreBadge} ${scoreClass(score.total)}`}>
           <strong>{formatScore(score.total)}</strong>
@@ -204,26 +242,35 @@ function ScoreCard({
         </div>
       </div>
 
-      <div className={styles.nodeLine}>
-        <span>{toProperCase(score.best_node?.name ?? "No transit node selected")}</span>
-        <span>{manifest?.data_as_of ? new Date(manifest.data_as_of).toLocaleDateString("en-SG") : "Data date pending"}</span>
+      <div className={styles.summaryGrid}>
+        <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />
+        <Metric label="Sheltered" value={formatPercent(selectedCoverage)} />
+        <Metric label="Extra walk" value={sameRoute || !extraWalkM ? "0 m" : `+${Math.round(extraWalkM)} m`} />
       </div>
 
-      <RouteModeControl
-        mode={routeMode}
-        setMode={setRouteMode}
-        disabled={false}
-        sameRoute={sameRoute}
-      />
+      <div className={styles.reasonList} aria-label="Score reasons">
+        {reasons.map((reason) => (
+          <span key={reason}>{reason}</span>
+        ))}
+      </div>
 
-      {score.paths && (
-        <div className={styles.metricGrid}>
-          <Metric label={routeMode === "shortest" && !sameRoute ? "Shortest walk" : "Shiokest walk"} value={formatDistance(selectedDistance)} />
-          <Metric label="Extra walk" value={sameRoute || !extraWalkM ? "0 m" : `+${Math.round(extraWalkM)} m`} />
-          <Metric label="Covered" value={`${selectedCoverage}%`} />
-          <Metric label="Shortest covered" value={`${shortestCoveredRatio}%`} />
+      {score.subscores && (
+        <div className={styles.scoreStrip} aria-label="Score breakdown">
+          {SUBSCORE_LABELS.map(([key, label]) => {
+            const value = score.subscores?.[key] ?? null;
+            return (
+              <span key={key}>
+                {label} <strong>{formatScore(value)}</strong>
+              </span>
+            );
+          })}
         </div>
       )}
+
+      <RouteModeControl mode={routeMode} setMode={setRouteMode} disabled={false} sameRoute={sameRoute} />
+
+      <details className={styles.detailBlock}>
+        <summary>Details</summary>
 
       {score.subscores && (
         <div className={styles.subscoreGrid}>
@@ -233,7 +280,7 @@ function ScoreCard({
               <div key={key} className={styles.subscoreRow}>
                 <div>
                   <span>{label}</span>
-                  <strong>{formatScore(value)}{typeof value === "number" ? "/100" : ""}</strong>
+                  <strong>{formatScoreWithMax(value)}</strong>
                 </div>
                 <div className={styles.barTrack} aria-hidden="true">
                   <div
@@ -247,9 +294,20 @@ function ScoreCard({
         </div>
       )}
 
+      {score.paths && (
+        <div className={styles.routeFacts}>
+          <Metric label="Shiokest" value={formatDistance(score.paths.sheltered_m)} />
+          <Metric label="Shortest" value={formatDistance(score.paths.shortest_m)} />
+          <Metric label="Extra walk" value={sameRoute || !extraWalkM ? "0 m" : `+${Math.round(extraWalkM)} m`} />
+          <Metric label="Detour" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
+          <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
+          <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
+        </div>
+      )}
+
       {score.exposure_gaps && score.exposure_gaps.length > 0 && (
         <div className={styles.gapList}>
-          <h3>Largest exposed gaps</h3>
+          <h3>Exposed gaps</h3>
           {score.exposure_gaps.slice(0, 3).map((gap, index) => (
             <div key={`${gap.label}-${index}`} className={styles.gapItem}>
               <strong>{formatDistance(gap.len_m)}</strong>
@@ -258,6 +316,9 @@ function ScoreCard({
           ))}
         </div>
       )}
+
+        <div className={styles.dataLine}>Data as of {dataDate}</div>
+      </details>
     </section>
   );
 }
@@ -309,7 +370,7 @@ export default function Home() {
     }
   };
 
-  const handleSearch = async (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!query.trim()) return;
 

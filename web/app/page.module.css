@@ -14,11 +14,11 @@
 .searchOverlay {
   top: 18px;
   left: 18px;
-  width: min(430px, calc(100vw - 36px));
+  width: min(360px, calc(100vw - 36px));
   max-height: calc(100vh - 36px);
   overflow: auto;
   display: grid;
-  gap: 10px;
+  gap: 8px;
   padding-right: 2px;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .brandRow {
-  padding: 14px;
+  padding: 12px;
 }
 
 .brandRow h1,
@@ -45,7 +45,7 @@
 }
 
 .brandRow h1 {
-  font-size: 22px;
+  font-size: 19px;
   line-height: 1.05;
 }
 
@@ -54,11 +54,11 @@
 .emptyState span {
   margin: 4px 0 0;
   color: #5d6d67;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .sourceLine {
-  font-size: 11px !important;
+  font-size: 10px !important;
 }
 
 .searchForm {
@@ -78,19 +78,20 @@
   min-width: 0;
   border: 1px solid rgba(62, 75, 70, 0.22);
   border-radius: 8px;
-  padding: 13px 14px;
+  padding: 10px 12px;
   color: #17211f;
   background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 14px 36px rgba(20, 33, 29, 0.12);
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .searchForm button {
   border: 1px solid #17211f;
   border-radius: 8px;
-  padding: 0 15px;
+  padding: 0 12px;
   color: #fff;
   background: #17211f;
+  font-size: 14px;
   font-weight: 800;
   cursor: pointer;
 }
@@ -159,43 +160,43 @@
 
 .detailOverlay {
   width: 100%;
-  max-height: min(62vh, 620px);
+  max-height: min(60vh, 560px);
   overflow: auto;
 }
 
 .scoreCard {
-  padding: 14px;
+  padding: 12px;
 }
 
 .scoreHeader {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
+  gap: 10px;
   align-items: start;
 }
 
 .scoreCard h2 {
-  font-size: 21px;
+  font-size: 18px;
   line-height: 1.12;
 }
 
 .scoreBadge {
-  min-width: 88px;
-  border: 2px solid currentColor;
+  min-width: 68px;
+  border: 1px solid currentColor;
   border-radius: 8px;
-  padding: 8px 9px;
+  padding: 6px 7px;
   display: grid;
   justify-items: center;
   line-height: 1;
 }
 
 .scoreBadge strong {
-  font-size: 31px;
+  font-size: 24px;
 }
 
 .scoreBadge span {
-  margin-top: 3px;
-  font-size: 12px;
+  margin-top: 2px;
+  font-size: 10px;
   font-weight: 900;
 }
 
@@ -215,18 +216,10 @@
   color: #62716c;
 }
 
-.nodeLine {
-  margin-top: 12px;
-  display: grid;
-  gap: 4px;
-  color: #5d6d67;
-  font-size: 13px;
-}
-
 .segmented {
-  margin-top: 14px;
+  margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border: 1px solid #cbd7d1;
   border-radius: 8px;
   overflow: hidden;
@@ -236,10 +229,10 @@
   min-width: 0;
   border: 0;
   border-right: 1px solid #cbd7d1;
-  padding: 10px 6px;
+  padding: 8px 6px;
   color: #3d514b;
   background: #f6faf8;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
   cursor: pointer;
 }
@@ -259,28 +252,28 @@
 }
 
 .sameRouteNote {
-  margin-top: 14px;
+  margin-top: 10px;
   border: 1px solid #cbd7d1;
   border-radius: 8px;
-  padding: 10px;
+  padding: 8px 9px;
   color: #2e4740;
   background: #f6faf8;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 800;
 }
 
-.metricGrid {
-  margin-top: 14px;
+.summaryGrid {
+  margin-top: 10px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
 }
 
 .metric {
   min-width: 0;
   border: 1px solid #dce5e1;
   border-radius: 8px;
-  padding: 9px;
+  padding: 7px;
   background: #fbfdfc;
 }
 
@@ -288,27 +281,76 @@
 .subscoreRow span {
   display: block;
   color: #61716b;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 800;
 }
 
 .metric strong {
   display: block;
-  margin-top: 3px;
+  margin-top: 2px;
   overflow-wrap: anywhere;
-  font-size: 15px;
+  font-size: 13px;
+}
+
+.reasonList {
+  margin-top: 10px;
+  display: grid;
+  gap: 5px;
+}
+
+.reasonList span {
+  border-left: 3px solid #007a78;
+  padding-left: 8px;
+  color: #243a34;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.scoreStrip {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.scoreStrip span {
+  border: 1px solid #dce5e1;
+  border-radius: 999px;
+  padding: 4px 7px;
+  color: #61716b;
+  background: #fbfdfc;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.scoreStrip strong {
+  color: #20352f;
+}
+
+.detailBlock {
+  margin-top: 10px;
+  border-top: 1px solid #dce5e1;
+  padding-top: 8px;
+}
+
+.detailBlock summary {
+  color: #2e4740;
+  font-size: 12px;
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .subscoreGrid {
-  margin-top: 14px;
+  margin-top: 10px;
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .subscoreRow {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 10px;
+  grid-template-columns: 112px 1fr;
+  gap: 8px;
   align-items: center;
 }
 
@@ -321,11 +363,11 @@
 
 .subscoreRow strong {
   flex: 0 0 auto;
-  font-size: 12px;
+  font-size: 11px;
 }
 
 .barTrack {
-  height: 8px;
+  height: 6px;
   border-radius: 999px;
   overflow: hidden;
   background: #dde8e3;
@@ -337,33 +379,47 @@
   background: linear-gradient(90deg, #007a78, #b7a13a);
 }
 
-.gapList {
-  margin-top: 15px;
-  border-top: 1px solid #dce5e1;
-  padding-top: 12px;
+.routeFacts {
+  margin-top: 10px;
   display: grid;
-  gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.gapList {
+  margin-top: 10px;
+  border-top: 1px solid #dce5e1;
+  padding-top: 9px;
+  display: grid;
+  gap: 6px;
 }
 
 .gapList h3 {
   color: #20352f;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .gapItem {
   display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 8px;
+  grid-template-columns: 58px 1fr;
+  gap: 6px;
   color: #5d6d67;
-  font-size: 13px;
+  font-size: 11px;
 }
 
 .gapItem strong {
   color: #c4332b;
 }
 
+.dataLine {
+  margin-top: 9px;
+  color: #6a7873;
+  font-size: 10px;
+  font-weight: 800;
+}
+
 .emptyState {
-  min-height: 160px;
+  min-height: 116px;
   border: 1px dashed #b8c8c1;
   border-radius: 8px;
   display: grid;
@@ -393,20 +449,21 @@
   }
 
   .brandRow h1 {
-    font-size: 19px;
+    font-size: 18px;
   }
 
   .detailOverlay {
     width: auto;
-    max-height: 52vh;
+    max-height: 50vh;
   }
 
   .scoreCard {
     padding: 12px;
   }
 
-  .metricGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .summaryGrid,
+  .routeFacts {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .subscoreRow {
@@ -417,16 +474,20 @@
 
 @media (max-width: 560px) {
   .searchForm button {
-    min-height: 46px;
+    min-height: 42px;
     padding: 0 12px;
   }
 
   .scoreBadge {
-    min-width: 76px;
-    padding: 7px 8px;
+    min-width: 62px;
   }
 
   .scoreBadge strong {
-    font-size: 27px;
+    font-size: 22px;
+  }
+
+  .summaryGrid,
+  .routeFacts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

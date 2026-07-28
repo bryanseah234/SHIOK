@@ -107,8 +107,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 5.2,
-        "line-opacity": 0.72,
+        "line-width": 4,
+        "line-opacity": 0.68,
       },
       layout: {
         "line-cap": "round",
@@ -124,9 +124,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#34413d",
-        "line-width": 3,
-        "line-opacity": 0.78,
-        "line-dasharray": [0.75, 1.5],
+        "line-width": 2.1,
+        "line-opacity": 0.72,
+        "line-dasharray": [0.65, 1.65],
       },
       layout: {
         "line-cap": "round",
@@ -142,8 +142,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 6.8,
-        "line-opacity": 0.76,
+        "line-width": 5.2,
+        "line-opacity": 0.72,
       },
       layout: {
         "line-cap": "round",
@@ -159,8 +159,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": ["get", "color"],
-        "line-width": 4.4,
-        "line-opacity": 0.94,
+        "line-width": 3.2,
+        "line-opacity": 0.9,
       },
       layout: {
         "line-cap": "round",
@@ -176,8 +176,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 6.8,
-        "line-opacity": 0.82,
+        "line-width": 5.2,
+        "line-opacity": 0.78,
       },
       layout: {
         "line-cap": "round",
@@ -193,9 +193,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 4.2,
-        "line-opacity": 0.96,
-        "line-dasharray": [0.45, 1.25],
+        "line-width": 3.1,
+        "line-opacity": 0.9,
+        "line-dasharray": [0.4, 1.35],
       },
       layout: {
         "line-cap": "round",
@@ -342,10 +342,10 @@ export function RouteEvidenceMap({
       const isCompact = map.getContainer().clientWidth < 700;
       map.fitBounds(routeData.bounds, {
         padding: isCompact
-          ? { top: 430, right: 28, bottom: 96, left: 28 }
-          : { top: 150, right: 80, bottom: 80, left: 460 },
+          ? { top: 300, right: 24, bottom: 90, left: 24 }
+          : { top: 150, right: 80, bottom: 90, left: 390 },
         duration: 350,
-        maxZoom: 18,
+        maxZoom: 16.2,
       });
     }
   }, [loaded, routeData]);
