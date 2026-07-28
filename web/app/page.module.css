@@ -15,8 +15,6 @@
   top: 18px;
   left: 18px;
   width: min(360px, calc(100vw - 36px));
-  max-height: calc(100vh - 36px);
-  overflow: auto;
   display: grid;
   gap: 8px;
   padding-right: 2px;
@@ -160,8 +158,6 @@
 
 .detailOverlay {
   width: 100%;
-  max-height: min(60vh, 560px);
-  overflow: auto;
 }
 
 .scoreCard {
@@ -374,44 +370,6 @@
   cursor: pointer;
 }
 
-.subscoreGrid {
-  margin-top: 10px;
-  display: grid;
-  gap: 8px;
-}
-
-.subscoreRow {
-  display: grid;
-  grid-template-columns: 112px 1fr;
-  gap: 8px;
-  align-items: center;
-}
-
-.subscoreRow div:first-child {
-  min-width: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.subscoreRow strong {
-  flex: 0 0 auto;
-  font-size: 11px;
-}
-
-.barTrack {
-  height: 6px;
-  border-radius: 999px;
-  overflow: hidden;
-  background: #dde8e3;
-}
-
-.barFill {
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #007a78, #b7a13a);
-}
-
 .routeFacts {
   margin-top: 10px;
   display: grid;
@@ -474,7 +432,6 @@
     left: 10px;
     right: 10px;
     width: auto;
-    max-height: calc(100vh - 20px);
   }
 
   .brandRow {
@@ -487,7 +444,6 @@
 
   .detailOverlay {
     width: auto;
-    max-height: 50vh;
   }
 
   .scoreCard {
@@ -499,10 +455,6 @@
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .subscoreRow {
-    grid-template-columns: 1fr;
-    gap: 5px;
-  }
 }
 
 @media (max-width: 560px) {

@@ -88,6 +88,13 @@ function formatPercent(value: number | null): string {
   return typeof value === "number" ? `${value}%` : "Pending";
 }
 
+function exposureGapCopy(lenM: number, index: number): string {
+  const rank = index === 0 ? "Longest" : `Gap ${index + 1}`;
+  if (lenM >= 300) return `${rank} exposed stretch`;
+  if (lenM >= 100) return `${rank} open-air stretch`;
+  return `${rank} short exposed stretch`;
+}
+
 function routeSame(selection: LoadedSelection | null): boolean {
   if (!selection?.geom || !selection.score?.paths) return false;
   return (
@@ -302,28 +309,6 @@ function ScoreCard({
       <details className={styles.detailBlock}>
         <summary>Details</summary>
 
-      {score.subscores && (
-        <div className={styles.subscoreGrid}>
-          {SUBSCORE_LABELS.map(([key, label]) => {
-            const value = score.subscores?.[key] ?? null;
-            return (
-              <div key={key} className={styles.subscoreRow}>
-                <div>
-                  <span>{label}</span>
-                  <strong>{formatScoreWithMax(value)}</strong>
-                </div>
-                <div className={styles.barTrack} aria-hidden="true">
-                  <div
-                    className={styles.barFill}
-                    style={{ width: `${Math.max(0, Math.min(value ?? 0, 100))}%` }}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
       {score.paths && (
         <div className={styles.routeFacts}>
           <Metric label="Shiokest" value={formatDistance(score.paths.sheltered_m)} />
@@ -341,7 +326,7 @@ function ScoreCard({
           {score.exposure_gaps.slice(0, 3).map((gap, index) => (
             <div key={`${gap.label}-${index}`} className={styles.gapItem}>
               <strong>{formatDistance(gap.len_m)}</strong>
-              <span>{toProperCase(gap.label)}</span>
+              <span>{exposureGapCopy(gap.len_m, index)}</span>
             </div>
           ))}
         </div>

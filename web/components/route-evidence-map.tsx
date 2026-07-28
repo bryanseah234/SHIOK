@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { StyleSpecification } from "maplibre-gl";
 import { postalGeomToRouteGeoJson } from "../lib/route-geojson";
-import type { LineStringFeatureCollection, LineStringFeature } from "../lib/route-geojson";
+import type { LineStringFeatureCollection, LineStringFeature, LngLat } from "../lib/route-geojson";
 import type { PostalGeom } from "../lib/types";
 import styles from "./route-evidence-map.module.css";
 
@@ -29,8 +29,8 @@ const ONE_MAP_STYLE: StyleSpecification = {
   sources: {
     onemap: {
       type: "raster",
-      tiles: ["https://www.onemap.gov.sg/maps/tiles/Grey_HD/{z}/{x}/{y}.png"],
-      tileSize: 128,
+      tiles: ["https://www.onemap.gov.sg/maps/tiles/GreyLite/{z}/{x}/{y}.png"],
+      tileSize: 256,
       bounds: ONE_MAP_TILE_BOUNDS,
       minzoom: 8,
       maxzoom: 20,
@@ -53,16 +53,32 @@ const ONE_MAP_STYLE: StyleSpecification = {
   ],
 };
 
-const SOURCE_IDS = ["shortest-route", "shiokest-route", "exposure-gaps"] as const;
+interface PointFeature {
+  type: "Feature";
+  geometry: {
+    type: "Point";
+    coordinates: LngLat;
+  };
+  properties: Record<string, string | number>;
+}
 
-function emptyCollection(): LineStringFeatureCollection {
+interface PointFeatureCollection {
+  type: "FeatureCollection";
+  features: PointFeature[];
+}
+
+type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
+
+const SOURCE_IDS = ["shortest-route", "shiokest-route", "exposure-gaps", "transit-node"] as const;
+
+function emptyCollection(): MapFeatureCollection {
   return { type: "FeatureCollection", features: [] };
 }
 
 function setSourceData(
   map: maplibregl.Map,
   sourceId: (typeof SOURCE_IDS)[number],
-  data: LineStringFeatureCollection
+  data: MapFeatureCollection
 ) {
   const source = map.getSource(sourceId);
   if (source && "setData" in source && typeof source.setData === "function") {
@@ -90,6 +106,11 @@ function mergeCollections(collections: LineStringFeatureCollection[]): LineStrin
   };
 }
 
+function endpointFor(collection: LineStringFeatureCollection): LngLat | null {
+  const coordinates = collection.features[0]?.geometry.coordinates ?? [];
+  return coordinates.length > 0 ? coordinates[coordinates.length - 1] : null;
+}
+
 function ensureRouteLayers(map: maplibregl.Map) {
   for (const id of SOURCE_IDS) {
     if (!map.getSource(id)) {
@@ -107,7 +128,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 4,
+        "line-width": 3.2,
         "line-opacity": 0.68,
       },
       layout: {
@@ -124,9 +145,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#34413d",
-        "line-width": 2.1,
+        "line-width": 1.45,
         "line-opacity": 0.72,
-        "line-dasharray": [0.65, 1.65],
+        "line-dasharray": [0.45, 1.75],
       },
       layout: {
         "line-cap": "round",
@@ -142,7 +163,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 5.2,
+        "line-width": 4.2,
         "line-opacity": 0.72,
       },
       layout: {
@@ -159,7 +180,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": ["get", "color"],
-        "line-width": 3.2,
+        "line-width": 2.45,
         "line-opacity": 0.9,
       },
       layout: {
@@ -176,7 +197,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 5.2,
+        "line-width": 4,
         "line-opacity": 0.78,
       },
       layout: {
@@ -193,13 +214,40 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 3.1,
+        "line-width": 2,
         "line-opacity": 0.9,
-        "line-dasharray": [0.4, 1.35],
+        "line-dasharray": [0.35, 1.5],
       },
       layout: {
         "line-cap": "round",
         "line-join": "round",
+      },
+    });
+  }
+
+  if (!map.getLayer("transit-node-halo")) {
+    map.addLayer({
+      id: "transit-node-halo",
+      type: "circle",
+      source: "transit-node",
+      paint: {
+        "circle-color": "#ffffff",
+        "circle-radius": 7,
+        "circle-opacity": 0.95,
+      },
+    });
+  }
+
+  if (!map.getLayer("transit-node-dot")) {
+    map.addLayer({
+      id: "transit-node-dot",
+      type: "circle",
+      source: "transit-node",
+      paint: {
+        "circle-color": "#17211f",
+        "circle-radius": 4,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 1,
       },
     });
   }
@@ -209,6 +257,7 @@ function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
   const shortestCollections: LineStringFeatureCollection[] = [];
   const shiokestCollections: LineStringFeatureCollection[] = [];
   const exposureCollections: LineStringFeatureCollection[] = [];
+  const transitFeatures: PointFeature[] = [];
   const allBounds: [number, number][] = [];
 
   for (const route of routes) {
@@ -256,6 +305,22 @@ function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
       exposureCollections.push(exposure);
     }
 
+    const transitEndpoint = endpointFor(shiokest);
+    if (transitEndpoint) {
+      transitFeatures.push({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: transitEndpoint,
+        },
+        properties: {
+          kind: "transit_node",
+          route_id: route.id,
+          route_label: route.label,
+        },
+      });
+    }
+
     if (data.bounds) {
       allBounds.push(data.bounds[0], data.bounds[1]);
     }
@@ -265,6 +330,10 @@ function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
     shortest: mergeCollections(shortestCollections),
     shiokest: mergeCollections(shiokestCollections),
     exposure: mergeCollections(exposureCollections),
+    transit: {
+      type: "FeatureCollection",
+      features: transitFeatures,
+    } satisfies PointFeatureCollection,
     bounds: boundsFor(allBounds),
   };
 }
@@ -337,6 +406,7 @@ export function RouteEvidenceMap({
     setSourceData(map, "shortest-route", routeData.shortest);
     setSourceData(map, "shiokest-route", routeData.shiokest);
     setSourceData(map, "exposure-gaps", routeData.exposure);
+    setSourceData(map, "transit-node", routeData.transit);
 
     if (routeData.bounds) {
       const isCompact = map.getContainer().clientWidth < 700;
