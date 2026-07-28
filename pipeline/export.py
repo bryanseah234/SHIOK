@@ -306,12 +306,11 @@ def export_static_artifacts(
         geom_by_cell[cell].append(geometry_record)
         geom_origin_by_postal[str(record["postal"])] = (lat, lon)
 
+    geom_shard_records: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for cell, cell_records in sorted(geom_by_cell.items()):
         if json_size(cell_records) <= geom_promotion_threshold_bytes:
             geom_index[cell] = []
-            written_files[rel_key(geom_dir / f"{cell}.json", output_dir)] = write_json(
-                geom_dir / f"{cell}.json", sorted(cell_records, key=lambda item: item["postal"])
-            )
+            geom_shard_records[cell].extend(cell_records)
             continue
 
         children: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -319,11 +318,13 @@ def export_static_artifacts(
             lat, lon = geom_origin_by_postal[item["postal"]]
             child = h3.latlng_to_cell(lat, lon, 9)
             children[child].append(item)
+            geom_shard_records[child].append(item)
         geom_index[cell] = sorted(children)
-        for child, child_records in sorted(children.items()):
-            written_files[rel_key(geom_dir / f"{child}.json", output_dir)] = write_json(
-                geom_dir / f"{child}.json", sorted(child_records, key=lambda item: item["postal"])
-            )
+
+    for shard, shard_records in sorted(geom_shard_records.items()):
+        written_files[rel_key(geom_dir / f"{shard}.json", output_dir)] = write_json(
+            geom_dir / f"{shard}.json", sorted(shard_records, key=lambda item: item["postal"])
+        )
 
     written_files[rel_key(output_dir / "geom" / "index.json", output_dir)] = write_json(
         output_dir / "geom" / "index.json", geom_index

@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 
 from shapely.geometry import LineString
@@ -103,6 +104,30 @@ def test_export_splits_large_score_files(tmp_path: Path):
     assert ok, validation
     for path in (tmp_path / "scores").glob("LARGE_AREA_PART_*.json"):
         assert path.stat().st_size <= 1200
+
+
+def test_export_merges_promoted_geom_shards_with_duplicate_child_id(tmp_path: Path, monkeypatch):
+    def fake_latlng_to_cell(lat: float, _lon: float, resolution: int) -> str:
+        if resolution == 8:
+            return "parent-a" if lat < 1.31 else "parent-b"
+        return "shared-child"
+
+    monkeypatch.setattr("pipeline.export.h3.latlng_to_cell", fake_latlng_to_cell)
+    records = [sample_record("123456"), sample_record("654321")]
+    records[0]["_origin"]["lat"] = 1.30
+    records[1]["_origin"]["lat"] = 1.32
+
+    report = export_static_artifacts(
+        records,
+        output_dir=tmp_path,
+        geom_promotion_threshold_bytes=1,
+    )
+    ok, validation = validate_static_artifacts(tmp_path)
+
+    assert ok, validation
+    assert report["geom_shard_count"] == 1
+    geom_records = json.loads((tmp_path / "geom" / "h3" / "shared-child.json").read_text())
+    assert sorted(record["postal"] for record in geom_records) == ["123456", "654321"]
 
 
 def test_load_score_batch_records_reads_chunks_in_order_and_rejects_duplicates(tmp_path: Path):
