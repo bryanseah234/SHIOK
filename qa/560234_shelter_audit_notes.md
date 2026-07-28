@@ -219,6 +219,27 @@ Rejected for production without calibration:
 
 Current root cause after the safe patch: the owner-verified sheltered route is still not fully represented by public routable geometry. The remaining work is a calibrated HDB precinct/void-deck model or audited source-backed correction geometry, not a frontend or scoring-formula bug.
 
+## 2026-07-29 HDB Precinct Connector Pass
+
+Implemented a calibrated, general HDB precinct connector layer:
+
+- For each source-backed HDB/residential footprint, nearby graph nodes and the building representative point are linked only when the connector is short and stays mostly inside the footprint's 20 m precinct buffer.
+- The layer is explicitly marked `INFERRED_HDB_PRECINCT_CONNECTOR` with `confidence=inferred`; it is not an LTA covered-linkway synthetic edge and is reported separately in QA.
+- Island build remains green: zero final REAL_DISCONNECTION components, `flags=[]`, synthesized LTA surface length 1,677.7 m / 0.51% of LTA total.
+- New HDB precinct evidence: 136,136 inferred precinct connector edges, 1,940,350.0 m total, 8,356 buildings with connector edges.
+
+Postal 560234 now materially improves:
+
+- Total: 66.9/100
+- Best node: MAYFLOWER MRT STATION Exit 5
+- Shortest: 545.6 m
+- Shiokest: 632.9 m
+- Detour: 16.0%
+- Covered: 294.1 m / 46.5%
+- Bus connectivity: real, 1.038 min expected wait, nearest routed stop 247.8 m, 6 services
+
+This is a substantial correction of the false-negative, but not proof of full shelter. The remaining 292.9 m exposure gap near Mayflower likely still reflects missing/different ground-truth overpass/HDB path geometry or conservative source limits. Do not call 560234 fully solved until the rendered route is manually compared against the owner's real path or audited correction geometry is added.
+
 ## Files
 
 - `qa/560234_shelter_audit.geojson`

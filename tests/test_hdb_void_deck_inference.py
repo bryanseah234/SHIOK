@@ -2,6 +2,7 @@ import geopandas as gpd
 from shapely.geometry import LineString, Point, Polygon
 
 from scripts.run_network_build import (
+    build_hdb_precinct_connector_edges,
     build_hdb_void_deck_anchor_edges,
     build_hdb_void_deck_edges,
     compute_polygon_match_ratio,
@@ -101,6 +102,39 @@ def test_build_hdb_void_deck_anchor_edges_adds_block_origin_connector():
     assert edges.iloc[0]["is_covered"] == 1
     assert edges.iloc[0]["synth_class"] == "INFERRED_HDB_VOID_DECK_ANCHOR"
     assert list(edges.iloc[0].geometry.coords)[-1] == (22.0, 10.0)
+
+
+def test_build_hdb_precinct_connector_edges_links_nearby_nodes_inside_hdb_buffer():
+    hdb_footprints = gpd.GeoDataFrame(
+        [
+            {
+                "id": 1,
+                "postal_code": "560234",
+                "geometry": Polygon([(0, 0), (20, 0), (20, 20), (0, 20)]),
+            }
+        ],
+        crs="EPSG:3414",
+    )
+    nodes = gpd.GeoDataFrame(
+        {"node": [(5.0, 10.0), (25.0, 10.0), (100.0, 100.0)]},
+        geometry=[Point(5, 10), Point(25, 10), Point(100, 100)],
+        crs="EPSG:3414",
+    )
+
+    edges, report = build_hdb_precinct_connector_edges(
+        hdb_footprints,
+        nodes,
+        coverage_buffer_m=6.0,
+        max_pair_m=30.0,
+        nearest_neighbours=2,
+    )
+
+    assert report["candidate_buildings"] == 1
+    assert report["buildings_with_edges"] == 1
+    assert report["added_edges"] >= 1
+    assert set(edges["synth_class"]) == {"INFERRED_HDB_PRECINCT_CONNECTOR"}
+    assert set(edges["is_covered"]) == {1}
+    assert all(edge.length <= 30.0 for edge in edges.geometry)
 
 
 def test_compute_polygon_match_ratio_marks_existing_footways_under_roof():

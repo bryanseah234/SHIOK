@@ -1,17 +1,17 @@
 {
-  "nodes": 651125,
-  "edges": 735413,
-  "mean_edge_length_m": 18.482319409174487,
-  "connected_components_count": 3216,
+  "nodes": 653242,
+  "edges": 871704,
+  "mean_edge_length_m": 17.818586738523056,
+  "connected_components_count": 2842,
   "top_5_component_sizes": [
-    613945,
+    617821,
     1946,
     1470,
     1402,
     1295
   ],
-  "osm_only_top_3_component_node_share_pct": 94.79185166081635,
-  "top_3_component_node_share_pct": 94.81451334229219,
+  "osm_only_top_3_component_node_share_pct": 95.07824708064877,
+  "top_3_component_node_share_pct": 95.10059059276654,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -412,14 +412,6 @@
       "gap_m": 2653.4292690215057,
       "class": "PRIVATE_ESTATE",
       "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
-    },
-    {
-      "size": 79,
-      "lat": 1.3434687511156695,
-      "lon": 103.87765897502075,
-      "gap_m": 6.821092287898642,
-      "class": "ISOLATED_NON_TRANSIT",
-      "evidence": "Owner-confirmed self-contained park loop"
     },
     {
       "size": 78,
@@ -1040,14 +1032,6 @@
       "evidence": "enclosed by: highway=service/access=private, highway=service/access=private"
     },
     {
-      "size": 79,
-      "lat": 1.3434687511156695,
-      "lon": 103.87765897502075,
-      "gap_m": 6.821092287898642,
-      "class": "ISOLATED_NON_TRANSIT",
-      "evidence": "Owner-confirmed self-contained park loop"
-    },
-    {
       "size": 78,
       "lat": 1.2938070225979472,
       "lon": 103.87713185625928,
@@ -1270,9 +1254,9 @@
     "ANG MO KIO": {
       "ALIGNED": 80,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 122,
+      "UNREPRESENTED-surface": 123,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 87
+      "NEEDS_MANUAL": 86
     },
     "BEDOK": {
       "ALIGNED": 227,
@@ -1283,10 +1267,10 @@
     },
     "BISHAN": {
       "ALIGNED": 59,
-      "OFFSET": 2,
+      "OFFSET": 3,
       "UNREPRESENTED-surface": 75,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 37
+      "NEEDS_MANUAL": 36
     },
     "BOON LAY": {
       "ALIGNED": 10,
@@ -1297,17 +1281,17 @@
     },
     "BUKIT BATOK": {
       "ALIGNED": 226,
-      "OFFSET": 20,
-      "UNREPRESENTED-surface": 40,
+      "OFFSET": 21,
+      "UNREPRESENTED-surface": 41,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 52
+      "NEEDS_MANUAL": 50
     },
     "BUKIT MERAH": {
       "ALIGNED": 252,
-      "OFFSET": 26,
+      "OFFSET": 27,
       "UNREPRESENTED-surface": 46,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 40
+      "NEEDS_MANUAL": 39
     },
     "BUKIT PANJANG": {
       "ALIGNED": 178,
@@ -1346,10 +1330,10 @@
     },
     "CHOA CHU KANG": {
       "ALIGNED": 229,
-      "OFFSET": 15,
-      "UNREPRESENTED-surface": 51,
+      "OFFSET": 17,
+      "UNREPRESENTED-surface": 53,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 45
+      "NEEDS_MANUAL": 41
     },
     "CLEMENTI": {
       "ALIGNED": 141,
@@ -1367,17 +1351,17 @@
     },
     "GEYLANG": {
       "ALIGNED": 147,
-      "OFFSET": 21,
-      "UNREPRESENTED-surface": 120,
+      "OFFSET": 22,
+      "UNREPRESENTED-surface": 124,
       "UNDERGROUND_OR_INDOOR": 12,
-      "NEEDS_MANUAL": 105
+      "NEEDS_MANUAL": 100
     },
     "HOUGANG": {
       "ALIGNED": 135,
-      "OFFSET": 14,
-      "UNREPRESENTED-surface": 103,
+      "OFFSET": 15,
+      "UNREPRESENTED-surface": 104,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 40
+      "NEEDS_MANUAL": 38
     },
     "JURONG EAST": {
       "ALIGNED": 140,
@@ -1388,17 +1372,17 @@
     },
     "JURONG WEST": {
       "ALIGNED": 205,
-      "OFFSET": 21,
-      "UNREPRESENTED-surface": 34,
+      "OFFSET": 23,
+      "UNREPRESENTED-surface": 36,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 41
+      "NEEDS_MANUAL": 37
     },
     "KALLANG": {
       "ALIGNED": 109,
-      "OFFSET": 13,
+      "OFFSET": 14,
       "UNREPRESENTED-surface": 146,
       "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 117
+      "NEEDS_MANUAL": 116
     },
     "LIM CHU KANG": {
       "ALIGNED": 0,
@@ -1480,9 +1464,9 @@
     "PASIR RIS": {
       "ALIGNED": 93,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 28,
+      "UNREPRESENTED-surface": 29,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 27
+      "NEEDS_MANUAL": 26
     },
     "PAYA LEBAR": {
       "ALIGNED": 0,
@@ -1500,17 +1484,17 @@
     },
     "PUNGGOL": {
       "ALIGNED": 83,
-      "OFFSET": 5,
+      "OFFSET": 6,
       "UNREPRESENTED-surface": 56,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 17
+      "NEEDS_MANUAL": 16
     },
     "QUEENSTOWN": {
       "ALIGNED": 206,
       "OFFSET": 26,
-      "UNREPRESENTED-surface": 118,
+      "UNREPRESENTED-surface": 122,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 46
+      "NEEDS_MANUAL": 42
     },
     "RIVER VALLEY": {
       "ALIGNED": 1,
@@ -1522,9 +1506,9 @@
     "ROCHOR": {
       "ALIGNED": 40,
       "OFFSET": 6,
-      "UNREPRESENTED-surface": 41,
+      "UNREPRESENTED-surface": 43,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 42
+      "NEEDS_MANUAL": 40
     },
     "SELETAR": {
       "ALIGNED": 9,
@@ -1535,24 +1519,24 @@
     },
     "SEMBAWANG": {
       "ALIGNED": 65,
-      "OFFSET": 4,
-      "UNREPRESENTED-surface": 24,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 25,
       "UNDERGROUND_OR_INDOOR": 5,
-      "NEEDS_MANUAL": 22
+      "NEEDS_MANUAL": 20
     },
     "SENGKANG": {
       "ALIGNED": 179,
       "OFFSET": 30,
-      "UNREPRESENTED-surface": 159,
+      "UNREPRESENTED-surface": 161,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 72
+      "NEEDS_MANUAL": 70
     },
     "SERANGOON": {
       "ALIGNED": 105,
       "OFFSET": 9,
-      "UNREPRESENTED-surface": 44,
+      "UNREPRESENTED-surface": 45,
       "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 26
+      "NEEDS_MANUAL": 25
     },
     "SIMPANG": {
       "ALIGNED": 0,
@@ -1592,9 +1576,9 @@
     "TAMPINES": {
       "ALIGNED": 296,
       "OFFSET": 16,
-      "UNREPRESENTED-surface": 68,
+      "UNREPRESENTED-surface": 72,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 55
+      "NEEDS_MANUAL": 51
     },
     "TANGLIN": {
       "ALIGNED": 43,
@@ -1613,9 +1597,9 @@
     "TOA PAYOH": {
       "ALIGNED": 169,
       "OFFSET": 6,
-      "UNREPRESENTED-surface": 98,
+      "UNREPRESENTED-surface": 99,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 53
+      "NEEDS_MANUAL": 52
     },
     "TUAS": {
       "ALIGNED": 7,
@@ -1641,16 +1625,16 @@
     "WOODLANDS": {
       "ALIGNED": 96,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 160,
+      "UNREPRESENTED-surface": 162,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 85
+      "NEEDS_MANUAL": 83
     },
     "YISHUN": {
       "ALIGNED": 102,
       "OFFSET": 5,
-      "UNREPRESENTED-surface": 48,
+      "UNREPRESENTED-surface": 53,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 54
+      "NEEDS_MANUAL": 49
     }
   },
   "per_area_match_pct": {
@@ -1711,17 +1695,18 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1604.3313089058738,
-  "synthesized_pct_of_total": 0.4854658818296743,
-  "unsnapped_endpoints_count": 1386,
-  "needs_manual_count": 1386,
+  "synthesized_length_m": 1677.7472509585234,
+  "synthesized_pct_of_total": 0.5076813275116839,
+  "unsnapped_endpoints_count": 1340,
+  "needs_manual_count": 1340,
   "covered_edge_length_m_osm_tags": 595247.9797038393,
-  "covered_edge_length_m_lta_match": 234657.00475747936,
+  "covered_edge_length_m_lta_match": 257841.35665434072,
   "covered_edge_length_m_osm_roof_canopy": 33911.718571337784,
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
+  "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 1232344.9553493191,
+  "covered_edge_length_m_union": 3172768.2467536395,
   "inferred_hdb_void_deck": {
     "candidate_buildings": 8544,
     "buildings_with_edges": 3393,
@@ -1740,6 +1725,18 @@
     "node_search_m": 8.0,
     "coverage_buffer_m": 3.0,
     "min_inside_ratio": 0.6,
+    "source": "hdb_points_plus_residential_footprints",
+    "confidence": "inferred"
+  },
+  "inferred_hdb_precinct_connectors": {
+    "candidate_buildings": 8544,
+    "buildings_with_edges": 8356,
+    "added_edges": 136136,
+    "length_m": 1940349.988357267,
+    "coverage_buffer_m": 20.0,
+    "max_pair_m": 55.0,
+    "min_inside_ratio": 0.75,
+    "nearest_neighbours": 3,
     "source": "hdb_points_plus_residential_footprints",
     "confidence": "inferred"
   },

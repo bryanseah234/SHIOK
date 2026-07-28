@@ -743,6 +743,127 @@ def build_hdb_void_deck_anchor_edges(
     return edges_gdf, report
 
 
+def build_hdb_precinct_connector_edges(
+    hdb_footprints_gdf: gpd.GeoDataFrame,
+    graph_nodes_gdf: gpd.GeoDataFrame,
+    *,
+    coverage_buffer_m: float = 20.0,
+    max_pair_m: float = 55.0,
+    min_line_m: float = 4.0,
+    min_inside_ratio: float = 0.75,
+    nearest_neighbours: int = 3,
+    max_candidate_nodes: int = 80,
+) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
+    empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    report: dict[str, object] = {
+        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "buildings_with_edges": 0,
+        "added_edges": 0,
+        "length_m": 0.0,
+        "coverage_buffer_m": coverage_buffer_m,
+        "max_pair_m": max_pair_m,
+        "min_inside_ratio": min_inside_ratio,
+        "nearest_neighbours": nearest_neighbours,
+        "source": "hdb_points_plus_residential_footprints",
+        "confidence": "inferred",
+    }
+    if hdb_footprints_gdf.empty or graph_nodes_gdf.empty:
+        return empty_edges, report
+
+    node_sindex = graph_nodes_gdf.sindex
+    precinct_edges: dict[tuple[tuple[float, float], tuple[float, float]], dict[str, object]] = {}
+    buildings_with_edges = 0
+    for idx, row in hdb_footprints_gdf.iterrows():
+        footprint = row.geometry
+        if footprint is None or footprint.is_empty or footprint.area < 200 or footprint.area > 6000:
+            continue
+
+        sheltered_area = footprint.buffer(coverage_buffer_m)
+        possible = node_sindex.query(sheltered_area, predicate="intersects")
+        if len(possible) == 0:
+            continue
+
+        candidates = graph_nodes_gdf.iloc[possible].copy()
+        candidates["dist"] = candidates.geometry.distance(footprint)
+        candidates = candidates.sort_values("dist").head(max_candidate_nodes)
+
+        local_nodes: list[tuple[tuple[float, float], Point]] = [
+            (candidate.node, candidate.geometry) for candidate in candidates.itertuples()
+        ]
+        anchor = footprint.representative_point()
+        local_nodes.append(((round(anchor.x, 2), round(anchor.y, 2)), anchor))
+        if len(local_nodes) < 2:
+            continue
+
+        building_edge_count = 0
+        for left_index, (_, left_point) in enumerate(local_nodes):
+            neighbours = sorted(
+                (
+                    (
+                        left_point.distance(right_point),
+                        right_index,
+                        right_node,
+                        right_point,
+                    )
+                    for right_index, (right_node, right_point) in enumerate(local_nodes)
+                    if right_index != left_index and left_point.distance(right_point) <= max_pair_m
+                ),
+                key=lambda item: (item[0], item[1]),
+            )[:nearest_neighbours]
+
+            for distance_m, right_index, right_node, right_point in neighbours:
+                if right_index <= left_index:
+                    continue
+                if distance_m < min_line_m:
+                    continue
+                left_node = local_nodes[left_index][0]
+                edge_key = (
+                    (left_node, right_node) if left_node <= right_node else (right_node, left_node)
+                )
+                if edge_key in precinct_edges:
+                    continue
+
+                line = LineString([left_point, right_point])
+                inside_ratio = line.intersection(sheltered_area).length / float(line.length)
+                if inside_ratio < min_inside_ratio:
+                    continue
+
+                precinct_edges[edge_key] = {
+                    "geometry": line,
+                    "is_covered": 1,
+                    "is_synthesized": 1,
+                    "length_m": float(line.length),
+                    "u": -1,
+                    "v": -1,
+                    "covered": "yes",
+                    "highway": "inferred_hdb_precinct_connector",
+                    "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR",
+                    "source_layer": "inferred_hdb_precinct",
+                    "confidence": "inferred",
+                    "postal_code": row.get("postal_code", ""),
+                    "osm_building_id": row.get("id", idx),
+                    "inside_ratio": float(inside_ratio),
+                }
+                building_edge_count += 1
+
+        if building_edge_count:
+            buildings_with_edges += 1
+
+    if not precinct_edges:
+        report["buildings_with_edges"] = buildings_with_edges
+        return empty_edges, report
+
+    edges_gdf = gpd.GeoDataFrame(
+        list(precinct_edges.values()),
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    report["buildings_with_edges"] = buildings_with_edges
+    report["added_edges"] = int(len(edges_gdf))
+    report["length_m"] = float(edges_gdf.geometry.length.sum())
+    return edges_gdf, report
+
+
 def get_skeleton(poly):
     try:
         # Some very thin polygons cause Voronoi errors in centerline
@@ -1100,11 +1221,20 @@ def run_build(scope: str = "pilot"):
         hdb_footprints_gdf,
         graph_nodes_gdf,
     )
+    hdb_precinct_edges_gdf, hdb_precinct_report = build_hdb_precinct_connector_edges(
+        hdb_footprints_gdf,
+        graph_nodes_gdf,
+    )
     hdb_void_length_m = (
         float(hdb_void_edges_gdf.geometry.length.sum()) if not hdb_void_edges_gdf.empty else 0.0
     )
     hdb_anchor_length_m = (
         float(hdb_anchor_edges_gdf.geometry.length.sum()) if not hdb_anchor_edges_gdf.empty else 0.0
+    )
+    hdb_precinct_length_m = (
+        float(hdb_precinct_edges_gdf.geometry.length.sum())
+        if not hdb_precinct_edges_gdf.empty
+        else 0.0
     )
     print(
         "Inferred HDB void-deck connectors: "
@@ -1120,6 +1250,13 @@ def run_build(scope: str = "pilot"):
         f"added={hdb_anchor_report['added_edges']}, "
         f"length={hdb_anchor_length_m:.1f}m"
     )
+    print(
+        "Inferred HDB precinct connectors: "
+        f"candidate_buildings={hdb_precinct_report['candidate_buildings']}, "
+        f"buildings_with_edges={hdb_precinct_report['buildings_with_edges']}, "
+        f"added={hdb_precinct_report['added_edges']}, "
+        f"length={hdb_precinct_length_m:.1f}m"
+    )
     if not hdb_void_edges_gdf.empty:
         edges_gdf = pd.concat([edges_gdf, hdb_void_edges_gdf], ignore_index=True)
         native_covered_mask = pd.concat(
@@ -1130,6 +1267,12 @@ def run_build(scope: str = "pilot"):
         edges_gdf = pd.concat([edges_gdf, hdb_anchor_edges_gdf], ignore_index=True)
         native_covered_mask = pd.concat(
             [native_covered_mask, pd.Series([False] * len(hdb_anchor_edges_gdf))],
+            ignore_index=True,
+        )
+    if not hdb_precinct_edges_gdf.empty:
+        edges_gdf = pd.concat([edges_gdf, hdb_precinct_edges_gdf], ignore_index=True)
+        native_covered_mask = pd.concat(
+            [native_covered_mask, pd.Series([False] * len(hdb_precinct_edges_gdf))],
             ignore_index=True,
         )
 
@@ -1634,10 +1777,12 @@ def run_build(scope: str = "pilot"):
         "covered_edge_length_m_osm_roof_canopy": roof_match_edge_length,
         "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
         "covered_edge_length_m_inferred_hdb_void_deck_anchors": hdb_anchor_length_m,
+        "covered_edge_length_m_inferred_hdb_precinct_connectors": hdb_precinct_length_m,
         "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
         "inferred_hdb_void_deck": hdb_void_report,
         "inferred_hdb_void_deck_anchors": hdb_anchor_report,
+        "inferred_hdb_precinct_connectors": hdb_precinct_report,
         "audited_shelter_corrections": correction_report,
         "flags": flags,
     }
@@ -1661,6 +1806,10 @@ def run_build(scope: str = "pilot"):
         hae = hdb_anchor_edges_gdf.to_crs(epsg=4326)
         hae["class"] = "INFERRED_HDB_VOID_DECK_ANCHOR"
         debug_export = pd.concat([debug_export, hae[["geometry", "class"]]], ignore_index=True)
+    if not hdb_precinct_edges_gdf.empty:
+        hpe = hdb_precinct_edges_gdf.to_crs(epsg=4326)
+        hpe["class"] = "INFERRED_HDB_PRECINCT_CONNECTOR"
+        debug_export = pd.concat([debug_export, hpe[["geometry", "class"]]], ignore_index=True)
     if not roof_gdf.empty:
         re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
         re["class"] = "OSM_ROOF_CANOPY"
