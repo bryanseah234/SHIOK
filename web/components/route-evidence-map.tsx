@@ -4,8 +4,23 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { StyleSpecification } from "maplibre-gl";
 import { postalGeomToRouteGeoJson } from "../lib/route-geojson";
-import type { LineStringFeatureCollection } from "../lib/route-geojson";
+import type { LineStringFeatureCollection, LineStringFeature } from "../lib/route-geojson";
 import type { PostalGeom } from "../lib/types";
+import styles from "./route-evidence-map.module.css";
+
+export type RouteDisplayMode = "shiokest" | "shortest" | "both";
+
+export interface RouteMapItem {
+  id: string;
+  label: string;
+  geom: PostalGeom;
+  color: string;
+}
+
+const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
+  [103.55, 1.13],
+  [104.13, 1.49],
+];
 
 const ONE_MAP_STYLE: StyleSpecification = {
   version: 8,
@@ -26,7 +41,7 @@ const ONE_MAP_STYLE: StyleSpecification = {
   ],
 };
 
-const SOURCE_IDS = ["shortest-route", "sheltered-route", "exposure-gaps"] as const;
+const SOURCE_IDS = ["shortest-route", "shiokest-route", "exposure-gaps"] as const;
 
 function emptyCollection(): LineStringFeatureCollection {
   return { type: "FeatureCollection", features: [] };
@@ -43,24 +58,34 @@ function setSourceData(
   }
 }
 
+function featureWithProps(
+  feature: LineStringFeature,
+  properties: Record<string, string | number>
+): LineStringFeature {
+  return {
+    ...feature,
+    properties: {
+      ...feature.properties,
+      ...properties,
+    },
+  };
+}
+
+function mergeCollections(collections: LineStringFeatureCollection[]): LineStringFeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: collections.flatMap((collection) => collection.features),
+  };
+}
+
 function ensureRouteLayers(map: maplibregl.Map) {
-  if (!map.getSource("shortest-route")) {
-    map.addSource("shortest-route", {
-      type: "geojson",
-      data: emptyCollection(),
-    });
-  }
-  if (!map.getSource("sheltered-route")) {
-    map.addSource("sheltered-route", {
-      type: "geojson",
-      data: emptyCollection(),
-    });
-  }
-  if (!map.getSource("exposure-gaps")) {
-    map.addSource("exposure-gaps", {
-      type: "geojson",
-      data: emptyCollection(),
-    });
+  for (const id of SOURCE_IDS) {
+    if (!map.getSource(id)) {
+      map.addSource(id, {
+        type: "geojson",
+        data: emptyCollection(),
+      });
+    }
   }
 
   if (!map.getLayer("shortest-route-line")) {
@@ -69,7 +94,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       type: "line",
       source: "shortest-route",
       paint: {
-        "line-color": "#475569",
+        "line-color": "#34413d",
         "line-width": 5,
         "line-opacity": 0.72,
         "line-dasharray": [1.1, 1.4],
@@ -80,15 +105,16 @@ function ensureRouteLayers(map: maplibregl.Map) {
       },
     });
   }
-  if (!map.getLayer("sheltered-route-line")) {
+
+  if (!map.getLayer("shiokest-route-line")) {
     map.addLayer({
-      id: "sheltered-route-line",
+      id: "shiokest-route-line",
       type: "line",
-      source: "sheltered-route",
+      source: "shiokest-route",
       paint: {
-        "line-color": "#0284c7",
-        "line-width": 5,
-        "line-opacity": 0.95,
+        "line-color": ["get", "color"],
+        "line-width": 6,
+        "line-opacity": 0.94,
       },
       layout: {
         "line-cap": "round",
@@ -96,16 +122,17 @@ function ensureRouteLayers(map: maplibregl.Map) {
       },
     });
   }
+
   if (!map.getLayer("exposure-gap-line")) {
     map.addLayer({
       id: "exposure-gap-line",
       type: "line",
       source: "exposure-gaps",
       paint: {
-        "line-color": "#dc2626",
-        "line-width": 7,
-        "line-opacity": 0.92,
-        "line-dasharray": [0.7, 1.1],
+        "line-color": "#c4332b",
+        "line-width": 8,
+        "line-opacity": 0.96,
+        "line-dasharray": [0.55, 1.05],
       },
       layout: {
         "line-cap": "round",
@@ -115,11 +142,93 @@ function ensureRouteLayers(map: maplibregl.Map) {
   }
 }
 
-export function RouteEvidenceMap({ geom }: { geom: PostalGeom | null }) {
+function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
+  const shortestCollections: LineStringFeatureCollection[] = [];
+  const shiokestCollections: LineStringFeatureCollection[] = [];
+  const exposureCollections: LineStringFeatureCollection[] = [];
+  const allBounds: [number, number][] = [];
+
+  for (const route of routes) {
+    const data = postalGeomToRouteGeoJson(route.geom);
+    const shortest = mergeCollections([
+      {
+        type: "FeatureCollection",
+        features: data.shortest.features.map((feature) =>
+          featureWithProps(feature, {
+            route_id: route.id,
+            route_label: route.label,
+            color: route.color,
+          })
+        ),
+      },
+    ]);
+    const shiokest = mergeCollections([
+      {
+        type: "FeatureCollection",
+        features: data.sheltered.features.map((feature) =>
+          featureWithProps(feature, {
+            route_id: route.id,
+            route_label: route.label,
+            color: route.color,
+          })
+        ),
+      },
+    ]);
+    const exposure = mergeCollections([
+      {
+        type: "FeatureCollection",
+        features: data.exposureGaps.features.map((feature) =>
+          featureWithProps(feature, {
+            route_id: route.id,
+            route_label: route.label,
+            color: "#c4332b",
+          })
+        ),
+      },
+    ]);
+
+    if (mode === "shortest" || mode === "both") shortestCollections.push(shortest);
+    if (mode === "shiokest" || mode === "both") {
+      shiokestCollections.push(shiokest);
+      exposureCollections.push(exposure);
+    }
+
+    if (data.bounds) {
+      allBounds.push(data.bounds[0], data.bounds[1]);
+    }
+  }
+
+  return {
+    shortest: mergeCollections(shortestCollections),
+    shiokest: mergeCollections(shiokestCollections),
+    exposure: mergeCollections(exposureCollections),
+    bounds: boundsFor(allBounds),
+  };
+}
+
+function boundsFor(points: [number, number][]): [[number, number], [number, number]] | null {
+  if (points.length === 0) return null;
+  const lngs = points.map(([lng]) => lng);
+  const lats = points.map(([, lat]) => lat);
+  return [
+    [Math.min(...lngs), Math.min(...lats)],
+    [Math.max(...lngs), Math.max(...lats)],
+  ];
+}
+
+export function RouteEvidenceMap({
+  routes,
+  mode,
+  compareMode = false,
+}: {
+  routes: RouteMapItem[];
+  mode: RouteDisplayMode;
+  compareMode?: boolean;
+}) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [loaded, setLoaded] = useState(false);
-  const routeData = useMemo(() => (geom ? postalGeomToRouteGeoJson(geom) : null), [geom]);
+  const routeData = useMemo(() => routeCollections(routes, mode), [routes, mode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -133,9 +242,10 @@ export function RouteEvidenceMap({ geom }: { geom: PostalGeom | null }) {
         container: containerRef.current,
         style: ONE_MAP_STYLE,
         center: [103.851959, 1.29027],
-        zoom: 12,
+        zoom: 11.6,
         minZoom: 10,
         maxZoom: 19,
+        maxBounds: SINGAPORE_BOUNDS,
         attributionControl: {
           compact: true,
         },
@@ -163,117 +273,55 @@ export function RouteEvidenceMap({ geom }: { geom: PostalGeom | null }) {
     if (!map || !loaded) return;
     ensureRouteLayers(map);
 
-    if (!routeData) {
-      setSourceData(map, "shortest-route", emptyCollection());
-      setSourceData(map, "sheltered-route", emptyCollection());
-      setSourceData(map, "exposure-gaps", emptyCollection());
-      return;
-    }
-
     setSourceData(map, "shortest-route", routeData.shortest);
-    setSourceData(map, "sheltered-route", routeData.sheltered);
-    setSourceData(map, "exposure-gaps", routeData.exposureGaps);
+    setSourceData(map, "shiokest-route", routeData.shiokest);
+    setSourceData(map, "exposure-gaps", routeData.exposure);
 
     if (routeData.bounds) {
+      const isCompact = map.getContainer().clientWidth < 700;
       map.fitBounds(routeData.bounds, {
-        padding: { top: 48, right: 48, bottom: 76, left: 48 },
+        padding: isCompact
+          ? { top: 230, right: 28, bottom: 360, left: 28 }
+          : compareMode
+            ? { top: 180, right: 70, bottom: 180, left: 70 }
+            : { top: 150, right: 460, bottom: 80, left: 460 },
         duration: 350,
         maxZoom: 18,
       });
-    } else if (routeData.center) {
-      map.easeTo({ center: routeData.center, zoom: 16, duration: 350 });
     }
-  }, [loaded, routeData]);
+  }, [compareMode, loaded, routeData]);
 
   return (
-    <div style={mapShellStyle}>
-      <div ref={containerRef} aria-label="Route evidence map" role="img" style={mapCanvasStyle} />
-      {!geom && (
-        <div style={emptyOverlayStyle}>
+    <div className={styles.mapShell}>
+      <div ref={containerRef} aria-label="Route evidence map" role="img" className={styles.mapCanvas} />
+      {routes.length === 0 && (
+        <div className={styles.emptyOverlay}>
           <strong>Search a postal or address</strong>
-          <span>Routes draw here when the postal has a scored transit path.</span>
+          <span>Shiokest routes draw here over the OneMap basemap.</span>
         </div>
       )}
-      <div style={legendStyle}>
-        <span style={legendItemStyle}>
-          <i style={{ ...legendLineStyle, background: "#0284c7" }} />
-          Sheltered route
-        </span>
-        <span style={legendItemStyle}>
-          <i style={{ ...legendLineStyle, background: "#475569", opacity: 0.72 }} />
-          Shortest route
-        </span>
-        <span style={legendItemStyle}>
-          <i style={{ ...legendLineStyle, background: "#dc2626" }} />
-          Exposed gaps
-        </span>
-      </div>
+      {routes.length > 0 && (
+        <div className={styles.legend} aria-label="Map legend">
+          {(mode === "shiokest" || mode === "both") && (
+            <span>
+              <i className={styles.shiokestLine} />
+              Shiokest
+            </span>
+          )}
+          {(mode === "shortest" || mode === "both") && (
+            <span>
+              <i className={styles.shortestLine} />
+              Shortest
+            </span>
+          )}
+          {(mode === "shiokest" || mode === "both") && (
+            <span>
+              <i className={styles.gapLine} />
+              Exposed
+            </span>
+          )}
+        </div>
+      )}
     </div>
   );
 }
-
-const mapShellStyle: React.CSSProperties = {
-  border: "1px solid #d8dee7",
-  borderRadius: "8px",
-  overflow: "hidden",
-  height: "min(72vh, 760px)",
-  minHeight: "520px",
-  position: "relative",
-  background: "#eef2f7",
-};
-
-const mapCanvasStyle: React.CSSProperties = {
-  width: "100%",
-  height: "100%",
-};
-
-const legendStyle: React.CSSProperties = {
-  position: "absolute",
-  left: "10px",
-  top: "10px",
-  maxWidth: "calc(100% - 84px)",
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "8px",
-  padding: "8px 10px",
-  border: "1px solid rgba(148, 163, 184, 0.45)",
-  borderRadius: "8px",
-  background: "rgba(255, 255, 255, 0.94)",
-  color: "#334155",
-  fontSize: "12px",
-  boxShadow: "0 8px 20px rgba(15, 23, 42, 0.12)",
-};
-
-const legendItemStyle: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "6px",
-  whiteSpace: "nowrap",
-};
-
-const legendLineStyle: React.CSSProperties = {
-  display: "inline-block",
-  width: "24px",
-  height: "4px",
-  borderRadius: "999px",
-};
-
-const emptyOverlayStyle: React.CSSProperties = {
-  position: "absolute",
-  left: "50%",
-  top: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "min(340px, calc(100% - 40px))",
-  border: "1px solid rgba(148, 163, 184, 0.45)",
-  borderRadius: "8px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: "6px",
-  color: "#334155",
-  textAlign: "center",
-  padding: "16px",
-  background: "rgba(255, 255, 255, 0.95)",
-  boxShadow: "0 16px 40px rgba(15, 23, 42, 0.16)",
-};

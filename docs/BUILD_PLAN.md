@@ -66,6 +66,11 @@ AC: JSON schema validation in tests; export-step assertions: total data-file cou
 Search (via proxy) → resolve postal → load area score file → compute the geometry shard client-side with `h3-js` (res-8; res-9 child if listed in `geom/index.json`) and lazy-load it → score card (total, 5 bars, top-2 plain-language reasons) → map: OneMap basemap, shortest + sheltered routes (pattern + colour, never colour alone), exposure gaps highlighted; compare mode (two postals side-by-side); "Data as of" from manifest; `NOT_YET_SCORED` / `NO_TRANSIT_IN_RANGE` states designed, not ad hoc.
 AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works; per-lookup network transfer ≤ 500 KB (measured, documented).
 
+**Deferred frontend/router backlog — owner tabled on 2026-07-28.**
+- User-facing shelter mode selector after MVP route UX is stable: default `Balanced` uses the PRD detour cap (`+25%` extra walk); optional later `Max shelter` mode may allow a higher cap such as `+50%`; always display the absolute extra walk, e.g. `+38 m`.
+- Island-wide SHIOK map layer after MVP: optional comfort heatmap, shelter overlay, Rain Mode coverage, and browse-before-search visual coverage. This is separate from the OneMap basemap; it likely requires PMTiles or another static tile artifact plus a free-tier serving plan.
+- Public route geometry contract upgrade: export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps.
+
 **T1.7 — Validation harness (pilot gate).**
 Stratified 200-postal sample across the 3 areas; compare shortest-path distance vs OneMap `routeType=walk` (throttle from the T0.4 probe; responses cached by OD-pair hash in `raw/validation/`; resumable after interrupt). Report median + p95 deviation per area. Golden set: 15 hand-verified addresses with expected score ranges; wire into `python run.py validate`.
 AC: median ≤ 10% and p95 ≤ 25% per area (if an area fails: investigate conflation first; only then propose OneMap-fallback for that area to owner); golden set green; validate blocks publish on failure (hard-coded in run.py).
