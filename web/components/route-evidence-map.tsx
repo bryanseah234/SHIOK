@@ -5,7 +5,7 @@ import type maplibregl from "maplibre-gl";
 import type { StyleSpecification } from "maplibre-gl";
 import { postalGeomToRouteGeoJson } from "../lib/route-geojson";
 import type { LineStringFeatureCollection, LineStringFeature, LngLat } from "../lib/route-geojson";
-import type { PostalGeom } from "../lib/types";
+import type { PostalGeom, TransitPoiCollection } from "../lib/types";
 import styles from "./route-evidence-map.module.css";
 
 export type RouteDisplayMode = "shiokest" | "shortest" | "both";
@@ -69,10 +69,70 @@ interface PointFeatureCollection {
 
 type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
 
-const SOURCE_IDS = ["shortest-route", "shiokest-route", "exposure-gaps", "transit-node"] as const;
+const SOURCE_IDS = ["transit-pois", "shortest-route", "shiokest-route", "exposure-gaps", "transit-node"] as const;
+const EMPTY_TRANSIT_POIS: TransitPoiCollection = { type: "FeatureCollection", features: [] };
 
 function emptyCollection(): MapFeatureCollection {
   return { type: "FeatureCollection", features: [] };
+}
+
+function toProperCase(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/\b([a-z])/g, (match) => match.toUpperCase())
+    .replace(/\bMrt\b/g, "MRT")
+    .replace(/\bLrt\b/g, "LRT")
+    .replace(/\bHdb\b/g, "HDB")
+    .replace(/\bAve\b/g, "Ave")
+    .replace(/\bSt\b/g, "St");
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function poiPopupHtml(properties: Record<string, unknown>): string {
+  const kind = properties.kind === "bus_stop" ? "Bus stop" : "MRT/LRT exit";
+  const title = typeof properties.name === "string" ? toProperCase(properties.name) : kind;
+  const meta =
+    properties.kind === "bus_stop"
+      ? [properties.code, properties.road].filter((value): value is string => typeof value === "string")
+      : [properties.station, properties.exit].filter((value): value is string => typeof value === "string");
+  return `<strong style="display:block;color:#17211f;font-size:12px;line-height:1.25">${escapeHtml(
+    title
+  )}</strong><span style="display:block;color:#4f625b;font-size:11px;margin-top:2px">${escapeHtml(kind)}</span>${
+    meta.length
+      ? `<small style="display:block;color:#6b7a75;font-size:10px;margin-top:2px">${escapeHtml(
+          meta.map(toProperCase).join(" / ")
+        )}</small>`
+      : ""
+  }`;
+}
+
+function cleanPoiProperties(properties: Record<string, unknown>): Record<string, string | number> {
+  return Object.fromEntries(
+    Object.entries(properties).filter(([, value]) => typeof value === "string" || typeof value === "number")
+  ) as Record<string, string | number>;
+}
+
+function transitPoiCollection(pois: TransitPoiCollection): PointFeatureCollection {
+  return {
+    type: "FeatureCollection",
+    features: pois.features
+      .filter((feature) => feature.geometry?.type === "Point" && Array.isArray(feature.geometry.coordinates))
+      .map((feature) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: feature.geometry.coordinates,
+        },
+        properties: cleanPoiProperties(feature.properties as unknown as Record<string, unknown>),
+      })),
+  };
 }
 
 function setSourceData(
@@ -119,6 +179,40 @@ function ensureRouteLayers(map: maplibregl.Map) {
         data: emptyCollection(),
       });
     }
+  }
+
+  if (!map.getLayer("bus-stop-dot")) {
+    map.addLayer({
+      id: "bus-stop-dot",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 15,
+      filter: ["==", ["get", "kind"], "bus_stop"],
+      paint: {
+        "circle-color": "#5f766f",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 1.7, 18, 3.1],
+        "circle-opacity": 0.56,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 0.7,
+      },
+    });
+  }
+
+  if (!map.getLayer("mrt-exit-dot")) {
+    map.addLayer({
+      id: "mrt-exit-dot",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 12,
+      filter: ["==", ["get", "kind"], "mrt_exit"],
+      paint: {
+        "circle-color": "#2f5f8f",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12, 3.6, 17, 5.2],
+        "circle-opacity": 0.86,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 1.1,
+      },
+    });
   }
 
   if (!map.getLayer("shortest-route-casing")) {
@@ -253,6 +347,36 @@ function ensureRouteLayers(map: maplibregl.Map) {
   }
 }
 
+type PopupConstructor = typeof import("maplibre-gl").Popup;
+
+function pointCoordinates(event: maplibregl.MapLayerMouseEvent): LngLat | null {
+  const geometry = event.features?.[0]?.geometry;
+  if (!geometry || geometry.type !== "Point") return null;
+  const coordinates = geometry.coordinates;
+  if (!Array.isArray(coordinates) || coordinates.length < 2) return null;
+  return [Number(coordinates[0]), Number(coordinates[1])];
+}
+
+function bindPoiInteractions(map: maplibregl.Map, Popup: PopupConstructor) {
+  for (const layerId of ["mrt-exit-dot", "bus-stop-dot"]) {
+    map.on("mouseenter", layerId, () => {
+      map.getCanvas().style.cursor = "pointer";
+    });
+    map.on("mouseleave", layerId, () => {
+      map.getCanvas().style.cursor = "";
+    });
+    map.on("click", layerId, (event) => {
+      const coordinates = pointCoordinates(event);
+      if (!coordinates) return;
+      const properties = (event.features?.[0]?.properties ?? {}) as Record<string, unknown>;
+      new Popup({ closeButton: false, offset: 12 })
+        .setLngLat(coordinates)
+        .setHTML(poiPopupHtml(properties))
+        .addTo(map);
+    });
+  }
+}
+
 function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
   const shortestCollections: LineStringFeatureCollection[] = [];
   const shiokestCollections: LineStringFeatureCollection[] = [];
@@ -351,14 +475,17 @@ function boundsFor(points: [number, number][]): [[number, number], [number, numb
 export function RouteEvidenceMap({
   routes,
   mode,
+  transitPois = EMPTY_TRANSIT_POIS,
 }: {
   routes: RouteMapItem[];
   mode: RouteDisplayMode;
+  transitPois?: TransitPoiCollection;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [loaded, setLoaded] = useState(false);
   const routeData = useMemo(() => routeCollections(routes, mode), [routes, mode]);
+  const transitPoiData = useMemo(() => transitPoiCollection(transitPois), [transitPois]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -384,6 +511,7 @@ export function RouteEvidenceMap({
       mapRef.current.on("load", () => {
         if (!mapRef.current) return;
         ensureRouteLayers(mapRef.current);
+        bindPoiInteractions(mapRef.current, maplibre.Popup);
         setLoaded(true);
       });
     }
@@ -407,6 +535,7 @@ export function RouteEvidenceMap({
     setSourceData(map, "shiokest-route", routeData.shiokest);
     setSourceData(map, "exposure-gaps", routeData.exposure);
     setSourceData(map, "transit-node", routeData.transit);
+    setSourceData(map, "transit-pois", transitPoiData);
 
     if (routeData.bounds) {
       const isCompact = map.getContainer().clientWidth < 700;
@@ -418,7 +547,7 @@ export function RouteEvidenceMap({
         maxZoom: 16.2,
       });
     }
-  }, [loaded, routeData]);
+  }, [loaded, routeData, transitPoiData]);
 
   return (
     <div className={styles.mapShell}>

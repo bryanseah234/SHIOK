@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal } from "../lib/data";
-import type { Manifest, PostalGeom, ScoreRecord, Subscores } from "../lib/types";
+import React, { useEffect, useMemo, useState } from "react";
+import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal, fetchTransitPois } from "../lib/data";
+import type { Manifest, PostalGeom, ScoreRecord, Subscores, TransitPoiCollection } from "../lib/types";
 import { RouteEvidenceMap, type RouteDisplayMode, type RouteMapItem } from "../components/route-evidence-map";
 import styles from "./page.module.css";
 
@@ -351,6 +351,7 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [primary, setPrimary] = useState<LoadedSelection | null>(null);
+  const [transitPois, setTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
@@ -359,6 +360,20 @@ export default function Home() {
   const mapRoutes = useMemo(() => buildRouteItems(primary), [primary]);
   const mapRouteMode = routeSame(primary) ? "shiokest" : routeMode;
   const showDetailOverlay = Boolean(primary);
+
+  useEffect(() => {
+    let active = true;
+    fetchTransitPois()
+      .then((pois) => {
+        if (active) setTransitPois(pois);
+      })
+      .catch(() => {
+        if (active) setTransitPois({ type: "FeatureCollection", features: [] });
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const loadSelection = async (result: SearchResult) => {
     const postal = normalizePostal(result.POSTAL);
@@ -424,7 +439,7 @@ export default function Home() {
 
   return (
     <main className={styles.appShell}>
-      <RouteEvidenceMap routes={mapRoutes} mode={mapRouteMode} />
+      <RouteEvidenceMap routes={mapRoutes} mode={mapRouteMode} transitPois={transitPois} />
 
       <section className={styles.searchOverlay} aria-label="Address search">
         <div className={styles.brandRow}>

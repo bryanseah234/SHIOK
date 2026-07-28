@@ -29,6 +29,7 @@ MAX_DATA_FILES = 5000
 MAX_FILE_BYTES = 5 * 1024 * 1024
 GEOM_PROMOTION_THRESHOLD_BYTES = 250 * 1024
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
+TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops")
 
 
 def slugify_area(value: Any) -> str:
@@ -336,6 +337,8 @@ def export_static_artifacts(
     written_files[rel_key(output_dir / "geom" / "postal-index.json", output_dir)] = write_json(
         output_dir / "geom" / "postal-index.json", dict(sorted(geom_postal_index.items()))
     )
+    transit_report = export_transit_pois(output_dir)
+    written_files[transit_report["path"]] = int(transit_report["bytes"])
 
     data_as_of_values = sorted(
         {
@@ -364,6 +367,12 @@ def export_static_artifacts(
             "promoted_resolution": 9,
             "promotion_threshold_bytes": geom_promotion_threshold_bytes,
         },
+        "transit": {
+            "pois": transit_report["path"],
+            "feature_count": transit_report["feature_count"],
+            "counts": transit_report["counts"],
+            "source_hashes": source_hashes(TRANSIT_SOURCE_KEYS),
+        },
     }
     written_files[rel_key(output_dir / "manifest.json", output_dir)] = write_json(
         output_dir / "manifest.json", manifest
@@ -384,6 +393,144 @@ def export_static_artifacts(
 def read_json(path: Path) -> Any:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def source_hashes(source_keys: Iterable[str]) -> dict[str, Any]:
+    manifest_path = PROJECT_ROOT / "raw" / "manifest.json"
+    if not manifest_path.is_file():
+        return {}
+    manifest = read_json(manifest_path)
+    sources = manifest.get("sources", {}) if isinstance(manifest, dict) else {}
+    return {
+        key: sources.get(key, {}).get("sha256")
+        for key in source_keys
+        if isinstance(sources.get(key, {}).get("sha256"), str)
+    }
+
+
+def feature_point(lon: Any, lat: Any) -> list[float] | None:
+    try:
+        lon_f = float(lon)
+        lat_f = float(lat)
+    except (TypeError, ValueError):
+        return None
+    if not (103.5 <= lon_f <= 104.2 and 1.1 <= lat_f <= 1.6):
+        return None
+    return [round(lon_f, 8), round(lat_f, 8)]
+
+
+def load_json_if_present(path: Path | None) -> Any | None:
+    if path is None or not path.is_file():
+        return None
+    return read_json(path)
+
+
+def build_transit_poi_collection(
+    mrt_geojson: dict[str, Any] | None,
+    bus_payload: dict[str, Any] | list[dict[str, Any]] | None,
+    provenance: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    features: list[dict[str, Any]] = []
+
+    if isinstance(mrt_geojson, dict):
+        for feature in mrt_geojson.get("features", []):
+            if not isinstance(feature, dict):
+                continue
+            geometry = feature.get("geometry", {})
+            properties = feature.get("properties", {})
+            if not isinstance(geometry, dict) or not isinstance(properties, dict):
+                continue
+            coordinates = geometry.get("coordinates")
+            if not isinstance(coordinates, list) or len(coordinates) < 2:
+                continue
+            point = feature_point(coordinates[0], coordinates[1])
+            if point is None:
+                continue
+            station = str(properties.get("STATION_NA", "")).strip()
+            exit_code = str(properties.get("EXIT_CODE", "")).strip()
+            object_id = str(properties.get("OBJECTID", "")).strip()
+            name = " ".join(part for part in [station, exit_code] if part).strip()
+            features.append(
+                {
+                    "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": point},
+                    "properties": {
+                        "id": f"mrt:{object_id or len(features)}",
+                        "kind": "mrt_exit",
+                        "name": name or "MRT/LRT exit",
+                        "station": station,
+                        "exit": exit_code,
+                    },
+                }
+            )
+
+    bus_rows: Any = []
+    if isinstance(bus_payload, dict):
+        bus_rows = bus_payload.get("value", [])
+    elif isinstance(bus_payload, list):
+        bus_rows = bus_payload
+    if isinstance(bus_rows, list):
+        for row in bus_rows:
+            if not isinstance(row, dict):
+                continue
+            point = feature_point(row.get("Longitude"), row.get("Latitude"))
+            if point is None:
+                continue
+            code = str(row.get("BusStopCode", "")).strip()
+            features.append(
+                {
+                    "type": "Feature",
+                    "geometry": {"type": "Point", "coordinates": point},
+                    "properties": {
+                        "id": f"bus:{code or len(features)}",
+                        "kind": "bus_stop",
+                        "name": str(row.get("Description", "")).strip() or "Bus stop",
+                        "code": code,
+                        "road": str(row.get("RoadName", "")).strip(),
+                    },
+                }
+            )
+
+    features.sort(
+        key=lambda item: (
+            str(item["properties"].get("kind", "")),
+            str(item["properties"].get("name", "")),
+            str(item["properties"].get("id", "")),
+        )
+    )
+    return {
+        "type": "FeatureCollection",
+        "features": features,
+        "provenance": provenance or {},
+    }
+
+
+def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]:
+    mrt_geojson = load_json_if_present(
+        raw_file_from_manifest("mrt_lrt_exits", "mrt_lrt_exits.geojson")
+    )
+    bus_payload = load_json_if_present(raw_file_from_manifest("bus_stops", "bus_stops.json"))
+    collection = build_transit_poi_collection(
+        mrt_geojson if isinstance(mrt_geojson, dict) else None,
+        bus_payload if isinstance(bus_payload, (dict, list)) else None,
+        {
+            "artifact": "shiok-transit-pois",
+            "source_hashes": source_hashes(TRANSIT_SOURCE_KEYS),
+        },
+    )
+    path = output_dir / "transit" / "pois.json"
+    size = write_json(path, collection)
+    counts = Counter(
+        str(feature.get("properties", {}).get("kind"))
+        for feature in collection["features"]
+        if isinstance(feature, dict)
+    )
+    return {
+        "path": rel_key(path, output_dir),
+        "bytes": size,
+        "feature_count": len(collection["features"]),
+        "counts": dict(sorted(counts.items())),
+    }
 
 
 def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
@@ -523,12 +670,44 @@ def validate_static_artifacts(
     if extra_geom:
         warnings.append(f"{len(extra_geom)} geometry postals are not in scores/index.json")
 
+    transit_features = 0
+    transit_path = input_dir / "transit" / "pois.json"
+    if transit_path.is_file():
+        transit = read_json(transit_path)
+        if not isinstance(transit, dict) or transit.get("type") != "FeatureCollection":
+            errors.append("transit/pois.json must be a GeoJSON FeatureCollection")
+        else:
+            features = transit.get("features")
+            if not isinstance(features, list):
+                errors.append("transit/pois.json features must be a list")
+            else:
+                transit_features = len(features)
+                for index, feature in enumerate(features):
+                    if not isinstance(feature, dict):
+                        errors.append(f"transit/pois.json:{index}: feature must be an object")
+                        continue
+                    geometry = feature.get("geometry", {})
+                    properties = feature.get("properties", {})
+                    if not isinstance(geometry, dict) or geometry.get("type") != "Point":
+                        errors.append(f"transit/pois.json:{index}: geometry must be Point")
+                    coordinates = (
+                        geometry.get("coordinates") if isinstance(geometry, dict) else None
+                    )
+                    if not isinstance(coordinates, list) or len(coordinates) < 2:
+                        errors.append(f"transit/pois.json:{index}: missing coordinates")
+                    if not isinstance(properties, dict) or properties.get("kind") not in {
+                        "mrt_exit",
+                        "bus_stop",
+                    }:
+                        errors.append(f"transit/pois.json:{index}: invalid kind")
+
     report = {
         "input_dir": str(input_dir),
         "ok": not errors,
         "file_count": len(files),
         "indexed_postals": len(indexed_postals),
         "geometry_postals": len(geom_postals),
+        "transit_features": transit_features,
         "errors": errors,
         "warnings": warnings,
     }

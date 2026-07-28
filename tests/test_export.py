@@ -5,6 +5,7 @@ from shapely.geometry import LineString
 
 from pipeline.score_batch import json_safe_score_record
 from pipeline.export import (
+    build_transit_poi_collection,
     encode_polyline,
     export_static_artifacts,
     load_score_batch_records,
@@ -96,6 +97,53 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
         shard = postal_index[postal]
         shard_records = json.loads((tmp_path / "geom" / "h3" / f"{shard}.json").read_text())
         assert postal in {record["postal"] for record in shard_records}
+
+
+def test_build_transit_poi_collection_exports_mrt_and_bus_points():
+    mrt_geojson = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.83658, 1.36708]},
+                "properties": {
+                    "OBJECTID": 1,
+                    "STATION_NA": "MAYFLOWER MRT STATION",
+                    "EXIT_CODE": "Exit 5",
+                },
+            }
+        ],
+    }
+    bus_payload = {
+        "value": [
+            {
+                "BusStopCode": "55089",
+                "Description": "Mayflower Stn Exit 5",
+                "Latitude": 1.367,
+                "Longitude": 103.837,
+                "RoadName": "Ang Mo Kio Ave 4",
+            }
+        ]
+    }
+
+    collection = build_transit_poi_collection(
+        mrt_geojson,
+        bus_payload,
+        {"source_hashes": {"mrt_lrt_exits": "a" * 64, "bus_stops": "b" * 64}},
+    )
+
+    assert collection["type"] == "FeatureCollection"
+    assert len(collection["features"]) == 2
+    kinds = {feature["properties"]["kind"] for feature in collection["features"]}
+    assert kinds == {"mrt_exit", "bus_stop"}
+    mrt = next(
+        feature for feature in collection["features"] if feature["properties"]["kind"] == "mrt_exit"
+    )
+    bus = next(
+        feature for feature in collection["features"] if feature["properties"]["kind"] == "bus_stop"
+    )
+    assert mrt["properties"]["name"] == "MAYFLOWER MRT STATION Exit 5"
+    assert bus["properties"]["code"] == "55089"
 
 
 def test_export_splits_large_score_files(tmp_path: Path):

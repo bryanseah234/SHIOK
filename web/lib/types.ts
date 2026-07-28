@@ -64,4 +64,30 @@ export interface Manifest {
   provenance: string | Record<string, unknown>;
   scores?: Record<string, unknown>;
   geom?: Record<string, unknown>;
+  transit?: Record<string, unknown>;
+}
+
+export interface TransitPoiProperties {
+  id: string;
+  kind: "mrt_exit" | "bus_stop";
+  name: string;
+  station?: string;
+  exit?: string;
+  code?: string;
+  road?: string;
+}
+
+export interface TransitPoiFeature {
+  type: "Feature";
+  geometry: {
+    type: "Point";
+    coordinates: [number, number];
+  };
+  properties: TransitPoiProperties;
+}
+
+export interface TransitPoiCollection {
+  type: "FeatureCollection";
+  features: TransitPoiFeature[];
+  provenance?: Record<string, unknown>;
 }

@@ -16,7 +16,7 @@ export function normalizeDataBase(value?: string): string {
 
 export const DATA_BASE = normalizeDataBase(process.env.NEXT_PUBLIC_DATA_BASE);
 
-import type { ScoreRecord, PostalGeom, Manifest } from "./types";
+import type { ScoreRecord, PostalGeom, Manifest, TransitPoiCollection } from "./types";
 import { latLngToCell } from "h3-js";
 
 type GeomIndex = Record<string, string[]>;
@@ -31,6 +31,22 @@ export async function fetchManifest(): Promise<Manifest> {
   return res.json() as Promise<Manifest>;
 }
 
+export async function fetchTransitPois(): Promise<TransitPoiCollection> {
+  if (_transitPois) return _transitPois;
+  const res = await fetch(`${DATA_BASE}transit/pois.json`);
+  if (!res.ok) {
+    _transitPois = { type: "FeatureCollection", features: [] };
+    return _transitPois;
+  }
+  const payload = (await res.json()) as TransitPoiCollection;
+  _transitPois = {
+    type: "FeatureCollection",
+    features: Array.isArray(payload.features) ? payload.features : [],
+    provenance: payload.provenance,
+  };
+  return _transitPois;
+}
+
 // ---------------------------------------------------------------------------
 // Score records
 // The pipeline shards scores by planning-area into files named by planning
@@ -43,6 +59,7 @@ export async function fetchManifest(): Promise<Manifest> {
 let _areaIndex: Record<string, string[]> | null = null;
 let _geomIndex: GeomIndex | null = null;
 let _geomPostalIndex: GeomPostalIndex | null = null;
+let _transitPois: TransitPoiCollection | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
