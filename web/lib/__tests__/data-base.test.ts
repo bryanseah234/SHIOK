@@ -14,7 +14,7 @@ describe("normalizeDataBase", () => {
 
   it("defaults production builds to generated data", () => {
     vi.stubEnv("NODE_ENV", "production");
-    expect(normalizeDataBase()).toBe("/data/generated/");
+    expect(normalizeDataBase()).toBe("/data/generated_20260728_1124/");
   });
 
   it("normalizes relative and absolute paths", () => {

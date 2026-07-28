@@ -6,7 +6,9 @@
 export function normalizeDataBase(value?: string): string {
   const raw = value?.trim();
   if (!raw) {
-    return process.env.NODE_ENV === "production" ? "/data/generated/" : "/data/mock/";
+    return process.env.NODE_ENV === "production"
+      ? "/data/generated_20260728_1124/"
+      : "/data/mock/";
   }
   const withLeadingSlash =
     raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")
