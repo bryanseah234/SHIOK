@@ -135,7 +135,11 @@ print(json.dumps({"chunk_count": len(chunks), "records": records, "state_counts"
     uv run python run.py validate --input $ExportDir
     if ($LASTEXITCODE -ne 0) { throw "validate failed" }
 
-    "{`n  `"bundle`": `"$BundleName`"`n}" | Set-Content -Path $BundleConfig -Encoding UTF8
+    [System.IO.File]::WriteAllText(
+        $BundleConfig,
+        "{`n  `"bundle`": `"$BundleName`"`n}",
+        [System.Text.UTF8Encoding]::new($false)
+    )
 
     if ($Deploy) {
         & (Join-Path $PSScriptRoot "deploy-production.ps1") -DataBundle $BundleName

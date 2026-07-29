@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T14:27:44.431017+00:00",
+  "generated_at": "2026-07-29T12:23:13.479357+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -17,12 +17,12 @@
       "last_modified": "Sun, 21 Jun 2026 02:06:46 GMT",
       "sha256": "7c987511548de3a82da403cabca02702031e02ade8703a9e401417883dfeb702",
       "source_name": "HDB Existing Building",
-      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_16b157c52ed637edd6ba1232e026258d.geojson?AWSAccessKeyId=ASIAU7LWPY2WHOV6TT2F&Expires=1785055836&Signature=XIg5fM%2FwtbOlWMorLXoIkBkWLOU%3D&X-Amzn-Trace-Id=Root%3D1-6a65bc4c-56ceeaa43dc7bd2a59c228db%3BParent%3D73e76f52680ebe9e%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22HDBExistingBuilding.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaDmFwLXNvdXRoZWFzdC0xIkgwRgIhANuRjFuJew2biTgP1bhhWySwZet4ef%2F%2BGw5yuv2ABawrAiEA1YfWQ5B%2BlZbhUG%2BK4yD0bYOHGpyeE%2B7BRIswMunVzOcqtQQIMRAEGgwzNDIyMzUyNjg3ODAiDCVhN1S0vwXsX%2Fho1iqSBGqsu4yERlirrAfrftsTI16mDRo8%2FUgRGbmDMiX7IUpgDHh%2FBtGHRnbsCvVK2NJhwBuiW%2FF5HP92Rn9%2BGz%2FZdkeZWB75HBXK3ni6sFJ6YGtlSQzBHgUsk5UCEbNKqpAKmy23P9Q%2BlaGaudKu8DABye505IU7YDoNyMTVnvBA%2B98kxcSiHs1rcX095PVunnIeI3iy6s1NNESZDdGUfwFiVc7euF8Mx9g2TxgdrEH6LlX329%2FcYAxk7pgpDQabGsJ8sZnLNiusTt%2F%2BbHRR7hPxuDeU%2BXblnB0Ri3uaPKH7h%2FkSORlzMl8mJkTpk9Ll%2Frkw8dVE9Doa5pHrTnqOlEDfJybVsThtG4WO7v3mm6KjNqwyAGFrOirJNPRHu8xFV0c27lkerTjY9noKdocK0qO3t58aSgzwh7SBUIKDYXdeDMITOHoBiu2isxWvoEI%2FMvxIlGeaeM9q7%2BSOL5Vt7HJBoIHiLIZaqZtpEooRSPc%2BLrIfw2hbtGLYE1jWE0olmSgW5hfSPBuiZNXkx26gfO5FIUR0%2FmwpHGQw2Bh9fgdOq%2BQI5z5oaHRCUv5wM9LcGLm2TOssVpYs509gh%2FWWf4LacLJldiNFhs4tDRTfrpt5vLDwdrhJzxsGdzdAkDseNqT7q5kGERZSH8XdkIQ%2F086xCC0MhXAIIZasVv7SoHpBD8uK0xEmWvvRXJLYBnFfSOYo854YMMT3ltMGOqEBB8%2B%2BWz8%2B8ACcNU1ZS9cI59UKws0xuL3WUKqd%2BViT%2F49WfA%2FuiVaER8T9%2Fbkdw3Xz0Mb0ottaZ2E2mLSpguhA%2BRbu5D7jfs9oldJHKN1uSMhA4Xh6PHbE1plFdbAb6axLzkFW0qP%2F%2Bpo%2FcjvueBKQH13DgcED2%2F4b0iJOOC75k0iFXSLns25djRxAYTa2Y1XECet0Zb%2BHdu%2FgUXfSzDrkWkc%3D"
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_16b157c52ed637edd6ba1232e026258d.geojson"
     },
     "bus_routes": {
       "bytes": 6211748,
       "etag": null,
-      "fetched_at": "2026-07-27T12:52:05.789605+00:00",
+      "fetched_at": "2026-07-29T12:22:42.720838+00:00",
       "last_modified": null,
       "sha256": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
       "source_name": "Bus Routes",
@@ -31,7 +31,7 @@
     "bus_services": {
       "bytes": 185358,
       "etag": null,
-      "fetched_at": "2026-07-27T12:52:06.210491+00:00",
+      "fetched_at": "2026-07-29T12:22:28.465298+00:00",
       "last_modified": null,
       "sha256": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
       "source_name": "Bus Services",
@@ -40,7 +40,7 @@
     "bus_stops": {
       "bytes": 719050,
       "etag": null,
-      "fetched_at": "2026-07-27T12:52:08.469093+00:00",
+      "fetched_at": "2026-07-29T12:22:28.062022+00:00",
       "last_modified": null,
       "sha256": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
       "source_name": "Bus Stops",
@@ -62,7 +62,16 @@
       "last_modified": "Tue, 07 Jul 2026 02:06:48 GMT",
       "sha256": "2b552c1429aaf93c544209df3da68838d708a78ec5ae86dcd2852c10b0589f29",
       "source_name": "Lamp Posts",
-      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_ca109de3e83efdd9a10bc5f3dda70a98.geojson?AWSAccessKeyId=ASIAU7LWPY2WHOV6TT2F&Expires=1785055827&Signature=XcjnEK%2FGDQO%2BUCWKRUPSQ7g8WWU%3D&X-Amzn-Trace-Id=Root%3D1-6a65bc43-5f2da6b6357f263023e94082%3BParent%3D95b8a3b0ccacf8ee%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22LTALampPost.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaDmFwLXNvdXRoZWFzdC0xIkgwRgIhANuRjFuJew2biTgP1bhhWySwZet4ef%2F%2BGw5yuv2ABawrAiEA1YfWQ5B%2BlZbhUG%2BK4yD0bYOHGpyeE%2B7BRIswMunVzOcqtQQIMRAEGgwzNDIyMzUyNjg3ODAiDCVhN1S0vwXsX%2Fho1iqSBGqsu4yERlirrAfrftsTI16mDRo8%2FUgRGbmDMiX7IUpgDHh%2FBtGHRnbsCvVK2NJhwBuiW%2FF5HP92Rn9%2BGz%2FZdkeZWB75HBXK3ni6sFJ6YGtlSQzBHgUsk5UCEbNKqpAKmy23P9Q%2BlaGaudKu8DABye505IU7YDoNyMTVnvBA%2B98kxcSiHs1rcX095PVunnIeI3iy6s1NNESZDdGUfwFiVc7euF8Mx9g2TxgdrEH6LlX329%2FcYAxk7pgpDQabGsJ8sZnLNiusTt%2F%2BbHRR7hPxuDeU%2BXblnB0Ri3uaPKH7h%2FkSORlzMl8mJkTpk9Ll%2Frkw8dVE9Doa5pHrTnqOlEDfJybVsThtG4WO7v3mm6KjNqwyAGFrOirJNPRHu8xFV0c27lkerTjY9noKdocK0qO3t58aSgzwh7SBUIKDYXdeDMITOHoBiu2isxWvoEI%2FMvxIlGeaeM9q7%2BSOL5Vt7HJBoIHiLIZaqZtpEooRSPc%2BLrIfw2hbtGLYE1jWE0olmSgW5hfSPBuiZNXkx26gfO5FIUR0%2FmwpHGQw2Bh9fgdOq%2BQI5z5oaHRCUv5wM9LcGLm2TOssVpYs509gh%2FWWf4LacLJldiNFhs4tDRTfrpt5vLDwdrhJzxsGdzdAkDseNqT7q5kGERZSH8XdkIQ%2F086xCC0MhXAIIZasVv7SoHpBD8uK0xEmWvvRXJLYBnFfSOYo854YMMT3ltMGOqEBB8%2B%2BWz8%2B8ACcNU1ZS9cI59UKws0xuL3WUKqd%2BViT%2F49WfA%2FuiVaER8T9%2Fbkdw3Xz0Mb0ottaZ2E2mLSpguhA%2BRbu5D7jfs9oldJHKN1uSMhA4Xh6PHbE1plFdbAb6axLzkFW0qP%2F%2Bpo%2FcjvueBKQH13DgcED2%2F4b0iJOOC75k0iFXSLns25djRxAYTa2Y1XECet0Zb%2BHdu%2FgUXfSzDrkWkc%3D"
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_ca109de3e83efdd9a10bc5f3dda70a98.geojson"
+    },
+    "leaf_area_index": {
+      "bytes": 204855,
+      "etag": "\"1fb59885f5c63a516320c2d7eb03a697-1\"",
+      "fetched_at": "2026-07-29T12:17:32.109221+00:00",
+      "last_modified": "Thu, 30 Apr 2026 07:54:04 GMT",
+      "sha256": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+      "source_name": "NParks Leaf Area Index",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_69141275d795e1fe2e496dda7c267d8d.xlsx"
     },
     "mrt_lrt_exits": {
       "bytes": 213057,
@@ -71,7 +80,7 @@
       "last_modified": "Sun, 19 Jul 2026 02:06:46 GMT",
       "sha256": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
       "source_name": "MRT/LRT Station Exits",
-      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_b39d3a0871985372d7e1637193335da5.geojson?AWSAccessKeyId=ASIAU7LWPY2WDW3HWUID&Expires=1785080261&Signature=07P61Ey3x7qHD11uqOgGBMVu%2B4w%3D&X-Amzn-Trace-Id=Root%3D1-6a661bb4-3cb16795676973205a88c5c9%3BParent%3De8cdcadfc9e2d14a%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22LTAMRTStationExitGEOJSON.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEG0aDmFwLXNvdXRoZWFzdC0xIkYwRAIgcHujSs%2FV00riNhe1%2FRK%2BiuepsYamofjuqsyhw0kPo04CIGW6k9scsTE6BbsDDaHedU58zfJajpiPEsEgADO6kVFnKrUECDYQBBoMMzQyMjM1MjY4NzgwIgw4v5hfW7i1a1Rn0NIqkgSuHZuiKVfDiSYsGE4SAq3o80pzVZHwSeztz8eDafNTgRVdAju1Izo9SMcTByrwhRWG4e4yagaoJqLjFjetffToMcdkHQNH%2F02c9RyS%2B24XF7qDj%2F9Vmw4mGkpIv%2BcZl0%2F7uFpJb75OLvdVF9%2F2dbNNqk5TZmZx5MVboatRoCBVsLSct9Mv8CXi7TINdFuQ8i%2B%2BLuOgfm%2B3umKi7L2tDc6vy2R7u%2Bc5%2BMSHdNJhMnzVdADwQYyEe7%2FMpWeFKsRcZBLegiWkvaoYa%2Bk0ywO%2BCQDaLTtRYNjEkCPhUPAYCKM22RLTiENPl7l8gEf4422G0XfnMAR6A4mo%2BgnUAitk4xk04bOUTMOXM6RkqtGrMUrOTYZVZUZHJ0ReK7%2FC2RzzCoDXfW%2BSePID%2FD5J22rEjf27fSPd4qzzPaS4aBrU2cQsUjTcxqpfp%2FzDP0JFBU7lHzJprWZPwxxttiVo76crGMy4J3auDc1huzBxni2OqYvdYYtuVH12JYJaVn34%2FiUZzdeTyvjB%2Bt5QrYr3M%2F83i2b0KvpFok92bIfl4cF7pXwrYtO%2FReqkzzICbt4HW4X5f%2F905Y8UfHt%2BS34W%2FDYPxbpvcVQpGec%2B5CkQGoAmHuqNwxeHaUXZ4b48uxApceyxxNWsUrpfa%2FRjA4snLtMY2hhpsmT0KHVgHEiMkrDBjN%2BRzUcEB6dY0TueIvNcNUTPXROhtTDmh5jTBjqjAQiTexsmQcWP1zlIQI1v5g1lDvDXnWm9u67jovoZOGygS58WUOPzVRIagF6DHpa9tu6v%2FAaOoXm7v50EgX51p7C%2Bw7uJl3Keq8QrM4lMUStFhtqZkXK54IpTfrjTvllzRc%2Bj3mu2ujU6YG2TKJA4S0IZsZHD7IThNrirn8YpRuw1ObOTW%2FvDlABQvQbCnTV51LCKec1Pkdl16Wnu1%2BK%2Bhc6zOx0%3D"
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_b39d3a0871985372d7e1637193335da5.geojson"
     },
     "osm_extract": {
       "bytes": 248783590,
@@ -98,7 +107,7 @@
       "last_modified": "Fri, 05 Dec 2025 02:07:56 GMT",
       "sha256": "f23856251b467089f788d0fff72ef5a38e753f21aa69b4352401d7ed50d380cc",
       "source_name": "Planning Area Boundaries (MP2019 No Sea)",
-      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_4765db0e87b9c86336792efe8a1f7a66.geojson?AWSAccessKeyId=ASIAU7LWPY2WHOV6TT2F&Expires=1785055849&Signature=G8VZRHCM5liDjphivKjOxAQtWZw%3D&X-Amzn-Trace-Id=Root%3D1-6a65bc59-512ff0f32a8172d45f6161d7%3BParent%3D8eab53236be81ff0%3BSampled%3D0%3BLineage%3D1%3Ab9934a3d%3A0&response-content-disposition=attachment%3B%20filename%3D%22MasterPlan2019PlanningAreaBoundaryNoSea.geojson%22&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaDmFwLXNvdXRoZWFzdC0xIkgwRgIhANuRjFuJew2biTgP1bhhWySwZet4ef%2F%2BGw5yuv2ABawrAiEA1YfWQ5B%2BlZbhUG%2BK4yD0bYOHGpyeE%2B7BRIswMunVzOcqtQQIMRAEGgwzNDIyMzUyNjg3ODAiDCVhN1S0vwXsX%2Fho1iqSBGqsu4yERlirrAfrftsTI16mDRo8%2FUgRGbmDMiX7IUpgDHh%2FBtGHRnbsCvVK2NJhwBuiW%2FF5HP92Rn9%2BGz%2FZdkeZWB75HBXK3ni6sFJ6YGtlSQzBHgUsk5UCEbNKqpAKmy23P9Q%2BlaGaudKu8DABye505IU7YDoNyMTVnvBA%2B98kxcSiHs1rcX095PVunnIeI3iy6s1NNESZDdGUfwFiVc7euF8Mx9g2TxgdrEH6LlX329%2FcYAxk7pgpDQabGsJ8sZnLNiusTt%2F%2BbHRR7hPxuDeU%2BXblnB0Ri3uaPKH7h%2FkSORlzMl8mJkTpk9Ll%2Frkw8dVE9Doa5pHrTnqOlEDfJybVsThtG4WO7v3mm6KjNqwyAGFrOirJNPRHu8xFV0c27lkerTjY9noKdocK0qO3t58aSgzwh7SBUIKDYXdeDMITOHoBiu2isxWvoEI%2FMvxIlGeaeM9q7%2BSOL5Vt7HJBoIHiLIZaqZtpEooRSPc%2BLrIfw2hbtGLYE1jWE0olmSgW5hfSPBuiZNXkx26gfO5FIUR0%2FmwpHGQw2Bh9fgdOq%2BQI5z5oaHRCUv5wM9LcGLm2TOssVpYs509gh%2FWWf4LacLJldiNFhs4tDRTfrpt5vLDwdrhJzxsGdzdAkDseNqT7q5kGERZSH8XdkIQ%2F086xCC0MhXAIIZasVv7SoHpBD8uK0xEmWvvRXJLYBnFfSOYo854YMMT3ltMGOqEBB8%2B%2BWz8%2B8ACcNU1ZS9cI59UKws0xuL3WUKqd%2BViT%2F49WfA%2FuiVaER8T9%2Fbkdw3Xz0Mb0ottaZ2E2mLSpguhA%2BRbu5D7jfs9oldJHKN1uSMhA4Xh6PHbE1plFdbAb6axLzkFW0qP%2F%2Bpo%2FcjvueBKQH13DgcED2%2F4b0iJOOC75k0iFXSLns25djRxAYTa2Y1XECet0Zb%2BHdu%2FgUXfSzDrkWkc%3D"
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_4765db0e87b9c86336792efe8a1f7a66.geojson"
     },
     "postal_universe_onemap_2020": {
       "bytes": 5945389,
@@ -111,21 +120,21 @@
     },
     "sla_dwelling_information": {
       "bytes": 610849,
-      "etag": null,
-      "fetched_at": "2026-07-27T14:27:44.431017+00:00",
-      "last_modified": null,
+      "etag": "\"478caca8eb53a522fdf2c86d5967ba3a-1\"",
+      "fetched_at": "2026-07-29T12:17:20.490663+00:00",
+      "last_modified": "Tue, 30 Jun 2026 02:06:46 GMT",
       "sha256": "a520d2a54bf628c83a11c21ca63ee1cd46386fc0aadb896911133c0742150271",
       "source_name": "SLA Dwelling Information",
-      "url_as_discovered": "https://api-open.data.gov.sg/v1/public/api/datasets/d_e4495201ba4f77fa2ef9855bad6d2cd1/initiate-download"
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_e4495201ba4f77fa2ef9855bad6d2cd1.geojson"
     },
     "traffic_signals": {
       "bytes": 1337159,
-      "etag": "W/\"146747-6577cb5d9c316\"",
-      "fetched_at": "2026-07-26T07:50:24.695226+00:00",
-      "last_modified": "Sun, 26 Jul 2026 05:16:38 GMT",
+      "etag": "\"bd9732a93491b220d40c6183085e9ece\"",
+      "fetched_at": "2026-07-29T12:17:05.733573+00:00",
+      "last_modified": "Fri, 06 Mar 2026 08:24:01 GMT",
       "sha256": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af",
       "source_name": "Traffic Signals",
-      "url_as_discovered": "https://datamall.lta.gov.sg/content/dam/datamall/datasets/Geospatial/TrafficLight_Mar2026.zip"
+      "url_as_discovered": "https://dmgeospatial.s3.ap-southeast-1.amazonaws.com/TrafficLight.zip"
     }
   }
 }

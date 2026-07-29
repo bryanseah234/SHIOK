@@ -20,22 +20,22 @@ sources:
     name: "Bus Stops"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusStops"
-    verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
+    verified: "2026-07-29"
+    notes: "JSON paged API ($skip 500) — requires owner DataMall AccountKey; used for stop locations and bus-as-transit candidates"
 
   bus_services:
     name: "Bus Services"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusServices"
-    verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
+    verified: "2026-07-29"
+    notes: "JSON paged API ($skip 500) — requires owner DataMall AccountKey; scheduled peak frequency source"
 
   bus_routes:
     name: "Bus Routes"
     kind: "datamall_api_paginated"
     endpoint: "https://datamall2.mytransport.sg/ltaodataservice/BusRoutes"
-    verified: "2026-07-26"
-    notes: "JSON paged API ($skip 500) — BLOCKED (owner key pending approval)"
+    verified: "2026-07-29"
+    notes: "JSON paged API ($skip 500) — requires owner DataMall AccountKey; service-to-stop connectivity source"
 
   mrt_lrt_exits:
     name: "MRT/LRT Station Exits"
@@ -77,6 +77,14 @@ sources:
     kind: "datagov_polldownload"
     dataset_id: "d_4765db0e87b9c86336792efe8a1f7a66"
     verified: "2026-07-26"
+
+  leaf_area_index:
+    name: "NParks Leaf Area Index"
+    kind: "datagov_polldownload"
+    dataset_id: "d_69141275d795e1fe2e496dda7c267d8d"
+    verified: "2026-07-29"
+    notes: "data.gov.sg XLSX table; shade/heat calibration source only, not rain shelter geometry"
+
   osm_extract:
     name: "Geofabrik Malaysia/Singapore/Brunei OSM"
     kind: "osm_pbf"

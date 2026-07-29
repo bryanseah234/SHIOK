@@ -28,6 +28,7 @@ DataMall zip auth is unverified: the fetcher tries unauthenticated first, falls 
 | 10 | OSM extract | Geofabrik `malaysia-singapore-brunei` PBF (clip to SG) or BBBike "Singapore" extract | PBF | Contains the Citymapper-imported LTA linkways as `covered=*` footways — cross-check against layer 1; keep both signals. ODbL. Read on Windows with pyrosm or QuackOSM (pure-wheel); fall back to pyosmium only if its Windows wheel installs cleanly. |
 | 11 | Overture (optional assist) | Overture releases via DuckDB `read_parquet` on their S3 (anonymous) | GeoParquet | Buildings theme has heights for Phase 4 shadow term; transportation theme optional cross-check. |
 | 12 | Planning Area boundaries | data.gov.sg — URA *Master Plan 2019 Planning Area Boundary (No Sea)*, id `d_4765db0e87b9c86336792efe8a1f7a66` (GeoJSON ~2 MB); prefer a DMP25 planning-area layer if published (several MP2019 layers marked superseded Jun 2025) | GeoJSON | Partition key for exports/QA + source of the OSM clip polygon (union, buffer ~500 m). |
+| 13 | NParks Leaf Area Index | data.gov.sg — NParks *Leaf Area Index (LAI)*, id `d_69141275d795e1fe2e496dda7c267d8d` | XLSX | Plant-species LAI table for future shade/heat calibration. This is not spatial tree-canopy geometry and must not be used as rain shelter. |
 
 ## OneMap specifics
 
@@ -40,10 +41,11 @@ DataMall zip auth is unverified: the fetcher tries unauthenticated first, falls 
 ## data.gov.sg specifics
 
 - Prefer the official download-initiation API over scraping HTML; store the dataset *page* URL in config, resolve the file at fetch time.
+- `datagov_polldownload` sources are not always GeoJSON. Preserve the resolved download extension from `Content-Disposition` or the signed URL, e.g. NParks LAI resolves to XLSX.
 - Real-time weather/UV APIs (Phase 4) are keyless and browser-callable — client-side only.
 
 ## Attribution (must ship — see docs/ATTRIBUTION.md)
 
-- LTA DataMall + data.gov.sg layers: Singapore Open Data Licence attribution.
+- LTA DataMall + data.gov.sg layers, including NParks LAI: Singapore Open Data Licence attribution.
 - OneMap: SLA/OneMap attribution on map + search.
 - OSM-derived: "© OpenStreetMap contributors" (ODbL); published route geometries are ODbL.

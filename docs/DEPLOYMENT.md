@@ -17,6 +17,21 @@ That wrapper runs:
 
 The current bundle is configured in `web/data-bundle.json`.
 
+## Vercel Git Auto-Deploy
+
+The Vercel project root directory must be `web`.
+
+Project settings currently expected:
+
+- Install Command: `npm ci`
+- Build Command: `npm run build`
+- Output Directory: `.next`
+
+With that root directory, every push to `main` builds the Next.js app from
+`web/`. Code-only deploys are safe because `web/scripts/ensure-data-bundle.mjs`
+downloads the configured production data bundle during `next build` when
+`web/public/data/<bundle>` is absent.
+
 ## Why This Exists
 
 `web/public/data/` is generated and intentionally ignored by Git. The current bundle is about 347 MB, so committing it would make GitHub/Vercel deploys brittle and noisy.

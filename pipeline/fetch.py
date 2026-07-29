@@ -3,11 +3,13 @@
 import hashlib
 import json
 import os
+import re
 import sys
 import time
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qsl, unquote, urlsplit, urlunsplit
 
 import httpx
 import yaml  # type: ignore[import-untyped]
@@ -25,6 +27,30 @@ TMP_DIR = RAW_DIR / "tmp"
 
 USER_AGENT = "SHIOK-Index-Pipeline/1.0 (Singapore Walk-to-Transit Index)"
 MAX_SIZE_BYTES = 500 * 1024 * 1024  # 500 MB limit
+DATAGOV_EXTENSION_BY_CONTENT_TYPE = {
+    "application/geo+json": ".geojson",
+    "application/json": ".json",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": ".xlsx",
+    "application/vnd.ms-excel": ".xls",
+    "text/csv": ".csv",
+    "application/zip": ".zip",
+}
+DATAGOV_ALLOWED_EXTENSIONS = set(DATAGOV_EXTENSION_BY_CONTENT_TYPE.values()) | {
+    ".geojson",
+    ".json",
+}
+SIGNED_URL_QUERY_KEYS = {
+    "awsaccesskeyid",
+    "expires",
+    "signature",
+    "x-amz-algorithm",
+    "x-amz-credential",
+    "x-amz-date",
+    "x-amz-expires",
+    "x-amz-security-token",
+    "x-amz-signature",
+    "x-amz-signedheaders",
+}
 
 
 def get_headers(extra: dict[str, str] | None = None) -> dict[str, str]:
@@ -62,9 +88,21 @@ def load_manifest() -> dict[str, Any]:
 
 def save_manifest(manifest: dict[str, Any]) -> None:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
+    manifest["generated_at"] = datetime.now(UTC).isoformat()
+    for source in manifest.get("sources", {}).values():
+        if isinstance(source, dict) and "url_as_discovered" in source:
+            source["url_as_discovered"] = stable_manifest_url(str(source["url_as_discovered"]))
     with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, sort_keys=True)
+
+
+def stable_manifest_url(url: str) -> str:
+    """Strip expiring signed-download query params while keeping the source path traceable."""
+    parsed = urlsplit(url)
+    query_keys = {key.lower() for key, _ in parse_qsl(parsed.query, keep_blank_values=True)}
+    if query_keys & SIGNED_URL_QUERY_KEYS:
+        return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, "", parsed.fragment))
+    return url
 
 
 def resolve_datagov_download_url(dataset_id: str) -> str:
@@ -88,19 +126,48 @@ def resolve_datagov_download_url(dataset_id: str) -> str:
             if not download_url:
                 raise ValueError(f"No download URL returned for dataset {dataset_id}")
             return download_url
-        except Exception as e:
+        except (httpx.HTTPError, ValueError, OSError):
             if attempt == 3:
                 client.close()
-                raise e
+                raise
     client.close()
     raise ValueError(f"Failed to initiate download for dataset {dataset_id} after 3 attempts")
 
 
+def datagov_raw_filename(
+    source_key: str,
+    download_url: str,
+    headers: httpx.Headers | dict[str, str],
+) -> str:
+    """Return a deterministic raw filename while preserving the actual data.gov file type."""
+    content_disposition = str(headers.get("content-disposition", ""))
+    match = re.search(
+        r"filename\*?=(?:UTF-8'')?\"?([^\";]+)\"?",
+        content_disposition,
+        re.IGNORECASE,
+    )
+    if match:
+        suffix = Path(unquote(match.group(1))).suffix.lower()
+        if suffix in DATAGOV_ALLOWED_EXTENSIONS:
+            return f"{source_key}{suffix}"
+
+    suffix = Path(unquote(urlsplit(download_url).path)).suffix.lower()
+    if suffix in DATAGOV_ALLOWED_EXTENSIONS:
+        return f"{source_key}{suffix}"
+
+    content_type = str(headers.get("content-type", "")).split(";", maxsplit=1)[0].lower()
+    suffix_by_type = DATAGOV_EXTENSION_BY_CONTENT_TYPE.get(content_type)
+    if suffix_by_type:
+        return f"{source_key}{suffix_by_type}"
+
+    return f"{source_key}.geojson"
+
+
 def resolve_datamall_static_url(keyword: str) -> str:
-    from datetime import datetime, timedelta
+    from datetime import timedelta
 
     # Prefix discovery: try current month, then previous months up to 6 months back
-    now = datetime.now()
+    now = datetime.now(UTC)
     client = httpx.Client(timeout=10.0, follow_redirects=True)
 
     for i in range(6):
@@ -124,7 +191,7 @@ def resolve_datamall_geospatial_url(keyword: str) -> str:
         url = resolve_datamall_static_url(keyword)
         print(f"Discovered unauthenticated static URL for {keyword}: {url}")
         return url
-    except Exception as e:
+    except (ValueError, httpx.HTTPError, OSError) as e:
         print(
             f"Unauthenticated static discovery failed for {keyword}: {e}. Falling back to Authenticated GeospatialWholeIsland API."
         )
@@ -339,7 +406,7 @@ def run_ingest(sources: dict[str, Any]) -> int:
             current_entry = manifest_sources.get(key, {})
             try:
                 url = resolve_datamall_geospatial_url(keyword)
-            except Exception as e:
+            except (ValueError, httpx.HTTPError, OSError) as e:
                 print(f"[{key}] Error discovering url for {name}: {e}")
                 continue
 
@@ -372,12 +439,12 @@ def run_ingest(sources: dict[str, Any]) -> int:
 
                     manifest_sources[key] = {
                         "source_name": name,
-                        "url_as_discovered": url,
+                        "url_as_discovered": stable_manifest_url(url),
                         "sha256": sha256,
                         "bytes": len(content),
                         "etag": etag,
                         "last_modified": last_modified,
-                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                        "fetched_at": datetime.now(UTC).isoformat(),
                     }
                     print(
                         f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
@@ -414,7 +481,7 @@ def run_ingest(sources: dict[str, Any]) -> int:
 
                     target_dir = RAW_DIR / sha256
                     target_dir.mkdir(parents=True, exist_ok=True)
-                    filename = f"{key}.geojson"
+                    filename = datagov_raw_filename(key, download_url, resp.headers)
                     target_path = target_dir / filename
 
                     with open(target_path, "wb") as f:
@@ -422,12 +489,12 @@ def run_ingest(sources: dict[str, Any]) -> int:
 
                     manifest_sources[key] = {
                         "source_name": name,
-                        "url_as_discovered": download_url,
+                        "url_as_discovered": stable_manifest_url(download_url),
                         "sha256": sha256,
                         "bytes": len(content),
                         "etag": etag,
                         "last_modified": last_modified,
-                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                        "fetched_at": datetime.now(UTC).isoformat(),
                     }
                     print(
                         f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
@@ -473,11 +540,11 @@ def run_ingest(sources: dict[str, Any]) -> int:
 
                     manifest_sources[key] = {
                         "source_name": name,
-                        "url_as_discovered": url,
+                        "url_as_discovered": stable_manifest_url(url),
                         "sha256": sha256,
                         "bytes": len(content),
                         "last_modified": last_modified,
-                        "fetched_at": datetime.now(timezone.utc).isoformat(),
+                        "fetched_at": datetime.now(UTC).isoformat(),
                     }
                     print(
                         f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"

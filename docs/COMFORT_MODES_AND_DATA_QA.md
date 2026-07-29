@@ -46,7 +46,7 @@ MVP-ready client modes:
 Honesty labels:
 
 - Bus is scheduled frequency, not historical arrival reliability.
-- Heat is provisional until NParks Leaf Area Index and/or shadow modeling lands.
+- Heat is provisional until NParks Leaf Area Index and/or shadow modeling is calibrated into the score.
 - Shelter is rain protection. Tree foliage is shade, not rain shelter.
 
 ## Bus as Transit
@@ -95,7 +95,7 @@ snapshots into reliability metrics before the frontend can display them.
 
 Candidate official source:
 
-- NParks Leaf Area Index on data.gov.sg.
+- NParks Leaf Area Index on data.gov.sg, tracked in `pipeline/config/sources.yaml` as an XLSX calibration dataset.
 
 Expected use:
 

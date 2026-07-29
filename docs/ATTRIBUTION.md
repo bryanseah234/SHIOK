@@ -16,7 +16,8 @@ Complete dataset licensing and attribution requirements per PRD v4.2 §11 and DA
 | 10 | OpenStreetMap — Pedestrian Network | ODbL (Open Database License) | "© OpenStreetMap contributors. Route geometries published under ODbL." | Map corner & dataset README |
 | 11 | Overture Maps — Buildings / Transportation (Phase 4) | ODbL / Permissive | "Contains data from Overture Maps Foundation." | Dataset README |
 | 12 | URA — MP2019 Planning Area Boundary (No Sea) | Singapore Open Data Licence v1.0 | "Contains information from URA Master Plan 2019 Planning Area Boundary dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
-| 13 | SLA OneMap — Basemap tiles & Search Proxy | OneMap API Terms of Service | "Basemap & Geocoding © Singapore Land Authority (OneMap)." | Map corner & search footer |
+| 13 | data.gov.sg — NParks Leaf Area Index | Singapore Open Data Licence v1.0 | "Contains information from NParks Leaf Area Index dataset accessed from data.gov.sg under the Singapore Open Data Licence v1.0." | Site footer & dataset README |
+| 14 | SLA OneMap — Basemap tiles & Search Proxy | OneMap API Terms of Service | "Basemap & Geocoding © Singapore Land Authority (OneMap)." | Map corner & search footer |
 
 ### Non-Commercial Policy Declaration
 
