@@ -21,6 +21,15 @@ runs. This keeps Rain + AM, Rain + PM, Sunny + AM, Sunny + PM, and midday
 views cheap in the frontend and avoids re-running the island batch for UI-only
 weight changes.
 
+When a real source/model change requires all static artifacts to change, use
+the guarded parallel helper:
+
+```powershell
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4
+```
+
+Use `-Deploy` only after the bundle validates and should become production.
+
 ## Mode Matrix
 
 MVP-ready client modes:
@@ -72,6 +81,15 @@ To build actual arrival reliability:
 
 This is not an MVP blocker. It needs days or weeks of collection before it is
 product-trustworthy.
+
+Collector entry point:
+
+```powershell
+uv run python run.py bus-arrivals collect --stop 54211 --samples 60 --interval-sec 60 --output raw\bus_arrivals\mayflower_54211.jsonl
+```
+
+This captures live snapshots only. A later aggregation job must convert those
+snapshots into reliability metrics before the frontend can display them.
 
 ## Shade and Leaf Coverage
 

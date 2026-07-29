@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | check | ingest | network | network-preflight | network-qa | route | score | score-batch | postal-universe | geocode-universe | export | validate | publish | test | shell
+Tasks: batch-plan | bus-arrivals | check | ingest | network | network-preflight | network-qa | route | score | score-batch | postal-universe | geocode-universe | export | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -24,6 +24,7 @@ STUBS = {
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
     "score": "apply pipeline/config/weights.yaml (T1.4)",
     "score-batch": "resumable postal scoring batch runner",
+    "bus-arrivals": "collect local LTA bus-arrival snapshots for future reliability scoring",
     "batch-plan": "dry-run full postal geocode/scoring batch plan (checkpoint C)",
     "postal-universe": "build deterministic postal-code universe candidates",
     "geocode-universe": "bounded OneMap geocode fill for source-derived postal gaps",
@@ -58,6 +59,8 @@ def run_task(name: str, extra: list[str]) -> int:
         return run_module("pipeline.scoring_integration")
     if name == "score-batch":
         return run_module("pipeline.score_batch")
+    if name == "bus-arrivals":
+        return run_module("pipeline.bus_arrivals")
     if name == "postal-universe":
         return run_module("pipeline.postal_universe")
     if name == "geocode-universe":

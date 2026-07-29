@@ -17,6 +17,11 @@ export interface RouteMapItem {
   color: string;
 }
 
+export interface FeedbackPoint {
+  lng: number;
+  lat: number;
+}
+
 const SINGAPORE_BOUNDS: [[number, number], [number, number]] = [
   [103.55, 1.13],
   [104.13, 1.49],
@@ -69,7 +74,15 @@ interface PointFeatureCollection {
 
 type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
 
-const SOURCE_IDS = ["transit-pois", "shortest-route", "shiokest-route", "exposure-gaps", "transit-node"] as const;
+const SOURCE_IDS = [
+  "transit-pois",
+  "shortest-route",
+  "shiokest-route",
+  "exposure-gaps",
+  "transit-node",
+  "feedback-route",
+  "feedback-points",
+] as const;
 const EMPTY_TRANSIT_POIS: TransitPoiCollection = { type: "FeatureCollection", features: [] };
 
 function emptyCollection(): MapFeatureCollection {
@@ -178,6 +191,44 @@ function mergeCollections(collections: LineStringFeatureCollection[]): LineStrin
 function endpointFor(collection: LineStringFeatureCollection): LngLat | null {
   const coordinates = collection.features[0]?.geometry.coordinates ?? [];
   return coordinates.length > 0 ? coordinates[coordinates.length - 1] : null;
+}
+
+function feedbackCollections(points: FeedbackPoint[]) {
+  const coordinates: LngLat[] = points.map((point) => [point.lng, point.lat]);
+  return {
+    route: {
+      type: "FeatureCollection",
+      features:
+        coordinates.length >= 2
+          ? [
+              {
+                type: "Feature",
+                geometry: {
+                  type: "LineString",
+                  coordinates,
+                },
+                properties: {
+                  kind: "feedback_route",
+                },
+              },
+            ]
+          : [],
+    } satisfies LineStringFeatureCollection,
+    points: {
+      type: "FeatureCollection",
+      features: coordinates.map((coordinate, index) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: coordinate,
+        },
+        properties: {
+          kind: "feedback_point",
+          index: index + 1,
+        },
+      })),
+    } satisfies PointFeatureCollection,
+  };
 }
 
 function ensureRouteLayers(map: maplibregl.Map) {
@@ -436,6 +487,68 @@ function ensureRouteLayers(map: maplibregl.Map) {
       },
     });
   }
+
+  if (!map.getLayer("feedback-route-casing")) {
+    map.addLayer({
+      id: "feedback-route-casing",
+      type: "line",
+      source: "feedback-route",
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": 4,
+        "line-opacity": 0.82,
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
+    });
+  }
+
+  if (!map.getLayer("feedback-route-line")) {
+    map.addLayer({
+      id: "feedback-route-line",
+      type: "line",
+      source: "feedback-route",
+      paint: {
+        "line-color": "#7b3f00",
+        "line-width": 2,
+        "line-opacity": 0.94,
+        "line-dasharray": [1, 1.2],
+      },
+      layout: {
+        "line-cap": "round",
+        "line-join": "round",
+      },
+    });
+  }
+
+  if (!map.getLayer("feedback-point-halo")) {
+    map.addLayer({
+      id: "feedback-point-halo",
+      type: "circle",
+      source: "feedback-points",
+      paint: {
+        "circle-color": "#ffffff",
+        "circle-radius": 6,
+        "circle-opacity": 0.9,
+      },
+    });
+  }
+
+  if (!map.getLayer("feedback-point-dot")) {
+    map.addLayer({
+      id: "feedback-point-dot",
+      type: "circle",
+      source: "feedback-points",
+      paint: {
+        "circle-color": "#7b3f00",
+        "circle-radius": 3.8,
+        "circle-stroke-color": "#ffffff",
+        "circle-stroke-width": 1,
+      },
+    });
+  }
 }
 
 type PopupConstructor = typeof import("maplibre-gl").Popup;
@@ -573,16 +686,23 @@ export function RouteEvidenceMap({
   routes,
   mode,
   transitPois = EMPTY_TRANSIT_POIS,
+  feedbackEnabled = false,
+  feedbackPoints = [],
+  onFeedbackPoint,
 }: {
   routes: RouteMapItem[];
   mode: RouteDisplayMode;
   transitPois?: TransitPoiCollection;
+  feedbackEnabled?: boolean;
+  feedbackPoints?: FeedbackPoint[];
+  onFeedbackPoint?: (point: FeedbackPoint) => void;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const [loaded, setLoaded] = useState(false);
   const routeData = useMemo(() => routeCollections(routes, mode), [routes, mode]);
   const transitPoiData = useMemo(() => transitPoiCollection(transitPois), [transitPois]);
+  const feedbackData = useMemo(() => feedbackCollections(feedbackPoints), [feedbackPoints]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -633,6 +753,8 @@ export function RouteEvidenceMap({
     setSourceData(map, "exposure-gaps", routeData.exposure);
     setSourceData(map, "transit-node", routeData.transit);
     setSourceData(map, "transit-pois", transitPoiData);
+    setSourceData(map, "feedback-route", feedbackData.route);
+    setSourceData(map, "feedback-points", feedbackData.points);
 
     if (routeData.bounds) {
       const isCompact = map.getContainer().clientWidth < 700;
@@ -644,7 +766,29 @@ export function RouteEvidenceMap({
         maxZoom: 16.6,
       });
     }
-  }, [loaded, routeData, transitPoiData]);
+  }, [loaded, routeData, transitPoiData, feedbackData]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !loaded) return;
+
+    map.getCanvas().style.cursor = feedbackEnabled ? "crosshair" : "";
+    const handleClick = (event: maplibregl.MapMouseEvent) => {
+      if (!feedbackEnabled || !onFeedbackPoint) return;
+      onFeedbackPoint({
+        lng: Number(event.lngLat.lng.toFixed(7)),
+        lat: Number(event.lngLat.lat.toFixed(7)),
+      });
+    };
+
+    map.on("click", handleClick);
+    return () => {
+      map.off("click", handleClick);
+      if (map.getCanvas().style.cursor === "crosshair") {
+        map.getCanvas().style.cursor = "";
+      }
+    };
+  }, [feedbackEnabled, loaded, onFeedbackPoint]);
 
   return (
     <div className={styles.mapShell}>

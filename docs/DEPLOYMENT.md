@@ -34,3 +34,23 @@ After a new score/export batch is generated and validated:
 3. Commit and push the source/config changes.
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
+
+## Full Rescore Helper
+
+For a source/model change that requires every known postal to be rescored, run
+the guarded helper from the repo root:
+
+```powershell
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4
+```
+
+Add `-Deploy` only when the generated bundle validates and should be pushed to
+production immediately:
+
+```powershell
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4 -Deploy
+```
+
+The helper partitions the postal universe, runs parallel score batches, combines
+chunks, exports `web/public/data/generated_<stamp>`, validates it, updates
+`web/data-bundle.json`, and optionally calls `deploy-production.ps1`.

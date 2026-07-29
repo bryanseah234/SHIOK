@@ -3,7 +3,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal, fetchTransitPois } from "../lib/data";
 import type { Manifest, PostalGeom, ScoreRecord, Subscores, TransitPoiCollection } from "../lib/types";
-import { RouteEvidenceMap, type RouteDisplayMode, type RouteMapItem } from "../components/route-evidence-map";
+import {
+  RouteEvidenceMap,
+  type FeedbackPoint,
+  type RouteDisplayMode,
+  type RouteMapItem,
+} from "../components/route-evidence-map";
 import styles from "./page.module.css";
 
 interface SearchResult {
@@ -38,6 +43,14 @@ const REASON_COPY: Record<keyof Subscores, { low: string; high: string }> = {
 };
 
 type ComfortMode = "balanced" | "rain_am" | "rain_pm" | "sunny_am" | "sunny_pm" | "sunny_midday";
+type FeedbackSegmentLabel =
+  | "sheltered"
+  | "void_deck"
+  | "covered_bridge"
+  | "underpass"
+  | "exposed"
+  | "blocked"
+  | "other";
 
 const COMFORT_MODES: Array<{ id: ComfortMode; label: string; weights: Record<keyof Subscores, number> | null }> = [
   { id: "balanced", label: "Balanced", weights: null },
@@ -46,6 +59,16 @@ const COMFORT_MODES: Array<{ id: ComfortMode; label: string; weights: Record<key
   { id: "sunny_am", label: "Sunny + AM", weights: { access: 0.3, bus: 0.2, rain: 0.1, heat: 0.35, crossing: 0.05 } },
   { id: "sunny_pm", label: "Sunny + PM", weights: { access: 0.3, bus: 0.2, rain: 0.1, heat: 0.35, crossing: 0.05 } },
   { id: "sunny_midday", label: "Sunny midday", weights: { access: 0.3, bus: 0.15, rain: 0.05, heat: 0.45, crossing: 0.05 } },
+];
+
+const FEEDBACK_SEGMENT_OPTIONS: Array<{ id: FeedbackSegmentLabel; label: string }> = [
+  { id: "sheltered", label: "Sheltered" },
+  { id: "void_deck", label: "Void deck" },
+  { id: "covered_bridge", label: "Covered bridge" },
+  { id: "underpass", label: "Underpass" },
+  { id: "exposed", label: "Exposed" },
+  { id: "blocked", label: "Blocked" },
+  { id: "other", label: "Other" },
 ];
 
 function normalizePostal(value: string): string | null {
@@ -169,6 +192,31 @@ function modeStatus(mode: ComfortMode): string {
   return "Shade model pending - scheduled buses";
 }
 
+function buildFeedbackPayload({
+  selection,
+  points,
+  segmentLabels,
+  note,
+}: {
+  selection: LoadedSelection | null;
+  points: FeedbackPoint[];
+  segmentLabels: FeedbackSegmentLabel[];
+  note: string;
+}) {
+  return {
+    postal: selection?.result.POSTAL ?? null,
+    destination: selection?.score?.best_node?.name ?? null,
+    issue: "user_reported_better_walk_route",
+    source: "user_drawn_qa_evidence_not_score_override",
+    waypoints: points.map((point) => [point.lat, point.lng]),
+    segment_labels: segmentLabels.slice(0, Math.max(0, points.length - 1)),
+    user_note: note.trim() || null,
+    current_score_state: selection?.score?.state ?? null,
+    current_total: selection?.score?.total ?? null,
+    created_at: new Date().toISOString(),
+  };
+}
+
 function RouteModeControl({
   mode,
   setMode,
@@ -267,6 +315,16 @@ function ScoreCard({
   setRouteMode,
   comfortMode,
   setComfortMode,
+  feedbackEnabled,
+  setFeedbackEnabled,
+  feedbackPoints,
+  feedbackSegmentLabels,
+  setFeedbackSegmentLabel,
+  clearFeedback,
+  feedbackNote,
+  setFeedbackNote,
+  copyFeedback,
+  copyStatus,
 }: {
   selection: LoadedSelection | null;
   manifest: Manifest | null;
@@ -274,6 +332,16 @@ function ScoreCard({
   setRouteMode: (mode: RouteDisplayMode) => void;
   comfortMode: ComfortMode;
   setComfortMode: (mode: ComfortMode) => void;
+  feedbackEnabled: boolean;
+  setFeedbackEnabled: (enabled: boolean) => void;
+  feedbackPoints: FeedbackPoint[];
+  feedbackSegmentLabels: FeedbackSegmentLabel[];
+  setFeedbackSegmentLabel: (index: number, label: FeedbackSegmentLabel) => void;
+  clearFeedback: () => void;
+  feedbackNote: string;
+  setFeedbackNote: (note: string) => void;
+  copyFeedback: () => void;
+  copyStatus: string;
 }) {
   if (!selection) {
     return (
@@ -363,6 +431,51 @@ function ScoreCard({
 
       <RouteModeControl mode={routeMode} setMode={setRouteMode} disabled={false} sameRoute={sameRoute} />
 
+      <div className={styles.feedbackBlock}>
+        <div className={styles.feedbackActions}>
+          <button type="button" onClick={() => setFeedbackEnabled(!feedbackEnabled)}>
+            {feedbackEnabled ? "Done tracing" : "Suggest better route"}
+          </button>
+          <button type="button" onClick={clearFeedback} disabled={feedbackPoints.length === 0}>
+            Clear
+          </button>
+          <button type="button" onClick={copyFeedback} disabled={feedbackPoints.length < 2}>
+            Copy QA JSON
+          </button>
+        </div>
+        {feedbackPoints.length > 0 && (
+          <div className={styles.feedbackEditor}>
+            <div className={styles.feedbackMeta}>
+              {feedbackPoints.length} points / {Math.max(0, feedbackPoints.length - 1)} segments
+              {copyStatus ? <span>{copyStatus}</span> : null}
+            </div>
+            {feedbackSegmentLabels.map((label, index) => (
+              <label key={`segment-${index}`} className={styles.segmentLabel}>
+                <span>Segment {index + 1}</span>
+                <select
+                  value={label}
+                  onChange={(event) =>
+                    setFeedbackSegmentLabel(index, event.target.value as FeedbackSegmentLabel)
+                  }
+                >
+                  {FEEDBACK_SEGMENT_OPTIONS.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            ))}
+            <textarea
+              value={feedbackNote}
+              onChange={(event) => setFeedbackNote(event.target.value)}
+              placeholder="Optional route note"
+              rows={2}
+            />
+          </div>
+        )}
+      </div>
+
       <details className={styles.detailBlock}>
         <summary>Details</summary>
 
@@ -411,6 +524,11 @@ export default function Home() {
   const [transitPois, setTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
   const [comfortMode, setComfortMode] = useState<ComfortMode>("balanced");
+  const [feedbackEnabled, setFeedbackEnabled] = useState(false);
+  const [feedbackPoints, setFeedbackPoints] = useState<FeedbackPoint[]>([]);
+  const [feedbackSegmentLabels, setFeedbackSegmentLabels] = useState<FeedbackSegmentLabel[]>([]);
+  const [feedbackNote, setFeedbackNote] = useState("");
+  const [copyStatus, setCopyStatus] = useState("");
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -451,6 +569,11 @@ export default function Home() {
       ]);
       setManifest(loadedManifest);
       setPrimary({ result: { ...result, POSTAL: postal }, score, geom });
+      setFeedbackEnabled(false);
+      setFeedbackPoints([]);
+      setFeedbackSegmentLabels([]);
+      setFeedbackNote("");
+      setCopyStatus("");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load score data.");
     } finally {
@@ -495,9 +618,55 @@ export default function Home() {
     }
   };
 
+  const addFeedbackPoint = (point: FeedbackPoint) => {
+    setCopyStatus("");
+    setFeedbackPoints((current) => {
+      if (current.length >= 24) return current;
+      if (current.length >= 1) {
+        setFeedbackSegmentLabels((labels) => [...labels, "sheltered"]);
+      }
+      return [...current, point];
+    });
+  };
+
+  const setFeedbackSegmentLabel = (index: number, label: FeedbackSegmentLabel) => {
+    setFeedbackSegmentLabels((current) =>
+      current.map((item, itemIndex) => (itemIndex === index ? label : item))
+    );
+  };
+
+  const clearFeedback = () => {
+    setFeedbackPoints([]);
+    setFeedbackSegmentLabels([]);
+    setFeedbackNote("");
+    setCopyStatus("");
+  };
+
+  const copyFeedback = async () => {
+    const payload = buildFeedbackPayload({
+      selection: primary,
+      points: feedbackPoints,
+      segmentLabels: feedbackSegmentLabels,
+      note: feedbackNote,
+    });
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+      setCopyStatus("Copied");
+    } catch {
+      setCopyStatus("Copy failed");
+    }
+  };
+
   return (
     <main className={styles.appShell}>
-      <RouteEvidenceMap routes={mapRoutes} mode={mapRouteMode} transitPois={transitPois} />
+      <RouteEvidenceMap
+        routes={mapRoutes}
+        mode={mapRouteMode}
+        transitPois={transitPois}
+        feedbackEnabled={feedbackEnabled}
+        feedbackPoints={feedbackPoints}
+        onFeedbackPoint={addFeedbackPoint}
+      />
 
       <section className={styles.searchOverlay} aria-label="Address search">
         <div className={styles.brandRow}>
@@ -547,6 +716,16 @@ export default function Home() {
               setRouteMode={setRouteMode}
               comfortMode={comfortMode}
               setComfortMode={setComfortMode}
+              feedbackEnabled={feedbackEnabled}
+              setFeedbackEnabled={setFeedbackEnabled}
+              feedbackPoints={feedbackPoints}
+              feedbackSegmentLabels={feedbackSegmentLabels}
+              setFeedbackSegmentLabel={setFeedbackSegmentLabel}
+              clearFeedback={clearFeedback}
+              feedbackNote={feedbackNote}
+              setFeedbackNote={setFeedbackNote}
+              copyFeedback={copyFeedback}
+              copyStatus={copyStatus}
             />
           </aside>
         )}
