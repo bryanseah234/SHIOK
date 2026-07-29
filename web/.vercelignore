@@ -1,1 +1,5 @@
-public/data/
+.next/
+.vercel/
+node_modules/
+public/data/generated_20260728_1405/
+public/data/generated_20260729_0438/

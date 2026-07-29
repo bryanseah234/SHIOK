@@ -2,7 +2,9 @@
  * DATA ACCESS MODULE
  * Defaults to the latest validated static score bundle.
  */
-export const DEFAULT_DATA_BASE = "/data/generated_20260729_0438/";
+import dataBundle from "../data-bundle.json";
+
+export const DEFAULT_DATA_BASE = `/data/${dataBundle.bundle}/`;
 
 export function normalizeDataBase(value?: string): string {
   const raw = value?.trim();

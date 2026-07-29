@@ -1,25 +1,20 @@
-.git/
-.env*
-.hypothesis
-.hypothesis/
+.env
 .venv/
-.mypy_cache/
 .pytest_cache/
 .ruff_cache/
-.vscode/
-.codebuddy/
+.mypy_cache/
+.next/
+__pycache__/
+*.pyc
 
-data/
-logs/
-processed/
-qa/
 raw/
+processed/
+logs/
+qa/
 tmp/
 
-node_modules/
-.next/
-out/
-web/node_modules/
 web/.next/
-web/out/
-web/public/data/
+web/.vercel/
+web/node_modules/
+web/public/data/generated_20260728_1405/
+web/public/data/generated_20260729_0438/
