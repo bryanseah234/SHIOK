@@ -1,4 +1,4 @@
-import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 
 function configuredBundle() {
@@ -44,7 +44,6 @@ async function downloadRemoteBundle(bundle, targetRoot) {
   }
 
   console.log(`local data missing; downloading ${remoteBase.href}`);
-  rmSync(targetRoot, { recursive: true, force: true });
 
   const manifest = await downloadJson(remoteBase, targetRoot, "manifest.json");
   const geomIndex = await downloadJson(remoteBase, targetRoot, "geom/index.json");
@@ -70,15 +69,12 @@ async function downloadRemoteBundle(bundle, targetRoot) {
 }
 
 const bundle = normalizeBundle(process.argv[2] || process.env.SHIOK_DATA_BUNDLE || configuredBundle());
-const source = join(process.cwd(), "public", "data", bundle);
-const target = join(process.cwd(), ".next", "static", "data", bundle);
+const target = join(process.cwd(), "public", "data", bundle);
+const manifestPath = join(target, "manifest.json");
 
-if (existsSync(source)) {
-  rmSync(target, { recursive: true, force: true });
-  mkdirSync(join(process.cwd(), ".next", "static", "data"), { recursive: true });
-  cpSync(source, target, { recursive: true });
-  console.log(`copied ${source} -> ${target}`);
+if (existsSync(manifestPath)) {
+  console.log(`using local data bundle ${target}`);
 } else {
   await downloadRemoteBundle(bundle, target);
-  console.log(`downloaded ${bundle} -> ${target}`);
+  console.log(`downloaded data bundle ${target}`);
 }

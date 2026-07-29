@@ -1,17 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  async rewrites() {
-    if (process.env.NODE_ENV !== "production") {
-      return [];
-    }
-    return [
-      {
-        source: "/data/:path*",
-        destination: "/_next/static/data/:path*",
-      },
-    ];
-  },
   async headers() {
     return [
       {

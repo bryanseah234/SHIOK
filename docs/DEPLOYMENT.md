@@ -21,9 +21,9 @@ The current bundle is configured in `web/data-bundle.json`.
 
 `web/public/data/` is generated and intentionally ignored by Git. The current bundle is about 347 MB, so committing it would make GitHub/Vercel deploys brittle and noisy.
 
-For direct local deploys, Vercel receives the local bundle and the build copies it into `.next/static/data`.
+For direct local deploys, Vercel receives the local bundle in `web/public/data/`.
 
-For Git auto-deploys, the bundle is not in the repository. The web build therefore downloads the configured bundle from the current production site and includes it in the new build. This makes code-only commits safe as long as `web/data-bundle.json` still points to a bundle already published in production.
+For Git auto-deploys, the bundle is not in the repository. Before `next build`, the web build downloads the configured bundle from the current production site into `web/public/data/`. This makes code-only commits safe as long as `web/data-bundle.json` still points to a bundle already published in production.
 
 ## Data Refresh Deploy
 
