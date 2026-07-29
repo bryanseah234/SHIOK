@@ -2,7 +2,7 @@
 param(
     [switch]$ConfirmFullBatch,
     [switch]$Deploy,
-    [int]$Workers = 4,
+    [int]$Workers = 8,
     [int]$ChunkSize = 500,
     [string]$Stamp = "",
     [string]$PostalUniverse = "processed\postal_universe_candidate_full_registered_geocoded.parquet",

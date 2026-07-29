@@ -19,7 +19,9 @@ describe("generated data bundle", () => {
       expect.objectContaining({ record_count: 124032 })
     );
     expect(Object.keys(scoreIndex).length).toBeGreaterThan(50);
-    expect(Object.keys(geomPostalIndex).length).toBe(80551);
+    expect(Object.keys(geomPostalIndex).length).toBe(
+      manifest.provenance.state_counts.SCORED
+    );
   });
 
   it("score shards conform to the public score record shape", () => {
