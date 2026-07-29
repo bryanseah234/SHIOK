@@ -37,6 +37,17 @@ const REASON_COPY: Record<keyof Subscores, { low: string; high: string }> = {
   crossing: { low: "More crossing friction", high: "Easy crossing profile" },
 };
 
+type ComfortMode = "balanced" | "rain_am" | "rain_pm" | "sunny_am" | "sunny_pm" | "sunny_midday";
+
+const COMFORT_MODES: Array<{ id: ComfortMode; label: string; weights: Record<keyof Subscores, number> | null }> = [
+  { id: "balanced", label: "Balanced", weights: null },
+  { id: "rain_am", label: "Rain + AM", weights: { access: 0.3, bus: 0.25, rain: 0.3, heat: 0.1, crossing: 0.05 } },
+  { id: "rain_pm", label: "Rain + PM", weights: { access: 0.3, bus: 0.25, rain: 0.3, heat: 0.1, crossing: 0.05 } },
+  { id: "sunny_am", label: "Sunny + AM", weights: { access: 0.3, bus: 0.2, rain: 0.1, heat: 0.35, crossing: 0.05 } },
+  { id: "sunny_pm", label: "Sunny + PM", weights: { access: 0.3, bus: 0.2, rain: 0.1, heat: 0.35, crossing: 0.05 } },
+  { id: "sunny_midday", label: "Sunny midday", weights: { access: 0.3, bus: 0.15, rain: 0.05, heat: 0.45, crossing: 0.05 } },
+];
+
 function normalizePostal(value: string): string | null {
   const trimmed = value.trim();
   if (!/^\d{1,6}$/.test(trimmed)) return null;
@@ -142,6 +153,22 @@ function scoreReasons(score: ScoreRecord): string[] {
     .map((item) => REASON_COPY[item.key].high);
 }
 
+function modeAdjustedTotal(score: ScoreRecord, mode: ComfortMode): number | null {
+  const config = COMFORT_MODES.find((item) => item.id === mode);
+  if (!config?.weights) return score.total;
+  if (!score.subscores) return null;
+  return Object.entries(config.weights).reduce((total, [key, weight]) => {
+    const value = score.subscores?.[key as keyof Subscores];
+    return total + (typeof value === "number" ? value : 0) * weight;
+  }, 0);
+}
+
+function modeStatus(mode: ComfortMode): string {
+  if (mode === "balanced") return "Scheduled buses - heat provisional";
+  if (mode.startsWith("rain")) return "Rain-weighted - scheduled buses";
+  return "Shade model pending - scheduled buses";
+}
+
 function RouteModeControl({
   mode,
   setMode,
@@ -183,6 +210,27 @@ function RouteModeControl({
   );
 }
 
+function ComfortModeControl({
+  mode,
+  setMode,
+}: {
+  mode: ComfortMode;
+  setMode: (mode: ComfortMode) => void;
+}) {
+  return (
+    <label className={styles.modeSelect}>
+      <span>Mode</span>
+      <select value={mode} onChange={(event) => setMode(event.target.value as ComfortMode)}>
+        {COMFORT_MODES.map((item) => (
+          <option key={item.id} value={item.id}>
+            {item.label}
+          </option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
 function InlineRouteLegend({ mode, sameRoute }: { mode: RouteDisplayMode; sameRoute: boolean }) {
   const showShiokest = mode === "shiokest" || mode === "both" || sameRoute;
   const showShortest = !sameRoute && (mode === "shortest" || mode === "both");
@@ -217,11 +265,15 @@ function ScoreCard({
   manifest,
   routeMode,
   setRouteMode,
+  comfortMode,
+  setComfortMode,
 }: {
   selection: LoadedSelection | null;
   manifest: Manifest | null;
   routeMode: RouteDisplayMode;
   setRouteMode: (mode: RouteDisplayMode) => void;
+  comfortMode: ComfortMode;
+  setComfortMode: (mode: ComfortMode) => void;
 }) {
   if (!selection) {
     return (
@@ -261,6 +313,7 @@ function ScoreCard({
   const selectedRouteLabel = routeMode === "shortest" && !sameRoute ? "Shortest walk" : "Shiokest walk";
   const stationName = toProperCase(score.best_node?.name ?? "No transit found nearby");
   const reasons = scoreReasons(score);
+  const displayScore = modeAdjustedTotal(score, comfortMode);
   const dataDate = manifest?.data_as_of
     ? new Date(manifest.data_as_of).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })
     : "Pending";
@@ -272,12 +325,16 @@ function ScoreCard({
           <h2>{postalTitle(selection)}</h2>
           <p>{stationName}</p>
         </div>
-        <div className={`${styles.scoreBadge} ${scoreClass(score.total)}`}>
-          <strong>{formatScoreWithMax(score.total)}</strong>
+        <div className={`${styles.scoreBadge} ${scoreClass(displayScore)}`}>
+          <strong>{formatScoreWithMax(displayScore)}</strong>
         </div>
       </div>
 
       <InlineRouteLegend mode={routeMode} sameRoute={sameRoute} />
+      <div className={styles.modeRow}>
+        <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
+        <span>{modeStatus(comfortMode)}</span>
+      </div>
 
       <div className={styles.summaryGrid}>
         <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />
@@ -353,6 +410,7 @@ export default function Home() {
   const [primary, setPrimary] = useState<LoadedSelection | null>(null);
   const [transitPois, setTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
+  const [comfortMode, setComfortMode] = useState<ComfortMode>("balanced");
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -487,6 +545,8 @@ export default function Home() {
               manifest={manifest}
               routeMode={mapRouteMode}
               setRouteMode={setRouteMode}
+              comfortMode={comfortMode}
+              setComfortMode={setComfortMode}
             />
           </aside>
         )}

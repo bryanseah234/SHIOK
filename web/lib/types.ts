@@ -1,11 +1,11 @@
 export type ScoreState = "SCORED" | "SCORED_PARTIAL" | "NOT_YET_SCORED" | "NO_TRANSIT_IN_RANGE";
 
 export interface Subscores {
-  access: number;
-  bus: number;
-  rain: number;
-  heat: number;
-  crossing: number;
+  access: number | null;
+  bus: number | null;
+  rain: number | null;
+  heat: number | null;
+  crossing: number | null;
 }
 
 export interface BestNode {

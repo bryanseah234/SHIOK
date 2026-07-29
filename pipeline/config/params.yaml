@@ -9,6 +9,7 @@ transit_access:
   bus_interchange_full_credit_m: 200
 bus_connectivity:
   routed_max_m: 250
+  straight_line_candidate_m: 300
   full_credit_wait_min: 2
   zero_credit_wait_min: 15
 crossing_friction:

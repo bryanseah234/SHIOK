@@ -291,6 +291,43 @@
   background: repeating-linear-gradient(90deg, #c4332b 0 2px, transparent 2px 6px);
 }
 
+.modeRow {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  color: #61716b;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.modeSelect {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 6px;
+  align-items: center;
+}
+
+.modeSelect span {
+  color: #43564f;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.modeSelect select {
+  min-width: 0;
+  border: 1px solid #cbd7d1;
+  border-radius: 8px;
+  padding: 6px 8px;
+  color: #17211f;
+  background: #f8fbfa;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+}
+
 .summaryGrid {
   margin-top: 10px;
   display: grid;

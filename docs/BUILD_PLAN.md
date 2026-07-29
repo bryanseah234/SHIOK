@@ -82,6 +82,7 @@ AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works;
 - Run and fix the Lighthouse/accessibility pass: Lighthouse a11y ≥ 90, keyboard-only walkthrough, text equivalents for map answers, reduced-motion support, and mobile readability.
 - Add top-2 plain-language reasons per score, e.g. "Low because: 180 m exposed near the canal; 1 uncovered crossing."
 - Keep the island-wide SHIOK tile layer / Rain Mode as an optional later feature after the selected-route UX and validation gates are stable.
+- Track weather/time mode permutations, NParks Leaf Area Index shade work, live bus-arrival collection, missing network features, and human route-feedback flow in `docs/COMFORT_MODES_AND_DATA_QA.md`.
 
 **T1.7 — Validation harness (pilot gate).**
 Stratified 200-postal sample across the 3 areas; compare shortest-path distance vs OneMap `routeType=walk` (throttle from the T0.4 probe; responses cached by OD-pair hash in `raw/validation/`; resumable after interrupt). Report median + p95 deviation per area. Golden set: 15 hand-verified addresses with expected score ranges; wire into `python run.py validate`.

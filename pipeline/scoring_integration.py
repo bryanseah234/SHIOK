@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sqlite3
 from dataclasses import dataclass
@@ -17,7 +18,12 @@ from pyproj import Transformer
 from shapely.geometry import MultiLineString
 from shapely.ops import linemerge, unary_union
 
-from pipeline.bus import BusConnectivityIndex, BusConnectivityResult
+from pipeline.bus import (
+    BusConnectivityIndex,
+    BusConnectivityResult,
+    BusStopCandidate,
+    combined_expected_wait_min,
+)
 from pipeline.routing import RoutingGraph, prepare_edges_for_routing
 from pipeline.scoring import (
     NO_TRANSIT_IN_RANGE,
@@ -50,6 +56,8 @@ class CandidateNode:
     graph_node: tuple[float, float]
     straight_line_m: float
     snap_distance_m: float
+    service_headways_min: dict[tuple[str, int], float] | None = None
+    expected_wait_min: float | None = None
 
 
 @dataclass(frozen=True)
@@ -65,6 +73,8 @@ class ScoringContext:
     bus_index: BusConnectivityIndex | None
     network_path: Path
     postal_universe_path: Path | None = None
+    base_provenance: dict[str, Any] | None = None
+    data_as_of: str | None = None
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -246,6 +256,95 @@ def select_mrt_exit_candidates(
                 )
             )
     return candidates
+
+
+def bus_stop_candidate_name(candidate: BusStopCandidate) -> str:
+    description = candidate.description.strip()
+    if description:
+        return description
+    if candidate.bus_stop_code:
+        return f"Bus stop {candidate.bus_stop_code}"
+    return "Bus stop"
+
+
+def select_bus_stop_candidates(
+    postal_point: Any,
+    bus_index: BusConnectivityIndex | None,
+    straight_line_radius_m: float,
+) -> list[CandidateNode]:
+    if bus_index is None:
+        return []
+
+    candidates: list[CandidateNode] = []
+    for stop in bus_index.nearby_stop_candidates(postal_point, straight_line_radius_m):
+        expected_wait = combined_expected_wait_min(list(stop.service_headways_min.values()))
+        if expected_wait is None:
+            continue
+        name = bus_stop_candidate_name(stop)
+        candidates.append(
+            CandidateNode(
+                node_type="bus_stop",
+                name=name,
+                station_name=name,
+                exit_code=stop.bus_stop_code,
+                graph_node=stop.graph_node,
+                straight_line_m=stop.straight_line_m,
+                snap_distance_m=stop.snap_distance_m,
+                service_headways_min=stop.service_headways_min,
+                expected_wait_min=expected_wait,
+            )
+        )
+
+    return sorted(
+        candidates,
+        key=lambda item: (
+            item.straight_line_m,
+            item.expected_wait_min if item.expected_wait_min is not None else float("inf"),
+            item.exit_code,
+            item.name,
+        ),
+    )
+
+
+def bus_connectivity_from_routed_candidates(
+    route_results: list[dict[str, Any]],
+    candidate_by_destination: dict[tuple[float, float], list[CandidateNode]],
+    routed_max_m: float,
+    straight_line_stop_count: int = 0,
+) -> BusConnectivityResult:
+    qualifying_headways: dict[tuple[str, int], float] = {}
+    routed_stop_count = 0
+    routed_distances: list[float] = []
+
+    for route_result in route_results:
+        destination = route_result["destination"]
+        routed_m = float(route_result["shortest_length_m"])
+        if routed_m > routed_max_m:
+            continue
+        bus_candidates = [
+            candidate
+            for candidate in candidate_by_destination.get(destination, [])
+            if candidate.node_type == "bus_stop"
+        ]
+        if not bus_candidates:
+            continue
+
+        routed_distances.append(routed_m)
+        routed_stop_count += len(bus_candidates)
+        for candidate in bus_candidates:
+            for service_key, headway in (candidate.service_headways_min or {}).items():
+                existing = qualifying_headways.get(service_key)
+                qualifying_headways[service_key] = (
+                    headway if existing is None else min(existing, headway)
+                )
+
+    return BusConnectivityResult(
+        expected_wait_min=combined_expected_wait_min(list(qualifying_headways.values())),
+        routed_stop_count=routed_stop_count,
+        service_count=len(qualifying_headways),
+        nearest_routed_m=min(routed_distances) if routed_distances else None,
+        straight_line_stop_count=straight_line_stop_count,
+    )
 
 
 def count_dbscan_clusters(points_xy: np.ndarray, eps_m: float, min_samples: int) -> int:
@@ -569,6 +668,14 @@ def load_scoring_context(
     mrt_exits_gdf = load_mrt_exits()
     crossing_counter = CrossingCounter.from_raw_data(params)
     bus_index = BusConnectivityIndex.from_raw_data(nodes, node_xy)
+    base_provenance = build_provenance(
+        params,
+        crossing_counter,
+        bus_data_available=bus_index is not None,
+        network_path=network_path,
+        postal_universe_path=postal_universe_path,
+    )
+    data_as_of = load_manifest().get("generated_at")
     return ScoringContext(
         params=params,
         weights=weights,
@@ -581,6 +688,8 @@ def load_scoring_context(
         bus_index=bus_index,
         network_path=network_path,
         postal_universe_path=postal_universe_path,
+        base_provenance=base_provenance,
+        data_as_of=data_as_of,
     )
 
 
@@ -691,55 +800,57 @@ def score_postal_row(
     include_geometry: bool = False,
     network_path: Path = NETWORK_PATH,
     postal_universe_path: Path | None = None,
+    base_provenance: dict[str, Any] | None = None,
+    data_as_of: str | None = None,
 ) -> dict[str, Any]:
     postal = str(postal_row["postal_code"])
     origin_node, origin_snap_m = nearest_graph_node(postal_row.geometry, nodes, node_xy)
-    candidates = select_mrt_exit_candidates(postal_row.geometry, mrt_exits_gdf, nodes, node_xy)
     bus_data_available = bus_index is not None
-    provenance = build_provenance(
-        params,
-        crossing_counter,
-        bus_data_available=bus_data_available,
-        network_path=network_path,
-        postal_universe_path=postal_universe_path,
+    mrt_candidates = select_mrt_exit_candidates(postal_row.geometry, mrt_exits_gdf, nodes, node_xy)
+    bus_candidate_radius_m = float(
+        params.get("bus_connectivity", {}).get(
+            "straight_line_candidate_m",
+            float(params.get("bus_connectivity", {}).get("routed_max_m", 250.0)) + 50.0,
+        )
+    )
+    bus_candidates = select_bus_stop_candidates(
+        postal_row.geometry,
+        bus_index,
+        bus_candidate_radius_m,
+    )
+    candidates = mrt_candidates + bus_candidates
+    provenance = (
+        copy.deepcopy(base_provenance)
+        if base_provenance is not None
+        else build_provenance(
+            params,
+            crossing_counter,
+            bus_data_available=bus_data_available,
+            network_path=network_path,
+            postal_universe_path=postal_universe_path,
+        )
     )
     provenance["origin_snap_distance_m"] = round(origin_snap_m, 1)
-    data_as_of = load_manifest().get("generated_at")
-
-    bus_result: BusConnectivityResult | None = None
-    if bus_index is not None:
-        bus_result = bus_index.expected_wait_for_postal(
-            postal_row.geometry,
-            origin_node,
-            edges_dict,
-            float(params["bus_connectivity"]["routed_max_m"]),
-            routing_graph=routing_graph,
-        )
-        provenance["bus_connectivity"] = {
-            "expected_wait_min": (
-                round(bus_result.expected_wait_min, 3)
-                if bus_result.expected_wait_min is not None
-                else None
-            ),
-            "routed_stop_count": bus_result.routed_stop_count,
-            "service_count": bus_result.service_count,
-            "nearest_routed_m": (
-                round(bus_result.nearest_routed_m, 1)
-                if bus_result.nearest_routed_m is not None
-                else None
-            ),
-        }
+    provenance["transit_node_set"] = {
+        "mrt_lrt_exit_candidates": len(mrt_candidates),
+        "bus_stop_candidates_direct": len(bus_candidates),
+        "bus_stop_candidate_radius_m": round(bus_candidate_radius_m, 1),
+    }
+    record_data_as_of = (
+        data_as_of if data_as_of is not None else load_manifest().get("generated_at")
+    )
 
     if not candidates:
-        record = assemble_score_record(postal, [], data_as_of, provenance)
+        record = assemble_score_record(postal, [], record_data_as_of, provenance)
         return add_private_origin(record, postal_row.geometry) if include_geometry else record
 
     destinations: list[tuple[float, float]] = []
-    candidate_by_destination: dict[tuple[float, float], CandidateNode] = {}
+    candidate_by_destination: dict[tuple[float, float], list[CandidateNode]] = {}
     for candidate in candidates:
         if candidate.graph_node not in candidate_by_destination:
             destinations.append(candidate.graph_node)
-            candidate_by_destination[candidate.graph_node] = candidate
+            candidate_by_destination[candidate.graph_node] = []
+        candidate_by_destination[candidate.graph_node].append(candidate)
 
     route_results = routing_graph.route(
         {origin_node: destinations},
@@ -748,24 +859,51 @@ def score_postal_row(
         include_geometry=True,
     )
 
+    bus_result = (
+        bus_connectivity_from_routed_candidates(
+            route_results,
+            candidate_by_destination,
+            float(params["bus_connectivity"]["routed_max_m"]),
+            straight_line_stop_count=len(bus_candidates),
+        )
+        if bus_data_available
+        else None
+    )
+    if bus_result is not None:
+        provenance["bus_connectivity"] = {
+            "expected_wait_min": (
+                round(bus_result.expected_wait_min, 3)
+                if bus_result.expected_wait_min is not None
+                else None
+            ),
+            "routed_stop_count": bus_result.routed_stop_count,
+            "straight_line_stop_count": bus_result.straight_line_stop_count,
+            "service_count": bus_result.service_count,
+            "nearest_routed_m": (
+                round(bus_result.nearest_routed_m, 1)
+                if bus_result.nearest_routed_m is not None
+                else None
+            ),
+        }
+
     candidate_scores = []
     for route_result in route_results:
-        candidate = candidate_by_destination[route_result["destination"]]
         crossing_count = crossing_counter.count_for_route(route_result.get("geometry"))
-        candidate_scores.append(
-            score_candidate_route(
-                candidate,
-                route_result,
-                params,
-                weights,
-                crossing_count,
-                bus_expected_wait_min=bus_result.expected_wait_min if bus_result else None,
-                bus_data_available=bus_data_available,
-                include_geometry=include_geometry,
+        for candidate in candidate_by_destination[route_result["destination"]]:
+            candidate_scores.append(
+                score_candidate_route(
+                    candidate,
+                    route_result,
+                    params,
+                    weights,
+                    crossing_count,
+                    bus_expected_wait_min=bus_result.expected_wait_min if bus_result else None,
+                    bus_data_available=bus_data_available,
+                    include_geometry=include_geometry,
+                )
             )
-        )
 
-    record = assemble_score_record(postal, candidate_scores, data_as_of, provenance)
+    record = assemble_score_record(postal, candidate_scores, record_data_as_of, provenance)
     return add_private_origin(record, postal_row.geometry) if include_geometry else record
 
 
@@ -821,6 +959,8 @@ def score_postal_gdf(
                 include_geometry,
                 context.network_path,
                 context.postal_universe_path,
+                context.base_provenance,
+                context.data_as_of,
             )
         )
         if limit is not None and len(records) >= limit:

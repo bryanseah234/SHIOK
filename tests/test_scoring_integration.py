@@ -6,15 +6,18 @@ import numpy as np
 import pandas as pd
 from shapely.geometry import LineString, Point
 
+from pipeline.bus import BusStopCandidate
 from pipeline.routing import route_worker
 from pipeline.scoring_integration import (
     CandidateNode,
     CrossingCounter,
     assemble_score_record,
     build_provenance,
+    bus_connectivity_from_routed_candidates,
     json_safe_score_record,
     load_postal_universe_points,
     score_candidate_route,
+    select_bus_stop_candidates,
     select_mrt_exit_candidates,
 )
 
@@ -29,6 +32,8 @@ PARAMS = {
         "bus_interchange_full_credit_m": 200.0,
     },
     "bus_connectivity": {
+        "routed_max_m": 250.0,
+        "straight_line_candidate_m": 300.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -91,6 +96,83 @@ def test_node_set_includes_all_nearest_exits_and_second_station_within_ratio():
         "ALPHA MRT STATION",
         "BETA MRT STATION",
     }
+
+
+class FakeBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54321",
+                description="OPP TEST BLK",
+                graph_node=(100.0, 0.0),
+                straight_line_m=90.0,
+                snap_distance_m=3.0,
+                service_headways_min={("10", 1): 8.0, ("11", 1): 12.0},
+            ),
+            BusStopCandidate(
+                bus_stop_code="99999",
+                description="NO SERVICE",
+                graph_node=(120.0, 0.0),
+                straight_line_m=120.0,
+                snap_distance_m=4.0,
+                service_headways_min={},
+            ),
+        ]
+
+
+def test_bus_stop_candidates_require_frequency_data():
+    candidates = select_bus_stop_candidates(
+        Point(0.0, 0.0),
+        FakeBusIndex(),  # type: ignore[arg-type]
+        straight_line_radius_m=300.0,
+    )
+
+    assert len(candidates) == 1
+    assert candidates[0].node_type == "bus_stop"
+    assert candidates[0].name == "OPP TEST BLK"
+    assert candidates[0].exit_code == "54321"
+    assert round(candidates[0].expected_wait_min or 0.0, 3) == 2.4
+
+
+def test_bus_connectivity_reuses_combined_routing_results():
+    bus_candidate = CandidateNode(
+        node_type="bus_stop",
+        name="OPP TEST BLK",
+        station_name="OPP TEST BLK",
+        exit_code="54321",
+        graph_node=(100.0, 0.0),
+        straight_line_m=90.0,
+        snap_distance_m=3.0,
+        service_headways_min={("10", 1): 8.0, ("11", 1): 12.0},
+    )
+    mrt_candidate = CandidateNode(
+        node_type="mrt_lrt_exit",
+        name="TEST MRT STATION Exit 1",
+        station_name="TEST MRT STATION",
+        exit_code="Exit 1",
+        graph_node=(500.0, 0.0),
+        straight_line_m=500.0,
+        snap_distance_m=2.0,
+    )
+
+    result = bus_connectivity_from_routed_candidates(
+        [
+            {"destination": (100.0, 0.0), "shortest_length_m": 180.0},
+            {"destination": (500.0, 0.0), "shortest_length_m": 500.0},
+        ],
+        {
+            (100.0, 0.0): [bus_candidate],
+            (500.0, 0.0): [mrt_candidate],
+        },
+        routed_max_m=250.0,
+        straight_line_stop_count=1,
+    )
+
+    assert result.routed_stop_count == 1
+    assert result.straight_line_stop_count == 1
+    assert result.service_count == 2
+    assert result.nearest_routed_m == 180.0
+    assert round(result.expected_wait_min or 0.0, 3) == 2.4
 
 
 def test_record_assembly_marks_missing_bus_data_partial_without_fabricating_subscore():

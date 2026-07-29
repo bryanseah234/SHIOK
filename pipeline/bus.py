@@ -46,6 +46,7 @@ class BusConnectivityResult:
     routed_stop_count: int
     service_count: int
     nearest_routed_m: float | None
+    straight_line_stop_count: int = 0
 
 
 def load_manifest() -> dict[str, Any]:
@@ -306,7 +307,7 @@ class BusConnectivityIndex:
         )
         candidates = self.nearby_stop_candidates(postal_point, radius)
         if not candidates:
-            return BusConnectivityResult(None, 0, 0, None)
+            return BusConnectivityResult(None, 0, 0, None, 0)
 
         candidate_by_node: dict[tuple[float, float], list[BusStopCandidate]] = {}
         for candidate in candidates:
@@ -343,6 +344,7 @@ class BusConnectivityIndex:
             routed_stop_count=routed_stop_count,
             service_count=len(qualifying_headways),
             nearest_routed_m=nearest_routed,
+            straight_line_stop_count=len(candidates),
         )
 
 
