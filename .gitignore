@@ -7,6 +7,8 @@ raw/*
 logs/
 processed/
 qa/*.png
+qa/*_debug.geojson
+qa/*_only.geojson
 tmp/
 
 # generated artifacts (deployed via `vercel deploy`, not git)
