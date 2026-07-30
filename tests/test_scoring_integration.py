@@ -7,7 +7,7 @@ import pandas as pd
 from shapely.geometry import LineString, Point
 
 from pipeline.bus import BusStopCandidate
-from pipeline.routing import route_worker
+from pipeline.routing import RoutingGraph, route_worker
 from pipeline.scoring_integration import (
     CandidateNode,
     CrossingCounter,
@@ -16,6 +16,7 @@ from pipeline.scoring_integration import (
     bus_connectivity_from_routed_candidates,
     json_safe_score_record,
     load_postal_universe_points,
+    nearest_graph_node_in_components,
     score_candidate_route,
     select_bus_stop_candidates,
     select_mrt_exit_candidates,
@@ -132,6 +133,41 @@ def test_bus_stop_candidates_require_frequency_data():
     assert candidates[0].name == "OPP TEST BLK"
     assert candidates[0].exit_code == "54321"
     assert round(candidates[0].expected_wait_min or 0.0, 3) == 2.4
+
+
+def test_nearest_graph_node_in_components_respects_component_and_cap():
+    edges = pd.DataFrame(
+        [
+            {"u": (0.0, 0.0), "v": (10.0, 0.0), "length_m": 10.0, "is_covered": 0},
+            {"u": (100.0, 0.0), "v": (110.0, 0.0), "length_m": 10.0, "is_covered": 0},
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (10.0, 0.0), (100.0, 0.0), (110.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    allowed_component = {routing_graph.component_membership[routing_graph.node_map[(100.0, 0.0)]]}
+
+    result = nearest_graph_node_in_components(
+        Point(98.0, 0.0),
+        nodes,
+        node_xy,
+        routing_graph,
+        allowed_component,
+        max_distance_m=5.0,
+    )
+
+    assert result == ((100.0, 0.0), 2.0)
+    assert (
+        nearest_graph_node_in_components(
+            Point(98.0, 0.0),
+            nodes,
+            node_xy,
+            routing_graph,
+            allowed_component,
+            max_distance_m=1.0,
+        )
+        is None
+    )
 
 
 def test_bus_connectivity_reuses_combined_routing_results():

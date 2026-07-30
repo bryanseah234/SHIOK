@@ -142,6 +142,38 @@ def nearest_graph_node(
     return nodes[index], float(squared[index] ** 0.5)
 
 
+def nearest_graph_node_in_components(
+    point: Any,
+    nodes: list[tuple[float, float]],
+    node_xy: np.ndarray,
+    routing_graph: RoutingGraph,
+    allowed_components: set[int],
+    max_distance_m: float,
+) -> tuple[tuple[float, float], float] | None:
+    if not allowed_components:
+        return None
+
+    allowed_indexes = [
+        index
+        for index, node in enumerate(nodes)
+        if node in routing_graph.node_map
+        and routing_graph.component_membership[routing_graph.node_map[node]] in allowed_components
+    ]
+    if not allowed_indexes:
+        return None
+
+    filtered_nodes = [nodes[index] for index in allowed_indexes]
+    filtered_xy = node_xy[np.asarray(allowed_indexes, dtype=int)]
+    xy = np.asarray([point.x, point.y], dtype=float)
+    deltas = filtered_xy - xy
+    squared = np.einsum("ij,ij->i", deltas, deltas)
+    index = int(np.argmin(squared))
+    distance_m = float(squared[index] ** 0.5)
+    if distance_m > max_distance_m:
+        return None
+    return filtered_nodes[index], distance_m
+
+
 def load_postal_points(
     postal_codes: list[str] | None = None,
     limit: int | None = None,
@@ -841,6 +873,13 @@ def score_postal_row(
     )
 
     if not candidates:
+        provenance["routing_diagnostics"] = {
+            "candidate_destination_nodes": 0,
+            "route_results": 0,
+            "candidate_scores": 0,
+            "nearest_routed_m": None,
+            "routes_within_access_range": 0,
+        }
         record = assemble_score_record(postal, [], record_data_as_of, provenance)
         return add_private_origin(record, postal_row.geometry) if include_geometry else record
 
@@ -858,6 +897,49 @@ def score_postal_row(
         float(params["detour_budget"]),
         include_geometry=True,
     )
+    if not route_results:
+        destination_components = {
+            routing_graph.component_membership[routing_graph.node_map[destination]]
+            for destination in destinations
+            if destination in routing_graph.node_map
+        }
+        resnap_max_m = float(params.get("origin_reachable_component_resnap_max_m", 0.0))
+        resnap = nearest_graph_node_in_components(
+            postal_row.geometry,
+            nodes,
+            node_xy,
+            routing_graph,
+            destination_components,
+            resnap_max_m,
+        )
+        if resnap is not None and resnap[0] != origin_node:
+            original_origin_node = origin_node
+            original_origin_snap_m = origin_snap_m
+            origin_node, origin_snap_m = resnap
+            provenance["origin_snap_distance_m"] = round(origin_snap_m, 1)
+            provenance["origin_resnap"] = {
+                "reason": "nearest_origin_component_cannot_reach_selected_transit_candidates",
+                "max_distance_m": round(resnap_max_m, 1),
+                "original_snap_distance_m": round(original_origin_snap_m, 1),
+                "resnap_distance_m": round(origin_snap_m, 1),
+                "original_component": routing_graph.component_membership[
+                    routing_graph.node_map[original_origin_node]
+                ],
+                "resnapped_component": routing_graph.component_membership[
+                    routing_graph.node_map[origin_node]
+                ],
+            }
+            route_results = routing_graph.route(
+                {origin_node: destinations},
+                float(params["shelter_lambda"]),
+                float(params["detour_budget"]),
+                include_geometry=True,
+            )
+        elif resnap_max_m > 0:
+            provenance["origin_resnap"] = {
+                "reason": "no_transit_reachable_component_within_resnap_cap",
+                "max_distance_m": round(resnap_max_m, 1),
+            }
 
     bus_result = (
         bus_connectivity_from_routed_candidates(
@@ -902,6 +984,18 @@ def score_postal_row(
                     include_geometry=include_geometry,
                 )
             )
+
+    route_distances = [float(route_result["shortest_length_m"]) for route_result in route_results]
+    access_zero_m = float(params["transit_access"]["zero_credit_m"])
+    provenance["routing_diagnostics"] = {
+        "candidate_destination_nodes": len(destinations),
+        "route_results": len(route_results),
+        "candidate_scores": len(candidate_scores),
+        "nearest_routed_m": round(min(route_distances), 1) if route_distances else None,
+        "routes_within_access_range": sum(
+            1 for distance in route_distances if distance <= access_zero_m
+        ),
+    }
 
     record = assemble_score_record(postal, candidate_scores, record_data_as_of, provenance)
     return add_private_origin(record, postal_row.geometry) if include_geometry else record

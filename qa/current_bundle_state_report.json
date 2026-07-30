@@ -1,0 +1,2243 @@
+{
+  "bundle": "generated_20260730_111641",
+  "manifest_record_count": 124032,
+  "no_transit_in_range": {
+    "area_counts_top20": [
+      [
+        "BUKIT_TIMAH",
+        2340
+      ],
+      [
+        "SERANGOON",
+        2318
+      ],
+      [
+        "ANG_MO_KIO",
+        722
+      ],
+      [
+        "SOUTHERN_ISLANDS",
+        546
+      ],
+      [
+        "HOUGANG",
+        453
+      ],
+      [
+        "CLEMENTI",
+        443
+      ],
+      [
+        "SUNGEI_KADUT",
+        422
+      ],
+      [
+        "TANGLIN",
+        411
+      ],
+      [
+        "BEDOK",
+        384
+      ],
+      [
+        "YISHUN",
+        318
+      ],
+      [
+        "QUEENSTOWN",
+        271
+      ],
+      [
+        "TUAS",
+        255
+      ],
+      [
+        "NOVENA",
+        254
+      ],
+      [
+        "BUKIT_BATOK",
+        235
+      ],
+      [
+        "WESTERN_ISLANDS",
+        177
+      ],
+      [
+        "BUKIT_PANJANG",
+        169
+      ],
+      [
+        "JURONG_EAST",
+        169
+      ],
+      [
+        "JURONG_WEST",
+        147
+      ],
+      [
+        "WESTERN_WATER_CATCHMENT",
+        146
+      ],
+      [
+        "PASIR_RIS",
+        143
+      ]
+    ],
+    "bus_direct_candidates": {
+      "count": 12010,
+      "gt0": 2563,
+      "max": 14,
+      "zero": 9447
+    },
+    "count": 12010,
+    "mrt_candidates": {
+      "count": 12010,
+      "gt0": 12010,
+      "max": 19,
+      "zero": 0
+    },
+    "origin_snap_m": {
+      "count": 12010,
+      "max": 7961.7,
+      "min": 0.0,
+      "p50": 25.7,
+      "p95": 106.3
+    },
+    "reason_shape_top20": [
+      [
+        "(4, 0, 0, None)",
+        2609
+      ],
+      [
+        "(3, 0, 0, None)",
+        1612
+      ],
+      [
+        "(2, 0, 0, None)",
+        1601
+      ],
+      [
+        "(1, 0, 0, None)",
+        790
+      ],
+      [
+        "(5, 0, 0, None)",
+        732
+      ],
+      [
+        "(7, 0, 0, None)",
+        649
+      ],
+      [
+        "(6, 0, 0, None)",
+        488
+      ],
+      [
+        "(8, 0, 0, None)",
+        469
+      ],
+      [
+        "(9, 0, 0, None)",
+        351
+      ],
+      [
+        "(2, 2, 0, None)",
+        259
+      ],
+      [
+        "(2, 3, 0, None)",
+        200
+      ],
+      [
+        "(2, 4, 0, None)",
+        140
+      ],
+      [
+        "(2, 1, 0, None)",
+        123
+      ],
+      [
+        "(4, 4, 0, None)",
+        101
+      ],
+      [
+        "(4, 2, 0, None)",
+        96
+      ],
+      [
+        "(5, 2, 0, None)",
+        93
+      ],
+      [
+        "(3, 1, 0, None)",
+        90
+      ],
+      [
+        "(5, 1, 0, None)",
+        81
+      ],
+      [
+        "(10, 0, 0, None)",
+        70
+      ],
+      [
+        "(4, 6, 0, None)",
+        69
+      ]
+    ],
+    "replay_classification_counts": [
+      [
+        "all_candidates_beyond_access_range",
+        16
+      ],
+      [
+        "candidate_graph_disconnected",
+        14
+      ]
+    ],
+    "replay_disconnected_candidate_component_snap_m": {
+      "count": 14,
+      "max": 174.9,
+      "min": 20.2,
+      "p50": 36.6,
+      "p95": 106.5,
+      "within_25m": 2,
+      "within_50m": 10,
+      "within_75m": 11
+    },
+    "replay_sample_count": 30,
+    "replay_samples": [
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 4,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "TAN KAH KEE MRT STATION Exit A",
+            "routed_m": 1205.7,
+            "snap_distance_m": 17.7,
+            "straight_line_m": 714.5,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "FARRER ROAD MRT STATION Exit B",
+            "routed_m": 1227.9,
+            "snap_distance_m": 18.2,
+            "straight_line_m": 782.8,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "TAN KAH KEE MRT STATION Exit B",
+            "routed_m": 1258.5,
+            "snap_distance_m": 19.9,
+            "straight_line_m": 761.4,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "FARRER ROAD MRT STATION Exit A",
+            "routed_m": 1373.1,
+            "snap_distance_m": 29.9,
+            "straight_line_m": 835.7,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 19.0,
+        "postal": "266100",
+        "reachable_candidates": 4,
+        "route_results": 4,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 3,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "FERNVALE LRT STATION Exit A",
+            "routed_m": 2097.0,
+            "snap_distance_m": 4.8,
+            "straight_line_m": 1600.9,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "THANGGAM LRT STATION Exit A",
+            "routed_m": 2424.1,
+            "snap_distance_m": 0.5,
+            "straight_line_m": 1881.5,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "THANGGAM LRT STATION Exit B",
+            "routed_m": 2440.0,
+            "snap_distance_m": 1.3,
+            "straight_line_m": 1890.5,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 29.2,
+        "postal": "080739",
+        "reachable_candidates": 3,
+        "route_results": 3,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 7,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 7,
+        "nearest_candidate_component_snap_m": 21.2,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 20.8,
+        "postal": "560181",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 6,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "HARBOURFRONT MRT STATION Exit A",
+            "routed_m": 3330.4,
+            "snap_distance_m": 6.7,
+            "straight_line_m": 1535.8,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 4.8,
+        "postal": "009901",
+        "reachable_candidates": 1,
+        "route_results": 1,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 4,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 3,
+        "nearest_candidate_component_snap_m": 34.5,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 18.4,
+        "postal": "530122",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 4,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 4,
+        "nearest_candidate_component_snap_m": 20.2,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 15.0,
+        "postal": "120207",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 4,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YEW TEE MRT STATION Exit B",
+            "routed_m": 1865.5,
+            "snap_distance_m": 4.0,
+            "straight_line_m": 1388.8,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YEW TEE MRT STATION Exit A",
+            "routed_m": 1904.0,
+            "snap_distance_m": 5.7,
+            "straight_line_m": 1433.9,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YEW TEE MRT STATION Exit D",
+            "routed_m": 1935.4,
+            "snap_distance_m": 2.0,
+            "straight_line_m": 1476.1,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YEW TEE MRT STATION Exit C",
+            "routed_m": 1991.7,
+            "snap_distance_m": 8.7,
+            "straight_line_m": 1507.1,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 68.7,
+        "postal": "728630",
+        "reachable_candidates": 4,
+        "route_results": 4,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "REDHILL MRT STATION Exit B",
+            "routed_m": 1324.0,
+            "snap_distance_m": 6.8,
+            "straight_line_m": 682.1,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "REDHILL MRT STATION Exit A",
+            "routed_m": 1361.7,
+            "snap_distance_m": 1.5,
+            "straight_line_m": 711.2,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 4.3,
+        "postal": "247656",
+        "reachable_candidates": 2,
+        "route_results": 2,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 4,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 6,
+        "nearest_candidate_component_snap_m": 32.7,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 27.9,
+        "postal": "425262",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 3,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 8,
+        "nearest_candidate_component_snap_m": 33.0,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 26.4,
+        "postal": "629144",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 2,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 1,
+        "nearest_candidate_component_snap_m": 174.9,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 132.9,
+        "postal": "678277",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 1,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 0.736,
+            "name": "Dover Stn Exit B",
+            "routed_m": 2275.9,
+            "snap_distance_m": 3.9,
+            "straight_line_m": 296.0,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "DOVER MRT STATION Exit B",
+            "routed_m": 2320.3,
+            "snap_distance_m": 4.4,
+            "straight_line_m": 314.9,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "DOVER MRT STATION Exit A",
+            "routed_m": 2347.3,
+            "snap_distance_m": 5.5,
+            "straight_line_m": 347.3,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 18.6,
+        "postal": "276249",
+        "reachable_candidates": 3,
+        "route_results": 3,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 5,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": 42.0,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 20.3,
+        "postal": "597626",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 9,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 6,
+        "nearest_candidate_component_snap_m": 67.5,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 66.4,
+        "postal": "128049",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 2,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 7,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 4.5,
+            "name": "Aft Penjuru Rd",
+            "routed_m": 1285.8,
+            "snap_distance_m": 4.5,
+            "straight_line_m": 229.1,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 4.5,
+            "name": "Bef Penjuru Rd",
+            "routed_m": 1364.5,
+            "snap_distance_m": 2.7,
+            "straight_line_m": 276.9,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "JURONG EAST MRT STATION Exit B",
+            "routed_m": 4545.3,
+            "snap_distance_m": 1.5,
+            "straight_line_m": 2882.2,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "JURONG EAST MRT STATION Exit A",
+            "routed_m": 4796.9,
+            "snap_distance_m": 4.0,
+            "straight_line_m": 2969.3,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "JURONG EAST MRT STATION Exit D",
+            "routed_m": 4880.7,
+            "snap_distance_m": 4.1,
+            "straight_line_m": 2960.8,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "JURONG EAST MRT STATION Exit C",
+            "routed_m": 5036.7,
+            "snap_distance_m": 11.9,
+            "straight_line_m": 2910.2,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 66.1,
+        "postal": "609206",
+        "reachable_candidates": 9,
+        "route_results": 9,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 2,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": 38.7,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 34.6,
+        "postal": "299671",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 4,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 1,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 0.873,
+            "name": "Haw Par Villa Stn",
+            "routed_m": 2679.1,
+            "snap_distance_m": 5.4,
+            "straight_line_m": 243.1,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 0.782,
+            "name": "Opp Haw Par Villa Stn",
+            "routed_m": 2700.0,
+            "snap_distance_m": 5.9,
+            "straight_line_m": 209.2,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "HAW PAR VILLA MRT STATION Exit A",
+            "routed_m": 2728.6,
+            "snap_distance_m": 6.6,
+            "straight_line_m": 230.6,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 2.439,
+            "name": "Haw Par Villa Stn",
+            "routed_m": 2749.7,
+            "snap_distance_m": 5.4,
+            "straight_line_m": 185.8,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 2.444,
+            "name": "Opp Haw Par Villa Stn",
+            "routed_m": 2772.6,
+            "snap_distance_m": 11.5,
+            "straight_line_m": 141.0,
+            "type": "bus_stop"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 31.1,
+        "postal": "117401",
+        "reachable_candidates": 5,
+        "route_results": 5,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 3,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 4,
+        "nearest_candidate_component_snap_m": 27.4,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 27.2,
+        "postal": "239819",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 3,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "LORONG CHUAN MRT STATION Exit A",
+            "routed_m": 1464.0,
+            "snap_distance_m": 15.1,
+            "straight_line_m": 522.2,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "LORONG CHUAN MRT STATION Exit B",
+            "routed_m": 1652.7,
+            "snap_distance_m": 12.3,
+            "straight_line_m": 464.7,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 1.962,
+            "name": "Aft Braddell Rd",
+            "routed_m": 2260.9,
+            "snap_distance_m": 13.7,
+            "straight_line_m": 252.4,
+            "type": "bus_stop"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": 1.825,
+            "name": "Bef Braddell Rd",
+            "routed_m": 2352.0,
+            "snap_distance_m": 8.7,
+            "straight_line_m": 265.1,
+            "type": "bus_stop"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 19.9,
+        "postal": "359631",
+        "reachable_candidates": 4,
+        "route_results": 4,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 1,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 5,
+        "nearest_candidate_component_snap_m": 106.5,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 10.7,
+        "postal": "804351",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 3,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": 39.3,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 39.0,
+        "postal": "257487",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 2,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 5,
+        "nearest_candidate_component_snap_m": 31.5,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 31.3,
+        "postal": "359938",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 5,
+        "classification": "candidate_graph_disconnected",
+        "mrt_candidates": 5,
+        "nearest_candidate_component_snap_m": 87.0,
+        "nearest_reachable": [],
+        "origin_component_reaches_candidate": false,
+        "origin_snap_m": 23.2,
+        "postal": "768437",
+        "reachable_candidates": 0,
+        "route_results": 0,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 3,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YIO CHU KANG MRT STATION Exit C",
+            "routed_m": 1823.0,
+            "snap_distance_m": 1.8,
+            "straight_line_m": 1036.9,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YIO CHU KANG MRT STATION Exit A",
+            "routed_m": 1874.4,
+            "snap_distance_m": 3.0,
+            "straight_line_m": 1034.1,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "YIO CHU KANG MRT STATION Exit B",
+            "routed_m": 1884.0,
+            "snap_distance_m": 0.9,
+            "straight_line_m": 1028.4,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 49.3,
+        "postal": "567754",
+        "reachable_candidates": 3,
+        "route_results": 3,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 8,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "MARINE TERRACE MRT STATION Exit 4",
+            "routed_m": 1247.5,
+            "snap_distance_m": 4.8,
+            "straight_line_m": 771.5,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "MARINE TERRACE MRT STATION Exit 3",
+            "routed_m": 1368.7,
+            "snap_distance_m": 11.9,
+            "straight_line_m": 858.0,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "KEMBANGAN MRT STATION Exit A",
+            "routed_m": 1369.9,
+            "snap_distance_m": 7.8,
+            "straight_line_m": 849.7,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "KEMBANGAN MRT STATION Exit B",
+            "routed_m": 1403.6,
+            "snap_distance_m": 2.0,
+            "straight_line_m": 874.8,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "MARINE TERRACE MRT STATION Exit 2",
+            "routed_m": 1488.6,
+            "snap_distance_m": 8.1,
+            "straight_line_m": 934.2,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "MARINE TERRACE MRT STATION Exit 1",
+            "routed_m": 1564.5,
+            "snap_distance_m": 12.2,
+            "straight_line_m": 825.6,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 36.4,
+        "postal": "459344",
+        "reachable_candidates": 8,
+        "route_results": 8,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "TAN KAH KEE MRT STATION Exit A",
+            "routed_m": 1376.2,
+            "snap_distance_m": 17.7,
+            "straight_line_m": 530.7,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "TAN KAH KEE MRT STATION Exit B",
+            "routed_m": 1429.0,
+            "snap_distance_m": 19.9,
+            "straight_line_m": 586.1,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 16.3,
+        "postal": "266148",
+        "reachable_candidates": 2,
+        "route_results": 2,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "DOVER MRT STATION Exit B",
+            "routed_m": 2103.8,
+            "snap_distance_m": 4.4,
+            "straight_line_m": 449.6,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "DOVER MRT STATION Exit A",
+            "routed_m": 2130.8,
+            "snap_distance_m": 5.5,
+            "straight_line_m": 473.0,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 22.0,
+        "postal": "276193",
+        "reachable_candidates": 2,
+        "route_results": 2,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "KING ALBERT PARK MRT STATION Exit B",
+            "routed_m": 1426.6,
+            "snap_distance_m": 18.9,
+            "straight_line_m": 715.3,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "KING ALBERT PARK MRT STATION Exit A",
+            "routed_m": 1675.2,
+            "snap_distance_m": 20.5,
+            "straight_line_m": 890.2,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 51.5,
+        "postal": "288114",
+        "reachable_candidates": 2,
+        "route_results": 2,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 3,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "BEAUTY WORLD MRT STATION Exit C",
+            "routed_m": 1612.1,
+            "snap_distance_m": 17.7,
+            "straight_line_m": 1178.5,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "BEAUTY WORLD MRT STATION Exit B",
+            "routed_m": 1659.5,
+            "snap_distance_m": 20.1,
+            "straight_line_m": 1266.9,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "BEAUTY WORLD MRT STATION Exit A",
+            "routed_m": 1744.4,
+            "snap_distance_m": 21.5,
+            "straight_line_m": 1318.7,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 46.7,
+        "postal": "599311",
+        "reachable_candidates": 3,
+        "route_results": 3,
+        "within_access_range": 0
+      },
+      {
+        "bus_candidates": 0,
+        "classification": "all_candidates_beyond_access_range",
+        "mrt_candidates": 2,
+        "nearest_candidate_component_snap_m": null,
+        "nearest_reachable": [
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "BARTLEY MRT STATION Exit A",
+            "routed_m": 2111.5,
+            "snap_distance_m": 19.8,
+            "straight_line_m": 962.5,
+            "type": "mrt_lrt_exit"
+          },
+          {
+            "access_score": "NO_TRANSIT_IN_RANGE",
+            "expected_wait_min": null,
+            "name": "BARTLEY MRT STATION Exit B",
+            "routed_m": 2470.0,
+            "snap_distance_m": 26.9,
+            "straight_line_m": 978.3,
+            "type": "mrt_lrt_exit"
+          }
+        ],
+        "origin_component_reaches_candidate": true,
+        "origin_snap_m": 12.1,
+        "postal": "535362",
+        "reachable_candidates": 2,
+        "route_results": 2,
+        "within_access_range": 0
+      }
+    ],
+    "samples": [
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560181",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 7
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 20.8,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 7,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560341",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 3
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 31.6,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 3,
+            "mrt_lrt_exit_candidates": 4
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560342",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 25.1,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 4
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560424",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 5
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 51.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 5,
+            "mrt_lrt_exit_candidates": 4
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560601",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 4
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 0.8,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 4,
+            "mrt_lrt_exit_candidates": 5
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "560602",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 4
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 2.4,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 4,
+            "mrt_lrt_exit_candidates": 5
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "561453",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 6
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 25.4,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 6,
+            "mrt_lrt_exit_candidates": 4
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "561602",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 4
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 7.5,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 4,
+            "mrt_lrt_exit_candidates": 5
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567754",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567755",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567756",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567757",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567758",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567759",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 0
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 49.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 0,
+            "mrt_lrt_exit_candidates": 3
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567826",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 27.6,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567827",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 26.6,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567833",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 18.3,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567834",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 14.1,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567835",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 12.1,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "postal": "567836",
+        "provenance": {
+          "bus_connectivity": {
+            "expected_wait_min": null,
+            "nearest_routed_m": null,
+            "routed_stop_count": 0,
+            "service_count": 0,
+            "straight_line_stop_count": 2
+          },
+          "manifest": "raw/manifest.json",
+          "origin_snap_distance_m": 10.7,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "routing": {
+            "detour_budget": 1.25,
+            "network": "processed\\network_island.parquet",
+            "shelter_lambda": 2.0
+          },
+          "source_hashes": {
+            "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+            "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+            "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+            "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+            "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+            "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+            "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+            "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+          },
+          "subscore_status": {
+            "access": "real_routed_shortest_distance",
+            "bus": "real",
+            "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            "heat": "provisional_covered_only_until_phase_4",
+            "rain": "real_routed_covered_length_ratio"
+          },
+          "transit_node_set": {
+            "bus_stop_candidate_radius_m": 300.0,
+            "bus_stop_candidates_direct": 2,
+            "mrt_lrt_exit_candidates": 7
+          }
+        }
+      }
+    ]
+  },
+  "not_yet_scored": {
+    "count": 319,
+    "reason_counts": [
+      [
+        "missing_coordinates_after_bounded_geocode",
+        319
+      ]
+    ],
+    "samples": [
+      {
+        "area": "UNKNOWN",
+        "postal": "000104",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000105",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000106",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000207",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000208",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000315",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000316",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000511",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000512",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000617",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000718",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000719",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000820",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000821",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000922",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "000923",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "001024",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "001026",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "001130",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "area": "UNKNOWN",
+        "postal": "001232",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260729_203116\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      }
+    ],
+    "source_counts": [
+      [
+        [
+          "acra_registered_entities"
+        ],
+        319
+      ]
+    ]
+  },
+  "scored": {
+    "count": 111703,
+    "total_score_distribution": {
+      "count": 111703,
+      "max": 100.0,
+      "min": 2.6,
+      "p50": 57.3,
+      "p95": 95.6
+    }
+  },
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 12010,
+    "SCORED": 111703
+  }
+}
