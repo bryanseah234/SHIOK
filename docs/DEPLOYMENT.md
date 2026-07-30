@@ -56,18 +56,20 @@ For a source/model change that requires every known postal to be rescored, run
 the guarded helper from the repo root:
 
 ```powershell
-.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 8
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4
 ```
 
 Add `-Deploy` only when the generated bundle validates and should be pushed to
 production immediately:
 
 ```powershell
-.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 8 -Deploy
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4 -Deploy
 ```
 
-On the current 14-logical-core / 64 GB Windows machine, use `-Workers 8` for
-future full rescoring unless the machine is needed for other work. The earlier
+On the current 14-logical-core / 64 GB Windows machine, use `-Workers 4` by
+default. A bounded 800-postal real scoring benchmark on 2026-07-30 measured
+4 workers at 338.00 seconds (2.367 records/sec) and 8 workers at 410.61 seconds
+(1.948 records/sec), so 8 workers is slower for this workload. The earlier
 4-worker bus-as-transit full batch completed scoring in roughly 9.5 hours.
 
 The helper partitions the postal universe, runs parallel score batches, combines
