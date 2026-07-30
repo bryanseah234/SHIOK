@@ -106,20 +106,20 @@ function scoreClass(total: number | null): string {
 }
 
 function formatScore(value: number | null | undefined): string {
-  return typeof value === "number" ? `${Math.round(value)}` : "Pending";
+  return typeof value === "number" ? `${Math.round(value)}` : "Not scored";
 }
 
-function formatScoreWithMax(value: number | null | undefined): string {
-  return typeof value === "number" ? `${Math.round(value)}/100` : "Pending";
+function formatScoreWithMax(value: number | null | undefined, fallback = "No score"): string {
+  return typeof value === "number" ? `${Math.round(value)}/100` : fallback;
 }
 
 function formatDistance(value: number | undefined): string {
-  if (typeof value !== "number") return "Pending";
+  if (typeof value !== "number") return "Unavailable";
   return value >= 1000 ? `${(value / 1000).toFixed(1)} km` : `${Math.round(value)} m`;
 }
 
 function formatPercent(value: number | null): string {
-  return typeof value === "number" ? `${value}%` : "Pending";
+  return typeof value === "number" ? `${value}%` : "Unavailable";
 }
 
 function exposureGapCopy(lenM: number, index: number): string {
@@ -148,14 +148,16 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
       id: "primary",
       label: resultTitle(primary.result),
       geom: primary.geom,
-      color: "#007a78",
+      color: "#008f86",
     });
   }
   return items;
 }
 
 function scoreReasons(score: ScoreRecord): string[] {
-  if (!score.paths || !score.best_node) return ["No routed transit stop nearby", "Score is pending route evidence"];
+  if (score.state === "NO_TRANSIT_IN_RANGE") return ["No qualifying transit nearby", "Needs route QA or wider transit rules"];
+  if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
+  if (!score.paths || !score.best_node) return ["Route evidence unavailable", "Score not available"];
   if (!score.subscores) return ["Score breakdown pending", "Route evidence available"];
 
   const values = SUBSCORE_LABELS.map(([key]) => ({
@@ -279,31 +281,23 @@ function ComfortModeControl({
   );
 }
 
-function InlineRouteLegend({ mode, sameRoute }: { mode: RouteDisplayMode; sameRoute: boolean }) {
-  const showShiokest = mode === "shiokest" || mode === "both" || sameRoute;
-  const showShortest = !sameRoute && (mode === "shortest" || mode === "both");
-  const showExposed = mode !== "shortest" || sameRoute;
-
+function InlineRouteLegend({ sameRoute }: { sameRoute: boolean }) {
   return (
     <div className={styles.inlineLegend} aria-label="Map legend">
-      {showShiokest && (
-        <span>
-          <i className={styles.shiokestLine} />
-          Shiokest
-        </span>
-      )}
-      {showShortest && (
+      <span>
+        <i className={styles.shiokestLine} />
+        Shiokest
+      </span>
+      {!sameRoute && (
         <span>
           <i className={styles.shortestLine} />
           Shortest
         </span>
       )}
-      {showExposed && (
-        <span>
-          <i className={styles.gapLine} />
-          Exposed
-        </span>
-      )}
+      <span>
+        <i className={styles.gapLine} />
+        Exposed
+      </span>
     </div>
   );
 }
@@ -379,12 +373,17 @@ function ScoreCard({
     routeMode === "shortest" && !sameRoute ? score.paths?.shortest_m : score.paths?.sheltered_m;
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
   const selectedRouteLabel = routeMode === "shortest" && !sameRoute ? "Shortest walk" : "Shiokest walk";
-  const stationName = toProperCase(score.best_node?.name ?? "No transit found nearby");
+  const stationName =
+    score.state === "NO_TRANSIT_IN_RANGE"
+      ? "No Qualifying Transit Nearby"
+      : toProperCase(score.best_node?.name ?? "No transit found nearby");
   const reasons = scoreReasons(score);
   const displayScore = modeAdjustedTotal(score, comfortMode);
+  const extraWalkLabel =
+    extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
   const dataDate = manifest?.data_as_of
     ? new Date(manifest.data_as_of).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })
-    : "Pending";
+    : "Unavailable";
 
   return (
     <section className={styles.scoreCard} aria-label="Score panel">
@@ -398,7 +397,7 @@ function ScoreCard({
         </div>
       </div>
 
-      <InlineRouteLegend mode={routeMode} sameRoute={sameRoute} />
+      {score.paths && <InlineRouteLegend sameRoute={sameRoute} />}
       <div className={styles.modeRow}>
         <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
         <span>{modeStatus(comfortMode)}</span>
@@ -407,7 +406,7 @@ function ScoreCard({
       <div className={styles.summaryGrid}>
         <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />
         <Metric label="Sheltered" value={formatPercent(selectedCoverage)} />
-        <Metric label="Extra walk" value={sameRoute || !extraWalkM ? "0 m" : `+${Math.round(extraWalkM)} m`} />
+        <Metric label="Extra walk" value={extraWalkLabel} />
       </div>
 
       <div className={styles.reasonList} aria-label="Score reasons">
@@ -429,7 +428,7 @@ function ScoreCard({
         </div>
       )}
 
-      <RouteModeControl mode={routeMode} setMode={setRouteMode} disabled={false} sameRoute={sameRoute} />
+      {score.paths && <RouteModeControl mode={routeMode} setMode={setRouteMode} disabled={false} sameRoute={sameRoute} />}
 
       <div className={styles.feedbackBlock}>
         <div className={styles.feedbackActions}>
@@ -483,7 +482,7 @@ function ScoreCard({
         <div className={styles.routeFacts}>
           <Metric label="Shiokest" value={formatDistance(score.paths.sheltered_m)} />
           <Metric label="Shortest" value={formatDistance(score.paths.shortest_m)} />
-          <Metric label="Extra walk" value={sameRoute || !extraWalkM ? "0 m" : `+${Math.round(extraWalkM)} m`} />
+          <Metric label="Extra walk" value={extraWalkLabel} />
           <Metric label="Detour" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
           <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
           <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />

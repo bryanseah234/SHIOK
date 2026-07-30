@@ -108,6 +108,12 @@ function escapeHtml(value: string): string {
     .replace(/"/g, "&quot;");
 }
 
+function asPopupText(value: unknown): string | null {
+  if (typeof value === "string" && value.trim()) return value.trim();
+  if (typeof value === "number" && Number.isFinite(value)) return String(value);
+  return null;
+}
+
 function poiPopupHtml(properties: Record<string, unknown>): string {
   const kind =
     properties.kind === "bus_stop"
@@ -116,21 +122,45 @@ function poiPopupHtml(properties: Record<string, unknown>): string {
         ? "MRT/LRT station"
         : "MRT/LRT exit";
   const title = typeof properties.name === "string" ? toProperCase(properties.name) : kind;
-  const meta =
-    properties.kind === "bus_stop"
-      ? [properties.code, properties.road].filter((value): value is string => typeof value === "string")
-      : properties.kind === "mrt_station"
-        ? [typeof properties.exit_count === "number" ? `${properties.exit_count} exits` : ""].filter(
-            (value): value is string => value.length > 0
-          )
-      : [properties.station, properties.exit].filter((value): value is string => typeof value === "string");
+  const rows: Array<[string, string]> = [];
+
+  if (properties.kind === "bus_stop") {
+    const code = asPopupText(properties.code);
+    const road = asPopupText(properties.road);
+    const services = asPopupText(properties.services) ?? asPopupText(properties.service_nos);
+    const serviceCount = asPopupText(properties.service_count);
+    if (code) rows.push(["Stop", code]);
+    if (road) rows.push(["Road", toProperCase(road)]);
+    if (services) rows.push(["Services", services]);
+    if (!services && serviceCount) rows.push(["Services", serviceCount]);
+  } else if (properties.kind === "mrt_station") {
+    const exits = asPopupText(properties.exit_count);
+    const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
+    if (exits) rows.push(["Exits", exits]);
+    if (lines) rows.push(["Lines", lines]);
+  } else {
+    const station = asPopupText(properties.station);
+    const exit = asPopupText(properties.exit);
+    const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
+    if (station) rows.push(["Station", toProperCase(station)]);
+    if (exit) rows.push(["Exit", exit]);
+    if (lines) rows.push(["Lines", lines]);
+  }
+
+  const rowsHtml = rows
+    .map(
+      ([label, value]) =>
+        `<dt style="font-weight:800;color:#43564f">${escapeHtml(label)}</dt><dd style="margin:0">${escapeHtml(
+          value
+        )}</dd>`
+    )
+    .join("");
+
   return `<strong style="display:block;color:#17211f;font-size:12px;line-height:1.25">${escapeHtml(
     title
   )}</strong><span style="display:block;color:#4f625b;font-size:11px;margin-top:2px">${escapeHtml(kind)}</span>${
-    meta.length
-      ? `<small style="display:block;color:#6b7a75;font-size:10px;margin-top:2px">${escapeHtml(
-          meta.map(toProperCase).join(" / ")
-        )}</small>`
+    rows.length
+      ? `<dl style="display:grid;grid-template-columns:auto 1fr;gap:2px 7px;margin:6px 0 0;color:#5f6f69;font-size:10px">${rowsHtml}</dl>`
       : ""
   }`;
 }
@@ -246,11 +276,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-halo",
       type: "circle",
       source: "transit-pois",
-      minzoom: 11.4,
+      minzoom: 10.8,
       filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
         "circle-color": "#ffffff",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.4, 5.4, 17, 8.5],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.8, 5.8, 17, 9],
         "circle-opacity": 0.92,
       },
     });
@@ -261,11 +291,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 11.4,
+      minzoom: 10.8,
       filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
         "circle-color": "#245b8d",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.4, 3.5, 17, 5.5],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.8, 3.8, 17, 5.9],
         "circle-opacity": 0.92,
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 1,
@@ -278,12 +308,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 15,
+      minzoom: 14.2,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#2f5f8f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.2, 18, 3.6],
-        "circle-opacity": 0.76,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 14.2, 2.5, 18, 4],
+        "circle-opacity": 0.8,
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
       },
@@ -295,12 +325,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 15.4,
+      minzoom: 13.8,
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
         "circle-color": "#436b5f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 15, 2.2, 18, 3.6],
-        "circle-opacity": 0.76,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.8, 1.8, 16, 2.8, 18, 4],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 13.8, 0.58, 16, 0.8],
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
       },
@@ -314,8 +344,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 3.2,
-        "line-opacity": 0.68,
+        "line-width": 5.2,
+        "line-opacity": 0.78,
       },
       layout: {
         "line-cap": "round",
@@ -330,10 +360,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
       type: "line",
       source: "shortest-route",
       paint: {
-        "line-color": "#34413d",
-        "line-width": 1.45,
-        "line-opacity": 0.72,
-        "line-dasharray": [0.45, 1.75],
+        "line-color": "#26342f",
+        "line-width": 2.8,
+        "line-opacity": 0.88,
+        "line-dasharray": [0.55, 1.25],
       },
       layout: {
         "line-cap": "round",
@@ -349,8 +379,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 4.2,
-        "line-opacity": 0.72,
+        "line-width": 7,
+        "line-opacity": 0.78,
       },
       layout: {
         "line-cap": "round",
@@ -366,8 +396,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": ["get", "color"],
-        "line-width": 2.45,
-        "line-opacity": 0.9,
+        "line-width": 4,
+        "line-opacity": 0.96,
       },
       layout: {
         "line-cap": "round",
@@ -383,8 +413,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 4,
-        "line-opacity": 0.78,
+        "line-width": 5.4,
+        "line-opacity": 0.82,
       },
       layout: {
         "line-cap": "round",
@@ -400,9 +430,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 2,
-        "line-opacity": 0.9,
-        "line-dasharray": [0.35, 1.5],
+        "line-width": 3.1,
+        "line-opacity": 0.92,
+        "line-dasharray": [0.35, 1.1],
       },
       layout: {
         "line-cap": "round",
@@ -416,11 +446,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 12.2,
+      minzoom: 11.5,
       filter: ["==", ["get", "kind"], "mrt_station"],
       layout: {
         "text-field": ["get", "label"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 12.2, 10, 17, 12],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 11.5, 9.5, 17, 12],
         "text-offset": [0, 1.1],
         "text-anchor": "top",
         "text-allow-overlap": false,
@@ -441,11 +471,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 16,
+      minzoom: 15.3,
       filter: ["==", ["get", "kind"], "bus_stop"],
       layout: {
         "text-field": ["get", "name"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 16, 9.2, 18, 10.4],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 15.3, 8.8, 18, 10.4],
         "text-offset": [0, 0.9],
         "text-anchor": "top",
         "text-allow-overlap": false,
@@ -495,7 +525,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "feedback-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 4,
+        "line-width": 5.2,
         "line-opacity": 0.82,
       },
       layout: {
@@ -512,7 +542,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "feedback-route",
       paint: {
         "line-color": "#7b3f00",
-        "line-width": 2,
+        "line-width": 3,
         "line-opacity": 0.94,
         "line-dasharray": [1, 1.2],
       },

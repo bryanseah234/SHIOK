@@ -15,8 +15,10 @@
   top: 18px;
   left: 18px;
   width: min(360px, calc(100vw - 36px));
+  max-height: calc(100dvh - 36px);
   display: grid;
   gap: 8px;
+  min-height: 0;
   padding-right: 2px;
 }
 
@@ -158,6 +160,22 @@
 
 .detailOverlay {
   width: 100%;
+  min-height: 0;
+  max-height: calc(100dvh - 154px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(67, 86, 79, 0.42) transparent;
+}
+
+.detailOverlay::-webkit-scrollbar {
+  width: 6px;
+}
+
+.detailOverlay::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(67, 86, 79, 0.35);
 }
 
 .scoreCard {
@@ -177,7 +195,7 @@
 }
 
 .scoreBadge {
-  min-width: 74px;
+  min-width: 84px;
   border: 1px solid currentColor;
   border-radius: 8px;
   padding: 7px 8px;
@@ -188,7 +206,7 @@
 }
 
 .scoreBadge strong {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 900;
   white-space: nowrap;
 }
@@ -241,7 +259,7 @@
 
 .segmented .segmentedActive {
   color: #fff;
-  background: #007a78;
+  background: #008f86;
 }
 
 .sameRouteNote {
@@ -360,17 +378,17 @@
 
 .inlineLegend i {
   display: inline-block;
-  width: 18px;
-  height: 2px;
+  width: 24px;
+  height: 3px;
   border-radius: 999px;
 }
 
 .shiokestLine {
-  background: #007a78;
+  background: #008f86;
 }
 
 .shortestLine {
-  background: repeating-linear-gradient(90deg, #34413d 0 3px, transparent 3px 7px);
+  background: repeating-linear-gradient(90deg, #26342f 0 4px, transparent 4px 8px);
 }
 
 .gapLine {
@@ -451,7 +469,7 @@
 }
 
 .reasonList span {
-  border-left: 3px solid #007a78;
+  border-left: 3px solid #008f86;
   padding-left: 8px;
   color: #243a34;
   font-size: 12px;
@@ -555,6 +573,7 @@
     left: 10px;
     right: 10px;
     width: auto;
+    max-height: calc(100dvh - 20px);
   }
 
   .brandRow {
@@ -567,6 +586,7 @@
 
   .detailOverlay {
     width: auto;
+    max-height: calc(100dvh - 148px);
   }
 
   .scoreCard {
