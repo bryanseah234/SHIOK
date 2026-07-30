@@ -1,0 +1,1036 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54191",
+          "name": "Mayflower Stn Exit 2",
+          "routed_m": 323.5,
+          "snap_distance_m": 13.3,
+          "station": "Mayflower Stn Exit 2",
+          "straight_line_m": 258.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 224.0,
+          "covered_ratio": 0.693,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 323.5,
+          "shortest_covered_ratio": 0.629,
+          "shortest_m": 323.5
+        },
+        "state": "SCORED",
+        "total": 67.7
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560181",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63299",
+          "name": "Blk 115",
+          "routed_m": 307.2,
+          "snap_distance_m": 2.3,
+          "station": "Blk 115",
+          "straight_line_m": 293.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 240.2,
+          "covered_ratio": 0.782,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 307.3,
+          "shortest_covered_ratio": 0.484,
+          "shortest_m": 307.2
+        },
+        "state": "SCORED",
+        "total": 70.3
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530122",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17379",
+          "name": "Blk 304",
+          "routed_m": 352.6,
+          "snap_distance_m": 4.7,
+          "station": "Blk 304",
+          "straight_line_m": 264.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 284.5,
+          "covered_ratio": 0.77,
+          "detour_pct": 4.8,
+          "routing_type": "sheltered",
+          "sheltered_m": 369.5,
+          "shortest_covered_ratio": 0.668,
+          "shortest_m": 352.6
+        },
+        "state": "SCORED",
+        "total": 90.8
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "120207",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 203.1,
+          "covered_ratio": 0.611,
+          "detour_pct": 0.0,
+          "routing_type": "shortest_due_to_detour",
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.611,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "total": 84.4
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 203.1,
+          "covered_ratio": 0.611,
+          "detour_pct": 0.0,
+          "routing_type": "shortest_due_to_detour",
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.611,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "total": 84.4
+      },
+      "postal": "560234",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "ANG MO KIO MRT STATION Exit B",
+          "routed_m": 825.1,
+          "snap_distance_m": 6.5,
+          "station": "ANG MO KIO MRT STATION",
+          "straight_line_m": 638.3,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 607.9,
+          "covered_ratio": 0.599,
+          "detour_pct": 23.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 1014.6,
+          "shortest_covered_ratio": 0.289,
+          "shortest_m": 825.1
+        },
+        "state": "SCORED",
+        "total": 40.1
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560341",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54081",
+          "name": "Teck Ghee Ct",
+          "routed_m": 709.3,
+          "snap_distance_m": 15.2,
+          "station": "Teck Ghee Ct",
+          "straight_line_m": 134.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 389.3,
+          "covered_ratio": 0.451,
+          "detour_pct": 21.6,
+          "routing_type": "sheltered",
+          "sheltered_m": 862.8,
+          "shortest_covered_ratio": 0.04,
+          "shortest_m": 709.3
+        },
+        "state": "SCORED",
+        "total": 41.8
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560342",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560424",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit 5",
+          "name": "LENTOR MRT STATION Exit 5",
+          "routed_m": 562.1,
+          "snap_distance_m": 5.5,
+          "station": "LENTOR MRT STATION",
+          "straight_line_m": 391.1,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 278.6,
+          "covered_ratio": 0.496,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 562.1,
+          "shortest_covered_ratio": 0.496,
+          "shortest_m": 562.1
+        },
+        "state": "SCORED",
+        "total": 68.3
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560601",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560602",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "62239",
+          "name": "Opp S'pore Girls' Hme",
+          "routed_m": 257.1,
+          "snap_distance_m": 1.4,
+          "station": "Opp S'pore Girls' Hme",
+          "straight_line_m": 66.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 12.6,
+          "covered_ratio": 0.049,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 257.1,
+          "shortest_covered_ratio": 0.049,
+          "shortest_m": 257.1
+        },
+        "state": "SCORED",
+        "total": 42.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530178",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "62301",
+          "name": "Blk 181",
+          "routed_m": 394.1,
+          "snap_distance_m": 4.5,
+          "station": "Blk 181",
+          "straight_line_m": 183.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 42.0,
+          "covered_ratio": 0.107,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 394.1,
+          "shortest_covered_ratio": 0.107,
+          "shortest_m": 394.1
+        },
+        "state": "SCORED",
+        "total": 43.3
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530182",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63119",
+          "name": "Aft Hougang Ave 1",
+          "routed_m": 269.0,
+          "snap_distance_m": 14.4,
+          "station": "Aft Hougang Ave 1",
+          "straight_line_m": 140.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 17.9,
+          "covered_ratio": 0.066,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 269.0,
+          "shortest_covered_ratio": 0.066,
+          "shortest_m": 269.0
+        },
+        "state": "SCORED",
+        "total": 42.7
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530215",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "64049",
+          "name": "Opp The Midtown",
+          "routed_m": 538.9,
+          "snap_distance_m": 0.9,
+          "station": "Opp The Midtown",
+          "straight_line_m": 160.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 185.4,
+          "covered_ratio": 0.344,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 538.9,
+          "shortest_covered_ratio": 0.344,
+          "shortest_m": 538.9
+        },
+        "state": "SCORED",
+        "total": 45.5
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530359",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "64571",
+          "name": "Blk 438",
+          "routed_m": 147.6,
+          "snap_distance_m": 6.4,
+          "station": "Blk 438",
+          "straight_line_m": 166.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 147.7,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 147.7,
+          "shortest_covered_ratio": 0.803,
+          "shortest_m": 147.6
+        },
+        "state": "SCORED",
+        "total": 98.1
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "530446",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit C",
+          "name": "CLEMENTI MRT STATION Exit C",
+          "routed_m": 322.3,
+          "snap_distance_m": 10.8,
+          "station": "CLEMENTI MRT STATION",
+          "straight_line_m": 249.5,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 287.6,
+          "covered_ratio": 0.744,
+          "detour_pct": 19.9,
+          "routing_type": "sheltered",
+          "sheltered_m": 386.3,
+          "shortest_covered_ratio": 0.407,
+          "shortest_m": 322.3
+        },
+        "state": "SCORED",
+        "total": 88.8
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "120453",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "20019",
+          "name": "Blk 431",
+          "routed_m": 408.7,
+          "snap_distance_m": 1.9,
+          "station": "Blk 431",
+          "straight_line_m": 258.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 241.8,
+          "covered_ratio": 0.592,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 408.8,
+          "shortest_covered_ratio": 0.539,
+          "shortest_m": 408.7
+        },
+        "state": "SCORED",
+        "total": 63.2
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "120504",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17379",
+          "name": "Blk 304",
+          "routed_m": 357.3,
+          "snap_distance_m": 4.7,
+          "station": "Blk 304",
+          "straight_line_m": 232.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 289.2,
+          "covered_ratio": 0.773,
+          "detour_pct": 4.7,
+          "routing_type": "sheltered",
+          "sheltered_m": 374.2,
+          "shortest_covered_ratio": 0.672,
+          "shortest_m": 357.3
+        },
+        "state": "SCORED",
+        "total": 90.9
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "121208",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "121502",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17379",
+          "name": "Blk 304",
+          "routed_m": 400.8,
+          "snap_distance_m": 4.7,
+          "station": "Blk 304",
+          "straight_line_m": 286.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 267.5,
+          "covered_ratio": 0.643,
+          "detour_pct": 3.8,
+          "routing_type": "sheltered",
+          "sheltered_m": 416.1,
+          "shortest_covered_ratio": 0.552,
+          "shortest_m": 400.8
+        },
+        "state": "SCORED",
+        "total": 65.7
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "122208",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266214",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266215",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266216",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266217",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11099",
+          "name": "Opp Leedon Green",
+          "routed_m": 285.2,
+          "snap_distance_m": 7.1,
+          "station": "Opp Leedon Green",
+          "straight_line_m": 224.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 70.1,
+          "covered_ratio": 0.246,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 285.2,
+          "shortest_covered_ratio": 0.246,
+          "shortest_m": 285.2
+        },
+        "state": "SCORED",
+        "total": 49.8
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266220",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11101",
+          "name": "Empress Rd Mkt/FC",
+          "routed_m": 510.7,
+          "snap_distance_m": 8.8,
+          "station": "Empress Rd Mkt/FC",
+          "straight_line_m": 245.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 109.3,
+          "covered_ratio": 0.21,
+          "detour_pct": 1.7,
+          "routing_type": "sheltered",
+          "sheltered_m": 519.3,
+          "shortest_covered_ratio": 0.042,
+          "shortest_m": 510.7
+        },
+        "state": "SCORED",
+        "total": 42.6
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266224",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "SOUTHERN_ISLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "009901",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINA_SOUTH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018930",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "STRAITS_VIEW",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018946",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "DOWNTOWN_CORE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018990",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINE_PARADE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "029996",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINA_EAST",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "029997",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "02101",
+          "name": "Aft S'pore Flyer",
+          "routed_m": 141.4,
+          "snap_distance_m": 7.0,
+          "station": "Aft S'pore Flyer",
+          "straight_line_m": 159.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 141.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 141.4
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "DOWNTOWN_CORE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "039803",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "53389",
+          "name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "snap_distance_m": 7.5,
+          "station": "Opp Bishan Nth Shop Mall",
+          "straight_line_m": 111.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 118.9,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 118.9,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 118.9
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "area": "BISHAN",
+      "before": {
+        "best_node": {
+          "exit": "53389",
+          "name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "snap_distance_m": 7.5,
+          "station": "Opp Bishan Nth Shop Mall",
+          "straight_line_m": 111.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 118.9,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 118.9,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 118.9
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "postal": "570234",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 18,
+  "converted_from_no_transit": [
+    "560181",
+    "530122",
+    "120207",
+    "560341",
+    "560342",
+    "560601",
+    "530178",
+    "530182",
+    "530215",
+    "530359",
+    "530446",
+    "120453",
+    "120504",
+    "121208",
+    "122208",
+    "266220",
+    "266224",
+    "039803"
+  ],
+  "geom_shards_touched": [
+    "886520d8a5fffff",
+    "886520d99bfffff",
+    "886520d9c1fffff",
+    "886520db31fffff",
+    "886526360dfffff",
+    "8865263647fffff",
+    "886526365dfffff",
+    "88652636c1fffff",
+    "88652636c9fffff",
+    "88652636cdfffff",
+    "886526acb7fffff",
+    "896520d8a7bffff",
+    "89652636553ffff",
+    "8965263659bffff",
+    "896526368d3ffff",
+    "89652636c6bffff"
+  ],
+  "geometry_postals": 111721,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 33,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 33,
+  "source_bundle": "generated_20260730_111641",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 11992,
+    "SCORED": 111721
+  },
+  "target_bundle": "generated_20260730_080819_targeted"
+}

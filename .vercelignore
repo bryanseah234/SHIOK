@@ -16,5 +16,6 @@ tmp/
 web/.next/
 web/.vercel/
 web/node_modules/
-web/public/data/generated_20260728_1405/
-web/public/data/generated_20260729_0438/
+web/public/data/generated_*/
+!web/public/data/generated_20260730_080819_targeted/
+!web/public/data/generated_20260730_080819_targeted/**
