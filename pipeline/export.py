@@ -19,6 +19,7 @@ from shapely.geometry import MultiLineString, Point
 from shapely.ops import linemerge
 from shapely import wkt as shapely_wkt
 
+from pipeline.bus import parse_peak_frequency_minutes
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
 from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
 
@@ -29,7 +30,7 @@ MAX_DATA_FILES = 5000
 MAX_FILE_BYTES = 5 * 1024 * 1024
 GEOM_PROMOTION_THRESHOLD_BYTES = 250 * 1024
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
-TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops")
+TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops", "bus_services", "bus_routes")
 
 
 def slugify_area(value: Any) -> str:
@@ -425,13 +426,179 @@ def load_json_if_present(path: Path | None) -> Any | None:
     return read_json(path)
 
 
+def payload_rows(payload: dict[str, Any] | list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+    if isinstance(payload, dict) and isinstance(payload.get("value"), list):
+        return [row for row in payload["value"] if isinstance(row, dict)]
+    if isinstance(payload, list):
+        return [row for row in payload if isinstance(row, dict)]
+    return []
+
+
+def natural_service_key(value: str) -> list[Any]:
+    return [int(part) if part.isdigit() else part for part in re.split(r"(\d+)", value)]
+
+
+def normalize_bus_time(value: Any) -> str | None:
+    text = str(value or "").strip()
+    if not text or text == "-":
+        return None
+    digits = re.sub(r"\D+", "", text)
+    if not digits:
+        return None
+    padded = digits.zfill(4)[-4:]
+    hour = int(padded[:2])
+    minute = int(padded[2:])
+    if hour > 29 or minute > 59:
+        return None
+    if hour >= 24:
+        hour -= 24
+    return f"{hour:02d}:{minute:02d}"
+
+
+def bus_time_sort_value(value: str, *, last_bus: bool) -> int:
+    hour, minute = (int(part) for part in value.split(":", 1))
+    total = hour * 60 + minute
+    if last_bus and hour < 4:
+        total += 24 * 60
+    return total
+
+
+def earliest_bus_time(values: Iterable[str]) -> str | None:
+    items = list(values)
+    return min(items, key=lambda item: bus_time_sort_value(item, last_bus=False)) if items else None
+
+
+def latest_bus_time(values: Iterable[str]) -> str | None:
+    items = list(values)
+    return max(items, key=lambda item: bus_time_sort_value(item, last_bus=True)) if items else None
+
+
+def compact_service_list(service_numbers: Iterable[str], max_items: int = 18) -> str | None:
+    services = sorted({service for service in service_numbers if service}, key=natural_service_key)
+    if not services:
+        return None
+    visible = services[:max_items]
+    suffix = f" +{len(services) - max_items} more" if len(services) > max_items else ""
+    return ", ".join(visible) + suffix
+
+
+def rounded_frequency(values: Iterable[float]) -> float | None:
+    positive = [float(value) for value in values if value and float(value) > 0]
+    if not positive:
+        return None
+    value = round(min(positive), 1)
+    return int(value) if value.is_integer() else value
+
+
+def transit_system_from_station(station: str) -> str:
+    return "LRT" if "LRT" in station.upper() else "MRT"
+
+
+def bus_stop_service_summaries(
+    bus_services_payload: dict[str, Any] | list[dict[str, Any]] | None,
+    bus_routes_payload: dict[str, Any] | list[dict[str, Any]] | None,
+) -> dict[str, dict[str, Any]]:
+    service_meta: dict[tuple[str, int], dict[str, Any]] = {}
+    for row in payload_rows(bus_services_payload):
+        service_no = str(row.get("ServiceNo", "")).strip()
+        direction_value = row.get("Direction")
+        if direction_value is None:
+            continue
+        try:
+            direction = int(direction_value)
+        except (TypeError, ValueError):
+            continue
+        if not service_no:
+            continue
+        service_meta[(service_no, direction)] = {
+            "operator": str(row.get("Operator", "")).strip(),
+            "category": str(row.get("Category", "")).strip(),
+            "am_peak": parse_peak_frequency_minutes(row.get("AM_Peak_Freq")),
+            "pm_peak": parse_peak_frequency_minutes(row.get("PM_Peak_Freq")),
+        }
+
+    stop_summaries: dict[str, dict[str, Any]] = defaultdict(
+        lambda: {
+            "services": set(),
+            "operators": set(),
+            "categories": set(),
+            "am_peak": [],
+            "pm_peak": [],
+            "wd_first": [],
+            "wd_last": [],
+            "sat_first": [],
+            "sat_last": [],
+            "sun_first": [],
+            "sun_last": [],
+        }
+    )
+    for row in payload_rows(bus_routes_payload):
+        code = str(row.get("BusStopCode", "")).strip()
+        service_no = str(row.get("ServiceNo", "")).strip()
+        direction_value = row.get("Direction")
+        if direction_value is None:
+            continue
+        try:
+            direction = int(direction_value)
+        except (TypeError, ValueError):
+            continue
+        if not code or not service_no:
+            continue
+
+        summary = stop_summaries[code]
+        summary["services"].add(service_no)
+        meta = service_meta.get((service_no, direction), {})
+        if meta.get("operator"):
+            summary["operators"].add(meta["operator"])
+        if meta.get("category"):
+            summary["categories"].add(meta["category"])
+        if meta.get("am_peak") is not None:
+            summary["am_peak"].append(float(meta["am_peak"]))
+        if meta.get("pm_peak") is not None:
+            summary["pm_peak"].append(float(meta["pm_peak"]))
+
+        for field, target in [
+            ("WD_FirstBus", "wd_first"),
+            ("WD_LastBus", "wd_last"),
+            ("SAT_FirstBus", "sat_first"),
+            ("SAT_LastBus", "sat_last"),
+            ("SUN_FirstBus", "sun_first"),
+            ("SUN_LastBus", "sun_last"),
+        ]:
+            normalized = normalize_bus_time(row.get(field))
+            if normalized:
+                summary[target].append(normalized)
+
+    properties_by_stop: dict[str, dict[str, Any]] = {}
+    for code, summary in stop_summaries.items():
+        services = sorted(summary["services"], key=natural_service_key)
+        properties: dict[str, Any] = {
+            "service_count": len(services),
+            "services": compact_service_list(services),
+            "operators": compact_service_list(summary["operators"], max_items=6),
+            "weekday_first_bus": earliest_bus_time(summary["wd_first"]),
+            "weekday_last_bus": latest_bus_time(summary["wd_last"]),
+            "saturday_first_bus": earliest_bus_time(summary["sat_first"]),
+            "saturday_last_bus": latest_bus_time(summary["sat_last"]),
+            "sunday_first_bus": earliest_bus_time(summary["sun_first"]),
+            "sunday_last_bus": latest_bus_time(summary["sun_last"]),
+            "am_peak_best_min": rounded_frequency(summary["am_peak"]),
+            "pm_peak_best_min": rounded_frequency(summary["pm_peak"]),
+        }
+        properties_by_stop[code] = {key: value for key, value in properties.items() if value}
+    return properties_by_stop
+
+
 def build_transit_poi_collection(
     mrt_geojson: dict[str, Any] | None,
     bus_payload: dict[str, Any] | list[dict[str, Any]] | None,
     provenance: dict[str, Any] | None = None,
+    bus_services_payload: dict[str, Any] | list[dict[str, Any]] | None = None,
+    bus_routes_payload: dict[str, Any] | list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     features: list[dict[str, Any]] = []
     station_groups: dict[str, dict[str, Any]] = {}
+    bus_summaries = bus_stop_service_summaries(bus_services_payload, bus_routes_payload)
 
     if isinstance(mrt_geojson, dict):
         for feature in mrt_geojson.get("features", []):
@@ -451,6 +618,7 @@ def build_transit_poi_collection(
             exit_code = str(properties.get("EXIT_CODE", "")).strip()
             object_id = str(properties.get("OBJECTID", "")).strip()
             name = " ".join(part for part in [station, exit_code] if part).strip()
+            system = transit_system_from_station(station)
             if station:
                 group = station_groups.setdefault(station, {"points": [], "exits": []})
                 group["points"].append(point)
@@ -466,6 +634,7 @@ def build_transit_poi_collection(
                         "name": name or "MRT/LRT exit",
                         "station": station,
                         "exit": exit_code,
+                        "system": system,
                     },
                 }
             )
@@ -488,36 +657,31 @@ def build_transit_poi_collection(
                     "name": station,
                     "label": label or station,
                     "exit_count": len(set(group["exits"])),
+                    "system": transit_system_from_station(station),
                 },
             }
         )
 
-    bus_rows: Any = []
-    if isinstance(bus_payload, dict):
-        bus_rows = bus_payload.get("value", [])
-    elif isinstance(bus_payload, list):
-        bus_rows = bus_payload
-    if isinstance(bus_rows, list):
-        for row in bus_rows:
-            if not isinstance(row, dict):
-                continue
-            point = feature_point(row.get("Longitude"), row.get("Latitude"))
-            if point is None:
-                continue
-            code = str(row.get("BusStopCode", "")).strip()
-            features.append(
-                {
-                    "type": "Feature",
-                    "geometry": {"type": "Point", "coordinates": point},
-                    "properties": {
-                        "id": f"bus:{code or len(features)}",
-                        "kind": "bus_stop",
-                        "name": str(row.get("Description", "")).strip() or "Bus stop",
-                        "code": code,
-                        "road": str(row.get("RoadName", "")).strip(),
-                    },
-                }
-            )
+    for row in payload_rows(bus_payload):
+        point = feature_point(row.get("Longitude"), row.get("Latitude"))
+        if point is None:
+            continue
+        code = str(row.get("BusStopCode", "")).strip()
+        properties = {
+            "id": f"bus:{code or len(features)}",
+            "kind": "bus_stop",
+            "name": str(row.get("Description", "")).strip() or "Bus stop",
+            "code": code,
+            "road": str(row.get("RoadName", "")).strip(),
+            **bus_summaries.get(code, {}),
+        }
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": point},
+                "properties": properties,
+            }
+        )
 
     features.sort(
         key=lambda item: (
@@ -538,6 +702,12 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
         raw_file_from_manifest("mrt_lrt_exits", "mrt_lrt_exits.geojson")
     )
     bus_payload = load_json_if_present(raw_file_from_manifest("bus_stops", "bus_stops.json"))
+    bus_services_payload = load_json_if_present(
+        raw_file_from_manifest("bus_services", "bus_services.json")
+    )
+    bus_routes_payload = load_json_if_present(
+        raw_file_from_manifest("bus_routes", "bus_routes.json")
+    )
     collection = build_transit_poi_collection(
         mrt_geojson if isinstance(mrt_geojson, dict) else None,
         bus_payload if isinstance(bus_payload, (dict, list)) else None,
@@ -545,6 +715,8 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
             "artifact": "shiok-transit-pois",
             "source_hashes": source_hashes(TRANSIT_SOURCE_KEYS),
         },
+        bus_services_payload if isinstance(bus_services_payload, (dict, list)) else None,
+        bus_routes_payload if isinstance(bus_routes_payload, (dict, list)) else None,
     )
     path = output_dir / "transit" / "pois.json"
     size = write_json(path, collection)

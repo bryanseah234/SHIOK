@@ -72,11 +72,23 @@ export interface TransitPoiProperties {
   kind: "mrt_station" | "mrt_exit" | "bus_stop";
   name: string;
   label?: string;
+  system?: string;
   exit_count?: number;
   station?: string;
   exit?: string;
   code?: string;
   road?: string;
+  service_count?: number;
+  services?: string;
+  operators?: string;
+  weekday_first_bus?: string;
+  weekday_last_bus?: string;
+  saturday_first_bus?: string;
+  saturday_last_bus?: string;
+  sunday_first_bus?: string;
+  sunday_last_bus?: string;
+  am_peak_best_min?: number;
+  pm_peak_best_min?: number;
 }
 
 export interface TransitPoiFeature {

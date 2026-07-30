@@ -12,6 +12,10 @@ function jsonResponse(ok: boolean, payload?: unknown): Response {
   } as Response;
 }
 
+function bareUrl(input: RequestInfo | URL): string {
+  return String(input).split("?")[0];
+}
+
 describe("fetchGeomForPostal", () => {
   afterEach(() => {
     vi.restoreAllMocks();
@@ -29,7 +33,7 @@ describe("fetchGeomForPostal", () => {
     };
 
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
-      const url = String(input);
+      const url = bareUrl(input);
       if (url.endsWith("/geom/h3/parent-cell.json")) return jsonResponse(false);
       if (url.endsWith("/geom/postal-index.json")) return jsonResponse(false);
       if (url.endsWith("/geom/index.json")) {
@@ -43,9 +47,18 @@ describe("fetchGeomForPostal", () => {
     const { fetchGeomForPostal } = await import("../data");
 
     await expect(fetchGeomForPostal("123456", 1.3, 103.8)).resolves.toEqual(childRecord);
-    expect(fetchMock).toHaveBeenCalledWith("/data/generated/geom/h3/parent-cell.json");
-    expect(fetchMock).toHaveBeenCalledWith("/data/generated/geom/index.json");
-    expect(fetchMock).toHaveBeenCalledWith("/data/generated/geom/h3/child-cell.json");
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/h3\/parent-cell\.json\?v=/),
+      { cache: "no-store" }
+    );
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/index\.json\?v=/),
+      { cache: "no-store" }
+    );
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/h3\/child-cell\.json\?v=/),
+      { cache: "no-store" }
+    );
   });
 
   it("loads route geometry for postal-only lookup through the postal shard index", async () => {
@@ -58,7 +71,7 @@ describe("fetchGeomForPostal", () => {
     };
 
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
-      const url = String(input);
+      const url = bareUrl(input);
       if (url.endsWith("/geom/postal-index.json")) {
         return jsonResponse(true, { "560234": "postal-child" });
       }
@@ -70,7 +83,13 @@ describe("fetchGeomForPostal", () => {
     const { fetchGeomForPostal } = await import("../data");
 
     await expect(fetchGeomForPostal("560234")).resolves.toEqual(childRecord);
-    expect(fetchMock).toHaveBeenCalledWith("/data/generated/geom/postal-index.json");
-    expect(fetchMock).toHaveBeenCalledWith("/data/generated/geom/h3/postal-child.json");
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/postal-index\.json\?v=/),
+      { cache: "no-store" }
+    );
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/h3\/postal-child\.json\?v=/),
+      { cache: "no-store" }
+    );
   });
 });

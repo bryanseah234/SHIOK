@@ -19,25 +19,33 @@ export function normalizeDataBase(value?: string): string {
 }
 
 export const DATA_BASE = normalizeDataBase(process.env.NEXT_PUBLIC_DATA_BASE);
+const DATA_FETCH_VERSION = `${dataBundle.bundle}-${Date.now().toString(36)}`;
 
 import type { ScoreRecord, PostalGeom, Manifest, TransitPoiCollection } from "./types";
 import { latLngToCell } from "h3-js";
 
 type GeomIndex = Record<string, string[]>;
 type GeomPostalIndex = Record<string, string>;
+const DATA_FETCH_OPTIONS: RequestInit = { cache: "no-store" };
+
+function dataUrl(path: string): string {
+  const url = `${DATA_BASE}${path}`;
+  const separator = url.includes("?") ? "&" : "?";
+  return `${url}${separator}v=${encodeURIComponent(DATA_FETCH_VERSION)}`;
+}
 
 // ---------------------------------------------------------------------------
 // Manifest
 // ---------------------------------------------------------------------------
 export async function fetchManifest(): Promise<Manifest> {
-  const res = await fetch(`${DATA_BASE}manifest.json`);
+  const res = await fetch(dataUrl("manifest.json"), DATA_FETCH_OPTIONS);
   if (!res.ok) throw new Error(`manifest fetch failed: ${res.status}`);
   return res.json() as Promise<Manifest>;
 }
 
 export async function fetchTransitPois(): Promise<TransitPoiCollection> {
   if (_transitPois) return _transitPois;
-  const res = await fetch(`${DATA_BASE}transit/pois.json`);
+  const res = await fetch(dataUrl("transit/pois.json"), DATA_FETCH_OPTIONS);
   if (!res.ok) {
     _transitPois = { type: "FeatureCollection", features: [] };
     return _transitPois;
@@ -67,14 +75,14 @@ let _transitPois: TransitPoiCollection | null = null;
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
-  const res = await fetch(`${DATA_BASE}scores/index.json`);
+  const res = await fetch(dataUrl("scores/index.json"), DATA_FETCH_OPTIONS);
   if (!res.ok) throw new Error(`score index fetch failed: ${res.status}`);
   _areaIndex = await res.json();
   return _areaIndex!;
 }
 
 async function fetchAreaRecords(areaSlug: string): Promise<ScoreRecord[]> {
-  const res = await fetch(`${DATA_BASE}scores/${areaSlug}.json`);
+  const res = await fetch(dataUrl(`scores/${areaSlug}.json`), DATA_FETCH_OPTIONS);
   if (!res.ok) throw new Error(`area fetch failed for ${areaSlug}: ${res.status}`);
   return res.json() as Promise<ScoreRecord[]>;
 }
@@ -94,7 +102,7 @@ export async function fetchScoreForPostal(
 
 async function getGeomIndex(): Promise<GeomIndex | null> {
   if (_geomIndex) return _geomIndex;
-  const res = await fetch(`${DATA_BASE}geom/index.json`);
+  const res = await fetch(dataUrl("geom/index.json"), DATA_FETCH_OPTIONS);
   if (!res.ok) return null;
   _geomIndex = (await res.json()) as GeomIndex;
   return _geomIndex;
@@ -102,14 +110,14 @@ async function getGeomIndex(): Promise<GeomIndex | null> {
 
 async function getGeomPostalIndex(): Promise<GeomPostalIndex | null> {
   if (_geomPostalIndex) return _geomPostalIndex;
-  const res = await fetch(`${DATA_BASE}geom/postal-index.json`);
+  const res = await fetch(dataUrl("geom/postal-index.json"), DATA_FETCH_OPTIONS);
   if (!res.ok) return null;
   _geomPostalIndex = (await res.json()) as GeomPostalIndex;
   return _geomPostalIndex;
 }
 
 async function fetchGeomShard(shardId: string): Promise<PostalGeom[] | null> {
-  const res = await fetch(`${DATA_BASE}geom/h3/${shardId}.json`);
+  const res = await fetch(dataUrl(`geom/h3/${shardId}.json`), DATA_FETCH_OPTIONS);
   if (!res.ok) return null;
   return res.json() as Promise<PostalGeom[]>;
 }

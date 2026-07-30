@@ -189,9 +189,9 @@ function modeAdjustedTotal(score: ScoreRecord, mode: ComfortMode): number | null
 }
 
 function modeStatus(mode: ComfortMode): string {
-  if (mode === "balanced") return "Scheduled buses - heat provisional";
-  if (mode.startsWith("rain")) return "Rain-weighted - scheduled buses";
-  return "Shade model pending - scheduled buses";
+  if (mode === "balanced") return "Static bus schedules - heat uses shelter";
+  if (mode.startsWith("rain")) return "Rain-weighted - static buses";
+  return "Sunny weighting - tree shade pending";
 }
 
 function buildFeedbackPayload({
@@ -501,7 +501,7 @@ function ScoreCard({
         </div>
       )}
 
-        <div className={styles.dataLine}>Data as of {dataDate}</div>
+        <div className={styles.dataLine}>Data as of {dataDate} - Heat: shelter only, tree shade pending</div>
       </details>
     </section>
   );

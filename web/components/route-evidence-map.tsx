@@ -114,6 +114,11 @@ function asPopupText(value: unknown): string | null {
   return null;
 }
 
+function formatPeakMinutes(value: unknown): string | null {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  return `${value} min best`;
+}
+
 function poiPopupHtml(properties: Record<string, unknown>): string {
   const kind =
     properties.kind === "bus_stop"
@@ -129,21 +134,35 @@ function poiPopupHtml(properties: Record<string, unknown>): string {
     const road = asPopupText(properties.road);
     const services = asPopupText(properties.services) ?? asPopupText(properties.service_nos);
     const serviceCount = asPopupText(properties.service_count);
+    const firstBus = asPopupText(properties.weekday_first_bus);
+    const lastBus = asPopupText(properties.weekday_last_bus);
+    const amPeak = formatPeakMinutes(properties.am_peak_best_min);
+    const pmPeak = formatPeakMinutes(properties.pm_peak_best_min);
+    const operators = asPopupText(properties.operators);
     if (code) rows.push(["Stop", code]);
     if (road) rows.push(["Road", toProperCase(road)]);
     if (services) rows.push(["Services", services]);
     if (!services && serviceCount) rows.push(["Services", serviceCount]);
+    if (firstBus) rows.push(["First bus", firstBus]);
+    if (lastBus) rows.push(["Last bus", lastBus]);
+    if (amPeak) rows.push(["AM peak", amPeak]);
+    if (pmPeak) rows.push(["PM peak", pmPeak]);
+    if (operators) rows.push(["Operator", operators]);
   } else if (properties.kind === "mrt_station") {
     const exits = asPopupText(properties.exit_count);
+    const system = asPopupText(properties.system);
     const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
+    if (system) rows.push(["System", system]);
     if (exits) rows.push(["Exits", exits]);
     if (lines) rows.push(["Lines", lines]);
   } else {
     const station = asPopupText(properties.station);
     const exit = asPopupText(properties.exit);
+    const system = asPopupText(properties.system);
     const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
     if (station) rows.push(["Station", toProperCase(station)]);
     if (exit) rows.push(["Exit", exit]);
+    if (system) rows.push(["System", system]);
     if (lines) rows.push(["Lines", lines]);
   }
 

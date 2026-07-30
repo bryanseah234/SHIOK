@@ -125,11 +125,40 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
             }
         ]
     }
+    bus_services_payload = {
+        "value": [
+            {
+                "ServiceNo": "262",
+                "Direction": 1,
+                "Operator": "SBST",
+                "Category": "TRUNK",
+                "AM_Peak_Freq": "06-08",
+                "PM_Peak_Freq": "07-09",
+            }
+        ]
+    }
+    bus_routes_payload = {
+        "value": [
+            {
+                "ServiceNo": "262",
+                "Direction": 1,
+                "BusStopCode": "55089",
+                "WD_FirstBus": "0530",
+                "WD_LastBus": "0045",
+                "SAT_FirstBus": "0535",
+                "SAT_LastBus": "0040",
+                "SUN_FirstBus": "0545",
+                "SUN_LastBus": "0030",
+            }
+        ]
+    }
 
     collection = build_transit_poi_collection(
         mrt_geojson,
         bus_payload,
         {"source_hashes": {"mrt_lrt_exits": "a" * 64, "bus_stops": "b" * 64}},
+        bus_services_payload,
+        bus_routes_payload,
     )
 
     assert collection["type"] == "FeatureCollection"
@@ -148,9 +177,16 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
         feature for feature in collection["features"] if feature["properties"]["kind"] == "bus_stop"
     )
     assert mrt["properties"]["name"] == "MAYFLOWER MRT STATION Exit 5"
+    assert mrt["properties"]["system"] == "MRT"
     assert station["properties"]["label"] == "MAYFLOWER"
     assert station["properties"]["exit_count"] == 1
     assert bus["properties"]["code"] == "55089"
+    assert bus["properties"]["services"] == "262"
+    assert bus["properties"]["service_count"] == 1
+    assert bus["properties"]["weekday_first_bus"] == "05:30"
+    assert bus["properties"]["weekday_last_bus"] == "00:45"
+    assert bus["properties"]["am_peak_best_min"] == 7
+    assert bus["properties"]["pm_peak_best_min"] == 8
 
 
 def test_export_splits_large_score_files(tmp_path: Path):
