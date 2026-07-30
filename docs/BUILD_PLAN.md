@@ -69,7 +69,7 @@ AC: deployed to Vercel; Lighthouse a11y ≥ 90; keyboard-only walkthrough works;
 **Deferred frontend/router backlog — owner tabled on 2026-07-28.**
 - User-facing shelter mode selector after MVP route UX is stable: default `Balanced` uses the PRD detour cap (`+25%` extra walk); optional later `Max shelter` mode may allow a higher cap such as `+50%`; always display the absolute extra walk, e.g. `+38 m`.
 - Island-wide SHIOK map layer after MVP: optional comfort heatmap, shelter overlay, Rain Mode coverage, and browse-before-search visual coverage. This is separate from the OneMap basemap; it likely requires PMTiles or another static tile artifact plus a free-tier serving plan.
-- Public route geometry contract upgrade: export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps.
+- Public route geometry contract upgrade: implemented in code on 2026-07-30 for future bundles. Export covered/exposed segment geometry for both `Shortest` and `Shiokest`, not only full route polylines plus Shiokest exposure gaps. Current production bundle remains backward-compatible until the next rescore/export.
 
 **Open production-readiness backlog — owner tabled on 2026-07-28.**
 - Keep Vercel automatic Git deployments as the target workflow, but make them production-safe first: set/verify the Vercel project root directory as `web` and choose a real static-data strategy for Git builds (`web/public/data` committed, downloaded from an approved artifact source, or served from a stable data deployment) so future commits cannot deploy a UI without score data.

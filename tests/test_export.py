@@ -3,7 +3,6 @@ from pathlib import Path
 
 from shapely.geometry import LineString
 
-from pipeline.score_batch import json_safe_score_record
 from pipeline.export import (
     build_transit_poi_collection,
     encode_polyline,
@@ -14,6 +13,7 @@ from pipeline.export import (
     validate_static_artifacts,
     write_json,
 )
+from pipeline.score_batch import json_safe_score_record
 
 
 def sample_record(postal: str = "123456") -> dict:
@@ -38,6 +38,30 @@ def sample_record(postal: str = "123456") -> dict:
         "_geometry": {
             "shortest": LineString([(28000.0, 35000.0), (28100.0, 35100.0)]),
             "sheltered": LineString([(28000.0, 35000.0), (28120.0, 35100.0)]),
+            "shortest_path_edges": [
+                {
+                    "length_m": 80.0,
+                    "is_covered": False,
+                    "geometry": LineString([(28000.0, 35000.0), (28040.0, 35040.0)]),
+                },
+                {
+                    "length_m": 120.0,
+                    "is_covered": True,
+                    "geometry": LineString([(28040.0, 35040.0), (28100.0, 35100.0)]),
+                },
+            ],
+            "sheltered_path_edges": [
+                {
+                    "length_m": 50.0,
+                    "is_covered": False,
+                    "geometry": LineString([(28000.0, 35000.0), (28050.0, 35050.0)]),
+                },
+                {
+                    "length_m": 170.0,
+                    "is_covered": True,
+                    "geometry": LineString([(28050.0, 35050.0), (28120.0, 35100.0)]),
+                },
+            ],
             "exposure_gap_edges": [
                 {
                     "length_m": 50.0,
@@ -97,6 +121,10 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
         shard = postal_index[postal]
         shard_records = json.loads((tmp_path / "geom" / "h3" / f"{shard}.json").read_text())
         assert postal in {record["postal"] for record in shard_records}
+        geom_record = next(record for record in shard_records if record["postal"] == postal)
+        assert geom_record["route_segments"]["shortest"][0]["is_covered"] is False
+        assert geom_record["route_segments"]["shortest"][1]["is_covered"] is True
+        assert geom_record["route_segments"]["sheltered"][0]["len_m"] == 50.0
 
 
 def test_build_transit_poi_collection_exports_mrt_and_bus_points():

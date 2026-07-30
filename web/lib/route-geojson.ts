@@ -1,5 +1,5 @@
 import { decodePolyline } from "./polyline";
-import type { PostalGeom } from "./types";
+import type { PostalGeom, RouteSegment } from "./types";
 
 export type LngLat = [number, number];
 
@@ -47,6 +47,30 @@ function emptyCollection(): LineStringFeatureCollection {
   return { type: "FeatureCollection", features: [] };
 }
 
+function routeSegmentFeatures(
+  segments: RouteSegment[] | undefined,
+  kind: "shortest" | "sheltered",
+  fallbackCoordinates: LngLat[]
+): LineStringFeature[] {
+  const features = (segments ?? [])
+    .map((segment, index) =>
+      lineFeature(toLngLat(segment.geom), {
+        kind,
+        is_covered: segment.is_covered ? 1 : 0,
+        len_m: segment.len_m,
+        segment_index: index,
+      })
+    )
+    .filter((feature) => feature.geometry.coordinates.length > 0);
+
+  if (features.length > 0) return features;
+  return [
+    lineFeature(fallbackCoordinates, {
+      kind,
+    }),
+  ];
+}
+
 function boundsFor(points: LngLat[]): [LngLat, LngLat] | null {
   if (points.length === 0) return null;
   const lngs = points.map(([lng]) => lng);
@@ -60,6 +84,16 @@ function boundsFor(points: LngLat[]): [LngLat, LngLat] | null {
 export function postalGeomToRouteGeoJson(geom: PostalGeom): RouteGeoJson {
   const shortestCoords = toLngLat(geom.shortest);
   const shelteredCoords = toLngLat(geom.sheltered);
+  const shortestFeatures = routeSegmentFeatures(
+    geom.route_segments?.shortest,
+    "shortest",
+    shortestCoords
+  );
+  const shelteredFeatures = routeSegmentFeatures(
+    geom.route_segments?.sheltered,
+    "sheltered",
+    shelteredCoords
+  );
   const gapFeatures = geom.exposure_gaps.map((gap, index) =>
     lineFeature(toLngLat(gap.geom), {
       kind: "exposure_gap",
@@ -70,8 +104,8 @@ export function postalGeomToRouteGeoJson(geom: PostalGeom): RouteGeoJson {
   );
 
   const allCoords = [
-    ...shortestCoords,
-    ...shelteredCoords,
+    ...shortestFeatures.flatMap((feature) => feature.geometry.coordinates),
+    ...shelteredFeatures.flatMap((feature) => feature.geometry.coordinates),
     ...gapFeatures.flatMap((feature) => feature.geometry.coordinates),
   ];
   const bounds = boundsFor(allCoords);
@@ -83,19 +117,11 @@ export function postalGeomToRouteGeoJson(geom: PostalGeom): RouteGeoJson {
   return {
     shortest: {
       ...emptyCollection(),
-      features: [
-        lineFeature(shortestCoords, {
-          kind: "shortest",
-        }),
-      ],
+      features: shortestFeatures,
     },
     sheltered: {
       ...emptyCollection(),
-      features: [
-        lineFeature(shelteredCoords, {
-          kind: "sheltered",
-        }),
-      ],
+      features: shelteredFeatures,
     },
     exposureGaps: {
       ...emptyCollection(),

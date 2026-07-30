@@ -29,6 +29,9 @@ DataMall zip auth is unverified: the fetcher tries unauthenticated first, falls 
 | 11 | Overture (optional assist) | Overture releases via DuckDB `read_parquet` on their S3 (anonymous) | GeoParquet | Buildings theme has heights for Phase 4 shadow term; transportation theme optional cross-check. |
 | 12 | Planning Area boundaries | data.gov.sg — URA *Master Plan 2019 Planning Area Boundary (No Sea)*, id `d_4765db0e87b9c86336792efe8a1f7a66` (GeoJSON ~2 MB); prefer a DMP25 planning-area layer if published (several MP2019 layers marked superseded Jun 2025) | GeoJSON | Partition key for exports/QA + source of the OSM clip polygon (union, buffer ~500 m). |
 | 13 | NParks Leaf Area Index | data.gov.sg — NParks *Leaf Area Index (LAI)*, id `d_69141275d795e1fe2e496dda7c267d8d` | XLSX | Plant-species LAI table for future shade/heat calibration. This is not spatial tree-canopy geometry and must not be used as rain shelter. |
+| 14 | NParks Nature Ways / green corridors | data.gov.sg NParks datasets such as Nature Ways, Park Connector routes/tracks, Tree Conservation Area, Heritage Trees | GeoJSON / mixed | Candidate Phase 4 shade/green-route evidence. These are spatial proxies, not rain shelter, and need model validation before scoring. |
+| 15 | LTA BusArrival v3 | DataMall API `ltaodataservice/v3/BusArrival` | JSON live API | Live ETA/load/location only. Requires `AccountKey`; never call directly from browser. Use Vercel proxy/cache or local collector + static aggregate. |
+| 16 | SingPost SGLocate Dataset | SingPost business data solution / SGLocate | licensed dataset / API | Most plausible canonical full-address/postal universe source, but subscription/licensed. Do not use unless owner has rights. API is not a free bulk enumeration path. |
 
 ## OneMap specifics
 

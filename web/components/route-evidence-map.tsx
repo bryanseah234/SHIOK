@@ -363,8 +363,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 5.2,
-        "line-opacity": 0.78,
+        "line-width": 6.2,
+        "line-opacity": 0.84,
       },
       layout: {
         "line-cap": "round",
@@ -379,9 +379,14 @@ function ensureRouteLayers(map: maplibregl.Map) {
       type: "line",
       source: "shortest-route",
       paint: {
-        "line-color": "#26342f",
-        "line-width": 2.8,
-        "line-opacity": 0.88,
+        "line-color": [
+          "case",
+          ["has", "is_covered"],
+          ["case", ["==", ["get", "is_covered"], 1], "#008f86", "#c4332b"],
+          "#26342f",
+        ],
+        "line-width": 3.5,
+        "line-opacity": 0.9,
         "line-dasharray": [0.55, 1.25],
       },
       layout: {
@@ -398,8 +403,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 7,
-        "line-opacity": 0.78,
+        "line-width": 8.2,
+        "line-opacity": 0.86,
       },
       layout: {
         "line-cap": "round",
@@ -414,8 +419,13 @@ function ensureRouteLayers(map: maplibregl.Map) {
       type: "line",
       source: "shiokest-route",
       paint: {
-        "line-color": ["get", "color"],
-        "line-width": 4,
+        "line-color": [
+          "case",
+          ["has", "is_covered"],
+          ["case", ["==", ["get", "is_covered"], 1], ["get", "color"], "#c4332b"],
+          ["get", "color"],
+        ],
+        "line-width": 4.8,
         "line-opacity": 0.96,
       },
       layout: {

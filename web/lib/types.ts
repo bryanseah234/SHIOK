@@ -51,11 +51,21 @@ export interface GeomGap {
   label: string;
 }
 
+export interface RouteSegment {
+  geom: string;
+  len_m: number;
+  is_covered: boolean;
+}
+
 export interface PostalGeom {
   postal: string;
   shortest: string;
   sheltered: string;
   exposure_gaps: GeomGap[];
+  route_segments?: {
+    shortest?: RouteSegment[];
+    sheltered?: RouteSegment[];
+  };
 }
 
 export interface Manifest {

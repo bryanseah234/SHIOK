@@ -219,11 +219,15 @@ class RoutingGraph:
                     "sheltered_length_m": sheltered_length,
                     "geometry": None,
                     "shortest_geometry": None,
+                    "shortest_path_edges": [],
+                    "sheltered_path_edges": [],
                     "path_edges": [],
                 }
                 if include_geometry:
                     result["geometry"] = self.geometry_for_epath(final_epath)
                     result["shortest_geometry"] = self.geometry_for_epath(epath_short)
+                    result["shortest_path_edges"] = self.path_edges_for_epath(epath_short)
+                    result["sheltered_path_edges"] = self.path_edges_for_epath(final_epath)
                     result["path_edges"] = self.path_edges_for_epath(final_epath)
                 results.append(result)
 

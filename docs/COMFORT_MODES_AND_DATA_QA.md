@@ -30,6 +30,26 @@ the guarded parallel helper:
 
 Use `-Deploy` only after the bundle validates and should become production.
 
+## Route Geometry Contract
+
+Implemented on 2026-07-30 in code, pending next scored-bundle export:
+
+- Backend route results now expose edge lists for both Shortest and Shiokest.
+- Static geometry shards can emit `route_segments.shortest` and
+  `route_segments.sheltered`.
+- Each segment has encoded geometry, length, and `is_covered`.
+- The frontend parser and map layers remain backward-compatible with the
+  existing bundle, but future bundles can render covered and exposed portions
+  for both route types.
+
+Evidence:
+
+- Focused tests cover routing edge lists, JSON-safe score chunks, export
+  segment records, and frontend GeoJSON conversion.
+- `qa/partial_resnap_rescore_sample.json` proves a bounded current-bundle
+  sample after the 50 m resnap fix: 18 of 32 sampled NO_TRANSIT records now
+  score. This is not live until a later bundle rescore/export.
+
 ## Mode Matrix
 
 MVP-ready client modes:
@@ -71,6 +91,20 @@ Later refinement:
 DataMall Bus Arrival is live/current data. It does not give historical
 reliability by itself.
 
+Current source finding:
+
+- LTA DataMall `v3/BusArrival` provides live bus ETA/load/location evidence and
+  is refreshed frequently, but it requires the DataMall `AccountKey`. Do not
+  call it directly from browser code.
+- Runtime use needs a thin Vercel API route with key secrecy and short caching,
+  or a local collector that publishes aggregated static artifacts.
+- LTA does not provide open real-time train-arrival data. MRT/LRT can show
+  static station/line/exit references and DataMall disruption/crowd datasets,
+  but not live train ETA unless a future official source appears.
+- MRT first/last train timings are available on official LTA/operator pages,
+  but not as a confirmed bulk API. Treat them as manually curated/static unless
+  permission and a stable ingestion path are established.
+
 To build actual arrival reliability:
 
 - Run a local collector on this Windows machine.
@@ -93,16 +127,37 @@ snapshots into reliability metrics before the frontend can display them.
 
 ## Shade and Leaf Coverage
 
-Candidate official source:
+Verified official/static source status:
 
 - NParks Leaf Area Index on data.gov.sg, tracked in `pipeline/config/sources.yaml` as an XLSX calibration dataset.
+- NParks LAI is not spatial route geometry. It is useful for future species or
+  vegetation calibration, not enough to compute route-level shade by itself.
+- LTA Covered Linkway remains the strongest official rain-shelter and covered
+  pedestrian geometry source.
+- NParks Nature Ways, Park Connector routes/tracks, Tree Conservation Area, and
+  Heritage Trees are usable spatial shade/greenery proxies, but they need a
+  documented scoring model before entering Heat Comfort.
 
 Expected use:
 
-- Treat Leaf Area Index as shade/heat evidence.
+- Treat Leaf Area Index as calibration evidence only until paired with spatial
+  canopy/green-route geometry.
 - Do not count trees as rain shelter.
 - Combine future shade evidence with covered paths and, later, building shadow
   by time of day.
+
+## Postal Universe
+
+Current honest state:
+
+- The legitimate open/current universe in the shipped bundle is 124,032 records,
+  not the target ~140k.
+- Remaining expansion should come from a legitimate source, not OneMap brute
+  force.
+- SingPost SGLocate is the most plausible canonical address/postal universe,
+  but it is a subscription/commercial data product. Use only if licensed.
+- data.gov.sg datasets with postal-code fields can supplement official POI and
+  facility postals, but they are not expected to close the full gap alone.
 
 ## Missing Network Feature Checklist
 

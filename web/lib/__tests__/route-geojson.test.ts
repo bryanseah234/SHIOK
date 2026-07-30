@@ -14,6 +14,27 @@ describe("postalGeomToRouteGeoJson", () => {
           label: "open segment",
         },
       ],
+      route_segments: {
+        shortest: [
+          {
+            geom: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+            len_m: 20,
+            is_covered: false,
+          },
+          {
+            geom: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+            len_m: 30,
+            is_covered: true,
+          },
+        ],
+        sheltered: [
+          {
+            geom: "_p~iF~ps|U_ulLnnqC_mqNvxq`@",
+            len_m: 50,
+            is_covered: true,
+          },
+        ],
+      },
     };
 
     const route = postalGeomToRouteGeoJson(geom);
@@ -23,7 +44,15 @@ describe("postalGeomToRouteGeoJson", () => {
       [-120.95, 40.7],
       [-126.453, 43.252],
     ]);
+    expect(route.shortest.features).toHaveLength(2);
+    expect(route.shortest.features[0].properties).toMatchObject({
+      kind: "shortest",
+      is_covered: 0,
+      len_m: 20,
+      segment_index: 0,
+    });
     expect(route.sheltered.features[0].properties.kind).toBe("sheltered");
+    expect(route.sheltered.features[0].properties.is_covered).toBe(1);
     expect(route.exposureGaps.features[0].properties).toMatchObject({
       kind: "exposure_gap",
       label: "open segment",

@@ -625,6 +625,10 @@ def score_candidate_route(
         candidate_score["_geometry"] = {
             "shortest": route_result.get("shortest_geometry"),
             "sheltered": route_result.get("geometry"),
+            "shortest_path_edges": route_result.get("shortest_path_edges", []),
+            "sheltered_path_edges": route_result.get(
+                "sheltered_path_edges", route_result.get("path_edges", [])
+            ),
             "exposure_gap_edges": route_result.get("path_edges", []),
         }
     return candidate_score
@@ -790,17 +794,19 @@ def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
     safe_geometry["shortest"] = json_safe_geometry(safe_geometry.get("shortest"))
     safe_geometry["sheltered"] = json_safe_geometry(safe_geometry.get("sheltered"))
 
-    exposure_gap_edges = safe_geometry.get("exposure_gap_edges")
-    if isinstance(exposure_gap_edges, list):
+    for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
+        path_edges = safe_geometry.get(edges_key)
+        if not isinstance(path_edges, list):
+            continue
         safe_edges: list[Any] = []
-        for edge in exposure_gap_edges:
+        for edge in path_edges:
             if not isinstance(edge, dict):
                 safe_edges.append(edge)
                 continue
             safe_edge = dict(edge)
             safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
             safe_edges.append(safe_edge)
-        safe_geometry["exposure_gap_edges"] = safe_edges
+        safe_geometry[edges_key] = safe_edges
 
     safe["_geometry"] = safe_geometry
     return safe

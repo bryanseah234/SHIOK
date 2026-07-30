@@ -1,3 +1,5 @@
+from shapely.geometry import LineString
+
 from pipeline.routing import RoutingGraph, route_worker
 
 
@@ -106,4 +108,31 @@ def test_reusable_routing_graph_matches_route_worker():
     assert graph_result["covered_m"] == worker_result["covered_m"]
     assert graph_result["covered_ratio"] == worker_result["covered_ratio"]
     assert graph_result["geometry"] is None
+    assert graph_result["shortest_path_edges"] == []
+    assert graph_result["sheltered_path_edges"] == []
     assert graph_result["path_edges"] == []
+
+
+def test_routing_exports_shortest_and_sheltered_path_edges_with_geometry():
+    edges_dict = {
+        "u": [0, 1, 0, 3, 4],
+        "v": [1, 2, 3, 4, 2],
+        "length_m": [10.0, 10.0, 10.0, 10.0, 2.0],
+        "is_covered": [0, 0, 1, 1, 1],
+        "geometry": [
+            LineString([(0, 0), (10, 0)]),
+            LineString([(10, 0), (20, 0)]),
+            LineString([(0, 0), (0, 10)]),
+            LineString([(0, 10), (10, 10)]),
+            LineString([(10, 10), (20, 0)]),
+        ],
+    }
+
+    result = RoutingGraph.from_edges_dict(edges_dict).route({(0.0, 0.0): [(20.0, 0.0)]}, 0.6, 1.25)[
+        0
+    ]
+
+    assert result["routing_type"] == "sheltered"
+    assert [edge["is_covered"] for edge in result["shortest_path_edges"]] == [False, False]
+    assert [edge["is_covered"] for edge in result["sheltered_path_edges"]] == [True, True, True]
+    assert result["path_edges"] == result["sheltered_path_edges"]

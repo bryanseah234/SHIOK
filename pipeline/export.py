@@ -7,17 +7,18 @@ import json
 import math
 import re
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
+from collections.abc import Iterable
+from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import geopandas as gpd
 import h3
 from pyproj import Transformer
+from shapely import wkt as shapely_wkt
 from shapely.geometry import MultiLineString, Point
 from shapely.ops import linemerge
-from shapely import wkt as shapely_wkt
 
 from pipeline.bus import parse_peak_frequency_minutes
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
@@ -102,8 +103,8 @@ def encode_polyline(points: Iterable[tuple[float, float]], precision: int = 5) -
     prev_lon = 0
     encoded = []
     for lat, lon in points:
-        lat_i = int(math.floor(lat * factor + 0.5))
-        lon_i = int(math.floor(lon * factor + 0.5))
+        lat_i = math.floor(lat * factor + 0.5)
+        lon_i = math.floor(lon * factor + 0.5)
         encoded.append(encode_signed_polyline_value(lat_i - prev_lat))
         encoded.append(encode_signed_polyline_value(lon_i - prev_lon))
         prev_lat = lat_i
@@ -162,6 +163,49 @@ def exposure_gap_geometries(record: dict[str, Any]) -> list[dict[str, Any]]:
     return gaps
 
 
+def route_segment_geometries(edges: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    segments: list[dict[str, Any]] = []
+    current_edges: list[dict[str, Any]] = []
+    current_covered: bool | None = None
+
+    def flush() -> None:
+        nonlocal current_covered
+        if not current_edges or current_covered is None:
+            current_edges.clear()
+            current_covered = None
+            return
+        geometry = merged_geometry(current_edges)
+        encoded = encode_geometry(geometry)
+        if encoded:
+            segments.append(
+                {
+                    "geom": encoded,
+                    "len_m": round(
+                        sum(float(edge.get("length_m", 0.0)) for edge in current_edges),
+                        1,
+                    ),
+                    "is_covered": current_covered,
+                }
+            )
+        current_edges.clear()
+        current_covered = None
+
+    for edge in edges:
+        length_m = float(edge.get("length_m", 0.0))
+        geometry = edge.get("geometry")
+        if length_m <= 0 or geometry is None:
+            continue
+        covered = bool(edge.get("is_covered"))
+        if current_covered is None:
+            current_covered = covered
+        if covered != current_covered:
+            flush()
+            current_covered = covered
+        current_edges.append(edge)
+    flush()
+    return segments
+
+
 def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
     geometry_payload = record.get("_geometry")
     if not isinstance(geometry_payload, dict):
@@ -170,12 +214,22 @@ def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
     sheltered = encode_geometry(geometry_payload.get("sheltered"))
     if not shortest or not sheltered:
         return None
-    return {
+    output: dict[str, Any] = {
         "postal": record["postal"],
         "shortest": shortest,
         "sheltered": sheltered,
         "exposure_gaps": exposure_gap_geometries(record),
     }
+    shortest_segments = route_segment_geometries(geometry_payload.get("shortest_path_edges", []))
+    sheltered_segments = route_segment_geometries(
+        geometry_payload.get("sheltered_path_edges", geometry_payload.get("exposure_gap_edges", []))
+    )
+    if shortest_segments or sheltered_segments:
+        output["route_segments"] = {
+            "shortest": shortest_segments,
+            "sheltered": sheltered_segments,
+        }
+    return output
 
 
 def public_score_record(record: dict[str, Any]) -> dict[str, Any]:
@@ -349,7 +403,7 @@ def export_static_artifacts(
         }
     )
     manifest = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "data_as_of": data_as_of_values[-1] if data_as_of_values else None,
         "provenance": {
             "artifact": "shiok-static-json",
@@ -747,10 +801,10 @@ def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
     for path in chunk_paths:
         payload = read_json(path)
         if not isinstance(payload, list):
-            raise ValueError(f"score batch chunk must contain a list: {path}")
+            raise TypeError(f"score batch chunk must contain a list: {path}")
         for item in payload:
             if not isinstance(item, dict):
-                raise ValueError(f"score batch chunk record must be an object: {path}")
+                raise TypeError(f"score batch chunk record must be an object: {path}")
             postal = str(item.get("postal", ""))
             if not postal:
                 raise ValueError(f"score batch chunk record missing postal: {path}")
