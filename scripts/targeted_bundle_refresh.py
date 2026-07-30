@@ -324,13 +324,25 @@ def refresh_bundle(
     comparisons = []
     for postal in existing_postals:
         after_record = replacements.get(postal)
+        rescored_record = rescored_by_postal.get(postal)
         before = before_records.get(postal)
+        after_compact = compact_record(after_record)
+        if after_compact is not None and rescored_record is not None:
+            geometry = rescored_record.get("_geometry")
+            after_compact["has_route_segments"] = bool(
+                isinstance(geometry, dict)
+                and (
+                    geometry.get("shortest_path_edges")
+                    or geometry.get("sheltered_path_edges")
+                    or geometry.get("exposure_gap_edges")
+                )
+            )
         comparisons.append(
             {
                 "postal": postal,
                 "area": area_from_shard(existing_lookup[postal]),
                 "before": compact_record(before),
-                "after": compact_record(after_record),
+                "after": after_compact,
                 "state_changed": (before or {}).get("state") != (after_record or {}).get("state"),
             }
         )

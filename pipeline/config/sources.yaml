@@ -85,6 +85,34 @@ sources:
     verified: "2026-07-29"
     notes: "data.gov.sg XLSX table; shade/heat calibration source only, not rain shelter geometry"
 
+  nparks_nature_ways:
+    name: "NParks Nature Ways"
+    kind: "datagov_polldownload"
+    dataset_id: "d_af948e3f29cd12bc8b0caea19ae68286"
+    verified: "2026-07-30"
+    notes: "GeoJSON line proxy for future heat/shade calibration only; not rain shelter"
+
+  nparks_park_connector_loop:
+    name: "NParks Park Connector Loop"
+    kind: "datagov_polldownload"
+    dataset_id: "d_a69ef89737379f231d2ae93fd1c5707f"
+    verified: "2026-07-30"
+    notes: "GeoJSON line proxy for future heat/shade calibration only; not rain shelter"
+
+  nparks_tracks:
+    name: "NParks Tracks"
+    kind: "datagov_polldownload"
+    dataset_id: "d_306cc1018cb733346681883ee6d73054"
+    verified: "2026-07-30"
+    notes: "GeoJSON tracks and park connector network proxy for future heat/shade calibration only"
+
+  nparks_heritage_trees:
+    name: "NParks Heritage Trees"
+    kind: "datagov_polldownload"
+    dataset_id: "d_644ff187b6d14d6316f47284a4a6c81f"
+    verified: "2026-07-30"
+    notes: "Point tree proxy for future heat/shade calibration only; not comprehensive canopy geometry"
+
   osm_extract:
     name: "Geofabrik Malaysia/Singapore/Brunei OSM"
     kind: "osm_pbf"

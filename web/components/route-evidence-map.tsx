@@ -814,7 +814,11 @@ export function RouteEvidenceMap({
     setSourceData(map, "transit-pois", transitPoiData);
     setSourceData(map, "feedback-route", feedbackData.route);
     setSourceData(map, "feedback-points", feedbackData.points);
+  }, [loaded, routeData, transitPoiData, feedbackData]);
 
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !loaded || !routeData.bounds) return;
     if (routeData.bounds) {
       const isCompact = map.getContainer().clientWidth < 700;
       map.fitBounds(routeData.bounds, {
@@ -825,7 +829,7 @@ export function RouteEvidenceMap({
         maxZoom: 16.6,
       });
     }
-  }, [loaded, routeData, transitPoiData, feedbackData]);
+  }, [loaded, routeData]);
 
   useEffect(() => {
     const map = mapRef.current;
