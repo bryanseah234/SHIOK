@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T12:23:13.479357+00:00",
+  "generated_at": "2026-07-31T03:52:07.027774+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -22,7 +22,7 @@
     "bus_routes": {
       "bytes": 6211748,
       "etag": null,
-      "fetched_at": "2026-07-29T12:22:42.720838+00:00",
+      "fetched_at": "2026-07-31T03:51:25.605634+00:00",
       "last_modified": null,
       "sha256": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
       "source_name": "Bus Routes",
@@ -31,7 +31,7 @@
     "bus_services": {
       "bytes": 185358,
       "etag": null,
-      "fetched_at": "2026-07-29T12:22:28.465298+00:00",
+      "fetched_at": "2026-07-31T03:51:10.658665+00:00",
       "last_modified": null,
       "sha256": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
       "source_name": "Bus Services",
@@ -40,7 +40,7 @@
     "bus_stops": {
       "bytes": 719050,
       "etag": null,
-      "fetched_at": "2026-07-29T12:22:28.062022+00:00",
+      "fetched_at": "2026-07-31T03:51:10.200150+00:00",
       "last_modified": null,
       "sha256": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
       "source_name": "Bus Stops",
@@ -81,6 +81,42 @@
       "sha256": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
       "source_name": "MRT/LRT Station Exits",
       "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_b39d3a0871985372d7e1637193335da5.geojson"
+    },
+    "nparks_heritage_trees": {
+      "bytes": 149987,
+      "etag": "\"bf2a2716ed50d17e3ce7e8ef7ee93460-1\"",
+      "fetched_at": "2026-07-31T03:52:07.027774+00:00",
+      "last_modified": "Wed, 01 Apr 2026 02:06:45 GMT",
+      "sha256": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+      "source_name": "NParks Heritage Trees",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_644ff187b6d14d6316f47284a4a6c81f.geojson"
+    },
+    "nparks_nature_ways": {
+      "bytes": 208278,
+      "etag": "\"fcb99500a475d154d026ff0f66436f9e-1\"",
+      "fetched_at": "2026-07-31T03:51:55.038503+00:00",
+      "last_modified": "Thu, 16 Apr 2026 02:06:48 GMT",
+      "sha256": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+      "source_name": "NParks Nature Ways",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_af948e3f29cd12bc8b0caea19ae68286.geojson"
+    },
+    "nparks_park_connector_loop": {
+      "bytes": 2008356,
+      "etag": "\"9a61e46bba5d5e86e69aeea20f8b66ec-1\"",
+      "fetched_at": "2026-07-31T03:51:58.411055+00:00",
+      "last_modified": "Wed, 15 Jul 2026 02:06:54 GMT",
+      "sha256": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+      "source_name": "NParks Park Connector Loop",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_a69ef89737379f231d2ae93fd1c5707f.geojson"
+    },
+    "nparks_tracks": {
+      "bytes": 25252264,
+      "etag": "\"5f67a52dc0b2a5a603991fdfb8cb2532-3\"",
+      "fetched_at": "2026-07-31T03:52:03.745049+00:00",
+      "last_modified": "Thu, 25 Dec 2025 02:06:56 GMT",
+      "sha256": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+      "source_name": "NParks Tracks",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_306cc1018cb733346681883ee6d73054.geojson"
     },
     "osm_extract": {
       "bytes": 248783590,

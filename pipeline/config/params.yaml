@@ -17,6 +17,8 @@ crossing_friction:
   dbscan_eps_m: 20
   dbscan_min_samples: 2
   penalty_per_crossing: 20
+heat_comfort:
+  shade_proxy_weight: 0.5
 onemap:
   highest_sustained_clean_rate_rps: 1.0  # Empirical ladder probe R (citation: logs/onemap_probe.csv)
   derived_client_throttle_rps: 0.5       # R / 2 per Section B formula

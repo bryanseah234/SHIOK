@@ -24,7 +24,7 @@ from pipeline.bus import (
     BusStopCandidate,
     combined_expected_wait_min,
 )
-from pipeline.routing import RoutingGraph, prepare_edges_for_routing
+from pipeline.routing import EDGE_METADATA_COLUMNS, RoutingGraph, prepare_edges_for_routing
 from pipeline.scoring import (
     NO_TRANSIT_IN_RANGE,
     NOT_YET_SCORED,
@@ -121,6 +121,7 @@ def load_network_inputs(
     cols = ["u", "v", "length_m", "is_covered"]
     if "geometry" in edges_df.columns:
         cols.append("geometry")
+    cols.extend(column for column in EDGE_METADATA_COLUMNS if column in edges_df.columns)
 
     nodes = (
         pd.concat([edges_df["u"], edges_df["v"]], ignore_index=True)
@@ -538,6 +539,14 @@ def round_nullable_score(value: Any) -> float | None:
     return round(float(value), 1)
 
 
+def heat_comfort_evidence_m(route_result: dict[str, Any], params: dict[str, Any]) -> float:
+    length_m = float(route_result["length_m"])
+    covered_m = float(route_result["covered_m"])
+    shade_m = float(route_result.get("shade_m") or 0.0)
+    shade_weight = float(params.get("heat_comfort", {}).get("shade_proxy_weight", 0.0))
+    return min(length_m, covered_m + shade_m * shade_weight)
+
+
 def score_candidate_route(
     candidate: CandidateNode,
     route_result: dict[str, Any],
@@ -561,9 +570,8 @@ def score_candidate_route(
     rain: SubscoreValue = score_rain_shelter(
         float(route_result["covered_m"]), float(route_result["length_m"])
     )
-    heat: SubscoreValue = score_heat_comfort(
-        float(route_result["covered_m"]), float(route_result["length_m"])
-    )
+    heat_evidence_m = heat_comfort_evidence_m(route_result, params)
+    heat: SubscoreValue = score_heat_comfort(heat_evidence_m, float(route_result["length_m"]))
     crossing: SubscoreValue = (
         score_crossing_friction(crossing_count, params["crossing_friction"])
         if crossing_count is not None
@@ -616,7 +624,21 @@ def score_candidate_route(
             "routing_type": route_result["routing_type"],
             "covered_m": round(float(route_result["covered_m"]), 1),
             "covered_ratio": round(float(route_result["covered_ratio"]), 3),
+            "shade_m": round(float(route_result.get("shade_m") or 0.0), 1),
+            "shade_ratio": round(float(route_result.get("shade_ratio") or 0.0), 3),
+            "heat_comfort_m": round(float(heat_evidence_m), 1),
+            "heat_comfort_ratio": round(
+                (
+                    float(heat_evidence_m) / float(route_result["length_m"])
+                    if float(route_result["length_m"]) > 0
+                    else 0.0
+                ),
+                3,
+            ),
             "shortest_covered_ratio": round(float(route_result["shortest_covered_ratio"]), 3),
+            "shortest_shade_ratio": round(
+                float(route_result.get("shortest_shade_ratio") or 0.0), 3
+            ),
         },
         "exposure_gaps": exposure_gaps_from_path_edges(route_result.get("path_edges", [])),
         "crossing_count": crossing_count,
@@ -632,6 +654,53 @@ def score_candidate_route(
             "exposure_gap_edges": route_result.get("path_edges", []),
         }
     return candidate_score
+
+
+def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, float]:
+    return (
+        float(candidate_score["total"]),
+        float(candidate_score["subscores"].get("rain") or 0.0),
+        -float(candidate_score["paths"]["shortest_m"]),
+    )
+
+
+def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
+    has_pending_subscores = any(value is None for value in candidate_score["subscores"].values())
+    return {
+        "state": "SCORED_PARTIAL" if has_pending_subscores else "SCORED",
+        "total": round(float(candidate_score["total"]), 1),
+        "subscores": candidate_score["subscores"],
+        "best_node": candidate_score["best_node"],
+        "paths": candidate_score["paths"],
+        "exposure_gaps": candidate_score["exposure_gaps"],
+    }
+
+
+def empty_route_option(node_type: str) -> dict[str, Any]:
+    return {
+        "state": NO_TRANSIT_IN_RANGE,
+        "total": None,
+        "subscores": None,
+        "best_node": {
+            "type": node_type,
+            "name": "No route found",
+            "routed_m": None,
+        },
+        "paths": None,
+        "exposure_gaps": None,
+    }
+
+
+def best_candidate_by_type(
+    scored_candidates: list[dict[str, Any]],
+    node_type: str,
+) -> dict[str, Any] | None:
+    typed = [
+        candidate_score
+        for candidate_score in scored_candidates
+        if candidate_score["best_node"].get("type") == node_type
+    ]
+    return max(typed, key=candidate_sort_key) if typed else None
 
 
 def build_provenance(
@@ -663,6 +732,11 @@ def build_provenance(
                 "bus_stops",
                 "bus_services",
                 "bus_routes",
+                "leaf_area_index",
+                "nparks_nature_ways",
+                "nparks_park_connector_loop",
+                "nparks_tracks",
+                "nparks_heritage_trees",
             }
         },
         "routing": {
@@ -684,7 +758,19 @@ def build_provenance(
             "access": "real_routed_shortest_distance",
             "bus": "real" if bus_data_available else "pending_lta_datamall_account_key",
             "rain": "real_routed_covered_length_ratio",
-            "heat": "provisional_covered_only_until_phase_4",
+            "heat": (
+                "provisional_covered_plus_nparks_shade_proxy_heat_only"
+                if any(
+                    key in sources
+                    for key in {
+                        "nparks_nature_ways",
+                        "nparks_park_connector_loop",
+                        "nparks_tracks",
+                        "nparks_heritage_trees",
+                    }
+                )
+                else "provisional_covered_only_until_phase_4"
+            ),
             "crossing": (
                 "real_traffic_signals_with_grade_separated_exemption"
                 if crossing_counter.available
@@ -751,29 +837,49 @@ def assemble_score_record(
             "provenance": provenance,
         }
 
-    best = max(
-        scored_candidates,
-        key=lambda item: (
-            float(item["total"]),
-            float(item["subscores"].get("rain") or 0.0),
-            -float(item["paths"]["shortest_m"]),
+    best = max(scored_candidates, key=candidate_sort_key)
+    best_mrt = best_candidate_by_type(scored_candidates, "mrt_lrt_exit")
+    best_bus = best_candidate_by_type(scored_candidates, "bus_stop")
+
+    route_options = {
+        "best_transit": public_route_option(best),
+        "mrt_lrt": (
+            public_route_option(best_mrt)
+            if best_mrt is not None
+            else empty_route_option("mrt_lrt_exit")
         ),
-    )
-    has_pending_subscores = any(value is None for value in best["subscores"].values())
+        "bus": (
+            public_route_option(best_bus)
+            if best_bus is not None
+            else empty_route_option("bus_stop")
+        ),
+    }
 
     record = {
         "postal": postal,
-        "state": "SCORED_PARTIAL" if has_pending_subscores else "SCORED",
+        "state": route_options["best_transit"]["state"],
         "total": round(float(best["total"]), 1),
         "subscores": best["subscores"],
         "best_node": best["best_node"],
         "paths": best["paths"],
         "exposure_gaps": best["exposure_gaps"],
+        "route_options": route_options,
         "data_as_of": data_as_of,
         "provenance": provenance,
     }
     if "_geometry" in best:
         record["_geometry"] = best["_geometry"]
+    geometry_options = {
+        key: candidate_score["_geometry"]
+        for key, candidate_score in {
+            "best_transit": best,
+            "mrt_lrt": best_mrt,
+            "bus": best_bus,
+        }.items()
+        if candidate_score is not None and "_geometry" in candidate_score
+    }
+    if geometry_options:
+        record["_geometry_options"] = geometry_options
     return record
 
 
@@ -809,6 +915,30 @@ def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
         safe_geometry[edges_key] = safe_edges
 
     safe["_geometry"] = safe_geometry
+    geometry_options = safe.get("_geometry_options")
+    if isinstance(geometry_options, dict):
+        safe_options = {}
+        for key, option_geometry in geometry_options.items():
+            if not isinstance(option_geometry, dict):
+                continue
+            option_safe = dict(option_geometry)
+            option_safe["shortest"] = json_safe_geometry(option_safe.get("shortest"))
+            option_safe["sheltered"] = json_safe_geometry(option_safe.get("sheltered"))
+            for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
+                path_edges = option_safe.get(edges_key)
+                if not isinstance(path_edges, list):
+                    continue
+                option_safe_edges: list[Any] = []
+                for edge in path_edges:
+                    if not isinstance(edge, dict):
+                        option_safe_edges.append(edge)
+                        continue
+                    safe_edge = dict(edge)
+                    safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
+                    option_safe_edges.append(safe_edge)
+                option_safe[edges_key] = option_safe_edges
+            safe_options[str(key)] = option_safe
+        safe["_geometry_options"] = safe_options
     return safe
 
 

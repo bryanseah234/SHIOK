@@ -64,6 +64,11 @@ function routeSegmentFeatures(
         is_covered: segment.is_covered ? 1 : 0,
         len_m: segment.len_m,
         segment_index: index,
+        source_class: segment.source_class ?? (segment.is_covered ? "covered_unknown" : "exposed"),
+        source_layer: segment.source_layer ?? "",
+        synth_class: segment.synth_class ?? "",
+        confidence: segment.confidence ?? "",
+        source_summary: segment.source_summary ?? "",
       })
     )
     .filter((feature) => feature.geometry.coordinates.length > 0);

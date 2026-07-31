@@ -11,6 +11,20 @@ from shapely.ops import linemerge
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = PROJECT_ROOT / "pipeline" / "config" / "params.yaml"
+EDGE_METADATA_COLUMNS = [
+    "source_layer",
+    "synth_class",
+    "confidence",
+    "shade_ratio",
+    "shade_source",
+    "shade_confidence",
+    "covered",
+    "highway",
+    "bridge",
+    "tunnel",
+    "indoor",
+    "footway",
+]
 
 
 def load_params():
@@ -79,6 +93,9 @@ def build_graph(edges_df):
     g.es["is_covered"] = edges_df["is_covered"].values
     if "geometry" in edges_df.columns:
         g.es["geometry"] = edges_df["geometry"].values
+    for column in EDGE_METADATA_COLUMNS:
+        if column in edges_df.columns:
+            g.es[column] = edges_df[column].values
 
     return g, node_mapping, reverse_mapping
 
@@ -92,9 +109,15 @@ class RoutingGraph:
         self.component_membership = self.graph.connected_components(mode="weak").membership
         self.lengths = [float(value) for value in self.graph.es["length_m"]]
         self.covered = [bool(value) for value in self.graph.es["is_covered"]]
+        self.shade_ratios = self._shade_ratio_values()
         self.geometries = (
             list(self.graph.es["geometry"]) if "geometry" in self.graph.edge_attributes() else None
         )
+        self.edge_metadata = {
+            column: list(self.graph.es[column])
+            for column in EDGE_METADATA_COLUMNS
+            if column in self.graph.edge_attributes()
+        }
         self._sheltered_costs_by_lambda = {}
 
     @classmethod
@@ -109,11 +132,26 @@ class RoutingGraph:
         obj.component_membership = obj.graph.connected_components(mode="weak").membership
         obj.lengths = [float(value) for value in obj.graph.es["length_m"]]
         obj.covered = [bool(value) for value in obj.graph.es["is_covered"]]
+        obj.shade_ratios = obj._shade_ratio_values()
         obj.geometries = (
             list(obj.graph.es["geometry"]) if "geometry" in obj.graph.edge_attributes() else None
         )
+        obj.edge_metadata = {
+            column: list(obj.graph.es[column])
+            for column in EDGE_METADATA_COLUMNS
+            if column in obj.graph.edge_attributes()
+        }
         obj._sheltered_costs_by_lambda = {}
         return obj
+
+    def _shade_ratio_values(self):
+        if "shade_ratio" not in self.graph.edge_attributes():
+            return [0.0 for _ in self.lengths]
+        ratios = []
+        for value in self.graph.es["shade_ratio"]:
+            numeric = pd.to_numeric(value, errors="coerce")
+            ratios.append(0.0 if pd.isna(numeric) else max(0.0, min(1.0, float(numeric))))
+        return ratios
 
     def sheltered_costs(self, shelter_lambda):
         lambda_key = float(shelter_lambda)
@@ -137,14 +175,20 @@ class RoutingGraph:
     def path_edges_for_epath(self, epath):
         if self.geometries is None:
             return []
-        return [
-            {
+        edges = []
+        for edge_id in epath:
+            edge = {
                 "length_m": float(self.lengths[edge_id]),
                 "is_covered": bool(self.covered[edge_id]),
                 "geometry": self.geometries[edge_id],
             }
-            for edge_id in epath
-        ]
+            for column, values in self.edge_metadata.items():
+                value = values[edge_id]
+                if pd.isna(value):
+                    continue
+                edge[column] = value
+            edges.append(edge)
+        return edges
 
     def route(self, od_pairs, shelter_lambda, detour_budget, include_geometry=True):
         sheltered_weights = (
@@ -200,8 +244,18 @@ class RoutingGraph:
                 final_covered = sum(
                     self.lengths[edge_id] for edge_id in final_epath if self.covered[edge_id]
                 )
+                final_shade = sum(
+                    self.lengths[edge_id] * self.shade_ratios[edge_id]
+                    for edge_id in final_epath
+                    if not self.covered[edge_id]
+                )
                 cov_short = sum(
                     self.lengths[edge_id] for edge_id in epath_short if self.covered[edge_id]
+                )
+                shade_short = sum(
+                    self.lengths[edge_id] * self.shade_ratios[edge_id]
+                    for edge_id in epath_short
+                    if not self.covered[edge_id]
                 )
                 sheltered_length = (
                     sum(self.lengths[edge_id] for edge_id in epath_shelt) if epath_shelt else None
@@ -214,8 +268,12 @@ class RoutingGraph:
                     "length_m": final_length,
                     "covered_m": final_covered,
                     "covered_ratio": final_covered / final_length if final_length > 0 else 0.0,
+                    "shade_m": final_shade,
+                    "shade_ratio": final_shade / final_length if final_length > 0 else 0.0,
                     "shortest_length_m": len_short,
                     "shortest_covered_ratio": cov_short / len_short if len_short > 0 else 0.0,
+                    "shortest_shade_m": shade_short,
+                    "shortest_shade_ratio": shade_short / len_short if len_short > 0 else 0.0,
                     "sheltered_length_m": sheltered_length,
                     "geometry": None,
                     "shortest_geometry": None,
@@ -257,6 +315,7 @@ def run_routing_batch(network_path, od_pairs):
     cols = ["u", "v", "length_m", "is_covered"]
     if "geometry" in edges_df.columns:
         cols.append("geometry")
+    cols.extend(column for column in EDGE_METADATA_COLUMNS if column in edges_df.columns)
     edges_dict = edges_df[cols].to_dict("list")
 
     origins = list(od_pairs.keys())

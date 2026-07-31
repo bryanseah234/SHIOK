@@ -89,6 +89,26 @@ def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
             edges.append(safe_edge)
         safe_geometry[edges_key] = edges
     safe["_geometry"] = safe_geometry
+    geometry_options = safe.get("_geometry_options")
+    if isinstance(geometry_options, dict):
+        safe_options: dict[str, Any] = {}
+        for key, option_geometry in geometry_options.items():
+            if not isinstance(option_geometry, dict):
+                continue
+            option_safe = dict(option_geometry)
+            option_safe["shortest"] = json_safe_geometry(option_safe.get("shortest"))
+            option_safe["sheltered"] = json_safe_geometry(option_safe.get("sheltered"))
+            for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
+                edges = []
+                for edge in option_safe.get(edges_key, []):
+                    if not isinstance(edge, dict):
+                        continue
+                    safe_edge = dict(edge)
+                    safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
+                    edges.append(safe_edge)
+                option_safe[edges_key] = edges
+            safe_options[str(key)] = option_safe
+        safe["_geometry_options"] = safe_options
     return safe
 
 

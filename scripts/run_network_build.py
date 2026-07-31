@@ -16,6 +16,12 @@ from shapely.errors import ShapelyDeprecationWarning
 from shapely.geometry import LineString, MultiLineString, Point
 from shapely.ops import nearest_points, substring
 
+from pipeline.shade import (
+    NPARKS_SHADE_SOURCE_KEYS,
+    compute_edge_shade_ratio,
+    prepare_shade_proxy_geometries,
+)
+
 warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
 
@@ -698,6 +704,52 @@ def load_overhead_bridge_underpass_polygons(
     )
     bridge_gdf["source_layer"] = "overhead_bridge_underpass"
     return bridge_gdf
+
+
+def load_nparks_shade_proxy_geometries(
+    union_poly,
+) -> tuple[gpd.GeoDataFrame, dict[str, dict[str, object]]]:
+    frames: list[gpd.GeoDataFrame] = []
+    report: dict[str, dict[str, object]] = {}
+    for source_key in sorted(NPARKS_SHADE_SOURCE_KEYS):
+        path = find_raw_file(f"{source_key}.geojson")
+        if path is None:
+            report[source_key] = {
+                "status": "missing",
+                "features_raw": 0,
+                "features_in_scope": 0,
+                "proxy_polygons": 0,
+            }
+            continue
+        try:
+            features = gpd.read_file(path)
+            if features.crs is None:
+                features = features.set_crs(epsg=4326)
+            features = features.to_crs(epsg=3414)
+            in_scope = features[features.geometry.intersects(union_poly)].copy()
+            proxy = prepare_shade_proxy_geometries(in_scope, source_key=source_key)
+        except Exception as exc:  # noqa: BLE001 - bad upstream geometry should not fake shade.
+            report[source_key] = {
+                "status": "error",
+                "error": str(exc),
+                "features_raw": 0,
+                "features_in_scope": 0,
+                "proxy_polygons": 0,
+            }
+            continue
+        report[source_key] = {
+            "status": "loaded",
+            "path": str(path.relative_to(PROJECT_ROOT)),
+            "features_raw": int(len(features)),
+            "features_in_scope": int(len(in_scope)),
+            "proxy_polygons": int(len(proxy)),
+        }
+        if not proxy.empty:
+            frames.append(proxy)
+
+    if not frames:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:3414"), report
+    return gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs="EPSG:3414"), report
 
 
 def load_hdb_building_points(union_poly) -> gpd.GeoDataFrame:
@@ -1967,6 +2019,29 @@ def run_build(scope: str = "pilot"):
         synth_gdf = gpd.GeoDataFrame(synth_edges, crs="EPSG:3414")
         edges_gdf = pd.concat([edges_gdf, synth_gdf], ignore_index=True)
 
+    shade_proxy_gdf, shade_report = load_nparks_shade_proxy_geometries(union_poly)
+    edges_gdf["shade_ratio"] = 0.0
+    edges_gdf["shade_source"] = ""
+    edges_gdf["shade_confidence"] = ""
+    shade_edge_count = 0
+    shade_weighted_length_m = 0.0
+    if not shade_proxy_gdf.empty:
+        shade_ratios = compute_edge_shade_ratio(edges_gdf[["geometry"]].copy(), shade_proxy_gdf)
+        shade_ratios = shade_ratios.fillna(0.0).clip(lower=0.0, upper=1.0)
+        shade_mask = shade_ratios > 0
+        edges_gdf.loc[:, "shade_ratio"] = shade_ratios.round(3)
+        edges_gdf.loc[shade_mask, "shade_source"] = "nparks_greenery_proxy"
+        edges_gdf.loc[shade_mask, "shade_confidence"] = "proxy_heat_only"
+        shade_edge_count = int(shade_mask.sum())
+        shade_weighted_length_m = float((edges_gdf.geometry.length * shade_ratios).sum())
+    print(
+        "NParks shade proxy attribution: "
+        f"sources_loaded={sum(1 for item in shade_report.values() if item['status'] == 'loaded')}, "
+        f"proxy_polygons={len(shade_proxy_gdf)}, "
+        f"shaded_edges={shade_edge_count}, "
+        f"weighted_length={shade_weighted_length_m:.1f}m"
+    )
+
     sizes, total_nodes, residuals = get_components(edges_gdf)
     top_3_share = sum(sizes[:3]) / total_nodes if total_nodes > 0 else 0
     final_real_disconnections = [r for r in residuals if r["class"] == "REAL_DISCONNECTION"]
@@ -2072,6 +2147,9 @@ def run_build(scope: str = "pilot"):
         "covered_edge_length_m_inferred_hdb_precinct_connectors": hdb_precinct_length_m,
         "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
+        "shade_proxy_edge_count": shade_edge_count,
+        "shade_proxy_weighted_length_m": shade_weighted_length_m,
+        "shade_proxy_sources": shade_report,
         "inferred_hdb_void_deck": hdb_void_report,
         "inferred_hdb_void_deck_anchors": hdb_anchor_report,
         "inferred_hdb_precinct_connectors": hdb_precinct_report,
@@ -2118,6 +2196,18 @@ def run_build(scope: str = "pilot"):
         hpf = edges_gdf.loc[hdb_point_footway_debug_mask, ["geometry"]].copy().to_crs(epsg=4326)
         hpf["class"] = "INFERRED_HDB_POINT_FOOTWAY"
         debug_export = pd.concat([debug_export, hpf[["geometry", "class"]]], ignore_index=True)
+    if "shade_ratio" in edges_gdf.columns:
+        shade_debug_mask = pd.to_numeric(edges_gdf["shade_ratio"], errors="coerce").fillna(0) > 0
+        if bool(shade_debug_mask.any()):
+            shade_debug = (
+                edges_gdf.loc[shade_debug_mask, ["geometry", "shade_ratio"]]
+                .copy()
+                .to_crs(epsg=4326)
+            )
+            shade_debug["class"] = "NPARKS_SHADE_PROXY"
+            debug_export = pd.concat(
+                [debug_export, shade_debug[["geometry", "class"]]], ignore_index=True
+            )
     if not roof_gdf.empty:
         re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
         re["class"] = "OSM_ROOF_CANOPY"

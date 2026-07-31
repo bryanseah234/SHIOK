@@ -73,6 +73,20 @@ interface PointFeatureCollection {
 }
 
 type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
+const SHELTER_SOURCE_COLOR = [
+  "case",
+  ["==", ["get", "is_covered"], 0],
+  "#c4332b",
+  ["==", ["get", "source_class"], "inferred_hdb_void_deck"],
+  "#7d7a42",
+  ["==", ["get", "source_class"], "bridge_underpass"],
+  "#4f7690",
+  ["==", ["get", "source_class"], "audited_shelter_correction"],
+  "#6957a8",
+  ["==", ["get", "source_class"], "osm_covered"],
+  "#317d76",
+  "#008f86",
+] as unknown as maplibregl.ExpressionSpecification;
 
 const SOURCE_IDS = [
   "transit-pois",
@@ -238,7 +252,8 @@ function mergeCollections(collections: LineStringFeatureCollection[]): LineStrin
 }
 
 function endpointFor(collection: LineStringFeatureCollection): LngLat | null {
-  const coordinates = collection.features[0]?.geometry.coordinates ?? [];
+  const lastFeature = collection.features[collection.features.length - 1];
+  const coordinates = lastFeature?.geometry.coordinates ?? [];
   return coordinates.length > 0 ? coordinates[coordinates.length - 1] : null;
 }
 
@@ -382,7 +397,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "line-color": [
           "case",
           ["has", "is_covered"],
-          ["case", ["==", ["get", "is_covered"], 1], "#008f86", "#c4332b"],
+          SHELTER_SOURCE_COLOR,
           "#26342f",
         ],
         "line-width": 3.5,
@@ -422,7 +437,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "line-color": [
           "case",
           ["has", "is_covered"],
-          ["case", ["==", ["get", "is_covered"], 1], ["get", "color"], "#c4332b"],
+          SHELTER_SOURCE_COLOR,
           ["get", "color"],
         ],
         "line-width": 4.8,

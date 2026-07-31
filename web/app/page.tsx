@@ -2,7 +2,16 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal, fetchTransitPois } from "../lib/data";
-import type { Manifest, PostalGeom, ScoreRecord, Subscores, TransitPoiCollection } from "../lib/types";
+import type {
+  Manifest,
+  PostalGeom,
+  PostalRouteGeomOption,
+  RouteSegment,
+  ScoreRecord,
+  Subscores,
+  TransitAccessMode,
+  TransitPoiCollection,
+} from "../lib/types";
 import {
   RouteEvidenceMap,
   type FeedbackPoint,
@@ -33,6 +42,22 @@ const SUBSCORE_LABELS: Array<[keyof Subscores, string]> = [
   ["bus", "Bus"],
   ["crossing", "Crossings"],
 ];
+
+const TRANSIT_MODE_OPTIONS: Array<{ id: TransitAccessMode; label: string }> = [
+  { id: "best_transit", label: "Best transit" },
+  { id: "mrt_lrt", label: "MRT/LRT" },
+  { id: "bus", label: "Bus" },
+];
+
+const SOURCE_LABELS: Record<string, string> = {
+  lta_covered_linkway: "LTA shelter",
+  osm_covered: "OSM covered",
+  inferred_hdb_void_deck: "HDB inferred",
+  bridge_underpass: "Bridge/underpass",
+  audited_shelter_correction: "Audited shelter",
+  covered_unknown: "Covered",
+  exposed: "Exposed",
+};
 
 const REASON_COPY: Record<keyof Subscores, { low: string; high: string }> = {
   access: { low: "Longer walk to transit", high: "Short walk to transit" },
@@ -137,6 +162,62 @@ function routeSame(selection: LoadedSelection | null): boolean {
   );
 }
 
+function routeOptionScore(score: ScoreRecord, mode: TransitAccessMode): ScoreRecord {
+  if (mode === "best_transit") return score;
+  const option = score.route_options?.[mode];
+  if (!option) {
+    return {
+      ...score,
+      state: "NO_TRANSIT_IN_RANGE",
+      total: null,
+      subscores: null,
+      best_node: null,
+      paths: null,
+      exposure_gaps: null,
+    };
+  }
+  return {
+    ...score,
+    state: option.state,
+    total: option.total,
+    subscores: option.subscores,
+    best_node: option.best_node,
+    paths: option.paths,
+    exposure_gaps: option.exposure_gaps,
+  };
+}
+
+function optionGeomToPostalGeom(postal: string, option: PostalRouteGeomOption): PostalGeom {
+  return {
+    postal,
+    shortest: option.shortest,
+    sheltered: option.sheltered,
+    shortest_parts: option.shortest_parts,
+    sheltered_parts: option.sheltered_parts,
+    exposure_gaps: option.exposure_gaps,
+    route_segments: option.route_segments,
+  };
+}
+
+function routeOptionGeom(geom: PostalGeom | null, mode: TransitAccessMode): PostalGeom | null {
+  if (!geom) return null;
+  if (mode === "best_transit") return geom;
+  const option = geom.route_options?.[mode];
+  return option ? optionGeomToPostalGeom(geom.postal, option) : null;
+}
+
+function selectionForTransitMode(
+  selection: LoadedSelection | null,
+  mode: TransitAccessMode
+): LoadedSelection | null {
+  if (!selection) return null;
+  return {
+    result: selection.result,
+    score: selection.score ? routeOptionScore(selection.score, mode) : null,
+    geom: routeOptionGeom(selection.geom, mode),
+  };
+}
+
 function postalTitle(selection: LoadedSelection): string {
   return `Postal ${selection.result.POSTAL}`;
 }
@@ -155,7 +236,7 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
 }
 
 function scoreReasons(score: ScoreRecord): string[] {
-  if (score.state === "NO_TRANSIT_IN_RANGE") return ["No qualifying transit nearby", "Needs route QA or wider transit rules"];
+  if (score.state === "NO_TRANSIT_IN_RANGE") return ["No qualifying route in this mode", "Try Best transit or route QA"];
   if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
   if (!score.paths || !score.best_node) return ["Route evidence unavailable", "Score not available"];
   if (!score.subscores) return ["Score breakdown pending", "Route evidence available"];
@@ -176,6 +257,33 @@ function scoreReasons(score: ScoreRecord): string[] {
     .reverse()
     .slice(0, 2)
     .map((item) => REASON_COPY[item.key].high);
+}
+
+function routeSourceBreakdown(
+  selection: LoadedSelection | null,
+  routeMode: RouteDisplayMode,
+  sameRoute: boolean
+): Array<{ source: string; label: string; lenM: number }> {
+  const segments =
+    routeMode === "shortest" && !sameRoute
+      ? selection?.geom?.route_segments?.shortest
+      : selection?.geom?.route_segments?.sheltered;
+  if (!segments?.length) return [];
+
+  const totals = new Map<string, number>();
+  for (const segment of segments as RouteSegment[]) {
+    const source = segment.source_class ?? (segment.is_covered ? "covered_unknown" : "exposed");
+    totals.set(source, (totals.get(source) ?? 0) + segment.len_m);
+  }
+  return Array.from(totals.entries())
+    .map(([source, lenM]) => ({
+      source,
+      label: SOURCE_LABELS[source] ?? source.replaceAll("_", " "),
+      lenM,
+    }))
+    .filter((item) => item.lenM > 0)
+    .sort((a, b) => b.lenM - a.lenM)
+    .slice(0, 4);
 }
 
 function modeAdjustedTotal(score: ScoreRecord, mode: ComfortMode): number | null {
@@ -260,6 +368,37 @@ function RouteModeControl({
   );
 }
 
+function TransitModeControl({
+  score,
+  mode,
+  setMode,
+}: {
+  score: ScoreRecord;
+  mode: TransitAccessMode;
+  setMode: (mode: TransitAccessMode) => void;
+}) {
+  if (!score.route_options) return null;
+  return (
+    <div className={`${styles.segmented} ${styles.transitSegmented}`} aria-label="Transit target">
+      {TRANSIT_MODE_OPTIONS.map((option) => {
+        const routeOption = option.id === "best_transit" ? score : score.route_options?.[option.id];
+        const available = Boolean(routeOption?.paths);
+        return (
+          <button
+            key={option.id}
+            type="button"
+            className={mode === option.id ? styles.segmentedActive : undefined}
+            data-empty={!available}
+            onClick={() => setMode(option.id)}
+          >
+            {option.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 function ComfortModeControl({
   mode,
   setMode,
@@ -298,6 +437,14 @@ function InlineRouteLegend({ sameRoute }: { sameRoute: boolean }) {
         <i className={styles.gapLine} />
         Exposed
       </span>
+      <span>
+        <i className={styles.hdbLine} />
+        HDB inferred
+      </span>
+      <span>
+        <i className={styles.bridgeLine} />
+        Bridge/underpass
+      </span>
     </div>
   );
 }
@@ -307,6 +454,8 @@ function ScoreCard({
   manifest,
   routeMode,
   setRouteMode,
+  transitMode,
+  setTransitMode,
   comfortMode,
   setComfortMode,
   feedbackEnabled,
@@ -324,6 +473,8 @@ function ScoreCard({
   manifest: Manifest | null;
   routeMode: RouteDisplayMode;
   setRouteMode: (mode: RouteDisplayMode) => void;
+  transitMode: TransitAccessMode;
+  setTransitMode: (mode: TransitAccessMode) => void;
   comfortMode: ComfortMode;
   setComfortMode: (mode: ComfortMode) => void;
   feedbackEnabled: boolean;
@@ -379,6 +530,7 @@ function ScoreCard({
       : toProperCase(score.best_node?.name ?? "No transit found nearby");
   const reasons = scoreReasons(score);
   const displayScore = modeAdjustedTotal(score, comfortMode);
+  const sourceBreakdown = routeSourceBreakdown(selection, routeMode, sameRoute);
   const extraWalkLabel =
     extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
   const dataDate = manifest?.data_as_of
@@ -397,7 +549,18 @@ function ScoreCard({
         </div>
       </div>
 
+      <TransitModeControl score={score} mode={transitMode} setMode={setTransitMode} />
+
       {score.paths && <InlineRouteLegend sameRoute={sameRoute} />}
+      {sourceBreakdown.length > 0 && (
+        <div className={styles.sourceStrip} aria-label="Route source evidence">
+          {sourceBreakdown.map((item) => (
+            <span key={item.source} data-source={item.source}>
+              {item.label} <strong>{formatDistance(item.lenM)}</strong>
+            </span>
+          ))}
+        </div>
+      )}
       <div className={styles.modeRow}>
         <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
         <span>{modeStatus(comfortMode)}</span>
@@ -486,6 +649,7 @@ function ScoreCard({
           <Metric label="Detour" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
           <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
           <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
+          <Metric label="Shade proxy" value={formatPercent(Math.round((score.paths.shade_ratio ?? 0) * 100))} />
         </div>
       )}
 
@@ -521,6 +685,7 @@ export default function Home() {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [primary, setPrimary] = useState<LoadedSelection | null>(null);
   const [transitPois, setTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
+  const [transitMode, setTransitMode] = useState<TransitAccessMode>("best_transit");
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
   const [comfortMode, setComfortMode] = useState<ComfortMode>("balanced");
   const [feedbackEnabled, setFeedbackEnabled] = useState(false);
@@ -532,8 +697,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const mapRoutes = useMemo(() => buildRouteItems(primary), [primary]);
-  const mapRouteMode = routeSame(primary) ? "shiokest" : routeMode;
+  const activeSelection = useMemo(() => selectionForTransitMode(primary, transitMode), [primary, transitMode]);
+  const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
+  const mapRouteMode = routeSame(activeSelection) ? "shiokest" : routeMode;
   const showDetailOverlay = Boolean(primary);
 
   useEffect(() => {
@@ -568,6 +734,8 @@ export default function Home() {
       ]);
       setManifest(loadedManifest);
       setPrimary({ result: { ...result, POSTAL: postal }, score, geom });
+      setTransitMode("best_transit");
+      setRouteMode("shiokest");
       setFeedbackEnabled(false);
       setFeedbackPoints([]);
       setFeedbackSegmentLabels([]);
@@ -709,10 +877,12 @@ export default function Home() {
         {showDetailOverlay && (
           <aside className={styles.detailOverlay}>
             <ScoreCard
-              selection={primary}
+              selection={activeSelection}
               manifest={manifest}
               routeMode={mapRouteMode}
               setRouteMode={setRouteMode}
+              transitMode={transitMode}
+              setTransitMode={setTransitMode}
               comfortMode={comfortMode}
               setComfortMode={setComfortMode}
               feedbackEnabled={feedbackEnabled}

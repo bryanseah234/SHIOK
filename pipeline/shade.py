@@ -4,7 +4,6 @@ from typing import Any
 
 import geopandas as gpd
 import pandas as pd
-from shapely.ops import unary_union
 
 NPARKS_SHADE_SOURCE_KEYS = {
     "nparks_nature_ways",
@@ -83,13 +82,19 @@ def compute_edge_shade_ratio(
     shade_frame = shade_polygons.copy()
     if shade_frame.crs is None:
         shade_frame = shade_frame.set_crs("EPSG:3414")
-    shade_union = unary_union(shade_frame.to_crs("EPSG:3414").geometry)
+    shade_frame = shade_frame.to_crs("EPSG:3414")
+    shade_sindex = shade_frame.sindex
     ratios: list[float] = []
     for geom in edge_frame.geometry:
         length = float(geom.length) if geom is not None else 0.0
         if length <= 0:
             ratios.append(0.0)
             continue
+        possible = shade_sindex.query(geom, predicate="intersects")
+        if len(possible) == 0:
+            ratios.append(0.0)
+            continue
+        shade_union = shade_frame.iloc[possible].geometry.union_all()
         shaded_length = float(geom.intersection(shade_union).length)
         ratios.append(max(0.0, min(1.0, shaded_length / length)))
     return pd.Series(ratios, index=edges.index)

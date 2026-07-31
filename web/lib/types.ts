@@ -11,7 +11,11 @@ export interface Subscores {
 export interface BestNode {
   type: string;
   name: string;
-  routed_m: number;
+  routed_m: number | null;
+  station?: string;
+  exit?: string;
+  straight_line_m?: number;
+  snap_distance_m?: number;
 }
 
 export interface Paths {
@@ -21,7 +25,12 @@ export interface Paths {
   routing_type?: string;
   covered_m?: number;
   covered_ratio?: number;
+  shade_m?: number;
+  shade_ratio?: number;
+  heat_comfort_m?: number;
+  heat_comfort_ratio?: number;
   shortest_covered_ratio?: number;
+  shortest_shade_ratio?: number;
 }
 
 export interface ExposureGap {
@@ -41,8 +50,20 @@ export interface ScoreRecord {
   best_node: BestNode | null;
   paths: Paths | null;
   exposure_gaps: ExposureGap[] | null;
+  route_options?: Partial<Record<TransitAccessMode, RouteOption>>;
   data_as_of: string | null;
   provenance: string | Record<string, unknown>;
+}
+
+export type TransitAccessMode = "best_transit" | "mrt_lrt" | "bus";
+
+export interface RouteOption {
+  state: ScoreState;
+  total: number | null;
+  subscores: Subscores | null;
+  best_node: BestNode | null;
+  paths: Paths | null;
+  exposure_gaps: ExposureGap[] | null;
 }
 
 export interface GeomGap {
@@ -55,10 +76,28 @@ export interface RouteSegment {
   geom: string;
   len_m: number;
   is_covered: boolean;
+  source_class?: string;
+  source_layer?: string;
+  synth_class?: string;
+  confidence?: string;
+  source_summary?: string;
 }
 
 export interface PostalGeom {
   postal: string;
+  shortest: string;
+  sheltered: string;
+  shortest_parts?: string[];
+  sheltered_parts?: string[];
+  exposure_gaps: GeomGap[];
+  route_segments?: {
+    shortest?: RouteSegment[];
+    sheltered?: RouteSegment[];
+  };
+  route_options?: Partial<Record<TransitAccessMode, PostalRouteGeomOption>>;
+}
+
+export interface PostalRouteGeomOption {
   shortest: string;
   sheltered: string;
   shortest_parts?: string[];

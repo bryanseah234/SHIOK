@@ -286,6 +286,38 @@
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 156660.99642731226,
   "covered_edge_length_m_audited_corrections": 0.0,
   "covered_edge_length_m_union": 389273.8753447969,
+  "shade_proxy_edge_count": 7562,
+  "shade_proxy_weighted_length_m": 94444.96702449897,
+  "shade_proxy_sources": {
+    "nparks_heritage_trees": {
+      "status": "loaded",
+      "path": "raw\\7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f\\nparks_heritage_trees.geojson",
+      "features_raw": 255,
+      "features_in_scope": 62,
+      "proxy_polygons": 62
+    },
+    "nparks_nature_ways": {
+      "status": "loaded",
+      "path": "raw\\9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11\\nparks_nature_ways.geojson",
+      "features_raw": 56,
+      "features_in_scope": 13,
+      "proxy_polygons": 13
+    },
+    "nparks_park_connector_loop": {
+      "status": "loaded",
+      "path": "raw\\83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd\\nparks_park_connector_loop.geojson",
+      "features_raw": 878,
+      "features_in_scope": 179,
+      "proxy_polygons": 179
+    },
+    "nparks_tracks": {
+      "status": "loaded",
+      "path": "raw\\2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627\\nparks_tracks.geojson",
+      "features_raw": 15425,
+      "features_in_scope": 1440,
+      "proxy_polygons": 1440
+    }
+  },
   "inferred_hdb_void_deck": {
     "candidate_buildings": 673,
     "buildings_with_edges": 330,

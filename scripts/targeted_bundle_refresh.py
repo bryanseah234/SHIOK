@@ -56,6 +56,14 @@ def normalize_postal(value: str) -> str:
     return str(value).strip().zfill(6)
 
 
+def display_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
+
+
 def postals_from_partial_report(path: Path) -> list[str]:
     if not path.is_file():
         return []
@@ -314,8 +322,8 @@ def refresh_bundle(
         "postal_count": len(existing_postals),
         "postals": existing_postals,
         "missing_from_bundle": missing_postals,
-        "network": str(network_path.relative_to(PROJECT_ROOT)),
-        "postal_universe": str(postal_universe_path.relative_to(PROJECT_ROOT)),
+        "network": display_path(network_path),
+        "postal_universe": display_path(postal_universe_path),
     }
     manifest.setdefault("scores", {})["shards"] = sorted(score_index)
     manifest["scores"]["planning_areas"] = sorted({area_from_shard(shard) for shard in score_index})

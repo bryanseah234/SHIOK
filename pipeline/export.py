@@ -151,8 +151,17 @@ def merged_geometry(edges: list[dict[str, Any]]) -> Any:
 
 def exposure_gap_geometries(record: dict[str, Any]) -> list[dict[str, Any]]:
     geometry_payload = record.get("_geometry", {})
+    return exposure_gap_geometries_from_payload(
+        geometry_payload,
+        record.get("exposure_gaps") or [],
+    )
+
+
+def exposure_gap_geometries_from_payload(
+    geometry_payload: dict[str, Any],
+    public_gaps: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
     path_edges = geometry_payload.get("exposure_gap_edges", [])
-    public_gaps = record.get("exposure_gaps") or []
     gaps: list[dict[str, Any]] = []
     current_edges: list[dict[str, Any]] = []
     gap_index = 0
@@ -202,17 +211,99 @@ def exposure_gap_geometries(record: dict[str, Any]) -> list[dict[str, Any]]:
     return gaps
 
 
+def text_value(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, float) and math.isnan(value):
+        return ""
+    return str(value).strip()
+
+
+def route_edge_source_class(edge: dict[str, Any]) -> str:
+    if not edge.get("is_covered"):
+        return "exposed"
+
+    source_layer = text_value(edge.get("source_layer")).lower()
+    synth_class = text_value(edge.get("synth_class")).lower()
+    highway = text_value(edge.get("highway")).lower()
+    covered = text_value(edge.get("covered")).lower()
+    bridge = text_value(edge.get("bridge")).lower()
+    tunnel = text_value(edge.get("tunnel")).lower()
+    indoor = text_value(edge.get("indoor")).lower()
+
+    if "audited_shelter_correction" in {source_layer, highway}:
+        return "audited_shelter_correction"
+    if "overhead_bridge_underpass" in source_layer or bridge in {"yes", "covered"} or tunnel:
+        return "bridge_underpass"
+    if "underpass" in highway or "bridge" in highway:
+        return "bridge_underpass"
+    if "inferred_hdb" in source_layer or "hdb" in synth_class:
+        return "inferred_hdb_void_deck"
+    if "covered_linkway" in source_layer:
+        return "lta_covered_linkway"
+    if indoor in {"yes", "building_passage"} or covered in {
+        "yes",
+        "covered",
+        "arcade",
+        "colonnade",
+    }:
+        return "osm_covered"
+    return "covered_unknown"
+
+
+def route_edge_source_key(edge: dict[str, Any]) -> tuple[Any, ...]:
+    return (
+        bool(edge.get("is_covered")),
+        route_edge_source_class(edge),
+        text_value(edge.get("source_layer")),
+        text_value(edge.get("synth_class")),
+        text_value(edge.get("confidence")),
+    )
+
+
+def route_segment_properties(
+    edges: list[dict[str, Any]],
+    is_covered: bool,
+    source_class: str,
+    source_layer: str,
+    synth_class: str,
+    confidence: str,
+    part_index: int,
+    part_len_m: float,
+) -> dict[str, Any]:
+    source_counts = Counter(route_edge_source_class(edge) for edge in edges)
+    properties: dict[str, Any] = {
+        "geom": "",
+        "len_m": round(part_len_m, 1),
+        "is_covered": is_covered,
+        "source_class": source_class,
+        "part_index": part_index,
+    }
+    if source_layer:
+        properties["source_layer"] = source_layer
+    if synth_class:
+        properties["synth_class"] = synth_class
+    if confidence:
+        properties["confidence"] = confidence
+    if source_counts:
+        properties["source_summary"] = ",".join(
+            f"{key}:{source_counts[key]}" for key in sorted(source_counts)
+        )
+    return properties
+
+
 def route_segment_geometries(edges: list[dict[str, Any]]) -> list[dict[str, Any]]:
     segments: list[dict[str, Any]] = []
     current_edges: list[dict[str, Any]] = []
-    current_covered: bool | None = None
+    current_key: tuple[Any, ...] | None = None
 
     def flush() -> None:
-        nonlocal current_covered
-        if not current_edges or current_covered is None:
+        nonlocal current_key
+        if not current_edges or current_key is None:
             current_edges.clear()
-            current_covered = None
+            current_key = None
             return
+        current_covered, source_class, source_layer, synth_class, confidence = current_key
         geometry = merged_geometry(current_edges)
         parts = geometry_line_parts(geometry)
         for part_index, part in enumerate(parts):
@@ -224,35 +315,42 @@ def route_segment_geometries(edges: list[dict[str, Any]]) -> list[dict[str, Any]
                 if len(parts) == 1
                 else float(part.length)
             )
-            segments.append(
-                {
-                    "geom": encoded,
-                    "len_m": round(part_len_m, 1),
-                    "is_covered": current_covered,
-                    "part_index": part_index,
-                }
+            segment = route_segment_properties(
+                current_edges,
+                bool(current_covered),
+                str(source_class),
+                str(source_layer),
+                str(synth_class),
+                str(confidence),
+                part_index,
+                part_len_m,
             )
+            segment["geom"] = encoded
+            segments.append(segment)
         current_edges.clear()
-        current_covered = None
+        current_key = None
 
     for edge in edges:
         length_m = float(edge.get("length_m", 0.0))
         geometry = edge.get("geometry")
         if length_m <= 0 or geometry is None:
             continue
-        covered = bool(edge.get("is_covered"))
-        if current_covered is None:
-            current_covered = covered
-        if covered != current_covered:
+        source_key = route_edge_source_key(edge)
+        if current_key is None:
+            current_key = source_key
+        if source_key != current_key:
             flush()
-            current_covered = covered
+            current_key = source_key
         current_edges.append(edge)
     flush()
     return segments
 
 
-def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
-    geometry_payload = record.get("_geometry")
+def geom_payload_record(
+    postal: str,
+    geometry_payload: dict[str, Any],
+    exposure_gaps: list[dict[str, Any]],
+) -> dict[str, Any] | None:
     if not isinstance(geometry_payload, dict):
         return None
     shortest = encode_geometry(geometry_payload.get("shortest"))
@@ -262,10 +360,10 @@ def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
     shortest_parts = encode_geometry_parts(geometry_payload.get("shortest"))
     sheltered_parts = encode_geometry_parts(geometry_payload.get("sheltered"))
     output: dict[str, Any] = {
-        "postal": record["postal"],
+        "postal": postal,
         "shortest": shortest,
         "sheltered": sheltered,
-        "exposure_gaps": exposure_gap_geometries(record),
+        "exposure_gaps": exposure_gap_geometries_from_payload(geometry_payload, exposure_gaps),
     }
     if len(shortest_parts) > 1:
         output["shortest_parts"] = shortest_parts
@@ -280,6 +378,41 @@ def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
             "shortest": shortest_segments,
             "sheltered": sheltered_segments,
         }
+    return output
+
+
+def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
+    geometry_payload = record.get("_geometry")
+    if not isinstance(geometry_payload, dict):
+        return None
+    output = geom_payload_record(
+        str(record["postal"]),
+        geometry_payload,
+        record.get("exposure_gaps") or [],
+    )
+    if output is None:
+        return None
+
+    geometry_options = record.get("_geometry_options")
+    route_options = record.get("route_options")
+    if isinstance(geometry_options, dict) and isinstance(route_options, dict):
+        option_output: dict[str, Any] = {}
+        for key, geometry_payload in sorted(geometry_options.items()):
+            public_option = route_options.get(key, {})
+            exposure_gaps = (
+                public_option.get("exposure_gaps") if isinstance(public_option, dict) else []
+            )
+            option_geom = geom_payload_record(
+                str(record["postal"]),
+                geometry_payload,
+                exposure_gaps if isinstance(exposure_gaps, list) else [],
+            )
+            if option_geom is None:
+                continue
+            option_geom.pop("postal", None)
+            option_output[str(key)] = option_geom
+        if option_output:
+            output["route_options"] = option_output
     return output
 
 
