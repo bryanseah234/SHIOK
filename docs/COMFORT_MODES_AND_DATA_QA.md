@@ -218,6 +218,11 @@ tested:
 - Diagnosis: source evidence is nearby; next fix should target graph
   connectivity/snap behavior for covered/HDB/bridge evidence, not a
   postal-specific score override.
+- A 2026-08-01 lambda/detour experiment for `560231` -> Mayflower MRT Exit 5
+  tested shelter lambda values 2, 5, 10, and 25 with detour budgets 1.25, 1.5,
+  2.0, and 3.0. Exit 5 stayed 425.9 m and 31.2% sheltered in every case.
+  Therefore the Exit 5 false-negative is not solved by a Max Shelter slider;
+  it needs graph/data connectivity work.
 
 ## Human Feedback Loop
 
