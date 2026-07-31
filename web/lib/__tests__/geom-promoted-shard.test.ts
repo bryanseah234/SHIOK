@@ -47,6 +47,10 @@ describe("fetchGeomForPostal", () => {
     const { fetchGeomForPostal } = await import("../data");
 
     await expect(fetchGeomForPostal("123456", 1.3, 103.8)).resolves.toEqual(childRecord);
+    expect(fetchMock).not.toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/postal-index\.json\?v=/),
+      { cache: "no-store" }
+    );
     expect(fetchMock).toHaveBeenCalledWith(
       expect.stringMatching(/^\/data\/generated\/geom\/h3\/parent-cell\.json\?v=/),
       { cache: "no-store" }

@@ -144,6 +144,29 @@ async function fetchGeomShard(shardId: string): Promise<PostalGeom[] | null> {
   }
 }
 
+async function fetchGeomByLatLng(
+  postal: string,
+  lat: number,
+  lng: number
+): Promise<PostalGeom | null> {
+  const cell = latLngToCell(lat, lng, 8);
+  const parentRecords = await fetchGeomShard(cell);
+  const parentMatch = parentRecords?.find((r) => r.postal === postal);
+  if (parentMatch) return parentMatch;
+
+  const index = await getGeomIndex();
+  for (const child of index?.[cell] ?? []) {
+    const childRecords = await fetchGeomShard(child);
+    const childMatch = childRecords?.find((r) => r.postal === postal);
+    if (childMatch) return childMatch;
+  }
+
+  if (!parentRecords && !(index?.[cell]?.length)) {
+    console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
+  }
+  return null;
+}
+
 // ---------------------------------------------------------------------------
 // Geometry
 // The client resolves which H3 res-8 shard to fetch using the postal's lat/lng
@@ -155,31 +178,17 @@ export async function fetchGeomForPostal(
   lat?: number,
   lng?: number
 ): Promise<PostalGeom | null> {
+  if (typeof lat === "number" && typeof lng === "number") {
+    const latLngMatch = await fetchGeomByLatLng(postal, lat, lng);
+    if (latLngMatch) return latLngMatch;
+  }
+
   const postalIndex = await getGeomPostalIndex();
   const indexedShard = postalIndex?.[postal];
   if (indexedShard) {
     const records = await fetchGeomShard(indexedShard);
     const match = records?.find((r) => r.postal === postal);
     if (match) return match;
-  }
-
-  if (typeof lat === "number" && typeof lng === "number") {
-    const cell = latLngToCell(lat, lng, 8);
-    const parentRecords = await fetchGeomShard(cell);
-    const parentMatch = parentRecords?.find((r) => r.postal === postal);
-    if (parentMatch) return parentMatch;
-
-    const index = await getGeomIndex();
-    for (const child of index?.[cell] ?? []) {
-      const childRecords = await fetchGeomShard(child);
-      const childMatch = childRecords?.find((r) => r.postal === postal);
-      if (childMatch) return childMatch;
-    }
-
-    if (!parentRecords && !(index?.[cell]?.length)) {
-      console.warn(`geom shard not found for cell ${cell} (postal ${postal})`);
-    }
-    return null;
   }
 
   return null;
