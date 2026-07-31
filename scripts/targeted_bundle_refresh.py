@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import shutil
 import sys
@@ -22,7 +23,7 @@ from pipeline.export import (
     geom_record,
     public_score_record,
     score_record_shards,
-    write_json,
+    write_json as write_plain_json,
 )
 from pipeline.scoring import NO_TRANSIT_IN_RANGE
 from pipeline.scoring_integration import score_postals
@@ -35,8 +36,23 @@ DEFAULT_PARTIAL_REPORT = PROJECT_ROOT / "qa" / "partial_resnap_rescore_sample.js
 
 
 def read_json(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as f:
-        return json.load(f)
+    if path.is_file():
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    gz_path = path.with_name(f"{path.name}.gz")
+    if gz_path.is_file():
+        with gzip.open(gz_path, "rt", encoding="utf-8") as f:
+            return json.load(f)
+    raise FileNotFoundError(path)
+
+
+def write_json(path: Path, payload: Any) -> int:
+    size = write_plain_json(path, payload)
+    gz_path = path.with_name(f"{path.name}.gz")
+    if gz_path.exists():
+        with gzip.open(gz_path, "wb") as f:
+            f.write(path.read_bytes())
+    return size
 
 
 def active_bundle_name() -> str:
