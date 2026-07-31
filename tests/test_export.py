@@ -126,7 +126,11 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert report["geom_shard_count"] >= 1
     assert ok, validation
     assert validation["indexed_postals"] == 2
+    assert validation["score_prefixes"] == 2
     assert validation["geometry_postals"] == 2
+    prefix_index = json.loads((tmp_path / "scores" / "prefix-index.json").read_text())
+    assert prefix_index["123"] == ["TEST_AREA"]
+    assert prefix_index["654"] == ["TEST_AREA"]
     postal_index = json.loads((tmp_path / "geom" / "postal-index.json").read_text())
     for postal in ["123456", "654321"]:
         shard = postal_index[postal]

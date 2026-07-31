@@ -26,6 +26,7 @@ import { latLngToCell } from "h3-js";
 
 type GeomIndex = Record<string, string[]>;
 type GeomPostalIndex = Record<string, string>;
+type ScorePrefixIndex = Record<string, string[]>;
 const DATA_FETCH_OPTIONS: RequestInit = { cache: "no-store" };
 
 function dataUrl(path: string): string {
@@ -89,6 +90,7 @@ export async function fetchTransitPois(): Promise<TransitPoiCollection> {
 
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
 let _areaIndex: Record<string, string[]> | null = null;
+let _scorePrefixIndex: ScorePrefixIndex | null | undefined;
 let _geomIndex: GeomIndex | null = null;
 let _geomPostalIndex: GeomPostalIndex | null = null;
 let _transitPois: TransitPoiCollection | null = null;
@@ -99,6 +101,16 @@ async function getAreaIndex(): Promise<Record<string, string[]>> {
   return _areaIndex!;
 }
 
+async function getScorePrefixIndex(): Promise<ScorePrefixIndex | null> {
+  if (_scorePrefixIndex !== undefined) return _scorePrefixIndex;
+  try {
+    _scorePrefixIndex = await fetchJson<ScorePrefixIndex>("scores/prefix-index.json");
+  } catch {
+    _scorePrefixIndex = null;
+  }
+  return _scorePrefixIndex;
+}
+
 async function fetchAreaRecords(areaSlug: string): Promise<ScoreRecord[]> {
   return fetchJson<ScoreRecord[]>(`scores/${areaSlug}.json`);
 }
@@ -106,8 +118,18 @@ async function fetchAreaRecords(areaSlug: string): Promise<ScoreRecord[]> {
 export async function fetchScoreForPostal(
   postal: string
 ): Promise<ScoreRecord | null> {
+  const tried = new Set<string>();
+  const prefixIndex = await getScorePrefixIndex();
+  for (const shard of prefixIndex?.[postal.slice(0, 3)] ?? []) {
+    tried.add(shard);
+    const records = await fetchAreaRecords(shard);
+    const match = records.find((r) => r.postal === postal);
+    if (match) return match;
+  }
+
   const index = await getAreaIndex();
   for (const [slug, postals] of Object.entries(index)) {
+    if (tried.has(slug)) continue;
     if (postals.includes(postal)) {
       const records = await fetchAreaRecords(slug);
       return records.find((r) => r.postal === postal) ?? null;

@@ -466,6 +466,18 @@ def state_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
+def score_prefix_index(
+    score_index: dict[str, list[str]], prefix_len: int = 3
+) -> dict[str, list[str]]:
+    prefix_map: dict[str, set[str]] = defaultdict(set)
+    for shard, postals in score_index.items():
+        for postal in postals:
+            text = str(postal)
+            if len(text) >= prefix_len:
+                prefix_map[text[:prefix_len]].add(shard)
+    return {prefix: sorted(shards) for prefix, shards in sorted(prefix_map.items())}
+
+
 def score_record_shards(
     area: str,
     records: list[dict[str, Any]],
@@ -606,6 +618,10 @@ def export_static_artifacts(
         scores_dir / "index.json",
         {key: sorted(value) for key, value in sorted(score_index.items())},
     )
+    written_files[rel_key(scores_dir / "prefix-index.json", output_dir)] = write_json(
+        scores_dir / "prefix-index.json",
+        score_prefix_index(score_index),
+    )
 
     geom_index: dict[str, list[str]] = {}
     geom_postal_index: dict[str, str] = {}
@@ -672,6 +688,8 @@ def export_static_artifacts(
             "planning_areas": sorted(scores_by_area),
             "shards": sorted(score_index),
             "index": "scores/index.json",
+            "prefix_index": "scores/prefix-index.json",
+            "prefix_length": 3,
         },
         "geom": {
             "index": "geom/index.json",
@@ -1140,6 +1158,7 @@ def validate_static_artifacts(
 
     indexed_postals: set[str] = set()
     scored_postals_with_geom_required: set[str] = set()
+    score_prefixes = 0
     if score_index_path.is_file():
         score_index = read_artifact_json(input_dir, "scores/index.json")
         if not isinstance(score_index, dict):
@@ -1170,6 +1189,22 @@ def validate_static_artifacts(
                 validate_score_record(record, errors, f"scores/{area}.json:{postal}")
                 if record.get("state") in {"SCORED", "SCORED_PARTIAL"}:
                     scored_postals_with_geom_required.add(postal)
+
+    manifest = None
+    if manifest_path.is_file():
+        manifest = read_artifact_json(input_dir, "manifest.json")
+    if isinstance(manifest, dict):
+        prefix_rel_path = manifest.get("scores", {}).get("prefix_index")
+        if isinstance(prefix_rel_path, str) and prefix_rel_path:
+            prefix_path = artifact_json_path(input_dir, prefix_rel_path)
+            if not prefix_path.is_file():
+                errors.append(f"manifest references missing file: {prefix_rel_path}")
+            else:
+                prefix_payload = read_artifact_json(input_dir, prefix_rel_path)
+                if not isinstance(prefix_payload, dict):
+                    errors.append(f"{prefix_rel_path} must be an object")
+                else:
+                    score_prefixes = len(prefix_payload)
 
     geom_postals: set[str] = set()
     if geom_index_path.is_file():
@@ -1246,6 +1281,7 @@ def validate_static_artifacts(
         "ok": not errors,
         "file_count": len(files),
         "indexed_postals": len(indexed_postals),
+        "score_prefixes": score_prefixes,
         "geometry_postals": len(geom_postals),
         "transit_features": transit_features,
         "errors": errors,
