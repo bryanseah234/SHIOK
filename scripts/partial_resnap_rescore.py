@@ -124,6 +124,7 @@ def compact_record(record: dict[str, Any] | None) -> dict[str, Any] | None:
         "origin_resnap": provenance.get("origin_resnap"),
         "routing_diagnostics": provenance.get("routing_diagnostics"),
         "transit_node_set": provenance.get("transit_node_set"),
+        "direct_bus_fallback": provenance.get("direct_bus_fallback"),
     }
 
 

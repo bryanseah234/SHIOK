@@ -222,10 +222,12 @@ def text_value(value: Any) -> str:
 
 
 def route_edge_source_class(edge: dict[str, Any]) -> str:
+    source_layer = text_value(edge.get("source_layer")).lower()
+    if "direct_bus_fallback" in source_layer:
+        return "direct_unrouted_bus"
     if not edge.get("is_covered"):
         return "exposed"
 
-    source_layer = text_value(edge.get("source_layer")).lower()
     synth_class = text_value(edge.get("synth_class")).lower()
     highway = text_value(edge.get("highway")).lower()
     covered = text_value(edge.get("covered")).lower()

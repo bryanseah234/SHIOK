@@ -14,6 +14,7 @@ from pipeline.scoring_integration import (
     assemble_score_record,
     build_provenance,
     bus_connectivity_from_routed_candidates,
+    direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
     nearest_graph_node_in_components,
@@ -303,6 +304,42 @@ def test_record_assembly_scores_real_zero_bus_as_zero_not_partial():
     assert record["state"] == "SCORED"
     assert record["subscores"]["bus"] == 0.0
     assert record["total"] == 80.0
+
+
+def test_direct_bus_fallback_scores_partial_without_routed_shelter_geometry():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(105.0, 0.0),
+        straight_line_m=95.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 8.0, ("11", 1): 12.0},
+        expected_wait_min=2.4,
+        point_xy=(95.0, 0.0),
+    )
+
+    scores = direct_bus_fallback_candidate_scores(
+        [candidate],
+        Point(0.0, 0.0),
+        PARAMS,
+        WEIGHTS,
+        include_geometry=True,
+    )
+    record = assemble_score_record("123456", scores, None, {})
+
+    assert record["state"] == "SCORED_PARTIAL"
+    assert record["best_node"]["type"] == "bus_stop"
+    assert record["best_node"]["routed_m"] is None
+    assert record["best_node"]["straight_line_m"] == 95.0
+    assert record["paths"]["routing_type"] == "direct_bus_fallback_unrouted"
+    assert record["subscores"]["access"] == 100.0
+    assert record["subscores"]["bus"] == 96.9
+    assert record["subscores"]["rain"] is None
+    assert record["subscores"]["heat"] is None
+    assert record["subscores"]["crossing"] is None
+    assert record["_geometry"]["sheltered"].coords[-1] == (95.0, 0.0)
 
 
 def test_record_assembly_selects_highest_scoring_candidate():

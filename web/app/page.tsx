@@ -55,6 +55,7 @@ const SOURCE_LABELS: Record<string, string> = {
   inferred_hdb_void_deck: "HDB inferred",
   bridge_underpass: "Bridge/underpass",
   audited_shelter_correction: "Audited shelter",
+  direct_unrouted_bus: "Direct bus estimate",
   covered_unknown: "Covered",
   exposed: "Exposed",
 };
@@ -156,6 +157,7 @@ function exposureGapCopy(lenM: number, index: number): string {
 
 function routeSame(selection: LoadedSelection | null): boolean {
   if (!selection?.geom || !selection.score?.paths) return false;
+  if (selection.score.paths.routing_type === "direct_bus_fallback_unrouted") return true;
   return (
     selection.geom.shortest === selection.geom.sheltered ||
     Math.round(selection.score.paths.shortest_m) === Math.round(selection.score.paths.sheltered_m)
@@ -238,6 +240,9 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
 function scoreReasons(score: ScoreRecord): string[] {
   if (score.state === "NO_TRANSIT_IN_RANGE") return ["No qualifying route in this mode", "Try Best transit or route QA"];
   if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
+  if (score.paths?.routing_type === "direct_bus_fallback_unrouted") {
+    return ["Nearby bus stop with service data", "Exact walking route not verified yet"];
+  }
   if (!score.paths || !score.best_node) return ["Route evidence unavailable", "Score not available"];
   if (!score.subscores) return ["Score breakdown pending", "Route evidence available"];
 
@@ -332,12 +337,18 @@ function RouteModeControl({
   setMode,
   disabled,
   sameRoute,
+  directBusFallback,
 }: {
   mode: RouteDisplayMode;
   setMode: (mode: RouteDisplayMode) => void;
   disabled: boolean;
   sameRoute: boolean;
+  directBusFallback: boolean;
 }) {
+  if (directBusFallback) {
+    return <div className={styles.sameRouteNote}>Direct line to bus stop; walking route pending.</div>;
+  }
+
   if (sameRoute) {
     return (
       <div className={styles.sameRouteNote}>
@@ -423,14 +434,20 @@ function ComfortModeControl({
   );
 }
 
-function InlineRouteLegend({ sameRoute }: { sameRoute: boolean }) {
+function InlineRouteLegend({
+  sameRoute,
+  directBusFallback,
+}: {
+  sameRoute: boolean;
+  directBusFallback: boolean;
+}) {
   return (
     <div className={styles.inlineLegend} aria-label="Map legend">
       <span>
-        <i className={styles.shiokestLine} />
-        Shiokest
+        <i className={directBusFallback ? styles.directBusLine : styles.shiokestLine} />
+        {directBusFallback ? "Direct bus estimate" : "Shiokest"}
       </span>
-      {!sameRoute && (
+      {!sameRoute && !directBusFallback && (
         <span>
           <i className={styles.shortestLine} />
           Shortest
@@ -516,6 +533,7 @@ function ScoreCard({
   }
 
   const sameRoute = routeSame(selection);
+  const directBusFallback = score.paths?.routing_type === "direct_bus_fallback_unrouted";
   const extraWalkM =
     score.paths && typeof score.paths.shortest_m === "number" && typeof score.paths.sheltered_m === "number"
       ? Math.max(0, score.paths.sheltered_m - score.paths.shortest_m)
@@ -526,7 +544,11 @@ function ScoreCard({
   const selectedDistance =
     routeMode === "shortest" && !sameRoute ? score.paths?.shortest_m : score.paths?.sheltered_m;
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
-  const selectedRouteLabel = routeMode === "shortest" && !sameRoute ? "Shortest walk" : "Shiokest walk";
+  const selectedRouteLabel = directBusFallback
+    ? "Direct bus estimate"
+    : routeMode === "shortest" && !sameRoute
+      ? "Shortest walk"
+      : "Shiokest walk";
   const stationName =
     score.state === "NO_TRANSIT_IN_RANGE"
       ? "No Qualifying Transit Nearby"
@@ -554,7 +576,7 @@ function ScoreCard({
 
       <TransitModeControl score={score} mode={transitMode} setMode={setTransitMode} />
 
-      {score.paths && <InlineRouteLegend sameRoute={sameRoute} />}
+       {score.paths && <InlineRouteLegend sameRoute={sameRoute} directBusFallback={directBusFallback} />}
       {sourceBreakdown.length > 0 && (
         <div className={styles.sourceStrip} aria-label="Route source evidence">
           {sourceBreakdown.map((item) => (
@@ -594,7 +616,15 @@ function ScoreCard({
         </div>
       )}
 
-      {score.paths && <RouteModeControl mode={routeMode} setMode={setRouteMode} disabled={false} sameRoute={sameRoute} />}
+      {score.paths && (
+        <RouteModeControl
+          mode={routeMode}
+          setMode={setRouteMode}
+          disabled={false}
+          sameRoute={sameRoute}
+          directBusFallback={directBusFallback}
+        />
+      )}
 
       <div className={styles.feedbackBlock}>
         <div className={styles.feedbackActions}>

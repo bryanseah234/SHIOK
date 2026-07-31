@@ -38,6 +38,7 @@ class BusStopCandidate:
     straight_line_m: float
     snap_distance_m: float
     service_headways_min: dict[tuple[str, int], float]
+    point_xy: tuple[float, float] | None = None
 
 
 @dataclass(frozen=True)
@@ -289,6 +290,7 @@ class BusConnectivityIndex:
                     straight_line_m=float(distances[index]),
                     snap_distance_m=float(row["snap_distance_m"]),
                     service_headways_min=service_headways,
+                    point_xy=(float(row.geometry.x), float(row.geometry.y)),
                 )
             )
         return candidates

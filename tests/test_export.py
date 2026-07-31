@@ -36,6 +36,19 @@ def test_route_edge_source_class_uses_osm_location_provenance():
     assert route_edge_source_class({"is_covered": True, "location": "indoor"}) == "osm_covered"
 
 
+def test_route_edge_source_class_labels_direct_bus_fallback():
+    assert (
+        route_edge_source_class(
+            {
+                "is_covered": False,
+                "source_layer": "direct_bus_fallback",
+                "synth_class": "unrouted_straight_line",
+            }
+        )
+        == "direct_unrouted_bus"
+    )
+
+
 def sample_record(postal: str = "123456") -> dict:
     return {
         "postal": postal,

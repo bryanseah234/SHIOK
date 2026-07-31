@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from pyproj import Transformer
-from shapely.geometry import MultiLineString
+from shapely.geometry import LineString, MultiLineString
 from shapely.ops import linemerge, unary_union
 
 from pipeline.bus import (
@@ -58,6 +58,7 @@ class CandidateNode:
     snap_distance_m: float
     service_headways_min: dict[tuple[str, int], float] | None = None
     expected_wait_min: float | None = None
+    point_xy: tuple[float, float] | None = None
 
 
 @dataclass(frozen=True)
@@ -325,6 +326,7 @@ def select_bus_stop_candidates(
                 snap_distance_m=stop.snap_distance_m,
                 service_headways_min=stop.service_headways_min,
                 expected_wait_min=expected_wait,
+                point_xy=stop.point_xy,
             )
         )
 
@@ -654,6 +656,86 @@ def score_candidate_route(
             "exposure_gap_edges": route_result.get("path_edges", []),
         }
     return candidate_score
+
+
+def direct_bus_fallback_candidate_scores(
+    candidates: list[CandidateNode],
+    postal_point: Any,
+    params: dict[str, Any],
+    weights: dict[str, float],
+    include_geometry: bool = False,
+) -> list[dict[str, Any]]:
+    """Score nearby buses as partial evidence when graph routing cannot reach transit."""
+    fallback_scores: list[dict[str, Any]] = []
+    for candidate in candidates:
+        if candidate.node_type != "bus_stop":
+            continue
+        access = score_transit_access(
+            float(candidate.straight_line_m),
+            params["transit_access"],
+            is_bus_interchange=False,
+        )
+        bus = score_bus_connectivity(candidate.expected_wait_min, params["bus_connectivity"])
+        subscore_values: dict[str, SubscoreValue] = {
+            "transit_access": access,
+            "bus_connectivity": bus,
+            "rain_shelter": NOT_YET_SCORED,
+            "heat_comfort": NOT_YET_SCORED,
+            "crossing_friction": NOT_YET_SCORED,
+        }
+        composite = calculate_composite_score(subscore_values, weights)
+        if not isinstance(composite, int | float):
+            continue
+
+        direct_m = float(candidate.straight_line_m)
+        stop_xy = candidate.point_xy or candidate.graph_node
+        line = LineString([(float(postal_point.x), float(postal_point.y)), stop_xy])
+        direct_edge = {
+            "length_m": direct_m,
+            "is_covered": False,
+            "geometry": line,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line",
+            "confidence": "partial_unrouted",
+        }
+        score: dict[str, Any] = {
+            "candidate": candidate,
+            "total": composite,
+            "subscores": {
+                "access": round_nullable_score(access),
+                "bus": round_nullable_score(bus),
+                "rain": None,
+                "heat": None,
+                "crossing": None,
+            },
+            "best_node": {
+                "type": candidate.node_type,
+                "name": candidate.name,
+                "routed_m": None,
+                "station": candidate.station_name,
+                "exit": candidate.exit_code,
+                "straight_line_m": round(direct_m, 1),
+                "snap_distance_m": round(candidate.snap_distance_m, 1),
+            },
+            "paths": {
+                "shortest_m": round(direct_m, 1),
+                "sheltered_m": round(direct_m, 1),
+                "detour_pct": 0.0,
+                "routing_type": "direct_bus_fallback_unrouted",
+            },
+            "exposure_gaps": [],
+            "crossing_count": None,
+        }
+        if include_geometry:
+            score["_geometry"] = {
+                "shortest": line,
+                "sheltered": line,
+                "shortest_path_edges": [direct_edge],
+                "sheltered_path_edges": [direct_edge],
+                "exposure_gap_edges": [],
+            }
+        fallback_scores.append(score)
+    return fallback_scores
 
 
 def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, float]:
@@ -1120,6 +1202,38 @@ def score_postal_row(
                     include_geometry=include_geometry,
                 )
             )
+
+    has_numeric_candidate = any(
+        isinstance(candidate_score["total"], int | float) for candidate_score in candidate_scores
+    )
+    if not has_numeric_candidate and bus_candidates:
+        fallback_scores = direct_bus_fallback_candidate_scores(
+            bus_candidates,
+            postal_row.geometry,
+            params,
+            weights,
+            include_geometry=include_geometry,
+        )
+        if fallback_scores:
+            candidate_scores = fallback_scores
+            expected_waits = [
+                candidate.expected_wait_min
+                for candidate in bus_candidates
+                if candidate.expected_wait_min is not None
+            ]
+            provenance["direct_bus_fallback"] = {
+                "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+                "candidate_count": len(bus_candidates),
+                "radius_m": round(bus_candidate_radius_m, 1),
+                "nearest_direct_m": round(
+                    min(candidate.straight_line_m for candidate in bus_candidates), 1
+                ),
+                "best_expected_wait_min": (
+                    round(min(expected_waits), 3) if expected_waits else None
+                ),
+                "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+                "untrusted_subscores": ["rain", "heat", "crossing"],
+            }
 
     route_distances = [float(route_result["shortest_length_m"]) for route_result in route_results]
     access_zero_m = float(params["transit_access"]["zero_credit_m"])

@@ -75,6 +75,8 @@ interface PointFeatureCollection {
 type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
 const SHELTER_SOURCE_COLOR = [
   "case",
+  ["==", ["get", "source_class"], "direct_unrouted_bus"],
+  "#64748b",
   ["==", ["get", "is_covered"], 0],
   "#c4332b",
   ["==", ["get", "source_class"], "inferred_hdb_void_deck"],
