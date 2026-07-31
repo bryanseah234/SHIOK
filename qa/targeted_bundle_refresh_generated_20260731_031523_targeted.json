@@ -1,0 +1,279 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 128.1,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 100.9,
+          "covered_ratio": 0.762,
+          "detour_pct": 3.3,
+          "routing_type": "sheltered",
+          "sheltered_m": 132.4,
+          "shortest_covered_ratio": 0.727,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 90.5
+      },
+      "postal": "560231",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 346.7,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 216.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 229.9,
+          "covered_ratio": 0.659,
+          "detour_pct": 0.7,
+          "routing_type": "sheltered",
+          "sheltered_m": 349.1,
+          "shortest_covered_ratio": 0.499,
+          "shortest_m": 346.7
+        },
+        "state": "SCORED",
+        "total": 85.1
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 346.7,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 216.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 203.5,
+          "covered_ratio": 0.585,
+          "detour_pct": 0.3,
+          "routing_type": "sheltered",
+          "sheltered_m": 347.8,
+          "shortest_covered_ratio": 0.499,
+          "shortest_m": 346.7
+        },
+        "state": "SCORED",
+        "total": 82.2
+      },
+      "postal": "560225",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 242.6,
+          "covered_ratio": 0.73,
+          "detour_pct": 0.0,
+          "routing_type": "shortest_due_to_detour",
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.73,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "total": 89.2
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 203.1,
+          "covered_ratio": 0.611,
+          "detour_pct": 0.0,
+          "routing_type": "shortest_due_to_detour",
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.611,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "total": 84.4
+      },
+      "postal": "560234",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 129.0,
+          "covered_ratio": 0.636,
+          "detour_pct": 19.7,
+          "routing_type": "sheltered",
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 117.4,
+          "covered_ratio": 0.579,
+          "detour_pct": 19.7,
+          "routing_type": "sheltered",
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.326,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "total": 83.1
+      },
+      "postal": "560700",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 76.6,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "Exit D",
+          "name": "ANG MO KIO MRT STATION Exit D",
+          "routed_m": 282.8,
+          "snap_distance_m": 37.6,
+          "station": "ANG MO KIO MRT STATION",
+          "straight_line_m": 222.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 190.6,
+          "covered_ratio": 0.674,
+          "detour_pct": 0.0,
+          "routing_type": "sheltered",
+          "sheltered_m": 282.8,
+          "shortest_covered_ratio": 0.598,
+          "shortest_m": 282.8
+        },
+        "state": "SCORED",
+        "total": 87.0
+      },
+      "postal": "560710",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_shards_touched": [
+    "88652636c1fffff",
+    "88652636c5fffff"
+  ],
+  "geometry_postals": 111721,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 5,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 5,
+  "source_bundle": "generated_20260731_012640_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 11992,
+    "SCORED": 111721
+  },
+  "target_bundle": "generated_20260731_031523_targeted"
+}

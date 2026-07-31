@@ -1,17 +1,17 @@
 {
-  "nodes": 77685,
-  "edges": 86617,
-  "mean_edge_length_m": 17.845954318348216,
-  "connected_components_count": 643,
+  "nodes": 78301,
+  "edges": 99317,
+  "mean_edge_length_m": 17.369599595012502,
+  "connected_components_count": 423,
   "top_5_component_sizes": [
-    28348,
-    25937,
-    17886,
+    29040,
+    26343,
+    18017,
     412,
     285
   ],
-  "osm_only_top_3_component_node_share_pct": 93.35429525251348,
-  "top_3_component_node_share_pct": 92.90210465340799,
+  "osm_only_top_3_component_node_share_pct": 93.70932754880694,
+  "top_3_component_node_share_pct": 93.74082067917395,
   "residual_components_gt_50_osm_only": [
     {
       "size": 412,
@@ -94,12 +94,12 @@
       "evidence": "dist_to_boundary=10.24m (<20m)"
     },
     {
-      "size": 79,
-      "lat": 1.3434687511156695,
-      "lon": 103.87765897502075,
-      "gap_m": 6.821092287898642,
-      "class": "ISOLATED_NON_TRANSIT",
-      "evidence": "Owner-confirmed self-contained park loop"
+      "size": 59,
+      "lat": 1.3481274483140726,
+      "lon": 103.85015617339702,
+      "gap_m": 2.858548582758883,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=0.37m (<20m)"
     },
     {
       "size": 57,
@@ -124,14 +124,6 @@
       "gap_m": 472.0738512139834,
       "class": "CLIP_EDGE",
       "evidence": "dist_to_boundary=6.90m (<20m)"
-    },
-    {
-      "size": 52,
-      "lat": 1.3481221222774797,
-      "lon": 103.8501072500699,
-      "gap_m": 2.858548582758883,
-      "class": "CLIP_EDGE",
-      "evidence": "dist_to_boundary=16.01m (<20m)"
     }
   ],
   "residual_components_gt_50_final": [
@@ -216,12 +208,12 @@
       "evidence": "dist_to_boundary=10.24m (<20m)"
     },
     {
-      "size": 79,
-      "lat": 1.3434687511156695,
-      "lon": 103.87765897502075,
-      "gap_m": 6.821092287898642,
-      "class": "ISOLATED_NON_TRANSIT",
-      "evidence": "Owner-confirmed self-contained park loop"
+      "size": 59,
+      "lat": 1.3481274483140726,
+      "lon": 103.85015617339702,
+      "gap_m": 2.858548582758883,
+      "class": "CLIP_EDGE",
+      "evidence": "dist_to_boundary=0.37m (<20m)"
     },
     {
       "size": 57,
@@ -246,14 +238,6 @@
       "gap_m": 472.0738512139834,
       "class": "CLIP_EDGE",
       "evidence": "dist_to_boundary=6.90m (<20m)"
-    },
-    {
-      "size": 52,
-      "lat": 1.3481221222774797,
-      "lon": 103.8501072500699,
-      "gap_m": 2.858548582758883,
-      "class": "CLIP_EDGE",
-      "evidence": "dist_to_boundary=16.01m (<20m)"
     }
   ],
   "real_disconnection_count_osm_only": 0,
@@ -262,9 +246,9 @@
     "Toa Payoh": {
       "ALIGNED": 169,
       "OFFSET": 6,
-      "UNREPRESENTED-surface": 98,
+      "UNREPRESENTED-surface": 99,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 53
+      "NEEDS_MANUAL": 52
     },
     "Bukit Timah": {
       "ALIGNED": 132,
@@ -276,9 +260,9 @@
     "Downtown Core": {
       "ALIGNED": 38,
       "OFFSET": 12,
-      "UNREPRESENTED-surface": 31,
+      "UNREPRESENTED-surface": 33,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 20
+      "NEEDS_MANUAL": 18
     }
   },
   "per_area_match_pct": {
@@ -287,16 +271,21 @@
     "Downtown Core": 41.609230442167835
   },
   "linkway_total_length_m": 33897.93725341413,
-  "synthesized_length_m": 173.8805920497825,
-  "synthesized_pct_of_total": 0.5129533126157098,
-  "unsnapped_endpoints_count": 96,
-  "needs_manual_count": 96,
+  "synthesized_length_m": 164.04385539156596,
+  "synthesized_pct_of_total": 0.48393462459148245,
+  "unsnapped_endpoints_count": 93,
+  "needs_manual_count": 93,
   "covered_edge_length_m_osm_tags": 102517.30464490506,
-  "covered_edge_length_m_lta_match": 28311.261216196097,
+  "covered_edge_length_m_lta_match": 31199.18728538028,
+  "covered_edge_length_m_lta_bridge_underpass_match": 14497.014630050136,
   "covered_edge_length_m_osm_roof_canopy": 5558.918096331083,
+  "covered_edge_length_m_inferred_hdb_precinct_footways": 38751.92750818052,
+  "covered_edge_length_m_inferred_hdb_point_footways": 87000.40080888526,
   "covered_edge_length_m_inferred_hdb_void_deck": 23608.199424341896,
+  "covered_edge_length_m_inferred_hdb_void_deck_anchors": 22682.41071183516,
+  "covered_edge_length_m_inferred_hdb_precinct_connectors": 156660.99642731226,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 144756.320185743,
+  "covered_edge_length_m_union": 389273.8753447969,
   "inferred_hdb_void_deck": {
     "candidate_buildings": 673,
     "buildings_with_edges": 330,
@@ -306,6 +295,66 @@
     "min_inside_ratio": 0.65,
     "source": "hdb_points_plus_osm_residential_footprints",
     "confidence": "inferred"
+  },
+  "inferred_hdb_void_deck_anchors": {
+    "candidate_buildings": 673,
+    "buildings_with_edges": 510,
+    "added_edges": 911,
+    "length_m": 22682.41071183516,
+    "node_search_m": 8.0,
+    "coverage_buffer_m": 3.0,
+    "min_inside_ratio": 0.6,
+    "source": "hdb_points_plus_residential_footprints",
+    "confidence": "inferred"
+  },
+  "inferred_hdb_precinct_connectors": {
+    "candidate_buildings": 673,
+    "buildings_with_edges": 661,
+    "added_edges": 11398,
+    "length_m": 156660.99642731226,
+    "coverage_buffer_m": 20.0,
+    "max_pair_m": 55.0,
+    "min_inside_ratio": 0.75,
+    "nearest_neighbours": 3,
+    "source": "hdb_points_plus_residential_footprints",
+    "confidence": "inferred"
+  },
+  "inferred_hdb_precinct_footways": {
+    "candidate_buildings": 673,
+    "eligible_edge_count": 42417,
+    "marked_edges": 3691,
+    "length_m": 38751.92750818052,
+    "footprint_buffer_m": 14.0,
+    "min_match_ratio": 0.7,
+    "allowed_highways": [
+      "corridor",
+      "footway",
+      "living_street",
+      "path",
+      "pedestrian",
+      "steps"
+    ],
+    "source": "hdb_points_plus_osm_residential_footprints",
+    "confidence": "inferred_existing_pedestrian_edge"
+  },
+  "inferred_hdb_point_footways": {
+    "candidate_hdb_points": 1101,
+    "eligible_edge_count": 42417,
+    "marked_edges": 7331,
+    "newly_marked_edges": 2628,
+    "length_m": 87000.40080888526,
+    "point_buffer_m": 18.0,
+    "min_match_ratio": 0.65,
+    "allowed_highways": [
+      "corridor",
+      "footway",
+      "living_street",
+      "path",
+      "pedestrian",
+      "steps"
+    ],
+    "source": "hdb_building_points",
+    "confidence": "inferred_existing_pedestrian_edge_point_proxy"
   },
   "audited_shelter_corrections": {
     "approved_features": 0,

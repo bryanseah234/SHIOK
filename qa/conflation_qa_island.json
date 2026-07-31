@@ -1,17 +1,17 @@
 {
-  "nodes": 653242,
-  "edges": 871704,
-  "mean_edge_length_m": 17.818586738523056,
+  "nodes": 653154,
+  "edges": 871634,
+  "mean_edge_length_m": 17.81996567287987,
   "connected_components_count": 2842,
   "top_5_component_sizes": [
-    617821,
+    617737,
     1946,
     1470,
     1402,
     1295
   ],
   "osm_only_top_3_component_node_share_pct": 95.07824708064877,
-  "top_3_component_node_share_pct": 95.10059059276654,
+  "top_3_component_node_share_pct": 95.10054290412369,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1254,9 +1254,9 @@
     "ANG MO KIO": {
       "ALIGNED": 80,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 123,
+      "UNREPRESENTED-surface": 124,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 86
+      "NEEDS_MANUAL": 85
     },
     "BEDOK": {
       "ALIGNED": 227,
@@ -1268,9 +1268,9 @@
     "BISHAN": {
       "ALIGNED": 59,
       "OFFSET": 3,
-      "UNREPRESENTED-surface": 75,
+      "UNREPRESENTED-surface": 76,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 36
+      "NEEDS_MANUAL": 35
     },
     "BOON LAY": {
       "ALIGNED": 10,
@@ -1345,16 +1345,16 @@
     "DOWNTOWN CORE": {
       "ALIGNED": 38,
       "OFFSET": 12,
-      "UNREPRESENTED-surface": 31,
+      "UNREPRESENTED-surface": 33,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 20
+      "NEEDS_MANUAL": 18
     },
     "GEYLANG": {
       "ALIGNED": 147,
       "OFFSET": 22,
-      "UNREPRESENTED-surface": 124,
+      "UNREPRESENTED-surface": 126,
       "UNDERGROUND_OR_INDOOR": 12,
-      "NEEDS_MANUAL": 100
+      "NEEDS_MANUAL": 98
     },
     "HOUGANG": {
       "ALIGNED": 135,
@@ -1380,9 +1380,9 @@
     "KALLANG": {
       "ALIGNED": 109,
       "OFFSET": 14,
-      "UNREPRESENTED-surface": 146,
+      "UNREPRESENTED-surface": 147,
       "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 116
+      "NEEDS_MANUAL": 115
     },
     "LIM CHU KANG": {
       "ALIGNED": 0,
@@ -1415,9 +1415,9 @@
     "MARINE PARADE": {
       "ALIGNED": 17,
       "OFFSET": 1,
-      "UNREPRESENTED-surface": 38,
+      "UNREPRESENTED-surface": 39,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 15
+      "NEEDS_MANUAL": 14
     },
     "MUSEUM": {
       "ALIGNED": 22,
@@ -1443,9 +1443,9 @@
     "NOVENA": {
       "ALIGNED": 79,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 44,
+      "UNREPRESENTED-surface": 45,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 48
+      "NEEDS_MANUAL": 47
     },
     "ORCHARD": {
       "ALIGNED": 23,
@@ -1464,9 +1464,9 @@
     "PASIR RIS": {
       "ALIGNED": 93,
       "OFFSET": 4,
-      "UNREPRESENTED-surface": 29,
+      "UNREPRESENTED-surface": 30,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 26
+      "NEEDS_MANUAL": 25
     },
     "PAYA LEBAR": {
       "ALIGNED": 0,
@@ -1492,9 +1492,9 @@
     "QUEENSTOWN": {
       "ALIGNED": 206,
       "OFFSET": 26,
-      "UNREPRESENTED-surface": 122,
+      "UNREPRESENTED-surface": 123,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 42
+      "NEEDS_MANUAL": 41
     },
     "RIVER VALLEY": {
       "ALIGNED": 1,
@@ -1527,9 +1527,9 @@
     "SENGKANG": {
       "ALIGNED": 179,
       "OFFSET": 30,
-      "UNREPRESENTED-surface": 161,
+      "UNREPRESENTED-surface": 164,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 70
+      "NEEDS_MANUAL": 67
     },
     "SERANGOON": {
       "ALIGNED": 105,
@@ -1548,9 +1548,9 @@
     "SINGAPORE RIVER": {
       "ALIGNED": 21,
       "OFFSET": 2,
-      "UNREPRESENTED-surface": 11,
+      "UNREPRESENTED-surface": 12,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 2
+      "NEEDS_MANUAL": 1
     },
     "SOUTHERN ISLANDS": {
       "ALIGNED": 0,
@@ -1576,9 +1576,9 @@
     "TAMPINES": {
       "ALIGNED": 296,
       "OFFSET": 16,
-      "UNREPRESENTED-surface": 72,
+      "UNREPRESENTED-surface": 73,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 51
+      "NEEDS_MANUAL": 50
     },
     "TANGLIN": {
       "ALIGNED": 43,
@@ -1625,9 +1625,9 @@
     "WOODLANDS": {
       "ALIGNED": 96,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 162,
+      "UNREPRESENTED-surface": 163,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 83
+      "NEEDS_MANUAL": 82
     },
     "YISHUN": {
       "ALIGNED": 102,
@@ -1695,18 +1695,21 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1677.7472509585234,
-  "synthesized_pct_of_total": 0.5076813275116839,
-  "unsnapped_endpoints_count": 1340,
-  "needs_manual_count": 1340,
+  "synthesized_length_m": 1632.3271104349722,
+  "synthesized_pct_of_total": 0.49393732809604507,
+  "unsnapped_endpoints_count": 1323,
+  "needs_manual_count": 1323,
   "covered_edge_length_m_osm_tags": 595247.9797038393,
-  "covered_edge_length_m_lta_match": 257841.35665434072,
+  "covered_edge_length_m_lta_match": 272495.2290865707,
+  "covered_edge_length_m_lta_bridge_underpass_match": 95083.52541082863,
   "covered_edge_length_m_osm_roof_canopy": 33911.718571337784,
+  "covered_edge_length_m_inferred_hdb_precinct_footways": 390253.85652884515,
+  "covered_edge_length_m_inferred_hdb_point_footways": 813589.5219444034,
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 3172768.2467536395,
+  "covered_edge_length_m_union": 3803282.8983995584,
   "inferred_hdb_void_deck": {
     "candidate_buildings": 8544,
     "buildings_with_edges": 3393,
@@ -1739,6 +1742,43 @@
     "nearest_neighbours": 3,
     "source": "hdb_points_plus_residential_footprints",
     "confidence": "inferred"
+  },
+  "inferred_hdb_precinct_footways": {
+    "candidate_buildings": 8544,
+    "eligible_edge_count": 336703,
+    "marked_edges": 40555,
+    "length_m": 390253.85652884515,
+    "footprint_buffer_m": 14.0,
+    "min_match_ratio": 0.7,
+    "allowed_highways": [
+      "corridor",
+      "footway",
+      "living_street",
+      "path",
+      "pedestrian",
+      "steps"
+    ],
+    "source": "hdb_points_plus_osm_residential_footprints",
+    "confidence": "inferred_existing_pedestrian_edge"
+  },
+  "inferred_hdb_point_footways": {
+    "candidate_hdb_points": 13436,
+    "eligible_edge_count": 336703,
+    "marked_edges": 73057,
+    "newly_marked_edges": 25979,
+    "length_m": 813589.5219444034,
+    "point_buffer_m": 18.0,
+    "min_match_ratio": 0.65,
+    "allowed_highways": [
+      "corridor",
+      "footway",
+      "living_street",
+      "path",
+      "pedestrian",
+      "steps"
+    ],
+    "source": "hdb_building_points",
+    "confidence": "inferred_existing_pedestrian_edge_point_proxy"
   },
   "audited_shelter_corrections": {
     "approved_features": 0,

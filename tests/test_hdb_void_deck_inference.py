@@ -2,6 +2,9 @@ import geopandas as gpd
 from shapely.geometry import LineString, Point, Polygon
 
 from scripts.run_network_build import (
+    apply_hdb_point_footway_coverage,
+    apply_hdb_precinct_footway_coverage,
+    apply_polygon_coverage_attribution,
     build_hdb_precinct_connector_edges,
     build_hdb_void_deck_anchor_edges,
     build_hdb_void_deck_edges,
@@ -153,3 +156,113 @@ def test_compute_polygon_match_ratio_marks_existing_footways_under_roof():
     ratios = compute_polygon_match_ratio(edges, roof, buffer_m=0.0, label="test roof")
 
     assert ratios.tolist() == [1.0, 0.0]
+
+
+def test_hdb_precinct_footway_coverage_marks_only_pedestrian_edges():
+    edges = gpd.GeoDataFrame(
+        [
+            {
+                "highway": "footway",
+                "is_covered": 0,
+                "geometry": LineString([(2, 10), (18, 10)]),
+            },
+            {
+                "highway": "primary",
+                "is_covered": 0,
+                "geometry": LineString([(2, 12), (18, 12)]),
+            },
+            {
+                "highway": "footway",
+                "is_covered": 0,
+                "geometry": LineString([(80, 80), (90, 90)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+    hdb_footprints = gpd.GeoDataFrame(
+        [{"geometry": Polygon([(0, 0), (20, 0), (20, 20), (0, 20)])}],
+        crs="EPSG:3414",
+    )
+
+    mask, report = apply_hdb_precinct_footway_coverage(
+        edges,
+        hdb_footprints,
+        footprint_buffer_m=2.0,
+        min_match_ratio=0.70,
+    )
+
+    assert mask.tolist() == [True, False, False]
+    assert edges["is_covered"].tolist() == [1, 0, 0]
+    assert edges.iloc[0]["source_layer"] == "inferred_hdb_precinct_footway"
+    assert report["marked_edges"] == 1
+
+
+def test_polygon_coverage_attribution_preserves_bridge_underpass_source():
+    edges = gpd.GeoDataFrame(
+        [
+            {
+                "highway": "footway",
+                "is_covered": 0,
+                "source_layer": "covered_linkway",
+                "geometry": LineString([(0, 0), (10, 0)]),
+            },
+            {
+                "highway": "footway",
+                "is_covered": 0,
+                "source_layer": "",
+                "geometry": LineString([(50, 50), (60, 50)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+    bridge = gpd.GeoDataFrame(
+        [{"geometry": Polygon([(-1, -1), (11, -1), (11, 1), (-1, 1)])}],
+        crs="EPSG:3414",
+    )
+
+    mask, length_m = apply_polygon_coverage_attribution(
+        edges,
+        bridge,
+        source_layer="overhead_bridge_underpass",
+        ratio_threshold=0.60,
+        buffer_m=0.0,
+        label="test bridge",
+        overwrite_sources={"covered_linkway"},
+    )
+
+    assert mask.tolist() == [True, False]
+    assert length_m == 10.0
+    assert edges.iloc[0]["is_covered"] == 1
+    assert edges.iloc[0]["source_layer"] == "overhead_bridge_underpass"
+
+
+def test_hdb_point_footway_coverage_is_separate_point_proxy_layer():
+    edges = gpd.GeoDataFrame(
+        [
+            {
+                "highway": "footway",
+                "is_covered": 0,
+                "geometry": LineString([(0, 0), (12, 0)]),
+            },
+            {
+                "highway": "service",
+                "is_covered": 0,
+                "geometry": LineString([(0, 2), (12, 2)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+    hdb_points = gpd.GeoDataFrame([{"geometry": Point(6, 0)}], crs="EPSG:3414")
+
+    mask, report = apply_hdb_point_footway_coverage(
+        edges,
+        hdb_points,
+        point_buffer_m=8.0,
+        min_match_ratio=0.65,
+    )
+
+    assert mask.tolist() == [True, False]
+    assert edges["is_covered"].tolist() == [1, 0]
+    assert edges.iloc[0]["source_layer"] == "inferred_hdb_point_footway"
+    assert report["marked_edges"] == 1
+    assert report["newly_marked_edges"] == 1

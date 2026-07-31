@@ -1,0 +1,112 @@
+[
+  {
+    "best_node": "Opp Mayflower Sec Sch",
+    "paths": {
+      "covered_m": 128.1,
+      "covered_ratio": 1.0,
+      "detour_pct": 0.0,
+      "routing_type": "sheltered",
+      "sheltered_m": 128.1,
+      "shortest_covered_ratio": 1.0,
+      "shortest_m": 128.1
+    },
+    "postal": "560231",
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": 100.0,
+      "heat": 100.0,
+      "rain": 100.0
+    },
+    "total": 100.0
+  },
+  {
+    "best_node": "Mayflower Sec Sch",
+    "paths": {
+      "covered_m": 242.6,
+      "covered_ratio": 0.73,
+      "detour_pct": 0.0,
+      "routing_type": "shortest_due_to_detour",
+      "sheltered_m": 332.4,
+      "shortest_covered_ratio": 0.73,
+      "shortest_m": 332.4
+    },
+    "postal": "560234",
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": 100.0,
+      "heat": 73.0,
+      "rain": 73.0
+    },
+    "total": 89.2
+  },
+  {
+    "best_node": "Opp Mayflower Sec Sch",
+    "paths": {
+      "covered_m": 229.9,
+      "covered_ratio": 0.659,
+      "detour_pct": 0.7,
+      "routing_type": "sheltered",
+      "sheltered_m": 349.1,
+      "shortest_covered_ratio": 0.499,
+      "shortest_m": 346.7
+    },
+    "postal": "560225",
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 93.8,
+      "crossing": 100.0,
+      "heat": 65.9,
+      "rain": 65.9
+    },
+    "total": 85.1
+  },
+  {
+    "best_node": "Blk 700B",
+    "paths": {
+      "covered_m": 129.0,
+      "covered_ratio": 0.636,
+      "detour_pct": 19.7,
+      "routing_type": "sheltered",
+      "sheltered_m": 202.9,
+      "shortest_covered_ratio": 0.394,
+      "shortest_m": 169.6
+    },
+    "postal": "560700",
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": 100.0,
+      "heat": 63.6,
+      "rain": 63.6
+    },
+    "total": 85.4
+  },
+  {
+    "best_node": "Aft Ang Mo Kio Int",
+    "paths": {
+      "covered_m": 76.6,
+      "covered_ratio": 1.0,
+      "detour_pct": 0.0,
+      "routing_type": "sheltered",
+      "sheltered_m": 76.6,
+      "shortest_covered_ratio": 1.0,
+      "shortest_m": 76.6
+    },
+    "postal": "560710",
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": 100.0,
+      "heat": 100.0,
+      "rain": 100.0
+    },
+    "total": 100.0
+  }
+]

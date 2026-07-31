@@ -1,9 +1,9 @@
+import builtins
 import json
 import math
 import tempfile
 import warnings
 import zipfile
-import builtins
 from collections import Counter
 from pathlib import Path
 
@@ -19,7 +19,7 @@ from shapely.ops import nearest_points, substring
 warnings.filterwarnings("ignore", category=ShapelyDeprecationWarning)
 
 
-def print(*args, **kwargs):  # noqa: A001
+def print(*args, **kwargs):
     """Flush long-running build logs when stdout is redirected to a file."""
     kwargs.setdefault("flush", True)
     return builtins.print(*args, **kwargs)
@@ -61,6 +61,14 @@ APPROVED_CORRECTION_STATUSES = {"approved"}
 COVERED_CORRECTION_VALUES = {"1", "true", "yes", "covered"}
 HDB_VOID_DECK_BUILDING_TAGS = {"apartments", "residential"}
 OSM_ROOF_SHELTER_TAGS = {"roof", "canopy"}
+HDB_PRECINCT_COVERED_HIGHWAYS = {
+    "corridor",
+    "footway",
+    "living_street",
+    "path",
+    "pedestrian",
+    "steps",
+}
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -293,6 +301,210 @@ def compute_lta_match_ratio(
     )
 
 
+def _blank_text_mask(series: pd.Series) -> pd.Series:
+    return series.isna() | series.astype(str).str.strip().isin(["", "nan", "None"])
+
+
+def ensure_columns(frame: gpd.GeoDataFrame, defaults: dict[str, object]) -> None:
+    for column, default in defaults.items():
+        if column not in frame.columns:
+            frame[column] = default
+
+
+def apply_polygon_coverage_attribution(
+    edges_gdf: gpd.GeoDataFrame,
+    polygon_gdf: gpd.GeoDataFrame,
+    *,
+    source_layer: str,
+    ratio_threshold: float,
+    buffer_m: float = 3.0,
+    label: str,
+    overwrite_sources: set[str] | None = None,
+) -> tuple[pd.Series, float]:
+    """Mark graph edges covered by source polygons and preserve why they are covered."""
+    match_ratio = compute_polygon_match_ratio(
+        edges_gdf,
+        polygon_gdf,
+        buffer_m=buffer_m,
+        label=label,
+    )
+    match_mask = match_ratio >= ratio_threshold
+    if not bool(match_mask.any()):
+        return match_mask, 0.0
+
+    ensure_columns(
+        edges_gdf,
+        {
+            "is_covered": 0,
+            "covered": "",
+            "source_layer": "",
+            "confidence": "",
+        },
+    )
+    edges_gdf.loc[match_mask, "is_covered"] = 1
+    covered_blank = _blank_text_mask(edges_gdf["covered"])
+    edges_gdf.loc[match_mask & covered_blank, "covered"] = "yes"
+
+    source_blank = _blank_text_mask(edges_gdf["source_layer"])
+    if overwrite_sources:
+        overwrite_mask = edges_gdf["source_layer"].astype(str).isin(overwrite_sources)
+        source_blank = source_blank | overwrite_mask
+    edges_gdf.loc[match_mask & source_blank, "source_layer"] = source_layer
+
+    confidence_blank = _blank_text_mask(edges_gdf["confidence"])
+    edges_gdf.loc[match_mask & confidence_blank, "confidence"] = "source_polygon_match"
+    return match_mask, float(edges_gdf.loc[match_mask, "geometry"].length.sum())
+
+
+def apply_hdb_precinct_footway_coverage(
+    edges_gdf: gpd.GeoDataFrame,
+    hdb_footprints_gdf: gpd.GeoDataFrame,
+    *,
+    footprint_buffer_m: float = 14.0,
+    min_match_ratio: float = 0.70,
+) -> tuple[pd.Series, dict[str, object]]:
+    """Mark existing pedestrian graph edges that sit inside HDB precinct shelter buffers.
+
+    This does not add new geometry. It only upgrades already-routable pedestrian
+    edges where HDB building-footprint evidence strongly overlaps the edge.
+    """
+    empty_mask = pd.Series(False, index=edges_gdf.index)
+    report: dict[str, object] = {
+        "candidate_buildings": len(hdb_footprints_gdf),
+        "eligible_edge_count": 0,
+        "marked_edges": 0,
+        "length_m": 0.0,
+        "footprint_buffer_m": footprint_buffer_m,
+        "min_match_ratio": min_match_ratio,
+        "allowed_highways": sorted(HDB_PRECINCT_COVERED_HIGHWAYS),
+        "source": "hdb_points_plus_osm_residential_footprints",
+        "confidence": "inferred_existing_pedestrian_edge",
+    }
+    if edges_gdf.empty or hdb_footprints_gdf.empty or "highway" not in edges_gdf.columns:
+        return empty_mask, report
+
+    highway = edges_gdf["highway"].fillna("").astype(str).str.strip().str.lower()
+    eligible_mask = highway.isin(HDB_PRECINCT_COVERED_HIGHWAYS)
+    report["eligible_edge_count"] = int(eligible_mask.sum())
+    if not bool(eligible_mask.any()):
+        return empty_mask, report
+
+    eligible_edges = edges_gdf.loc[eligible_mask].copy()
+    buffered_hdb = hdb_footprints_gdf.copy()
+    buffered_hdb["geometry"] = buffered_hdb.geometry.buffer(footprint_buffer_m)
+    match_ratio = compute_polygon_match_ratio(
+        eligible_edges,
+        buffered_hdb,
+        buffer_m=0.0,
+        label="HDB precinct pedestrian-edge",
+    )
+    local_mask = match_ratio >= min_match_ratio
+    if not bool(local_mask.any()):
+        return empty_mask, report
+
+    marked_index = local_mask[local_mask].index
+    full_mask = pd.Series(False, index=edges_gdf.index)
+    full_mask.loc[marked_index] = True
+
+    ensure_columns(
+        edges_gdf,
+        {
+            "is_covered": 0,
+            "covered": "",
+            "source_layer": "",
+            "confidence": "",
+        },
+    )
+    edges_gdf.loc[full_mask, "is_covered"] = 1
+    covered_blank = _blank_text_mask(edges_gdf["covered"])
+    edges_gdf.loc[full_mask & covered_blank, "covered"] = "yes"
+    source_blank = _blank_text_mask(edges_gdf["source_layer"])
+    edges_gdf.loc[full_mask & source_blank, "source_layer"] = "inferred_hdb_precinct_footway"
+    confidence_blank = _blank_text_mask(edges_gdf["confidence"])
+    edges_gdf.loc[full_mask & confidence_blank, "confidence"] = "inferred_existing_pedestrian_edge"
+
+    report["marked_edges"] = int(full_mask.sum())
+    report["length_m"] = float(edges_gdf.loc[full_mask, "geometry"].length.sum())
+    return full_mask, report
+
+
+def apply_hdb_point_footway_coverage(
+    edges_gdf: gpd.GeoDataFrame,
+    hdb_points_gdf: gpd.GeoDataFrame,
+    *,
+    point_buffer_m: float = 18.0,
+    min_match_ratio: float = 0.65,
+) -> tuple[pd.Series, dict[str, object]]:
+    """Fallback HDB coverage for existing pedestrian edges near official HDB points.
+
+    This is intentionally weaker than footprint evidence: it marks only existing
+    pedestrian edges and records a separate point-proxy source layer.
+    """
+    empty_mask = pd.Series(False, index=edges_gdf.index)
+    report: dict[str, object] = {
+        "candidate_hdb_points": len(hdb_points_gdf),
+        "eligible_edge_count": 0,
+        "marked_edges": 0,
+        "newly_marked_edges": 0,
+        "length_m": 0.0,
+        "point_buffer_m": point_buffer_m,
+        "min_match_ratio": min_match_ratio,
+        "allowed_highways": sorted(HDB_PRECINCT_COVERED_HIGHWAYS),
+        "source": "hdb_building_points",
+        "confidence": "inferred_existing_pedestrian_edge_point_proxy",
+    }
+    if edges_gdf.empty or hdb_points_gdf.empty or "highway" not in edges_gdf.columns:
+        return empty_mask, report
+
+    highway = edges_gdf["highway"].fillna("").astype(str).str.strip().str.lower()
+    eligible_mask = highway.isin(HDB_PRECINCT_COVERED_HIGHWAYS)
+    report["eligible_edge_count"] = int(eligible_mask.sum())
+    if not bool(eligible_mask.any()):
+        return empty_mask, report
+
+    eligible_edges = edges_gdf.loc[eligible_mask].copy()
+    point_buffers = hdb_points_gdf.copy()
+    point_buffers["geometry"] = point_buffers.geometry.buffer(point_buffer_m)
+    match_ratio = compute_polygon_match_ratio(
+        eligible_edges,
+        point_buffers,
+        buffer_m=0.0,
+        label="HDB point pedestrian-edge",
+    )
+    local_mask = match_ratio >= min_match_ratio
+    if not bool(local_mask.any()):
+        return empty_mask, report
+
+    marked_index = local_mask[local_mask].index
+    full_mask = pd.Series(False, index=edges_gdf.index)
+    full_mask.loc[marked_index] = True
+
+    ensure_columns(
+        edges_gdf,
+        {
+            "is_covered": 0,
+            "covered": "",
+            "source_layer": "",
+            "confidence": "",
+        },
+    )
+    was_uncovered = edges_gdf["is_covered"].fillna(0).astype(float) <= 0
+    edges_gdf.loc[full_mask, "is_covered"] = 1
+    covered_blank = _blank_text_mask(edges_gdf["covered"])
+    edges_gdf.loc[full_mask & covered_blank, "covered"] = "yes"
+    source_blank = _blank_text_mask(edges_gdf["source_layer"])
+    edges_gdf.loc[full_mask & source_blank, "source_layer"] = "inferred_hdb_point_footway"
+    confidence_blank = _blank_text_mask(edges_gdf["confidence"])
+    edges_gdf.loc[full_mask & confidence_blank, "confidence"] = (
+        "inferred_existing_pedestrian_edge_point_proxy"
+    )
+
+    report["marked_edges"] = int(full_mask.sum())
+    report["newly_marked_edges"] = int((full_mask & was_uncovered).sum())
+    report["length_m"] = float(edges_gdf.loc[full_mask, "geometry"].length.sum())
+    return full_mask, report
+
+
 def value_counts(series: pd.Series) -> Counter[str]:
     return Counter(
         str(value).strip()
@@ -303,6 +515,13 @@ def value_counts(series: pd.Series) -> Counter[str]:
 
 def format_top_counts(counts: Counter[str], limit: int = 3) -> str:
     return ", ".join(f"{key}={value}" for key, value in counts.most_common(limit))
+
+
+def report_float(report: dict[str, object], key: str) -> float:
+    value = report.get(key, 0.0)
+    if isinstance(value, int | float):
+        return float(value)
+    return float(str(value))
 
 
 def extract_longest_linestring(geom):
@@ -381,7 +600,7 @@ def build_audited_correction_edges(
 ) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
     """Convert approved correction lines into covered graph edges snapped to existing nodes."""
     empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
-    approved_features = int(len(corrections_gdf))
+    approved_features = len(corrections_gdf)
     candidate_lines = 0
     added_edges = 0
     skipped_edges = 0
@@ -559,7 +778,7 @@ def build_hdb_void_deck_edges(
 ) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
     empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
     report: dict[str, object] = {
-        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "candidate_buildings": len(hdb_footprints_gdf),
         "buildings_with_edges": 0,
         "added_edges": 0,
         "length_m": 0.0,
@@ -641,7 +860,7 @@ def build_hdb_void_deck_edges(
         return empty_edges, report
     edges_gdf = gpd.GeoDataFrame(void_edges, geometry="geometry", crs="EPSG:3414")
     report["buildings_with_edges"] = buildings_with_edges
-    report["added_edges"] = int(len(edges_gdf))
+    report["added_edges"] = len(edges_gdf)
     report["length_m"] = float(edges_gdf.geometry.length.sum())
     return edges_gdf, report
 
@@ -660,7 +879,7 @@ def build_hdb_void_deck_anchor_edges(
 ) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
     empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
     report: dict[str, object] = {
-        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "candidate_buildings": len(hdb_footprints_gdf),
         "buildings_with_edges": 0,
         "added_edges": 0,
         "length_m": 0.0,
@@ -738,7 +957,7 @@ def build_hdb_void_deck_anchor_edges(
 
     edges_gdf = gpd.GeoDataFrame(anchor_edges, geometry="geometry", crs="EPSG:3414")
     report["buildings_with_edges"] = buildings_with_edges
-    report["added_edges"] = int(len(edges_gdf))
+    report["added_edges"] = len(edges_gdf)
     report["length_m"] = float(edges_gdf.geometry.length.sum())
     return edges_gdf, report
 
@@ -756,7 +975,7 @@ def build_hdb_precinct_connector_edges(
 ) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
     empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
     report: dict[str, object] = {
-        "candidate_buildings": int(len(hdb_footprints_gdf)),
+        "candidate_buildings": len(hdb_footprints_gdf),
         "buildings_with_edges": 0,
         "added_edges": 0,
         "length_m": 0.0,
@@ -859,7 +1078,7 @@ def build_hdb_precinct_connector_edges(
         crs="EPSG:3414",
     )
     report["buildings_with_edges"] = buildings_with_edges
-    report["added_edges"] = int(len(edges_gdf))
+    report["added_edges"] = len(edges_gdf)
     report["length_m"] = float(edges_gdf.geometry.length.sum())
     return edges_gdf, report
 
@@ -921,13 +1140,16 @@ def run_build(scope: str = "pilot"):
 
     # Load LTA covered shelter polygons
     zip_path = require_raw_file("covered_linkway.zip")
-    lta_gdf = load_first_shapefile_from_zip(zip_path).to_crs(epsg=3414)
-    lta_gdf = gpd.sjoin(
-        lta_gdf, pa_boundary[["PLN_AREA_N", "geometry"]], how="inner", predicate="intersects"
+    covered_linkway_gdf = load_first_shapefile_from_zip(zip_path).to_crs(epsg=3414)
+    covered_linkway_gdf = gpd.sjoin(
+        covered_linkway_gdf,
+        pa_boundary[["PLN_AREA_N", "geometry"]],
+        how="inner",
+        predicate="intersects",
     )
-    lta_gdf["source_layer"] = "covered_linkway"
+    covered_linkway_gdf["source_layer"] = "covered_linkway"
     bridge_gdf = load_overhead_bridge_underpass_polygons(pa_boundary)
-    lta_gdf = pd.concat([lta_gdf, bridge_gdf], ignore_index=True)
+    lta_gdf = pd.concat([covered_linkway_gdf, bridge_gdf], ignore_index=True)
     print(
         "Loaded LTA shelter polygons in scope: "
         f"covered_linkways={len(lta_gdf[lta_gdf['source_layer'] == 'covered_linkway'])}, "
@@ -1114,8 +1336,10 @@ def run_build(scope: str = "pilot"):
         ):
             return (
                 "PRIVATE_ESTATE",
-                f"Western Water Catchment service/military-access component; "
-                f"highway tags: {format_top_counts(highway_counts)}",
+                (
+                    f"Western Water Catchment service/military-access component; "
+                    f"highway tags: {format_top_counts(highway_counts)}"
+                ),
             )
 
         owner_overrides = {
@@ -1155,9 +1379,12 @@ def run_build(scope: str = "pilot"):
         ):
             return (
                 "ISOLATED_NON_TRANSIT",
-                f"nearest_bus_stop={bus_dist:.1f}m (>{BUS_NON_TRANSIT_THRESHOLD_M:.0f}m), "
-                f"nearest_mrt_lrt_exit={mrt_dist:.1f}m "
-                f"(>{MRT_NON_TRANSIT_THRESHOLD_M:.0f}m)",
+                (
+                    f"nearest_bus_stop={bus_dist:.1f}m "
+                    f"(>{BUS_NON_TRANSIT_THRESHOLD_M:.0f}m), "
+                    f"nearest_mrt_lrt_exit={mrt_dist:.1f}m "
+                    f"(>{MRT_NON_TRANSIT_THRESHOLD_M:.0f}m)"
+                ),
             )
 
         path_track_ratio = (
@@ -1168,20 +1395,27 @@ def run_build(scope: str = "pilot"):
         if any(token in name_text for token in PARK_NAME_TOKENS):
             return (
                 "ISOLATED_NON_TRANSIT",
-                f"named park/attraction path component in {area_name}; "
-                f"names: {format_top_counts(name_counts)}",
+                (
+                    f"named park/attraction path component in {area_name}; "
+                    f"names: {format_top_counts(name_counts)}"
+                ),
             )
         if area_name in PARK_NON_TRANSIT_AREAS and path_track_ratio >= 0.70 and gap_dist > 50.0:
             return (
                 "ISOLATED_NON_TRANSIT",
-                f"park/track component in {area_name}; "
-                f"highway tags: {format_top_counts(highway_counts)}",
+                (
+                    f"park/track component in {area_name}; "
+                    f"highway tags: {format_top_counts(highway_counts)}"
+                ),
             )
         if math.isfinite(bus_dist) and bus_dist > BUS_NON_TRANSIT_THRESHOLD_M and gap_dist > 100.0:
             return (
                 "ISOLATED_NON_TRANSIT",
-                f"standalone component with no bus stop inside D3 range; "
-                f"nearest_bus_stop={bus_dist:.1f}m, gap_to_main={gap_dist:.1f}m, area={area_name}",
+                (
+                    "standalone component with no bus stop inside D3 range; "
+                    f"nearest_bus_stop={bus_dist:.1f}m, "
+                    f"gap_to_main={gap_dist:.1f}m, area={area_name}"
+                ),
             )
 
         return "REAL_DISCONNECTION", ""
@@ -1211,6 +1445,30 @@ def run_build(scope: str = "pilot"):
     print(
         f"OSM roof/canopy covered attribution: edges={int(roof_match_mask.sum())}, "
         f"length={roof_match_edge_length:.1f}m"
+    )
+
+    _hdb_footway_mask, hdb_footway_report = apply_hdb_precinct_footway_coverage(
+        edges_gdf,
+        hdb_footprints_gdf,
+    )
+    hdb_footway_length_m = report_float(hdb_footway_report, "length_m")
+    print(
+        "Inferred HDB precinct pedestrian-edge coverage: "
+        f"eligible_edges={hdb_footway_report['eligible_edge_count']}, "
+        f"marked={hdb_footway_report['marked_edges']}, "
+        f"length={hdb_footway_length_m:.1f}m"
+    )
+    _hdb_point_footway_mask, hdb_point_footway_report = apply_hdb_point_footway_coverage(
+        edges_gdf,
+        hdb_points_gdf,
+    )
+    hdb_point_footway_length_m = report_float(hdb_point_footway_report, "length_m")
+    print(
+        "Inferred HDB point pedestrian-edge coverage: "
+        f"eligible_edges={hdb_point_footway_report['eligible_edge_count']}, "
+        f"marked={hdb_point_footway_report['marked_edges']}, "
+        f"new={hdb_point_footway_report['newly_marked_edges']}, "
+        f"length={hdb_point_footway_length_m:.1f}m"
     )
 
     hdb_void_edges_gdf, hdb_void_report = build_hdb_void_deck_edges(
@@ -1461,10 +1719,31 @@ def run_build(scope: str = "pilot"):
     print(f"\nMean edge length: {edges_gdf.geometry.length.mean():.2f}m")
 
     # Also 60% intersection logic for attribution (used for downstream scoring, NOT classification)
-    match_ratio = compute_lta_match_ratio(edges_gdf, lta_gdf)
-    lta_match_mask = match_ratio >= 0.60
+    covered_linkway_match_mask, _ = apply_polygon_coverage_attribution(
+        edges_gdf,
+        covered_linkway_gdf,
+        source_layer="covered_linkway",
+        ratio_threshold=0.60,
+        buffer_m=3.0,
+        label="LTA covered-linkway",
+    )
+    bridge_match_mask, bridge_match_edge_length = apply_polygon_coverage_attribution(
+        edges_gdf,
+        bridge_gdf,
+        source_layer="overhead_bridge_underpass",
+        ratio_threshold=0.45,
+        buffer_m=4.0,
+        label="LTA overhead bridge/underpass",
+        overwrite_sources={"covered_linkway"},
+    )
+    lta_match_mask = covered_linkway_match_mask | bridge_match_mask
     lta_match_edge_length = edges_gdf.loc[lta_match_mask, "geometry"].length.sum()
-    edges_gdf.loc[lta_match_mask, "is_covered"] = 1
+    print(
+        "LTA polygon covered attribution: "
+        f"covered_linkway_edges={int(covered_linkway_match_mask.sum())}, "
+        f"bridge_underpass_edges={int(bridge_match_mask.sum())}, "
+        f"union_length={float(lta_match_edge_length):.1f}m"
+    )
     native_covered_edge_length = edges_gdf.loc[native_covered_mask, "geometry"].length.sum()
 
     # Classification uses NATIVE covered osm
@@ -1556,6 +1835,8 @@ def run_build(scope: str = "pilot"):
 
         coords = list(line.coords)
         start_pt, end_pt = Point(coords[0]), Point(coords[-1])
+        polygon_source_layer = str(row.get("source_layer", "")).strip()
+        is_bridge_underpass = polygon_source_layer == "overhead_bridge_underpass"
 
         if row["class"] == "OFFSET":
             cap = min(11.0, row["dist_to_covered"] + 1.0)
@@ -1610,40 +1891,45 @@ def run_build(scope: str = "pilot"):
                         "u": -1,
                         "v": -1,
                         "synth_class": "OFFSET",
+                        "source_layer": polygon_source_layer,
+                        "covered": "yes",
+                        "confidence": "source_polygon_endpoint_snap",
                     }
                 )
 
         elif row["class"] == "UNREPRESENTED-surface":
-            # 2m node snap or 5m edge split
+            # Wider endpoint snap only for LTA overhead bridge/underpass polygons.
+            node_snap_m = 4.0 if is_bridge_underpass else 2.0
+            edge_snap_m = 8.0 if is_bridge_underpass else 5.0
             p_nearest_s, d_s_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=2.0
+                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=node_snap_m
             )
             p_nearest_e, d_e_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=2.0
+                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=node_snap_m
             )
             p_edge_s, d_s_edge, edge_idx_s = nearest_point_and_index_on_geometry(
-                edges_gdf.geometry, edges_sindex, start_pt, max_distance=5.0
+                edges_gdf.geometry, edges_sindex, start_pt, max_distance=edge_snap_m
             )
             p_edge_e, d_e_edge, edge_idx_e = nearest_point_and_index_on_geometry(
-                edges_gdf.geometry, edges_sindex, end_pt, max_distance=5.0
+                edges_gdf.geometry, edges_sindex, end_pt, max_distance=edge_snap_m
             )
 
             snapped_s = False
             snapped_e = False
 
-            if p_nearest_s is not None and d_s_node <= 2.0:
+            if p_nearest_s is not None and d_s_node <= node_snap_m:
                 coords[0] = (p_nearest_s.x, p_nearest_s.y)
                 snapped_s = True
-            elif p_edge_s is not None and d_s_edge <= 5.0:
+            elif p_edge_s is not None and d_s_edge <= edge_snap_m:
                 coords[0] = (p_edge_s.x, p_edge_s.y)
                 if edge_idx_s is not None:
                     synth_edge_split_points.setdefault(edge_idx_s, []).append(p_edge_s)
                 snapped_s = True
 
-            if p_nearest_e is not None and d_e_node <= 2.0:
+            if p_nearest_e is not None and d_e_node <= node_snap_m:
                 coords[-1] = (p_nearest_e.x, p_nearest_e.y)
                 snapped_e = True
-            elif p_edge_e is not None and d_e_edge <= 5.0:
+            elif p_edge_e is not None and d_e_edge <= edge_snap_m:
                 coords[-1] = (p_edge_e.x, p_edge_e.y)
                 if edge_idx_e is not None:
                     synth_edge_split_points.setdefault(edge_idx_e, []).append(p_edge_e)
@@ -1664,6 +1950,9 @@ def run_build(scope: str = "pilot"):
                         "u": -1,
                         "v": -1,
                         "synth_class": "UNREPRESENTED-surface",
+                        "source_layer": polygon_source_layer,
+                        "covered": "yes",
+                        "confidence": "source_polygon_endpoint_snap",
                     }
                 )
 
@@ -1774,7 +2063,10 @@ def run_build(scope: str = "pilot"):
         "needs_manual_count": needs_manual_count,
         "covered_edge_length_m_osm_tags": float(native_covered_edge_length),
         "covered_edge_length_m_lta_match": float(lta_match_edge_length),
+        "covered_edge_length_m_lta_bridge_underpass_match": bridge_match_edge_length,
         "covered_edge_length_m_osm_roof_canopy": roof_match_edge_length,
+        "covered_edge_length_m_inferred_hdb_precinct_footways": hdb_footway_length_m,
+        "covered_edge_length_m_inferred_hdb_point_footways": hdb_point_footway_length_m,
         "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
         "covered_edge_length_m_inferred_hdb_void_deck_anchors": hdb_anchor_length_m,
         "covered_edge_length_m_inferred_hdb_precinct_connectors": hdb_precinct_length_m,
@@ -1783,6 +2075,8 @@ def run_build(scope: str = "pilot"):
         "inferred_hdb_void_deck": hdb_void_report,
         "inferred_hdb_void_deck_anchors": hdb_anchor_report,
         "inferred_hdb_precinct_connectors": hdb_precinct_report,
+        "inferred_hdb_precinct_footways": hdb_footway_report,
+        "inferred_hdb_point_footways": hdb_point_footway_report,
         "audited_shelter_corrections": correction_report,
         "flags": flags,
     }
@@ -1810,6 +2104,20 @@ def run_build(scope: str = "pilot"):
         hpe = hdb_precinct_edges_gdf.to_crs(epsg=4326)
         hpe["class"] = "INFERRED_HDB_PRECINCT_CONNECTOR"
         debug_export = pd.concat([debug_export, hpe[["geometry", "class"]]], ignore_index=True)
+    if "source_layer" in edges_gdf.columns:
+        debug_source_layer = edges_gdf["source_layer"].astype(str)
+    else:
+        debug_source_layer = pd.Series("", index=edges_gdf.index, dtype="string")
+    hdb_footway_debug_mask = debug_source_layer.eq("inferred_hdb_precinct_footway")
+    hdb_point_footway_debug_mask = debug_source_layer.eq("inferred_hdb_point_footway")
+    if bool(hdb_footway_debug_mask.any()):
+        hfw = edges_gdf.loc[hdb_footway_debug_mask, ["geometry"]].copy().to_crs(epsg=4326)
+        hfw["class"] = "INFERRED_HDB_PRECINCT_FOOTWAY"
+        debug_export = pd.concat([debug_export, hfw[["geometry", "class"]]], ignore_index=True)
+    if bool(hdb_point_footway_debug_mask.any()):
+        hpf = edges_gdf.loc[hdb_point_footway_debug_mask, ["geometry"]].copy().to_crs(epsg=4326)
+        hpf["class"] = "INFERRED_HDB_POINT_FOOTWAY"
+        debug_export = pd.concat([debug_export, hpf[["geometry", "class"]]], ignore_index=True)
     if not roof_gdf.empty:
         re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
         re["class"] = "OSM_ROOF_CANOPY"
