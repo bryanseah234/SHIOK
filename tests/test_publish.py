@@ -60,6 +60,7 @@ def test_deploy_command_is_production_archive_no_wait():
 
     assert Path(command[0]).name in {"vercel", "vercel.cmd"}
     assert command[1] == "deploy"
+    assert command[2] == "web"
     assert "--prod" in command
     assert "--archive=tgz" in command
     assert "--yes" in command

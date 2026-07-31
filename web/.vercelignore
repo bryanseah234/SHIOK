@@ -1,5 +1,7 @@
 .next/
 .vercel/
 node_modules/
-public/data/generated_20260728_1405/
-public/data/generated_20260729_0438/
+
+public/data/generated_*/
+!public/data/generated_20260731_124456_r3/
+!public/data/generated_20260731_124456_r3/**

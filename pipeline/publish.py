@@ -63,7 +63,7 @@ def deploy_command(web_dir: Path) -> list[str]:
     return [
         command_name("vercel"),
         "deploy",
-        str(web_dir.parent),
+        str(web_dir),
         "--prod",
         "--archive=tgz",
         "--yes",
