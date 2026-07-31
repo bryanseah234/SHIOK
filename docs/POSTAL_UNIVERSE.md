@@ -110,3 +110,15 @@ ship the 124,032-record candidate universe with explicit state counts. The
 remaining gap needs either a new official open dataset, a licensed SingPost/SLA
 address product, or owner-approved legal rights to another canonical source.
 Brute-forcing OneMap remains prohibited.
+
+## 2026-08-01 Review
+
+Parallel source review checked whether Bellingcat OSM Search, OpenInfraMap,
+Overpass/Overpass Turbo, OSM extracts, data.gov.sg, OneMap, SLA Address Point,
+and SingPost/SGLocate could close the remaining postal-universe gap.
+
+Result: no free, current, authoritative bulk all-postal source was identified.
+The ~140k target should not be claimed until SLA Address Point, SingPost/SGLocate,
+or another canonical source is licensed or explicitly permitted for this
+non-commercial use. The current production-safe stance remains 124,032
+source-derived records plus honest unresolved states.
