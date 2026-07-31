@@ -745,8 +745,16 @@ export function RouteEvidenceMap({
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
+  const lastFitKeyRef = useRef<string>("");
   const [loaded, setLoaded] = useState(false);
   const routeData = useMemo(() => routeCollections(routes, mode), [routes, mode]);
+  const routeFitKey = useMemo(
+    () =>
+      `${mode}:${routes
+        .map((route) => `${route.id}:${route.geom.postal}:${route.geom.shortest}:${route.geom.sheltered}`)
+        .join("|")}`,
+    [routes, mode]
+  );
   const transitPoiData = useMemo(() => transitPoiCollection(transitPois), [transitPois]);
   const feedbackData = useMemo(() => feedbackCollections(feedbackPoints), [feedbackPoints]);
   const accessibleLabel = useMemo(() => mapAriaLabel(routes, mode), [routes, mode]);
@@ -807,6 +815,8 @@ export function RouteEvidenceMap({
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded || !routeData.bounds) return;
+    if (lastFitKeyRef.current === routeFitKey) return;
+    lastFitKeyRef.current = routeFitKey;
     if (routeData.bounds) {
       const isCompact = map.getContainer().clientWidth < 700;
       map.fitBounds(routeData.bounds, {
@@ -817,7 +827,7 @@ export function RouteEvidenceMap({
         maxZoom: 16.6,
       });
     }
-  }, [loaded, routeData]);
+  }, [loaded, routeData.bounds, routeFitKey]);
 
   useEffect(() => {
     const map = mapRef.current;
