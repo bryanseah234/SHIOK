@@ -25,6 +25,21 @@ NETWORK_SOURCE_FILES = {
     "covered_linkway": "covered_linkway.zip",
     "osm_extract": "osm_extract.osm.pbf",
 }
+ISLAND_NETWORK_SOURCE_FILES = {
+    "overhead_bridge_underpass": "overhead_bridge_underpass.zip",
+    "building_points": "building_points.geojson",
+    "nparks_heritage_trees": "nparks_heritage_trees.geojson",
+    "nparks_nature_ways": "nparks_nature_ways.geojson",
+    "nparks_park_connector_loop": "nparks_park_connector_loop.geojson",
+    "nparks_tracks": "nparks_tracks.geojson",
+}
+
+
+def network_source_files_for_area(area: str) -> dict[str, str]:
+    source_files = dict(NETWORK_SOURCE_FILES)
+    if area == "island":
+        source_files.update(ISLAND_NETWORK_SOURCE_FILES)
+    return source_files
 
 
 def sha256_file(path: Path) -> str:
@@ -188,7 +203,7 @@ def build_network_preflight(
         except (OSError, ValueError, json.JSONDecodeError) as exc:
             errors.append(f"could not read manifest: {exc}")
 
-    for source_key, filename in NETWORK_SOURCE_FILES.items():
+    for source_key, filename in network_source_files_for_area(area).items():
         raw_statuses[source_key] = source_file_status(
             source_key=source_key,
             filename=filename,
@@ -217,7 +232,11 @@ def build_network_preflight(
     )
     qa_path = qa_dir / f"conflation_qa_{area}.json"
     debug_path = qa_dir / f"{area}_debug.geojson"
-    qa_ok, qa_summary = validate_network_qa(qa_path, debug_path)
+    qa_ok, qa_summary = validate_network_qa(
+        qa_path,
+        debug_path,
+        require_production_sources=area == "island",
+    )
     output_status = {
         "network_parquet": {
             "path": str(network_path),

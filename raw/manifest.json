@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-31T03:52:07.027774+00:00",
+  "generated_at": "2026-07-31T20:11:47.824018+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -126,6 +126,15 @@
       "sha256": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
       "source_name": "Geofabrik Malaysia/Singapore/Brunei OSM",
       "url_as_discovered": "https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf"
+    },
+    "other_uen_registered_entities": {
+      "bytes": 3149224,
+      "etag": null,
+      "fetched_at": "2026-07-31T20:11:47.824018+00:00",
+      "last_modified": null,
+      "sha256": "8d2b048866a8af3109299e60eb67fbcdca99d6a8a001861abc3da05a909264b1",
+      "source_name": "Entities Registered with Other UEN Issuance Agencies",
+      "url_as_discovered": "https://api-open.data.gov.sg/v1/public/api/datasets/d_b1d2b840ab9e993570c037b706b39bb8/initiate-download"
     },
     "overhead_bridge_underpass": {
       "bytes": 478973,

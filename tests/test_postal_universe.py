@@ -6,10 +6,12 @@ from pathlib import Path
 from pipeline.postal_universe import (
     ACRA_SOURCE_KEY,
     ONEMAP_2020_SOURCE_KEY,
+    OTHER_UEN_SOURCE_KEY,
     SLA_DWELLING_SOURCE_KEY,
     SourceRow,
     iter_acra_rows,
     iter_onemap_2020_rows,
+    iter_other_uen_rows,
     iter_sla_dwelling_rows,
     merge_source_rows,
     normalize_postal_code,
@@ -86,6 +88,39 @@ def test_iter_acra_rows_filters_registered_policy(tmp_path: Path):
     assert [row.postal_code for row in registered_rows] == ["189648"]
     assert registered_stats.valid_unique_postals == 1
     assert {row.postal_code for row in all_rows} == {"189648", "670481"}
+    assert all_stats.valid_unique_postals == 2
+
+
+def test_iter_other_uen_rows_filters_registered_policy(tmp_path: Path):
+    path = tmp_path / "other_uen.csv"
+    with open(path, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(
+            f,
+            fieldnames=["uen_status_desc", "reg_street_name", "reg_postal_code"],
+        )
+        writer.writeheader()
+        writer.writerow(
+            {
+                "uen_status_desc": "Registered",
+                "reg_street_name": "NORTH BRIDGE ROAD",
+                "reg_postal_code": "188778",
+            }
+        )
+        writer.writerow(
+            {
+                "uen_status_desc": "Deregistered",
+                "reg_street_name": "YISHUN AVENUE 2",
+                "reg_postal_code": "769098",
+            }
+        )
+
+    registered_rows, registered_stats = iter_other_uen_rows(path, "registered")
+    all_rows, all_stats = iter_other_uen_rows(path, "all")
+
+    assert registered_stats.source_key == OTHER_UEN_SOURCE_KEY
+    assert [row.postal_code for row in registered_rows] == ["188778"]
+    assert registered_stats.valid_unique_postals == 1
+    assert {row.postal_code for row in all_rows} == {"188778", "769098"}
     assert all_stats.valid_unique_postals == 2
 
 

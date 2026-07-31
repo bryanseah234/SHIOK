@@ -28,6 +28,40 @@ def valid_report() -> dict:
         "real_disconnection_count_osm_only": 0,
         "real_disconnection_count_final": 0,
         "flags": [],
+        "covered_edge_length_m_osm_tags": 100.0,
+        "covered_edge_length_m_lta_bridge_underpass_match": 20.0,
+        "covered_edge_length_m_osm_roof_canopy": 15.0,
+        "covered_edge_length_m_inferred_hdb_precinct_footways": 30.0,
+        "covered_edge_length_m_inferred_hdb_point_footways": 40.0,
+        "covered_edge_length_m_inferred_hdb_void_deck": 25.0,
+        "shade_proxy_edge_count": 12,
+        "shade_proxy_weighted_length_m": 55.0,
+        "shade_proxy_sources": {
+            "nparks_heritage_trees": {
+                "status": "loaded",
+                "features_raw": 1,
+                "features_in_scope": 1,
+                "proxy_polygons": 1,
+            },
+            "nparks_nature_ways": {
+                "status": "loaded",
+                "features_raw": 1,
+                "features_in_scope": 1,
+                "proxy_polygons": 1,
+            },
+            "nparks_park_connector_loop": {
+                "status": "loaded",
+                "features_raw": 1,
+                "features_in_scope": 1,
+                "proxy_polygons": 1,
+            },
+            "nparks_tracks": {
+                "status": "loaded",
+                "features_raw": 1,
+                "features_in_scope": 1,
+                "proxy_polygons": 1,
+            },
+        },
     }
 
 
@@ -70,3 +104,44 @@ def test_validate_network_qa_requires_debug_artifact(tmp_path: Path):
 
     assert not ok
     assert any(error.startswith("missing debug GeoJSON:") for error in summary["errors"])
+
+
+def test_validate_network_qa_requires_production_shade_sources(tmp_path: Path):
+    qa_path = tmp_path / "conflation_qa_island.json"
+    debug_path = tmp_path / "island_debug.geojson"
+    report = valid_report()
+    report["shade_proxy_sources"]["nparks_tracks"]["status"] = "missing"
+    report["shade_proxy_edge_count"] = 0
+    write_json(qa_path, report)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+    ok, summary = validate_network_qa(
+        qa_path,
+        debug_path,
+        require_production_sources=True,
+    )
+
+    assert not ok
+    assert "shade_proxy_edge_count must be > 0, got 0" in summary["errors"]
+    assert "shade_proxy_sources.nparks_tracks.status must be loaded" in summary["errors"]
+
+
+def test_validate_network_qa_rejects_tree_as_rain_metric(tmp_path: Path):
+    qa_path = tmp_path / "conflation_qa_island.json"
+    debug_path = tmp_path / "island_debug.geojson"
+    report = valid_report()
+    report["covered_edge_length_m_nparks_shade"] = 10.0
+    write_json(qa_path, report)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+    ok, summary = validate_network_qa(
+        qa_path,
+        debug_path,
+        require_production_sources=True,
+    )
+
+    assert not ok
+    assert any(
+        error.startswith("shade/tree metrics must not be counted as rain shelter")
+        for error in summary["errors"]
+    )

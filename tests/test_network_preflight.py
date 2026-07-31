@@ -2,7 +2,11 @@ import hashlib
 import json
 from pathlib import Path
 
-from pipeline.network_preflight import build_network_preflight, source_file_status
+from pipeline.network_preflight import (
+    build_network_preflight,
+    network_source_files_for_area,
+    source_file_status,
+)
 
 
 def write_raw_source(raw_dir: Path, source_key: str, filename: str, content: bytes) -> dict:
@@ -34,11 +38,7 @@ def write_manifest(path: Path, entries: dict[str, dict]) -> None:
 def required_raw_manifest(tmp_path: Path) -> tuple[Path, Path]:
     raw_dir = tmp_path / "raw"
     entries = {}
-    for source_key, filename in {
-        "planning_area_boundary": "planning_area_boundary.geojson",
-        "covered_linkway": "covered_linkway.zip",
-        "osm_extract": "osm_extract.osm.pbf",
-    }.items():
+    for source_key, filename in network_source_files_for_area("island").items():
         entries[source_key] = write_raw_source(
             raw_dir,
             source_key,
@@ -109,6 +109,25 @@ def test_network_preflight_rejects_missing_required_manifest_source(tmp_path: Pa
     assert not ok
     assert "missing manifest source: covered_linkway" in report["errors"]
     assert report["checkpoint"]["can_run_after_human_approval"] is False
+
+
+def test_network_preflight_rejects_missing_island_production_source(tmp_path: Path):
+    raw_dir, manifest_path = required_raw_manifest(tmp_path)
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    del manifest["sources"]["nparks_tracks"]
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    ok, report = build_network_preflight(
+        area="island",
+        raw_dir=raw_dir,
+        manifest_path=manifest_path,
+        qa_dir=tmp_path / "qa",
+        processed_dir=tmp_path / "processed",
+        inspect_geometries=False,
+    )
+
+    assert not ok
+    assert "missing manifest source: nparks_tracks" in report["errors"]
 
 
 def test_network_preflight_rejects_hash_mismatch(tmp_path: Path):

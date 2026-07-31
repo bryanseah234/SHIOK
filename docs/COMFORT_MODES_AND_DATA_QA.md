@@ -66,7 +66,10 @@ MVP-ready client modes:
 Honesty labels:
 
 - Bus is scheduled frequency, not historical arrival reliability.
-- Heat is provisional until NParks Leaf Area Index and/or shadow modeling is calibrated into the score.
+- Heat is provisional. The current model uses rain shelter plus NParks greenery
+  proxy shade on uncovered segments, weighted by `heat_comfort.shade_proxy_weight`.
+  Leaf Area Index and time-of-day building shadow are still future calibration
+  work.
 - Shelter is rain protection. Tree foliage is shade, not rain shelter.
 
 ## Bus as Transit
@@ -134,17 +137,19 @@ Verified official/static source status:
   vegetation calibration, not enough to compute route-level shade by itself.
 - LTA Covered Linkway remains the strongest official rain-shelter and covered
   pedestrian geometry source.
-- NParks Nature Ways, Park Connector routes/tracks, Tree Conservation Area, and
-  Heritage Trees are usable spatial shade/greenery proxies, but they need a
-  documented scoring model before entering Heat Comfort.
+- NParks Nature Ways, Park Connector routes/tracks, and Heritage Trees are
+  active spatial shade/greenery proxies in Heat Comfort. Current buffers:
+  8 m for line features, 6 m for point features. They do not affect Rain
+  Shelter.
 
 Expected use:
 
 - Treat Leaf Area Index as calibration evidence only until paired with spatial
   canopy/green-route geometry.
 - Do not count trees as rain shelter.
-- Combine future shade evidence with covered paths and, later, building shadow
-  by time of day.
+- Current Heat Comfort combines covered paths with NParks proxy shade on
+  uncovered path length. Later work can add building shadow by time of day and
+  richer canopy geometry.
 
 ## Postal Universe
 
@@ -154,6 +159,10 @@ Current honest state:
   not the target ~140k.
 - Remaining expansion should come from a legitimate source, not OneMap brute
   force.
+- Other-UEN registered entities are a legitimate incremental source and are
+  wired into the candidate universe path, but the 2026-07-31 check found only
+  173 net-new registered/live postals over the current production universe.
+  They do not solve canonical postal coverage.
 - SingPost SGLocate is the most plausible canonical address/postal universe,
   but it is a subscription/commercial data product. Use only if licensed.
 - data.gov.sg datasets with postal-code fields can supplement official POI and

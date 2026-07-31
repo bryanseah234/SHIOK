@@ -38,6 +38,9 @@ ONEMAP_2020_RAW_NAME = "postal_universe_onemap_2020.json.gz"
 ACRA_SOURCE_KEY = "acra_registered_entities"
 ACRA_DATASET_ID = "d_3f960c10fed6145404ca7b821f263b87"
 ACRA_RAW_NAME = "acra_registered_entities.csv"
+OTHER_UEN_SOURCE_KEY = "other_uen_registered_entities"
+OTHER_UEN_DATASET_ID = "d_b1d2b840ab9e993570c037b706b39bb8"
+OTHER_UEN_RAW_NAME = "other_uen_registered_entities.csv"
 SLA_DWELLING_SOURCE_KEY = "sla_dwelling_information"
 SLA_DWELLING_DATASET_ID = "d_e4495201ba4f77fa2ef9855bad6d2cd1"
 SLA_DWELLING_RAW_NAME = "sla_dwelling_information.geojson"
@@ -195,6 +198,7 @@ def source_priority(source_key: str) -> int:
         "osm_addr_postcode": 20,
         ONEMAP_2020_SOURCE_KEY: 30,
         ACRA_SOURCE_KEY: 90,
+        OTHER_UEN_SOURCE_KEY: 90,
     }.get(source_key, 999)
 
 
@@ -301,6 +305,48 @@ def ensure_acra_raw(download_missing: bool) -> Path:
             "Entities Registered with ACRA",
             initiate_url,
             ACRA_RAW_NAME,
+            response.content,
+        )
+
+
+def ensure_other_uen_raw(download_missing: bool) -> Path:
+    path = raw_file_from_manifest(OTHER_UEN_SOURCE_KEY, OTHER_UEN_RAW_NAME)
+    if path is not None:
+        return path
+
+    tmp_path = TMP_DIR / "other_uen_entities.csv"
+    if tmp_path.is_file():
+        return write_download_to_hashed_raw(
+            OTHER_UEN_SOURCE_KEY,
+            "Entities Registered with Other UEN Issuance Agencies",
+            f"https://api-open.data.gov.sg/v1/public/api/datasets/{OTHER_UEN_DATASET_ID}/initiate-download",
+            OTHER_UEN_RAW_NAME,
+            tmp_path.read_bytes(),
+        )
+
+    if not download_missing:
+        raise FileNotFoundError(
+            f"{OTHER_UEN_SOURCE_KEY} not in raw manifest; rerun with --download-missing"
+        )
+
+    initiate_url = f"https://api-open.data.gov.sg/v1/public/api/datasets/{OTHER_UEN_DATASET_ID}/initiate-download"
+    with httpx.Client(
+        timeout=120.0, follow_redirects=True, headers={"User-Agent": USER_AGENT}
+    ) as c:
+        initiate = c.get(initiate_url)
+        initiate.raise_for_status()
+        download_url = str(initiate.json().get("data", {}).get("url", ""))
+        if not download_url:
+            raise ValueError(
+                f"data.gov.sg did not return a download URL for {OTHER_UEN_DATASET_ID}"
+            )
+        response = c.get(download_url)
+        response.raise_for_status()
+        return write_download_to_hashed_raw(
+            OTHER_UEN_SOURCE_KEY,
+            "Entities Registered with Other UEN Issuance Agencies",
+            initiate_url,
+            OTHER_UEN_RAW_NAME,
             response.content,
         )
 
@@ -621,6 +667,58 @@ def iter_acra_rows(path: Path, policy: AcraPolicy) -> tuple[list[SourceRow], Sou
     )
 
 
+def iter_other_uen_rows(path: Path, policy: AcraPolicy) -> tuple[list[SourceRow], SourceStats]:
+    if policy == "none":
+        return [], SourceStats(
+            source_key=OTHER_UEN_SOURCE_KEY,
+            raw_records=0,
+            valid_unique_postals=0,
+            records_with_coordinates=0,
+            path=display_path(path),
+            sha256=sha256_file(path),
+            url=f"https://data.gov.sg/datasets/{OTHER_UEN_DATASET_ID}/view",
+        )
+
+    rows: list[SourceRow] = []
+    raw_records = 0
+    seen: set[str] = set()
+    emitted: set[str] = set()
+    allowed_statuses = {"REGISTERED", "LIVE"}
+    with open(path, "r", encoding="utf-8-sig", newline="") as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            raw_records += 1
+            if policy == "registered":
+                status = str(row.get("uen_status_desc", "")).strip().upper()
+                if status not in allowed_statuses:
+                    continue
+            postal = normalize_postal_code(row.get("reg_postal_code"))
+            if postal is None:
+                continue
+            seen.add(postal)
+            if postal in emitted:
+                continue
+            emitted.add(postal)
+            rows.append(
+                SourceRow(
+                    postal_code=postal,
+                    source_key=OTHER_UEN_SOURCE_KEY,
+                    priority=90,
+                    road_name=str(row.get("reg_street_name", "")).strip() or None,
+                )
+            )
+
+    return rows, SourceStats(
+        source_key=OTHER_UEN_SOURCE_KEY,
+        raw_records=raw_records,
+        valid_unique_postals=len(seen),
+        records_with_coordinates=0,
+        path=display_path(path),
+        sha256=sha256_file(path),
+        url=f"https://data.gov.sg/datasets/{OTHER_UEN_DATASET_ID}/view",
+    )
+
+
 def merge_source_rows(source_rows: Iterable[SourceRow]) -> list[UniverseRecord]:
     records: dict[str, UniverseRecord] = {}
     for row in source_rows:
@@ -807,6 +905,20 @@ def build_universe(
         print(
             f"[postal-universe] ACRA: {acra_stats.valid_unique_postals} unique, "
             f"{acra_stats.records_with_coordinates} with coordinates",
+            flush=True,
+        )
+
+        print(
+            f"[postal-universe] loading Other UEN postals with policy={acra_policy}...",
+            flush=True,
+        )
+        other_uen_path = ensure_other_uen_raw(download_missing)
+        other_uen_rows, other_uen_stats = iter_other_uen_rows(other_uen_path, acra_policy)
+        all_rows.extend(other_uen_rows)
+        stats.append(other_uen_stats)
+        print(
+            f"[postal-universe] Other UEN: {other_uen_stats.valid_unique_postals} unique, "
+            f"{other_uen_stats.records_with_coordinates} with coordinates",
             flush=True,
         )
 

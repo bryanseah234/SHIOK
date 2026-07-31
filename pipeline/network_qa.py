@@ -27,6 +27,23 @@ REQUIRED_QA_KEYS = {
     "real_disconnection_count_final",
     "flags",
 }
+EXPECTED_NPARKS_SHADE_SOURCES = {
+    "nparks_heritage_trees",
+    "nparks_nature_ways",
+    "nparks_park_connector_loop",
+    "nparks_tracks",
+}
+PRODUCTION_SOURCE_METRIC_KEYS = {
+    "covered_edge_length_m_osm_tags",
+    "covered_edge_length_m_lta_bridge_underpass_match",
+    "covered_edge_length_m_osm_roof_canopy",
+    "covered_edge_length_m_inferred_hdb_precinct_footways",
+    "covered_edge_length_m_inferred_hdb_point_footways",
+    "covered_edge_length_m_inferred_hdb_void_deck",
+    "shade_proxy_edge_count",
+    "shade_proxy_weighted_length_m",
+    "shade_proxy_sources",
+}
 
 
 def _is_number(value: Any) -> TypeGuard[int | float]:
@@ -71,11 +88,65 @@ def _validate_residuals(
     return len(residuals)
 
 
+def _validate_positive_metric(
+    report: dict[str, Any],
+    key: str,
+    errors: list[str],
+) -> None:
+    value = report.get(key)
+    if not _is_number(value):
+        errors.append(f"{key} must be numeric")
+    elif float(value) <= 0:
+        errors.append(f"{key} must be > 0, got {value!r}")
+
+
+def _validate_production_sources(report: dict[str, Any], errors: list[str]) -> None:
+    missing = sorted(PRODUCTION_SOURCE_METRIC_KEYS - set(report))
+    for key in missing:
+        errors.append(f"missing production source metric: {key}")
+
+    for key in sorted(PRODUCTION_SOURCE_METRIC_KEYS - {"shade_proxy_sources"}):
+        if key in report:
+            _validate_positive_metric(report, key, errors)
+
+    shade_sources = report.get("shade_proxy_sources")
+    if not isinstance(shade_sources, dict):
+        errors.append("shade_proxy_sources must be an object")
+        return
+
+    for source_key in sorted(EXPECTED_NPARKS_SHADE_SOURCES):
+        source = shade_sources.get(source_key)
+        if not isinstance(source, dict):
+            errors.append(f"shade_proxy_sources missing {source_key}")
+            continue
+        if source.get("status") != "loaded":
+            errors.append(f"shade_proxy_sources.{source_key}.status must be loaded")
+        for metric in ("features_raw", "features_in_scope", "proxy_polygons"):
+            value = source.get(metric)
+            if not _is_number(value) or float(value) <= 0:
+                errors.append(
+                    f"shade_proxy_sources.{source_key}.{metric} must be > 0, got {value!r}"
+                )
+
+    covered_metric_keys = [key for key in report if str(key).startswith("covered_edge_length_m_")]
+    bad_tree_as_rain = [
+        key
+        for key in covered_metric_keys
+        if "nparks" in key.lower() or "shade" in key.lower() or "tree" in key.lower()
+    ]
+    if bad_tree_as_rain:
+        errors.append(
+            "shade/tree metrics must not be counted as rain shelter: "
+            + ", ".join(sorted(bad_tree_as_rain))
+        )
+
+
 def validate_network_qa(
     qa_path: Path,
     debug_path: Path | None = None,
     *,
     require_debug: bool = True,
+    require_production_sources: bool = False,
     min_mean_edge_m: float = 10.0,
     max_mean_edge_m: float = 40.0,
 ) -> tuple[bool, dict[str, Any]]:
@@ -140,6 +211,9 @@ def validate_network_qa(
         elif not debug_path.is_file():
             errors.append(f"missing debug GeoJSON: {debug_path}")
 
+    if require_production_sources:
+        _validate_production_sources(report, errors)
+
     ok = not errors
     summary: dict[str, Any] = {
         "ok": ok,
@@ -158,6 +232,8 @@ def validate_network_qa(
             "flags": report.get("flags"),
             "osm_residual_components_gt_50": osm_residual_count,
             "final_residual_components_gt_50": final_residual_count,
+            "shade_proxy_edge_count": report.get("shade_proxy_edge_count"),
+            "shade_proxy_weighted_length_m": report.get("shade_proxy_weighted_length_m"),
         },
     }
     return ok, summary
@@ -183,6 +259,7 @@ def main() -> int:
         qa_path,
         debug_path,
         require_debug=not args.no_debug,
+        require_production_sources=args.area == "island",
     )
     print(json.dumps(summary, indent=2))
     return 0 if ok else 1

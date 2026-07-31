@@ -1,6 +1,6 @@
 # Postal Universe Source Policy
 
-Last updated: 2026-07-27.
+Last updated: 2026-07-31.
 
 The project still does not have an authoritative free all-Singapore postal-code
 download from SingPost or SLA. `pipeline.postal_universe` therefore builds
@@ -12,8 +12,8 @@ coverage tradeoff.
 | Mode | Sources | Intended Use |
 | --- | --- | --- |
 | `official_current` | Current HDB Existing Building + current SLA Dwelling Information + current OSM `addr:postcode` inside Singapore planning-boundary bbox | Conservative current open-data baseline |
-| `candidate_full_registered` | `official_current` + OneMap-derived 2020 dump + ACRA registered/live postals | Recommended candidate for human review before full batch |
-| `candidate_full_all` | `official_current` + OneMap-derived 2020 dump + all ACRA postals, including deregistered entities | Coverage stress test, not recommended as default |
+| `candidate_full_registered` | `official_current` + OneMap-derived 2020 dump + ACRA registered/live postals + Other-UEN registered/live postals | Recommended candidate for human review before full batch |
+| `candidate_full_all` | `official_current` + OneMap-derived 2020 dump + all ACRA/Other-UEN postals, including deregistered entities | Coverage stress test, not recommended as default |
 
 ## Evidence From 2026-07-27 Local Run
 
@@ -33,6 +33,20 @@ coverage tradeoff.
 - needs geocode: 486
 - OneMap-derived 2020 dump: 121,515 valid unique postals from 141,848 address records
 - ACRA registered/live: 47,075 valid unique postals, no coordinates
+
+`processed/postal_universe_candidate_full_registered_geocoded_summary.json`
+
+- total unique postals: 124,032
+- ready to score after bounded OneMap geocode: 123,713
+- needs geocode after bounded OneMap geocode: 319
+- bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
+
+Shipped bundle `generated_20260731_124456_gz2`
+
+- total score records: 124,032
+- `SCORED`: 112,880
+- `NO_TRANSIT_IN_RANGE`: 10,833
+- `NOT_YET_SCORED`: 319
 
 `uv run python run.py postal-universe --mode candidate_full_all --download-missing`
 
@@ -55,6 +69,12 @@ coverage tradeoff.
 - ACRA postal codes are registered-entity addresses. They are legitimate open
   data, but they are not a delivery-point universe. `registered/live` is safer
   than `all`; `all` includes deregistered entities.
+- Other-UEN registered entities are legitimate open data and can add a small
+  number of candidate entity-address postals. A 2026-07-31 source check found
+  7,745 registered/live unique postals in the source, but only 173 net-new
+  postals beyond the current 124,032-record production universe. Including
+  deregistered rows would add 329 net-new postals. This is useful incremental
+  coverage, not the missing ~16k needed to reach a canonical ~140k universe.
 - OneMap API brute-force enumeration remains forbidden. The only acceptable
   OneMap API use for remaining gaps is bounded geocoding of source-derived
   postals at the ratified 0.5 req/s throttle.
@@ -72,7 +92,17 @@ No new free authoritative all-postal-code source was found.
 - Commercial postal-code vendors exist, but they conflict with the $0 budget.
 - Community OneMap dumps remain useful evidence for candidate coverage, but they
   are stale third-party snapshots and must stay warning-gated.
+- Other-UEN registered entities are open and legitimate, but they are still
+  entity-address evidence and do not solve the delivery-point universe.
 
 Therefore the current honest production posture remains: ship the scored
 source-derived universe, expose `NOT_YET_SCORED`/missing states honestly, and do
 not claim complete ~140k coverage until a legitimate source is accepted.
+
+## 2026-07-31 Decision
+
+Do not block MVP launch on the unsolved ~140k target. Current production should
+ship the 124,032-record candidate universe with explicit state counts. The
+remaining gap needs either a new official open dataset, a licensed SingPost/SLA
+address product, or owner-approved legal rights to another canonical source.
+Brute-forcing OneMap remains prohibited.
