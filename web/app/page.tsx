@@ -297,9 +297,9 @@ function modeAdjustedTotal(score: ScoreRecord, mode: ComfortMode): number | null
 }
 
 function modeStatus(mode: ComfortMode): string {
-  if (mode === "balanced") return "Static bus schedules - heat uses shelter";
+  if (mode === "balanced") return "Static bus schedules - heat uses shelter and shade proxy";
   if (mode.startsWith("rain")) return "Rain-weighted - static buses";
-  return "Sunny weighting - tree shade pending";
+  return "Sunny-weighted - NParks shade proxy";
 }
 
 function buildFeedbackPayload({
@@ -351,6 +351,7 @@ function RouteModeControl({
       <button
         type="button"
         className={mode === "shiokest" ? styles.segmentedActive : undefined}
+        aria-pressed={mode === "shiokest"}
         disabled={disabled}
         onClick={() => setMode("shiokest")}
       >
@@ -359,6 +360,7 @@ function RouteModeControl({
       <button
         type="button"
         className={mode === "shortest" ? styles.segmentedActive : undefined}
+        aria-pressed={mode === "shortest"}
         disabled={disabled}
         onClick={() => setMode("shortest")}
       >
@@ -388,6 +390,7 @@ function TransitModeControl({
             key={option.id}
             type="button"
             className={mode === option.id ? styles.segmentedActive : undefined}
+            aria-pressed={mode === option.id}
             data-empty={!available}
             onClick={() => setMode(option.id)}
           >
@@ -595,7 +598,11 @@ function ScoreCard({
 
       <div className={styles.feedbackBlock}>
         <div className={styles.feedbackActions}>
-          <button type="button" onClick={() => setFeedbackEnabled(!feedbackEnabled)}>
+          <button
+            type="button"
+            aria-pressed={feedbackEnabled}
+            onClick={() => setFeedbackEnabled(!feedbackEnabled)}
+          >
             {feedbackEnabled ? "Done tracing" : "Suggest better route"}
           </button>
           <button type="button" onClick={clearFeedback} disabled={feedbackPoints.length === 0}>
@@ -665,7 +672,9 @@ function ScoreCard({
         </div>
       )}
 
-        <div className={styles.dataLine}>Data as of {dataDate} - Heat: shelter only, tree shade pending</div>
+        <div className={styles.dataLine}>
+          Data as of {dataDate} - Heat: shelter plus NParks shade proxy
+        </div>
       </details>
     </section>
   );

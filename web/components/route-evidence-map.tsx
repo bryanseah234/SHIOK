@@ -746,6 +746,28 @@ function routeCollections(routes: RouteMapItem[], mode: RouteDisplayMode) {
   };
 }
 
+function routeModeLabel(mode: RouteDisplayMode): string {
+  if (mode === "shortest") return "shortest route";
+  if (mode === "both") return "shortest and Shiokest routes";
+  return "Shiokest route";
+}
+
+function mapAriaLabel(routes: RouteMapItem[], mode: RouteDisplayMode): string {
+  if (routes.length === 0) {
+    return "Singapore transit map with MRT stations, LRT stations, and bus stops";
+  }
+  const labels = routes.map((route) => route.label).join(", ");
+  return `Route evidence map for ${labels}, showing ${routeModeLabel(mode)}`;
+}
+
+function prefersReducedMotion(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
+}
+
 function boundsFor(points: [number, number][]): [[number, number], [number, number]] | null {
   if (points.length === 0) return null;
   const lngs = points.map(([lng]) => lng);
@@ -777,6 +799,7 @@ export function RouteEvidenceMap({
   const routeData = useMemo(() => routeCollections(routes, mode), [routes, mode]);
   const transitPoiData = useMemo(() => transitPoiCollection(transitPois), [transitPois]);
   const feedbackData = useMemo(() => feedbackCollections(feedbackPoints), [feedbackPoints]);
+  const accessibleLabel = useMemo(() => mapAriaLabel(routes, mode), [routes, mode]);
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -840,7 +863,7 @@ export function RouteEvidenceMap({
         padding: isCompact
           ? { top: 300, right: 24, bottom: 90, left: 24 }
           : { top: 150, right: 80, bottom: 90, left: 390 },
-        duration: 350,
+        duration: prefersReducedMotion() ? 0 : 350,
         maxZoom: 16.6,
       });
     }
@@ -870,7 +893,7 @@ export function RouteEvidenceMap({
 
   return (
     <div className={styles.mapShell}>
-      <div ref={containerRef} aria-label="Route evidence map" role="img" className={styles.mapCanvas} />
+      <div ref={containerRef} aria-label={accessibleLabel} role="img" className={styles.mapCanvas} />
     </div>
   );
 }
