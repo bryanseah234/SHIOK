@@ -71,6 +71,26 @@ OSM_COVERED_TAG_VALUES = {"yes", "covered", "arcade", "colonnade", "building_pas
 OSM_TUNNEL_COVERED_VALUES = {"yes", "building_passage"}
 OSM_INDOOR_COVERED_VALUES = {"yes", "building_passage"}
 OSM_LOCATION_COVERED_VALUES = {"underground", "indoor"}
+OSM_EXPLICIT_SHELTER_QUERY_KEYS = (
+    "amenity",
+    "building:part",
+    "covered",
+    "man_made",
+    "public_transport",
+    "shelter",
+    "shelter_type",
+)
+OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS = [
+    "amenity",
+    "building:part",
+    "covered",
+    "highway",
+    "man_made",
+    "public_transport",
+    "shelter",
+    "shelter_type",
+]
+OSM_SHELTER_YES_VALUES = {"yes", "roof", "covered", "canopy"}
 HDB_PRECINCT_COVERED_HIGHWAYS = {
     "corridor",
     "footway",
@@ -792,6 +812,107 @@ def load_hdb_building_points(union_poly) -> gpd.GeoDataFrame:
     return hdb_gdf
 
 
+def explicit_osm_shelter_feature_mask(features: gpd.GeoDataFrame) -> pd.Series:
+    amenity = normalized_text_series(features, "amenity")
+    building_part = normalized_text_series(features, "building:part")
+    covered = normalized_text_series(features, "covered")
+    highway = normalized_text_series(features, "highway")
+    man_made = normalized_text_series(features, "man_made")
+    public_transport = normalized_text_series(features, "public_transport")
+    shelter = normalized_text_series(features, "shelter")
+    shelter_type = normalized_text_series(features, "shelter_type")
+
+    return (
+        amenity.eq("shelter")
+        | building_part.eq("roof")
+        | covered.isin(OSM_COVERED_TAG_VALUES)
+        | man_made.eq("canopy")
+        | shelter.isin(OSM_SHELTER_YES_VALUES)
+        | shelter_type.ne("")
+        | (public_transport.eq("platform") & shelter.isin(OSM_SHELTER_YES_VALUES))
+        | (highway.eq("bus_stop") & shelter.isin(OSM_SHELTER_YES_VALUES))
+    )
+
+
+def prepare_osm_explicit_shelter_geometries(
+    features: gpd.GeoDataFrame,
+    *,
+    line_buffer_m: float = 2.0,
+    point_buffer_m: float = 3.0,
+) -> gpd.GeoDataFrame:
+    empty = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    if features.empty:
+        return empty
+
+    frame = features.copy()
+    if frame.crs is None:
+        frame = frame.set_crs(epsg=4326)
+    frame = frame.to_crs(epsg=3414)
+    frame = frame[explicit_osm_shelter_feature_mask(frame)].copy()
+    if frame.empty:
+        return empty
+
+    rows = []
+    for _, row in frame.iterrows():
+        geom = row.geometry
+        if geom is None or geom.is_empty:
+            continue
+        geom_type = geom.geom_type
+        if geom_type in {"Polygon", "MultiPolygon"}:
+            shelter_geom = geom
+        elif geom_type in {"LineString", "MultiLineString"}:
+            shelter_geom = geom.buffer(line_buffer_m)
+        elif geom_type in {"Point", "MultiPoint"}:
+            shelter_geom = geom.buffer(point_buffer_m)
+        else:
+            continue
+        rows.append(
+            {
+                "source_layer": "osm_explicit_shelter",
+                "confidence": "osm_explicit_shelter_tag",
+                "geometry": shelter_geom,
+            }
+        )
+
+    if not rows:
+        return empty
+    return gpd.GeoDataFrame(rows, geometry="geometry", crs="EPSG:3414")
+
+
+def load_osm_explicit_shelter_geometries(osm: OSM, union_poly) -> gpd.GeoDataFrame:
+    frames: list[gpd.GeoDataFrame] = []
+    for key in OSM_EXPLICIT_SHELTER_QUERY_KEYS:
+        try:
+            data = osm.get_data_by_custom_criteria(
+                custom_filter={key: True},
+                tags_as_columns=OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS,
+                keep_nodes=True,
+                keep_ways=True,
+                keep_relations=True,
+            )
+        except (
+            Exception
+        ) as exc:  # noqa: BLE001 - OSM tag enrichment should not stop baseline build.
+            print(f"Warning: failed to load OSM shelter tag {key}: {exc}")
+            continue
+        if data is None or data.empty:
+            continue
+        frame = gpd.GeoDataFrame(data, geometry="geometry", crs="EPSG:4326")
+        if "id" in frame.columns:
+            frame["_source_key"] = key
+        frames.append(frame)
+
+    if not frames:
+        return gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+
+    features = gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs="EPSG:4326")
+    if "id" in features.columns:
+        features = features.drop_duplicates("id")
+    features = features.to_crs(epsg=3414)
+    features = features[features.geometry.intersects(union_poly)].copy()
+    return prepare_osm_explicit_shelter_geometries(features)
+
+
 def split_osm_building_shelter_layers(
     osm_buildings_gdf: gpd.GeoDataFrame | None,
     hdb_points_gdf: gpd.GeoDataFrame,
@@ -1289,10 +1410,12 @@ def run_build(scope: str = "pilot"):
         ),
         hdb_points_gdf,
     )
+    osm_explicit_shelter_gdf = load_osm_explicit_shelter_geometries(osm, union_poly)
     print(
         "Loaded building shelter inference layers: "
         f"hdb_points={len(hdb_points_gdf)}, "
         f"osm_roof_canopy_polygons={len(roof_gdf)}, "
+        f"osm_explicit_shelter_polygons={len(osm_explicit_shelter_gdf)}, "
         f"hdb_void_deck_candidate_footprints={len(hdb_footprints_gdf)}"
     )
 
@@ -1502,18 +1625,30 @@ def run_build(scope: str = "pilot"):
     native_covered_mask = native_osm_covered_mask(edges_gdf)
     edges_gdf.loc[native_covered_mask, "is_covered"] = 1
 
-    roof_match_ratio = compute_polygon_match_ratio(
+    roof_match_mask, roof_match_edge_length = apply_polygon_coverage_attribution(
         edges_gdf,
         roof_gdf,
+        source_layer="osm_building_roof",
+        ratio_threshold=0.50,
         buffer_m=3.0,
         label="OSM roof/canopy",
     )
-    roof_match_mask = roof_match_ratio >= 0.50
-    roof_match_edge_length = float(edges_gdf.loc[roof_match_mask, "geometry"].length.sum())
-    edges_gdf.loc[roof_match_mask, "is_covered"] = 1
+    explicit_shelter_match_mask, explicit_shelter_match_edge_length = (
+        apply_polygon_coverage_attribution(
+            edges_gdf,
+            osm_explicit_shelter_gdf,
+            source_layer="osm_explicit_shelter",
+            ratio_threshold=0.50,
+            buffer_m=0.5,
+            label="OSM explicit shelter",
+        )
+    )
     print(
-        f"OSM roof/canopy covered attribution: edges={int(roof_match_mask.sum())}, "
-        f"length={roof_match_edge_length:.1f}m"
+        "OSM roof/canopy/shelter attribution: "
+        f"roof_edges={int(roof_match_mask.sum())}, "
+        f"roof_length={roof_match_edge_length:.1f}m, "
+        f"explicit_shelter_edges={int(explicit_shelter_match_mask.sum())}, "
+        f"explicit_shelter_length={explicit_shelter_match_edge_length:.1f}m"
     )
 
     _hdb_footway_mask, hdb_footway_report = apply_hdb_precinct_footway_coverage(
@@ -2161,6 +2296,7 @@ def run_build(scope: str = "pilot"):
         "covered_edge_length_m_lta_match": float(lta_match_edge_length),
         "covered_edge_length_m_lta_bridge_underpass_match": bridge_match_edge_length,
         "covered_edge_length_m_osm_roof_canopy": roof_match_edge_length,
+        "covered_edge_length_m_osm_explicit_shelter": explicit_shelter_match_edge_length,
         "covered_edge_length_m_inferred_hdb_precinct_footways": hdb_footway_length_m,
         "covered_edge_length_m_inferred_hdb_point_footways": hdb_point_footway_length_m,
         "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
@@ -2233,6 +2369,10 @@ def run_build(scope: str = "pilot"):
         re = roof_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
         re["class"] = "OSM_ROOF_CANOPY"
         debug_export = pd.concat([debug_export, re[["geometry", "class"]]], ignore_index=True)
+    if not osm_explicit_shelter_gdf.empty:
+        ose = osm_explicit_shelter_gdf[["geometry", "source_layer"]].copy().to_crs(epsg=4326)
+        ose["class"] = "OSM_EXPLICIT_SHELTER"
+        debug_export = pd.concat([debug_export, ose[["geometry", "class"]]], ignore_index=True)
     debug_export.to_file(debug_path, driver="GeoJSON")
 
     # Save network for routing!

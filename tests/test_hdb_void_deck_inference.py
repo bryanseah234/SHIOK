@@ -10,6 +10,7 @@ from scripts.run_network_build import (
     build_hdb_void_deck_edges,
     compute_polygon_match_ratio,
     native_osm_covered_mask,
+    prepare_osm_explicit_shelter_geometries,
     split_osm_building_shelter_layers,
 )
 
@@ -189,6 +190,42 @@ def test_native_osm_covered_mask_includes_underground_and_indoor_location():
     mask = native_osm_covered_mask(edges)
 
     assert mask.tolist() == [True, True, False, True]
+
+
+def test_prepare_osm_explicit_shelter_geometries_filters_supported_tags():
+    features = gpd.GeoDataFrame(
+        [
+            {
+                "man_made": "canopy",
+                "geometry": Polygon([(0, 0), (5, 0), (5, 5), (0, 5)]),
+            },
+            {
+                "building:part": "roof",
+                "geometry": Polygon([(10, 0), (15, 0), (15, 5), (10, 5)]),
+            },
+            {
+                "amenity": "shelter",
+                "geometry": Point(30, 30),
+            },
+            {
+                "public_transport": "platform",
+                "shelter": "yes",
+                "geometry": LineString([(40, 40), (50, 40)]),
+            },
+            {
+                "covered": "partial",
+                "geometry": LineString([(60, 60), (70, 60)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+
+    shelters = prepare_osm_explicit_shelter_geometries(features)
+
+    assert len(shelters) == 4
+    assert set(shelters["source_layer"]) == {"osm_explicit_shelter"}
+    assert set(shelters["confidence"]) == {"osm_explicit_shelter_tag"}
+    assert all(geom.geom_type in {"Polygon", "MultiPolygon"} for geom in shelters.geometry)
 
 
 def test_hdb_precinct_footway_coverage_marks_only_pedestrian_edges():
