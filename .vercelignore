@@ -17,5 +17,5 @@ web/.next/
 web/.vercel/
 web/node_modules/
 web/public/data/generated_*/
-!web/public/data/generated_20260731_route_modes_shade_amk/
-!web/public/data/generated_20260731_route_modes_shade_amk/**
+!web/public/data/generated_20260731_124456_r3/
+!web/public/data/generated_20260731_124456_r3/**

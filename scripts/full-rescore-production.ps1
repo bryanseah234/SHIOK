@@ -128,7 +128,13 @@ for index in range(workers):
         if (-not (Test-Path $chunkDir)) { throw "Missing chunk directory: $chunkDir" }
         Get-ChildItem $chunkDir -Filter "chunk_*.json" | Sort-Object Name | ForEach-Object {
             $targetName = "chunk_part{0:D2}_{1}" -f $index, $_.Name.Substring(6)
-            Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $CombinedChunksDir $targetName)
+            $targetPath = Join-Path $CombinedChunksDir $targetName
+            try {
+                New-Item -ItemType HardLink -Path $targetPath -Target $_.FullName | Out-Null
+            }
+            catch {
+                Copy-Item -LiteralPath $_.FullName -Destination $targetPath
+            }
         }
     }
 

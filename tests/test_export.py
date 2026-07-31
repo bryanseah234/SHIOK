@@ -8,6 +8,7 @@ from pipeline.export import (
     encode_polyline,
     export_static_artifacts,
     geom_record,
+    json_size,
     load_score_batch_records,
     route_segment_geometries,
     slugify_area,
@@ -276,21 +277,64 @@ def test_export_merges_promoted_geom_shards_with_duplicate_child_id(tmp_path: Pa
         return "shared-child"
 
     monkeypatch.setattr("pipeline.export.h3.latlng_to_cell", fake_latlng_to_cell)
-    records = [sample_record("123456"), sample_record("654321")]
+    records = [
+        sample_record("123456"),
+        sample_record("123457"),
+        sample_record("654321"),
+        sample_record("654322"),
+    ]
     records[0]["_origin"]["lat"] = 1.30
-    records[1]["_origin"]["lat"] = 1.32
+    records[1]["_origin"]["lat"] = 1.3001
+    records[2]["_origin"]["lat"] = 1.32
+    records[3]["_origin"]["lat"] = 1.3201
+    threshold = json_size([geom_record(records[0])]) + 100
 
     report = export_static_artifacts(
         records,
         output_dir=tmp_path,
-        geom_promotion_threshold_bytes=1,
+        geom_promotion_threshold_bytes=threshold,
     )
     ok, validation = validate_static_artifacts(tmp_path)
 
     assert ok, validation
-    assert report["geom_shard_count"] == 1
-    geom_records = json.loads((tmp_path / "geom" / "h3" / "shared-child.json").read_text())
-    assert sorted(record["postal"] for record in geom_records) == ["123456", "654321"]
+    assert report["geom_shard_count"] == 2
+    geom_records = []
+    for path in sorted((tmp_path / "geom" / "h3").glob("shared-child_PART_*.json")):
+        geom_records.extend(json.loads(path.read_text()))
+    assert sorted(record["postal"] for record in geom_records) == [
+        "123456",
+        "123457",
+        "654321",
+        "654322",
+    ]
+
+
+def test_export_recursively_promotes_large_geom_shards(tmp_path: Path, monkeypatch):
+    def fake_latlng_to_cell(lat: float, _lon: float, resolution: int) -> str:
+        if resolution == 8:
+            return "parent-cell"
+        if resolution == 9:
+            return "still-too-large"
+        return "deep-a" if lat < 1.31 else "deep-b"
+
+    monkeypatch.setattr("pipeline.export.h3.latlng_to_cell", fake_latlng_to_cell)
+    records = [sample_record("123456"), sample_record("654321")]
+    records[0]["_origin"]["lat"] = 1.30
+    records[1]["_origin"]["lat"] = 1.32
+    threshold = json_size([geom_record(records[0])]) + 100
+
+    report = export_static_artifacts(
+        records,
+        output_dir=tmp_path,
+        geom_promotion_threshold_bytes=threshold,
+        geom_max_promotion_resolution=10,
+    )
+    ok, validation = validate_static_artifacts(tmp_path)
+
+    assert ok, validation
+    assert report["geom_shard_count"] == 2
+    geom_index = json.loads((tmp_path / "geom" / "index.json").read_text())
+    assert geom_index["parent-cell"] == ["deep-a", "deep-b"]
 
 
 def test_load_score_batch_records_reads_chunks_in_order_and_rejects_duplicates(tmp_path: Path):

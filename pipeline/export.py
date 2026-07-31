@@ -29,7 +29,8 @@ DEFAULT_EXPORT_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated"
 DEFAULT_VALIDATE_DIR = PROJECT_ROOT / "web" / "public" / "data"
 MAX_DATA_FILES = 5000
 MAX_FILE_BYTES = 5 * 1024 * 1024
-GEOM_PROMOTION_THRESHOLD_BYTES = 250 * 1024
+GEOM_PROMOTION_THRESHOLD_BYTES = int(MAX_FILE_BYTES * 0.9)
+GEOM_MAX_PROMOTION_RESOLUTION = 12
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
 TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops", "bus_services", "bus_routes")
 
@@ -498,10 +499,83 @@ def score_record_shards(
     return shards
 
 
+def sized_record_shards(
+    shard_id: str,
+    records: list[dict[str, Any]],
+    max_bytes: int,
+) -> list[tuple[str, list[dict[str, Any]]]]:
+    records = sorted(records, key=lambda item: str(item["postal"]))
+    if json_size(records) <= max_bytes:
+        return [(shard_id, records)]
+
+    shards: list[tuple[str, list[dict[str, Any]]]] = []
+    start = 0
+    shard_index = 1
+    while start < len(records):
+        low = 1
+        high = len(records) - start
+        best = 0
+        while low <= high:
+            mid = (low + high) // 2
+            candidate = records[start : start + mid]
+            if json_size(candidate) <= max_bytes:
+                best = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+        if best == 0:
+            postal = records[start].get("postal")
+            raise ValueError(
+                f"single record exceeds {max_bytes} bytes in shard {shard_id}: {postal}"
+            )
+        shard_records = records[start : start + best]
+        shards.append((f"{shard_id}_PART_{shard_index:03d}", shard_records))
+        start += best
+        shard_index += 1
+    return shards
+
+
+def geom_record_shards(
+    shard_id: str,
+    records: list[dict[str, Any]],
+    geom_origin_by_postal: dict[str, tuple[float, float]],
+    max_bytes: int,
+    resolution: int,
+    max_resolution: int,
+) -> list[tuple[str, list[dict[str, Any]]]]:
+    records = sorted(records, key=lambda item: str(item["postal"]))
+    if json_size(records) <= max_bytes:
+        return [(shard_id, records)]
+
+    if resolution >= max_resolution:
+        return sized_record_shards(shard_id, records, max_bytes)
+
+    children: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in records:
+        lat, lon = geom_origin_by_postal[str(item["postal"])]
+        child = h3.latlng_to_cell(lat, lon, resolution + 1)
+        children[child].append(item)
+
+    shards: list[tuple[str, list[dict[str, Any]]]] = []
+    for child, child_records in sorted(children.items()):
+        shards.extend(
+            geom_record_shards(
+                child,
+                child_records,
+                geom_origin_by_postal,
+                max_bytes,
+                resolution + 1,
+                max_resolution,
+            )
+        )
+    return shards
+
+
 def export_static_artifacts(
     records: list[dict[str, Any]],
     output_dir: Path = DEFAULT_EXPORT_DIR,
     geom_promotion_threshold_bytes: int = GEOM_PROMOTION_THRESHOLD_BYTES,
+    geom_max_promotion_resolution: int = GEOM_MAX_PROMOTION_RESOLUTION,
     score_shard_max_bytes: int = MAX_FILE_BYTES,
 ) -> dict[str, Any]:
     records = sorted(records, key=lambda item: str(item["postal"]))
@@ -549,21 +623,20 @@ def export_static_artifacts(
 
     geom_shard_records: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for cell, cell_records in sorted(geom_by_cell.items()):
-        if json_size(cell_records) <= geom_promotion_threshold_bytes:
-            geom_index[cell] = []
-            geom_shard_records[cell].extend(cell_records)
-            for item in cell_records:
-                geom_postal_index[str(item["postal"])] = cell
-            continue
-
-        children: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        for item in cell_records:
-            lat, lon = geom_origin_by_postal[item["postal"]]
-            child = h3.latlng_to_cell(lat, lon, 9)
-            children[child].append(item)
-            geom_shard_records[child].append(item)
-            geom_postal_index[str(item["postal"])] = child
-        geom_index[cell] = sorted(children)
+        shards = geom_record_shards(
+            cell,
+            cell_records,
+            geom_origin_by_postal,
+            geom_promotion_threshold_bytes,
+            8,
+            geom_max_promotion_resolution,
+        )
+        shard_ids = [shard for shard, _records in shards]
+        geom_index[cell] = [] if shard_ids == [cell] else sorted(shard_ids)
+        for shard, shard_records in shards:
+            geom_shard_records[shard].extend(shard_records)
+            for item in shard_records:
+                geom_postal_index[str(item["postal"])] = shard
 
     for shard, shard_records in sorted(geom_shard_records.items()):
         written_files[rel_key(geom_dir / f"{shard}.json", output_dir)] = write_json(
@@ -603,7 +676,8 @@ def export_static_artifacts(
             "index": "geom/index.json",
             "postal_index": "geom/postal-index.json",
             "h3_resolution": 8,
-            "promoted_resolution": 9,
+            "promoted_resolution": geom_max_promotion_resolution,
+            "promotion_mode": "recursive_h3",
             "promotion_threshold_bytes": geom_promotion_threshold_bytes,
         },
         "transit": {
