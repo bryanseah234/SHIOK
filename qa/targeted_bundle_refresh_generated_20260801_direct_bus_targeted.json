@@ -1,0 +1,2522 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54269",
+          "name": "Opp Ang Mo Kio Stn",
+          "routed_m": null,
+          "snap_distance_m": 2.2,
+          "station": "Opp Ang Mo Kio Stn",
+          "straight_line_m": 75.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 75.5,
+          "shortest_m": 75.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560424",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55129",
+          "name": "Blk 604",
+          "routed_m": null,
+          "snap_distance_m": 12.2,
+          "station": "Blk 604",
+          "straight_line_m": 127.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 127.3,
+          "shortest_m": 127.3
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "560602",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55121",
+          "name": "Opp Blk 604",
+          "routed_m": null,
+          "snap_distance_m": 10.8,
+          "station": "Opp Blk 604",
+          "straight_line_m": 289.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 289.1,
+          "shortest_m": 289.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567854",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55121",
+          "name": "Opp Blk 604",
+          "routed_m": null,
+          "snap_distance_m": 10.8,
+          "station": "Opp Blk 604",
+          "straight_line_m": 293.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 293.3,
+          "shortest_m": 293.3
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567855",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55121",
+          "name": "Opp Blk 604",
+          "routed_m": null,
+          "snap_distance_m": 10.8,
+          "station": "Opp Blk 604",
+          "straight_line_m": 297.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 297.6,
+          "shortest_m": 297.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567856",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "56251",
+          "name": "Opp Horizon Gdns",
+          "routed_m": null,
+          "snap_distance_m": 5.7,
+          "station": "Opp Horizon Gdns",
+          "straight_line_m": 116.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 116.6,
+          "shortest_m": 116.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 53.5
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567857",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "56251",
+          "name": "Opp Horizon Gdns",
+          "routed_m": null,
+          "snap_distance_m": 5.7,
+          "station": "Opp Horizon Gdns",
+          "straight_line_m": 111.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 111.7,
+          "shortest_m": 111.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 53.5
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567858",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "56251",
+          "name": "Opp Horizon Gdns",
+          "routed_m": null,
+          "snap_distance_m": 5.7,
+          "station": "Opp Horizon Gdns",
+          "straight_line_m": 106.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 106.8,
+          "shortest_m": 106.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 53.5
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "567859",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "64401",
+          "name": "Opp Blk 477A",
+          "routed_m": null,
+          "snap_distance_m": 12.9,
+          "station": "Opp Blk 477A",
+          "straight_line_m": 111.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 111.1,
+          "shortest_m": 111.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "534029",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "64401",
+          "name": "Opp Blk 477A",
+          "routed_m": null,
+          "snap_distance_m": 12.9,
+          "station": "Opp Blk 477A",
+          "straight_line_m": 89.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 89.7,
+          "shortest_m": 89.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "534030",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "62301",
+          "name": "Blk 181",
+          "routed_m": null,
+          "snap_distance_m": 4.5,
+          "station": "Blk 181",
+          "straight_line_m": 252.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 252.6,
+          "shortest_m": 252.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 48.8
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "536210",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "62301",
+          "name": "Blk 181",
+          "routed_m": null,
+          "snap_distance_m": 4.5,
+          "station": "Blk 181",
+          "straight_line_m": 289.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 289.4,
+          "shortest_m": 289.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 48.8
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "536213",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63101",
+          "name": "Opp Blk 169",
+          "routed_m": null,
+          "snap_distance_m": 4.3,
+          "station": "Opp Blk 169",
+          "straight_line_m": 183.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 183.0,
+          "shortest_m": 183.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "539213",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63101",
+          "name": "Opp Blk 169",
+          "routed_m": null,
+          "snap_distance_m": 4.3,
+          "station": "Opp Blk 169",
+          "straight_line_m": 172.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 172.0,
+          "shortest_m": 172.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "539216",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63101",
+          "name": "Opp Blk 169",
+          "routed_m": null,
+          "snap_distance_m": 4.3,
+          "station": "Opp Blk 169",
+          "straight_line_m": 50.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.3,
+          "shortest_m": 50.3
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "539220",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "63091",
+          "name": "Opp Blk 106",
+          "routed_m": null,
+          "snap_distance_m": 38.3,
+          "station": "Opp Blk 106",
+          "straight_line_m": 299.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 299.9,
+          "shortest_m": 299.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "539255",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "20299",
+          "name": "Blk 501",
+          "routed_m": null,
+          "snap_distance_m": 2.8,
+          "station": "Blk 501",
+          "straight_line_m": 161.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 161.7,
+          "shortest_m": 161.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "121502",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17051",
+          "name": "Opp Regent Pk",
+          "routed_m": null,
+          "snap_distance_m": 3.4,
+          "station": "Opp Regent Pk",
+          "straight_line_m": 65.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 65.4,
+          "shortest_m": 65.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "122438",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17381",
+          "name": "West Bay Resort Condo",
+          "routed_m": null,
+          "snap_distance_m": 4.9,
+          "station": "West Bay Resort Condo",
+          "straight_line_m": 116.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 116.3,
+          "shortest_m": 116.3
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128039",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17021",
+          "name": "Waseda S Snr High Sch",
+          "routed_m": null,
+          "snap_distance_m": 22.8,
+          "station": "Waseda S Snr High Sch",
+          "straight_line_m": 223.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 223.6,
+          "shortest_m": 223.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128047",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17021",
+          "name": "Waseda S Snr High Sch",
+          "routed_m": null,
+          "snap_distance_m": 22.8,
+          "station": "Waseda S Snr High Sch",
+          "straight_line_m": 250.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 250.7,
+          "shortest_m": 250.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128048",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17021",
+          "name": "Waseda S Snr High Sch",
+          "routed_m": null,
+          "snap_distance_m": 22.8,
+          "station": "Waseda S Snr High Sch",
+          "straight_line_m": 227.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 227.4,
+          "shortest_m": 227.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128049",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "20331",
+          "name": "Vejoil Pte Ltd",
+          "routed_m": null,
+          "snap_distance_m": 4.5,
+          "station": "Vejoil Pte Ltd",
+          "straight_line_m": 120.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 120.8,
+          "shortest_m": 120.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 53.1
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128412",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "17049",
+          "name": "Blk 601",
+          "routed_m": null,
+          "snap_distance_m": 7.0,
+          "station": "Blk 601",
+          "straight_line_m": 180.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 180.9,
+          "shortest_m": 180.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "128550",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11239",
+          "name": "Fairlodge",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Fairlodge",
+          "straight_line_m": 196.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 196.2,
+          "shortest_m": 196.2
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266214",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11239",
+          "name": "Fairlodge",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Fairlodge",
+          "straight_line_m": 155.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 155.1,
+          "shortest_m": 155.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266215",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11239",
+          "name": "Fairlodge",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Fairlodge",
+          "straight_line_m": 168.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 168.4,
+          "shortest_m": 168.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266216",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11239",
+          "name": "Fairlodge",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Fairlodge",
+          "straight_line_m": 192.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 192.4,
+          "shortest_m": 192.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266217",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11109",
+          "name": "Spanish Village",
+          "routed_m": null,
+          "snap_distance_m": 5.0,
+          "station": "Spanish Village",
+          "straight_line_m": 158.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 158.8,
+          "shortest_m": 158.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266227",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11239",
+          "name": "Fairlodge",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Fairlodge",
+          "straight_line_m": 150.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 150.9,
+          "shortest_m": 150.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "266228",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11269",
+          "name": "Opp Holland Village",
+          "routed_m": null,
+          "snap_distance_m": 1.8,
+          "station": "Opp Holland Village",
+          "straight_line_m": 205.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 205.5,
+          "shortest_m": 205.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "267835",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "11269",
+          "name": "Opp Holland Village",
+          "routed_m": null,
+          "snap_distance_m": 1.8,
+          "station": "Opp Holland Village",
+          "straight_line_m": 184.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 184.6,
+          "shortest_m": 184.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "267836",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "83341",
+          "name": "Blk 102",
+          "routed_m": null,
+          "snap_distance_m": 24.7,
+          "station": "Blk 102",
+          "straight_line_m": 225.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 225.1,
+          "shortest_m": 225.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 49.6
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "419592",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "83201",
+          "name": "Bef Frankel Terr",
+          "routed_m": null,
+          "snap_distance_m": 9.3,
+          "station": "Bef Frankel Terr",
+          "straight_line_m": 213.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 213.8,
+          "shortest_m": 213.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "426146",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "92081",
+          "name": "St. Patrick's Sch",
+          "routed_m": null,
+          "snap_distance_m": 31.2,
+          "station": "St. Patrick's Sch",
+          "straight_line_m": 91.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 91.5,
+          "shortest_m": 91.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "429058",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "93039",
+          "name": "Siglap Stn/Laguna Park",
+          "routed_m": null,
+          "snap_distance_m": 16.1,
+          "station": "Siglap Stn/Laguna Park",
+          "straight_line_m": 249.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 249.6,
+          "shortest_m": 249.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "449288",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "93049",
+          "name": "Lagoon View",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Lagoon View",
+          "straight_line_m": 187.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 187.7,
+          "shortest_m": 187.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "449292",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "93049",
+          "name": "Lagoon View",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Lagoon View",
+          "straight_line_m": 151.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 151.5,
+          "shortest_m": 151.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "449293",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "93049",
+          "name": "Lagoon View",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Lagoon View",
+          "straight_line_m": 132.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 132.6,
+          "shortest_m": 132.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "449294",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "93049",
+          "name": "Lagoon View",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Lagoon View",
+          "straight_line_m": 152.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 152.1,
+          "shortest_m": 152.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "449304",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47549",
+          "name": "Blk 693 CP",
+          "routed_m": null,
+          "snap_distance_m": 8.2,
+          "station": "Blk 693 CP",
+          "straight_line_m": 165.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 165.8,
+          "shortest_m": 165.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "730694",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47029",
+          "name": "Opp Khalsa Cres Drug Rehab Ctr",
+          "routed_m": null,
+          "snap_distance_m": 13.4,
+          "station": "Opp Khalsa Cres Drug Rehab Ctr",
+          "straight_line_m": 263.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 263.7,
+          "shortest_m": 263.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 53.8
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "730915",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "46299",
+          "name": "Opp Blk 106",
+          "routed_m": null,
+          "snap_distance_m": 10.3,
+          "station": "Opp Blk 106",
+          "straight_line_m": 92.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 92.2,
+          "shortest_m": 92.2
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "731903",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "46299",
+          "name": "Opp Blk 106",
+          "routed_m": null,
+          "snap_distance_m": 10.3,
+          "station": "Opp Blk 106",
+          "straight_line_m": 103.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 103.9,
+          "shortest_m": 103.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "731904",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47549",
+          "name": "Blk 693 CP",
+          "routed_m": null,
+          "snap_distance_m": 8.2,
+          "station": "Blk 693 CP",
+          "straight_line_m": 167.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 167.6,
+          "shortest_m": 167.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "735694",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "58581",
+          "name": "Bef Gambas Cres",
+          "routed_m": null,
+          "snap_distance_m": 4.4,
+          "station": "Bef Gambas Cres",
+          "straight_line_m": 272.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 272.9,
+          "shortest_m": 272.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "737708",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47561",
+          "name": "Blk 620",
+          "routed_m": null,
+          "snap_distance_m": 1.6,
+          "station": "Blk 620",
+          "straight_line_m": 145.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 145.5,
+          "shortest_m": 145.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "737774",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47561",
+          "name": "Blk 620",
+          "routed_m": null,
+          "snap_distance_m": 1.6,
+          "station": "Blk 620",
+          "straight_line_m": 134.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 134.8,
+          "shortest_m": 134.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "WOODLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "737775",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "57061",
+          "name": "Dieppe Barracks",
+          "routed_m": null,
+          "snap_distance_m": 11.3,
+          "station": "Dieppe Barracks",
+          "straight_line_m": 279.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 279.7,
+          "shortest_m": 279.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "760965",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "57069",
+          "name": "Opp Dieppe Barracks",
+          "routed_m": null,
+          "snap_distance_m": 17.6,
+          "station": "Opp Dieppe Barracks",
+          "straight_line_m": 267.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 267.6,
+          "shortest_m": 267.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "760966",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59751",
+          "name": "Opp The Shaughnessy",
+          "routed_m": null,
+          "snap_distance_m": 4.1,
+          "station": "Opp The Shaughnessy",
+          "straight_line_m": 64.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 64.5,
+          "shortest_m": 64.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "767974",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59751",
+          "name": "Opp The Shaughnessy",
+          "routed_m": null,
+          "snap_distance_m": 4.1,
+          "station": "Opp The Shaughnessy",
+          "straight_line_m": 74.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 74.9,
+          "shortest_m": 74.9
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "767989",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59521",
+          "name": "Yishun Emerald",
+          "routed_m": null,
+          "snap_distance_m": 25.0,
+          "station": "Yishun Emerald",
+          "straight_line_m": 123.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 123.7,
+          "shortest_m": 123.7
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "768428",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59521",
+          "name": "Yishun Emerald",
+          "routed_m": null,
+          "snap_distance_m": 25.0,
+          "station": "Yishun Emerald",
+          "straight_line_m": 99.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 99.8,
+          "shortest_m": 99.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "768429",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59521",
+          "name": "Yishun Emerald",
+          "routed_m": null,
+          "snap_distance_m": 25.0,
+          "station": "Yishun Emerald",
+          "straight_line_m": 71.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 71.5,
+          "shortest_m": 71.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "768430",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59521",
+          "name": "Yishun Emerald",
+          "routed_m": null,
+          "snap_distance_m": 25.0,
+          "station": "Yishun Emerald",
+          "straight_line_m": 49.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 49.1,
+          "shortest_m": 49.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "768431",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "96301",
+          "name": "Expo Stn Exit B",
+          "routed_m": null,
+          "snap_distance_m": 11.7,
+          "station": "Expo Stn Exit B",
+          "straight_line_m": 116.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 116.4,
+          "shortest_m": 116.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "486038",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "96249",
+          "name": "Builders Ctr",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Builders Ctr",
+          "straight_line_m": 56.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 56.1,
+          "shortest_m": 56.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 50.4
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "486122",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "97169",
+          "name": "Opp Edwards Lifesciences",
+          "routed_m": null,
+          "snap_distance_m": 15.9,
+          "station": "Opp Edwards Lifesciences",
+          "straight_line_m": 215.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 215.0,
+          "shortest_m": 215.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 52.7
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "486131",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "96249",
+          "name": "Builders Ctr",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Builders Ctr",
+          "straight_line_m": 153.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 153.4,
+          "shortest_m": 153.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 50.4
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "486147",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "96241",
+          "name": "Laguna Natl Country Club",
+          "routed_m": null,
+          "snap_distance_m": 5.4,
+          "station": "Laguna Natl Country Club",
+          "straight_line_m": 105.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 105.6,
+          "shortest_m": 105.6
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 50.4
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "486361",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "75259",
+          "name": "Tropica Condo",
+          "routed_m": null,
+          "snap_distance_m": 5.6,
+          "station": "Tropica Condo",
+          "straight_line_m": 239.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 239.8,
+          "shortest_m": 239.8
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "528684",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "75251",
+          "name": "Opp Tropica Condo",
+          "routed_m": null,
+          "snap_distance_m": 7.6,
+          "station": "Opp Tropica Condo",
+          "straight_line_m": 269.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 269.1,
+          "shortest_m": 269.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "528685",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "75251",
+          "name": "Opp Tropica Condo",
+          "routed_m": null,
+          "snap_distance_m": 7.6,
+          "station": "Opp Tropica Condo",
+          "straight_line_m": 242.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 242.4,
+          "shortest_m": 242.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "528686",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "SOUTHERN_ISLANDS",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "009901",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINA_SOUTH",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018930",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "STRAITS_VIEW",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018946",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "03539",
+          "name": "Marina Bay Stn",
+          "routed_m": null,
+          "snap_distance_m": 43.6,
+          "station": "Marina Bay Stn",
+          "straight_line_m": 222.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 222.5,
+          "shortest_m": 222.5
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "DOWNTOWN_CORE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "018990",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINE_PARADE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "029996",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "MARINA_EAST",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "029997",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "072900",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079000",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079050",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079100",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "03218",
+          "name": "Prince Edward Rd Stn Exit 2",
+          "routed_m": null,
+          "snap_distance_m": 4.8,
+          "station": "Prince Edward Rd Stn Exit 2",
+          "straight_line_m": 76.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 76.4,
+          "shortest_m": 76.4
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "DOWNTOWN_CORE",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079122",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079200",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079250",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "079582",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "47711",
+          "name": "JB Sentral Bus Ter",
+          "routed_m": null,
+          "snap_distance_m": 823.3,
+          "station": "JB Sentral Bus Ter",
+          "straight_line_m": 225.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 225.0,
+          "shortest_m": 225.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "080000",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "area": "UNKNOWN",
+      "before": {
+        "best_node": null,
+        "has_route_segments": false,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "080100",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 67,
+  "converted_from_no_transit": [
+    "560424",
+    "560602",
+    "567854",
+    "567855",
+    "567856",
+    "567857",
+    "567858",
+    "567859",
+    "534029",
+    "534030",
+    "536210",
+    "536213",
+    "539213",
+    "539216",
+    "539220",
+    "539255",
+    "121502",
+    "122438",
+    "128039",
+    "128047",
+    "128048",
+    "128049",
+    "128412",
+    "128550",
+    "266214",
+    "266215",
+    "266216",
+    "266217",
+    "266227",
+    "266228",
+    "267835",
+    "267836",
+    "419592",
+    "426146",
+    "429058",
+    "449288",
+    "449292",
+    "449293",
+    "449294",
+    "449304",
+    "730694",
+    "730915",
+    "731903",
+    "731904",
+    "735694",
+    "737708",
+    "737774",
+    "737775",
+    "760965",
+    "760966",
+    "767974",
+    "767989",
+    "768428",
+    "768429",
+    "768430",
+    "768431",
+    "486038",
+    "486122",
+    "486131",
+    "486147",
+    "486361",
+    "528684",
+    "528685",
+    "528686",
+    "018990",
+    "079122",
+    "080000"
+  ],
+  "geom_shards_touched": [
+    "886520ca49fffff",
+    "886520d8a9fffff",
+    "886520d8adfffff",
+    "886520d9c3fffff",
+    "886520db15fffff",
+    "886520db17fffff",
+    "886526265bfffff",
+    "8865263417fffff",
+    "8865263419fffff",
+    "8865263453fffff",
+    "8865263489fffff",
+    "886526348dfffff",
+    "8865263495fffff",
+    "88652634bbfffff",
+    "88652634cdfffff",
+    "88652634e3fffff",
+    "886526364bfffff",
+    "886526366bfffff",
+    "886526368dfffff",
+    "88652636cdfffff",
+    "886526ac07fffff",
+    "886526ac3dfffff",
+    "886526aca5fffff",
+    "886526acadfffff",
+    "886526acb7fffff",
+    "886526acc1fffff",
+    "886526acc3fffff",
+    "886526acc5fffff",
+    "886526adc9fffff",
+    "896520d8a7bffff",
+    "896520d99b3ffff",
+    "896520d9c03ffff",
+    "896520d9c07ffff",
+    "896520d9c17ffff",
+    "896520d9cabffff",
+    "89652636593ffff",
+    "89652636c6fffff",
+    "896526ac873ffff",
+    "896526ac88fffff",
+    "896526acb2bffff"
+  ],
+  "geometry_postals": 112947,
+  "missing_from_bundle": [],
+  "network": "processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 80,
+  "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 80,
+  "source_bundle": "generated_20260801_amk_osm_shelter_targeted_v2",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 10766,
+    "SCORED": 112880,
+    "SCORED_PARTIAL": 67
+  },
+  "target_bundle": "generated_20260801_direct_bus_targeted"
+}

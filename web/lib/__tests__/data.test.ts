@@ -25,7 +25,8 @@ describe("generated data bundle", () => {
     );
     expect(Object.keys(scoreIndex).length).toBeGreaterThan(50);
     expect(Object.keys(geomPostalIndex).length).toBe(
-      manifest.provenance.state_counts.SCORED
+      manifest.provenance.state_counts.SCORED +
+        manifest.provenance.state_counts.SCORED_PARTIAL
     );
   });
 
