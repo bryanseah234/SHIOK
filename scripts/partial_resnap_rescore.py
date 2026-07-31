@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import sys
 from collections import Counter
@@ -25,8 +26,14 @@ DEFAULT_AREAS = ["ANG_MO_KIO", "HOUGANG", "CLEMENTI", "BUKIT_TIMAH"]
 
 
 def read_json(path: Path) -> Any:
-    with path.open("r", encoding="utf-8") as f:
-        return json.load(f)
+    if path.is_file():
+        with path.open("r", encoding="utf-8") as f:
+            return json.load(f)
+    gz_path = path.with_name(f"{path.name}.gz")
+    if gz_path.is_file():
+        with gzip.open(gz_path, "rt", encoding="utf-8") as f:
+            return json.load(f)
+    raise FileNotFoundError(path)
 
 
 def active_bundle_dir() -> Path:
