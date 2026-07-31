@@ -23,6 +23,7 @@ EDGE_METADATA_COLUMNS = [
     "bridge",
     "tunnel",
     "indoor",
+    "location",
     "footway",
 ]
 

@@ -9,6 +9,7 @@ from scripts.run_network_build import (
     build_hdb_void_deck_anchor_edges,
     build_hdb_void_deck_edges,
     compute_polygon_match_ratio,
+    native_osm_covered_mask,
     split_osm_building_shelter_layers,
 )
 
@@ -156,6 +157,38 @@ def test_compute_polygon_match_ratio_marks_existing_footways_under_roof():
     ratios = compute_polygon_match_ratio(edges, roof, buffer_m=0.0, label="test roof")
 
     assert ratios.tolist() == [1.0, 0.0]
+
+
+def test_native_osm_covered_mask_includes_underground_and_indoor_location():
+    edges = gpd.GeoDataFrame(
+        [
+            {
+                "highway": "footway",
+                "location": "underground",
+                "geometry": LineString([(0, 0), (1, 0)]),
+            },
+            {
+                "highway": "footway",
+                "location": "indoor",
+                "geometry": LineString([(0, 1), (1, 1)]),
+            },
+            {
+                "highway": "footway",
+                "tunnel": "no",
+                "geometry": LineString([(0, 2), (1, 2)]),
+            },
+            {
+                "highway": "footway",
+                "covered": "building_passage",
+                "geometry": LineString([(0, 3), (1, 3)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+
+    mask = native_osm_covered_mask(edges)
+
+    assert mask.tolist() == [True, True, False, True]
 
 
 def test_hdb_precinct_footway_coverage_marks_only_pedestrian_edges():

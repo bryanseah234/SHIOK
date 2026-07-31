@@ -11,6 +11,7 @@ from pipeline.export import (
     geom_record,
     json_size,
     load_score_batch_records,
+    route_edge_source_class,
     route_segment_geometries,
     slugify_area,
     validate_export_batch_args,
@@ -25,6 +26,14 @@ def gzip_json_file(path: Path) -> None:
     with gzip.open(path.with_name(f"{path.name}.gz"), "wb") as f:
         f.write(payload)
     path.unlink()
+
+
+def test_route_edge_source_class_uses_osm_location_provenance():
+    assert (
+        route_edge_source_class({"is_covered": True, "location": "underground"})
+        == "bridge_underpass"
+    )
+    assert route_edge_source_class({"is_covered": True, "location": "indoor"}) == "osm_covered"
 
 
 def sample_record(postal: str = "123456") -> dict:

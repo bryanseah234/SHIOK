@@ -232,10 +232,16 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
     bridge = text_value(edge.get("bridge")).lower()
     tunnel = text_value(edge.get("tunnel")).lower()
     indoor = text_value(edge.get("indoor")).lower()
+    location = text_value(edge.get("location")).lower()
 
     if "audited_shelter_correction" in {source_layer, highway}:
         return "audited_shelter_correction"
-    if "overhead_bridge_underpass" in source_layer or bridge in {"yes", "covered"} or tunnel:
+    if (
+        "overhead_bridge_underpass" in source_layer
+        or bridge in {"yes", "covered"}
+        or tunnel in {"yes", "building_passage"}
+        or location == "underground"
+    ):
         return "bridge_underpass"
     if "underpass" in highway or "bridge" in highway:
         return "bridge_underpass"
@@ -248,7 +254,10 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
         "covered",
         "arcade",
         "colonnade",
+        "building_passage",
     }:
+        return "osm_covered"
+    if location == "indoor":
         return "osm_covered"
     return "covered_unknown"
 

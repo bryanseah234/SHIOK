@@ -67,6 +67,10 @@ APPROVED_CORRECTION_STATUSES = {"approved"}
 COVERED_CORRECTION_VALUES = {"1", "true", "yes", "covered"}
 HDB_VOID_DECK_BUILDING_TAGS = {"apartments", "residential"}
 OSM_ROOF_SHELTER_TAGS = {"roof", "canopy"}
+OSM_COVERED_TAG_VALUES = {"yes", "covered", "arcade", "colonnade", "building_passage"}
+OSM_TUNNEL_COVERED_VALUES = {"yes", "building_passage"}
+OSM_INDOOR_COVERED_VALUES = {"yes", "building_passage"}
+OSM_LOCATION_COVERED_VALUES = {"underground", "indoor"}
 HDB_PRECINCT_COVERED_HIGHWAYS = {
     "corridor",
     "footway",
@@ -75,6 +79,29 @@ HDB_PRECINCT_COVERED_HIGHWAYS = {
     "pedestrian",
     "steps",
 }
+
+
+def normalized_text_series(frame: gpd.GeoDataFrame, column: str) -> pd.Series:
+    if column not in frame.columns:
+        return pd.Series("", index=frame.index)
+    return frame[column].fillna("").astype(str).str.strip().str.lower()
+
+
+def native_osm_covered_mask(edges_gdf: gpd.GeoDataFrame) -> pd.Series:
+    """Return OSM-tagged edges that are explicit rain-shelter evidence."""
+    mask = pd.Series(False, index=edges_gdf.index)
+    covered = normalized_text_series(edges_gdf, "covered")
+    highway = normalized_text_series(edges_gdf, "highway")
+    tunnel = normalized_text_series(edges_gdf, "tunnel")
+    indoor = normalized_text_series(edges_gdf, "indoor")
+    location = normalized_text_series(edges_gdf, "location")
+
+    mask |= covered.isin(OSM_COVERED_TAG_VALUES)
+    mask |= highway.str.contains("covered", na=False)
+    mask |= tunnel.isin(OSM_TUNNEL_COVERED_VALUES)
+    mask |= indoor.isin(OSM_INDOOR_COVERED_VALUES)
+    mask |= location.isin(OSM_LOCATION_COVERED_VALUES)
+    return mask
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -1216,7 +1243,7 @@ def run_build(scope: str = "pilot"):
     nodes, edges = osm.get_network(
         nodes=True,
         network_type="walking",
-        extra_attributes=["covered", "tunnel", "indoor", "layer", "level"],
+        extra_attributes=["covered", "tunnel", "indoor", "layer", "level", "location"],
     )
     print(f"Loaded OSM walking network: nodes={len(nodes)}, edges={len(edges)}")
     try:
@@ -1473,16 +1500,7 @@ def run_build(scope: str = "pilot"):
         return "REAL_DISCONNECTION", ""
 
     edges_gdf["is_covered"] = 0
-    native_covered_mask = pd.Series(False, index=edges_gdf.index)
-    if "covered" in edges_gdf.columns:
-        native_covered_mask |= edges_gdf["covered"].isin(["yes", "covered", "arcade", "colonnade"])
-    if "highway" in edges_gdf.columns:
-        native_covered_mask |= edges_gdf["highway"].str.contains("covered", na=False)
-    if "tunnel" in edges_gdf.columns:
-        native_covered_mask |= edges_gdf["tunnel"].isin(["yes", "building_passage"])
-    if "indoor" in edges_gdf.columns:
-        native_covered_mask |= edges_gdf["indoor"].isin(["yes"])
-
+    native_covered_mask = native_osm_covered_mask(edges_gdf)
     edges_gdf.loc[native_covered_mask, "is_covered"] = 1
 
     roof_match_ratio = compute_polygon_match_ratio(
