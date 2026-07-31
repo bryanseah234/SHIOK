@@ -279,7 +279,7 @@ def test_prepare_osm_explicit_shelter_geometries_filters_supported_tags():
 
     shelters = prepare_osm_explicit_shelter_geometries(features)
 
-    assert len(shelters) == 5
+    assert len(shelters) == 6
     assert set(shelters["source_layer"]) == {"osm_explicit_shelter"}
     assert set(shelters["confidence"]) == {"osm_explicit_shelter_tag"}
     assert all(geom.geom_type in {"Polygon", "MultiPolygon"} for geom in shelters.geometry)

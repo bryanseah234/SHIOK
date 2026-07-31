@@ -1,0 +1,127 @@
+version: "2026-08-01"
+
+policy:
+  production_source: "hashed_local_osm_pbf"
+  qa_only_tools:
+    - "Bellingcat OSM Search"
+    - "OpenInfraMap"
+    - "Overpass Turbo"
+  notes:
+    - "Hosted OSM query/map tools are for discovery and QA only."
+    - "Production builds must extract OSM-derived evidence from the local hashed PBF snapshot."
+    - "Bounded Overpass outputs may only become production input if raw response, query, timestamp, osm_base, and SHA256 are archived under raw/."
+
+network_extra_attributes:
+  - access
+  - access:conditional
+  - bridge
+  - building
+  - building:levels
+  - covered
+  - conveying
+  - crossing
+  - crossing:island
+  - crossing:markings
+  - crossing:signals
+  - entrance
+  - foot
+  - foot:conditional
+  - footway
+  - height
+  - highway
+  - incline
+  - indoor
+  - kerb
+  - landuse
+  - layer
+  - leisure
+  - level
+  - location
+  - min_height
+  - name
+  - natural
+  - oneway:foot
+  - public_transport
+  - railway
+  - ramp
+  - service
+  - shade
+  - shelter
+  - shelter_type
+  - sidewalk
+  - sidewalk:both
+  - sidewalk:left
+  - sidewalk:right
+  - tactile_paving
+  - traffic_calming
+  - traffic_signals
+  - tunnel
+  - weather_protection
+  - wheelchair
+
+covered_values:
+  - arcade
+  - building_passage
+  - colonnade
+  - covered
+  - partial
+  - "yes"
+
+tunnel_covered_values:
+  - building_passage
+  - "yes"
+
+indoor_covered_values:
+  - building_passage
+  - "yes"
+
+location_covered_values:
+  - indoor
+  - underground
+
+negative_shelter_values:
+  - "0"
+  - "false"
+  - "no"
+  - "none"
+
+explicit_shelter_query_keys:
+  - amenity
+  - building
+  - building:part
+  - covered
+  - highway
+  - man_made
+  - public_transport
+  - shelter
+  - shelter_type
+  - weather_protection
+
+explicit_shelter_tags_as_columns:
+  - amenity
+  - building
+  - building:part
+  - covered
+  - highway
+  - man_made
+  - public_transport
+  - shelter
+  - shelter_type
+  - weather_protection
+
+shelter_yes_values:
+  - canopy
+  - covered
+  - roof
+  - "yes"
+
+qa_only_openinframap_tags:
+  - communication
+  - man_made
+  - pipeline
+  - power
+  - substance
+  - telecom
+  - utility
+  - water
+  - waterway

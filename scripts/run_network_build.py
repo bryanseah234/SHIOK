@@ -16,6 +16,7 @@ from shapely.errors import ShapelyDeprecationWarning
 from shapely.geometry import LineString, MultiLineString, Point
 from shapely.ops import nearest_points, substring
 
+from pipeline.osm_tags import load_osm_tag_schema
 from pipeline.shade import (
     NPARKS_SHADE_SOURCE_KEYS,
     compute_edge_shade_ratio,
@@ -67,55 +68,16 @@ APPROVED_CORRECTION_STATUSES = {"approved"}
 COVERED_CORRECTION_VALUES = {"1", "true", "yes", "covered"}
 HDB_VOID_DECK_BUILDING_TAGS = {"apartments", "residential"}
 OSM_ROOF_SHELTER_TAGS = {"roof", "canopy"}
-OSM_COVERED_TAG_VALUES = {"yes", "covered", "arcade", "colonnade", "building_passage"}
-OSM_TUNNEL_COVERED_VALUES = {"yes", "building_passage"}
-OSM_INDOOR_COVERED_VALUES = {"yes", "building_passage"}
-OSM_LOCATION_COVERED_VALUES = {"underground", "indoor"}
-OSM_SHELTER_NEGATIVE_VALUES = {"0", "false", "no", "none"}
-OSM_NETWORK_EXTRA_ATTRIBUTES = [
-    "access",
-    "bridge",
-    "covered",
-    "crossing",
-    "crossing:markings",
-    "foot",
-    "foot:conditional",
-    "footway",
-    "indoor",
-    "layer",
-    "level",
-    "location",
-    "name",
-    "service",
-    "shade",
-    "shelter",
-    "sidewalk",
-    "traffic_calming",
-    "tunnel",
-    "weather_protection",
-]
-OSM_EXPLICIT_SHELTER_QUERY_KEYS = (
-    "amenity",
-    "building:part",
-    "covered",
-    "man_made",
-    "public_transport",
-    "shelter",
-    "shelter_type",
-    "weather_protection",
-)
-OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS = [
-    "amenity",
-    "building:part",
-    "covered",
-    "highway",
-    "man_made",
-    "public_transport",
-    "shelter",
-    "shelter_type",
-    "weather_protection",
-]
-OSM_SHELTER_YES_VALUES = {"yes", "roof", "covered", "canopy"}
+OSM_TAG_SCHEMA = load_osm_tag_schema()
+OSM_COVERED_TAG_VALUES = OSM_TAG_SCHEMA.covered_values
+OSM_TUNNEL_COVERED_VALUES = OSM_TAG_SCHEMA.tunnel_covered_values
+OSM_INDOOR_COVERED_VALUES = OSM_TAG_SCHEMA.indoor_covered_values
+OSM_LOCATION_COVERED_VALUES = OSM_TAG_SCHEMA.location_covered_values
+OSM_SHELTER_NEGATIVE_VALUES = OSM_TAG_SCHEMA.negative_shelter_values
+OSM_NETWORK_EXTRA_ATTRIBUTES = list(OSM_TAG_SCHEMA.network_extra_attributes)
+OSM_EXPLICIT_SHELTER_QUERY_KEYS = OSM_TAG_SCHEMA.explicit_shelter_query_keys
+OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS = list(OSM_TAG_SCHEMA.explicit_shelter_tags_as_columns)
+OSM_SHELTER_YES_VALUES = OSM_TAG_SCHEMA.shelter_yes_values
 HDB_PRECINCT_COVERED_HIGHWAYS = {
     "corridor",
     "footway",
@@ -838,9 +800,9 @@ def load_nparks_shade_proxy_geometries(
         report[source_key] = {
             "status": "loaded",
             "path": str(path.relative_to(PROJECT_ROOT)),
-            "features_raw": int(len(features)),
-            "features_in_scope": int(len(in_scope)),
-            "proxy_polygons": int(len(proxy)),
+            "features_raw": len(features),
+            "features_in_scope": len(in_scope),
+            "proxy_polygons": len(proxy),
         }
         if not proxy.empty:
             frames.append(proxy)
@@ -944,9 +906,8 @@ def load_osm_explicit_shelter_geometries(osm: OSM, union_poly) -> gpd.GeoDataFra
                 keep_ways=True,
                 keep_relations=True,
             )
-        except (
-            Exception
-        ) as exc:  # noqa: BLE001 - OSM tag enrichment should not stop baseline build.
+        except Exception as exc:  # noqa: BLE001
+            # OSM tag enrichment should not stop the baseline network build.
             print(f"Warning: failed to load OSM shelter tag {key}: {exc}")
             continue
         if data is None or data.empty:

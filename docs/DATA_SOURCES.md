@@ -52,6 +52,8 @@ DataMall zip auth is unverified: the fetcher tries unauthenticated first, falls 
 - Use the hashed Geofabrik/OSM PBF as the production OSM source. Extra shelter
   classes should be extracted from that local snapshot first so builds remain
   reproducible.
+- The reviewed production tag schema lives in `pipeline/config/osm_tags.yaml`.
+  Update that file and its tests before changing network-build OSM extraction.
 - Use Overpass/Overpass Turbo for bounded QA and query development. If a
   bounded Overpass result becomes production input, store the raw response,
   query text, timestamp, and hash under `raw/` before any network build.

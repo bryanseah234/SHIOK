@@ -9,35 +9,24 @@ from shapely import wkt
 from shapely.geometry import MultiLineString
 from shapely.ops import linemerge
 
+from pipeline.osm_tags import load_osm_tag_schema
+
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = PROJECT_ROOT / "pipeline" / "config" / "params.yaml"
-EDGE_METADATA_COLUMNS = [
+
+_BASE_EDGE_METADATA_COLUMNS = [
     "source_layer",
     "synth_class",
     "confidence",
     "shade_ratio",
     "shade_source",
     "shade_confidence",
-    "covered",
     "highway",
-    "access",
-    "bridge",
-    "crossing",
-    "crossing:markings",
-    "foot",
-    "foot:conditional",
-    "tunnel",
-    "indoor",
-    "location",
-    "footway",
-    "name",
-    "service",
-    "shade",
-    "shelter",
-    "sidewalk",
-    "traffic_calming",
-    "weather_protection",
 ]
+_OSM_EDGE_METADATA_COLUMNS = list(load_osm_tag_schema().network_extra_attributes)
+EDGE_METADATA_COLUMNS = list(
+    dict.fromkeys([*_BASE_EDGE_METADATA_COLUMNS, *_OSM_EDGE_METADATA_COLUMNS])
+)
 
 
 def load_params():
