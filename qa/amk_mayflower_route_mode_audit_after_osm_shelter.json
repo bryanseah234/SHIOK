@@ -1,0 +1,156 @@
+{
+  "network": "processed/network_island.parquet",
+  "ok": true,
+  "summary": [
+    {
+      "best": {
+        "covered_pct": 100.0,
+        "node": "Opp Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 100.0,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 100.0,
+        "node": "Opp Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "covered_pct": 31.2,
+        "node": "MAYFLOWER MRT STATION Exit 5",
+        "routing_type": "sheltered",
+        "sheltered_m": 425.9,
+        "shortest_m": 425.9,
+        "state": "SCORED",
+        "total": 72.1
+      },
+      "postal": "560231"
+    },
+    {
+      "best": {
+        "covered_pct": 76.6,
+        "node": "Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 90.6,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 76.6,
+        "node": "Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 90.6
+      },
+      "mrt_lrt": {
+        "covered_pct": 52.3,
+        "node": "MAYFLOWER MRT STATION Exit 5",
+        "routing_type": "sheltered",
+        "sheltered_m": 632.9,
+        "shortest_m": 545.6,
+        "state": "SCORED",
+        "total": 72.6
+      },
+      "postal": "560234"
+    },
+    {
+      "best": {
+        "covered_pct": 70.4,
+        "node": "Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 85.3,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 70.4,
+        "node": "Mayflower Sec Sch",
+        "state": "SCORED",
+        "total": 85.3
+      },
+      "mrt_lrt": {
+        "covered_pct": 36.3,
+        "node": "MAYFLOWER MRT STATION Exit 5",
+        "routing_type": "sheltered",
+        "sheltered_m": 646.9,
+        "shortest_m": 644.4,
+        "state": "SCORED",
+        "total": 59.7
+      },
+      "postal": "560225"
+    },
+    {
+      "best": {
+        "covered_pct": 63.6,
+        "node": "Blk 700B",
+        "state": "SCORED",
+        "total": 85.4,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 63.6,
+        "node": "Blk 700B",
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "mrt_lrt": {
+        "covered_pct": 64.1,
+        "node": "ANG MO KIO MRT STATION Exit D",
+        "routing_type": "sheltered",
+        "sheltered_m": 681.8,
+        "shortest_m": 561.1,
+        "state": "SCORED",
+        "total": 77.4
+      },
+      "postal": "560700"
+    },
+    {
+      "best": {
+        "covered_pct": 100.0,
+        "node": "Aft Ang Mo Kio Int",
+        "state": "SCORED",
+        "total": 100.0,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 100.0,
+        "node": "Aft Ang Mo Kio Int",
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "covered_pct": 67.4,
+        "node": "ANG MO KIO MRT STATION Exit D",
+        "routing_type": "sheltered",
+        "sheltered_m": 282.8,
+        "shortest_m": 282.8,
+        "state": "SCORED",
+        "total": 87.4
+      },
+      "postal": "560710"
+    },
+    {
+      "best": {
+        "covered_pct": 100.0,
+        "node": "Opp Bishan Nth Shop Mall",
+        "state": "SCORED",
+        "total": 100.0,
+        "type": "bus_stop"
+      },
+      "bus": {
+        "covered_pct": 100.0,
+        "node": "Opp Bishan Nth Shop Mall",
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "covered_pct": null,
+        "node": "No route found",
+        "routing_type": null,
+        "sheltered_m": null,
+        "shortest_m": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": null
+      },
+      "postal": "570234"
+    }
+  ]
+}

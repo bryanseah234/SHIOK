@@ -1,0 +1,363 @@
+{
+  "bundle_before": "generated_20260731_124456_gz2",
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "postal": "560231",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.766,
+          "shade_ratio": 0.0,
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.766,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 76.6,
+          "rain": 76.6
+        },
+        "total": 90.6
+      },
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.73,
+          "shade_ratio": 0.0,
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.73,
+          "shortest_m": 332.4
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 73.0,
+          "rain": 73.0
+        },
+        "total": 89.2
+      },
+      "postal": "560234",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 431.2,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.704,
+          "shade_ratio": 0.0,
+          "sheltered_m": 433.7,
+          "shortest_covered_ratio": 0.576,
+          "shortest_m": 431.2
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 95.3,
+          "bus": 93.8,
+          "crossing": 100.0,
+          "heat": 70.4,
+          "rain": 70.4
+        },
+        "total": 85.3
+      },
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 346.7,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 216.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.659,
+          "shade_ratio": 0.0,
+          "sheltered_m": 349.1,
+          "shortest_covered_ratio": 0.499,
+          "shortest_m": 346.7
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 93.8,
+          "crossing": 100.0,
+          "heat": 65.9,
+          "rain": 65.9
+        },
+        "total": 85.1
+      },
+      "postal": "560225",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.636,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 63.6,
+          "rain": 63.6
+        },
+        "total": 85.4
+      },
+      "before": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.636,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 63.6,
+          "rain": 63.6
+        },
+        "total": 85.4
+      },
+      "postal": "560700",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "before": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "postal": "560710",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "53389",
+          "name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "snap_distance_m": 7.5,
+          "station": "Opp Bishan Nth Shop Mall",
+          "straight_line_m": 111.0,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.9,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 118.9
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "before": {
+        "best_node": {
+          "exit": "53389",
+          "name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "snap_distance_m": 7.5,
+          "station": "Opp Bishan Nth Shop Mall",
+          "straight_line_m": 111.0,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.9,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 118.9
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0
+      },
+      "postal": "570234",
+      "state_changed": false
+    }
+  ],
+  "network": "processed/network_island.parquet",
+  "ok": true,
+  "postals": [
+    "560231",
+    "560234",
+    "560225",
+    "560700",
+    "560710",
+    "570234"
+  ]
+}

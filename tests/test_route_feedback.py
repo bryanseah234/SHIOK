@@ -1,7 +1,8 @@
 import geopandas as gpd
+import pandas as pd
 from shapely.geometry import LineString
 
-from pipeline.route_feedback import audit_report, classify_feedback_segments
+from pipeline.route_feedback import audit_geojson, audit_report, classify_feedback_segments
 
 
 def test_feedback_audit_marks_uncovered_user_shelter_as_missing_source():
@@ -89,3 +90,32 @@ def test_feedback_report_counts_routes_and_classifications():
 
     assert report["route_count"] == 1
     assert report["classification_counts"] == {"missing_hdb_void_deck_connector": 1}
+
+
+def test_feedback_report_serializes_missing_distances_as_null():
+    audited = gpd.GeoDataFrame(
+        [
+            {
+                "postal": "560234",
+                "destination": "Mayflower",
+                "segment_index": 0,
+                "label": "sheltered",
+                "length_m": 10.0,
+                "classification": "routable_but_uncovered_or_missing_shelter_source",
+                "needs_model_qa": True,
+                "nearby_edge_count": 1,
+                "nearby_covered_edge_count": 0,
+                "nearest_edge_m": 0.0,
+                "nearest_covered_edge_m": pd.NA,
+                "nearby_sources": {},
+                "geometry": LineString([(0, 0), (10, 0)]),
+            }
+        ],
+        crs="EPSG:3414",
+    )
+
+    report = audit_report(audited)
+
+    assert report["segments"][0]["nearest_covered_edge_m"] is None
+    geojson = audit_geojson(audited)
+    assert geojson["features"][0]["properties"]["nearest_covered_edge_m"] is None

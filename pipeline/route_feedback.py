@@ -118,6 +118,17 @@ def _edge_source_summary(edges: gpd.GeoDataFrame) -> dict[str, int]:
     return dict(sorted(counter.items()))
 
 
+def json_nullable(value: Any) -> Any:
+    if value is None:
+        return None
+    try:
+        if pd.isna(value):
+            return None
+    except TypeError:
+        pass
+    return value
+
+
 def _has_bridge_evidence(edges: gpd.GeoDataFrame) -> bool:
     if edges.empty:
         return False
@@ -246,8 +257,8 @@ def audit_report(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
                 "needs_model_qa": bool(row["needs_model_qa"]),
                 "nearby_edge_count": int(row["nearby_edge_count"]),
                 "nearby_covered_edge_count": int(row["nearby_covered_edge_count"]),
-                "nearest_edge_m": row["nearest_edge_m"],
-                "nearest_covered_edge_m": row["nearest_covered_edge_m"],
+                "nearest_edge_m": json_nullable(row["nearest_edge_m"]),
+                "nearest_covered_edge_m": json_nullable(row["nearest_covered_edge_m"]),
                 "nearby_sources": row["nearby_sources"],
             }
         )
@@ -268,7 +279,7 @@ def audit_geojson(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
     features = []
     for _, row in output.iterrows():
         properties = {
-            key: value
+            key: json_nullable(value)
             for key, value in row.drop(labels=["geometry"]).items()
             if key != "nearby_sources"
         }

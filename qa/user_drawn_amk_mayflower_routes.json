@@ -1,0 +1,146 @@
+[
+  {
+    "postal": "560234",
+    "destination": "MAYFLOWER MRT STATION Exit 5",
+    "issue": "user_reported_better_walk_route",
+    "source": "user_drawn_qa_evidence_not_score_override",
+    "waypoints": [
+      [1.3671578, 103.8366331],
+      [1.367072, 103.8370569],
+      [1.3674506, 103.8371171],
+      [1.3677124, 103.8370321],
+      [1.3679884, 103.837202],
+      [1.3681087, 103.8373719],
+      [1.3686607, 103.8369401],
+      [1.3686465, 103.8367207],
+      [1.3688093, 103.8364092],
+      [1.369248, 103.8369826],
+      [1.3695311, 103.8367844],
+      [1.3702882, 103.8363243],
+      [1.3704439, 103.8365083]
+    ],
+    "segment_labels": [
+      "void_deck",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "void_deck",
+      "sheltered",
+      "covered_bridge",
+      "sheltered",
+      "sheltered",
+      "void_deck",
+      "sheltered"
+    ],
+    "created_at": "2026-07-30T02:15:48.222Z"
+  },
+  {
+    "postal": "560231",
+    "destination": "MAYFLOWER MRT STATION Exit 5",
+    "issue": "user_reported_better_walk_route",
+    "source": "user_drawn_qa_evidence_not_score_override",
+    "waypoints": [
+      [1.3683916, 103.8376787],
+      [1.3681117, 103.8373391],
+      [1.3686987, 103.8369516],
+      [1.3686283, 103.8366933],
+      [1.3688161, 103.8363997],
+      [1.3692851, 103.836977],
+      [1.3695134, 103.8367687],
+      [1.3703059, 103.8363228],
+      [1.3704828, 103.8365351]
+    ],
+    "segment_labels": [
+      "sheltered",
+      "void_deck",
+      "sheltered",
+      "covered_bridge",
+      "sheltered",
+      "sheltered",
+      "void_deck",
+      "sheltered"
+    ],
+    "created_at": "2026-07-30T09:06:09.270Z"
+  },
+  {
+    "postal": "560710",
+    "destination": "ANG MO KIO MRT STATION Exit D",
+    "issue": "user_reported_better_walk_route",
+    "source": "user_drawn_qa_evidence_not_score_override",
+    "waypoints": [
+      [1.3712472, 103.8483704],
+      [1.3704831, 103.8487706],
+      [1.3705821, 103.8490254],
+      [1.3695985, 103.8495987]
+    ],
+    "segment_labels": ["sheltered", "exposed", "sheltered"],
+    "created_at": "2026-07-30T09:07:35.321Z"
+  },
+  {
+    "postal": "560225",
+    "destination": "MAYFLOWER MRT STATION Exit 5",
+    "issue": "user_reported_better_walk_route",
+    "source": "user_drawn_qa_evidence_not_score_override",
+    "waypoints": [
+      [1.3673833, 103.8380057],
+      [1.367533, 103.8376176],
+      [1.3674471, 103.8374929],
+      [1.3674825, 103.8373796],
+      [1.3674542, 103.8371248],
+      [1.3675391, 103.8369691],
+      [1.368091, 103.8373938],
+      [1.3686784, 103.836962],
+      [1.3686359, 103.8367497],
+      [1.3688341, 103.836417],
+      [1.3692445, 103.8369762],
+      [1.3695205, 103.8367709],
+      [1.370313, 103.8363391],
+      [1.3704475, 103.8365302]
+    ],
+    "segment_labels": [
+      "void_deck",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "void_deck",
+      "sheltered",
+      "void_deck",
+      "sheltered",
+      "covered_bridge",
+      "sheltered",
+      "sheltered",
+      "void_deck",
+      "sheltered"
+    ],
+    "created_at": "2026-07-30T09:09:52.566Z"
+  },
+  {
+    "postal": "560700",
+    "destination": "ANG MO KIO MRT STATION Exit B",
+    "issue": "user_reported_better_walk_route",
+    "source": "user_drawn_qa_evidence_not_score_override",
+    "waypoints": [
+      [1.3696501, 103.8465903],
+      [1.3690974, 103.8464151],
+      [1.3690459, 103.8468209],
+      [1.3690459, 103.8469625],
+      [1.3690105, 103.847465],
+      [1.3693501, 103.8474721],
+      [1.3695129, 103.849178],
+      [1.3694351, 103.8496735],
+      [1.3698101, 103.8496806]
+    ],
+    "segment_labels": [
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "sheltered",
+      "underpass",
+      "sheltered"
+    ],
+    "created_at": "2026-07-30T09:12:22.029Z"
+  }
+]
