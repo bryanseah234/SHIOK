@@ -1,7 +1,7 @@
 import gzip
 import json
 
-from scripts.targeted_bundle_refresh import read_json, write_json
+from scripts.targeted_bundle_refresh import load_geom_shard, read_json, write_json
 
 
 def test_targeted_bundle_refresh_reads_gzipped_artifact(tmp_path):
@@ -22,3 +22,12 @@ def test_targeted_bundle_refresh_updates_existing_gzip_sibling(tmp_path):
     assert read_json(path) == [{"postal": "123456"}]
     with gzip.open(path.with_name("scores.json.gz"), "rt", encoding="utf-8") as f:
         assert json.load(f) == [{"postal": "123456"}]
+
+
+def test_targeted_bundle_refresh_loads_gzipped_geom_shard(tmp_path):
+    shard_dir = tmp_path / "geom" / "h3"
+    shard_dir.mkdir(parents=True)
+    with gzip.open(shard_dir / "abc.json.gz", "wt", encoding="utf-8") as f:
+        json.dump([{"postal": "123456"}], f)
+
+    assert load_geom_shard(tmp_path, "abc") == [{"postal": "123456"}]

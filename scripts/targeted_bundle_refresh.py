@@ -164,7 +164,7 @@ def replace_area_scores(
 
 def load_geom_shard(bundle_dir: Path, shard: str) -> list[dict[str, Any]]:
     path = bundle_dir / "geom" / "h3" / f"{shard}.json"
-    if not path.is_file():
+    if not path.is_file() and not path.with_name(f"{path.name}.gz").is_file():
         return []
     return read_json(path)
 
