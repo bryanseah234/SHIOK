@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { gunzipSync, gzipSync } from "node:zlib";
+import { latLngToCell } from "h3-js";
 
 function configuredBundle() {
   const configPath = new URL("../data-bundle.json", import.meta.url);
@@ -19,6 +20,46 @@ function normalizeBundle(value) {
 function writeJson(path, payload) {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, JSON.stringify(payload, null, 2), "utf8");
+}
+
+function writeGzJson(path, payload) {
+  mkdirSync(dirname(path), { recursive: true });
+  writeFileSync(path, gzipSync(JSON.stringify(payload)));
+}
+
+function writePostalPrefixShards(targetRoot, postalIndex) {
+  const prefixes = new Map();
+  for (const [postal, shard] of Object.entries(postalIndex || {})) {
+    const prefix = String(postal).slice(0, 3);
+    if (!prefixes.has(prefix)) prefixes.set(prefix, {});
+    prefixes.get(prefix)[postal] = shard;
+  }
+
+  for (const [prefix, mapping] of prefixes) {
+    writeGzJson(join(targetRoot, "geom", "postal-prefix", `${prefix}.json.gz`), mapping);
+  }
+}
+
+function writeTransitH3Shards(targetRoot, transitPois) {
+  const cells = new Map();
+  for (const feature of transitPois?.features || []) {
+    const [lng, lat] = feature?.geometry?.coordinates || [];
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) continue;
+    const cell = latLngToCell(lat, lng, 8);
+    if (!cells.has(cell)) cells.set(cell, []);
+    cells.get(cell).push(feature);
+  }
+
+  for (const [cell, features] of cells) {
+    writeGzJson(join(targetRoot, "transit", "h3", `${cell}.json.gz`), {
+      type: "FeatureCollection",
+      features,
+      provenance: {
+        source: "transit/pois.json",
+        h3_resolution: 8,
+      },
+    });
+  }
 }
 
 function decodeArtifact(bytes, relPath, response) {
@@ -87,10 +128,12 @@ async function downloadRemoteBundle(bundle, targetRoot) {
 
   const manifest = await downloadJson(remoteBase, targetRoot, "manifest.json");
   const geomIndex = await downloadJson(remoteBase, targetRoot, "geom/index.json");
-  await downloadArtifact(remoteBase, targetRoot, "geom/postal-index.json");
+  const geomPostalIndex = await downloadJson(remoteBase, targetRoot, "geom/postal-index.json");
+  writePostalPrefixShards(targetRoot, geomPostalIndex);
   await downloadArtifact(remoteBase, targetRoot, "scores/index.json");
   await downloadArtifact(remoteBase, targetRoot, "scores/prefix-index.json");
-  await downloadArtifact(remoteBase, targetRoot, "transit/pois.json");
+  const transitPois = await downloadJson(remoteBase, targetRoot, "transit/pois.json");
+  writeTransitH3Shards(targetRoot, transitPois);
 
   for (const shard of manifest.scores?.shards || []) {
     await downloadArtifact(remoteBase, targetRoot, `scores/${shard}.json`);

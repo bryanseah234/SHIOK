@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("h3-js", () => ({
+  gridDisk: (cell: string) => [cell],
   latLngToCell: () => "parent-cell",
 }));
 
@@ -65,7 +66,7 @@ describe("fetchGeomForPostal", () => {
     );
   });
 
-  it("loads route geometry for postal-only lookup through the postal shard index", async () => {
+  it("loads route geometry for postal-only lookup through the postal prefix shard index", async () => {
     vi.stubEnv("NEXT_PUBLIC_DATA_BASE", "/data/generated/");
     const childRecord = {
       postal: "560234",
@@ -76,7 +77,7 @@ describe("fetchGeomForPostal", () => {
 
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = bareUrl(input);
-      if (url.endsWith("/geom/postal-index.json")) {
+      if (url.endsWith("/geom/postal-prefix/560.json")) {
         return jsonResponse(true, { "560234": "postal-child" });
       }
       if (url.endsWith("/geom/h3/postal-child.json")) return jsonResponse(true, [childRecord]);
@@ -88,6 +89,10 @@ describe("fetchGeomForPostal", () => {
 
     await expect(fetchGeomForPostal("560234")).resolves.toEqual(childRecord);
     expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/geom\/postal-prefix\/560\.json\?v=/),
+      { cache: "no-store" }
+    );
+    expect(fetchMock).not.toHaveBeenCalledWith(
       expect.stringMatching(/^\/data\/generated\/geom\/postal-index\.json\?v=/),
       { cache: "no-store" }
     );

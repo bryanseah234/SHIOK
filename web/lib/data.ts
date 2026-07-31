@@ -22,7 +22,8 @@ export const DATA_BASE = normalizeDataBase(process.env.NEXT_PUBLIC_DATA_BASE);
 const DATA_FETCH_VERSION = `${dataBundle.bundle}-${Date.now().toString(36)}`;
 
 import type { ScoreRecord, PostalGeom, Manifest, TransitPoiCollection } from "./types";
-import { latLngToCell } from "h3-js";
+import { gridDisk, latLngToCell } from "h3-js";
+import { decodePolyline } from "./polyline";
 
 type GeomIndex = Record<string, string[]>;
 type GeomPostalIndex = Record<string, string>;
@@ -93,7 +94,9 @@ let _areaIndex: Record<string, string[]> | null = null;
 let _scorePrefixIndex: ScorePrefixIndex | null | undefined;
 let _geomIndex: GeomIndex | null = null;
 let _geomPostalIndex: GeomPostalIndex | null = null;
+const _geomPostalPrefixIndexes = new Map<string, GeomPostalIndex | null>();
 let _transitPois: TransitPoiCollection | null = null;
+const _transitPoiShards = new Map<string, TransitPoiCollection | null>();
 
 async function getAreaIndex(): Promise<Record<string, string[]>> {
   if (_areaIndex) return _areaIndex;
@@ -158,6 +161,18 @@ async function getGeomPostalIndex(): Promise<GeomPostalIndex | null> {
   }
 }
 
+async function getGeomPostalPrefixIndex(prefix: string): Promise<GeomPostalIndex | null> {
+  if (_geomPostalPrefixIndexes.has(prefix)) return _geomPostalPrefixIndexes.get(prefix)!;
+  try {
+    const payload = await fetchJson<GeomPostalIndex>(`geom/postal-prefix/${prefix}.json`);
+    _geomPostalPrefixIndexes.set(prefix, payload);
+    return payload;
+  } catch {
+    _geomPostalPrefixIndexes.set(prefix, null);
+    return null;
+  }
+}
+
 async function fetchGeomShard(shardId: string): Promise<PostalGeom[] | null> {
   try {
     return await fetchJson<PostalGeom[]>(`geom/h3/${shardId}.json`);
@@ -205,6 +220,14 @@ export async function fetchGeomForPostal(
     if (latLngMatch) return latLngMatch;
   }
 
+  const prefixIndex = await getGeomPostalPrefixIndex(postal.slice(0, 3));
+  const prefixShard = prefixIndex?.[postal];
+  if (prefixShard) {
+    const records = await fetchGeomShard(prefixShard);
+    const match = records?.find((r) => r.postal === postal);
+    if (match) return match;
+  }
+
   const postalIndex = await getGeomPostalIndex();
   const indexedShard = postalIndex?.[postal];
   if (indexedShard) {
@@ -214,4 +237,67 @@ export async function fetchGeomForPostal(
   }
 
   return null;
+}
+
+function emptyTransitPois(): TransitPoiCollection {
+  return { type: "FeatureCollection", features: [] };
+}
+
+function addRouteCells(cells: Set<string>, encoded: string | undefined) {
+  if (!encoded) return;
+  for (const [lat, lng] of decodePolyline(encoded)) {
+    const cell = latLngToCell(lat, lng, 8);
+    for (const nearby of gridDisk(cell, 1)) {
+      cells.add(nearby);
+    }
+  }
+}
+
+function transitCellsForGeom(geom: PostalGeom | null): string[] {
+  if (!geom) return [];
+  const cells = new Set<string>();
+  for (const encoded of geom.shortest_parts?.length ? geom.shortest_parts : [geom.shortest]) {
+    addRouteCells(cells, encoded);
+  }
+  for (const encoded of geom.sheltered_parts?.length ? geom.sheltered_parts : [geom.sheltered]) {
+    addRouteCells(cells, encoded);
+  }
+  for (const gap of geom.exposure_gaps || []) {
+    addRouteCells(cells, gap.geom);
+  }
+  return Array.from(cells).sort();
+}
+
+async function fetchTransitPoiShard(cell: string): Promise<TransitPoiCollection | null> {
+  if (_transitPoiShards.has(cell)) return _transitPoiShards.get(cell)!;
+  try {
+    const payload = await fetchJson<TransitPoiCollection>(`transit/h3/${cell}.json`);
+    _transitPoiShards.set(cell, payload);
+    return payload;
+  } catch {
+    _transitPoiShards.set(cell, null);
+    return null;
+  }
+}
+
+export async function fetchTransitPoisForGeom(
+  geom: PostalGeom | null
+): Promise<TransitPoiCollection> {
+  const cells = transitCellsForGeom(geom);
+  if (cells.length === 0) return emptyTransitPois();
+
+  const shards = await Promise.all(cells.map(fetchTransitPoiShard));
+  const seen = new Set<string>();
+  const features = [];
+  for (const shard of shards) {
+    for (const feature of shard?.features || []) {
+      const coordinates = feature.geometry?.coordinates?.join(",") || "";
+      const key = `${feature.properties?.kind}:${feature.properties?.id}:${coordinates}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      features.push(feature);
+    }
+  }
+
+  return { type: "FeatureCollection", features };
 }

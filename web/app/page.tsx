@@ -1,7 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-import { fetchGeomForPostal, fetchManifest, fetchScoreForPostal, fetchTransitPois } from "../lib/data";
+import React, { useMemo, useState } from "react";
+import {
+  fetchGeomForPostal,
+  fetchManifest,
+  fetchScoreForPostal,
+  fetchTransitPoisForGeom,
+} from "../lib/data";
 import type {
   Manifest,
   PostalGeom,
@@ -741,20 +746,6 @@ export default function Home() {
   const mapRouteMode = routeSame(activeSelection) ? "shiokest" : routeMode;
   const showDetailOverlay = Boolean(primary);
 
-  useEffect(() => {
-    let active = true;
-    fetchTransitPois()
-      .then((pois) => {
-        if (active) setTransitPois(pois);
-      })
-      .catch(() => {
-        if (active) setTransitPois({ type: "FeatureCollection", features: [] });
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
-
   const loadSelection = async (result: SearchResult) => {
     const postal = normalizePostal(result.POSTAL);
     if (!postal) {
@@ -763,6 +754,7 @@ export default function Home() {
     }
     setLoading(true);
     setError(null);
+    setTransitPois({ type: "FeatureCollection", features: [] });
     try {
       const lat = Number.parseFloat(result.LATITUDE);
       const lng = Number.parseFloat(result.LONGITUDE);
@@ -771,8 +763,10 @@ export default function Home() {
         fetchScoreForPostal(postal),
         fetchGeomForPostal(postal, Number.isFinite(lat) ? lat : undefined, Number.isFinite(lng) ? lng : undefined),
       ]);
+      const nearbyTransitPois = await fetchTransitPoisForGeom(geom);
       setManifest(loadedManifest);
       setPrimary({ result: { ...result, POSTAL: postal }, score, geom });
+      setTransitPois(nearbyTransitPois);
       setTransitMode("best_transit");
       setRouteMode("shiokest");
       setFeedbackEnabled(false);
