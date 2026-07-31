@@ -5,6 +5,7 @@ param(
     [int]$Workers = 4,
     [int]$ChunkSize = 500,
     [string]$Stamp = "",
+    [string]$ResumeRunRoot = "",
     [string]$PostalUniverse = "processed\postal_universe_candidate_full_registered_geocoded.parquet",
     [string]$Network = "processed\network_island.parquet"
 )
@@ -21,16 +22,34 @@ if ($Workers -lt 1 -or $Workers -gt 8) {
 if ($ChunkSize -lt 1) {
     throw "ChunkSize must be positive."
 }
-if (-not $Stamp) {
-    $Stamp = Get-Date -Format "yyyyMMdd_HHmmss"
-}
-if ($Stamp -notmatch '^[0-9]{8}_[0-9]{6}$') {
-    throw "Stamp must match yyyyMMdd_HHmmss."
-}
-
 $UniversePath = Join-Path $RepoRoot $PostalUniverse
 $NetworkPath = Join-Path $RepoRoot $Network
-$RunRoot = Join-Path $RepoRoot "processed\score_batches\full_rescore_$Stamp"
+$ResumeMode = [bool]$ResumeRunRoot
+
+if ($ResumeMode) {
+    $ResolvedResumeRunRoot = if ([System.IO.Path]::IsPathRooted($ResumeRunRoot)) {
+        Resolve-Path $ResumeRunRoot
+    }
+    else {
+        Resolve-Path (Join-Path $RepoRoot $ResumeRunRoot)
+    }
+    $RunRoot = $ResolvedResumeRunRoot.Path
+    $RunName = Split-Path $RunRoot -Leaf
+    if ($RunName -notmatch '^full_rescore_([0-9]{8}_[0-9]{6})$') {
+        throw "ResumeRunRoot must point to a full_rescore_yyyyMMdd_HHmmss directory: $RunRoot"
+    }
+    $Stamp = $Matches[1]
+}
+else {
+    if (-not $Stamp) {
+        $Stamp = Get-Date -Format "yyyyMMdd_HHmmss"
+    }
+    if ($Stamp -notmatch '^[0-9]{8}_[0-9]{6}$') {
+        throw "Stamp must match yyyyMMdd_HHmmss."
+    }
+    $RunRoot = Join-Path $RepoRoot "processed\score_batches\full_rescore_$Stamp"
+}
+
 $PartitionDir = Join-Path $RunRoot "partitions"
 $LogDir = Join-Path $RunRoot "logs"
 $CombinedDir = Join-Path $RunRoot "combined"
@@ -41,14 +60,16 @@ $BundleConfig = Join-Path $RepoRoot "web\data-bundle.json"
 
 if (-not (Test-Path $UniversePath)) { throw "Postal universe not found: $UniversePath" }
 if (-not (Test-Path $NetworkPath)) { throw "Network not found: $NetworkPath" }
-if (Test-Path $RunRoot) { throw "Run directory already exists: $RunRoot" }
+if ((Test-Path $RunRoot) -and -not $ResumeMode) { throw "Run directory already exists: $RunRoot" }
+if ($ResumeMode -and -not (Test-Path $RunRoot)) { throw "Run directory not found: $RunRoot" }
 if (Test-Path $ExportDir) { throw "Export bundle already exists: $ExportDir" }
 
 New-Item -ItemType Directory -Force -Path $PartitionDir, $LogDir, $CombinedChunksDir | Out-Null
 
 Push-Location $RepoRoot
 try {
-    $partitionScript = @"
+    if (-not $ResumeMode) {
+        $partitionScript = @"
 from pathlib import Path
 import sys
 import pandas as pd
@@ -65,16 +86,22 @@ for index in range(workers):
     part.to_parquet(part_path, index=False)
     print(f"{part_path} rows={len(part)} ready={(part['status'] == 'READY_TO_SCORE').sum()}")
 "@
-    $partitionScript | uv run python - $UniversePath $PartitionDir $Workers
-    if ($LASTEXITCODE -ne 0) { throw "partitioning failed" }
+        $partitionScript | uv run python - $UniversePath $PartitionDir $Workers
+        if ($LASTEXITCODE -ne 0) { throw "partitioning failed" }
+    }
+    else {
+        Write-Output "resuming_run_root=$RunRoot"
+    }
 
     $processes = @()
     for ($index = 1; $index -le $Workers; $index++) {
         $partName = "part{0:D2}_of{1:D2}.parquet" -f $index, $Workers
         $partPath = Join-Path $PartitionDir $partName
+        if (-not (Test-Path $partPath)) { throw "Missing partition for resume/run: $partPath" }
         $partOut = Join-Path $RunRoot ("part{0:D2}_of{1:D2}" -f $index, $Workers)
-        $stdout = Join-Path $LogDir ("part{0:D2}.out.log" -f $index)
-        $stderr = Join-Path $LogDir ("part{0:D2}.err.log" -f $index)
+        $logPrefix = if ($ResumeMode) { "resume_part{0:D2}" -f $index } else { "part{0:D2}" -f $index }
+        $stdout = Join-Path $LogDir "$logPrefix.out.log"
+        $stderr = Join-Path $LogDir "$logPrefix.err.log"
         $args = @(
             "run", "python", "run.py", "score-batch",
             "--postal-universe", $partPath,
