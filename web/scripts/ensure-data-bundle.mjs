@@ -27,6 +27,11 @@ function writeGzJson(path, payload) {
   writeFileSync(path, gzipSync(JSON.stringify(payload)));
 }
 
+function writeJsonAndGz(path, payload) {
+  writeJson(path, payload);
+  writeGzJson(`${path}.gz`, payload);
+}
+
 function writePostalPrefixShards(targetRoot, postalIndex) {
   const prefixes = new Map();
   for (const [postal, shard] of Object.entries(postalIndex || {})) {
@@ -106,13 +111,7 @@ async function downloadArtifact(remoteBase, targetRoot, relPath) {
 async function downloadJson(remoteBase, targetRoot, relPath) {
   const artifact = await fetchArtifact(remoteBase, relPath);
   const payload = JSON.parse(artifact.text);
-  if (artifact.relPath.endsWith(".gz")) {
-    const targetPath = join(targetRoot, artifact.relPath);
-    mkdirSync(dirname(targetPath), { recursive: true });
-    writeFileSync(targetPath, artifact.storageBytes);
-  } else {
-    writeJson(join(targetRoot, relPath), payload);
-  }
+  writeJsonAndGz(join(targetRoot, relPath), payload);
   return payload;
 }
 
