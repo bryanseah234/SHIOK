@@ -3,7 +3,9 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import shutil
 import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -59,16 +61,58 @@ def load_vercel_link(web_dir: Path) -> dict[str, Any]:
     return {"linked": False, "path": None, "payload": None}
 
 
-def deploy_command(web_dir: Path) -> list[str]:
+def deploy_command(source_dir: Path) -> list[str]:
     return [
         command_name("vercel"),
         "deploy",
-        str(web_dir.parent),
+        str(source_dir),
         "--prod",
         "--archive=tgz",
         "--yes",
         "--no-wait",
     ]
+
+
+def copy_path(src: Path, dst: Path) -> None:
+    if src.is_dir():
+        shutil.copytree(src, dst)
+    else:
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+
+
+def prepare_vercel_source(web_dir: Path, data_dir: Path) -> Path:
+    data_dir = data_dir.resolve()
+    web_dir = web_dir.resolve()
+    bundle = data_dir.name
+    stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    stage_root = PROJECT_ROOT / "tmp" / f"vercel_source_{bundle}_{stamp}"
+    stage_web = stage_root / "web"
+    stage_web.mkdir(parents=True, exist_ok=False)
+
+    root_vercel = web_dir.parent / ".vercel"
+    web_vercel = web_dir / ".vercel"
+    if root_vercel.is_dir():
+        copy_path(root_vercel, stage_root / ".vercel")
+    elif web_vercel.is_dir():
+        copy_path(web_vercel, stage_root / ".vercel")
+
+    skip_web_names = {".next", ".vercel", "node_modules", "public"}
+    for child in web_dir.iterdir():
+        if child.name in skip_web_names:
+            continue
+        copy_path(child, stage_web / child.name)
+
+    public_src = web_dir / "public"
+    public_dst = stage_web / "public"
+    if public_src.is_dir():
+        for child in public_src.iterdir():
+            if child.name == "data":
+                continue
+            copy_path(child, public_dst / child.name)
+
+    copy_path(data_dir, public_dst / "data" / bundle)
+    return stage_root
 
 
 def summarize_audit(command_report: dict[str, Any]) -> dict[str, Any]:
@@ -97,7 +141,7 @@ def publish_preflight(
         "validation": validation_report,
         "vercel": load_vercel_link(web_dir),
         "checks": {},
-        "deploy_command": deploy_command(web_dir),
+        "deploy_command": deploy_command(web_dir.parent),
         "deploy_executed": False,
     }
 
@@ -155,7 +199,10 @@ def publish_production(
         report["errors"] = ["production deploy requires --confirm-production"]
         return False, report
 
-    result = run_command(deploy_command(web_dir), cwd=web_dir.parent)
+    stage_dir = prepare_vercel_source(web_dir, input_dir)
+    report["deploy_source_dir"] = str(stage_dir)
+    report["deploy_command"] = deploy_command(stage_dir)
+    result = run_command(deploy_command(stage_dir), cwd=stage_dir)
     report["deploy_executed"] = True
     report["deploy_result"] = result
     report["ok"] = result["ok"]

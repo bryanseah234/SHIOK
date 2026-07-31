@@ -4,7 +4,7 @@ from pathlib import Path
 from tests.test_export import sample_record
 
 from pipeline.export import export_static_artifacts
-from pipeline.publish import deploy_command, publish_preflight
+from pipeline.publish import deploy_command, prepare_vercel_source, publish_preflight
 
 
 def linked_web_dir(tmp_path: Path) -> Path:
@@ -56,12 +56,31 @@ def test_publish_preflight_accepts_valid_artifacts_and_link_without_external_che
 
 
 def test_deploy_command_is_production_archive_no_wait():
-    command = deploy_command(Path("web"))
+    command = deploy_command(Path("source"))
 
     assert Path(command[0]).name in {"vercel", "vercel.cmd"}
     assert command[1] == "deploy"
-    assert command[2] == "."
+    assert command[2] == "source"
     assert "--prod" in command
     assert "--archive=tgz" in command
     assert "--yes" in command
     assert "--no-wait" in command
+
+
+def test_prepare_vercel_source_copies_only_selected_bundle(tmp_path: Path, monkeypatch):
+    monkeypatch.setattr("pipeline.publish.PROJECT_ROOT", tmp_path)
+    web_dir = linked_web_dir(tmp_path)
+    (web_dir / "app").mkdir()
+    (web_dir / "app" / "page.tsx").write_text("export default function Page() { return null }")
+    (web_dir / "public" / "data" / "old_bundle").mkdir(parents=True)
+    (web_dir / "public" / "data" / "old_bundle" / "manifest.json").write_text("{}")
+    data_dir = web_dir / "public" / "data" / "selected_bundle"
+    data_dir.mkdir(parents=True)
+    (data_dir / "manifest.json").write_text("{}")
+
+    stage = prepare_vercel_source(web_dir, data_dir)
+
+    assert (stage / ".vercel" / "project.json").is_file()
+    assert (stage / "web" / "app" / "page.tsx").is_file()
+    assert (stage / "web" / "public" / "data" / "selected_bundle" / "manifest.json").is_file()
+    assert not (stage / "web" / "public" / "data" / "old_bundle").exists()
