@@ -235,6 +235,8 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
     tunnel = text_value(edge.get("tunnel")).lower()
     indoor = text_value(edge.get("indoor")).lower()
     location = text_value(edge.get("location")).lower()
+    shelter = text_value(edge.get("shelter")).lower()
+    weather_protection = text_value(edge.get("weather_protection")).lower()
 
     if "audited_shelter_correction" in {source_layer, highway}:
         return "audited_shelter_correction"
@@ -251,13 +253,25 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
         return "inferred_hdb_void_deck"
     if "covered_linkway" in source_layer:
         return "lta_covered_linkway"
-    if indoor in {"yes", "building_passage"} or covered in {
-        "yes",
-        "covered",
-        "arcade",
-        "colonnade",
-        "building_passage",
-    }:
+    if (
+        indoor in {"yes", "building_passage"}
+        or covered
+        in {
+            "yes",
+            "covered",
+            "arcade",
+            "colonnade",
+            "building_passage",
+        }
+        or shelter in {"yes", "roof", "covered", "canopy"}
+        or weather_protection
+        in {
+            "yes",
+            "roof",
+            "covered",
+            "canopy",
+        }
+    ):
         return "osm_covered"
     if location == "indoor":
         return "osm_covered"

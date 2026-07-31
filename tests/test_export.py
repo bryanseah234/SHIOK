@@ -34,6 +34,10 @@ def test_route_edge_source_class_uses_osm_location_provenance():
         == "bridge_underpass"
     )
     assert route_edge_source_class({"is_covered": True, "location": "indoor"}) == "osm_covered"
+    assert route_edge_source_class({"is_covered": True, "shelter": "yes"}) == "osm_covered"
+    assert (
+        route_edge_source_class({"is_covered": True, "weather_protection": "yes"}) == "osm_covered"
+    )
 
 
 def test_route_edge_source_class_labels_direct_bus_fallback():

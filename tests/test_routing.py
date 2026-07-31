@@ -136,3 +136,41 @@ def test_routing_exports_shortest_and_sheltered_path_edges_with_geometry():
     assert [edge["is_covered"] for edge in result["shortest_path_edges"]] == [False, False]
     assert [edge["is_covered"] for edge in result["sheltered_path_edges"]] == [True, True, True]
     assert result["path_edges"] == result["sheltered_path_edges"]
+
+
+def test_routing_preserves_pedestrian_qa_metadata_on_path_edges():
+    edges_dict = {
+        "u": [(0.0, 0.0)],
+        "v": [(10.0, 0.0)],
+        "length_m": [10.0],
+        "is_covered": [0],
+        "geometry": [LineString([(0, 0), (10, 0)])],
+        "access": ["yes"],
+        "foot": ["designated"],
+        "foot:conditional": ["no @ (construction)"],
+        "footway": ["crossing"],
+        "sidewalk": ["both"],
+        "crossing": ["traffic_signals"],
+        "crossing:markings": ["zebra"],
+        "traffic_calming": ["table"],
+        "shelter": ["no"],
+        "weather_protection": ["no"],
+        "name": ["Test Walk"],
+    }
+
+    result = RoutingGraph.from_edges_dict(edges_dict).route({(0.0, 0.0): [(10.0, 0.0)]}, 0.6, 1.25)[
+        0
+    ]
+    edge = result["path_edges"][0]
+
+    assert edge["access"] == "yes"
+    assert edge["foot"] == "designated"
+    assert edge["foot:conditional"] == "no @ (construction)"
+    assert edge["footway"] == "crossing"
+    assert edge["sidewalk"] == "both"
+    assert edge["crossing"] == "traffic_signals"
+    assert edge["crossing:markings"] == "zebra"
+    assert edge["traffic_calming"] == "table"
+    assert edge["shelter"] == "no"
+    assert edge["weather_protection"] == "no"
+    assert edge["name"] == "Test Walk"

@@ -71,6 +71,29 @@ OSM_COVERED_TAG_VALUES = {"yes", "covered", "arcade", "colonnade", "building_pas
 OSM_TUNNEL_COVERED_VALUES = {"yes", "building_passage"}
 OSM_INDOOR_COVERED_VALUES = {"yes", "building_passage"}
 OSM_LOCATION_COVERED_VALUES = {"underground", "indoor"}
+OSM_SHELTER_NEGATIVE_VALUES = {"0", "false", "no", "none"}
+OSM_NETWORK_EXTRA_ATTRIBUTES = [
+    "access",
+    "bridge",
+    "covered",
+    "crossing",
+    "crossing:markings",
+    "foot",
+    "foot:conditional",
+    "footway",
+    "indoor",
+    "layer",
+    "level",
+    "location",
+    "name",
+    "service",
+    "shade",
+    "shelter",
+    "sidewalk",
+    "traffic_calming",
+    "tunnel",
+    "weather_protection",
+]
 OSM_EXPLICIT_SHELTER_QUERY_KEYS = (
     "amenity",
     "building:part",
@@ -79,6 +102,7 @@ OSM_EXPLICIT_SHELTER_QUERY_KEYS = (
     "public_transport",
     "shelter",
     "shelter_type",
+    "weather_protection",
 )
 OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS = [
     "amenity",
@@ -89,6 +113,7 @@ OSM_EXPLICIT_SHELTER_TAGS_AS_COLUMNS = [
     "public_transport",
     "shelter",
     "shelter_type",
+    "weather_protection",
 ]
 OSM_SHELTER_YES_VALUES = {"yes", "roof", "covered", "canopy"}
 HDB_PRECINCT_COVERED_HIGHWAYS = {
@@ -121,7 +146,19 @@ def native_osm_covered_mask(edges_gdf: gpd.GeoDataFrame) -> pd.Series:
     mask |= tunnel.isin(OSM_TUNNEL_COVERED_VALUES)
     mask |= indoor.isin(OSM_INDOOR_COVERED_VALUES)
     mask |= location.isin(OSM_LOCATION_COVERED_VALUES)
-    return mask
+    return mask & ~osm_shelter_negative_mask(edges_gdf)
+
+
+def osm_shelter_negative_mask(frame: gpd.GeoDataFrame) -> pd.Series:
+    """Return OSM features explicitly tagged as not sheltered."""
+    covered = normalized_text_series(frame, "covered")
+    shelter = normalized_text_series(frame, "shelter")
+    weather_protection = normalized_text_series(frame, "weather_protection")
+    return (
+        covered.isin(OSM_SHELTER_NEGATIVE_VALUES)
+        | shelter.isin(OSM_SHELTER_NEGATIVE_VALUES)
+        | weather_protection.isin(OSM_SHELTER_NEGATIVE_VALUES)
+    )
 
 
 def find_raw_file(pattern: str) -> Path | None:
@@ -373,6 +410,7 @@ def apply_polygon_coverage_attribution(
     buffer_m: float = 3.0,
     label: str,
     overwrite_sources: set[str] | None = None,
+    exclude_mask: pd.Series | None = None,
 ) -> tuple[pd.Series, float]:
     """Mark graph edges covered by source polygons and preserve why they are covered."""
     match_ratio = compute_polygon_match_ratio(
@@ -382,6 +420,9 @@ def apply_polygon_coverage_attribution(
         label=label,
     )
     match_mask = match_ratio >= ratio_threshold
+    if exclude_mask is not None:
+        aligned_exclude = exclude_mask.reindex(edges_gdf.index, fill_value=False).astype(bool)
+        match_mask = match_mask & ~aligned_exclude
     if not bool(match_mask.any()):
         return match_mask, 0.0
 
@@ -415,6 +456,7 @@ def apply_hdb_precinct_footway_coverage(
     *,
     footprint_buffer_m: float = 14.0,
     min_match_ratio: float = 0.70,
+    exclude_mask: pd.Series | None = None,
 ) -> tuple[pd.Series, dict[str, object]]:
     """Mark existing pedestrian graph edges that sit inside HDB precinct shelter buffers.
 
@@ -438,6 +480,10 @@ def apply_hdb_precinct_footway_coverage(
 
     highway = edges_gdf["highway"].fillna("").astype(str).str.strip().str.lower()
     eligible_mask = highway.isin(HDB_PRECINCT_COVERED_HIGHWAYS)
+    if exclude_mask is not None:
+        eligible_mask = eligible_mask & ~exclude_mask.reindex(
+            edges_gdf.index, fill_value=False
+        ).astype(bool)
     report["eligible_edge_count"] = int(eligible_mask.sum())
     if not bool(eligible_mask.any()):
         return empty_mask, report
@@ -487,6 +533,7 @@ def apply_hdb_point_footway_coverage(
     *,
     point_buffer_m: float = 18.0,
     min_match_ratio: float = 0.65,
+    exclude_mask: pd.Series | None = None,
 ) -> tuple[pd.Series, dict[str, object]]:
     """Fallback HDB coverage for existing pedestrian edges near official HDB points.
 
@@ -511,6 +558,10 @@ def apply_hdb_point_footway_coverage(
 
     highway = edges_gdf["highway"].fillna("").astype(str).str.strip().str.lower()
     eligible_mask = highway.isin(HDB_PRECINCT_COVERED_HIGHWAYS)
+    if exclude_mask is not None:
+        eligible_mask = eligible_mask & ~exclude_mask.reindex(
+            edges_gdf.index, fill_value=False
+        ).astype(bool)
     report["eligible_edge_count"] = int(eligible_mask.sum())
     if not bool(eligible_mask.any()):
         return empty_mask, report
@@ -821,17 +872,20 @@ def explicit_osm_shelter_feature_mask(features: gpd.GeoDataFrame) -> pd.Series:
     public_transport = normalized_text_series(features, "public_transport")
     shelter = normalized_text_series(features, "shelter")
     shelter_type = normalized_text_series(features, "shelter_type")
+    weather_protection = normalized_text_series(features, "weather_protection")
 
-    return (
+    positive = (
         amenity.eq("shelter")
         | building_part.eq("roof")
         | covered.isin(OSM_COVERED_TAG_VALUES)
         | man_made.eq("canopy")
         | shelter.isin(OSM_SHELTER_YES_VALUES)
         | shelter_type.ne("")
+        | weather_protection.isin(OSM_SHELTER_YES_VALUES)
         | (public_transport.eq("platform") & shelter.isin(OSM_SHELTER_YES_VALUES))
         | (highway.eq("bus_stop") & shelter.isin(OSM_SHELTER_YES_VALUES))
     )
+    return positive & ~osm_shelter_negative_mask(features)
 
 
 def prepare_osm_explicit_shelter_geometries(
@@ -1364,7 +1418,7 @@ def run_build(scope: str = "pilot"):
     nodes, edges = osm.get_network(
         nodes=True,
         network_type="walking",
-        extra_attributes=["covered", "tunnel", "indoor", "layer", "level", "location"],
+        extra_attributes=OSM_NETWORK_EXTRA_ATTRIBUTES,
     )
     print(f"Loaded OSM walking network: nodes={len(nodes)}, edges={len(edges)}")
     try:
@@ -1393,6 +1447,7 @@ def run_build(scope: str = "pilot"):
             edges = edges[~edges["highway"].isin(exclude)]
 
     edges_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
+    osm_negative_shelter_mask = osm_shelter_negative_mask(edges_gdf)
     graph_nodes_gdf = graph_nodes_from_edges(edges_gdf)
     print(f"Filtered OSM walking edges: {len(edges_gdf)}")
     print(f"Filtered OSM graph nodes from retained edges: {len(graph_nodes_gdf)}")
@@ -1632,6 +1687,7 @@ def run_build(scope: str = "pilot"):
         ratio_threshold=0.50,
         buffer_m=3.0,
         label="OSM roof/canopy",
+        exclude_mask=osm_negative_shelter_mask,
     )
     explicit_shelter_match_mask, explicit_shelter_match_edge_length = (
         apply_polygon_coverage_attribution(
@@ -1641,6 +1697,7 @@ def run_build(scope: str = "pilot"):
             ratio_threshold=0.50,
             buffer_m=0.5,
             label="OSM explicit shelter",
+            exclude_mask=osm_negative_shelter_mask,
         )
     )
     print(
@@ -1654,6 +1711,7 @@ def run_build(scope: str = "pilot"):
     _hdb_footway_mask, hdb_footway_report = apply_hdb_precinct_footway_coverage(
         edges_gdf,
         hdb_footprints_gdf,
+        exclude_mask=osm_negative_shelter_mask,
     )
     hdb_footway_length_m = report_float(hdb_footway_report, "length_m")
     print(
@@ -1665,6 +1723,7 @@ def run_build(scope: str = "pilot"):
     _hdb_point_footway_mask, hdb_point_footway_report = apply_hdb_point_footway_coverage(
         edges_gdf,
         hdb_points_gdf,
+        exclude_mask=osm_negative_shelter_mask,
     )
     hdb_point_footway_length_m = report_float(hdb_point_footway_report, "length_m")
     print(

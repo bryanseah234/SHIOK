@@ -20,11 +20,23 @@ EDGE_METADATA_COLUMNS = [
     "shade_confidence",
     "covered",
     "highway",
+    "access",
     "bridge",
+    "crossing",
+    "crossing:markings",
+    "foot",
+    "foot:conditional",
     "tunnel",
     "indoor",
     "location",
     "footway",
+    "name",
+    "service",
+    "shade",
+    "shelter",
+    "sidewalk",
+    "traffic_calming",
+    "weather_protection",
 ]
 
 
