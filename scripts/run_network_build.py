@@ -1272,7 +1272,6 @@ def run_build(scope: str = "pilot"):
             edges = edges[~edges["highway"].isin(exclude)]
 
     edges_gdf = gpd.GeoDataFrame(edges, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
-    nodes_gdf = gpd.GeoDataFrame(nodes, geometry="geometry", crs="EPSG:4326").to_crs(epsg=3414)
     graph_nodes_gdf = graph_nodes_from_edges(edges_gdf)
     print(f"Filtered OSM walking edges: {len(edges_gdf)}")
     print(f"Filtered OSM graph nodes from retained edges: {len(graph_nodes_gdf)}")
@@ -1884,7 +1883,11 @@ def run_build(scope: str = "pilot"):
     synth_edge_split_points: dict[object, list[Point]] = {}
     unsnapped_count = 0
     needs_manual_count = 0
-    nodes_sindex = nodes_gdf.sindex
+    # Snap synthesized shelter endpoints only to nodes that exist in the current
+    # routable graph. Raw OSM nodes can sit mid-edge after filtering; those must
+    # use the edge-snap path so the host edge is split into a real route node.
+    snap_nodes_gdf = graph_nodes_from_edges(edges_gdf)
+    nodes_sindex = snap_nodes_gdf.sindex
     edges_sindex = edges_gdf.sindex
 
     synth_candidates = lta_gdf[lta_gdf["class"].isin(["OFFSET", "UNREPRESENTED-surface"])]
@@ -1913,10 +1916,10 @@ def run_build(scope: str = "pilot"):
 
             # If nodes are too far, try to snap to nearest edge and project
             p_nearest_s, d_s_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=cap
+                snap_nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=cap
             )
             p_nearest_e, d_e_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=cap
+                snap_nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=cap
             )
             p_edge_s, d_s_edge, edge_idx_s = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, start_pt, max_distance=cap
@@ -1972,10 +1975,10 @@ def run_build(scope: str = "pilot"):
             node_snap_m = 4.0 if is_bridge_underpass else 2.0
             edge_snap_m = 8.0 if is_bridge_underpass else 5.0
             p_nearest_s, d_s_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=node_snap_m
+                snap_nodes_gdf.geometry, nodes_sindex, start_pt, max_distance=node_snap_m
             )
             p_nearest_e, d_e_node = nearest_point_on_geometry(
-                nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=node_snap_m
+                snap_nodes_gdf.geometry, nodes_sindex, end_pt, max_distance=node_snap_m
             )
             p_edge_s, d_s_edge, edge_idx_s = nearest_point_and_index_on_geometry(
                 edges_gdf.geometry, edges_sindex, start_pt, max_distance=edge_snap_m
