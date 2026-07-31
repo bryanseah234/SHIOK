@@ -98,6 +98,12 @@ Current implementation:
   to transit.
 - The line geometry is explicitly `direct_bus_fallback_unrouted`; rain, heat,
   and crossing subscores remain null.
+- A wider 2026-08-01 bounded QA sample rescored 128 selected records, including
+  126 prior `NO_TRANSIT_IN_RANGE` records plus `560231`/`560234` controls.
+  Result: 62 of 126 no-transit records converted to `SCORED_PARTIAL`, 64
+  remained `NO_TRANSIT_IN_RANGE`, and both controls remained `SCORED`. This is
+  evidence for a broader targeted refresh, not a substitute for the full bundle
+  rescore.
 
 ## Actual Bus Arrivals
 
