@@ -203,6 +203,22 @@ tested:
 - Tree canopy / Leaf Area Index.
 - Building shadow by time of day.
 
+2026-08-01 AMK/Mayflower user-route audit:
+
+- Reran `qa/user_feedback_amk_20260730T090609Z.json` against
+  `processed/network_island.parquet` at both 50 m and 100 m search radii.
+- Both radii produced the same 32-segment classification:
+  - 22 `covered_evidence_nearby_check_connectivity_or_snap`
+  - 6 `hdb_void_deck_evidence_nearby_check_connectivity`
+  - 3 `bridge_underpass_evidence_nearby_check_endpoint_snap`
+  - 1 `user_marked_exposed_no_shelter_expected`
+- For `560231` -> Mayflower MRT Exit 5, the production MRT/LRT route is still
+  426 m and 31% sheltered. Best transit correctly chooses a nearer bus stop,
+  but that can hide the Mayflower MRT false-negative from the default view.
+- Diagnosis: source evidence is nearby; next fix should target graph
+  connectivity/snap behavior for covered/HDB/bridge evidence, not a
+  postal-specific score override.
+
 ## Human Feedback Loop
 
 Add a static-first "Suggest better route" flow:
