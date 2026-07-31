@@ -61,6 +61,8 @@ export interface PostalGeom {
   postal: string;
   shortest: string;
   sheltered: string;
+  shortest_parts?: string[];
+  sheltered_parts?: string[];
   exposure_gaps: GeomGap[];
   route_segments?: {
     shortest?: RouteSegment[];

@@ -85,6 +85,18 @@ def geometry_to_lat_lon_pairs(geometry: Any) -> list[tuple[float, float]]:
     return pairs
 
 
+def geometry_line_parts(geometry: Any) -> list[Any]:
+    if isinstance(geometry, str):
+        geometry = shapely_wkt.loads(geometry)
+    if geometry is None or getattr(geometry, "is_empty", True):
+        return []
+    if geometry.geom_type == "LineString":
+        return [geometry]
+    if geometry.geom_type == "MultiLineString":
+        return list(geometry.geoms)
+    return []
+
+
 def encode_signed_polyline_value(value: int) -> str:
     shifted = value << 1
     if value < 0:
@@ -116,6 +128,14 @@ def encode_geometry(geometry: Any) -> str:
     return encode_polyline(geometry_to_lat_lon_pairs(geometry))
 
 
+def encode_geometry_parts(geometry: Any) -> list[str]:
+    return [
+        encoded
+        for encoded in (encode_geometry(part) for part in geometry_line_parts(geometry))
+        if encoded
+    ]
+
+
 def merged_geometry(edges: list[dict[str, Any]]) -> Any:
     geometries = []
     for edge in edges:
@@ -144,13 +164,32 @@ def exposure_gap_geometries(record: dict[str, Any]) -> list[dict[str, Any]]:
         length_m = sum(float(edge["length_m"]) for edge in current_edges)
         public_gap = public_gaps[gap_index] if gap_index < len(public_gaps) else {}
         geometry = merged_geometry(current_edges)
-        gaps.append(
-            {
-                "geom": encode_geometry(geometry),
-                "len_m": round(float(public_gap.get("len_m", length_m)), 1),
-                "label": str(public_gap.get("label", "exposed gap")),
-            }
-        )
+        parts = geometry_line_parts(geometry)
+        if not parts:
+            current_edges.clear()
+            gap_index += 1
+            return
+        if len(parts) == 1:
+            gaps.append(
+                {
+                    "geom": encode_geometry(parts[0]),
+                    "len_m": round(float(public_gap.get("len_m", length_m)), 1),
+                    "label": str(public_gap.get("label", "exposed gap")),
+                }
+            )
+        else:
+            for part_index, part in enumerate(parts):
+                encoded = encode_geometry(part)
+                if not encoded:
+                    continue
+                gaps.append(
+                    {
+                        "geom": encoded,
+                        "len_m": round(float(part.length), 1),
+                        "label": str(public_gap.get("label", "exposed gap")),
+                        "part_index": part_index,
+                    }
+                )
         current_edges.clear()
         gap_index += 1
 
@@ -175,16 +214,22 @@ def route_segment_geometries(edges: list[dict[str, Any]]) -> list[dict[str, Any]
             current_covered = None
             return
         geometry = merged_geometry(current_edges)
-        encoded = encode_geometry(geometry)
-        if encoded:
+        parts = geometry_line_parts(geometry)
+        for part_index, part in enumerate(parts):
+            encoded = encode_geometry(part)
+            if not encoded:
+                continue
+            part_len_m = (
+                sum(float(edge.get("length_m", 0.0)) for edge in current_edges)
+                if len(parts) == 1
+                else float(part.length)
+            )
             segments.append(
                 {
                     "geom": encoded,
-                    "len_m": round(
-                        sum(float(edge.get("length_m", 0.0)) for edge in current_edges),
-                        1,
-                    ),
+                    "len_m": round(part_len_m, 1),
                     "is_covered": current_covered,
+                    "part_index": part_index,
                 }
             )
         current_edges.clear()
@@ -214,12 +259,18 @@ def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
     sheltered = encode_geometry(geometry_payload.get("sheltered"))
     if not shortest or not sheltered:
         return None
+    shortest_parts = encode_geometry_parts(geometry_payload.get("shortest"))
+    sheltered_parts = encode_geometry_parts(geometry_payload.get("sheltered"))
     output: dict[str, Any] = {
         "postal": record["postal"],
         "shortest": shortest,
         "sheltered": sheltered,
         "exposure_gaps": exposure_gap_geometries(record),
     }
+    if len(shortest_parts) > 1:
+        output["shortest_parts"] = shortest_parts
+    if len(sheltered_parts) > 1:
+        output["sheltered_parts"] = sheltered_parts
     shortest_segments = route_segment_geometries(geometry_payload.get("shortest_path_edges", []))
     sheltered_segments = route_segment_geometries(
         geometry_payload.get("sheltered_path_edges", geometry_payload.get("exposure_gap_edges", []))

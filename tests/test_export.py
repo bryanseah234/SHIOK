@@ -1,13 +1,15 @@
 import json
 from pathlib import Path
 
-from shapely.geometry import LineString
+from shapely.geometry import LineString, MultiLineString
 
 from pipeline.export import (
     build_transit_poi_collection,
     encode_polyline,
     export_static_artifacts,
+    geom_record,
     load_score_batch_records,
+    route_segment_geometries,
     slugify_area,
     validate_export_batch_args,
     validate_static_artifacts,
@@ -125,6 +127,43 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
         assert geom_record["route_segments"]["shortest"][0]["is_covered"] is False
         assert geom_record["route_segments"]["shortest"][1]["is_covered"] is True
         assert geom_record["route_segments"]["sheltered"][0]["len_m"] == 50.0
+
+
+def test_route_segments_split_disjoint_multiline_parts_without_fake_connector():
+    segments = route_segment_geometries(
+        [
+            {
+                "length_m": 10.0,
+                "is_covered": True,
+                "geometry": LineString([(0, 0), (10, 0)]),
+            },
+            {
+                "length_m": 10.0,
+                "is_covered": True,
+                "geometry": LineString([(100, 0), (110, 0)]),
+            },
+        ]
+    )
+
+    assert len(segments) == 2
+    assert all(segment["is_covered"] is True for segment in segments)
+    assert all(segment["len_m"] == 10.0 for segment in segments)
+    assert segments[0]["geom"] != segments[1]["geom"]
+
+
+def test_geom_record_emits_multiline_route_parts_for_fallback_rendering():
+    record = sample_record("560231")
+    record["_geometry"]["shortest"] = MultiLineString(
+        [
+            LineString([(28000.0, 35000.0), (28010.0, 35000.0)]),
+            LineString([(28100.0, 35000.0), (28110.0, 35000.0)]),
+        ]
+    )
+
+    output = geom_record(record)
+
+    assert output is not None
+    assert len(output["shortest_parts"]) == 2
 
 
 def test_build_transit_poi_collection_exports_mrt_and_bus_points():

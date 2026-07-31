@@ -29,6 +29,11 @@ function toLngLat(encoded: string): LngLat[] {
   return decodePolyline(encoded).map(([lat, lng]) => [lng, lat]);
 }
 
+function toLngLatParts(encodedParts: string[] | undefined, fallback: string): LngLat[][] {
+  const source = encodedParts && encodedParts.length > 0 ? encodedParts : [fallback];
+  return source.map(toLngLat).filter((coordinates) => coordinates.length > 0);
+}
+
 function lineFeature(
   coordinates: LngLat[],
   properties: Record<string, string | number>
@@ -50,7 +55,7 @@ function emptyCollection(): LineStringFeatureCollection {
 function routeSegmentFeatures(
   segments: RouteSegment[] | undefined,
   kind: "shortest" | "sheltered",
-  fallbackCoordinates: LngLat[]
+  fallbackParts: LngLat[][]
 ): LineStringFeature[] {
   const features = (segments ?? [])
     .map((segment, index) =>
@@ -64,11 +69,12 @@ function routeSegmentFeatures(
     .filter((feature) => feature.geometry.coordinates.length > 0);
 
   if (features.length > 0) return features;
-  return [
-    lineFeature(fallbackCoordinates, {
+  return fallbackParts.map((coordinates, index) =>
+    lineFeature(coordinates, {
       kind,
-    }),
-  ];
+      part_index: index,
+    })
+  );
 }
 
 function boundsFor(points: LngLat[]): [LngLat, LngLat] | null {
@@ -82,17 +88,17 @@ function boundsFor(points: LngLat[]): [LngLat, LngLat] | null {
 }
 
 export function postalGeomToRouteGeoJson(geom: PostalGeom): RouteGeoJson {
-  const shortestCoords = toLngLat(geom.shortest);
-  const shelteredCoords = toLngLat(geom.sheltered);
+  const shortestParts = toLngLatParts(geom.shortest_parts, geom.shortest);
+  const shelteredParts = toLngLatParts(geom.sheltered_parts, geom.sheltered);
   const shortestFeatures = routeSegmentFeatures(
     geom.route_segments?.shortest,
     "shortest",
-    shortestCoords
+    shortestParts
   );
   const shelteredFeatures = routeSegmentFeatures(
     geom.route_segments?.sheltered,
     "sheltered",
-    shelteredCoords
+    shelteredParts
   );
   const gapFeatures = geom.exposure_gaps.map((gap, index) =>
     lineFeature(toLngLat(gap.geom), {
