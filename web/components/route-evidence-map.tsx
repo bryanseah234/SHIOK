@@ -487,56 +487,6 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
-  if (!map.getLayer("mrt-station-label")) {
-    map.addLayer({
-      id: "mrt-station-label",
-      type: "symbol",
-      source: "transit-pois",
-      minzoom: 11.5,
-      filter: ["==", ["get", "kind"], "mrt_station"],
-      layout: {
-        "text-field": ["get", "label"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 11.5, 9.5, 17, 12],
-        "text-offset": [0, 1.1],
-        "text-anchor": "top",
-        "text-allow-overlap": false,
-        "text-ignore-placement": false,
-        "text-optional": true,
-      },
-      paint: {
-        "text-color": "#1d3f60",
-        "text-halo-color": "#ffffff",
-        "text-halo-width": 1.4,
-        "text-halo-blur": 0.2,
-      },
-    });
-  }
-
-  if (!map.getLayer("bus-stop-label")) {
-    map.addLayer({
-      id: "bus-stop-label",
-      type: "symbol",
-      source: "transit-pois",
-      minzoom: 15.3,
-      filter: ["==", ["get", "kind"], "bus_stop"],
-      layout: {
-        "text-field": ["get", "name"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 15.3, 8.8, 18, 10.4],
-        "text-offset": [0, 0.9],
-        "text-anchor": "top",
-        "text-allow-overlap": false,
-        "text-ignore-placement": false,
-        "text-optional": true,
-      },
-      paint: {
-        "text-color": "#38564d",
-        "text-halo-color": "#ffffff",
-        "text-halo-width": 1.25,
-        "text-halo-blur": 0.15,
-      },
-    });
-  }
-
   if (!map.getLayer("transit-node-halo")) {
     map.addLayer({
       id: "transit-node-halo",
@@ -640,10 +590,8 @@ function pointCoordinates(event: maplibregl.MapLayerMouseEvent): LngLat | null {
 function bindPoiInteractions(map: maplibregl.Map, Popup: PopupConstructor) {
   for (const layerId of [
     "mrt-station-dot",
-    "mrt-station-label",
     "mrt-exit-dot",
     "bus-stop-dot",
-    "bus-stop-label",
   ]) {
     map.on("mouseenter", layerId, () => {
       map.getCanvas().style.cursor = "pointer";
