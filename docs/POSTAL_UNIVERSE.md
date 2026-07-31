@@ -1,6 +1,6 @@
 # Postal Universe Source Policy
 
-Last updated: 2026-07-31.
+Last updated: 2026-08-01.
 
 The project still does not have an authoritative free all-Singapore postal-code
 download from SingPost or SLA. `pipeline.postal_universe` therefore builds
@@ -41,12 +41,16 @@ coverage tradeoff.
 - needs geocode after bounded OneMap geocode: 319
 - bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
 
-Shipped bundle `generated_20260731_124456_gz2`
+Active shipped bundle `generated_20260801_direct_bus_targeted`
 
 - total score records: 124,032
 - `SCORED`: 112,880
-- `NO_TRANSIT_IN_RANGE`: 10,833
+- `SCORED_PARTIAL`: 67
+- `NO_TRANSIT_IN_RANGE`: 10,766
 - `NOT_YET_SCORED`: 319
+- targeted direct-bus refresh: 80 sampled prior `NO_TRANSIT_IN_RANGE` postals
+  were patched; 67 converted to `SCORED_PARTIAL` with a straight-line bus
+  estimate and untrusted rain/heat/crossing subscores left null.
 
 `uv run python run.py postal-universe --mode candidate_full_all --download-missing`
 

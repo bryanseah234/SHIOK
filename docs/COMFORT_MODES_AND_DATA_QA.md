@@ -89,6 +89,16 @@ Later refinement:
 - Keep direct-line fallback visible only as "nearby bus stop"; do not invent a
   sheltered routed walk if the graph cannot route it.
 
+Current implementation:
+
+- `generated_20260801_direct_bus_targeted` patches 80 sampled prior
+  `NO_TRANSIT_IN_RANGE` records with the direct-bus fallback.
+- 67 records now emit `SCORED_PARTIAL` when DataMall has a bus stop with
+  service headway evidence within 300 m direct radius but the graph cannot route
+  to transit.
+- The line geometry is explicitly `direct_bus_fallback_unrouted`; rain, heat,
+  and crossing subscores remain null.
+
 ## Actual Bus Arrivals
 
 DataMall Bus Arrival is live/current data. It does not give historical
