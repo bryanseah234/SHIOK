@@ -1,3 +1,4 @@
+import gzip
 import json
 from pathlib import Path
 
@@ -17,6 +18,13 @@ from pipeline.export import (
     write_json,
 )
 from pipeline.score_batch import json_safe_score_record
+
+
+def gzip_json_file(path: Path) -> None:
+    payload = path.read_bytes()
+    with gzip.open(path.with_name(f"{path.name}.gz"), "wb") as f:
+        f.write(payload)
+    path.unlink()
 
 
 def sample_record(postal: str = "123456") -> dict:
@@ -128,6 +136,25 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
         assert geom_record["route_segments"]["shortest"][0]["is_covered"] is False
         assert geom_record["route_segments"]["shortest"][1]["is_covered"] is True
         assert geom_record["route_segments"]["sheltered"][0]["len_m"] == 50.0
+
+
+def test_validate_accepts_gzipped_json_artifacts(tmp_path: Path):
+    records = [sample_record("123456"), sample_record("654321")]
+    export_static_artifacts(records, output_dir=tmp_path)
+
+    gzip_json_file(tmp_path / "scores" / "index.json")
+    gzip_json_file(tmp_path / "geom" / "index.json")
+    gzip_json_file(tmp_path / "transit" / "pois.json")
+    for path in (tmp_path / "scores").glob("TEST_AREA*.json"):
+        gzip_json_file(path)
+    for path in (tmp_path / "geom" / "h3").glob("*.json"):
+        gzip_json_file(path)
+
+    ok, validation = validate_static_artifacts(tmp_path)
+
+    assert ok, validation
+    assert validation["indexed_postals"] == 2
+    assert validation["geometry_postals"] == 2
 
 
 def test_route_segments_split_disjoint_multiline_parts_without_fake_connector():

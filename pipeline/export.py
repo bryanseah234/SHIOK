@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import json
 import math
 import re
@@ -708,6 +709,24 @@ def read_json(path: Path) -> Any:
         return json.load(f)
 
 
+def artifact_json_path(input_dir: Path, rel_path: str) -> Path:
+    plain = input_dir / rel_path
+    if plain.is_file():
+        return plain
+    gzipped = input_dir / f"{rel_path}.gz"
+    if gzipped.is_file():
+        return gzipped
+    return plain
+
+
+def read_artifact_json(input_dir: Path, rel_path: str) -> Any:
+    path = artifact_json_path(input_dir, rel_path)
+    if path.suffix == ".gz":
+        with gzip.open(path, "rt", encoding="utf-8") as f:
+            return json.load(f)
+    return read_json(path)
+
+
 def source_hashes(source_keys: Iterable[str]) -> dict[str, Any]:
     manifest_path = PROJECT_ROOT / "raw" / "manifest.json"
     if not manifest_path.is_file():
@@ -1095,7 +1114,11 @@ def validate_static_artifacts(
 ) -> tuple[bool, dict[str, Any]]:
     errors: list[str] = []
     warnings: list[str] = []
-    files = [path for path in input_dir.rglob("*.json") if path.is_file()]
+    files = [
+        path
+        for path in input_dir.rglob("*")
+        if path.is_file() and (path.name.endswith(".json") or path.name.endswith(".json.gz"))
+    ]
 
     if len(files) > MAX_DATA_FILES:
         errors.append(f"file count {len(files)} exceeds {MAX_DATA_FILES}")
@@ -1104,17 +1127,21 @@ def validate_static_artifacts(
         if size > MAX_FILE_BYTES:
             errors.append(f"{path.relative_to(input_dir)} exceeds {MAX_FILE_BYTES} bytes")
 
-    manifest_path = input_dir / "manifest.json"
-    score_index_path = input_dir / "scores" / "index.json"
-    geom_index_path = input_dir / "geom" / "index.json"
-    for required in [manifest_path, score_index_path, geom_index_path]:
+    manifest_path = artifact_json_path(input_dir, "manifest.json")
+    score_index_path = artifact_json_path(input_dir, "scores/index.json")
+    geom_index_path = artifact_json_path(input_dir, "geom/index.json")
+    for rel_path, required in [
+        ("manifest.json", manifest_path),
+        ("scores/index.json", score_index_path),
+        ("geom/index.json", geom_index_path),
+    ]:
         if not required.is_file():
-            errors.append(f"missing required file: {required.relative_to(input_dir)}")
+            errors.append(f"missing required file: {rel_path}")
 
     indexed_postals: set[str] = set()
     scored_postals_with_geom_required: set[str] = set()
     if score_index_path.is_file():
-        score_index = read_json(score_index_path)
+        score_index = read_artifact_json(input_dir, "scores/index.json")
         if not isinstance(score_index, dict):
             errors.append("scores/index.json must be an object")
             score_index = {}
@@ -1122,11 +1149,12 @@ def validate_static_artifacts(
             if not isinstance(postals, list):
                 errors.append(f"scores/index.json {area}: value must be a list")
                 continue
-            area_path = input_dir / "scores" / f"{area}.json"
+            area_rel_path = f"scores/{area}.json"
+            area_path = artifact_json_path(input_dir, area_rel_path)
             if not area_path.is_file():
-                errors.append(f"scores/index.json references missing file: scores/{area}.json")
+                errors.append(f"scores/index.json references missing file: {area_rel_path}")
                 continue
-            records = read_json(area_path)
+            records = read_artifact_json(input_dir, area_rel_path)
             if not isinstance(records, list):
                 errors.append(f"scores/{area}.json must be a list")
                 continue
@@ -1145,7 +1173,7 @@ def validate_static_artifacts(
 
     geom_postals: set[str] = set()
     if geom_index_path.is_file():
-        geom_index = read_json(geom_index_path)
+        geom_index = read_artifact_json(input_dir, "geom/index.json")
         if not isinstance(geom_index, dict):
             errors.append("geom/index.json must be an object")
             geom_index = {}
@@ -1155,13 +1183,12 @@ def validate_static_artifacts(
                 errors.append(f"geom/index.json {cell}: value must be a list")
                 continue
             for target_cell in target_cells:
-                geom_path = input_dir / "geom" / "h3" / f"{target_cell}.json"
+                geom_rel_path = f"geom/h3/{target_cell}.json"
+                geom_path = artifact_json_path(input_dir, geom_rel_path)
                 if not geom_path.is_file():
-                    errors.append(
-                        f"geom/index.json references missing file: geom/h3/{target_cell}.json"
-                    )
+                    errors.append(f"geom/index.json references missing file: {geom_rel_path}")
                     continue
-                geom_records = read_json(geom_path)
+                geom_records = read_artifact_json(input_dir, geom_rel_path)
                 if not isinstance(geom_records, list):
                     errors.append(f"geom/h3/{target_cell}.json must be a list")
                     continue
@@ -1183,9 +1210,9 @@ def validate_static_artifacts(
         warnings.append(f"{len(extra_geom)} geometry postals are not in scores/index.json")
 
     transit_features = 0
-    transit_path = input_dir / "transit" / "pois.json"
+    transit_path = artifact_json_path(input_dir, "transit/pois.json")
     if transit_path.is_file():
-        transit = read_json(transit_path)
+        transit = read_artifact_json(input_dir, "transit/pois.json")
         if not isinstance(transit, dict) or transit.get("type") != "FeatureCollection":
             errors.append("transit/pois.json must be a GeoJSON FeatureCollection")
         else:

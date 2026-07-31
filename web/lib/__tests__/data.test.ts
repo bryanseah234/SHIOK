@@ -1,12 +1,17 @@
 import type { Manifest, PostalGeom, ScoreRecord, ScoreState } from "../types";
 import dataBundle from "../../data-bundle.json";
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
+import { gunzipSync } from "zlib";
 import { join } from "path";
 
 const DATA_DIR = join(__dirname, "../../public/data", dataBundle.bundle);
 
 function readJson<T>(rel: string): T {
-  return JSON.parse(readFileSync(join(DATA_DIR, rel), "utf-8")) as T;
+  const plain = join(DATA_DIR, rel);
+  if (existsSync(plain)) {
+    return JSON.parse(readFileSync(plain, "utf-8")) as T;
+  }
+  return JSON.parse(gunzipSync(readFileSync(`${plain}.gz`)).toString("utf-8")) as T;
 }
 
 describe("generated data bundle", () => {
