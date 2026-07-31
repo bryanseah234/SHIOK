@@ -63,7 +63,7 @@ def deploy_command(web_dir: Path) -> list[str]:
     return [
         command_name("vercel"),
         "deploy",
-        str(web_dir),
+        str(web_dir.parent),
         "--prod",
         "--archive=tgz",
         "--yes",
@@ -155,7 +155,7 @@ def publish_production(
         report["errors"] = ["production deploy requires --confirm-production"]
         return False, report
 
-    result = run_command(deploy_command(web_dir), cwd=web_dir)
+    result = run_command(deploy_command(web_dir), cwd=web_dir.parent)
     report["deploy_executed"] = True
     report["deploy_result"] = result
     report["ok"] = result["ok"]
