@@ -21,6 +21,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 18.3,
+        "end_snap_x": 28465.219,
+        "end_snap_y": 38899.912,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -42,7 +44,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 8.8
+        "start_snap_node_m": 8.8,
+        "start_snap_x": 28492.685,
+        "start_snap_y": 38940.05
       },
       "type": "Feature"
     },
@@ -67,6 +71,8 @@
         "end_component_id": 1238,
         "end_component_node_count": 18,
         "end_snap_node_m": 8.7,
+        "end_snap_x": 28410.74,
+        "end_snap_y": 38975.15,
         "endpoint_component_gap_m": 92.9,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -88,7 +94,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 18.3
+        "start_snap_node_m": 18.3,
+        "start_snap_x": 28465.219,
+        "start_snap_y": 38899.912
       },
       "type": "Feature"
     },
@@ -113,6 +121,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 1.7,
+        "end_snap_x": 28374.998,
+        "end_snap_y": 38963.072,
         "endpoint_component_gap_m": 37.7,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -134,7 +144,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 1238,
         "start_component_node_count": 18,
-        "start_snap_node_m": 8.7
+        "start_snap_node_m": 8.7,
+        "start_snap_x": 28410.74,
+        "start_snap_y": 38975.15
       },
       "type": "Feature"
     },
@@ -159,6 +171,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 3.3,
+        "end_snap_x": 28345.229,
+        "end_snap_y": 38979.857,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "covered_bridge",
@@ -180,7 +194,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 1.7
+        "start_snap_node_m": 1.7,
+        "start_snap_x": 28374.998,
+        "start_snap_y": 38963.072
       },
       "type": "Feature"
     },
@@ -205,6 +221,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 5.0,
+        "end_snap_x": 28402.798,
+        "end_snap_y": 39036.626,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -226,7 +244,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 3.3
+        "start_snap_node_m": 3.3,
+        "start_snap_x": 28345.229,
+        "start_snap_y": 38979.857
       },
       "type": "Feature"
     },
@@ -251,6 +271,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 24.3,
+        "end_snap_x": 28399.693,
+        "end_snap_y": 39040.895,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -272,7 +294,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 5.0
+        "start_snap_node_m": 5.0,
+        "start_snap_x": 28402.798,
+        "start_snap_y": 39036.626
       },
       "type": "Feature"
     },
@@ -297,6 +321,8 @@
         "end_component_id": 2099,
         "end_component_node_count": 11,
         "end_snap_node_m": 9.6,
+        "end_snap_x": 28339.82,
+        "end_snap_y": 39154.798,
         "endpoint_component_gap_m": 128.7,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -318,7 +344,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 24.3
+        "start_snap_node_m": 24.3,
+        "start_snap_x": 28399.693,
+        "start_snap_y": 39040.895
       },
       "type": "Feature"
     },
@@ -343,6 +371,8 @@
         "end_component_id": 2099,
         "end_component_node_count": 11,
         "end_snap_node_m": 7.4,
+        "end_snap_x": 28355.767,
+        "end_snap_y": 39159.453,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -364,7 +394,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 2099,
         "start_component_node_count": 11,
-        "start_snap_node_m": 9.6
+        "start_snap_node_m": 9.6,
+        "start_snap_x": 28339.82,
+        "start_snap_y": 39154.798
       },
       "type": "Feature"
     },
@@ -389,6 +421,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 1.5,
+        "end_snap_x": 29718.821,
+        "end_snap_y": 39165.263,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -410,7 +444,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 0.9
+        "start_snap_node_m": 0.9,
+        "start_snap_x": 29675.32,
+        "start_snap_y": 39250.23
       },
       "type": "Feature"
     },
@@ -435,6 +471,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 1.8,
+        "end_snap_x": 29746.176,
+        "end_snap_y": 39177.372,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "exposed",
@@ -456,7 +494,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 1.5
+        "start_snap_node_m": 1.5,
+        "start_snap_x": 29718.821,
+        "start_snap_y": 39165.263
       },
       "type": "Feature"
     },
@@ -481,6 +521,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 2.3,
+        "end_snap_x": 29810.534,
+        "end_snap_y": 39070.656,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -502,7 +544,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 1.8
+        "start_snap_node_m": 1.8,
+        "start_snap_x": 29746.176,
+        "start_snap_y": 39177.372
       },
       "type": "Feature"
     },
@@ -527,6 +571,8 @@
         "end_component_id": 4513,
         "end_component_node_count": 5,
         "end_snap_node_m": 4.8,
+        "end_snap_x": 28474.77,
+        "end_snap_y": 38837.28,
         "endpoint_component_gap_m": 64.0,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -548,7 +594,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 3335,
         "start_component_node_count": 7,
-        "start_snap_node_m": 16.5
+        "start_snap_node_m": 16.5,
+        "start_snap_x": 28537.848,
+        "start_snap_y": 38826.573
       },
       "type": "Feature"
     },
@@ -573,6 +621,8 @@
         "end_component_id": 4513,
         "end_component_node_count": 5,
         "end_snap_node_m": 5.6,
+        "end_snap_x": 28465.22,
+        "end_snap_y": 38836.46,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -594,7 +644,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 4513,
         "start_component_node_count": 5,
-        "start_snap_node_m": 4.8
+        "start_snap_node_m": 4.8,
+        "start_snap_x": 28474.77,
+        "start_snap_y": 38837.28
       },
       "type": "Feature"
     },
@@ -619,6 +671,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 3.6,
+        "end_snap_x": 28449.105,
+        "end_snap_y": 38837.05,
         "endpoint_component_gap_m": 16.1,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -640,7 +694,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 4513,
         "start_component_node_count": 5,
-        "start_snap_node_m": 5.6
+        "start_snap_node_m": 5.6,
+        "start_snap_x": 28465.22,
+        "start_snap_y": 38836.46
       },
       "type": "Feature"
     },
@@ -665,6 +721,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 10.0,
+        "end_snap_x": 28431.366,
+        "end_snap_y": 38837.868,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -686,7 +744,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 3.6
+        "start_snap_node_m": 3.6,
+        "start_snap_x": 28449.105,
+        "start_snap_y": 38837.05
       },
       "type": "Feature"
     },
@@ -711,6 +771,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 16.1,
+        "end_snap_x": 28405.324,
+        "end_snap_y": 38857.108,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -732,7 +794,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 10.0
+        "start_snap_node_m": 10.0,
+        "start_snap_x": 28431.366,
+        "start_snap_y": 38837.868
       },
       "type": "Feature"
     },
@@ -757,6 +821,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 11.9,
+        "end_snap_x": 28465.219,
+        "end_snap_y": 38899.912,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -778,7 +844,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 16.1
+        "start_snap_node_m": 16.1,
+        "start_snap_x": 28405.324,
+        "start_snap_y": 38857.108
       },
       "type": "Feature"
     },
@@ -803,6 +871,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 8.9,
+        "end_snap_x": 28396.911,
+        "end_snap_y": 38964.642,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -824,7 +894,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 11.9
+        "start_snap_node_m": 11.9,
+        "start_snap_x": 28465.219,
+        "start_snap_y": 38899.912
       },
       "type": "Feature"
     },
@@ -849,6 +921,8 @@
         "end_component_id": 1238,
         "end_component_node_count": 18,
         "end_snap_node_m": 6.6,
+        "end_snap_x": 28380.96,
+        "end_snap_y": 38968.84,
         "endpoint_component_gap_m": 16.5,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -870,7 +944,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 8.9
+        "start_snap_node_m": 8.9,
+        "start_snap_x": 28396.911,
+        "start_snap_y": 38964.642
       },
       "type": "Feature"
     },
@@ -895,6 +971,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 2.6,
+        "end_snap_x": 28347.388,
+        "end_snap_y": 38984.347,
         "endpoint_component_gap_m": 37.0,
         "issue": "user_reported_better_walk_route",
         "label": "covered_bridge",
@@ -916,7 +994,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 1238,
         "start_component_node_count": 18,
-        "start_snap_node_m": 6.6
+        "start_snap_node_m": 6.6,
+        "start_snap_x": 28380.96,
+        "start_snap_y": 38968.84
       },
       "type": "Feature"
     },
@@ -941,6 +1021,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 3.7,
+        "end_snap_x": 28409.041,
+        "end_snap_y": 39026.454,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -962,7 +1044,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 2.6
+        "start_snap_node_m": 2.6,
+        "start_snap_x": 28347.388,
+        "start_snap_y": 38984.347
       },
       "type": "Feature"
     },
@@ -987,6 +1071,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 24.7,
+        "end_snap_x": 28399.693,
+        "end_snap_y": 39040.895,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1008,7 +1094,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 3.7
+        "start_snap_node_m": 3.7,
+        "start_snap_x": 28409.041,
+        "start_snap_y": 39026.454
       },
       "type": "Feature"
     },
@@ -1033,6 +1121,8 @@
         "end_component_id": 2099,
         "end_component_node_count": 11,
         "end_snap_node_m": 7.9,
+        "end_snap_x": 28339.82,
+        "end_snap_y": 39154.798,
         "endpoint_component_gap_m": 128.7,
         "issue": "user_reported_better_walk_route",
         "label": "void_deck",
@@ -1054,7 +1144,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 24.7
+        "start_snap_node_m": 24.7,
+        "start_snap_x": 28399.693,
+        "start_snap_y": 39040.895
       },
       "type": "Feature"
     },
@@ -1079,6 +1171,8 @@
         "end_component_id": 2099,
         "end_component_node_count": 11,
         "end_snap_node_m": 3.6,
+        "end_snap_x": 28355.767,
+        "end_snap_y": 39159.453,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1100,7 +1194,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 2099,
         "start_component_node_count": 11,
-        "start_snap_node_m": 7.9
+        "start_snap_node_m": 7.9,
+        "start_snap_x": 28339.82,
+        "start_snap_y": 39154.798
       },
       "type": "Feature"
     },
@@ -1125,6 +1221,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 6.3,
+        "end_snap_x": 29457.129,
+        "end_snap_y": 39007.107,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1146,7 +1244,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 3.2
+        "start_snap_node_m": 3.2,
+        "start_snap_x": 29477.06,
+        "start_snap_y": 39077.709
       },
       "type": "Feature"
     },
@@ -1171,6 +1271,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 1.9,
+        "end_snap_x": 29501.833,
+        "end_snap_y": 39009.429,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1192,7 +1294,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 6.3
+        "start_snap_node_m": 6.3,
+        "start_snap_x": 29457.129,
+        "start_snap_y": 39007.107
       },
       "type": "Feature"
     },
@@ -1217,6 +1321,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 3.7,
+        "end_snap_x": 29514.72,
+        "end_snap_y": 39008.323,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1238,7 +1344,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 1.9
+        "start_snap_node_m": 1.9,
+        "start_snap_x": 29501.833,
+        "start_snap_y": 39009.429
       },
       "type": "Feature"
     },
@@ -1263,6 +1371,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 2.6,
+        "end_snap_x": 29571.766,
+        "end_snap_y": 39003.646,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1284,7 +1394,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 3.7
+        "start_snap_node_m": 3.7,
+        "start_snap_x": 29514.72,
+        "start_snap_y": 39008.323
       },
       "type": "Feature"
     },
@@ -1309,6 +1421,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 7.8,
+        "end_snap_x": 29567.782,
+        "end_snap_y": 39038.61,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1330,7 +1444,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 2.6
+        "start_snap_node_m": 2.6,
+        "start_snap_x": 29571.766,
+        "start_snap_y": 39003.646
       },
       "type": "Feature"
     },
@@ -1355,6 +1471,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 20.8,
+        "end_snap_x": 29785.472,
+        "end_snap_y": 39062.551,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1376,7 +1494,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 7.8
+        "start_snap_node_m": 7.8,
+        "start_snap_x": 29567.782,
+        "start_snap_y": 39038.61
       },
       "type": "Feature"
     },
@@ -1401,6 +1521,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 5.1,
+        "end_snap_x": 29816.087,
+        "end_snap_y": 39053.882,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "underpass",
@@ -1422,7 +1544,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 20.8
+        "start_snap_node_m": 20.8,
+        "start_snap_x": 29785.472,
+        "start_snap_y": 39062.551
       },
       "type": "Feature"
     },
@@ -1447,6 +1571,8 @@
         "end_component_id": 0,
         "end_component_node_count": 637403,
         "end_snap_node_m": 22.2,
+        "end_snap_x": 29812.493,
+        "end_snap_y": 39071.585,
         "endpoint_component_gap_m": null,
         "issue": "user_reported_better_walk_route",
         "label": "sheltered",
@@ -1468,7 +1594,9 @@
         "source": "user_drawn_qa_evidence_not_score_override",
         "start_component_id": 0,
         "start_component_node_count": 637403,
-        "start_snap_node_m": 5.1
+        "start_snap_node_m": 5.1,
+        "start_snap_x": 29816.087,
+        "start_snap_y": 39053.882
       },
       "type": "Feature"
     }

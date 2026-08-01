@@ -20,12 +20,14 @@ def main() -> int:
     parser.add_argument("--search-m", type=float, default=20.0)
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--geojson", type=Path, default=None)
+    parser.add_argument("--candidates-geojson", type=Path, default=None)
     args = parser.parse_args()
 
     from pipeline.route_feedback import (
         audit_geojson,
         audit_report,
         classify_feedback_segments,
+        component_gap_candidate_geojson,
         feedback_segments,
         load_feedback_routes,
         load_network_edges,
@@ -49,6 +51,12 @@ def main() -> int:
             json.dumps(audit_geojson(audited), indent=2, sort_keys=True),
             encoding="utf-8",
         )
+    if args.candidates_geojson:
+        args.candidates_geojson.parent.mkdir(parents=True, exist_ok=True)
+        args.candidates_geojson.write_text(
+            json.dumps(component_gap_candidate_geojson(audited), indent=2, sort_keys=True),
+            encoding="utf-8",
+        )
 
     print(
         json.dumps(
@@ -59,6 +67,9 @@ def main() -> int:
                 "classification_counts": report["classification_counts"],
                 "output": str(args.output) if args.output else None,
                 "geojson": str(args.geojson) if args.geojson else None,
+                "candidates_geojson": (
+                    str(args.candidates_geojson) if args.candidates_geojson else None
+                ),
             },
             indent=2,
             sort_keys=True,

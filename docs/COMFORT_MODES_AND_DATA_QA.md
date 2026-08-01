@@ -235,6 +235,11 @@ tested:
   128.7 m HDB component gap. This confirms the next work is a source-backed
   HDB/covered-component connector model, not score-weight tuning or a manual
   route override.
+- `qa/route_feedback_component_gap_candidates_amk_20260801.geojson` exports the
+  component-gap connector candidates as QA-only map lines. It contains 8
+  features: 3 for `560231` and 5 for `560225`. Each feature is marked
+  `evidence_status=qa_candidate_not_scoring`; these are inspection candidates,
+  not production shelter corrections.
 
 ## Human Feedback Loop
 

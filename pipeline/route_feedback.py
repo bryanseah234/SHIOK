@@ -457,6 +457,14 @@ def classify_feedback_segments(
         row["end_snap_node_m"] = (
             round(float(end_snap["distance_m"]), 1) if end_snap is not None else None
         )
+        row["start_snap_x"] = (
+            round(float(start_snap.geometry.x), 3) if start_snap is not None else None
+        )
+        row["start_snap_y"] = (
+            round(float(start_snap.geometry.y), 3) if start_snap is not None else None
+        )
+        row["end_snap_x"] = round(float(end_snap.geometry.x), 3) if end_snap is not None else None
+        row["end_snap_y"] = round(float(end_snap.geometry.y), 3) if end_snap is not None else None
         row["start_component_node_count"] = (
             int(start_snap["component_node_count"]) if start_snap is not None else None
         )
@@ -516,6 +524,10 @@ def audit_report(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
                 "same_component": json_nullable(row.get("same_component")),
                 "start_snap_node_m": json_nullable(row.get("start_snap_node_m")),
                 "end_snap_node_m": json_nullable(row.get("end_snap_node_m")),
+                "start_snap_x": json_nullable(row.get("start_snap_x")),
+                "start_snap_y": json_nullable(row.get("start_snap_y")),
+                "end_snap_x": json_nullable(row.get("end_snap_x")),
+                "end_snap_y": json_nullable(row.get("end_snap_y")),
                 "start_component_node_count": json_nullable(row.get("start_component_node_count")),
                 "end_component_node_count": json_nullable(row.get("end_component_node_count")),
                 "endpoint_component_gap_m": json_nullable(row.get("endpoint_component_gap_m")),
@@ -572,4 +584,62 @@ def audit_geojson(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
                 "properties": properties,
             }
         )
+    return {"type": "FeatureCollection", "features": features}
+
+
+def component_gap_candidate_geojson(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
+    if audited_segments.empty:
+        return {"type": "FeatureCollection", "features": []}
+
+    to_wgs84 = Transformer.from_crs(audited_segments.crs, "EPSG:4326", always_xy=True)
+    features = []
+    component_gap_classes = {
+        "covered_component_gap",
+        "hdb_void_deck_component_gap",
+        "bridge_underpass_component_gap",
+    }
+    for _, row in audited_segments.iterrows():
+        if str(row.get("classification", "")) not in component_gap_classes:
+            continue
+        coords = [
+            row.get("start_snap_x"),
+            row.get("start_snap_y"),
+            row.get("end_snap_x"),
+            row.get("end_snap_y"),
+        ]
+        if any(json_nullable(value) is None for value in coords):
+            continue
+
+        candidate_line = LineString(
+            [
+                (float(row["start_snap_x"]), float(row["start_snap_y"])),
+                (float(row["end_snap_x"]), float(row["end_snap_y"])),
+            ]
+        )
+        if candidate_line.is_empty or candidate_line.length <= 0:
+            continue
+        line_wgs84 = transform(to_wgs84.transform, candidate_line)
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": mapping(line_wgs84),
+                "properties": {
+                    "postal": row["postal"],
+                    "destination": row["destination"],
+                    "segment_index": int(row["segment_index"]),
+                    "label": row["label"],
+                    "classification": row["classification"],
+                    "length_m": round(float(candidate_line.length), 1),
+                    "endpoint_component_gap_m": json_nullable(row.get("endpoint_component_gap_m")),
+                    "start_component_id": json_nullable(row.get("start_component_id")),
+                    "end_component_id": json_nullable(row.get("end_component_id")),
+                    "evidence_status": "qa_candidate_not_scoring",
+                    "promotion_rule": (
+                        "Promote only after source-backed review or a general tested "
+                        "network-build connector rule."
+                    ),
+                },
+            }
+        )
+
     return {"type": "FeatureCollection", "features": features}

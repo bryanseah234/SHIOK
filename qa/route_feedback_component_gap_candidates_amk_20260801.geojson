@@ -1,0 +1,237 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749889582384,
+            1.3680715025408114
+          ],
+          [
+            103.83700936506972,
+            1.368751928954857
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 1238,
+        "endpoint_component_gap_m": 92.9,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "void_deck",
+        "length_m": 92.9,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 1,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83700936506972,
+            1.368751928954857
+          ],
+          [
+            103.83668819804306,
+            1.368642700309139
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 37.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "sheltered",
+        "length_m": 37.7,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 2,
+        "start_component_id": 1238
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83691010092744,
+            1.36934650340926
+          ],
+          [
+            103.83637210130074,
+            1.3703766022086379
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 2099,
+        "endpoint_component_gap_m": 128.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "void_deck",
+        "length_m": 128.7,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 6,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83815151669216,
+            1.3674082495775295
+          ],
+          [
+            103.8375847172196,
+            1.3675050809408495
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 4513,
+        "endpoint_component_gap_m": 64.0,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "void_deck",
+        "length_m": 64.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 0,
+        "start_component_id": 3335
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749890382008,
+            1.3674976653049649
+          ],
+          [
+            103.8373540993553,
+            1.3675030013028202
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 16.1,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "sheltered",
+        "length_m": 16.1,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 2,
+        "start_component_id": 4513
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83688510169024,
+            1.3686568985432719
+          ],
+          [
+            103.83674177085527,
+            1.3686948639656311
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 1238,
+        "endpoint_component_gap_m": 16.5,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "sheltered",
+        "length_m": 16.5,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 7,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83674177085527,
+            1.3686948639656311
+          ],
+          [
+            103.83644010313604,
+            1.368835104149019
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 37.0,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "covered_bridge",
+        "length_m": 37.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 8,
+        "start_component_id": 1238
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83691010092744,
+            1.36934650340926
+          ],
+          [
+            103.83637210130074,
+            1.3703766022086379
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "classification": "hdb_void_deck_component_gap",
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 2099,
+        "endpoint_component_gap_m": 128.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "label": "void_deck",
+        "length_m": 128.7,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "segment_index": 11,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

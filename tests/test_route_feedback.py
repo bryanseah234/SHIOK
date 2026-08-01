@@ -2,7 +2,12 @@ import geopandas as gpd
 import pandas as pd
 from shapely.geometry import LineString
 
-from pipeline.route_feedback import audit_geojson, audit_report, classify_feedback_segments
+from pipeline.route_feedback import (
+    audit_geojson,
+    audit_report,
+    classify_feedback_segments,
+    component_gap_candidate_geojson,
+)
 
 
 def test_feedback_audit_marks_uncovered_user_shelter_as_missing_source():
@@ -106,6 +111,13 @@ def test_feedback_audit_flags_covered_component_gap():
     assert bool(row["same_component"]) is False
     assert row["start_component_id"] != row["end_component_id"]
     assert row["endpoint_component_gap_m"] == 100.0
+
+    candidates = component_gap_candidate_geojson(audited)
+    assert len(candidates["features"]) == 1
+    properties = candidates["features"][0]["properties"]
+    assert properties["classification"] == "hdb_void_deck_component_gap"
+    assert properties["evidence_status"] == "qa_candidate_not_scoring"
+    assert properties["length_m"] == 100.0
 
 
 def test_feedback_report_counts_routes_and_classifications():
