@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import gzip
 import json
 import math
@@ -34,7 +35,13 @@ MAX_FILE_BYTES = 5 * 1024 * 1024
 GEOM_PROMOTION_THRESHOLD_BYTES = int(MAX_FILE_BYTES * 0.9)
 GEOM_MAX_PROMOTION_RESOLUTION = 12
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
-TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops", "bus_services", "bus_routes")
+TRANSIT_SOURCE_KEYS = (
+    "mrt_lrt_exits",
+    "train_station_codes",
+    "bus_stops",
+    "bus_services",
+    "bus_routes",
+)
 OSM_TAG_SCHEMA = load_osm_tag_schema()
 
 
@@ -805,6 +812,13 @@ def load_json_if_present(path: Path | None) -> Any | None:
     return read_json(path)
 
 
+def load_csv_if_present(path: Path | None) -> list[dict[str, Any]] | None:
+    if path is None or not path.is_file():
+        return None
+    with path.open("r", encoding="utf-8-sig", newline="") as f:
+        return [dict(row) for row in csv.DictReader(f)]
+
+
 def payload_rows(payload: dict[str, Any] | list[dict[str, Any]] | None) -> list[dict[str, Any]]:
     if isinstance(payload, dict) and isinstance(payload.get("value"), list):
         return [row for row in payload["value"] if isinstance(row, dict)]
@@ -871,6 +885,53 @@ def rounded_frequency(values: Iterable[float]) -> float | None:
 
 def transit_system_from_station(station: str) -> str:
     return "LRT" if "LRT" in station.upper() else "MRT"
+
+
+def normalize_station_lookup_name(value: Any) -> str:
+    text = str(value or "").strip()
+    text = re.sub(r"\s+(MRT|LRT)\s+STATION$", "", text, flags=re.IGNORECASE).strip()
+    return re.sub(r"\s+", " ", text).upper()
+
+
+def first_row_value(row: dict[str, Any], keys: Iterable[str]) -> str:
+    for key in keys:
+        value = str(row.get(key, "")).strip()
+        if value:
+            return value
+    return ""
+
+
+def train_station_line_summaries(
+    train_station_codes_payload: dict[str, Any] | list[dict[str, Any]] | None,
+) -> dict[str, dict[str, str]]:
+    grouped: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: {"station_codes": set(), "lines": set()}
+    )
+    for row in payload_rows(train_station_codes_payload):
+        station_key = normalize_station_lookup_name(
+            first_row_value(row, ["MRT Station English", "mrt_station_english"])
+        )
+        if not station_key:
+            continue
+        code = first_row_value(row, ["Station Code", "stn_code"])
+        line = first_row_value(row, ["MRT Line English", "mrt_line_english"])
+        if code:
+            grouped[station_key]["station_codes"].add(code)
+        if line:
+            grouped[station_key]["lines"].add(line)
+
+    summaries: dict[str, dict[str, str]] = {}
+    for station, values in grouped.items():
+        station_codes = compact_service_list(values["station_codes"])
+        lines = ", ".join(sorted(values["lines"]))
+        summary = {}
+        if station_codes:
+            summary["station_codes"] = station_codes
+        if lines:
+            summary["lines"] = lines
+        if summary:
+            summaries[station] = summary
+    return summaries
 
 
 def bus_stop_service_summaries(
@@ -974,10 +1035,12 @@ def build_transit_poi_collection(
     provenance: dict[str, Any] | None = None,
     bus_services_payload: dict[str, Any] | list[dict[str, Any]] | None = None,
     bus_routes_payload: dict[str, Any] | list[dict[str, Any]] | None = None,
+    train_station_codes_payload: dict[str, Any] | list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     features: list[dict[str, Any]] = []
     station_groups: dict[str, dict[str, Any]] = {}
     bus_summaries = bus_stop_service_summaries(bus_services_payload, bus_routes_payload)
+    station_line_summaries = train_station_line_summaries(train_station_codes_payload)
 
     if isinstance(mrt_geojson, dict):
         for feature in mrt_geojson.get("features", []):
@@ -998,6 +1061,7 @@ def build_transit_poi_collection(
             object_id = str(properties.get("OBJECTID", "")).strip()
             name = " ".join(part for part in [station, exit_code] if part).strip()
             system = transit_system_from_station(station)
+            station_summary = station_line_summaries.get(normalize_station_lookup_name(station), {})
             if station:
                 group = station_groups.setdefault(station, {"points": [], "exits": []})
                 group["points"].append(point)
@@ -1014,6 +1078,7 @@ def build_transit_poi_collection(
                         "station": station,
                         "exit": exit_code,
                         "system": system,
+                        **station_summary,
                     },
                 }
             )
@@ -1026,6 +1091,7 @@ def build_transit_poi_collection(
         lat = sum(point[1] for point in points) / len(points)
         station_id = re.sub(r"[^A-Z0-9]+", "_", station.upper()).strip("_")
         label = re.sub(r"\s+(MRT|LRT)\s+STATION$", "", station, flags=re.IGNORECASE).strip()
+        station_summary = station_line_summaries.get(normalize_station_lookup_name(station), {})
         features.append(
             {
                 "type": "Feature",
@@ -1037,6 +1103,7 @@ def build_transit_poi_collection(
                     "label": label or station,
                     "exit_count": len(set(group["exits"])),
                     "system": transit_system_from_station(station),
+                    **station_summary,
                 },
             }
         )
@@ -1087,6 +1154,9 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
     bus_routes_payload = load_json_if_present(
         raw_file_from_manifest("bus_routes", "bus_routes.json")
     )
+    train_station_codes_payload = load_csv_if_present(
+        raw_file_from_manifest("train_station_codes", "train_station_codes.csv")
+    )
     collection = build_transit_poi_collection(
         mrt_geojson if isinstance(mrt_geojson, dict) else None,
         bus_payload if isinstance(bus_payload, (dict, list)) else None,
@@ -1096,6 +1166,7 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
         },
         bus_services_payload if isinstance(bus_services_payload, (dict, list)) else None,
         bus_routes_payload if isinstance(bus_routes_payload, (dict, list)) else None,
+        train_station_codes_payload if isinstance(train_station_codes_payload, list) else None,
     )
     path = output_dir / "transit" / "pois.json"
     size = write_json(path, collection)
@@ -1109,7 +1180,24 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
         "bytes": size,
         "feature_count": len(collection["features"]),
         "counts": dict(sorted(counts.items())),
+        "source_hashes": source_hashes(TRANSIT_SOURCE_KEYS),
     }
+
+
+def refresh_transit_manifest(output_dir: Path, transit_report: dict[str, Any]) -> bool:
+    manifest_path = output_dir / "manifest.json"
+    if not manifest_path.is_file():
+        return False
+    manifest = read_json(manifest_path)
+    manifest["transit"] = {
+        "pois": transit_report["path"],
+        "feature_count": transit_report["feature_count"],
+        "counts": transit_report["counts"],
+        "source_hashes": transit_report["source_hashes"],
+        "refreshed_at": datetime.now(UTC).isoformat(),
+    }
+    write_json(manifest_path, manifest)
+    return True
 
 
 def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
@@ -1375,6 +1463,9 @@ def main() -> int:
     validate_parser = subparsers.add_parser("validate")
     validate_parser.add_argument("--input", type=Path, default=DEFAULT_VALIDATE_DIR)
 
+    transit_parser = subparsers.add_parser("export-transit")
+    transit_parser.add_argument("--output", type=Path, default=DEFAULT_EXPORT_DIR)
+
     args = parser.parse_args()
     if args.action == "export":
         guard_errors = validate_export_batch_args(
@@ -1426,6 +1517,12 @@ def main() -> int:
         ok, report = validate_static_artifacts(input_dir=args.input)
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0 if ok else 1
+
+    if args.action == "export-transit":
+        report = export_transit_pois(output_dir=args.output)
+        report["manifest_updated"] = refresh_transit_manifest(args.output, report)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0
 
     return 1
 

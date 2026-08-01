@@ -44,6 +44,13 @@ sources:
     verified: "2026-07-26"
     notes: "data.gov.sg GeoJSON — LTA MRT Station Exit; resolved via initiate-download API (201 confirmed)"
 
+  train_station_codes:
+    name: "Train Station Codes and Chinese Names"
+    kind: "datagov_polldownload"
+    dataset_id: "d_d312a5b127e1ae74299b8ae664cedd4e"
+    verified: "2026-08-02"
+    notes: "data.gov.sg CSV — station code, English station name, and MRT/LRT line name; used to enrich static MRT/LRT map POIs; incomplete for newer TEL stations such as Mayflower"
+
   traffic_signals:
     name: "Traffic Signals"
     kind: "datamall_geospatial_listing"

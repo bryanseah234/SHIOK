@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | bus-arrivals | check | ingest | network | network-preflight | network-qa | overture-addresses | readiness | route | score | score-batch | postal-universe | geocode-universe | export | validate | publish | test | shell
+Tasks: batch-plan | bus-arrivals | check | ingest | network | network-preflight | network-qa | overture-addresses | readiness | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -31,6 +31,7 @@ STUBS = {
     "postal-universe": "build deterministic postal-code universe candidates",
     "geocode-universe": "bounded OneMap geocode fill for source-derived postal gaps",
     "export": "scores/{area}.json + geom/h3/{cell}.json + manifest (T1.5)",
+    "export-transit": "refresh transit POIs without rescoring",
     "validate": "golden set + OneMap comparison; blocks publish (T1.7)",
     "publish": "vercel deploy --prod --archive=tgz (only deploy path)",
     "test": "pytest (T0.1)",
@@ -73,6 +74,8 @@ def run_task(name: str, extra: list[str]) -> int:
         return run_module("pipeline.geocode_universe")
     if name == "export":
         return run_module("pipeline.export", ["export"])
+    if name == "export-transit":
+        return run_module("pipeline.export", ["export-transit"])
     if name == "validate":
         return run_module("pipeline.export", ["validate"])
 

@@ -60,18 +60,22 @@ export function transitPoiPopupHtml(properties: Record<string, unknown>): string
   } else if (properties.kind === "mrt_station") {
     const exits = asPopupText(properties.exit_count);
     const system = asPopupText(properties.system);
+    const stationCodes = asPopupText(properties.station_codes);
     const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
     if (system) rows.push(["System", system]);
     if (exits) rows.push(["Exits", exits]);
+    if (stationCodes) rows.push(["Codes", stationCodes]);
     if (lines) rows.push(["Lines", lines]);
   } else {
     const station = asPopupText(properties.station);
     const exit = asPopupText(properties.exit);
     const system = asPopupText(properties.system);
+    const stationCodes = asPopupText(properties.station_codes);
     const lines = asPopupText(properties.lines) ?? asPopupText(properties.line);
     if (station) rows.push(["Station", toProperCase(station)]);
     if (exit) rows.push(["Exit", exit]);
     if (system) rows.push(["System", system]);
+    if (stationCodes) rows.push(["Codes", stationCodes]);
     if (lines) rows.push(["Lines", lines]);
   }
 

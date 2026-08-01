@@ -124,6 +124,8 @@ export interface TransitPoiProperties {
   name: string;
   label?: string;
   system?: string;
+  lines?: string;
+  station_codes?: string;
   exit_count?: number;
   station?: string;
   exit?: string;

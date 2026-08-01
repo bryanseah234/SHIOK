@@ -1,5 +1,6 @@
 """Fetch and hash pipeline module for S.H.I.O.K. Index (T0.3)."""
 
+import argparse
 import hashlib
 import json
 import os
@@ -73,6 +74,16 @@ def load_sources() -> dict[str, Any]:
         data: dict[str, Any] = yaml.safe_load(f) or {}
     sources: dict[str, Any] = data.get("sources", {})
     return sources
+
+
+def select_sources(sources: dict[str, Any], source_keys: list[str]) -> dict[str, Any]:
+    requested = list(dict.fromkeys(key.strip() for key in source_keys if key.strip()))
+    if not requested:
+        return sources
+    missing = [key for key in requested if key not in sources]
+    if missing:
+        raise ValueError(f"unknown source key(s): {', '.join(missing)}")
+    return {key: sources[key] for key in requested}
 
 
 def load_manifest() -> dict[str, Any]:
@@ -557,17 +568,31 @@ def run_ingest(sources: dict[str, Any]) -> int:
     return 0
 
 
-def main(action: str) -> int:
-    sources = load_sources()
-    if action == "check":
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Fetch/check upstream SHIOK datasets.")
+    parser.add_argument("action", choices=["check", "ingest"])
+    parser.add_argument(
+        "--source",
+        action="append",
+        default=[],
+        help="Restrict to one source key. Can be passed multiple times.",
+    )
+    args = parser.parse_args(argv)
+
+    try:
+        sources = select_sources(load_sources(), args.source)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+
+    if args.action == "check":
         return run_check(sources)
-    elif action == "ingest":
+    elif args.action == "ingest":
         return run_ingest(sources)
     else:
-        print(f"Unknown action: {action}", file=sys.stderr)
+        print(f"Unknown action: {args.action}", file=sys.stderr)
         return 1
 
 
 if __name__ == "__main__":
-    action = sys.argv[1] if len(sys.argv) > 1 else "check"
-    sys.exit(main(action))
+    sys.exit(main())

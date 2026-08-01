@@ -25,20 +25,32 @@ Sample verified from `transit/pois.json`:
   `00:50`
 
 MRT/LRT exits and station centroids are exported from DataMall MRT/LRT Station
-Exits:
+Exits, enriched where possible by the official data.gov.sg Train Station Codes
+and Chinese Names CSV:
 
 - station name
 - exit code
 - system inferred from station name (`MRT` or `LRT`)
 - station exit count
+- station code and line name for stations present in the Train Station Codes
+  source
+
+Pending bundle verification after static enrichment:
+
+- 6,011 total transit POI features
+- 661 features with station codes
+- 160 of 190 MRT/LRT station centroid features with station codes
+- sample enriched station: `ADMIRALTY MRT STATION`, `NS10`,
+  `North South Line`
 
 ## Not Active Yet
 
 - Live bus arrivals/ETA/load: requires DataMall `AccountKey` behind a Vercel API
   route with caching, or local collection plus published static aggregates.
-- MRT/LRT line and direction labels: current MRT/LRT exits source does not carry
-  line codes. Needs a legitimate static rail-line/station-code source or an
-  audited station mapping.
+- Complete MRT/LRT line and direction labels: the Train Station Codes CSV is
+  official but incomplete/stale for newer TEL stations. Example:
+  `MAYFLOWER MRT STATION` remains missing station code and line name in this
+  source.
 - MRT/LRT first/last train: not in the current bulk source. Needs an official
   static ingestion path before display.
 

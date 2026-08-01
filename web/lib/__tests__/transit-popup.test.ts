@@ -31,7 +31,8 @@ describe("transit popup formatting", () => {
       kind: "mrt_station",
       name: "MAYFLOWER MRT STATION",
       system: "MRT",
-      lines: "TE",
+      station_codes: "TE6",
+      lines: "Thomson-East Coast Line",
       exit_count: 5,
     });
     const exitHtml = transitPoiPopupHtml({
@@ -40,16 +41,20 @@ describe("transit popup formatting", () => {
       station: "MAYFLOWER MRT STATION",
       exit: "Exit 5",
       system: "MRT",
-      line: "TE",
+      station_codes: "TE6",
+      lines: "Thomson-East Coast Line",
     });
 
     expect(stationHtml).toContain("Mayflower MRT Station");
     expect(stationHtml).toContain("MRT/LRT station");
     expect(stationHtml).toContain("Exits");
-    expect(stationHtml).toContain("TE");
+    expect(stationHtml).toContain("Codes");
+    expect(stationHtml).toContain("TE6");
+    expect(stationHtml).toContain("Thomson-East Coast Line");
     expect(exitHtml).toContain("MRT/LRT exit");
     expect(exitHtml).toContain("Mayflower MRT Station");
     expect(exitHtml).toContain("Exit 5");
+    expect(exitHtml).toContain("TE6");
   });
 
   it("cleans labels and escapes unsafe popup text", () => {

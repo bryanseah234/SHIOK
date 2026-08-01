@@ -11,6 +11,7 @@ from pipeline.export import (
     geom_record,
     json_size,
     load_score_batch_records,
+    refresh_transit_manifest,
     route_edge_source_class,
     route_segment_geometries,
     slugify_area,
@@ -297,6 +298,15 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
             }
         ]
     }
+    train_station_codes_payload = [
+        {
+            "stn_code": "TE6",
+            "mrt_station_english": "Mayflower",
+            "mrt_station_chinese": "美华",
+            "mrt_line_english": "Thomson-East Coast Line",
+            "mrt_line_chinese": "汤申-东海岸线",
+        }
+    ]
 
     collection = build_transit_poi_collection(
         mrt_geojson,
@@ -304,6 +314,7 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
         {"source_hashes": {"mrt_lrt_exits": "a" * 64, "bus_stops": "b" * 64}},
         bus_services_payload,
         bus_routes_payload,
+        train_station_codes_payload,
     )
 
     assert collection["type"] == "FeatureCollection"
@@ -323,8 +334,12 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
     )
     assert mrt["properties"]["name"] == "MAYFLOWER MRT STATION Exit 5"
     assert mrt["properties"]["system"] == "MRT"
+    assert mrt["properties"]["station_codes"] == "TE6"
+    assert mrt["properties"]["lines"] == "Thomson-East Coast Line"
     assert station["properties"]["label"] == "MAYFLOWER"
     assert station["properties"]["exit_count"] == 1
+    assert station["properties"]["station_codes"] == "TE6"
+    assert station["properties"]["lines"] == "Thomson-East Coast Line"
     assert bus["properties"]["code"] == "55089"
     assert bus["properties"]["services"] == "262"
     assert bus["properties"]["service_count"] == 1
@@ -332,6 +347,32 @@ def test_build_transit_poi_collection_exports_mrt_and_bus_points():
     assert bus["properties"]["weekday_last_bus"] == "00:45"
     assert bus["properties"]["am_peak_best_min"] == 7
     assert bus["properties"]["pm_peak_best_min"] == 8
+
+
+def test_refresh_transit_manifest_updates_only_transit_block(tmp_path: Path):
+    write_json(
+        tmp_path / "manifest.json",
+        {
+            "data_as_of": "2026-08-01T00:00:00+00:00",
+            "transit": {"source_hashes": {"old": "hash"}},
+        },
+    )
+
+    updated = refresh_transit_manifest(
+        tmp_path,
+        {
+            "path": "transit/pois.json",
+            "feature_count": 3,
+            "counts": {"bus_stop": 1, "mrt_exit": 1, "mrt_station": 1},
+            "source_hashes": {"train_station_codes": "a" * 64},
+        },
+    )
+
+    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert updated is True
+    assert manifest["data_as_of"] == "2026-08-01T00:00:00+00:00"
+    assert manifest["transit"]["source_hashes"] == {"train_station_codes": "a" * 64}
+    assert manifest["transit"]["refreshed_at"]
 
 
 def test_export_splits_large_score_files(tmp_path: Path):

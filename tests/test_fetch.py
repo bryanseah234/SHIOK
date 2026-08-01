@@ -1,6 +1,8 @@
 import httpx
 
-from pipeline.fetch import datagov_raw_filename, stable_manifest_url
+import pytest
+
+from pipeline.fetch import datagov_raw_filename, select_sources, stable_manifest_url
 
 
 def test_datagov_raw_filename_uses_content_disposition_extension() -> None:
@@ -45,3 +47,14 @@ def test_stable_manifest_url_preserves_normal_query() -> None:
     url = "https://example.test/api?searchVal=560234&returnGeom=Y"
 
     assert stable_manifest_url(url) == url
+
+
+def test_select_sources_filters_requested_keys() -> None:
+    sources = {"bus_stops": {"name": "Bus Stops"}, "train_station_codes": {"name": "Rail"}}
+
+    assert select_sources(sources, ["train_station_codes"]) == {
+        "train_station_codes": {"name": "Rail"}
+    }
+    assert select_sources(sources, []) == sources
+    with pytest.raises(ValueError, match="unknown source key"):
+        select_sources(sources, ["missing"])
