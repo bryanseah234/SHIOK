@@ -209,6 +209,12 @@ Current honest state:
 
 - The legitimate open/current universe in the shipped bundle is 124,032 records,
   not the target ~140k.
+- URA No of Dwelling Units is now wired and probed as an official-current
+  source. It raises the official-current probe to 105,462 postals and the
+  candidate production-mode probe to 124,443 total postals after source merge.
+- Bounded OneMap geocode on the URA-expanded candidate fills 99 of 575
+  source-derived gaps, producing 123,967 ready-to-score rows and 476 unresolved
+  `NOT_YET_SCORED` rows. This has not been full-rescored or shipped yet.
 - Remaining expansion should come from a legitimate source, not OneMap brute
   force.
 - Other-UEN registered entities are a legitimate incremental source and are
