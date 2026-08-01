@@ -176,6 +176,14 @@ function nestedNumber(value: unknown, path: string[]): number | null {
   return typeof cursor === "number" && Number.isFinite(cursor) ? cursor : null;
 }
 
+function provenanceReason(score: ScoreRecord, transitMode: TransitAccessMode): string | null {
+  if (transitMode !== "best_transit") return null;
+  const provenance = score.provenance;
+  if (!provenance || typeof provenance !== "object") return null;
+  const reason = provenance.reason;
+  return typeof reason === "string" ? reason : null;
+}
+
 function nearestRoutedTransitM(score: ScoreRecord, transitMode: TransitAccessMode): number | null {
   return transitMode === "best_transit"
     ? nestedNumber(score.provenance, ["routing_diagnostics", "nearest_routed_m"])
@@ -183,6 +191,9 @@ function nearestRoutedTransitM(score: ScoreRecord, transitMode: TransitAccessMod
 }
 
 function noTransitTitle(score: ScoreRecord, transitMode: TransitAccessMode): string {
+  const reason = provenanceReason(score, transitMode);
+  if (reason === "transit_candidates_graph_disconnected") return "Transit route not connected yet";
+  if (reason === "no_transit_candidates_selected") return "No transit candidate nearby";
   return nearestRoutedTransitM(score, transitMode) !== null
     ? "Transit beyond scoring range"
     : `No routed ${transitModeLabel(transitMode)} within range`;
@@ -193,6 +204,13 @@ function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): str
     return "Partial score: nearby bus service is counted, but exact walking-route shelter is still pending.";
   }
   if (score.state === "NO_TRANSIT_IN_RANGE") {
+    const reason = provenanceReason(score, transitMode);
+    if (reason === "transit_candidates_graph_disconnected") {
+      return "Transit candidates exist, but the current walking graph could not connect a route yet.";
+    }
+    if (reason === "no_transit_candidates_selected") {
+      return "No qualifying MRT/LRT exit or bus stop candidate was selected near this postal.";
+    }
     const nearestM = nearestRoutedTransitM(score, transitMode);
     if (nearestM !== null) {
       return `Closest routed transit found is about ${formatDistance(nearestM)} away; current scoring range is 1.2 km.`;
@@ -290,6 +308,13 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
 function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
   if (score.state === "NO_TRANSIT_IN_RANGE") {
     const label = transitModeLabel(transitMode);
+    const reason = provenanceReason(score, transitMode);
+    if (reason === "transit_candidates_graph_disconnected") {
+      return ["Transit candidate found", "Walking route not connected yet"];
+    }
+    if (reason === "no_transit_candidates_selected") {
+      return ["No nearby transit candidate selected", "Outside current candidate thresholds"];
+    }
     const nearestM = nearestRoutedTransitM(score, transitMode);
     return nearestM !== null
       ? [`Closest routed ${label} is ${formatDistance(nearestM)}`, "Current scoring range is 1.2 km"]
