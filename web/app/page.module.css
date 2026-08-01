@@ -552,6 +552,18 @@
   font-weight: 800;
 }
 
+.stateNote {
+  margin: 8px 0 0;
+  border: 1px solid #dce5e1;
+  border-radius: 8px;
+  padding: 8px;
+  color: #43564f;
+  background: #f8fbfa;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
 .scoreStrip {
   margin-top: 10px;
   display: flex;

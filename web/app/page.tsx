@@ -167,6 +167,19 @@ function exposureGapCopy(lenM: number, index: number): string {
   return `${rank} short exposed stretch`;
 }
 
+function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): string | null {
+  if (score.state === "SCORED_PARTIAL") {
+    return "Partial score: nearby bus service is counted, but exact walking-route shelter is still pending.";
+  }
+  if (score.state === "NO_TRANSIT_IN_RANGE") {
+    return `No qualifying ${transitModeLabel(transitMode)} walk was found within the current scoring range.`;
+  }
+  if (score.state === "NOT_YET_SCORED") {
+    return "This postal is in the source universe, but it still needs usable location evidence.";
+  }
+  return null;
+}
+
 function routeSame(selection: LoadedSelection | null): boolean {
   if (!selection?.geom || !selection.score?.paths) return false;
   if (selection.score.paths.routing_type === "direct_bus_fallback_unrouted") return true;
@@ -252,14 +265,22 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
 function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
   if (score.state === "NO_TRANSIT_IN_RANGE") {
     const label = transitModeLabel(transitMode);
-    return [`No ${label} route within scoring range`, "Transit may exist, but this graph did not find a qualifying walk"];
+    return [`No ${label} walk within scoring range`, "Nearby transit may still exist outside the current threshold"];
   }
   if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
   if (score.paths?.routing_type === "direct_bus_fallback_unrouted") {
-    return ["Nearby bus stop with service data", "Exact walking route not verified yet"];
+    return ["Nearby bus stop with service data", "Walking-route shelter not verified yet"];
   }
   if (!score.paths || !score.best_node) return ["Route evidence unavailable", "Score not available"];
   if (!score.subscores) return ["Score breakdown pending", "Route evidence available"];
+
+  const measuredReasons: string[] = [];
+  if (typeof score.paths.sheltered_m === "number") {
+    measuredReasons.push(`${formatDistance(score.paths.sheltered_m)} to ${transitModeLabel(transitMode)}`);
+  }
+  if (typeof score.paths.covered_ratio === "number") {
+    measuredReasons.push(`${Math.round(score.paths.covered_ratio * 100)}% sheltered on Shiokest`);
+  }
 
   const values = SUBSCORE_LABELS.map(([key]) => ({
     key,
@@ -269,14 +290,13 @@ function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): strin
   const lowReasons = values.filter((item) => item.value < 55).map((item) => REASON_COPY[item.key].low);
   if (lowReasons.length >= 2) return lowReasons.slice(0, 2);
   if (lowReasons.length === 1) {
-    const strongest = [...values].reverse()[0];
-    return [lowReasons[0], REASON_COPY[strongest.key].high];
+    return [lowReasons[0], measuredReasons[0] ?? REASON_COPY[[...values].reverse()[0].key].high];
   }
 
-  return [...values]
+  return (measuredReasons.length >= 2 ? measuredReasons : [...values]
     .reverse()
     .slice(0, 2)
-    .map((item) => REASON_COPY[item.key].high);
+    .map((item) => REASON_COPY[item.key].high));
 }
 
 function routeSourceBreakdown(
@@ -317,9 +337,9 @@ function modeAdjustedTotal(score: ScoreRecord, mode: ComfortMode): number | null
 }
 
 function modeStatus(mode: ComfortMode): string {
-  if (mode === "balanced") return "Static bus schedules - heat uses shelter and shade proxy";
-  if (mode.startsWith("rain")) return "Rain-weighted - static buses";
-  return "Sunny-weighted - NParks shade proxy";
+  if (mode === "balanced") return "Balanced scoring with scheduled buses";
+  if (mode.startsWith("rain")) return "Rain gives shelter more weight";
+  return "Sunny mode gives heat comfort more weight";
 }
 
 function buildFeedbackPayload({
@@ -586,8 +606,10 @@ function ScoreCard({
       ? `No routed ${transitModeLabel(transitMode)} within range`
       : toProperCase(score.best_node?.name ?? "No transit found nearby");
   const reasons = scoreReasons(score, transitMode);
+  const stateNote = scoreStateNote(score, transitMode);
   const displayScore = modeAdjustedTotal(score, comfortMode);
   const sourceBreakdown = routeSourceBreakdown(selection, routeMode, sameRoute);
+  const exposureGaps = score.exposure_gaps ? [...score.exposure_gaps].sort((a, b) => b.len_m - a.len_m) : [];
   const extraWalkLabel =
     extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
   const dataDate = manifest?.data_as_of
@@ -634,6 +656,7 @@ function ScoreCard({
           <span key={reason}>{reason}</span>
         ))}
       </div>
+      {stateNote && <p className={styles.stateNote}>{stateNote}</p>}
 
       {score.subscores && (
         <div className={styles.scoreStrip} aria-label="Score breakdown">
@@ -715,17 +738,17 @@ function ScoreCard({
           <Metric label="Shiokest" value={formatDistance(score.paths.sheltered_m)} />
           <Metric label="Shortest" value={formatDistance(score.paths.shortest_m)} />
           <Metric label="Extra walk" value={extraWalkLabel} />
-          <Metric label="Detour" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
+          <Metric label="Extra vs shortest" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
           <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
           <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
           <Metric label="Shade proxy" value={formatPercent(Math.round((score.paths.shade_ratio ?? 0) * 100))} />
         </div>
       )}
 
-      {score.exposure_gaps && score.exposure_gaps.length > 0 && (
+      {exposureGaps.length > 0 && (
         <div className={styles.gapList}>
           <h3>Exposed gaps</h3>
-          {score.exposure_gaps.slice(0, 3).map((gap, index) => (
+          {exposureGaps.slice(0, 3).map((gap, index) => (
             <div key={`${gap.label}-${index}`} className={styles.gapItem}>
               <strong>{formatDistance(gap.len_m)}</strong>
               <span>{exposureGapCopy(gap.len_m, index)}</span>
