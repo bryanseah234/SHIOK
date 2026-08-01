@@ -851,7 +851,7 @@ export default function Home() {
     if (directPostal) {
       await loadSelection({
         BUILDING: `Postal ${directPostal}`,
-        ROAD_NAME: "Direct lookup",
+        ROAD_NAME: "",
         POSTAL: directPostal,
         LATITUDE: "",
         LONGITUDE: "",

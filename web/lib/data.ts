@@ -84,9 +84,8 @@ export async function fetchTransitPois(): Promise<TransitPoiCollection> {
 // ---------------------------------------------------------------------------
 // Score records
 // The pipeline shards scores by planning-area into files named by planning
-// area slug (e.g. "ANG_MO_KIO.json").  For the mock we use a single area
-// file that holds all five test postals.  fetchScoreForPostal searches every
-// area file via the area-to-postals index; in mock mode the index is trivial.
+// area slug (e.g. "ANG_MO_KIO.json"). fetchScoreForPostal uses prefix indexes
+// first, then falls back to the full area-to-postals index for older bundles.
 // ---------------------------------------------------------------------------
 
 /** Area-index maps area-slug → [postal, …] so we can look up which file to fetch. */
