@@ -143,18 +143,19 @@ After the limit resets, deploy the pending local bundle through the
 bundle-aware helper rather than raw `vercel deploy`:
 
 ```powershell
-.\scripts\deploy-production.bat -DataBundle generated_20260801_165500
-.\scripts\activate-data-bundle.bat -DataBundle generated_20260801_165500
-.\scripts\preflight-production.bat -SkipNetworkPreflight
-git add web\data-bundle.json
-git commit -m "data: activate full rescore bundle"
-git push origin main
+.\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction
 ```
 
 Use raw `vercel deploy` only for code-only manual deploys where
 `web/data-bundle.json` already points at a bundle that is reachable in
 production. New generated bundles must go through `deploy-production.bat`
 because it stages the otherwise ignored `web/public/data/<bundle>` directory.
+
+To see the full sequence without deploying:
+
+```powershell
+.\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -PlanOnly
+```
 
 ## Lookup Transfer Check
 
