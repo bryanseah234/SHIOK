@@ -423,6 +423,16 @@ def build_report(
     }
 
 
+def summarize_state_report(report: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "bundle": report["bundle"],
+        "manifest_record_count": report["manifest_record_count"],
+        "state_counts": report["state_counts"],
+        "no_transit_count": report["no_transit_in_range"]["count"],
+        "not_yet_count": report["not_yet_scored"]["count"],
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Fast audit of the current deployed score bundle.")
     parser.add_argument("--bundle-dir", type=Path, default=None)
@@ -430,15 +440,24 @@ def main() -> int:
     parser.add_argument("--replay-limit", type=int, default=30)
     parser.add_argument("--network", type=Path, default=DEFAULT_NETWORK)
     parser.add_argument("--postal-universe", type=Path, default=DEFAULT_UNIVERSE)
+    parser.add_argument(
+        "--state-only",
+        action="store_true",
+        help="Print current bundle state counts without writing a QA report.",
+    )
     args = parser.parse_args()
 
     bundle_dir = args.bundle_dir if args.bundle_dir is not None else active_bundle_dir()
     report = build_report(
         bundle_dir=bundle_dir,
-        replay_limit=max(0, int(args.replay_limit)),
+        replay_limit=0 if args.state_only else max(0, int(args.replay_limit)),
         network_path=args.network,
         postal_universe_path=args.postal_universe,
     )
+    if args.state_only:
+        print(json.dumps(summarize_state_report(report), indent=2, sort_keys=True))
+        return 0
+
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
     print(

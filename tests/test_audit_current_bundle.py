@@ -1,4 +1,4 @@
-from scripts.audit_current_bundle import sample_postals
+from scripts.audit_current_bundle import sample_postals, summarize_state_report
 
 
 def _record(
@@ -55,3 +55,24 @@ def test_sample_postals_tops_up_when_direct_bus_bucket_is_empty():
 
     assert len(selected) == 12
     assert len(set(selected)) == 12
+
+
+def test_summarize_state_report_keeps_only_operator_counts():
+    summary = summarize_state_report(
+        {
+            "bundle": "generated_example",
+            "manifest_record_count": 124032,
+            "state_counts": {"SCORED": 2, "NOT_YET_SCORED": 1},
+            "not_yet_scored": {"count": 1, "samples": [{"postal": "999999"}]},
+            "no_transit_in_range": {"count": 3, "samples": [{"postal": "888888"}]},
+            "scored": {"count": 2},
+        }
+    )
+
+    assert summary == {
+        "bundle": "generated_example",
+        "manifest_record_count": 124032,
+        "state_counts": {"SCORED": 2, "NOT_YET_SCORED": 1},
+        "no_transit_count": 3,
+        "not_yet_count": 1,
+    }
