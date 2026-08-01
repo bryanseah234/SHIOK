@@ -145,3 +145,60 @@ Current public-source search still supports the same launch stance:
 Decision remains unchanged: ship the 124,032-record source-derived universe
 honestly, do not brute-force OneMap, and treat full canonical coverage as a data
 licensing/source-acquisition problem rather than an engineering shortcut.
+
+## 2026-08-01 Overture Addresses Candidate Probe
+
+Overture Maps Addresses is the strongest new no-cost candidate found so far,
+but it is not a drop-in solution for claiming canonical ~140k postal coverage.
+
+Source:
+
+- Overture Addresses docs list Singapore at 142,210 address rows in the July
+  2026 coverage table.
+- Release path probed locally:
+  `s3://overturemaps-us-west-2/release/2026-07-22.0/theme=addresses/type=address/*`
+- Overture marks the Addresses theme Alpha and documents address IDs as
+  unstable; source attribution for SG samples is
+  `OpenAddresses/Singapore Land Authority`.
+
+Local DuckDB probe on 2026-08-01:
+
+```text
+rows=142210
+unique_six_digit_postcodes=123883
+missing_postcode_rows=0
+bbox=(103.61080169677734, 1.2073525190353394,
+      104.05919647216797, 1.4701491594314575)
+```
+
+Comparison against
+`processed/postal_universe_candidate_full_registered_geocoded.parquet`:
+
+```text
+overture_unique_postcodes=123883
+current_unique_postcodes=124032
+intersection=122196
+new_from_overture=1687
+current_missing_from_overture=1836
+```
+
+Samples of Overture-only postcodes:
+
+```text
+018895, 018963, 018970, 019916, 019917, 019921, 019927, 019933,
+019960, 019964, 038965, 039953, 039969, 059828, 059829, 059937,
+059964, 069834, 069835, 069846
+```
+
+Decision:
+
+- Promote Overture Addresses to a reviewed candidate source, not production
+  source-of-record yet.
+- It can improve QA and add about 1,687 candidate postcodes, but by unique
+  postcode count it is slightly smaller than the current source-derived
+  universe and misses 1,836 current postcodes.
+- Before using it in a score batch, build a gated ingestion step that archives
+  the raw SG subset under `raw/<sha256>/`, records query/release/provenance,
+  dedupes by six-digit postcode, compares coordinate deltas against current
+  records, and sample-validates coordinates.
+- Do not claim full canonical ~140k coverage from Overture alone.

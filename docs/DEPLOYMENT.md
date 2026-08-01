@@ -41,6 +41,17 @@ deploy to Vercel. For a faster UI-only check, skip the network gates:
 .\scripts\preflight-production.bat -SkipNetworkPreflight
 ```
 
+For a compact JSON status report that does not run `npm build`, score postals,
+or deploy, use:
+
+```powershell
+uv run python run.py readiness
+```
+
+This reports the active bundle state counts, static artifact validation, island
+network QA, batch-plan gates, Vercel root-directory/data strategy, and known
+incorporated versus pending data features.
+
 ## Vercel Git Auto-Deploy
 
 The Vercel project root directory must be `web`.

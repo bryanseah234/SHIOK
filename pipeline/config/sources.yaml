@@ -128,3 +128,11 @@ sources:
     max_bytes: "2GB"
     refresh: "manual"
     notes: "Geofabrik extract for T1.1 pedestrian graph conflation"
+
+  overture_addresses_sg_candidate:
+    name: "Overture Maps Addresses — Singapore candidate"
+    kind: "overture_geoparquet_candidate"
+    url: "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=addresses/type=address/*"
+    verified: "2026-08-01"
+    refresh: "monthly"
+    notes: "Candidate postal-universe QA/expansion source only. Overture addresses are Alpha; SG probe found 142,210 address rows, 123,883 unique six-digit postcodes, 1,687 new vs current universe, and 1,836 current postcodes missing from Overture. Promote only after raw subset archive, hash/provenance, attribution, dedupe, and sample-coordinate validation."
