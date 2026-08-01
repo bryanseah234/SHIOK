@@ -146,6 +146,16 @@ bundle-aware helper rather than raw `vercel deploy`:
 .\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction
 ```
 
+Before running the production release, use the local launch-check wrapper to run
+the repeatable checks without deploying:
+
+```powershell
+.\scripts\launch-check.bat -DataBundle generated_20260801_165500
+```
+
+It runs Python tests, web tests, a fresh-bundle build, readiness, scored/no-score
+browser smokes, and a safe release plan. It never passes `-ConfirmProduction`.
+
 Use raw `vercel deploy` only for code-only manual deploys where
 `web/data-bundle.json` already points at a bundle that is reachable in
 production. New generated bundles must go through `deploy-production.bat`

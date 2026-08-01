@@ -54,4 +54,19 @@ describe("deployment packaging", () => {
     expect(script).toContain("release=not_started");
     expect(script).toContain("-ConfirmProduction");
   });
+
+  it("keeps launch check local-only and broad enough for release rehearsal", () => {
+    const script = readFileSync(join(__dirname, "../../../scripts/launch-check.ps1"), "utf-8");
+
+    expect(script).toContain("deploy=false");
+    expect(script).toContain("uv run python run.py test");
+    expect(script).toContain("npm --prefix web test");
+    expect(script).toContain("npm --prefix web run build");
+    expect(script).toContain("uv run python run.py readiness");
+    expect(script).toContain("--expected-state no_transit");
+    expect(script).toContain("--expected-state not_yet_scored");
+    expect(script).toContain("Release plan only");
+    expect(script).not.toContain("deploy-production");
+    expect(script).not.toContain("vercel deploy");
+  });
 });

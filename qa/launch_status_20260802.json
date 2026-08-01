@@ -34,7 +34,7 @@
   },
   "verified_checks": {
     "python_tests": "155 passed",
-    "web_tests": "28 passed",
+    "web_tests": "29 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
@@ -45,6 +45,7 @@
     "feedback_route_zoom_reset_regression_guard": "passed",
     "transit_poi_popup_static_info_regression_tests": "passed",
     "pending_bundle_readiness_artifact": "qa/readiness_pending_bundle_20260802_0424.json passed",
+    "local_launch_check_wrapper_full_smoke": "20260802_043136 passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [
