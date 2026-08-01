@@ -41,6 +41,7 @@ describe("deployment packaging", () => {
     expect(script).toContain("Input.dispatchKeyEvent");
     expect(script).toContain("keyboard_search_used");
     expect(script).toContain("pending_badge_absent");
+    expect(script).toContain("not_yet_copy_distinct_from_no_transit");
     expect(script).toContain("score_has_max_denominator");
     expect(script).toContain("map_has_text_equivalent");
     expect(script).toContain("short_mobile_card_bottom_visible");

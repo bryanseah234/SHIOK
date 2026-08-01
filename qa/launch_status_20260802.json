@@ -40,6 +40,7 @@
     "routed_browser_smoke_560234": "passed",
     "multi_postal_keyboard_browser_smoke": "560231, 560234, 570234 passed",
     "no_transit_keyboard_browser_smoke": "567754 passed",
+    "not_yet_scored_keyboard_browser_smoke": "000104 passed",
     "release_helper_safe_plan_mode": "passed",
     "feedback_route_zoom_reset_regression_guard": "passed",
     "transit_poi_popup_static_info_regression_tests": "passed",

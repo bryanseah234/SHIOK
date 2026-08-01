@@ -27,6 +27,7 @@ Root directory: `web`
 - Routed browser smoke for 560234: passed
 - Multi-postal keyboard browser smoke for 560231, 560234, 570234: passed
 - No-transit keyboard browser smoke for 567754: passed
+- Not-yet-scored keyboard browser smoke for 000104: passed
 - Release helper safe-plan mode: passed
 - Feedback-route drawing zoom-reset regression guard: passed
 - Transit POI popup static-info regression tests: passed

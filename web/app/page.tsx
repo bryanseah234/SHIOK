@@ -628,6 +628,8 @@ function ScoreCard({
   const stationName =
     score.state === "NO_TRANSIT_IN_RANGE"
       ? `No routed ${transitModeLabel(transitMode)} within range`
+      : score.state === "NOT_YET_SCORED"
+        ? "Location Evidence Missing"
       : toProperCase(score.best_node?.name ?? "No transit found nearby");
   const reasons = scoreReasons(score, transitMode);
   const stateNote = scoreStateNote(score, transitMode);

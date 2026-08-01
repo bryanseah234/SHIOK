@@ -375,7 +375,12 @@ function collectChecks(summary, postal, inputMode, expectedState) {
     return { ...checks, no_transit_state_present: hasNoTransit };
   }
   if (expectedState === "not_yet_scored") {
-    return { ...checks, not_yet_scored_state_present: hasNotYetScored };
+    return {
+      ...checks,
+      not_yet_scored_state_present: hasNotYetScored,
+      not_yet_copy_distinct_from_no_transit:
+        !summary.cardText.includes("No Transit Found Nearby") && !summary.cardText.includes("No routed transit"),
+    };
   }
   return checks;
 }
