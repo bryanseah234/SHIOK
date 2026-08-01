@@ -310,3 +310,26 @@ Add a static-first "Suggest better route" flow:
 - Promote it only through a general model fix or audited correction layer.
 
 No postal-specific score override.
+
+Approved correction workflow:
+
+1. Review a draft file such as
+   `qa/draft_audited_shelter_corrections_amk_20260801_osm_covered_values_network.geojson`
+   in QGIS/geojson.io against source evidence.
+2. Promote only verified `review_ready_not_scoring` features with an explicit
+   audit id, reviewer, and evidence note:
+
+```powershell
+uv run python scripts/promote_audited_shelter_corrections.py `
+  --draft qa/draft_audited_shelter_corrections_amk_20260801_osm_covered_values_network.geojson `
+  --approve feedback-560231-segment-1-hdb-source-overlap-review `
+  --reviewer owner `
+  --evidence-note "Reviewed against source-backed HDB/covered edges on map"
+```
+
+3. Rebuild the network, rerun network QA, rerun the AMK route-feedback audit,
+   then run a targeted score refresh before any full batch.
+
+The script refuses blocked insufficient-overlap candidates and keeps approvals
+in `data/audited_shelter_corrections.geojson`, which the network builder ingests
+only when `status=approved`.
