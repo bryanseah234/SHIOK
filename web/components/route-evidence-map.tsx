@@ -31,6 +31,7 @@ const ONE_MAP_TILE_BOUNDS = [103.596, 1.1443, 104.4309, 1.4835] as [number, numb
 
 const ONE_MAP_STYLE: StyleSpecification = {
   version: 8,
+  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
   sources: {
     onemap: {
       type: "raster",
@@ -201,9 +202,35 @@ function poiPopupHtml(properties: Record<string, unknown>): string {
 }
 
 function cleanPoiProperties(properties: Record<string, unknown>): Record<string, string | number> {
-  return Object.fromEntries(
+  const clean = Object.fromEntries(
     Object.entries(properties).filter(([, value]) => typeof value === "string" || typeof value === "number")
   ) as Record<string, string | number>;
+  const label = poiLabelText(properties);
+  return label ? { ...clean, label_text: label } : clean;
+}
+
+function poiLabelText(properties: Record<string, unknown>): string | null {
+  const kind = asPopupText(properties.kind);
+  if (kind === "mrt_station") {
+    const label = asPopupText(properties.label);
+    if (label) return toProperCase(label);
+    const name = asPopupText(properties.name);
+    return name ? toProperCase(name.replace(/\s+(MRT|LRT)\s+STATION$/i, "")) : null;
+  }
+
+  if (kind === "mrt_exit") {
+    const exit = asPopupText(properties.exit);
+    if (exit) return exit;
+  }
+
+  if (kind === "bus_stop") {
+    const name = asPopupText(properties.name);
+    if (name) return toProperCase(name);
+    const code = asPopupText(properties.code);
+    return code ? `Bus ${code}` : null;
+  }
+
+  return null;
 }
 
 function transitPoiCollection(pois: TransitPoiCollection): PointFeatureCollection {
@@ -339,6 +366,32 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
+  if (!map.getLayer("mrt-station-label")) {
+    map.addLayer({
+      id: "mrt-station-label",
+      type: "symbol",
+      source: "transit-pois",
+      minzoom: 11.2,
+      filter: ["==", ["get", "kind"], "mrt_station"],
+      layout: {
+        "text-field": ["get", "label_text"],
+        "text-font": ["Open Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 11.2, 10, 15, 12],
+        "text-offset": [0, 1.05],
+        "text-anchor": "top",
+        "text-max-width": 9,
+        "text-padding": 4,
+        "text-optional": true,
+      },
+      paint: {
+        "text-color": "#214861",
+        "text-halo-color": "#f6faf8",
+        "text-halo-width": 1.3,
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 11.2, 0.72, 13, 0.94],
+      },
+    });
+  }
+
   if (!map.getLayer("mrt-exit-dot")) {
     map.addLayer({
       id: "mrt-exit-dot",
@@ -356,6 +409,32 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
+  if (!map.getLayer("mrt-exit-label")) {
+    map.addLayer({
+      id: "mrt-exit-label",
+      type: "symbol",
+      source: "transit-pois",
+      minzoom: 15.1,
+      filter: ["==", ["get", "kind"], "mrt_exit"],
+      layout: {
+        "text-field": ["get", "label_text"],
+        "text-font": ["Open Sans Regular"],
+        "text-size": 10,
+        "text-offset": [0.65, 0],
+        "text-anchor": "left",
+        "text-max-width": 5,
+        "text-padding": 2,
+        "text-optional": true,
+      },
+      paint: {
+        "text-color": "#2f5f8f",
+        "text-halo-color": "#f6faf8",
+        "text-halo-width": 1.2,
+        "text-opacity": 0.88,
+      },
+    });
+  }
+
   if (!map.getLayer("bus-stop-dot")) {
     map.addLayer({
       id: "bus-stop-dot",
@@ -369,6 +448,32 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "circle-opacity": ["interpolate", ["linear"], ["zoom"], 13.8, 0.58, 16, 0.8],
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
+      },
+    });
+  }
+
+  if (!map.getLayer("bus-stop-label")) {
+    map.addLayer({
+      id: "bus-stop-label",
+      type: "symbol",
+      source: "transit-pois",
+      minzoom: 16,
+      filter: ["==", ["get", "kind"], "bus_stop"],
+      layout: {
+        "text-field": ["get", "label_text"],
+        "text-font": ["Open Sans Regular"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 16, 9, 18, 10.5],
+        "text-offset": [0.55, 0],
+        "text-anchor": "left",
+        "text-max-width": 8,
+        "text-padding": 2,
+        "text-optional": true,
+      },
+      paint: {
+        "text-color": "#36594f",
+        "text-halo-color": "#f6faf8",
+        "text-halo-width": 1.1,
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 16, 0.68, 18, 0.9],
       },
     });
   }
