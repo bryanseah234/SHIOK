@@ -34,7 +34,7 @@
   },
   "verified_checks": {
     "python_tests": "155 passed",
-    "web_tests": "25 passed",
+    "web_tests": "28 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
@@ -42,6 +42,7 @@
     "no_transit_keyboard_browser_smoke": "567754 passed",
     "release_helper_safe_plan_mode": "passed",
     "feedback_route_zoom_reset_regression_guard": "passed",
+    "transit_poi_popup_static_info_regression_tests": "passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [

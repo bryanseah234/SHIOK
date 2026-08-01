@@ -21,7 +21,7 @@ Root directory: `web`
 ## Verified Checks
 
 - Python tests: 155 passed
-- Web tests: 25 passed
+- Web tests: 28 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
@@ -29,6 +29,7 @@ Root directory: `web`
 - No-transit keyboard browser smoke for 567754: passed
 - Release helper safe-plan mode: passed
 - Feedback-route drawing zoom-reset regression guard: passed
+- Transit POI popup static-info regression tests: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command
