@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   fetchGeomForPostal,
   fetchManifest,
   fetchScoreForPostal,
+  fetchTransitPois,
   fetchTransitPoisForGeom,
 } from "../lib/data";
 import type {
@@ -728,7 +729,8 @@ export default function Home() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [primary, setPrimary] = useState<LoadedSelection | null>(null);
-  const [transitPois, setTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
+  const [baseTransitPois, setBaseTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
+  const [routeTransitPois, setRouteTransitPois] = useState<TransitPoiCollection>({ type: "FeatureCollection", features: [] });
   const [transitMode, setTransitMode] = useState<TransitAccessMode>("best_transit");
   const [routeMode, setRouteMode] = useState<RouteDisplayMode>("shiokest");
   const [comfortMode, setComfortMode] = useState<ComfortMode>("balanced");
@@ -744,7 +746,18 @@ export default function Home() {
   const activeSelection = useMemo(() => selectionForTransitMode(primary, transitMode), [primary, transitMode]);
   const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
   const mapRouteMode = routeSame(activeSelection) ? "shiokest" : routeMode;
+  const mapTransitPois = routeTransitPois.features.length > 0 ? routeTransitPois : baseTransitPois;
   const showDetailOverlay = Boolean(primary);
+
+  useEffect(() => {
+    let active = true;
+    void fetchTransitPois().then((pois) => {
+      if (active) setBaseTransitPois(pois);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const loadSelection = async (result: SearchResult) => {
     const postal = normalizePostal(result.POSTAL);
@@ -754,7 +767,7 @@ export default function Home() {
     }
     setLoading(true);
     setError(null);
-    setTransitPois({ type: "FeatureCollection", features: [] });
+    setRouteTransitPois({ type: "FeatureCollection", features: [] });
     try {
       const lat = Number.parseFloat(result.LATITUDE);
       const lng = Number.parseFloat(result.LONGITUDE);
@@ -766,7 +779,7 @@ export default function Home() {
       const nearbyTransitPois = await fetchTransitPoisForGeom(geom);
       setManifest(loadedManifest);
       setPrimary({ result: { ...result, POSTAL: postal }, score, geom });
-      setTransitPois(nearbyTransitPois);
+      setRouteTransitPois(nearbyTransitPois);
       setTransitMode("best_transit");
       setRouteMode("shiokest");
       setFeedbackEnabled(false);
@@ -862,7 +875,7 @@ export default function Home() {
       <RouteEvidenceMap
         routes={mapRoutes}
         mode={mapRouteMode}
-        transitPois={transitPois}
+        transitPois={mapTransitPois}
         feedbackEnabled={feedbackEnabled}
         feedbackPoints={feedbackPoints}
         onFeedbackPoint={addFeedbackPoint}

@@ -67,4 +67,30 @@ describe("fetchTransitPoisForGeom", () => {
       { cache: "no-store" }
     );
   });
+
+  it("loads the island transit POI collection for the default map", async () => {
+    vi.stubEnv("NEXT_PUBLIC_DATA_BASE", "/data/generated/");
+    const station = {
+      type: "Feature",
+      geometry: { type: "Point", coordinates: [103.85, 1.29] },
+      properties: { id: "NS1", kind: "mrt_station", name: "Test MRT" },
+    };
+    const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
+      const url = bareUrl(input);
+      if (url.endsWith("/transit/pois.json")) {
+        return jsonResponse(true, { type: "FeatureCollection", features: [station] });
+      }
+      return jsonResponse(false);
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const { fetchTransitPois } = await import("../data");
+    const pois = await fetchTransitPois();
+
+    expect(pois.features).toEqual([station]);
+    expect(fetchMock).toHaveBeenCalledWith(
+      expect.stringMatching(/^\/data\/generated\/transit\/pois\.json\?v=/),
+      { cache: "no-store" }
+    );
+  });
 });
