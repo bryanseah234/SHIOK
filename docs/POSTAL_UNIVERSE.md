@@ -1,6 +1,6 @@
 # Postal Universe Source Policy
 
-Last updated: 2026-08-01.
+Last updated: 2026-08-02.
 
 The project still does not have an authoritative free all-Singapore postal-code
 download from SingPost or SLA. `pipeline.postal_universe` therefore builds
@@ -11,7 +11,7 @@ coverage tradeoff.
 
 | Mode | Sources | Intended Use |
 | --- | --- | --- |
-| `official_current` | Current HDB Existing Building + current SLA Dwelling Information + current OSM `addr:postcode` inside Singapore planning-boundary bbox | Conservative current open-data baseline |
+| `official_current` | Current HDB Existing Building + current SLA Dwelling Information + current URA No of Dwelling Units + current OSM `addr:postcode` inside Singapore planning-boundary bbox | Conservative current open-data baseline |
 | `candidate_full_registered` | `official_current` + OneMap-derived 2020 dump + ACRA registered/live postals + Other-UEN registered/live postals | Recommended candidate for human review before full batch |
 | `candidate_full_all` | `official_current` + OneMap-derived 2020 dump + all ACRA/Other-UEN postals, including deregistered entities | Coverage stress test, not recommended as default |
 
@@ -53,6 +53,28 @@ Active web bundle `generated_20260801_direct_bus_all_targeted`
   300 m direct radius were patched to `SCORED_PARTIAL` with a straight-line bus
   estimate and untrusted rain/heat/crossing subscores left null.
 
+## Evidence From 2026-08-02 URA Probe
+
+`uv run python run.py postal-universe --mode official_current --download-missing --output tmp\postal_universe_official_current_ura_probe.parquet --summary tmp\postal_universe_official_current_ura_probe_summary.json`
+
+- total unique postals: 105,462
+- ready to score: 105,462
+- needs geocode: 0
+- HDB Existing Building: 13,436 valid unique postals
+- SLA Dwelling Information: 1,420 valid unique postals
+- URA No of Dwelling Units: 83,541 valid unique postals
+- OSM `addr:postcode`: 25,629 valid unique postals
+- source-only postals from URA No of Dwelling Units: 75,947
+
+`uv run python run.py postal-universe --mode candidate_full_registered --download-missing --output tmp\postal_universe_candidate_full_registered_ura_probe.parquet --summary tmp\postal_universe_candidate_full_registered_ura_probe_summary.json`
+
+- total unique postals: 124,443
+- ready to score: 123,868
+- needs geocode: 575
+- source-only postals from URA No of Dwelling Units: 238
+- net gain versus the 124,032-record production candidate universe: 411 postals
+- conclusion: URA substantially strengthens official-current dwelling coverage, but it does not close the canonical ~140k target.
+
 `uv run python run.py postal-universe --mode candidate_full_all --download-missing`
 
 - total unique postals: 132,174
@@ -66,6 +88,11 @@ Active web bundle `generated_20260801_direct_bus_all_targeted`
   point records with `POSTAL_CODE`, `HOUSE_BLK_NO`, `STREET_NAME`, dwelling
   type, and unit counts. It adds private-dwelling coverage, but it is not a
   complete all-address universe.
+- URA No of Dwelling Units is an official data.gov.sg/URA GeoJSON containing
+  point records with `POSTALCODE`, `BLK_NO`, `PROJ_NAME`, `PROP_TYPE`,
+  `X_ADDR`, `Y_ADDR`, and dwelling-unit count. It adds a large number of
+  official dwelling postals, especially private/landed postals, but it still
+  is not a complete all-address universe.
 - The OneMap-derived 2020 dump is a third-party repository snapshot:
   `https://github.com/xuancong84/singapore-address-heatmap`. Its README states
   that it was retrieved from OneMap on 10 Jun 2020 and is governed by the OneMap

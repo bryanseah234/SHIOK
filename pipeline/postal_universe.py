@@ -8,11 +8,12 @@ import gzip
 import hashlib
 import json
 import re
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from functools import lru_cache
 from pathlib import Path
-from typing import Any, Iterable, Literal, cast
+from typing import Any, Literal, cast
 
 import geopandas as gpd
 import httpx
@@ -49,6 +50,9 @@ OVERTURE_ADDRESSES_URL = (
 SLA_DWELLING_SOURCE_KEY = "sla_dwelling_information"
 SLA_DWELLING_DATASET_ID = "d_e4495201ba4f77fa2ef9855bad6d2cd1"
 SLA_DWELLING_RAW_NAME = "sla_dwelling_information.geojson"
+URA_DWELLING_SOURCE_KEY = "ura_no_dwelling_units"
+URA_DWELLING_DATASET_ID = "d_be71daeab5930f96b90ad2857454d876"
+URA_DWELLING_RAW_NAME = "ura_no_dwelling_units.geojson"
 OFFICIAL_CURRENT_PARQUET = PROCESSED_DIR / "postal_universe_official_current.parquet"
 OFFICIAL_CURRENT_SUMMARY = PROCESSED_DIR / "postal_universe_official_current_summary.json"
 
@@ -160,7 +164,7 @@ def load_manifest() -> dict[str, Any]:
     with open(MANIFEST_PATH, "r", encoding="utf-8") as f:
         data: Any = json.load(f)
     if not isinstance(data, dict):
-        raise ValueError(f"expected JSON object in {MANIFEST_PATH}")
+        raise TypeError(f"expected JSON object in {MANIFEST_PATH}")
     return cast(dict[str, Any], data)
 
 
@@ -172,7 +176,7 @@ def manifest_sha256(source_key: str) -> str | None:
 
 def save_manifest(manifest: dict[str, Any]) -> None:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    manifest["generated_at"] = datetime.now(timezone.utc).isoformat()
+    manifest["generated_at"] = datetime.now(UTC).isoformat()
     with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
         json.dump(manifest, f, indent=2, sort_keys=True)
 
@@ -185,7 +189,9 @@ def raw_file_from_manifest(source_key: str, filename: str) -> Path | None:
         path = RAW_DIR / sha / filename
         if path.is_file():
             return path
-    matches = sorted(RAW_DIR.glob(f"*/{filename}"))
+    matches = sorted(
+        path for path in RAW_DIR.glob(f"*/{filename}") if path.parent.resolve() != TMP_DIR.resolve()
+    )
     return matches[0] if matches else None
 
 
@@ -200,6 +206,7 @@ def source_priority(source_key: str) -> int:
     return {
         "hdb_existing_building": 10,
         SLA_DWELLING_SOURCE_KEY: 15,
+        URA_DWELLING_SOURCE_KEY: 18,
         "osm_addr_postcode": 20,
         ONEMAP_2020_SOURCE_KEY: 30,
         OVERTURE_ADDRESSES_SOURCE_KEY: 35,
@@ -235,7 +242,7 @@ def write_download_to_hashed_raw(
         "bytes": len(content),
         "etag": None,
         "last_modified": None,
-        "fetched_at": datetime.now(timezone.utc).isoformat(),
+        "fetched_at": datetime.now(UTC).isoformat(),
     }
     save_manifest(manifest)
     return target
@@ -397,6 +404,46 @@ def ensure_sla_dwelling_raw(download_missing: bool) -> Path:
         )
 
 
+def ensure_ura_dwelling_raw(download_missing: bool) -> Path:
+    path = raw_file_from_manifest(URA_DWELLING_SOURCE_KEY, URA_DWELLING_RAW_NAME)
+    if path is not None:
+        return path
+
+    tmp_path = TMP_DIR / "ura_no_dwelling_units.geojson"
+    if tmp_path.is_file():
+        return write_download_to_hashed_raw(
+            URA_DWELLING_SOURCE_KEY,
+            "URA No of Dwelling Units",
+            f"https://api-open.data.gov.sg/v1/public/api/datasets/{URA_DWELLING_DATASET_ID}/initiate-download",
+            URA_DWELLING_RAW_NAME,
+            tmp_path.read_bytes(),
+        )
+
+    if not download_missing:
+        raise FileNotFoundError(
+            f"{URA_DWELLING_SOURCE_KEY} not in raw manifest; rerun with --download-missing"
+        )
+
+    initiate_url = f"https://api-open.data.gov.sg/v1/public/api/datasets/{URA_DWELLING_DATASET_ID}/initiate-download"
+    with httpx.Client(timeout=60.0, follow_redirects=True, headers={"User-Agent": USER_AGENT}) as c:
+        initiate = c.get(initiate_url)
+        initiate.raise_for_status()
+        download_url = str(initiate.json().get("data", {}).get("url", ""))
+        if not download_url:
+            raise ValueError(
+                f"data.gov.sg did not return a download URL for {URA_DWELLING_DATASET_ID}"
+            )
+        response = c.get(download_url)
+        response.raise_for_status()
+        return write_download_to_hashed_raw(
+            URA_DWELLING_SOURCE_KEY,
+            "URA No of Dwelling Units",
+            initiate_url,
+            URA_DWELLING_RAW_NAME,
+            response.content,
+        )
+
+
 def lat_lon_to_xy(lat: float, lon: float) -> tuple[float, float]:
     x, y = wgs84_to_svy21_transformer().transform(lon, lat)
     return float(x), float(y)
@@ -431,7 +478,7 @@ def iter_onemap_2020_rows(path: Path) -> tuple[list[SourceRow], SourceStats]:
     with gzip.open(path, "rt", encoding="utf-8") as f:
         payload: Any = json.load(f)
     if not isinstance(payload, list):
-        raise ValueError(f"expected list in {path}")
+        raise TypeError(f"expected list in {path}")
 
     for item in payload:
         raw_records += 1
@@ -560,6 +607,68 @@ def iter_sla_dwelling_rows(path: Path) -> tuple[list[SourceRow], SourceStats]:
         path=display_path(path),
         sha256=sha256_file(path),
         url=f"https://data.gov.sg/datasets/{SLA_DWELLING_DATASET_ID}/view",
+    )
+
+
+def iter_ura_dwelling_rows(path: Path) -> tuple[list[SourceRow], SourceStats]:
+    gdf = gpd.read_file(path).to_crs("EPSG:3414")
+    rows: list[SourceRow] = []
+    seen: set[str] = set()
+    emitted: set[str] = set()
+    coordinate_postals: set[str] = set()
+    for _, row in gdf.iterrows():
+        postal = normalize_postal_code(row.get("POSTALCODE"))
+        if postal is None or row.geometry is None or row.geometry.is_empty:
+            continue
+        seen.add(postal)
+
+        x: float
+        y: float
+        try:
+            x = float(row.get("X_ADDR"))
+            y = float(row.get("Y_ADDR"))
+        except (TypeError, ValueError):
+            point = row.geometry.representative_point()
+            x = float(point.x)
+            y = float(point.y)
+
+        lat, lon = xy_to_lat_lon(x, y)
+        if not valid_singapore_lat_lon(lat, lon):
+            point = row.geometry.representative_point()
+            lat, lon = xy_to_lat_lon(float(point.x), float(point.y))
+            x = float(point.x)
+            y = float(point.y)
+        if not valid_singapore_lat_lon(lat, lon):
+            continue
+
+        coordinate_postals.add(postal)
+        if postal in emitted:
+            continue
+        emitted.add(postal)
+        block = str(row.get("BLK_NO", "")).strip()
+        project = str(row.get("PROJ_NAME", "")).strip()
+        prop_type = str(row.get("PROP_TYPE", "")).strip()
+        rows.append(
+            SourceRow(
+                postal_code=postal,
+                source_key=URA_DWELLING_SOURCE_KEY,
+                priority=source_priority(URA_DWELLING_SOURCE_KEY),
+                lat=lat,
+                lon=lon,
+                x=x,
+                y=y,
+                address=" ".join(part for part in (block, project) if part) or None,
+                building=project or prop_type or None,
+            )
+        )
+    return rows, SourceStats(
+        source_key=URA_DWELLING_SOURCE_KEY,
+        raw_records=len(gdf),
+        valid_unique_postals=len(seen),
+        records_with_coordinates=len(coordinate_postals),
+        path=display_path(path),
+        sha256=sha256_file(path),
+        url=f"https://data.gov.sg/datasets/{URA_DWELLING_DATASET_ID}/view",
     )
 
 
@@ -852,6 +961,7 @@ def official_current_cache() -> tuple[list[SourceRow], list[SourceStats]] | None
     expected_hashes = {
         "hdb_existing_building": manifest_sha256("building_points"),
         SLA_DWELLING_SOURCE_KEY: manifest_sha256(SLA_DWELLING_SOURCE_KEY),
+        URA_DWELLING_SOURCE_KEY: manifest_sha256(URA_DWELLING_SOURCE_KEY),
         "osm_addr_postcode": manifest_sha256("osm_extract"),
     }
     for source_key, expected_hash in expected_hashes.items():
@@ -928,6 +1038,19 @@ def build_universe(
         print(
             f"[postal-universe] SLA Dwelling: {sla_dwelling_stats.valid_unique_postals} unique, "
             f"{sla_dwelling_stats.records_with_coordinates} with coordinates",
+            flush=True,
+        )
+
+        print("[postal-universe] loading URA dwelling-unit postals...", flush=True)
+        ura_dwelling_rows, ura_dwelling_stats = iter_ura_dwelling_rows(
+            ensure_ura_dwelling_raw(download_missing)
+        )
+        all_rows.extend(ura_dwelling_rows)
+        stats.append(ura_dwelling_stats)
+        print(
+            f"[postal-universe] URA Dwelling Units: "
+            f"{ura_dwelling_stats.valid_unique_postals} unique, "
+            f"{ura_dwelling_stats.records_with_coordinates} with coordinates",
             flush=True,
         )
 
@@ -1020,10 +1143,10 @@ def build_universe(
         )
 
     summary = {
-        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "generated_at": datetime.now(UTC).isoformat(),
         "mode": mode,
         "acra_policy": acra_policy,
-        "total_unique_postals": int(len(df)),
+        "total_unique_postals": len(df),
         "ready_to_score": int((df["status"] == "READY_TO_SCORE").sum()) if not df.empty else 0,
         "needs_geocode": int((df["status"] == "NEEDS_GEOCODE").sum()) if not df.empty else 0,
         "source_stats": [stat.as_dict() for stat in stats],

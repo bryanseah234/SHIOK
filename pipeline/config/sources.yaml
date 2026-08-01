@@ -80,6 +80,13 @@ sources:
     verified: "2026-07-27"
     notes: "data.gov.sg GeoJSON — point records with POSTAL_CODE, HOUSE_BLK_NO, STREET_NAME, D_TYPE, NO_OF_UNITS; resolved via initiate-download API (201 confirmed)"
 
+  ura_no_dwelling_units:
+    name: "URA No of Dwelling Units"
+    kind: "datagov_polldownload"
+    dataset_id: "d_be71daeab5930f96b90ad2857454d876"
+    verified: "2026-08-02"
+    notes: "data.gov.sg GeoJSON — point records with POSTALCODE, BLK_NO, PROJ_NAME, PROP_TYPE, X_ADDR, Y_ADDR, DU; official-current postal-universe expansion source with coordinates"
+
   planning_area_boundary:
     name: "Planning Area Boundaries (MP2019 No Sea)"
     kind: "datagov_polldownload"

@@ -6,20 +6,24 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from pipeline import postal_universe
 from pipeline.postal_universe import (
     ACRA_SOURCE_KEY,
     ONEMAP_2020_SOURCE_KEY,
     OTHER_UEN_SOURCE_KEY,
     OVERTURE_ADDRESSES_SOURCE_KEY,
     SLA_DWELLING_SOURCE_KEY,
+    URA_DWELLING_SOURCE_KEY,
     SourceRow,
     iter_acra_rows,
     iter_onemap_2020_rows,
-    iter_overture_address_candidate_rows,
     iter_other_uen_rows,
+    iter_overture_address_candidate_rows,
     iter_sla_dwelling_rows,
+    iter_ura_dwelling_rows,
     merge_source_rows,
     normalize_postal_code,
+    raw_file_from_manifest,
 )
 
 
@@ -197,6 +201,63 @@ def test_iter_sla_dwelling_rows_extracts_postal_coordinates(tmp_path: Path):
     assert rows[0].source_key == SLA_DWELLING_SOURCE_KEY
     assert rows[0].road_name == "OXFORD STREET"
     assert rows[0].address == "6 OXFORD STREET"
+
+
+def test_iter_ura_dwelling_rows_extracts_postal_coordinates(tmp_path: Path):
+    path = tmp_path / "ura_no_dwelling_units.geojson"
+    payload = {
+        "type": "FeatureCollection",
+        "name": "URA_DU_PD6_PT",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.861039199, 1.35854578]},
+                "properties": {
+                    "POSTALCODE": "555390",
+                    "BLK_NO": "45",
+                    "PROJ_NAME": "TAI HWAN GARDEN",
+                    "PROP_TYPE": "Landed",
+                    "X_ADDR": 31084.9837927,
+                    "Y_ADDR": 37846.6234373,
+                    "DU": 1,
+                },
+            },
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.849615, 1.275804635]},
+                "properties": {"POSTALCODE": "bad"},
+            },
+        ],
+    }
+    path.write_text(json.dumps(payload), encoding="utf-8")
+
+    rows, stats = iter_ura_dwelling_rows(path)
+
+    assert stats.source_key == URA_DWELLING_SOURCE_KEY
+    assert stats.raw_records == 2
+    assert stats.valid_unique_postals == 1
+    assert stats.records_with_coordinates == 1
+    assert rows[0].postal_code == "555390"
+    assert rows[0].source_key == URA_DWELLING_SOURCE_KEY
+    assert rows[0].building == "TAI HWAN GARDEN"
+    assert rows[0].address == "45 TAI HWAN GARDEN"
+
+
+def test_raw_file_from_manifest_ignores_tmp_fallback(monkeypatch, tmp_path: Path):
+    raw_dir = tmp_path / "raw"
+    tmp_dir = raw_dir / "tmp"
+    hashed_dir = raw_dir / ("a" * 64)
+    tmp_dir.mkdir(parents=True)
+    hashed_dir.mkdir()
+    (tmp_dir / "sample.geojson").write_text("tmp", encoding="utf-8")
+    (hashed_dir / "sample.geojson").write_text("hashed", encoding="utf-8")
+    monkeypatch.setattr(postal_universe, "RAW_DIR", raw_dir)
+    monkeypatch.setattr(postal_universe, "TMP_DIR", tmp_dir)
+    monkeypatch.setattr(postal_universe, "MANIFEST_PATH", raw_dir / "manifest.json")
+
+    assert raw_file_from_manifest("sample_source", "sample.geojson") == (
+        hashed_dir / "sample.geojson"
+    )
 
 
 def test_merge_source_rows_prefers_current_coordinates_and_keeps_source_membership():

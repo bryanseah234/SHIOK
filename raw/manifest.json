@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T21:23:07.501695+00:00",
+  "generated_at": "2026-08-01T21:49:20.977890+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -198,6 +198,15 @@
       "sha256": "2d518f326e0e76444722caa96e784b5b86f8767652a2f730417294f1b4c4f2b6",
       "source_name": "Train Station Codes and Chinese Names",
       "url_as_discovered": "https://datamall.lta.gov.sg/content/dam/datamall/datasets/Geospatial/Train%20Station%20Codes%20and%20Chinese%20Names.zip"
+    },
+    "ura_no_dwelling_units": {
+      "bytes": 38686242,
+      "etag": null,
+      "fetched_at": "2026-08-01T21:49:20.977890+00:00",
+      "last_modified": null,
+      "sha256": "9d249959b4010d00a7d91f8161f22188bbb0203a27185f91f46b41595f4884f0",
+      "source_name": "URA No of Dwelling Units",
+      "url_as_discovered": "https://api-open.data.gov.sg/v1/public/api/datasets/d_be71daeab5930f96b90ad2857454d876/initiate-download"
     }
   }
 }
