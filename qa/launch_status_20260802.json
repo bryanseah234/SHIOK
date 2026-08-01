@@ -34,10 +34,11 @@
   },
   "verified_checks": {
     "python_tests": "155 passed",
-    "web_tests": "22 passed",
+    "web_tests": "23 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
+    "keyboard_browser_smoke_560234": "passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [
