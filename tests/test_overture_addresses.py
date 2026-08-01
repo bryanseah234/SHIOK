@@ -40,6 +40,8 @@ def test_archive_overture_postcode_rows_writes_hashed_parquet(tmp_path: Path):
             "postcode": "018895",
             "address_rows": 2,
             "source_dataset": "OpenAddresses/Singapore Land Authority",
+            "representative_lon": 103.8,
+            "representative_lat": 1.3,
             "min_lon": 103.8,
             "min_lat": 1.3,
             "max_lon": 103.8,
@@ -54,3 +56,4 @@ def test_archive_overture_postcode_rows_writes_hashed_parquet(tmp_path: Path):
     assert path.parent.name == archive["sha256"]
     table = pq.read_table(path)
     assert table.column("postcode").to_pylist() == ["018895"]
+    assert table.column("representative_lon").to_pylist() == [103.8]

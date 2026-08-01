@@ -82,6 +82,8 @@ def archive_overture_postcode_rows(
             "postcode": [row["postcode"] for row in rows],
             "address_rows": [int(row["address_rows"]) for row in rows],
             "source_dataset": [row.get("source_dataset") for row in rows],
+            "representative_lon": [row.get("representative_lon") for row in rows],
+            "representative_lat": [row.get("representative_lat") for row in rows],
             "min_lon": [row.get("min_lon") for row in rows],
             "min_lat": [row.get("min_lat") for row in rows],
             "max_lon": [row.get("max_lon") for row in rows],
@@ -89,7 +91,7 @@ def archive_overture_postcode_rows(
         }
     )
     with tempfile.TemporaryDirectory() as tmp:
-        tmp_path = Path(tmp) / "overture_addresses_sg_postcodes.parquet"
+        tmp_path = Path(tmp) / "overture_addresses_sg_postcode_candidates.parquet"
         pq.write_table(table, tmp_path)
         digest = sha256_file(tmp_path)
         target_dir = raw_dir / digest
@@ -128,10 +130,12 @@ def query_overture_singapore_postcodes(overture_path: str) -> dict[str, Any]:
             "postcode": str(row[0]),
             "address_rows": int(row[1]),
             "source_dataset": row[2],
-            "min_lon": row[3],
-            "min_lat": row[4],
-            "max_lon": row[5],
-            "max_lat": row[6],
+            "representative_lon": row[3],
+            "representative_lat": row[4],
+            "min_lon": row[5],
+            "min_lat": row[6],
+            "max_lon": row[7],
+            "max_lat": row[8],
         }
         for row in con.execute(
             f"""
@@ -139,6 +143,8 @@ def query_overture_singapore_postcodes(overture_path: str) -> dict[str, Any]:
               postcode,
               count(*) AS address_rows,
               any_value(sources[1].dataset) AS source_dataset,
+              avg(bbox.xmin) AS representative_lon,
+              avg(bbox.ymin) AS representative_lat,
               min(bbox.xmin) AS min_lon,
               min(bbox.ymin) AS min_lat,
               max(bbox.xmax) AS max_lon,

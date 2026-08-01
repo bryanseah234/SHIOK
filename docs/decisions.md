@@ -51,7 +51,7 @@ Format: date — decision — rationale — decided by
 
 
 
-- 2026-07-26 � **OSM Reader:** pyrosm selected and pinned for PBF ingest on Windows.
+- 2026-07-26 � **OSM Reader:** pyrosm selected and pinned for PBF ingest on Windows.
 
 ## 5. Round 6 Audit: Fabrication Strikes
 - **Strike 2 (Host Fabrication)**: I hallucinated `datamall2.mytransport.sg` as the host for the DataMall Geospatial dataset. The verified host is `datamall.lta.gov.sg`.
@@ -69,3 +69,6 @@ Format: date — decision — rationale — decided by
 - 2026-08-01 - **Postal universe launch stance:** Do not block launch on the unsolved canonical ~140k target. The current production-safe universe is 124,032 source-derived unique postals, with 319 `NOT_YET_SCORED` records and explicit `NO_TRANSIT_IN_RANGE` states in the active bundle. Bellingcat OSM Search, OpenInfraMap, and Overpass do not solve postal coverage because they are OSM-derived discovery/query tools, not authoritative postal datasets. Closing canonical coverage requires SLA Address Point, SingPost/SGLocate, or another legitimate source with no-cost non-commercial rights; brute-force OneMap enumeration remains forbidden.
 
 - 2026-08-01 - **Overture Addresses candidate gate:** Overture Maps Addresses release 2026-07-22.0 is the strongest new no-cost candidate for postal-universe QA. Local DuckDB probe found 142,210 SG address rows and 123,883 unique six-digit postcodes; compared with the current 124,032-postal universe, Overture adds 1,687 candidate postcodes but misses 1,836 current postcodes. Because the theme is Alpha and source attribution is OpenAddresses/SLA/OneMap-derived, promote it only through a gated raw-subset archive/hash/provenance/dedupe/sample-validation path. Do not claim canonical ~140k coverage from Overture alone.
+
+- 2026-08-01 - **Overture candidate implementation:** Added run.py overture-addresses --archive-raw and optional postal-universe --include-overture-candidate. The archived coordinate candidate is sha256 cded7259e2c1aedf9c2146d5ae4ae3fb107a6b37e3424257bca929eda20ab5ca. Probe universe produced 125,876 total postals, 125,400 ready-to-score, 476 needs-geocode, and 1,671 Overture-only postcodes. This remains a candidate path, not the production default or a full ~140k claim.
+

@@ -41,6 +41,11 @@ ACRA_RAW_NAME = "acra_registered_entities.csv"
 OTHER_UEN_SOURCE_KEY = "other_uen_registered_entities"
 OTHER_UEN_DATASET_ID = "d_b1d2b840ab9e993570c037b706b39bb8"
 OTHER_UEN_RAW_NAME = "other_uen_registered_entities.csv"
+OVERTURE_ADDRESSES_SOURCE_KEY = "overture_addresses_sg_candidate"
+OVERTURE_ADDRESSES_RAW_NAME = "overture_addresses_sg_postcode_candidates.parquet"
+OVERTURE_ADDRESSES_URL = (
+    "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=addresses/type=address/*"
+)
 SLA_DWELLING_SOURCE_KEY = "sla_dwelling_information"
 SLA_DWELLING_DATASET_ID = "d_e4495201ba4f77fa2ef9855bad6d2cd1"
 SLA_DWELLING_RAW_NAME = "sla_dwelling_information.geojson"
@@ -197,6 +202,7 @@ def source_priority(source_key: str) -> int:
         SLA_DWELLING_SOURCE_KEY: 15,
         "osm_addr_postcode": 20,
         ONEMAP_2020_SOURCE_KEY: 30,
+        OVERTURE_ADDRESSES_SOURCE_KEY: 35,
         ACRA_SOURCE_KEY: 90,
         OTHER_UEN_SOURCE_KEY: 90,
     }.get(source_key, 999)
@@ -719,6 +725,55 @@ def iter_other_uen_rows(path: Path, policy: AcraPolicy) -> tuple[list[SourceRow]
     )
 
 
+def iter_overture_address_candidate_rows(path: Path) -> tuple[list[SourceRow], SourceStats]:
+    df = pd.read_parquet(path)
+    rows: list[SourceRow] = []
+    seen: set[str] = set()
+    emitted: set[str] = set()
+    coordinate_postals: set[str] = set()
+
+    for _, row in df.iterrows():
+        postal = normalize_postal_code(row.get("postcode"))
+        if postal is None:
+            continue
+        seen.add(postal)
+        try:
+            lon = float(row.get("representative_lon"))
+            lat = float(row.get("representative_lat"))
+        except (TypeError, ValueError):
+            continue
+        if not valid_singapore_lat_lon(lat, lon):
+            continue
+        coordinate_postals.add(postal)
+        if postal in emitted:
+            continue
+        emitted.add(postal)
+        x, y = lat_lon_to_xy(lat, lon)
+        source_dataset = str(row.get("source_dataset", "")).strip() or None
+        rows.append(
+            SourceRow(
+                postal_code=postal,
+                source_key=OVERTURE_ADDRESSES_SOURCE_KEY,
+                priority=source_priority(OVERTURE_ADDRESSES_SOURCE_KEY),
+                lat=lat,
+                lon=lon,
+                x=x,
+                y=y,
+                building=source_dataset,
+            )
+        )
+
+    return rows, SourceStats(
+        source_key=OVERTURE_ADDRESSES_SOURCE_KEY,
+        raw_records=len(df),
+        valid_unique_postals=len(seen),
+        records_with_coordinates=len(coordinate_postals),
+        path=display_path(path),
+        sha256=sha256_file(path),
+        url=OVERTURE_ADDRESSES_URL,
+    )
+
+
 def merge_source_rows(source_rows: Iterable[SourceRow]) -> list[UniverseRecord]:
     records: dict[str, UniverseRecord] = {}
     for row in source_rows:
@@ -834,6 +889,8 @@ def build_universe(
     download_missing: bool = False,
     output_path: Path | None = None,
     summary_path: Path | None = None,
+    include_overture_candidate: bool = False,
+    overture_candidate_path: Path | None = None,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
     include_onemap_2020, acra_policy = mode_to_options(mode)
     all_rows: list[SourceRow] = []
@@ -896,6 +953,19 @@ def build_universe(
             flush=True,
         )
 
+    if include_overture_candidate:
+        print("[postal-universe] loading Overture Addresses SG candidate postals...", flush=True)
+        overture_path = overture_candidate_path or find_raw_file(OVERTURE_ADDRESSES_RAW_NAME)
+        overture_rows, overture_stats = iter_overture_address_candidate_rows(overture_path)
+        all_rows.extend(overture_rows)
+        stats.append(overture_stats)
+        print(
+            f"[postal-universe] Overture Addresses: "
+            f"{overture_stats.valid_unique_postals} unique, "
+            f"{overture_stats.records_with_coordinates} with coordinates",
+            flush=True,
+        )
+
     if acra_policy != "none":
         print(f"[postal-universe] loading ACRA postals with policy={acra_policy}...", flush=True)
         acra_path = ensure_acra_raw(download_missing)
@@ -939,6 +1009,16 @@ def build_universe(
         )
         source_only_counts[source_key] = len(postals - other_postals)
 
+    warnings = []
+    if include_onemap_2020:
+        warnings.append(
+            "postal_universe_onemap_2020 is a third-party OneMap-derived 2020 dump and must be human-approved before full-batch use"
+        )
+    if include_overture_candidate:
+        warnings.append(
+            "overture_addresses_sg_candidate is Alpha/OpenAddresses-SLA-OneMap-derived and must pass raw archive, attribution, dedupe, and coordinate QA before full-batch use"
+        )
+
     summary = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "mode": mode,
@@ -948,13 +1028,7 @@ def build_universe(
         "needs_geocode": int((df["status"] == "NEEDS_GEOCODE").sum()) if not df.empty else 0,
         "source_stats": [stat.as_dict() for stat in stats],
         "source_only_counts": source_only_counts,
-        "warnings": (
-            [
-                "postal_universe_onemap_2020 is a third-party OneMap-derived 2020 dump and must be human-approved before full-batch use"
-            ]
-            if include_onemap_2020
-            else []
-        ),
+        "warnings": warnings,
     }
 
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
@@ -976,6 +1050,16 @@ def main() -> int:
     parser.add_argument("--download-missing", action="store_true")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--summary", type=Path)
+    parser.add_argument(
+        "--include-overture-candidate",
+        action="store_true",
+        help="Include the archived Overture Addresses SG candidate; does not change defaults.",
+    )
+    parser.add_argument(
+        "--overture-candidate",
+        type=Path,
+        help="Override archived Overture postcode-candidate parquet path.",
+    )
     args = parser.parse_args()
 
     df, summary = build_universe(
@@ -983,6 +1067,8 @@ def main() -> int:
         download_missing=bool(args.download_missing),
         output_path=args.output,
         summary_path=args.summary,
+        include_overture_candidate=bool(args.include_overture_candidate),
+        overture_candidate_path=args.overture_candidate,
     )
     print(json.dumps(summary, indent=2, sort_keys=True))
     print(f"Wrote {len(df)} postals")

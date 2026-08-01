@@ -3,14 +3,19 @@ import gzip
 import json
 from pathlib import Path
 
+import pyarrow as pa
+import pyarrow.parquet as pq
+
 from pipeline.postal_universe import (
     ACRA_SOURCE_KEY,
     ONEMAP_2020_SOURCE_KEY,
     OTHER_UEN_SOURCE_KEY,
+    OVERTURE_ADDRESSES_SOURCE_KEY,
     SLA_DWELLING_SOURCE_KEY,
     SourceRow,
     iter_acra_rows,
     iter_onemap_2020_rows,
+    iter_overture_address_candidate_rows,
     iter_other_uen_rows,
     iter_sla_dwelling_rows,
     merge_source_rows,
@@ -124,6 +129,38 @@ def test_iter_other_uen_rows_filters_registered_policy(tmp_path: Path):
     assert all_stats.valid_unique_postals == 2
 
 
+def test_iter_overture_address_candidate_rows_extracts_representative_coordinates(
+    tmp_path: Path,
+):
+    path = tmp_path / "overture_addresses_sg_postcode_candidates.parquet"
+    table = pa.table(
+        {
+            "postcode": ["018895", "bad"],
+            "address_rows": [2, 1],
+            "source_dataset": ["OpenAddresses/Singapore Land Authority", "bad"],
+            "representative_lon": [103.8365, 103.8],
+            "representative_lat": [1.3704, 1.3],
+            "min_lon": [103.8365, 103.8],
+            "min_lat": [1.3704, 1.3],
+            "max_lon": [103.8365, 103.8],
+            "max_lat": [1.3704, 1.3],
+        }
+    )
+    pq.write_table(table, path)
+
+    rows, stats = iter_overture_address_candidate_rows(path)
+
+    assert stats.source_key == OVERTURE_ADDRESSES_SOURCE_KEY
+    assert stats.raw_records == 2
+    assert stats.valid_unique_postals == 1
+    assert stats.records_with_coordinates == 1
+    assert rows[0].postal_code == "018895"
+    assert rows[0].source_key == OVERTURE_ADDRESSES_SOURCE_KEY
+    assert rows[0].lat == 1.3704
+    assert rows[0].lon == 103.8365
+    assert rows[0].building == "OpenAddresses/Singapore Land Authority"
+
+
 def test_iter_sla_dwelling_rows_extracts_postal_coordinates(tmp_path: Path):
     path = tmp_path / "sla_dwelling_information.geojson"
     payload = {
@@ -199,3 +236,32 @@ def test_merge_source_rows_prefers_current_coordinates_and_keeps_source_membersh
     assert merged[0].sources == {ONEMAP_2020_SOURCE_KEY, "hdb_existing_building"}
     assert merged[0].status == "READY_TO_SCORE"
     assert merged[1].status == "NEEDS_GEOCODE"
+
+
+def test_merge_source_rows_does_not_let_overture_override_onemap_coordinates():
+    rows = [
+        SourceRow(
+            postal_code="123456",
+            source_key=OVERTURE_ADDRESSES_SOURCE_KEY,
+            priority=35,
+            lat=1.32,
+            lon=103.82,
+            x=120.0,
+            y=220.0,
+        ),
+        SourceRow(
+            postal_code="123456",
+            source_key=ONEMAP_2020_SOURCE_KEY,
+            priority=30,
+            lat=1.30,
+            lon=103.80,
+            x=100.0,
+            y=200.0,
+        ),
+    ]
+
+    merged = merge_source_rows(rows)
+
+    assert merged[0].coordinate_source == ONEMAP_2020_SOURCE_KEY
+    assert merged[0].lat == 1.30
+    assert merged[0].sources == {ONEMAP_2020_SOURCE_KEY, OVERTURE_ADDRESSES_SOURCE_KEY}

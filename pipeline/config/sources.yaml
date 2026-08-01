@@ -135,4 +135,4 @@ sources:
     url: "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=addresses/type=address/*"
     verified: "2026-08-01"
     refresh: "monthly"
-    notes: "Candidate postal-universe QA/expansion source only. Overture addresses are Alpha; SG probe found 142,210 address rows, 123,883 unique six-digit postcodes, 1,687 new vs current universe, and 1,836 current postcodes missing from Overture. Promote only after raw subset archive, hash/provenance, attribution, dedupe, and sample-coordinate validation."
+    notes: "Candidate postal-universe QA/expansion source only. Overture addresses are Alpha; SG probe found 142,210 address rows, 123,883 unique six-digit postcodes, 1,687 new vs current universe, and 1,836 current postcodes missing from Overture. Archived coordinate candidate sha256 cded7259e2c1aedf9c2146d5ae4ae3fb107a6b37e3424257bca929eda20ab5ca; optional postal-universe probe produced 125,876 total postals and 1,671 Overture-only postcodes. Promote only after attribution, dedupe, coordinate QA, and owner approval."

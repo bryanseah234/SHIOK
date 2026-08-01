@@ -86,8 +86,8 @@ def readiness_features() -> dict[str, Any]:
                 "not claimed; Overture Addresses is a candidate gate, not accepted source-of-record"
             ),
             "overture_addresses_sg_candidate": (
-                "142210 SG address rows, 123883 unique six-digit postcodes, "
-                "1687 new vs current universe; needs raw archive/hash/provenance validation"
+                "optional archive/probe implemented; produced 125876-postal candidate universe "
+                "with 1671 Overture-only postcodes; not active production until coordinate QA/rescore"
             ),
             "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
             "building_shadow_time_of_day": "future heat model",

@@ -191,8 +191,8 @@ uv run python run.py overture-addresses --archive-raw
 Archived local probe artifact:
 
 ```text
-raw/01151de1ab5341ee3111ead05f1c71b4fc0f4ae376076e2ce46d781b921d2ab5/overture_addresses_sg_postcodes.parquet
-sha256=01151de1ab5341ee3111ead05f1c71b4fc0f4ae376076e2ce46d781b921d2ab5
+raw/cded7259e2c1aedf9c2146d5ae4ae3fb107a6b37e3424257bca929eda20ab5ca/overture_addresses_sg_postcode_candidates.parquet
+sha256=cded7259e2c1aedf9c2146d5ae4ae3fb107a6b37e3424257bca929eda20ab5ca
 ```
 
 Samples of Overture-only postcodes:
@@ -215,3 +215,24 @@ Decision:
   dedupes by six-digit postcode, compares coordinate deltas against current
   records, and sample-validates coordinates.
 - Do not claim full canonical ~140k coverage from Overture alone.
+
+Implementation status:
+
+- `uv run python run.py overture-addresses --archive-raw` archives an Overture
+  postcode-candidate Parquet with one representative WGS84 coordinate per
+  six-digit postcode plus source/provenance fields.
+- `uv run python run.py postal-universe --mode candidate_full_registered
+  --include-overture-candidate --output tmp\postal_universe_candidate_full_registered_overture_probe.parquet
+  --summary tmp\postal_universe_candidate_full_registered_overture_probe_summary.json`
+  builds an optional probe universe without touching production defaults.
+
+Optional Overture-inclusive probe result on 2026-08-01:
+
+```text
+total_unique_postals=125876
+ready_to_score=125400
+needs_geocode=476
+overture_addresses_sg_candidate_source_only=1671
+```
+
+This is useful progress, but still not full ~140k coverage.
