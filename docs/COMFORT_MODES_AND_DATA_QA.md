@@ -358,3 +358,10 @@ only when `status=approved`.
 for the current Mayflower state. It shows current best/bus/MRT route scores for
 `560231`, `560234`, and `560225`, plus 5 review-ready connector candidates and
 3 blocked candidates that need stronger source evidence.
+
+The 5 review-ready source-backed connector candidates were promoted into
+`data/audited_shelter_corrections.geojson` with `status=approved` after owner
+approval for autonomous source-audited promotion. The 3
+`blocked_insufficient_source_overlap_not_scoring` candidates remain excluded.
+Next step is a network rebuild plus AMK targeted refresh to measure the real
+route effect; no score override has been applied.

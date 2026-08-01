@@ -1,7 +1,213 @@
 {
-  "type": "FeatureCollection",
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749890382008,
+            1.3674976653049646
+          ],
+          [
+            103.8373540993553,
+            1.3675030013028202
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "audit_id": "feedback-560225-segment-2-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 16.1,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.0,
+        "postal": "560225",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 2,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83688510169024,
+            1.3686568985432714
+          ],
+          [
+            103.83674177085527,
+            1.368694863965631
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "audit_id": "feedback-560225-segment-7-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 16.5,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.485,
+        "postal": "560225",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 7,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83674177085527,
+            1.368694863965631
+          ],
+          [
+            103.83644010313604,
+            1.3688351041490185
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "audit_id": "feedback-560225-segment-8-covered-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "covered_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 0.216,
+        "is_covered": true,
+        "label": "covered_bridge",
+        "length_m": 37.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560225",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 8,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749889582384,
+            1.3680715025408114
+          ],
+          [
+            103.83700936506972,
+            1.3687519289548573
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "audit_id": "feedback-560231-segment-1-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "void_deck",
+        "length_m": 92.9,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.0,
+        "postal": "560231",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 1,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83700936506972,
+            1.3687519289548573
+          ],
+          [
+            103.83668819804306,
+            1.3686427003091393
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "audit_id": "feedback-560231-segment-2-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 37.7,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.388,
+        "postal": "560231",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 2,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    }
+  ],
   "name": "audited_shelter_corrections",
   "schema": "shiok-audited-shelter-corrections-v1",
-  "usage": "Only source-backed covered pedestrian correction lines with status=approved and covered/is_covered=true are ingested. Empty by default.",
-  "features": []
+  "type": "FeatureCollection",
+  "usage": "Only source-backed covered pedestrian correction lines with status=approved and covered/is_covered=true are ingested. Empty by default."
 }
