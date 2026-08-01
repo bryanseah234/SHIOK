@@ -240,6 +240,14 @@ tested:
   features: 3 for `560231` and 5 for `560225`. Each feature is marked
   `evidence_status=qa_candidate_not_scoring`; these are inspection candidates,
   not production shelter corrections.
+- `qa/route_feedback_component_gap_source_audit_amk_20260801.json` audits those
+  8 candidates against current network source/provenance evidence using an 8 m
+  evidence buffer. Result: 4 `hdb_source_overlap_review`, 1
+  `covered_source_overlap_review`, and 3 `insufficient_source_overlap`.
+  Critically, the repeated 128.7 m Mayflower gap for `560231` segment 6 and
+  `560225` segment 11 is still `insufficient_source_overlap` with only 10.5%
+  HDB/covered overlap. Do not promote that connector into scoring without
+  stronger source evidence or human-approved audited correction.
 
 ## Human Feedback Loop
 
