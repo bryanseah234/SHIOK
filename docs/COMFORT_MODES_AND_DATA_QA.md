@@ -32,15 +32,19 @@ Use `-Deploy` only after the bundle validates and should become production.
 
 ## Route Geometry Contract
 
-Implemented on 2026-07-30 in code, pending next scored-bundle export:
+Implemented in code and active in the current
+`generated_20260801_direct_bus_all_targeted` bundle:
 
-- Backend route results now expose edge lists for both Shortest and Shiokest.
-- Static geometry shards can emit `route_segments.shortest` and
+- Backend route results expose edge lists for both Shortest and Shiokest.
+- Static geometry shards emit `route_segments.shortest` and
   `route_segments.sheltered`.
 - Each segment has encoded geometry, length, and `is_covered`.
 - The frontend parser and map layers remain backward-compatible with the
-  existing bundle, but future bundles can render covered and exposed portions
-  for both route types.
+  older bundles, while the current active bundle can render covered and exposed
+  portions for both route types.
+- `uv run python run.py readiness` now reports
+  `geometry_postals_with_route_segments=114329`, matching all active geometry
+  postals.
 
 Evidence:
 

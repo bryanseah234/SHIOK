@@ -173,6 +173,9 @@ def build_readiness_report(
                 "file_count": validation.get("file_count"),
                 "indexed_postals": validation.get("indexed_postals"),
                 "geometry_postals": validation.get("geometry_postals"),
+                "geometry_postals_with_route_segments": validation.get(
+                    "geometry_postals_with_route_segments"
+                ),
                 "transit_features": validation.get("transit_features"),
                 "score_prefixes": validation.get("score_prefixes"),
                 "errors": validation.get("errors", []),

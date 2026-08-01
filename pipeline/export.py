@@ -1237,6 +1237,7 @@ def validate_static_artifacts(
                     score_prefixes = len(prefix_payload)
 
     geom_postals: set[str] = set()
+    geom_postals_with_route_segments: set[str] = set()
     if geom_index_path.is_file():
         geom_index = read_artifact_json(input_dir, "geom/index.json")
         if not isinstance(geom_index, dict):
@@ -1266,6 +1267,14 @@ def validate_static_artifacts(
                     for key in ["shortest", "sheltered", "exposure_gaps"]:
                         if key not in item:
                             errors.append(f"geom/h3/{target_cell}.json:{postal}: missing {key}")
+                    route_segments = item.get("route_segments")
+                    if isinstance(route_segments, dict):
+                        shortest_segments = route_segments.get("shortest")
+                        sheltered_segments = route_segments.get("sheltered")
+                        if isinstance(shortest_segments, list) and isinstance(
+                            sheltered_segments, list
+                        ):
+                            geom_postals_with_route_segments.add(postal)
 
     missing_geom = scored_postals_with_geom_required - geom_postals
     if missing_geom:
@@ -1313,6 +1322,7 @@ def validate_static_artifacts(
         "indexed_postals": len(indexed_postals),
         "score_prefixes": score_prefixes,
         "geometry_postals": len(geom_postals),
+        "geometry_postals_with_route_segments": len(geom_postals_with_route_segments),
         "transit_features": transit_features,
         "errors": errors,
         "warnings": warnings,

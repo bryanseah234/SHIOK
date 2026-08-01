@@ -154,6 +154,7 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     assert ok, report
     assert report["bundle"]["manifest_record_count"] == 1
     assert report["bundle"]["state_total_matches_manifest"] is True
+    assert report["bundle"]["static_validation"]["geometry_postals_with_route_segments"] == 1
     assert report["network"]["ok"] is True
     assert report["vercel"]["root_directory_ok"] is True
     assert report["features"]["incorporated"]["bus_as_transit_direct_fallback"] is True

@@ -172,6 +172,7 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert validation["indexed_postals"] == 2
     assert validation["score_prefixes"] == 2
     assert validation["geometry_postals"] == 2
+    assert validation["geometry_postals_with_route_segments"] == 2
     prefix_index = json.loads((tmp_path / "scores" / "prefix-index.json").read_text())
     assert prefix_index["123"] == ["TEST_AREA"]
     assert prefix_index["654"] == ["TEST_AREA"]
@@ -203,6 +204,7 @@ def test_validate_accepts_gzipped_json_artifacts(tmp_path: Path):
     assert ok, validation
     assert validation["indexed_postals"] == 2
     assert validation["geometry_postals"] == 2
+    assert validation["geometry_postals_with_route_segments"] == 2
 
 
 def test_route_segments_split_disjoint_multiline_parts_without_fake_connector():
