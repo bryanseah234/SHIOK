@@ -17,6 +17,30 @@ That wrapper runs:
 
 The current bundle is configured in `web/data-bundle.json`.
 
+## Fast Production Preflight
+
+Before deploying code-only changes or before deciding whether a long full
+rescore is worth running, use the non-deploying preflight:
+
+```powershell
+.\scripts\preflight-production.bat
+```
+
+That wrapper checks:
+
+1. current Git status
+2. island network QA gates
+3. island network input/hash preflight
+4. active static data bundle validation
+5. web tests
+
+It does not build a new network, score postals, update `web/data-bundle.json`, or
+deploy to Vercel. For a faster UI-only check, skip the network gates:
+
+```powershell
+.\scripts\preflight-production.bat -SkipNetworkPreflight
+```
+
 ## Vercel Git Auto-Deploy
 
 The Vercel project root directory must be `web`.
