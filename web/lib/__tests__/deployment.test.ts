@@ -50,6 +50,8 @@ describe("deployment packaging", () => {
     expect(script).toContain("not_yet_copy_distinct_from_no_transit");
     expect(script).toContain("Transit beyond scoring range");
     expect(script).toContain("Closest routed transit");
+    expect(script).toContain("bodyHtml");
+    expect(script).toContain("Runtime.exceptionThrown");
     expect(script).toContain("score_has_max_denominator");
     expect(script).toContain("map_has_text_equivalent");
     expect(script).toContain("short_mobile_card_bottom_visible");
@@ -71,6 +73,10 @@ describe("deployment packaging", () => {
     expect(script).toContain("npm --prefix web test");
     expect(script).toContain("npm --prefix web run build");
     expect(script).toContain("uv run python run.py readiness");
+    expect(script).toContain("Find-AvailablePort");
+    expect(script).toContain("port_adjusted");
+    expect(script).toContain("Stop-ProcessTree");
+    expect(script).toContain("Stop-NewListenerOnPort");
     expect(script).toContain("--expected-state no_transit");
     expect(script).toContain("--expected-state not_yet_scored");
     expect(script).toContain("--transit-mode mrt_lrt");

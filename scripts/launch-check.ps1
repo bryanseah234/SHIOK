@@ -21,6 +21,56 @@ if ($Port -lt 1) {
     throw "Invalid port: $Port"
 }
 
+function Test-PortInUse {
+    param([int]$CandidatePort)
+    $listener = Get-NetTCPConnection -LocalPort $CandidatePort -State Listen -ErrorAction SilentlyContinue
+    return $null -ne $listener
+}
+
+function Find-AvailablePort {
+    param([int]$StartPort)
+    for ($candidate = $StartPort; $candidate -lt ($StartPort + 100); $candidate++) {
+        if (-not (Test-PortInUse -CandidatePort $candidate)) {
+            return $candidate
+        }
+    }
+    throw "No available local port found from $StartPort to $($StartPort + 99)"
+}
+
+function Get-ChildProcessIds {
+    param([int]$ParentId)
+    $children = @(Get-CimInstance Win32_Process -Filter "ParentProcessId=$ParentId" -ErrorAction SilentlyContinue)
+    $ids = @()
+    foreach ($child in $children) {
+        $ids += [int]$child.ProcessId
+        $ids += Get-ChildProcessIds -ParentId ([int]$child.ProcessId)
+    }
+    return $ids
+}
+
+function Stop-ProcessTree {
+    param([int]$RootProcessId)
+    $ids = @(Get-ChildProcessIds -ParentId $RootProcessId) + @($RootProcessId)
+    foreach ($id in ($ids | Select-Object -Unique)) {
+        Stop-Process -Id $id -Force -ErrorAction SilentlyContinue
+    }
+}
+
+function Stop-NewListenerOnPort {
+    param(
+        [int]$ListenerPort,
+        [datetime]$StartedAfter
+    )
+    $listeners = @(Get-NetTCPConnection -LocalPort $ListenerPort -State Listen -ErrorAction SilentlyContinue)
+    foreach ($listener in $listeners) {
+        $process = Get-Process -Id $listener.OwningProcess -ErrorAction SilentlyContinue
+        if ($process -and $process.StartTime -ge $StartedAfter) {
+            Stop-ProcessTree -RootProcessId ([int]$process.Id)
+            Write-Output "server_listener_stopped=$($process.Id)"
+        }
+    }
+}
+
 function Invoke-Checked {
     param(
         [Parameter(Mandatory = $true)]
@@ -43,6 +93,11 @@ try {
     Write-Output "repo=$RepoRoot"
     Write-Output "bundle=$DataBundle"
     Write-Output "deploy=false"
+    $RequestedPort = $Port
+    $Port = Find-AvailablePort -StartPort $Port
+    if ($Port -ne $RequestedPort) {
+        Write-Output "port_adjusted=$RequestedPort->$Port"
+    }
 
     if (-not $SkipPythonTests) {
         Invoke-Checked -Label "Python tests" -Command { uv run python run.py test }
@@ -74,6 +129,7 @@ try {
     if (-not $SkipBrowser) {
         Write-Output ""
         Write-Output "== Start local production server =="
+        $ServerStartCutoff = (Get-Date).AddSeconds(-2)
         $ServerProcess = Start-Process -FilePath npm.cmd -ArgumentList @("--prefix", "web", "run", "start", "--", "-p", "$Port") -WindowStyle Hidden -PassThru
         Write-Output "server_pid=$($ServerProcess.Id)"
         $Deadline = (Get-Date).AddSeconds(45)
@@ -119,8 +175,11 @@ try {
     Write-Output "next_production_command=.\scripts\release-data-bundle.bat -DataBundle $DataBundle -ConfirmProduction"
 }
 finally {
-    if ($ServerProcess -and -not $ServerProcess.HasExited) {
-        Stop-Process -Id $ServerProcess.Id -Force
+    if ($ServerProcess) {
+        Stop-ProcessTree -RootProcessId $ServerProcess.Id
+        if ($ServerStartCutoff) {
+            Stop-NewListenerOnPort -ListenerPort $Port -StartedAfter $ServerStartCutoff
+        }
         Write-Output "server=stopped"
     }
     Pop-Location

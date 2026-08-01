@@ -172,6 +172,7 @@ class CdpClient {
   constructor(wsUrl) {
     this.nextId = 1;
     this.pending = new Map();
+    this.events = [];
     this.ws = new WebSocket(wsUrl);
   }
 
@@ -187,6 +188,11 @@ class CdpClient {
         this.pending.delete(msg.id);
         if (msg.error) rejectPromise(new Error(JSON.stringify(msg.error)));
         else resolvePromise(msg.result || {});
+      } else if (
+        ["Runtime.exceptionThrown", "Runtime.consoleAPICalled", "Log.entryAdded"].includes(msg.method)
+      ) {
+        this.events.push(msg);
+        this.events = this.events.slice(-20);
       }
     });
   }
@@ -222,7 +228,19 @@ async function waitForExpression(cdp, expression, timeoutMs) {
     if (result.result?.value) return;
     await new Promise((resolvePromise) => setTimeout(resolvePromise, 300));
   }
-  throw new Error(`timed out waiting for expression: ${expression}`);
+  const diagnostics = await cdp.send("Runtime.evaluate", {
+    expression: `(() => ({
+      href: location.href,
+      readyState: document.readyState,
+      title: document.title,
+      bodyText: (document.body?.innerText || "").slice(0, 500),
+      bodyHtml: (document.body?.innerHTML || "").slice(0, 500),
+    }))()`,
+    returnByValue: true,
+  });
+  throw new Error(
+    `timed out waiting for expression: ${expression}; page=${JSON.stringify(diagnostics.result?.value || {})}; events=${JSON.stringify(cdp.events)}`
+  );
 }
 
 async function pressEnter(cdp) {
@@ -556,6 +574,7 @@ async function runSmoke(args) {
     await cdp.open();
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
+    await cdp.send("Log.enable");
     await cdp.send("Page.bringToFront");
     const outputDir = dirname(resolve(args.out));
     const shotBase = basename(args.out, ".json");
