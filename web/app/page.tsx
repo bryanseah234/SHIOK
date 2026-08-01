@@ -176,15 +176,24 @@ function nestedNumber(value: unknown, path: string[]): number | null {
   return typeof cursor === "number" && Number.isFinite(cursor) ? cursor : null;
 }
 
+function nearestRoutedTransitM(score: ScoreRecord, transitMode: TransitAccessMode): number | null {
+  return transitMode === "best_transit"
+    ? nestedNumber(score.provenance, ["routing_diagnostics", "nearest_routed_m"])
+    : null;
+}
+
+function noTransitTitle(score: ScoreRecord, transitMode: TransitAccessMode): string {
+  return nearestRoutedTransitM(score, transitMode) !== null
+    ? "Transit beyond scoring range"
+    : `No routed ${transitModeLabel(transitMode)} within range`;
+}
+
 function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): string | null {
   if (score.state === "SCORED_PARTIAL") {
     return "Partial score: nearby bus service is counted, but exact walking-route shelter is still pending.";
   }
   if (score.state === "NO_TRANSIT_IN_RANGE") {
-    const nearestM =
-      transitMode === "best_transit"
-        ? nestedNumber(score.provenance, ["routing_diagnostics", "nearest_routed_m"])
-        : null;
+    const nearestM = nearestRoutedTransitM(score, transitMode);
     if (nearestM !== null) {
       return `Closest routed transit found is about ${formatDistance(nearestM)} away; current scoring range is 1.2 km.`;
     }
@@ -281,7 +290,10 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
 function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
   if (score.state === "NO_TRANSIT_IN_RANGE") {
     const label = transitModeLabel(transitMode);
-    return [`No ${label} walk within scoring range`, "Nearby transit may still exist outside the current threshold"];
+    const nearestM = nearestRoutedTransitM(score, transitMode);
+    return nearestM !== null
+      ? [`Closest routed ${label} is ${formatDistance(nearestM)}`, "Current scoring range is 1.2 km"]
+      : [`No ${label} walk within scoring range`, "Nearby transit may still exist outside the current threshold"];
   }
   if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
   if (score.paths?.routing_type === "direct_bus_fallback_unrouted") {
@@ -627,7 +639,7 @@ function ScoreCard({
       : "Shiokest walk";
   const stationName =
     score.state === "NO_TRANSIT_IN_RANGE"
-      ? `No routed ${transitModeLabel(transitMode)} within range`
+      ? noTransitTitle(score, transitMode)
       : score.state === "NOT_YET_SCORED"
         ? "Location Evidence Missing"
       : toProperCase(score.best_node?.name ?? "No transit found nearby");
