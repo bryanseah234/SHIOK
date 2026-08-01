@@ -182,6 +182,19 @@ new_from_overture=1687
 current_missing_from_overture=1836
 ```
 
+Reproducible command:
+
+```powershell
+uv run python run.py overture-addresses --archive-raw
+```
+
+Archived local probe artifact:
+
+```text
+raw/01151de1ab5341ee3111ead05f1c71b4fc0f4ae376076e2ce46d781b921d2ab5/overture_addresses_sg_postcodes.parquet
+sha256=01151de1ab5341ee3111ead05f1c71b4fc0f4ae376076e2ce46d781b921d2ab5
+```
+
 Samples of Overture-only postcodes:
 
 ```text
