@@ -70,6 +70,9 @@ Current implementation status:
 - The planner derives start/end points from the same shortest-route geometry
   the frontend displays, records per-postal cache keys, and does not call
   OneMap.
+- `uv run python run.py onemap-validation collect` is implemented as a
+  resumable cache writer, but it refuses external calls unless
+  `--confirm-onemap-collection` is provided.
 - `qa/onemap_validation_sample_2000_20260802.json` was generated for
   `generated_20260801_165500`: 2,000 samples from 112,880 eligible scored
   records across 52 areas.
@@ -78,16 +81,19 @@ Current implementation status:
 - `qa/onemap_validation_cached_report_20260802.json` currently has 0 cached
   OneMap walk results, so `gate_passed=false`.
 
-Next cache-evaluation step, after a collector writes the OneMap route cache:
+Next external-API collection step, when intentionally scheduled:
+
+```powershell
+uv run python run.py onemap-validation collect --sample qa\onemap_validation_sample_2000_20260802.json --output qa\onemap_validation_collect_report_20260802.json --confirm-onemap-collection
+```
+
+Then evaluate the collected cache:
 
 ```powershell
 uv run python run.py onemap-validation evaluate --sample qa\onemap_validation_sample_2000_20260802.json --output qa\onemap_validation_cached_report_20260802.json
 ```
 
-The evaluator is already implemented, but the collector that calls OneMap and
-writes `raw/validation/onemap_walk/<cache_key>.json` still needs to be added
-before the gate can pass. Do not treat this launch gate as passed from local
-route distances alone.
+Do not treat this launch gate as passed from local route distances alone.
 
 ## Mode Matrix
 

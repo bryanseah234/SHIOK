@@ -4,6 +4,7 @@ from pathlib import Path
 from pipeline.export import export_static_artifacts
 from pipeline.onemap_validation import (
     build_validation_sample,
+    collect_onemap_walk_cache,
     decode_polyline,
     evaluate_cached_results,
     route_cache_key,
@@ -81,3 +82,57 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["median_abs_pct_delta"] == 5.0
     assert report["p95_abs_pct_delta"] == 5.0
     assert report["results_preview"][0]["abs_pct_delta"] == 5.0
+
+
+def test_collect_onemap_walk_cache_requires_explicit_confirmation(tmp_path: Path):
+    sample_payload = {
+        "bundle": "generated_test",
+        "samples": [
+            {
+                "postal": "123456",
+                "cache_key": "abc",
+                "start": {"lat": 1.3, "lon": 103.8},
+                "end": {"lat": 1.301, "lon": 103.801},
+            }
+        ],
+    }
+
+    ok, report = collect_onemap_walk_cache(sample_payload, cache_dir=tmp_path)
+
+    assert not ok
+    assert "requires --confirm-onemap-collection" in report["errors"][0]
+    assert report["will_call_onemap"] is False
+
+
+def test_collect_onemap_walk_cache_writes_fake_fetcher_result(tmp_path: Path):
+    start = {"lat": 1.3, "lon": 103.8}
+    end = {"lat": 1.301, "lon": 103.801}
+    cache_key = route_cache_key(start, end)
+    sample_payload = {
+        "bundle": "generated_test",
+        "samples": [
+            {
+                "postal": "123456",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 100.0,
+                "start": start,
+                "end": end,
+            }
+        ],
+    }
+
+    ok, report = collect_onemap_walk_cache(
+        sample_payload,
+        cache_dir=tmp_path,
+        delay_sec=0,
+        confirm_onemap_collection=True,
+        fetcher=lambda _sample: {"route_summary": {"total_distance": 101.0}},
+    )
+
+    assert ok, report
+    assert report["written_cache_results"] == 1
+    assert (tmp_path / f"{cache_key}.json").is_file()
+    cached_report = evaluate_cached_results(sample_payload, tmp_path)
+    assert cached_report["cached_results"] == 1
+    assert cached_report["median_abs_pct_delta"] == 0.99

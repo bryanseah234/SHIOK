@@ -170,7 +170,7 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
         in report["features"]["not_incorporated"]["overture_addresses_sg_candidate"]
     )
     assert (
-        "has not been collected/evaluated yet"
+        "has not been collected yet"
         in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
     )
 

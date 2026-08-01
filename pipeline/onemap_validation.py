@@ -6,22 +6,32 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import re
+import time
 from collections import defaultdict
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+import httpx
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BUNDLE_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated_20260801_165500"
 DEFAULT_SAMPLE_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_sample_2000.json"
 DEFAULT_REPORT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_cached_report.json"
+DEFAULT_COLLECT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_collect_report.json"
 DEFAULT_CACHE_DIR = PROJECT_ROOT / "raw" / "validation" / "onemap_walk"
 DEFAULT_SAMPLE_SIZE = 2000
 DEFAULT_ONEMAP_DELAY_SEC = 2.0
 MEDIAN_THRESHOLD_PCT = 10.0
 P95_THRESHOLD_PCT = 25.0
+ONEMAP_AUTH_URL = "https://www.onemap.gov.sg/api/auth/post/getToken"
+ONEMAP_ROUTE_URL = "https://www.onemap.gov.sg/api/public/routingsvc/route"
+USER_AGENT = "SHIOK-Index-OneMap-Validation/1.0"
+
+FetchRoute = Callable[[dict[str, Any]], dict[str, Any]]
 
 
 def read_json(path: Path) -> Any:
@@ -415,6 +425,154 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
     }
 
 
+def get_onemap_token(client: httpx.Client) -> str | None:
+    email = os.environ.get("ONEMAP_EMAIL")
+    password = os.environ.get("ONEMAP_PASSWORD")
+    if not email or not password:
+        return None
+    response = client.post(
+        ONEMAP_AUTH_URL,
+        json={"email": email, "password": password},
+        headers={"User-Agent": USER_AGENT},
+    )
+    response.raise_for_status()
+    payload: Any = response.json()
+    token = payload.get("access_token") if isinstance(payload, dict) else None
+    return str(token) if token else None
+
+
+def fetch_onemap_walk_route(
+    sample: dict[str, Any], client: httpx.Client, token: str | None
+) -> dict[str, Any]:
+    start = sample.get("start")
+    end = sample.get("end")
+    if not isinstance(start, dict) or not isinstance(end, dict):
+        raise TypeError(f"sample missing start/end coordinates: {sample.get('postal')}")
+    headers = {"User-Agent": USER_AGENT}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    response = client.get(
+        ONEMAP_ROUTE_URL,
+        params={
+            "start": f"{float(start['lat'])},{float(start['lon'])}",
+            "end": f"{float(end['lat'])},{float(end['lon'])}",
+            "routeType": "walk",
+        },
+        headers=headers,
+    )
+    response.raise_for_status()
+    payload: Any = response.json()
+    if not isinstance(payload, dict):
+        raise TypeError("OneMap route response must be a JSON object")
+    return payload
+
+
+def collect_onemap_walk_cache(
+    sample_payload: dict[str, Any],
+    *,
+    cache_dir: Path,
+    delay_sec: float = DEFAULT_ONEMAP_DELAY_SEC,
+    limit: int | None = None,
+    dry_run: bool = False,
+    confirm_onemap_collection: bool = False,
+    fetcher: FetchRoute | None = None,
+) -> tuple[bool, dict[str, Any]]:
+    samples = [item for item in sample_payload.get("samples", []) if isinstance(item, dict)]
+    existing = [
+        sample for sample in samples if (cache_dir / f"{sample.get('cache_key')}.json").is_file()
+    ]
+    pending = [
+        sample
+        for sample in samples
+        if not (cache_dir / f"{sample.get('cache_key')}.json").is_file()
+    ]
+    if limit is not None:
+        pending = pending[: max(0, int(limit))]
+
+    report: dict[str, Any] = {
+        "ok": True,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "bundle": sample_payload.get("bundle"),
+        "cache_dir": str(cache_dir),
+        "dry_run": dry_run,
+        "confirm_onemap_collection": confirm_onemap_collection,
+        "delay_sec": delay_sec,
+        "sample_size": len(samples),
+        "existing_cache_results": len(existing),
+        "queued_requests": len(pending),
+        "http_requests": 0,
+        "written_cache_results": 0,
+        "errors": [],
+        "will_call_onemap": bool(pending and not dry_run and confirm_onemap_collection),
+    }
+    if delay_sec < 0:
+        report["ok"] = False
+        report["errors"].append("delay_sec must be >= 0")
+        return False, report
+    if not dry_run and not confirm_onemap_collection:
+        report["ok"] = False
+        report["errors"].append("OneMap validation collection requires --confirm-onemap-collection")
+        return False, report
+    if dry_run or not pending:
+        return True, report
+
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    client = httpx.Client(timeout=30.0, follow_redirects=True) if fetcher is None else None
+    token = None
+    try:
+        if client is not None:
+            token = get_onemap_token(client)
+            if token is None:
+                report["ok"] = False
+                report["errors"].append("ONEMAP_EMAIL/ONEMAP_PASSWORD token is required")
+                return False, report
+
+        for sample in pending:
+            cache_key = str(sample.get("cache_key", ""))
+            if not cache_key:
+                report["errors"].append(f"sample missing cache_key: {sample.get('postal')}")
+                continue
+            try:
+                if fetcher is not None:
+                    response_payload = fetcher(sample)
+                else:
+                    if client is None:
+                        raise RuntimeError("missing OneMap HTTP client")
+                    response_payload = fetch_onemap_walk_route(sample, client, token)
+                cache_payload = {
+                    "source": "onemap_walk_route_validation",
+                    "fetched_at": datetime.now(UTC).isoformat(),
+                    "sample": {
+                        "postal": sample.get("postal"),
+                        "area": sample.get("area"),
+                        "project_shortest_m": sample.get("project_shortest_m"),
+                        "start": sample.get("start"),
+                        "end": sample.get("end"),
+                    },
+                    "response": response_payload,
+                }
+                write_json(cache_dir / f"{cache_key}.json", cache_payload)
+                report["written_cache_results"] += 1
+            except httpx.HTTPStatusError as exc:
+                report["errors"].append(
+                    f"{sample.get('postal')}: OneMap HTTP {exc.response.status_code}"
+                )
+                if exc.response.status_code == 429:
+                    time.sleep(max(60.0, delay_sec * 5.0))
+            except (httpx.HTTPError, TypeError, ValueError, RuntimeError) as exc:
+                report["errors"].append(f"{sample.get('postal')}: {exc}")
+            finally:
+                report["http_requests"] += 1
+                if delay_sec > 0:
+                    time.sleep(delay_sec)
+    finally:
+        if client is not None:
+            client.close()
+
+    report["ok"] = not report["errors"]
+    return bool(report["ok"]), report
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Plan/evaluate OneMap walk validation.")
     subparsers = parser.add_subparsers(dest="action", required=True)
@@ -431,6 +589,15 @@ def main() -> int:
     evaluate.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
     evaluate.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     evaluate.add_argument("--output", type=Path, default=DEFAULT_REPORT_OUTPUT)
+
+    collect = subparsers.add_parser("collect")
+    collect.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
+    collect.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
+    collect.add_argument("--output", type=Path, default=DEFAULT_COLLECT_OUTPUT)
+    collect.add_argument("--delay-sec", type=float, default=DEFAULT_ONEMAP_DELAY_SEC)
+    collect.add_argument("--limit", type=int)
+    collect.add_argument("--dry-run", action="store_true")
+    collect.add_argument("--confirm-onemap-collection", action="store_true")
 
     args = parser.parse_args()
     if args.action == "plan":
@@ -453,6 +620,22 @@ def main() -> int:
         write_json(args.output, payload)
         print(json.dumps(payload, indent=2, sort_keys=True))
         return 0 if payload["ok"] else 1
+
+    if args.action == "collect":
+        sample_payload = read_json(args.sample)
+        if not isinstance(sample_payload, dict):
+            raise TypeError(f"sample must contain a JSON object: {args.sample}")
+        ok, payload = collect_onemap_walk_cache(
+            sample_payload,
+            cache_dir=args.cache_dir,
+            delay_sec=float(args.delay_sec),
+            limit=args.limit,
+            dry_run=bool(args.dry_run),
+            confirm_onemap_collection=bool(args.confirm_onemap_collection),
+        )
+        write_json(args.output, payload)
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0 if ok else 1
 
     return 1
 

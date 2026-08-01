@@ -134,8 +134,8 @@ def readiness_features() -> dict[str, Any]:
             "building_shadow_time_of_day": "future heat model",
             "live_bus_or_mrt_arrivals": "requires runtime proxy or collected static aggregates",
             "onemap_walk_validation_gate": (
-                "sample planner and cache evaluator implemented; the 2,000-postal "
-                "OneMap walk comparison has not been collected/evaluated yet"
+                "sample planner, guarded collector, and cache evaluator implemented; "
+                "the 2,000-postal OneMap walk comparison has not been collected yet"
             ),
             "bellingcat_openinframap_overpass_as_production_feeds": (
                 "QA/discovery only unless raw bounded OSM query output is archived and hashed"
