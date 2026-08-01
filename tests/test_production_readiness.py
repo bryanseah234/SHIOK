@@ -159,6 +159,12 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     assert report["network"]["ok"] is True
     assert report["vercel"]["root_directory_ok"] is True
     assert report["features"]["incorporated"]["bus_as_transit_direct_fallback"] is True
+    assert report["features"]["incorporated"]["ura_no_dwelling_units_postal_source"] is True
+    assert "124443" in report["features"]["not_incorporated"]["ura_expanded_scores_live"]
+    assert (
+        "complete accepted source-of-record"
+        in report["features"]["not_incorporated"]["canonical_140k_postal_universe"]
+    )
     assert (
         "outlier review/rescore"
         in report["features"]["not_incorporated"]["overture_addresses_sg_candidate"]

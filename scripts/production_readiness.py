@@ -114,11 +114,17 @@ def readiness_features() -> dict[str, Any]:
             "nparks_spatial_shade_proxy_heat_only": True,
             "broader_osm_covered_tags_from_hashed_pbf": True,
             "bus_as_transit_direct_fallback": True,
+            "ura_no_dwelling_units_postal_source": True,
             "all_known_source_derived_postals_scored_or_explicit_state": True,
         },
         "not_incorporated": {
             "canonical_140k_postal_universe": (
-                "not claimed; Overture Addresses is a candidate gate, not accepted source-of-record"
+                "not claimed; URA improves official-current coverage and Overture remains a "
+                "candidate gate, but neither is a complete accepted source-of-record"
+            ),
+            "ura_expanded_scores_live": (
+                "postal prep produces 124443 candidate records and 123967 ready-to-score rows; "
+                "not active production until full rescore/export/deploy"
             ),
             "overture_addresses_sg_candidate": (
                 "optional archive/probe implemented; produced 125876-postal candidate universe "
