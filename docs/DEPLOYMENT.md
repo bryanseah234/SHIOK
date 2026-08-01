@@ -139,13 +139,22 @@ quota window resets. Continue committing source changes to `main`; docs-only and
 QA-only commits should be skipped by `web/scripts/ignore-build.mjs`, while real
 `web/` changes will build after the quota resets.
 
-After the limit resets, run:
+After the limit resets, deploy the pending local bundle through the
+bundle-aware helper rather than raw `vercel deploy`:
 
 ```powershell
+.\scripts\deploy-production.bat -DataBundle generated_20260801_165500
+.\scripts\activate-data-bundle.bat -DataBundle generated_20260801_165500
 .\scripts\preflight-production.bat -SkipNetworkPreflight
-vercel deploy --prod --yes --scope theprawnvercel --no-wait
-vercel inspect sgshiok.vercel.app --scope theprawnvercel
+git add web\data-bundle.json
+git commit -m "data: activate full rescore bundle"
+git push origin main
 ```
+
+Use raw `vercel deploy` only for code-only manual deploys where
+`web/data-bundle.json` already points at a bundle that is reachable in
+production. New generated bundles must go through `deploy-production.bat`
+because it stages the otherwise ignored `web/public/data/<bundle>` directory.
 
 ## Lookup Transfer Check
 
