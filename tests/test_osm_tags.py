@@ -21,6 +21,10 @@ def test_osm_tag_schema_contains_reviewed_production_tags():
     assert "tactile_paving" in schema.network_extra_attributes
     assert "railway" in schema.network_extra_attributes
     assert "building:levels" in schema.network_extra_attributes
+    assert "building_arcade" in schema.covered_values
+    assert "roof" in schema.covered_values
+    assert "shelter" in schema.covered_values
+    assert "canopy" in schema.covered_values
     assert "partial" in schema.covered_values
     assert "no" in schema.negative_shelter_values
     assert "building" in schema.explicit_shelter_query_keys

@@ -62,3 +62,22 @@ source-derived universe honestly, with explicit `NOT_YET_SCORED` and
 
 Without one of those, full canonical ~140k coverage remains blocked by source
 availability, not code.
+
+## Local OSM Tag Promotion
+
+A read-only local PBF check on 2026-08-01 found clear shelter-positive
+`covered=*` values inside the Singapore planning-area union that were not yet in
+the production schema:
+
+- `covered=building_arcade`: 13 features
+- `covered=shelter`: 5 features
+- `covered=roof`: 2 features
+- `covered=booth`: 1 feature
+
+These were promoted in `pipeline/config/osm_tags.yaml` because they come from
+the existing hashed local OSM PBF, not from a hosted Overpass/OpenInfraMap/
+Bellingcat dependency. Ambiguous typo/mixed values such as `covered=yes;no`,
+`covered=steps`, and `covered=s` were not promoted.
+
+The schema also allows `covered=canopy` for future PBF snapshots; the current
+Singapore-filtered PBF check did not find that value.
