@@ -56,6 +56,11 @@ With that root directory, every push to `main` builds the Next.js app from
 downloads the configured production data bundle during `next build` when
 `web/public/data/<bundle>` is absent.
 
+Only the `sgshiok` Vercel project should be connected to this GitHub repo. On
+2026-08-01, the older `shiok` Vercel project was disconnected from
+`bryanseah234/sgSHIOK2026` because it was still creating duplicate failed commit
+statuses and burning Hobby deploy quota.
+
 ## Why This Exists
 
 `web/public/data/` is generated and intentionally ignored by Git. The current
