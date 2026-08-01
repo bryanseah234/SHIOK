@@ -193,6 +193,8 @@ Expected use:
 - Current Heat Comfort combines covered paths with NParks proxy shade on
   uncovered path length. Later work can add building shadow by time of day and
   richer canopy geometry.
+- Current island QA shade proxy counts are recorded in
+  `qa/shade_proxy_status_20260802.md`.
 
 ## Postal Universe
 
