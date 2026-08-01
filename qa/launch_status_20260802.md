@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `87c17e8` (`chore: harden launch browser checks`)
+- Latest pushed commit: `218e6fd` (`qa: add OneMap validation sample gate`)
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 165 passed
+- Python tests: 168 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -54,6 +54,7 @@ Root directory: `web`
 - Postal-universe prep helper: default plan-only guard passed; confirmed prep run passed.
 - URA 200-postal sample scoring: passed.
 - Launch-check local server cleanup: passed; stale-port guard now chooses a free port and stops child `next start` listeners.
+- OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
 
 ## Next Production Command
 
@@ -68,5 +69,6 @@ Run only after the Vercel Hobby quota window resets:
 - Deploy and activate the pending bundle.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
+- Collect/evaluate the 2,000-postal OneMap walk-validation cache; current cached report has 0/2,000 results and `gate_passed=false`.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.
