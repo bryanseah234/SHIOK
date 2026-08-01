@@ -22,10 +22,20 @@ Root directory: `web`
   features have station codes. `MAYFLOWER MRT STATION` is now enriched as
   `TE6`, `Thomson-East Coast Line`.
 
+## Prepared Next Postal Universe
+
+- URA No of Dwelling Units is now wired as an official postal-universe source.
+- Prepared candidate universe: 124,443 records.
+- Ready to score after bounded OneMap geocode: 123,967.
+- Remaining unresolved source-derived postals: 476 `NOT_YET_SCORED`.
+- Bounded geocode status: 575 queued, 99 filled, 476 not found, 0 latest HTTP requests from cache.
+- URA sample score QA: 200 sampled URA-backed postals, 186 `SCORED`, 1 `SCORED_PARTIAL`, 13 `NO_TRANSIT_IN_RANGE`.
+- Not live yet: requires full rescore/export/deploy after the current pending bundle deployment is resolved.
+
 ## Verified Checks
 
-- Python tests: 158 passed
-- Web tests: 29 passed
+- Python tests: 162 passed
+- Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
@@ -40,6 +50,8 @@ Root directory: `web`
 - Mayflower MRT-only browser smoke for 560231: passed
 - Local launch-check wrapper full smoke artifact set `20260802_053249`: passed
 - Known-postal smoke including 570234: passed
+- Postal-universe prep helper: default plan-only guard passed; confirmed prep run passed.
+- URA 200-postal sample scoring: passed.
 
 ## Next Production Command
 
@@ -52,6 +64,7 @@ Run only after the Vercel Hobby quota window resets:
 ## Not Done
 
 - Deploy and activate the pending bundle.
+- Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.
