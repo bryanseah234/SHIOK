@@ -863,6 +863,47 @@ function mapAriaLabel(routes: RouteMapItem[], mode: RouteDisplayMode): string {
   return `Route evidence map for ${labels}, showing ${routeModeLabel(mode)}`;
 }
 
+function transitPoiSummary(pois: PointFeatureCollection): string {
+  const counts = pois.features.reduce(
+    (total, feature) => {
+      const kind = feature.properties.kind;
+      if (kind === "mrt_station") total.mrtStations += 1;
+      if (kind === "mrt_exit") total.mrtExits += 1;
+      if (kind === "bus_stop") total.busStops += 1;
+      return total;
+    },
+    { mrtStations: 0, mrtExits: 0, busStops: 0 }
+  );
+
+  return `${counts.mrtStations} MRT or LRT stations, ${counts.mrtExits} exits, and ${counts.busStops} bus stops`;
+}
+
+function mapTextSummary(
+  routes: RouteMapItem[],
+  mode: RouteDisplayMode,
+  routeData: ReturnType<typeof routeCollections>,
+  pois: PointFeatureCollection
+): string {
+  const poiText = transitPoiSummary(pois);
+  if (routes.length === 0) {
+    return `Singapore map with ${poiText}. Search for a postal code to show route evidence.`;
+  }
+
+  const routeLabels = routes.map((route) => route.label).join(", ");
+  const visibleRoutes =
+    mode === "both"
+      ? `${routeData.shiokest.features.length} Shiokest segments and ${routeData.shortest.features.length} shortest segments`
+      : mode === "shortest"
+        ? `${routeData.shortest.features.length} shortest segments`
+        : `${routeData.shiokest.features.length} Shiokest segments`;
+  const exposed =
+    routeData.exposure.features.length === 1
+      ? "1 exposed gap"
+      : `${routeData.exposure.features.length} exposed gaps`;
+
+  return `Route evidence for ${routeLabels}. Showing ${visibleRoutes}, ${exposed}, and ${poiText}.`;
+}
+
 function prefersReducedMotion(): boolean {
   return (
     typeof window !== "undefined" &&
@@ -911,6 +952,10 @@ export function RouteEvidenceMap({
   const transitPoiData = useMemo(() => transitPoiCollection(transitPois), [transitPois]);
   const feedbackData = useMemo(() => feedbackCollections(feedbackPoints), [feedbackPoints]);
   const accessibleLabel = useMemo(() => mapAriaLabel(routes, mode), [routes, mode]);
+  const accessibleSummary = useMemo(
+    () => mapTextSummary(routes, mode, routeData, transitPoiData),
+    [routes, mode, routeData, transitPoiData]
+  );
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -1008,7 +1053,17 @@ export function RouteEvidenceMap({
 
   return (
     <div className={styles.mapShell}>
-      <div ref={containerRef} aria-label={accessibleLabel} role="img" className={styles.mapCanvas} />
+      <div
+        ref={containerRef}
+        aria-describedby="route-map-summary"
+        aria-label={accessibleLabel}
+        role="img"
+        tabIndex={0}
+        className={styles.mapCanvas}
+      />
+      <p id="route-map-summary" className={styles.screenReaderOnly}>
+        {accessibleSummary}
+      </p>
     </div>
   );
 }

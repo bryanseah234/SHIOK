@@ -630,7 +630,7 @@ function ScoreCard({
 
       <TransitModeControl score={score} mode={transitMode} setMode={setTransitMode} />
 
-       {score.paths && <InlineRouteLegend sameRoute={sameRoute} directBusFallback={directBusFallback} />}
+      {score.paths && <InlineRouteLegend sameRoute={sameRoute} directBusFallback={directBusFallback} />}
       {sourceBreakdown.length > 0 && (
         <div className={styles.sourceStrip} aria-label="Route source evidence">
           {sourceBreakdown.map((item) => (
