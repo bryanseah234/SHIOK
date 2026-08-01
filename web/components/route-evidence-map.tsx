@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import type maplibregl from "maplibre-gl";
 import type { StyleSpecification } from "maplibre-gl";
 import { postalGeomToRouteGeoJson } from "../lib/route-geojson";
+import localGlyphProtocol from "../lib/local-glyph-protocol";
 import type { LineStringFeatureCollection, LineStringFeature, LngLat } from "../lib/route-geojson";
 import type { PostalGeom, TransitPoiCollection } from "../lib/types";
 import styles from "./route-evidence-map.module.css";
@@ -31,7 +32,7 @@ const ONE_MAP_TILE_BOUNDS = [103.596, 1.1443, 104.4309, 1.4835] as [number, numb
 
 const ONE_MAP_STYLE: StyleSpecification = {
   version: 8,
-  glyphs: "https://demotiles.maplibre.org/font/{fontstack}/{range}.pbf",
+  glyphs: "glyphs://{fontstack}/{range}",
   sources: {
     onemap: {
       type: "raster",
@@ -74,6 +75,25 @@ interface PointFeatureCollection {
 }
 
 type MapFeatureCollection = LineStringFeatureCollection | PointFeatureCollection;
+type MapLibreModule = typeof import("maplibre-gl");
+
+let localGlyphProtocolRegistered = false;
+
+async function ensureLocalGlyphProtocol(maplibre: MapLibreModule) {
+  if (localGlyphProtocolRegistered) return;
+  try {
+    maplibre.addProtocol(
+      "glyphs",
+      localGlyphProtocol as Parameters<MapLibreModule["addProtocol"]>[1]
+    );
+  } catch (error) {
+    if (!String(error).toLowerCase().includes("already")) {
+      throw error;
+    }
+  }
+  localGlyphProtocolRegistered = true;
+}
+
 const SHELTER_SOURCE_COLOR = [
   "case",
   ["==", ["get", "source_class"], "direct_unrouted_bus"],
@@ -870,6 +890,8 @@ export function RouteEvidenceMap({
 
     async function initMap() {
       const maplibre = await import("maplibre-gl");
+      if (!active || !containerRef.current || mapRef.current) return;
+      await ensureLocalGlyphProtocol(maplibre);
       if (!active || !containerRef.current || mapRef.current) return;
 
       mapRef.current = new maplibre.Map({

@@ -10,9 +10,11 @@
     "test": "node scripts/test-web.mjs"
   },
   "dependencies": {
+    "@mapbox/tiny-sdf": "^2.2.0",
     "h3-js": "4.1.0",
     "maplibre-gl": "4.7.1",
     "next": "^15.5.21",
+    "pbf": "^5.1.2",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },
