@@ -2,6 +2,7 @@
 param(
     [switch]$ConfirmFullBatch,
     [switch]$Deploy,
+    [switch]$SkipActivateBundle,
     [int]$Workers = 4,
     [int]$ChunkSize = 500,
     [string]$Stamp = "",
@@ -168,11 +169,17 @@ print(json.dumps({"chunk_count": len(chunks), "records": records, "state_counts"
     uv run python run.py validate --input $ExportDir
     if ($LASTEXITCODE -ne 0) { throw "validate failed" }
 
-    [System.IO.File]::WriteAllText(
-        $BundleConfig,
-        "{`n  `"bundle`": `"$BundleName`"`n}",
-        [System.Text.UTF8Encoding]::new($false)
-    )
+    if ($SkipActivateBundle) {
+        Write-Output "activation_skipped=true"
+        Write-Output "activate_bundle_after_publish=$BundleName"
+    }
+    else {
+        [System.IO.File]::WriteAllText(
+            $BundleConfig,
+            "{`n  `"bundle`": `"$BundleName`"`n}",
+            [System.Text.UTF8Encoding]::new($false)
+        )
+    }
 
     if ($Deploy) {
         & (Join-Path $PSScriptRoot "deploy-production.ps1") -DataBundle $BundleName

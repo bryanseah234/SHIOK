@@ -158,7 +158,7 @@ For a source/model change that requires every known postal to be rescored, run
 the guarded helper from the repo root:
 
 ```powershell
-.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4
+.\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4 -SkipActivateBundle
 ```
 
 Add `-Deploy` only when the generated bundle validates and should be pushed to
@@ -176,4 +176,5 @@ default. A bounded 800-postal real scoring benchmark on 2026-07-30 measured
 
 The helper partitions the postal universe, runs parallel score batches, combines
 chunks, exports `web/public/data/generated_<stamp>`, validates it, updates
-`web/data-bundle.json`, and optionally calls `deploy-production.ps1`.
+`web/data-bundle.json` unless `-SkipActivateBundle` is set, and optionally calls
+`deploy-production.ps1`.
