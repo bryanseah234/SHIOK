@@ -315,11 +315,15 @@ function modeStatus(mode: ComfortMode): string {
 
 function buildFeedbackPayload({
   selection,
+  transitMode,
+  routeMode,
   points,
   segmentLabels,
   note,
 }: {
   selection: LoadedSelection | null;
+  transitMode: TransitAccessMode;
+  routeMode: RouteDisplayMode;
   points: FeedbackPoint[];
   segmentLabels: FeedbackSegmentLabel[];
   note: string;
@@ -327,6 +331,8 @@ function buildFeedbackPayload({
   return {
     postal: selection?.result.POSTAL ?? null,
     destination: selection?.score?.best_node?.name ?? null,
+    transit_mode: transitMode,
+    route_mode: routeMode,
     issue: "user_reported_better_walk_route",
     source: "user_drawn_qa_evidence_not_score_override",
     waypoints: points.map((point) => [point.lat, point.lng]),
@@ -334,6 +340,8 @@ function buildFeedbackPayload({
     user_note: note.trim() || null,
     current_score_state: selection?.score?.state ?? null,
     current_total: selection?.score?.total ?? null,
+    current_best_node: selection?.score?.best_node ?? null,
+    current_paths: selection?.score?.paths ?? null,
     created_at: new Date().toISOString(),
   };
 }
@@ -866,7 +874,9 @@ export default function Home() {
 
   const copyFeedback = async () => {
     const payload = buildFeedbackPayload({
-      selection: primary,
+      selection: activeSelection,
+      transitMode,
+      routeMode: mapRouteMode,
       points: feedbackPoints,
       segmentLabels: feedbackSegmentLabels,
       note: feedbackNote,
