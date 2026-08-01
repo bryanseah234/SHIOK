@@ -263,6 +263,17 @@ tested:
   `status=needs_owner_review`, so the network builder ignores them unless a
   human verifies the source evidence and changes a reviewed feature to
   `status=approved` in `data/audited_shelter_corrections.geojson`.
+- After adding NParks Heritage Road Green Buffers and rebuilding the island
+  network, reran the same AMK feedback audit against
+  `processed/network_island.parquet`. Results stayed materially the same:
+  19 `covered_evidence_nearby_check_connectivity_or_snap`, 8
+  `hdb_void_deck_component_gap`, 2
+  `hdb_void_deck_evidence_nearby_check_connectivity`, 2
+  `bridge_underpass_evidence_nearby_check_endpoint_snap`, and 1 expected exposed
+  segment. The connector audit still has 5 review-ready draft corrections and 3
+  blocked insufficient-overlap candidates. For `560231`, segment 6 remains
+  blocked with only 10.5% HDB/covered overlap, confirming that greenery shade
+  data does not solve the Mayflower rain-shelter/void-deck route gap.
 
 ## Human Feedback Loop
 
