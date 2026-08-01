@@ -1,0 +1,420 @@
+{
+  "generated_at": "2026-08-01T19:47:56.967Z",
+  "bundle": "generated_20260801_165500",
+  "postals": [
+    {
+      "postal": "560234",
+      "found": true,
+      "state": "SCORED",
+      "total": 90.4,
+      "best_node": {
+        "exit": "54211",
+        "name": "Mayflower Sec Sch",
+        "routed_m": 326.2,
+        "snap_distance_m": 3.8,
+        "station": "Mayflower Sec Sch",
+        "straight_line_m": 162.6,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 248.3,
+        "covered_ratio": 0.761,
+        "detour_pct": 0,
+        "heat_comfort_m": 248.3,
+        "heat_comfort_ratio": 0.761,
+        "routing_type": "shortest_due_to_detour",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 326.2,
+        "shortest_covered_ratio": 0.761,
+        "shortest_m": 326.2,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 90.4,
+          "node_type": "bus_stop",
+          "node_name": "Mayflower Sec Sch",
+          "routed_m": 326.2,
+          "sheltered_m": 326.2,
+          "covered_ratio_pct": 76,
+          "routing_type": "shortest_due_to_detour"
+        },
+        "mrt_lrt": {
+          "state": "SCORED",
+          "total": 72.6,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 545.6,
+          "sheltered_m": 632.9,
+          "covered_ratio_pct": 52,
+          "routing_type": "sheltered"
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 90.4,
+          "node_type": "bus_stop",
+          "node_name": "Mayflower Sec Sch",
+          "routed_m": 326.2,
+          "sheltered_m": 326.2,
+          "covered_ratio_pct": 76,
+          "routing_type": "shortest_due_to_detour"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    {
+      "postal": "560231",
+      "found": true,
+      "state": "SCORED",
+      "total": 100,
+      "best_node": {
+        "exit": "54219",
+        "name": "Opp Mayflower Sec Sch",
+        "routed_m": 128.1,
+        "snap_distance_m": 13.6,
+        "station": "Opp Mayflower Sec Sch",
+        "straight_line_m": 86.4,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 128.1,
+        "covered_ratio": 1,
+        "detour_pct": 0,
+        "heat_comfort_m": 128.1,
+        "heat_comfort_ratio": 1,
+        "routing_type": "sheltered",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 128.1,
+        "shortest_covered_ratio": 1,
+        "shortest_m": 128.1,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "sheltered_m": 128.1,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        },
+        "mrt_lrt": {
+          "state": "SCORED",
+          "total": 72.1,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 425.9,
+          "sheltered_m": 425.9,
+          "covered_ratio_pct": 31,
+          "routing_type": "sheltered"
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "sheltered_m": 128.1,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    {
+      "postal": "560225",
+      "found": true,
+      "state": "SCORED",
+      "total": 85.4,
+      "best_node": {
+        "exit": "54211",
+        "name": "Mayflower Sec Sch",
+        "routed_m": 425,
+        "snap_distance_m": 3.8,
+        "station": "Mayflower Sec Sch",
+        "straight_line_m": 240.7,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 299.2,
+        "covered_ratio": 0.7,
+        "detour_pct": 0.6,
+        "heat_comfort_m": 299.2,
+        "heat_comfort_ratio": 0.7,
+        "routing_type": "sheltered",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 427.4,
+        "shortest_covered_ratio": 0.57,
+        "shortest_m": 425,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 85.4,
+          "node_type": "bus_stop",
+          "node_name": "Mayflower Sec Sch",
+          "routed_m": 425,
+          "sheltered_m": 427.4,
+          "covered_ratio_pct": 70,
+          "routing_type": "sheltered"
+        },
+        "mrt_lrt": {
+          "state": "SCORED",
+          "total": 59.7,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 644.4,
+          "sheltered_m": 646.9,
+          "covered_ratio_pct": 36,
+          "routing_type": "sheltered"
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 85.4,
+          "node_type": "bus_stop",
+          "node_name": "Mayflower Sec Sch",
+          "routed_m": 425,
+          "sheltered_m": 427.4,
+          "covered_ratio_pct": 70,
+          "routing_type": "sheltered"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    {
+      "postal": "560700",
+      "found": true,
+      "state": "SCORED",
+      "total": 85.4,
+      "best_node": {
+        "exit": "54241",
+        "name": "Blk 700B",
+        "routed_m": 169.6,
+        "snap_distance_m": 4.5,
+        "station": "Blk 700B",
+        "straight_line_m": 102.8,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 129,
+        "covered_ratio": 0.636,
+        "detour_pct": 19.7,
+        "heat_comfort_m": 129,
+        "heat_comfort_ratio": 0.636,
+        "routing_type": "sheltered",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 202.9,
+        "shortest_covered_ratio": 0.394,
+        "shortest_m": 169.6,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 85.4,
+          "node_type": "bus_stop",
+          "node_name": "Blk 700B",
+          "routed_m": 169.6,
+          "sheltered_m": 202.9,
+          "covered_ratio_pct": 64,
+          "routing_type": "sheltered"
+        },
+        "mrt_lrt": {
+          "state": "SCORED",
+          "total": 77.4,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "ANG MO KIO MRT STATION Exit D",
+          "routed_m": 561.1,
+          "sheltered_m": 681.8,
+          "covered_ratio_pct": 64,
+          "routing_type": "sheltered"
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 85.4,
+          "node_type": "bus_stop",
+          "node_name": "Blk 700B",
+          "routed_m": 169.6,
+          "sheltered_m": 202.9,
+          "covered_ratio_pct": 64,
+          "routing_type": "sheltered"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    {
+      "postal": "560710",
+      "found": true,
+      "state": "SCORED",
+      "total": 100,
+      "best_node": {
+        "exit": "54391",
+        "name": "Aft Ang Mo Kio Int",
+        "routed_m": 76.6,
+        "snap_distance_m": 15.8,
+        "station": "Aft Ang Mo Kio Int",
+        "straight_line_m": 56.7,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 76.6,
+        "covered_ratio": 1,
+        "detour_pct": 0,
+        "heat_comfort_m": 76.6,
+        "heat_comfort_ratio": 1,
+        "routing_type": "sheltered",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 76.6,
+        "shortest_covered_ratio": 1,
+        "shortest_m": 76.6,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "sheltered_m": 76.6,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        },
+        "mrt_lrt": {
+          "state": "SCORED",
+          "total": 87.4,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "ANG MO KIO MRT STATION Exit D",
+          "routed_m": 282.8,
+          "sheltered_m": 282.8,
+          "covered_ratio_pct": 67,
+          "routing_type": "sheltered"
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "sheltered_m": 76.6,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    },
+    {
+      "postal": "570234",
+      "found": true,
+      "state": "SCORED",
+      "total": 100,
+      "best_node": {
+        "exit": "53389",
+        "name": "Opp Bishan Nth Shop Mall",
+        "routed_m": 118.9,
+        "snap_distance_m": 7.5,
+        "station": "Opp Bishan Nth Shop Mall",
+        "straight_line_m": 111,
+        "type": "bus_stop"
+      },
+      "paths": {
+        "covered_m": 118.9,
+        "covered_ratio": 1,
+        "detour_pct": 0,
+        "heat_comfort_m": 118.9,
+        "heat_comfort_ratio": 1,
+        "routing_type": "sheltered",
+        "shade_m": 0,
+        "shade_ratio": 0,
+        "sheltered_m": 118.9,
+        "shortest_covered_ratio": 1,
+        "shortest_m": 118.9,
+        "shortest_shade_ratio": 0
+      },
+      "route_options": {
+        "best_transit": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "sheltered_m": 118.9,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        },
+        "mrt_lrt": {
+          "state": "NO_TRANSIT_IN_RANGE",
+          "total": null,
+          "node_type": "mrt_lrt_exit",
+          "node_name": "No route found",
+          "routed_m": null,
+          "sheltered_m": null,
+          "covered_ratio_pct": null,
+          "routing_type": null
+        },
+        "bus": {
+          "state": "SCORED",
+          "total": 100,
+          "node_type": "bus_stop",
+          "node_name": "Opp Bishan Nth Shop Mall",
+          "routed_m": 118.9,
+          "sheltered_m": 118.9,
+          "covered_ratio_pct": 100,
+          "routing_type": "sheltered"
+        }
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      }
+    }
+  ],
+  "checks": {
+    "all_found": true,
+    "postal_570234_scored_not_pending": true,
+    "postal_560234_defaults_to_bus": true,
+    "mayflower_controls_have_mrt_option": true
+  }
+}
