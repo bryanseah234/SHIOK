@@ -392,3 +392,19 @@ route effect; no score override has been applied.
   MRT evidence route. This confirms the default product behavior is bus-aware,
   while the MRT-specific 560231/560234 shelter-route false-negative remains a
   separate data/model QA issue.
+
+2026-08-02 remaining no-transit replay:
+
+- `qa/no_transit_replay_top_areas_20260802.json` reran an 80-postal sample from
+  the pending `generated_20260801_165500` bundle against the current routing
+  graph.
+- Classification counts: 74 `all_candidates_beyond_access_range`, 6
+  `candidate_graph_disconnected`.
+- All 9,384 remaining `NO_TRANSIT_IN_RANGE` records in the pending bundle have
+  zero direct bus candidates within 300 m, so the remaining population is not an
+  obvious direct-bus fallback miss.
+- Interpretation: most sampled remaining no-transit records are reachable but
+  beyond the current 1.2 km transit-access cutoff. The next product decision is
+  whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit
+  scored state for far-but-reachable transit. The 6 disconnected samples still
+  need targeted geometry QA before any broad resnap/connector change.
