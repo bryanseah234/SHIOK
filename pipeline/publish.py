@@ -81,6 +81,45 @@ def copy_path(src: Path, dst: Path) -> None:
         shutil.copy2(src, dst)
 
 
+def staged_vercelignore(bundle: str, *, root: bool) -> str:
+    data_prefix = "web/public/data" if root else "public/data"
+    base_ignores = [
+        ".env",
+        ".venv/",
+        ".pytest_cache/",
+        ".ruff_cache/",
+        ".mypy_cache/",
+        ".next/",
+        "__pycache__/",
+        "*.pyc",
+        "node_modules/",
+    ]
+    if root:
+        base_ignores.extend(
+            [
+                "raw/",
+                "processed/",
+                "logs/",
+                "qa/",
+                "tmp/",
+                "web/.next/",
+                "web/.vercel/",
+                "web/node_modules/",
+            ]
+        )
+    else:
+        base_ignores.append(".vercel/")
+    return "\n".join(
+        [
+            *base_ignores,
+            f"{data_prefix}/generated_*/",
+            f"!{data_prefix}/{bundle}/",
+            f"!{data_prefix}/{bundle}/**",
+            "",
+        ]
+    )
+
+
 def prepare_vercel_source(web_dir: Path, data_dir: Path) -> Path:
     data_dir = data_dir.resolve()
     web_dir = web_dir.resolve()
@@ -112,6 +151,12 @@ def prepare_vercel_source(web_dir: Path, data_dir: Path) -> Path:
             copy_path(child, public_dst / child.name)
 
     copy_path(data_dir, public_dst / "data" / bundle)
+    (stage_root / ".vercelignore").write_text(
+        staged_vercelignore(bundle, root=True), encoding="utf-8"
+    )
+    (stage_web / ".vercelignore").write_text(
+        staged_vercelignore(bundle, root=False), encoding="utf-8"
+    )
     return stage_root
 
 

@@ -84,3 +84,9 @@ def test_prepare_vercel_source_copies_only_selected_bundle(tmp_path: Path, monke
     assert (stage / "web" / "app" / "page.tsx").is_file()
     assert (stage / "web" / "public" / "data" / "selected_bundle" / "manifest.json").is_file()
     assert not (stage / "web" / "public" / "data" / "old_bundle").exists()
+    assert "!web/public/data/selected_bundle/**" in (stage / ".vercelignore").read_text(
+        encoding="utf-8"
+    )
+    assert "!public/data/selected_bundle/**" in (stage / "web" / ".vercelignore").read_text(
+        encoding="utf-8"
+    )
