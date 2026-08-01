@@ -45,6 +45,10 @@ Implemented in code and active in the current
 - `uv run python run.py readiness` now reports
   `geometry_postals_with_route_segments=114329`, matching all active geometry
   postals.
+- `qa/route_geometry_contract_560231_20260802.md` confirms the pending bundle
+  has shortest and Shiokest segment arrays for `560231` in both Best Transit and
+  MRT/LRT modes. The remaining Mayflower issue is a data/model gap, not a
+  missing route-geometry export.
 
 Evidence:
 
