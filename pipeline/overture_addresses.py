@@ -53,16 +53,29 @@ def current_universe_postcodes(path: Path) -> set[str]:
 
 
 def current_universe_coordinates(path: Path) -> dict[str, dict[str, Any]]:
-    table = pq.read_table(path, columns=["postal_code", "x", "y", "coordinate_source"])
+    wanted_columns = [
+        "postal_code",
+        "lat",
+        "lon",
+        "x",
+        "y",
+        "coordinate_source",
+        "address",
+    ]
+    schema_columns = set(pq.read_schema(path).names)
+    table = pq.read_table(path, columns=[col for col in wanted_columns if col in schema_columns])
     coordinates: dict[str, dict[str, Any]] = {}
     for row in table.to_pylist():
         postcode = normalize_postcode(row.get("postal_code"))
         if postcode is None or row.get("x") is None or row.get("y") is None:
             continue
         coordinates[postcode] = {
+            "lat": row.get("lat"),
+            "lon": row.get("lon"),
             "x": float(row["x"]),
             "y": float(row["y"]),
             "coordinate_source": row.get("coordinate_source"),
+            "address": row.get("address"),
         }
     return coordinates
 
@@ -131,6 +144,11 @@ def compare_coordinate_deltas(
                 "postcode": postcode,
                 "delta_m": round(delta_m, 1),
                 "current_source": current.get("coordinate_source"),
+                "current_address": current.get("address"),
+                "current_lon": current.get("lon"),
+                "current_lat": current.get("lat"),
+                "overture_lon": lon,
+                "overture_lat": lat,
                 "overture_source": row.get("source_dataset"),
                 "address_rows": row.get("address_rows"),
             }
@@ -147,8 +165,57 @@ def compare_coordinate_deltas(
         "over_100m": sum(1 for value in deltas if value > 100.0),
         "over_250m": sum(1 for value in deltas if value > 250.0),
         "over_1000m": sum(1 for value in deltas if value > 1000.0),
+        "outliers_over_100m": [
+            row
+            for row in sorted(rows, key=lambda item: float(item["delta_m"]), reverse=True)
+            if float(row["delta_m"]) > 100.0
+        ],
         "largest_deltas": sorted(rows, key=lambda item: float(item["delta_m"]), reverse=True)[:10],
     }
+
+
+def coordinate_outlier_geojson(
+    coordinate_comparison: dict[str, Any],
+    *,
+    min_delta_m: float = 100.0,
+) -> dict[str, Any]:
+    features: list[dict[str, Any]] = []
+    for row in coordinate_comparison.get("outliers_over_100m", []):
+        if float(row.get("delta_m", 0.0)) < min_delta_m:
+            continue
+        current_lon = row.get("current_lon")
+        current_lat = row.get("current_lat")
+        overture_lon = row.get("overture_lon")
+        overture_lat = row.get("overture_lat")
+        if (
+            current_lon is None
+            or current_lat is None
+            or overture_lon is None
+            or overture_lat is None
+        ):
+            continue
+        features.append(
+            {
+                "type": "Feature",
+                "properties": {
+                    "postcode": row.get("postcode"),
+                    "delta_m": row.get("delta_m"),
+                    "current_source": row.get("current_source"),
+                    "current_address": row.get("current_address"),
+                    "overture_source": row.get("overture_source"),
+                    "address_rows": row.get("address_rows"),
+                    "evidence_status": "coordinate_outlier_review_not_scoring",
+                },
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [
+                        [float(current_lon), float(current_lat)],
+                        [float(overture_lon), float(overture_lat)],
+                    ],
+                },
+            }
+        )
+    return {"type": "FeatureCollection", "features": features}
 
 
 def sha256_file(path: Path) -> str:
@@ -322,6 +389,8 @@ def main() -> int:
     parser.add_argument("--archive-raw", action="store_true")
     parser.add_argument("--raw-dir", type=Path, default=RAW_DIR)
     parser.add_argument("--output", type=Path, default=None)
+    parser.add_argument("--outlier-geojson", type=Path, default=None)
+    parser.add_argument("--outlier-threshold-m", type=float, default=100.0)
     args = parser.parse_args()
 
     ok, report = build_overture_candidate_report(
@@ -330,6 +399,21 @@ def main() -> int:
         archive_raw=bool(args.archive_raw),
         raw_dir=args.raw_dir,
     )
+    if args.outlier_geojson is not None:
+        geojson = coordinate_outlier_geojson(
+            report.get("coordinate_comparison", {}),
+            min_delta_m=float(args.outlier_threshold_m),
+        )
+        args.outlier_geojson.parent.mkdir(parents=True, exist_ok=True)
+        args.outlier_geojson.write_text(
+            json.dumps(geojson, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        report["coordinate_outlier_geojson"] = {
+            "path": str(args.outlier_geojson),
+            "features": len(geojson["features"]),
+            "min_delta_m": float(args.outlier_threshold_m),
+        }
     text = json.dumps(report, indent=2, sort_keys=True)
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)

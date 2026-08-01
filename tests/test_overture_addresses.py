@@ -6,6 +6,7 @@ from pipeline.overture_addresses import (
     archive_overture_postcode_rows,
     compare_coordinate_deltas,
     compare_postcode_sets,
+    coordinate_outlier_geojson,
     normalize_postcode,
     wgs84_to_xy_transformer,
 )
@@ -70,6 +71,45 @@ def test_compare_coordinate_deltas_reports_current_overlap():
     assert report["over_250m"] == 0
     assert report["over_1000m"] == 0
     assert report["largest_deltas"][0]["postcode"] == "018895"
+
+
+def test_coordinate_outlier_geojson_exports_review_lines():
+    report = {
+        "outliers_over_100m": [
+            {
+                "postcode": "079000",
+                "delta_m": 26004.4,
+                "current_source": "osm_addr_postcode",
+                "current_address": "Current address",
+                "current_lon": 103.7,
+                "current_lat": 1.2,
+                "overture_lon": 103.9,
+                "overture_lat": 1.4,
+                "overture_source": "OpenAddresses/Singapore Land Authority",
+                "address_rows": 1,
+            },
+            {
+                "postcode": "018895",
+                "delta_m": 99.9,
+                "current_lon": 103.8,
+                "current_lat": 1.3,
+                "overture_lon": 103.8001,
+                "overture_lat": 1.3001,
+            },
+        ]
+    }
+
+    geojson = coordinate_outlier_geojson(report, min_delta_m=100.0)
+
+    assert geojson["type"] == "FeatureCollection"
+    assert len(geojson["features"]) == 1
+    feature = geojson["features"][0]
+    assert feature["properties"]["postcode"] == "079000"
+    assert feature["properties"]["evidence_status"] == "coordinate_outlier_review_not_scoring"
+    assert feature["geometry"] == {
+        "type": "LineString",
+        "coordinates": [[103.7, 1.2], [103.9, 1.4]],
+    }
 
 
 def test_archive_overture_postcode_rows_writes_hashed_parquet(tmp_path: Path):

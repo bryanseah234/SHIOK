@@ -256,3 +256,16 @@ distribution is strong enough to keep Overture as a serious candidate for
 targeted validation and future universe expansion, but the outliers prove it
 must remain gated until the largest coordinate mismatches are reviewed and any
 production inclusion is followed by a rescore.
+
+Review artifact:
+
+```text
+qa/overture_coordinate_outliers_20260801.geojson
+qa/overture_addresses_sg_candidate_report_20260801.json
+```
+
+The GeoJSON contains 482 `coordinate_outlier_review_not_scoring` LineString
+features from current-coordinate point to Overture-coordinate point for every
+postcode whose Overture representative coordinate differs from the current
+universe coordinate by more than 100 m. This is a QA layer only; it does not
+change scoring.
