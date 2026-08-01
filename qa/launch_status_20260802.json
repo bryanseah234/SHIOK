@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-08-01T19:49:33.728Z",
+  "current_time_sgt": "2026-08-02T03:41-03:49+08:00",
+  "project": {
+    "repo": "https://github.com/bryanseah234/sgSHIOK2026.git",
+    "vercel_project": "theprawnvercel/sgshiok",
+    "production_url": "https://sgshiok.vercel.app/",
+    "root_directory": "web"
+  },
+  "live_bundle": {
+    "bundle": "generated_20260801_direct_bus_all_targeted",
+    "remote_manifest_status": 200,
+    "record_count": 124032
+  },
+  "pending_bundle": {
+    "bundle": "generated_20260801_165500",
+    "local_readiness_ok": true,
+    "remote_manifest_status": 404,
+    "record_count": 124032,
+    "state_counts": {
+      "SCORED": 112880,
+      "SCORED_PARTIAL": 1449,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "NOT_YET_SCORED": 319
+    },
+    "validation": {
+      "ok": true,
+      "file_count": 2743,
+      "indexed_postals": 124032,
+      "geometry_postals": 114329,
+      "geometry_postals_with_route_segments": 114329,
+      "transit_features": 6011
+    }
+  },
+  "verified_checks": {
+    "python_tests": "155 passed",
+    "web_tests": "22 passed",
+    "fresh_bundle_web_build": "passed",
+    "lighthouse_accessibility": 100,
+    "routed_browser_smoke_560234": "passed",
+    "known_postal_smoke": "passed"
+  },
+  "not_done": [
+    "Deploy pending bundle after Vercel Hobby quota resets.",
+    "Activate web/data-bundle.json only after remote pending-bundle manifest is reachable.",
+    "Run broader keyboard-only and multi-postal mobile browser QA after activation.",
+    "Resolve Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction; no manual postal score override.",
+    "Close canonical ~140k postal universe only with licensed/permitted source; current launchable universe is 124,032."
+  ],
+  "next_command_after_quota_reset": ".\\scripts\\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction"
+}
