@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `218e6fd` (`qa: add OneMap validation sample gate`)
+- Latest pushed commit: `cbdd5e8` (`qa: add guarded OneMap validation collector`)
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 168 passed
+- Python tests: 170 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -55,6 +55,7 @@ Root directory: `web`
 - URA 200-postal sample scoring: passed.
 - Launch-check local server cleanup: passed; stale-port guard now chooses a free port and stops child `next start` listeners.
 - OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
+- OneMap walk-validation collector dry-run: passed; `qa/onemap_validation_collect_dry_run_20260802.json` queued 2,000 requests, made 0 HTTP requests, and requires explicit `--confirm-onemap-collection` before external calls.
 
 ## Next Production Command
 

@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-01T23:02:41.624Z",
-  "current_time_sgt": "2026-08-02T07:02+08:00",
+  "generated_at": "2026-08-01T23:07:18.974Z",
+  "current_time_sgt": "2026-08-02T07:07+08:00",
   "project": {
     "repo": "https://github.com/bryanseah234/sgSHIOK2026.git",
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit": "218e6fd"
+    "latest_pushed_commit": "cbdd5e8"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
@@ -34,7 +34,7 @@
     }
   },
   "verified_checks": {
-    "python_tests": "168 passed",
+    "python_tests": "170 passed",
     "web_tests": "31 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
@@ -52,6 +52,7 @@
     "known_postal_smoke": "passed",
     "launch_check_server_cleanup": "passed; free-port guard and child next-start listener cleanup verified",
     "onemap_walk_validation_sample_plan": "qa/onemap_validation_sample_2000_20260802.json passed; 2000 samples from 112880 eligible scored records across 52 areas; projected 66.7 minutes at 2.0s/request",
+    "onemap_walk_validation_collect_dry_run": "qa/onemap_validation_collect_dry_run_20260802.json passed; 2000 queued requests, 0 HTTP requests, requires explicit confirmation before external calls",
     "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json not passed; 0 of 2000 cache results collected"
   },
   "not_done": [
