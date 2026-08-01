@@ -9,6 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
+- Latest pushed commit: `87c17e8` (`chore: harden launch browser checks`)
 
 ## Pending Fresh Bundle
 
@@ -34,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 162 passed
+- Python tests: 165 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -48,10 +49,11 @@ Root directory: `web`
 - Transit POI popup static-info regression tests: passed
 - Pending-bundle readiness artifact `qa/readiness_pending_bundle_20260802_0424.json`: passed
 - Mayflower MRT-only browser smoke for 560231: passed
-- Local launch-check wrapper full smoke artifact set `20260802_053249`: passed
+- Local launch-check wrapper full smoke artifact set `20260802_064933`: passed
 - Known-postal smoke including 570234: passed
 - Postal-universe prep helper: default plan-only guard passed; confirmed prep run passed.
 - URA 200-postal sample scoring: passed.
+- Launch-check local server cleanup: passed; stale-port guard now chooses a free port and stops child `next start` listeners.
 
 ## Next Production Command
 

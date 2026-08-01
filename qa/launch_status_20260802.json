@@ -1,11 +1,12 @@
 {
-  "generated_at": "2026-08-01T19:49:33.728Z",
-  "current_time_sgt": "2026-08-02T03:41-03:49+08:00",
+  "generated_at": "2026-08-01T22:55:33.994Z",
+  "current_time_sgt": "2026-08-02T06:55+08:00",
   "project": {
     "repo": "https://github.com/bryanseah234/sgSHIOK2026.git",
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
-    "root_directory": "web"
+    "root_directory": "web",
+    "latest_pushed_commit": "87c17e8"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
@@ -33,8 +34,8 @@
     }
   },
   "verified_checks": {
-    "python_tests": "155 passed",
-    "web_tests": "29 passed",
+    "python_tests": "165 passed",
+    "web_tests": "31 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
@@ -47,8 +48,9 @@
     "transit_poi_popup_static_info_regression_tests": "passed",
     "pending_bundle_readiness_artifact": "qa/readiness_pending_bundle_20260802_0424.json passed",
     "mayflower_mrt_only_browser_smoke": "560231 passed",
-    "local_launch_check_wrapper_full_smoke": "20260802_044529 passed",
-    "known_postal_smoke": "passed"
+    "local_launch_check_wrapper_full_smoke": "20260802_064933 passed",
+    "known_postal_smoke": "passed",
+    "launch_check_server_cleanup": "passed; free-port guard and child next-start listener cleanup verified"
   },
   "not_done": [
     "Deploy pending bundle after Vercel Hobby quota resets.",
