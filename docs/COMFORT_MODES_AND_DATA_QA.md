@@ -171,6 +171,9 @@ uv run python run.py bus-arrivals collect --stop 54211 --samples 60 --interval-s
 This captures live snapshots only. A later aggregation job must convert those
 snapshots into reliability metrics before the frontend can display them.
 
+Current static transit POI data and remaining live/MRT metadata gaps are recorded
+in `qa/transit_poi_status_20260802.md`.
+
 ## Shade and Leaf Coverage
 
 Verified official/static source status:
