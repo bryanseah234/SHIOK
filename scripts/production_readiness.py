@@ -87,7 +87,8 @@ def readiness_features() -> dict[str, Any]:
             ),
             "overture_addresses_sg_candidate": (
                 "optional archive/probe implemented; produced 125876-postal candidate universe "
-                "with 1671 Overture-only postcodes; not active production until coordinate QA/rescore"
+                "with 1671 Overture-only postcodes; coordinate QA implemented with p95 23.5m "
+                "and 41 postcodes over 1km; not active production until outlier review/rescore"
             ),
             "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
             "building_shadow_time_of_day": "future heat model",

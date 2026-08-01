@@ -157,3 +157,7 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     assert report["network"]["ok"] is True
     assert report["vercel"]["root_directory_ok"] is True
     assert report["features"]["incorporated"]["bus_as_transit_direct_fallback"] is True
+    assert (
+        "outlier review/rescore"
+        in report["features"]["not_incorporated"]["overture_addresses_sg_candidate"]
+    )
