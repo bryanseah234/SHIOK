@@ -188,10 +188,12 @@ start -- -p <port>` is serving the build, run a routed browser smoke test:
 npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560234 --out ..\qa\browser_smoke_560234.json --screenshots
 ```
 
-The script launches headless Chrome, searches the postal through the real form,
-checks the score card, route legend, map text equivalent, and short-mobile card
-fit, then writes a JSON report. PNG screenshots under `qa/` remain ignored by
-Git; commit the JSON/Markdown summaries instead.
+The script launches headless Chrome, focuses the postal input, types with
+Chrome's keyboard input API, submits with Enter, checks the score card, route
+legend, map text equivalent, and short-mobile card fit, then writes a JSON
+report. `--input-mode programmatic` is available only as a diagnostic fallback.
+PNG screenshots under `qa/` remain ignored by Git; commit the JSON/Markdown
+summaries instead.
 
 ## Local Cleanup
 

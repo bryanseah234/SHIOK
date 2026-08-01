@@ -35,6 +35,8 @@ describe("deployment packaging", () => {
     const script = readFileSync(join(__dirname, "../../scripts/browser-smoke.mjs"), "utf-8");
 
     expect(packageJson.scripts["qa:browser"]).toBe("node scripts/browser-smoke.mjs");
+    expect(script).toContain("Input.dispatchKeyEvent");
+    expect(script).toContain("keyboard_search_used");
     expect(script).toContain("score_has_max_denominator");
     expect(script).toContain("map_has_text_equivalent");
     expect(script).toContain("short_mobile_card_bottom_visible");

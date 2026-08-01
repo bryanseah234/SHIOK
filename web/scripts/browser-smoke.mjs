@@ -17,6 +17,7 @@ function parseArgs(argv) {
     debugPort: 9224,
     chrome: process.env.CHROME_PATH || "",
     timeoutMs: 30000,
+    inputMode: "keyboard",
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -33,6 +34,7 @@ function parseArgs(argv) {
     else if (arg === "--debug-port") args.debugPort = Number(next());
     else if (arg === "--chrome") args.chrome = next();
     else if (arg === "--timeout-ms") args.timeoutMs = Number(next());
+    else if (arg === "--input-mode") args.inputMode = next();
     else if (arg === "--screenshots") args.screenshots = true;
     else if (arg === "--no-screenshots") args.screenshots = false;
     else throw new Error(`unknown arg: ${arg}`);
@@ -46,6 +48,9 @@ function parseArgs(argv) {
   }
   if (!Number.isInteger(args.timeoutMs) || args.timeoutMs < 1000) {
     throw new Error(`invalid timeout: ${args.timeoutMs}`);
+  }
+  if (!["keyboard", "programmatic"].includes(args.inputMode)) {
+    throw new Error(`invalid input mode: ${args.inputMode}`);
   }
   if (!args.out) {
     args.out = join(repoRoot, "qa", `browser_smoke_${args.postal}.json`);
@@ -169,7 +174,76 @@ async function waitForExpression(cdp, expression, timeoutMs) {
   throw new Error(`timed out waiting for expression: ${expression}`);
 }
 
-async function searchPostal(cdp, postal, timeoutMs) {
+async function pressEnter(cdp) {
+  const keyEvent = {
+    key: "Enter",
+    code: "Enter",
+    windowsVirtualKeyCode: 13,
+    nativeVirtualKeyCode: 13,
+  };
+  await cdp.send("Input.dispatchKeyEvent", { ...keyEvent, type: "rawKeyDown" });
+  await cdp.send("Input.dispatchKeyEvent", {
+    ...keyEvent,
+    type: "char",
+    text: "\r",
+    unmodifiedText: "\r",
+  });
+  await cdp.send("Input.dispatchKeyEvent", { ...keyEvent, type: "keyUp" });
+}
+
+async function clickSearchInput(cdp, timeoutMs) {
+  await waitForExpression(cdp, "Boolean(document.querySelector('#postal-search-input'))", timeoutMs);
+  const result = await cdp.send("Runtime.evaluate", {
+    returnByValue: true,
+    awaitPromise: true,
+    expression: `(() => {
+      const input = document.querySelector('#postal-search-input');
+      const rect = input.getBoundingClientRect();
+      return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    })()`,
+  });
+  const point = result.result?.value;
+  if (!point || typeof point.x !== "number" || typeof point.y !== "number") {
+    throw new Error("could not resolve postal input click target");
+  }
+  await cdp.send("Input.dispatchMouseEvent", { type: "mouseMoved", x: point.x, y: point.y });
+  await cdp.send("Input.dispatchMouseEvent", { type: "mousePressed", x: point.x, y: point.y, button: "left", clickCount: 1 });
+  await cdp.send("Input.dispatchMouseEvent", { type: "mouseReleased", x: point.x, y: point.y, button: "left", clickCount: 1 });
+  await waitForExpression(cdp, "document.activeElement === document.querySelector('#postal-search-input')", timeoutMs);
+}
+
+async function typeText(cdp, text) {
+  for (const character of text) {
+    const keyEvent = {
+      key: character,
+      code: `Digit${character}`,
+      windowsVirtualKeyCode: character.charCodeAt(0),
+      nativeVirtualKeyCode: character.charCodeAt(0),
+    };
+    await cdp.send("Input.dispatchKeyEvent", { ...keyEvent, type: "rawKeyDown" });
+    await cdp.send("Input.dispatchKeyEvent", {
+      ...keyEvent,
+      type: "char",
+      text: character,
+      unmodifiedText: character,
+    });
+    await cdp.send("Input.dispatchKeyEvent", { ...keyEvent, type: "keyUp" });
+  }
+}
+
+async function searchPostalWithKeyboard(cdp, postal, timeoutMs) {
+  await clickSearchInput(cdp, timeoutMs);
+  await typeText(cdp, postal);
+  await waitForExpression(
+    cdp,
+    `document.querySelector('#postal-search-input')?.value === '${postal}'`,
+    timeoutMs
+  );
+  await new Promise((resolvePromise) => setTimeout(resolvePromise, 300));
+  await pressEnter(cdp);
+}
+
+async function searchPostalProgrammatically(cdp, postal, timeoutMs) {
   await waitForExpression(cdp, "Boolean(document.querySelector('#postal-search-input'))", timeoutMs);
   await cdp.send("Runtime.evaluate", {
     awaitPromise: true,
@@ -182,6 +256,14 @@ async function searchPostal(cdp, postal, timeoutMs) {
       button.click();
     })()`,
   });
+}
+
+async function searchPostal(cdp, postal, timeoutMs, inputMode) {
+  if (inputMode === "keyboard") {
+    await searchPostalWithKeyboard(cdp, postal, timeoutMs);
+  } else {
+    await searchPostalProgrammatically(cdp, postal, timeoutMs);
+  }
   await waitForExpression(
     cdp,
     `document.body.innerText.includes('Postal ${postal}') && document.body.innerText.includes('/100')`,
@@ -259,9 +341,10 @@ async function runSmoke(args) {
     await cdp.open();
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
+    await cdp.send("Page.bringToFront");
     await cdp.send("Page.navigate", { url: args.url });
     await waitForExpression(cdp, "document.readyState === 'complete'", args.timeoutMs);
-    await searchPostal(cdp, args.postal, args.timeoutMs);
+    await searchPostal(cdp, args.postal, args.timeoutMs, args.inputMode);
 
     const summary = await collectPageSummary(cdp);
     const outputDir = dirname(resolve(args.out));
@@ -297,12 +380,14 @@ async function runSmoke(args) {
       short_mobile_card_bottom_visible:
         typeof summary.metrics.cardBottom === "number" &&
         summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2,
+      keyboard_search_used: args.inputMode === "keyboard",
     };
 
     const payload = {
       generated_at: new Date().toISOString(),
       url: args.url,
       postal: args.postal,
+      input_mode: args.inputMode,
       screenshots,
       score_panel_excerpt: summary.cardText.split("\n").slice(0, 32),
       map_label: summary.mapLabel,
