@@ -48,18 +48,26 @@ Write-Output "bundle=$DataBundle"
 Write-Output "record_count=$RecordCount"
 Write-Output "generated_at=$GeneratedAt"
 
-if ($PlanOnly) {
+function Write-ReleasePlan {
+    param([string]$Reason)
     Write-Output ""
     Write-Output "plan_only=true"
+    Write-Output "release=not_started"
+    Write-Output "reason=$Reason"
     Write-Output "commands:"
     Write-Output ".\scripts\release-data-bundle.bat -DataBundle $DataBundle -ConfirmProduction"
     Write-Output ""
     Write-Output "This will validate locally, direct-deploy the ignored data bundle, wait for the production manifest, activate web/data-bundle.json, preflight, commit, and push."
+}
+
+if ($PlanOnly) {
+    Write-ReleasePlan -Reason "plan_only_requested"
     return
 }
 
 if (-not $ConfirmProduction) {
-    throw "Refusing production release without -ConfirmProduction. Use -PlanOnly to print the release plan."
+    Write-ReleasePlan -Reason "confirm_production_not_set"
+    return
 }
 
 Push-Location $RepoRoot

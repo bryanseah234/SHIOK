@@ -157,6 +157,9 @@ To see the full sequence without deploying:
 .\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -PlanOnly
 ```
 
+Omitting both `-PlanOnly` and `-ConfirmProduction` is also safe: the helper
+prints the same plan and exits without deploying.
+
 ## Lookup Transfer Check
 
 Use this from the repo root to measure a postal lookup against the active local

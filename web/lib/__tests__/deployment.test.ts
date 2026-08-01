@@ -43,4 +43,12 @@ describe("deployment packaging", () => {
     expect(script).toContain("map_has_text_equivalent");
     expect(script).toContain("short_mobile_card_bottom_visible");
   });
+
+  it("keeps data-bundle release dry-run safe by default", () => {
+    const script = readFileSync(join(__dirname, "../../../scripts/release-data-bundle.ps1"), "utf-8");
+
+    expect(script).toContain("confirm_production_not_set");
+    expect(script).toContain("release=not_started");
+    expect(script).toContain("-ConfirmProduction");
+  });
 });

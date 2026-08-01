@@ -21,11 +21,12 @@ Root directory: `web`
 ## Verified Checks
 
 - Python tests: 155 passed
-- Web tests: 23 passed
+- Web tests: 24 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
 - Multi-postal keyboard browser smoke for 560231, 560234, 570234: passed
+- Release helper safe-plan mode: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command
