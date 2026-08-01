@@ -269,3 +269,30 @@ features from current-coordinate point to Overture-coordinate point for every
 postcode whose Overture representative coordinate differs from the current
 universe coordinate by more than 100 m. This is a QA layer only; it does not
 change scoring.
+
+## 2026-08-02 Source Refresh
+
+Current public-source search still did not identify a free authoritative
+all-delivery-point postal universe:
+
+- SingPost SGLocate documentation describes postcode/street/block address
+  search APIs and enhanced address details, with additional charges possible:
+  `https://www.sglocate.com/documentations.aspx`
+- SingPost business data pages describe SGLocate Dataset as a business data
+  solution containing standardised Singapore postal addresses:
+  `https://www.singpost.com/business/promote-your-products/data-solutions`
+- SLA continues to list Address Point under licensable digitised land
+  information, alongside Street Directory, cadastral, road-network, and building
+  outline data:
+  `https://www.sla.gov.sg/geospatial/digitised-land-information/`
+- data.gov.sg search exposes agency-specific datasets with postal-code fields,
+  but not a canonical all-address/postal-code table:
+  `https://data.gov.sg/datasets?coverage=&query=postal+code`
+- Third-party/commercial postal-code vendors exist, but they do not satisfy the
+  $0/open-source production constraint.
+
+Decision unchanged: the launchable universe remains the 124,032 source-derived
+records with explicit `SCORED`, `SCORED_PARTIAL`, `NO_TRANSIT_IN_RANGE`, and
+`NOT_YET_SCORED` states. The ~140k canonical target needs a licensed/permitted
+SingPost/SLA-equivalent source or a new official open release; it should not be
+closed with OneMap brute force.
