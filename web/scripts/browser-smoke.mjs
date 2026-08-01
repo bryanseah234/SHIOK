@@ -12,6 +12,11 @@ const TRANSIT_MODE_LABELS = {
   mrt_lrt: "MRT/LRT",
   bus: "Bus",
 };
+const ROUTE_MODE_LABELS = {
+  shiokest: "Shiokest",
+  both: "Both",
+  shortest: "Shortest",
+};
 
 function normalizePostalValue(value) {
   const postal = String(value).trim().padStart(6, "0");
@@ -46,6 +51,7 @@ function parseArgs(argv) {
     inputMode: "keyboard",
     expectedState: "scored",
     transitMode: "best_transit",
+    routeMode: "shiokest",
     mustInclude: [],
   };
 
@@ -67,6 +73,7 @@ function parseArgs(argv) {
     else if (arg === "--input-mode") args.inputMode = next();
     else if (arg === "--expected-state") args.expectedState = next();
     else if (arg === "--transit-mode") args.transitMode = next();
+    else if (arg === "--route-mode") args.routeMode = next();
     else if (arg === "--must-include") args.mustInclude.push(next());
     else if (arg === "--screenshots") args.screenshots = true;
     else if (arg === "--no-screenshots") args.screenshots = false;
@@ -91,6 +98,9 @@ function parseArgs(argv) {
   }
   if (!Object.prototype.hasOwnProperty.call(TRANSIT_MODE_LABELS, args.transitMode)) {
     throw new Error(`invalid transit mode: ${args.transitMode}`);
+  }
+  if (!Object.prototype.hasOwnProperty.call(ROUTE_MODE_LABELS, args.routeMode)) {
+    throw new Error(`invalid route mode: ${args.routeMode}`);
   }
   if (!args.out) {
     const suffix = args.postals.length === 1 ? args.postal : `${args.postals[0]}_plus_${args.postals.length - 1}`;
@@ -338,6 +348,31 @@ async function selectTransitMode(cdp, transitMode, timeoutMs) {
   await new Promise((resolvePromise) => setTimeout(resolvePromise, 700));
 }
 
+async function selectRouteMode(cdp, routeMode, timeoutMs) {
+  const label = ROUTE_MODE_LABELS[routeMode];
+  if (!label) throw new Error(`invalid route mode: ${routeMode}`);
+  if (routeMode === "shiokest") return;
+  await waitForExpression(
+    cdp,
+    `Array.from(document.querySelectorAll('[aria-label="Route display"] button')).some((button) => button.textContent?.trim() === '${label}')`,
+    timeoutMs
+  );
+  await cdp.send("Runtime.evaluate", {
+    awaitPromise: true,
+    expression: `(() => {
+      const button = Array.from(document.querySelectorAll('[aria-label="Route display"] button'))
+        .find((item) => item.textContent?.trim() === '${label}');
+      button.click();
+    })()`,
+  });
+  await waitForExpression(
+    cdp,
+    `Array.from(document.querySelectorAll('[aria-label="Route display"] button')).some((button) => button.textContent?.trim() === '${label}' && button.getAttribute('aria-pressed') === 'true')`,
+    timeoutMs
+  );
+  await new Promise((resolvePromise) => setTimeout(resolvePromise, 700));
+}
+
 async function captureScreenshot(cdp, viewport, file) {
   await cdp.send("Emulation.setDeviceMetricsOverride", {
     width: viewport.width,
@@ -362,12 +397,15 @@ async function collectPageSummary(cdp) {
       const overlay = document.querySelector('[class*=detailOverlay]');
       const activeTransitButton = Array.from(document.querySelectorAll('[aria-label="Transit target"] button'))
         .find((button) => button.getAttribute('aria-pressed') === 'true');
+      const activeRouteButton = Array.from(document.querySelectorAll('[aria-label="Route display"] button'))
+        .find((button) => button.getAttribute('aria-pressed') === 'true');
       const rect = card?.getBoundingClientRect();
       return {
         cardText: card?.innerText || '',
         mapLabel: map?.getAttribute('aria-label') || '',
         mapSummary: summary?.innerText || '',
         activeTransitMode: activeTransitButton?.textContent?.trim() || '',
+        activeRouteMode: activeRouteButton?.textContent?.trim() || '',
         metrics: {
           viewportWidth: innerWidth,
           viewportHeight: innerHeight,
@@ -383,7 +421,7 @@ async function collectPageSummary(cdp) {
   return result.result.value;
 }
 
-function collectChecks(summary, postal, inputMode, expectedState, transitMode, mustInclude) {
+function collectChecks(summary, postal, inputMode, expectedState, transitMode, routeMode, mustInclude) {
   const hasScore = summary.cardText.includes("/100");
   const hasNoTransit =
     summary.cardText.includes("No routed") ||
@@ -404,6 +442,7 @@ function collectChecks(summary, postal, inputMode, expectedState, transitMode, m
     keyboard_search_used: inputMode === "keyboard",
     transit_mode_selected:
       transitMode === "best_transit" || summary.activeTransitMode === TRANSIT_MODE_LABELS[transitMode],
+    route_mode_selected: routeMode === "shiokest" || summary.activeRouteMode === ROUTE_MODE_LABELS[routeMode],
     required_text_present: mustInclude.every((text) => summary.cardText.includes(text) || summary.mapSummary.includes(text)),
   };
   if (expectedState === "scored") {
@@ -434,6 +473,7 @@ async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
   await waitForExpression(cdp, "document.readyState === 'complete'", args.timeoutMs);
   await searchPostal(cdp, postal, args.timeoutMs, args.inputMode);
   await selectTransitMode(cdp, args.transitMode, args.timeoutMs);
+  await selectRouteMode(cdp, args.routeMode, args.timeoutMs);
 
   const summary = await collectPageSummary(cdp);
   const screenshots = [];
@@ -465,6 +505,7 @@ async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
     args.inputMode,
     args.expectedState,
     args.transitMode,
+    args.routeMode,
     args.mustInclude
   );
   return {
@@ -472,12 +513,14 @@ async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
     input_mode: args.inputMode,
     expected_state: args.expectedState,
     transit_mode: args.transitMode,
+    route_mode: args.routeMode,
     must_include: args.mustInclude,
     screenshots,
     score_panel_excerpt: summary.cardText.split("\n").slice(0, 32),
     map_label: summary.mapLabel,
     map_summary: summary.mapSummary,
     active_transit_mode: summary.activeTransitMode,
+    active_route_mode: summary.activeRouteMode,
     metrics: summary.metrics,
     checks,
     ok: Object.values(checks).every(Boolean),
@@ -525,6 +568,7 @@ async function runSmoke(args) {
       input_mode: args.inputMode,
       expected_state: args.expectedState,
       transit_mode: args.transitMode,
+      route_mode: args.routeMode,
       must_include: args.mustInclude,
     };
     const payload =

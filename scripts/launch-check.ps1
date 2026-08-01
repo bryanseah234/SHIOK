@@ -99,6 +99,9 @@ try {
         Invoke-Checked -Label "Mayflower MRT-only browser smoke" -Command {
             npm --prefix web run qa:browser -- --url "http://127.0.0.1:$Port/" --postal 560231 --transit-mode mrt_lrt --must-include "Mayflower MRT Station" --out "..\qa\browser_smoke_mayflower_mrt_560231_$Timestamp.json" --debug-port ($Port + 99)
         }
+        Invoke-Checked -Label "Route compare browser smoke" -Command {
+            npm --prefix web run qa:browser -- --url "http://127.0.0.1:$Port/" --postal 560109 --route-mode both --must-include "shortest segments" --out "..\qa\browser_smoke_route_compare_560109_$Timestamp.json" --debug-port ($Port + 98)
+        }
         Invoke-Checked -Label "No-transit browser smoke" -Command {
             npm --prefix web run qa:browser -- --url "http://127.0.0.1:$Port/" --postal 567754 --expected-state no_transit --out "..\qa\browser_smoke_no_transit_567754_$Timestamp.json" --debug-port ($Port + 100)
         }

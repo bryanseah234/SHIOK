@@ -28,12 +28,13 @@ Root directory: `web`
 - Multi-postal keyboard browser smoke for 560231, 560234, 570234: passed
 - No-transit keyboard browser smoke for 567754: passed
 - Not-yet-scored keyboard browser smoke for 000104: passed
+- Route-compare browser smoke for 560109: passed
 - Release helper safe-plan mode: passed
 - Feedback-route drawing zoom-reset regression guard: passed
 - Transit POI popup static-info regression tests: passed
 - Pending-bundle readiness artifact `qa/readiness_pending_bundle_20260802_0424.json`: passed
 - Mayflower MRT-only browser smoke for 560231: passed
-- Local launch-check wrapper full smoke artifact set `20260802_043830`: passed
+- Local launch-check wrapper full smoke artifact set `20260802_044529`: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command

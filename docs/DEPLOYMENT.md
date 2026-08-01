@@ -221,6 +221,13 @@ nearer bus stop:
 npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560231 --transit-mode mrt_lrt --must-include "Mayflower MRT Station" --out ..\qa\browser_smoke_mayflower_mrt.json
 ```
 
+To verify the Shortest/Shiokest compare control on a postal where the two paths
+actually differ:
+
+```powershell
+npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560109 --route-mode both --must-include "shortest segments" --out ..\qa\browser_smoke_route_compare.json
+```
+
 The script launches headless Chrome, focuses the postal input, types with
 Chrome's keyboard input API, submits with Enter, checks the score card, route
 legend, map text equivalent, and short-mobile card fit, then writes a JSON
@@ -229,9 +236,10 @@ programmatic` is available only as a diagnostic fallback. `--expected-state`
 defaults to `scored`; use `no_transit` or `not_yet_scored` when validating
 explicit non-score states. `--transit-mode mrt_lrt` or `--transit-mode bus`
 clicks the visible transit target control after lookup; `--must-include` asserts
-specific text is present in the resulting score card or map summary. PNG
-screenshots under `qa/` remain ignored by Git; commit the JSON/Markdown
-summaries instead.
+specific text is present in the resulting score card or map summary.
+`--route-mode both` or `--route-mode shortest` clicks the visible route display
+control after lookup. PNG screenshots under `qa/` remain ignored by Git; commit
+the JSON/Markdown summaries instead.
 
 ## Local Cleanup
 

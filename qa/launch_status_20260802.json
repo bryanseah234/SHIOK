@@ -41,12 +41,13 @@
     "multi_postal_keyboard_browser_smoke": "560231, 560234, 570234 passed",
     "no_transit_keyboard_browser_smoke": "567754 passed",
     "not_yet_scored_keyboard_browser_smoke": "000104 passed",
+    "route_compare_browser_smoke": "560109 passed",
     "release_helper_safe_plan_mode": "passed",
     "feedback_route_zoom_reset_regression_guard": "passed",
     "transit_poi_popup_static_info_regression_tests": "passed",
     "pending_bundle_readiness_artifact": "qa/readiness_pending_bundle_20260802_0424.json passed",
     "mayflower_mrt_only_browser_smoke": "560231 passed",
-    "local_launch_check_wrapper_full_smoke": "20260802_043830 passed",
+    "local_launch_check_wrapper_full_smoke": "20260802_044529 passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [
