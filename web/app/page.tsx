@@ -154,6 +154,12 @@ function formatPercent(value: number | null): string {
   return typeof value === "number" ? `${value}%` : "Unavailable";
 }
 
+function transitModeLabel(mode: TransitAccessMode): string {
+  if (mode === "mrt_lrt") return "MRT/LRT";
+  if (mode === "bus") return "bus";
+  return "transit";
+}
+
 function exposureGapCopy(lenM: number, index: number): string {
   const rank = index === 0 ? "Longest" : `Gap ${index + 1}`;
   if (lenM >= 300) return `${rank} exposed stretch`;
@@ -243,8 +249,11 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
   return items;
 }
 
-function scoreReasons(score: ScoreRecord): string[] {
-  if (score.state === "NO_TRANSIT_IN_RANGE") return ["No qualifying route in this mode", "Try Best transit or route QA"];
+function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
+  if (score.state === "NO_TRANSIT_IN_RANGE") {
+    const label = transitModeLabel(transitMode);
+    return [`No ${label} route within scoring range`, "Transit may exist, but this graph did not find a qualifying walk"];
+  }
   if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
   if (score.paths?.routing_type === "direct_bus_fallback_unrouted") {
     return ["Nearby bus stop with service data", "Exact walking route not verified yet"];
@@ -574,9 +583,9 @@ function ScoreCard({
       : "Shiokest walk";
   const stationName =
     score.state === "NO_TRANSIT_IN_RANGE"
-      ? "No Qualifying Transit Nearby"
+      ? `No routed ${transitModeLabel(transitMode)} within range`
       : toProperCase(score.best_node?.name ?? "No transit found nearby");
-  const reasons = scoreReasons(score);
+  const reasons = scoreReasons(score, transitMode);
   const displayScore = modeAdjustedTotal(score, comfortMode);
   const sourceBreakdown = routeSourceBreakdown(selection, routeMode, sameRoute);
   const extraWalkLabel =
