@@ -188,12 +188,19 @@ start -- -p <port>` is serving the build, run a routed browser smoke test:
 npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560234 --out ..\qa\browser_smoke_560234.json --screenshots
 ```
 
+For a broader no-screenshot launch smoke, run several known postals through the
+same browser session:
+
+```powershell
+npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postals 560231,560234,570234 --out ..\qa\browser_smoke_launch.json
+```
+
 The script launches headless Chrome, focuses the postal input, types with
 Chrome's keyboard input API, submits with Enter, checks the score card, route
 legend, map text equivalent, and short-mobile card fit, then writes a JSON
-report. `--input-mode programmatic` is available only as a diagnostic fallback.
-PNG screenshots under `qa/` remain ignored by Git; commit the JSON/Markdown
-summaries instead.
+report. Multi-postal runs write one `results[]` entry per postal. `--input-mode
+programmatic` is available only as a diagnostic fallback. PNG screenshots under
+`qa/` remain ignored by Git; commit the JSON/Markdown summaries instead.
 
 ## Local Cleanup
 

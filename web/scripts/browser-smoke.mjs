@@ -8,10 +8,31 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const webRoot = resolve(scriptDir, "..");
 const repoRoot = resolve(webRoot, "..");
 
+function normalizePostalValue(value) {
+  const postal = String(value).trim().padStart(6, "0");
+  if (!/^\d{6}$/.test(postal)) {
+    throw new Error(`postal must be six digits: ${postal}`);
+  }
+  return postal;
+}
+
+function parsePostalList(value) {
+  const postals = String(value)
+    .split(/[,\s]+/)
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map(normalizePostalValue);
+  if (postals.length === 0) {
+    throw new Error("postals list is empty");
+  }
+  return postals;
+}
+
 function parseArgs(argv) {
   const args = {
     url: process.env.SHIOK_BROWSER_QA_URL || "http://127.0.0.1:3000/",
-    postal: "560234",
+    postal: "",
+    postals: [],
     out: "",
     screenshots: false,
     debugPort: 9224,
@@ -29,7 +50,8 @@ function parseArgs(argv) {
     };
 
     if (arg === "--url") args.url = next();
-    else if (arg === "--postal") args.postal = next().padStart(6, "0");
+    else if (arg === "--postal") args.postals = [normalizePostalValue(next())];
+    else if (arg === "--postals") args.postals = parsePostalList(next());
     else if (arg === "--out") args.out = next();
     else if (arg === "--debug-port") args.debugPort = Number(next());
     else if (arg === "--chrome") args.chrome = next();
@@ -40,9 +62,10 @@ function parseArgs(argv) {
     else throw new Error(`unknown arg: ${arg}`);
   }
 
-  if (!/^\d{6}$/.test(args.postal)) {
-    throw new Error(`postal must be six digits: ${args.postal}`);
+  if (args.postals.length === 0) {
+    args.postals = [normalizePostalValue("560234")];
   }
+  args.postal = args.postals[0];
   if (!Number.isInteger(args.debugPort) || args.debugPort < 1) {
     throw new Error(`invalid debug port: ${args.debugPort}`);
   }
@@ -53,7 +76,8 @@ function parseArgs(argv) {
     throw new Error(`invalid input mode: ${args.inputMode}`);
   }
   if (!args.out) {
-    args.out = join(repoRoot, "qa", `browser_smoke_${args.postal}.json`);
+    const suffix = args.postals.length === 1 ? args.postal : `${args.postals[0]}_plus_${args.postals.length - 1}`;
+    args.out = join(repoRoot, "qa", `browser_smoke_${suffix}.json`);
   }
   return args;
 }
@@ -314,6 +338,64 @@ async function collectPageSummary(cdp) {
   return result.result.value;
 }
 
+function collectChecks(summary, postal, inputMode) {
+  return {
+    score_has_max_denominator: summary.cardText.includes("/100"),
+    score_panel_loaded: summary.cardText.includes(`Postal ${postal}`),
+    transit_legend_present: summary.cardText.includes("MRT/LRT") && summary.cardText.includes("Bus stop"),
+    route_mode_present: summary.cardText.includes("Shiokest"),
+    map_has_text_equivalent: Boolean(summary.mapSummary),
+    short_mobile_card_bottom_visible:
+      typeof summary.metrics.cardBottom === "number" &&
+      summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2,
+    keyboard_search_used: inputMode === "keyboard",
+  };
+}
+
+async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
+  await cdp.send("Page.navigate", { url: args.url });
+  await new Promise((resolvePromise) => setTimeout(resolvePromise, 500));
+  await waitForExpression(cdp, "document.readyState === 'complete'", args.timeoutMs);
+  await searchPostal(cdp, postal, args.timeoutMs, args.inputMode);
+
+  const summary = await collectPageSummary(cdp);
+  const screenshots = [];
+  const caseShotBase = args.postals.length === 1 ? shotBase : `${shotBase}_${postal}`;
+
+  if (args.screenshots) {
+    const desktop = join(outputDir, `${caseShotBase}_desktop.png`);
+    const mobile = join(outputDir, `${caseShotBase}_mobile.png`);
+    const mobileShort = join(outputDir, `${caseShotBase}_mobile_short.png`);
+    await captureScreenshot(cdp, { width: 1440, height: 950, mobile: false }, desktop);
+    await captureScreenshot(cdp, { width: 390, height: 844, mobile: true }, mobile);
+    await captureScreenshot(cdp, { width: 390, height: 667, mobile: true }, mobileShort);
+    screenshots.push(desktop, mobile, mobileShort);
+    Object.assign(summary, await collectPageSummary(cdp));
+  } else {
+    await cdp.send("Emulation.setDeviceMetricsOverride", {
+      width: 390,
+      height: 667,
+      deviceScaleFactor: 2,
+      mobile: true,
+    });
+    await new Promise((resolvePromise) => setTimeout(resolvePromise, 700));
+    Object.assign(summary, await collectPageSummary(cdp));
+  }
+
+  const checks = collectChecks(summary, postal, args.inputMode);
+  return {
+    postal,
+    input_mode: args.inputMode,
+    screenshots,
+    score_panel_excerpt: summary.cardText.split("\n").slice(0, 32),
+    map_label: summary.mapLabel,
+    map_summary: summary.mapSummary,
+    metrics: summary.metrics,
+    checks,
+    ok: Object.values(checks).every(Boolean),
+  };
+}
+
 async function runSmoke(args) {
   const chrome = resolveChrome(args.chrome);
   const debugBase = `http://127.0.0.1:${args.debugPort}`;
@@ -342,60 +424,28 @@ async function runSmoke(args) {
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
     await cdp.send("Page.bringToFront");
-    await cdp.send("Page.navigate", { url: args.url });
-    await waitForExpression(cdp, "document.readyState === 'complete'", args.timeoutMs);
-    await searchPostal(cdp, args.postal, args.timeoutMs, args.inputMode);
-
-    const summary = await collectPageSummary(cdp);
     const outputDir = dirname(resolve(args.out));
     const shotBase = basename(args.out, ".json");
-    const screenshots = [];
-
-    if (args.screenshots) {
-      const desktop = join(outputDir, `${shotBase}_desktop.png`);
-      const mobile = join(outputDir, `${shotBase}_mobile.png`);
-      const mobileShort = join(outputDir, `${shotBase}_mobile_short.png`);
-      await captureScreenshot(cdp, { width: 1440, height: 950, mobile: false }, desktop);
-      await captureScreenshot(cdp, { width: 390, height: 844, mobile: true }, mobile);
-      await captureScreenshot(cdp, { width: 390, height: 667, mobile: true }, mobileShort);
-      screenshots.push(desktop, mobile, mobileShort);
-      Object.assign(summary, await collectPageSummary(cdp));
-    } else {
-      await cdp.send("Emulation.setDeviceMetricsOverride", {
-        width: 390,
-        height: 667,
-        deviceScaleFactor: 2,
-        mobile: true,
-      });
-      await new Promise((resolvePromise) => setTimeout(resolvePromise, 700));
-      Object.assign(summary, await collectPageSummary(cdp));
+    const results = [];
+    for (const postal of args.postals) {
+      results.push(await runPostalCase(cdp, args, postal, outputDir, shotBase));
     }
 
-    const checks = {
-      score_has_max_denominator: summary.cardText.includes("/100"),
-      score_panel_loaded: summary.cardText.includes(`Postal ${args.postal}`),
-      transit_legend_present: summary.cardText.includes("MRT/LRT") && summary.cardText.includes("Bus stop"),
-      route_mode_present: summary.cardText.includes("Shiokest"),
-      map_has_text_equivalent: Boolean(summary.mapSummary),
-      short_mobile_card_bottom_visible:
-        typeof summary.metrics.cardBottom === "number" &&
-        summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2,
-      keyboard_search_used: args.inputMode === "keyboard",
-    };
-
-    const payload = {
+    const commonPayload = {
       generated_at: new Date().toISOString(),
       url: args.url,
-      postal: args.postal,
       input_mode: args.inputMode,
-      screenshots,
-      score_panel_excerpt: summary.cardText.split("\n").slice(0, 32),
-      map_label: summary.mapLabel,
-      map_summary: summary.mapSummary,
-      metrics: summary.metrics,
-      checks,
-      ok: Object.values(checks).every(Boolean),
     };
+    const payload =
+      results.length === 1
+        ? { ...commonPayload, ...results[0] }
+        : {
+            ...commonPayload,
+            postals: args.postals,
+            result_count: results.length,
+            results,
+            ok: results.every((result) => result.ok),
+          };
 
     mkdirSync(outputDir, { recursive: true });
     writeFileSync(args.out, `${JSON.stringify(payload, null, 2)}\n`);
