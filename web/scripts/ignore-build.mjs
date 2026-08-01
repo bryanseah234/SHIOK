@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { relative, resolve, sep } from "node:path";
+import { isAbsolute, relative, resolve } from "node:path";
 
 function git(args) {
   return execFileSync("git", args, { encoding: "utf8" }).trim();
@@ -24,7 +24,7 @@ const touchesProject = files.some((file) => {
   if (file === "__force_build__") return true;
   const absolute = resolve(repoRoot, file);
   const rel = relative(projectRoot, absolute);
-  return rel === "" || (!rel.startsWith("..") && !resolve(rel).startsWith(sep));
+  return rel === "" || (!rel.startsWith("..") && !isAbsolute(rel));
 });
 
 if (touchesProject) {
