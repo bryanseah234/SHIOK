@@ -104,6 +104,13 @@ Current implementation:
   remained `NO_TRANSIT_IN_RANGE`, and both controls remained `SCORED`. This is
   evidence for a broader targeted refresh, not a substitute for the full bundle
   rescore.
+- A clean current-bundle replay audit on
+  `generated_20260801_no_transit_wide_targeted` with `--replay-limit 4`
+  classified all 4 sampled `NO_TRANSIT_IN_RANGE` records as
+  `all_candidates_beyond_access_range`, not graph-disconnected. This does not
+  clear the full 10,704-record no-transit bucket, but it proves at least some
+  remaining cases are access-threshold/product-policy cases rather than missing
+  bus/MRT source data.
 
 ## Actual Bus Arrivals
 
