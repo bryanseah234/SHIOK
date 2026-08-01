@@ -815,6 +815,7 @@ def build_provenance(
                 "bus_services",
                 "bus_routes",
                 "leaf_area_index",
+                "nparks_heritage_road_green_buffers",
                 "nparks_nature_ways",
                 "nparks_park_connector_loop",
                 "nparks_tracks",
@@ -849,6 +850,7 @@ def build_provenance(
                         "nparks_park_connector_loop",
                         "nparks_tracks",
                         "nparks_heritage_trees",
+                        "nparks_heritage_road_green_buffers",
                     }
                 )
                 else "provisional_covered_only_until_phase_4"

@@ -1,17 +1,17 @@
 {
-  "nodes": 653146,
-  "edges": 871629,
-  "mean_edge_length_m": 17.82004931576896,
+  "nodes": 653119,
+  "edges": 871583,
+  "mean_edge_length_m": 17.82097288967555,
   "connected_components_count": 2838,
   "top_5_component_sizes": [
-    617733,
+    617706,
     1946,
     1470,
     1402,
     1295
   ],
   "osm_only_top_3_component_node_share_pct": 95.07824708064877,
-  "top_3_component_node_share_pct": 95.10109531406454,
+  "top_3_component_node_share_pct": 95.10089279289073,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1266,11 +1266,11 @@
       "NEEDS_MANUAL": 59
     },
     "BISHAN": {
-      "ALIGNED": 59,
+      "ALIGNED": 81,
       "OFFSET": 3,
-      "UNREPRESENTED-surface": 76,
+      "UNREPRESENTED-surface": 61,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 35
+      "NEEDS_MANUAL": 28
     },
     "BOON LAY": {
       "ALIGNED": 10,
@@ -1371,9 +1371,9 @@
       "NEEDS_MANUAL": 21
     },
     "JURONG WEST": {
-      "ALIGNED": 205,
+      "ALIGNED": 206,
       "OFFSET": 23,
-      "UNREPRESENTED-surface": 36,
+      "UNREPRESENTED-surface": 35,
       "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 37
     },
@@ -1441,11 +1441,11 @@
       "NEEDS_MANUAL": 0
     },
     "NOVENA": {
-      "ALIGNED": 79,
-      "OFFSET": 4,
-      "UNREPRESENTED-surface": 45,
+      "ALIGNED": 82,
+      "OFFSET": 6,
+      "UNREPRESENTED-surface": 42,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 47
+      "NEEDS_MANUAL": 45
     },
     "ORCHARD": {
       "ALIGNED": 23,
@@ -1581,9 +1581,9 @@
       "NEEDS_MANUAL": 50
     },
     "TANGLIN": {
-      "ALIGNED": 43,
-      "OFFSET": 6,
-      "UNREPRESENTED-surface": 26,
+      "ALIGNED": 45,
+      "OFFSET": 5,
+      "UNREPRESENTED-surface": 25,
       "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 8
     },
@@ -1640,7 +1640,7 @@
   "per_area_match_pct": {
     "ANG MO KIO": 34.22338495547219,
     "BEDOK": 72.03837224615978,
-    "BISHAN": 41.07078061873243,
+    "BISHAN": 54.14085117006847,
     "BOON LAY": 63.39688482131437,
     "BUKIT BATOK": 75.31867107196298,
     "BUKIT MERAH": 75.6859694196867,
@@ -1655,7 +1655,7 @@
     "GEYLANG": 42.82789169604111,
     "HOUGANG": 52.31245185141351,
     "JURONG EAST": 78.3727676250737,
-    "JURONG WEST": 74.68234153428646,
+    "JURONG WEST": 74.73903571590596,
     "KALLANG": 35.59795517005083,
     "LIM CHU KANG": 0.0,
     "MANDAI": 0.0,
@@ -1665,7 +1665,7 @@
     "MUSEUM": 59.973424393993945,
     "NEWTON": 33.12677635920529,
     "NORTH-EASTERN ISLANDS": 0.0,
-    "NOVENA": 50.99033685367341,
+    "NOVENA": 53.95635270752068,
     "ORCHARD": 57.63914721050508,
     "OUTRAM": 41.14346311080101,
     "PASIR RIS": 57.01125094244925,
@@ -1685,7 +1685,7 @@
     "STRAITS VIEW": 0.0,
     "SUNGEI KADUT": 78.58716735554697,
     "TAMPINES": 75.74637204648728,
-    "TANGLIN": 59.619519904802885,
+    "TANGLIN": 63.24772100347145,
     "TENGAH": 100.0,
     "TOA PAYOH": 64.44062156604485,
     "TUAS": 92.67414085615982,
@@ -1695,25 +1695,32 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1616.1328498373957,
-  "synthesized_pct_of_total": 0.4890369930106795,
-  "unsnapped_endpoints_count": 1326,
-  "needs_manual_count": 1326,
-  "covered_edge_length_m_osm_tags": 595431.3326134472,
+  "synthesized_length_m": 1601.381897539438,
+  "synthesized_pct_of_total": 0.4845733987235123,
+  "unsnapped_endpoints_count": 1317,
+  "needs_manual_count": 1317,
+  "covered_edge_length_m_osm_tags": 601287.6775776225,
   "covered_edge_length_m_lta_match": 272495.2290865707,
   "covered_edge_length_m_lta_bridge_underpass_match": 95083.52541082863,
-  "covered_edge_length_m_osm_roof_canopy": 33911.718571337784,
-  "covered_edge_length_m_osm_explicit_shelter": 517556.7932696907,
-  "covered_edge_length_m_inferred_hdb_precinct_footways": 390253.85652884515,
-  "covered_edge_length_m_inferred_hdb_point_footways": 813589.5219444034,
+  "covered_edge_length_m_osm_roof_canopy": 33880.75591428681,
+  "covered_edge_length_m_osm_explicit_shelter": 557392.2218836243,
+  "covered_edge_length_m_inferred_hdb_precinct_footways": 384265.58574225206,
+  "covered_edge_length_m_inferred_hdb_point_footways": 800228.0897317082,
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 3826189.7993168742,
-  "shade_proxy_edge_count": 64255,
-  "shade_proxy_weighted_length_m": 840193.4117618328,
+  "covered_edge_length_m_union": 3822586.1917195306,
+  "shade_proxy_edge_count": 64288,
+  "shade_proxy_weighted_length_m": 840905.5987623793,
   "shade_proxy_sources": {
+    "nparks_heritage_road_green_buffers": {
+      "status": "loaded",
+      "path": "raw\\87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5\\nparks_heritage_road_green_buffers.geojson",
+      "features_raw": 5,
+      "features_in_scope": 5,
+      "proxy_polygons": 5
+    },
     "nparks_heritage_trees": {
       "status": "loaded",
       "path": "raw\\7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f\\nparks_heritage_trees.geojson",
@@ -1778,9 +1785,9 @@
   },
   "inferred_hdb_precinct_footways": {
     "candidate_buildings": 8544,
-    "eligible_edge_count": 336703,
-    "marked_edges": 40555,
-    "length_m": 390253.85652884515,
+    "eligible_edge_count": 332620,
+    "marked_edges": 39988,
+    "length_m": 384265.58574225206,
     "footprint_buffer_m": 14.0,
     "min_match_ratio": 0.7,
     "allowed_highways": [
@@ -1796,10 +1803,10 @@
   },
   "inferred_hdb_point_footways": {
     "candidate_hdb_points": 13436,
-    "eligible_edge_count": 336703,
-    "marked_edges": 73057,
-    "newly_marked_edges": 25359,
-    "length_m": 813589.5219444034,
+    "eligible_edge_count": 332620,
+    "marked_edges": 71955,
+    "newly_marked_edges": 24649,
+    "length_m": 800228.0897317082,
     "point_buffer_m": 18.0,
     "min_match_ratio": 0.65,
     "allowed_highways": [

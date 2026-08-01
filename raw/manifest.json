@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-31T20:11:47.824018+00:00",
+  "generated_at": "2026-08-01T01:34:49.490757+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -81,6 +81,15 @@
       "sha256": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
       "source_name": "MRT/LRT Station Exits",
       "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_b39d3a0871985372d7e1637193335da5.geojson"
+    },
+    "nparks_heritage_road_green_buffers": {
+      "bytes": 254367,
+      "etag": "\"b5e66dd2f1bf5a6ade5ae46ce7b4921d-1\"",
+      "fetched_at": "2026-08-01T01:34:49.490173+00:00",
+      "last_modified": "Sun, 01 Feb 2026 02:06:51 GMT",
+      "sha256": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+      "source_name": "NParks Heritage Road Green Buffers",
+      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/blobs.data.gov.sg/d_9233bdb05de067c3b3db21b836467a6a.geojson"
     },
     "nparks_heritage_trees": {
       "bytes": 149987,

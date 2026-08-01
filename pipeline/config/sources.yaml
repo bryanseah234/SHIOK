@@ -113,6 +113,13 @@ sources:
     verified: "2026-07-30"
     notes: "Point tree proxy for future heat/shade calibration only; not comprehensive canopy geometry"
 
+  nparks_heritage_road_green_buffers:
+    name: "NParks Heritage Road Green Buffers"
+    kind: "datagov_polldownload"
+    dataset_id: "d_9233bdb05de067c3b3db21b836467a6a"
+    verified: "2026-08-01"
+    notes: "GeoJSON polygon proxy for heat-only roadside greenery shade; not rain shelter"
+
   osm_extract:
     name: "Geofabrik Malaysia/Singapore/Brunei OSM"
     kind: "osm_pbf"

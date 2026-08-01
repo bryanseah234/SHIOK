@@ -43,6 +43,12 @@ def valid_report() -> dict:
                 "features_in_scope": 1,
                 "proxy_polygons": 1,
             },
+            "nparks_heritage_road_green_buffers": {
+                "status": "loaded",
+                "features_raw": 1,
+                "features_in_scope": 1,
+                "proxy_polygons": 1,
+            },
             "nparks_nature_ways": {
                 "status": "loaded",
                 "features_raw": 1,

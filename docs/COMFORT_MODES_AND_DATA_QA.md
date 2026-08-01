@@ -160,10 +160,10 @@ Verified official/static source status:
   vegetation calibration, not enough to compute route-level shade by itself.
 - LTA Covered Linkway remains the strongest official rain-shelter and covered
   pedestrian geometry source.
-- NParks Nature Ways, Park Connector routes/tracks, and Heritage Trees are
-  active spatial shade/greenery proxies in Heat Comfort. Current buffers:
-  8 m for line features, 6 m for point features. They do not affect Rain
-  Shelter.
+- NParks Nature Ways, Park Connector routes/tracks, Heritage Trees, and
+  Heritage Road Green Buffers are active spatial shade/greenery proxies in Heat
+  Comfort. Current buffers: 8 m for line features, 6 m for point features, and
+  native polygons for green buffers. They do not affect Rain Shelter.
 
 Expected use:
 

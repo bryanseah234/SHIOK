@@ -42,6 +42,23 @@ def test_prepare_shade_proxy_buffers_points_but_keeps_polygons():
     assert all(shade.geometry.area > 0)
 
 
+def test_heritage_road_green_buffers_are_supported_heat_only_polygons():
+    features = gpd.GeoDataFrame(
+        [{"geometry": Polygon([(0, 0), (20, 0), (20, 8), (0, 8)])}],
+        crs="EPSG:3414",
+    )
+
+    shade = prepare_shade_proxy_geometries(
+        features,
+        source_key="nparks_heritage_road_green_buffers",
+    )
+
+    assert len(shade) == 1
+    assert shade.iloc[0]["source_layer"] == "nparks_heritage_road_green_buffers"
+    assert shade.iloc[0]["score_use"] == SHADE_ONLY_NOTE
+    assert shade.iloc[0].geometry.equals(features.iloc[0].geometry)
+
+
 def test_compute_edge_shade_ratio_measures_partial_route_shade():
     edges = gpd.GeoDataFrame(
         [{"geometry": LineString([(0, 0), (10, 0)])}],

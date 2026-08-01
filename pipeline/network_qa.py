@@ -29,6 +29,7 @@ REQUIRED_QA_KEYS = {
 }
 EXPECTED_NPARKS_SHADE_SOURCES = {
     "nparks_heritage_trees",
+    "nparks_heritage_road_green_buffers",
     "nparks_nature_ways",
     "nparks_park_connector_loop",
     "nparks_tracks",

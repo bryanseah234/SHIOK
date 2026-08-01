@@ -10,6 +10,7 @@ NPARKS_SHADE_SOURCE_KEYS = {
     "nparks_park_connector_loop",
     "nparks_tracks",
     "nparks_heritage_trees",
+    "nparks_heritage_road_green_buffers",
 }
 
 SHADE_ONLY_NOTE = "tree_and_greenery_proxy_heat_only_not_rain_shelter"

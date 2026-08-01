@@ -29,6 +29,7 @@ ISLAND_NETWORK_SOURCE_FILES = {
     "overhead_bridge_underpass": "overhead_bridge_underpass.zip",
     "building_points": "building_points.geojson",
     "nparks_heritage_trees": "nparks_heritage_trees.geojson",
+    "nparks_heritage_road_green_buffers": "nparks_heritage_road_green_buffers.geojson",
     "nparks_nature_ways": "nparks_nature_ways.geojson",
     "nparks_park_connector_loop": "nparks_park_connector_loop.geojson",
     "nparks_tracks": "nparks_tracks.geojson",
