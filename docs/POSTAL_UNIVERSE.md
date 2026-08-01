@@ -123,3 +123,25 @@ The ~140k target should not be claimed until SLA Address Point, SingPost/SGLocat
 or another canonical source is licensed or explicitly permitted for this
 non-commercial use. The current production-safe stance remains 124,032
 source-derived records plus honest unresolved states.
+
+## 2026-08-01 Follow-up Source Check
+
+Current public-source search still supports the same launch stance:
+
+- SLA lists Address Point under licensable digitised land information, not a
+  free bulk open-data download:
+  `https://www.sla.gov.sg/geospatial/digitised-land-information/`
+- SingPost presents SGLocate as a business data solution / API for standardised
+  Singapore postal addresses, not a free static dataset:
+  `https://www.singpost.com/business/promote-your-products/data-solutions`
+- HDB Property Information on data.gov.sg still tells users to approach
+  SingPost for postal-code information and notes that charges may apply:
+  `https://data.gov.sg/datasets/d_17f5382f26140b1fdae0ba2ef6239d2f/view`
+- data.gov.sg search results for "postal code" expose useful agency-specific
+  datasets, but not a canonical all-delivery-point postal universe.
+- Bellingcat OSM Search, OpenInfraMap, and Overpass remain useful OSM QA tools,
+  not independent postal-universe sources.
+
+Decision remains unchanged: ship the 124,032-record source-derived universe
+honestly, do not brute-force OneMap, and treat full canonical coverage as a data
+licensing/source-acquisition problem rather than an engineering shortcut.

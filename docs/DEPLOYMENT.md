@@ -97,6 +97,22 @@ After a new score/export batch is generated and validated:
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
 
+## Vercel Hobby Limits
+
+If Git deploy shows `Deployment rate limited` or direct CLI deploy returns
+`api-deployments-free-per-day`, stop deploy attempts until the 24-hour Hobby
+quota window resets. Continue committing source changes to `main`; docs-only and
+QA-only commits should be skipped by `web/scripts/ignore-build.mjs`, while real
+`web/` changes will build after the quota resets.
+
+After the limit resets, run:
+
+```powershell
+.\scripts\preflight-production.bat -SkipNetworkPreflight
+vercel deploy --prod --yes --scope theprawnvercel --no-wait
+vercel inspect sgshiok.vercel.app --scope theprawnvercel
+```
+
 ## Lookup Transfer Check
 
 Use this from the repo root to measure a postal lookup against the active local
