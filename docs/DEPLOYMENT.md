@@ -148,6 +148,15 @@ bundle:
 npm --prefix web run measure:lookup -- 560234
 ```
 
+For a generated bundle that is not yet active in `web/data-bundle.json`, set
+`SHIOK_DATA_BUNDLE`:
+
+```powershell
+$env:SHIOK_DATA_BUNDLE = "generated_20260801_165500"
+npm --prefix web run measure:lookup -- 560234
+Remove-Item Env:\SHIOK_DATA_BUNDLE
+```
+
 After derived shards are materialized, Postal 560234 measured 337.8 KB gzipped
 for lookup-specific static artifacts, under the 500 KB PRD target. The initial
 full transit POI overlay is separate and measured 358.0 KB gzipped.

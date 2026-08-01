@@ -53,6 +53,14 @@ Bundle: `generated_20260801_165500`
 - `NEXT_PUBLIC_DATA_BASE=/data/generated_20260801_165500/`
 - `npm --prefix web run build`: OK
 
+## Transfer Check
+
+- `SHIOK_DATA_BUNDLE=generated_20260801_165500 npm --prefix web run measure:lookup -- 560234`: OK
+- lookup requests: 12
+- estimated compressed lookup transfer: 386,118 bytes / 377.1 KB
+- PRD budget: 512,000 bytes / 500 KB
+- under budget: true
+
 ## Deployment State
 
 This bundle is not activated in `web\data-bundle.json` and is not deployed.

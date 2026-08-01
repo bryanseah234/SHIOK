@@ -1,13 +1,13 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { gunzipSync } from "node:zlib";
+import { gunzipSync, gzipSync } from "node:zlib";
 import { gridDisk, latLngToCell } from "h3-js";
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const webRoot = join(scriptDir, "..");
 const bundleConfig = JSON.parse(readFileSync(join(webRoot, "data-bundle.json"), "utf8"));
-const bundle = String(bundleConfig.bundle || "").trim();
+const bundle = String(process.env.SHIOK_DATA_BUNDLE || bundleConfig.bundle || "").trim();
 const dataRoot = join(webRoot, "public", "data", bundle);
 const postal = (process.argv[2] || "560234").padStart(6, "0");
 
@@ -24,6 +24,15 @@ function artifactInfo(rel) {
     return { rel, encoding: "gzip", bytes: statSync(gzPath(rel)).size, exists: true };
   }
   if (existsSync(rawPath(rel))) {
+    if (rel.endsWith(".json")) {
+      return {
+        rel,
+        encoding: "gzip_estimate",
+        bytes: gzipSync(readFileSync(rawPath(rel))).length,
+        storage_bytes: statSync(rawPath(rel)).size,
+        exists: true,
+      };
+    }
     return { rel, encoding: "identity", bytes: statSync(rawPath(rel)).size, exists: true };
   }
   return { rel, encoding: "missing", bytes: 0, exists: false };

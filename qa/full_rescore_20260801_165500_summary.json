@@ -44,6 +44,15 @@
     "transit_features": 6011,
     "warnings": []
   },
+  "transfer_check": {
+    "bundle": "generated_20260801_165500",
+    "lookup_budget_bytes": 512000,
+    "lookup_bytes": 386118,
+    "lookup_kb": 377.1,
+    "lookup_request_count": 12,
+    "lookup_under_500kb": true,
+    "postal": "560234"
+  },
   "web_build": {
     "command": "npm --prefix web run build",
     "ok": true
