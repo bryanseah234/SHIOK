@@ -74,6 +74,19 @@
   font: inherit;
 }
 
+.searchForm input:focus-visible,
+.searchForm button:focus-visible,
+.segmented button:focus-visible,
+.resultList button:focus-visible,
+.modeSelect select:focus-visible,
+.feedbackActions button:focus-visible,
+.segmentLabel select:focus-visible,
+.feedbackEditor textarea:focus-visible,
+.detailBlock summary:focus-visible {
+  outline: 3px solid rgba(0, 143, 134, 0.42);
+  outline-offset: 2px;
+}
+
 .searchForm input {
   min-width: 0;
   border: 1px solid rgba(62, 75, 70, 0.22);
@@ -121,8 +134,7 @@
   cursor: pointer;
 }
 
-.resultList button:hover,
-.resultList button:focus-visible {
+.resultList button:hover {
   background: #edf4f1;
 }
 
