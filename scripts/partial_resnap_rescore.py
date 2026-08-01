@@ -77,6 +77,7 @@ def select_no_transit_postals(
     per_area: int,
     extra_postals: list[str],
     limit: int,
+    only_with_direct_bus: bool = False,
 ) -> list[str]:
     selected: list[str] = []
 
@@ -91,6 +92,7 @@ def select_no_transit_postals(
         record
         for record in sorted(records.values(), key=lambda item: str(item["postal"]))
         if record.get("state") == NO_TRANSIT_IN_RANGE
+        and (not only_with_direct_bus or bus_direct_count(record) > 0)
     ]
     for area in areas:
         area_records = [record for record in no_transit if record.get("_area") == area]
@@ -136,9 +138,17 @@ def build_report(
     per_area: int,
     extra_postals: list[str],
     limit: int,
+    only_with_direct_bus: bool = False,
 ) -> dict[str, Any]:
     records = load_bundle_records(bundle_dir)
-    selected_postals = select_no_transit_postals(records, areas, per_area, extra_postals, limit)
+    selected_postals = select_no_transit_postals(
+        records,
+        areas,
+        per_area,
+        extra_postals,
+        limit,
+        only_with_direct_bus=only_with_direct_bus,
+    )
     rescored = score_postals(
         postal_codes=selected_postals,
         include_geometry=False,
@@ -197,6 +207,11 @@ def main() -> int:
     parser.add_argument("--per-area", type=int, default=6)
     parser.add_argument("--postal", action="append", dest="postals", default=[])
     parser.add_argument("--limit", type=int, default=32)
+    parser.add_argument(
+        "--only-with-direct-bus",
+        action="store_true",
+        help="Restrict selected NO_TRANSIT_IN_RANGE rows to records with bus stops within the direct-radius candidate set.",
+    )
     args = parser.parse_args()
 
     report = build_report(
@@ -207,6 +222,7 @@ def main() -> int:
         per_area=max(0, int(args.per_area)),
         extra_postals=args.postals,
         limit=max(1, int(args.limit)),
+        only_with_direct_bus=bool(args.only_with_direct_bus),
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True), encoding="utf-8")
