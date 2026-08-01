@@ -287,6 +287,15 @@ tested:
   OpenInfraMap, Overpass, and broader OSM covered-value extraction do not solve
   the Mayflower false-negative; the next fix is still source-backed connector
   geometry or owner-approved audited corrections.
+- A targeted AMK rescore comparison against the active bundle selected 18
+  records: controls `560231`, `560234`, `560225`, `560700`, `560710` plus prior
+  no-transit records. Result: 7 of 13 prior `NO_TRANSIT_IN_RANGE` records became
+  `SCORED_PARTIAL` through the existing direct-bus fallback, 6 remained
+  no-transit, and all 5 controls stayed `SCORED` with unchanged metrics.
+  `560231` still defaults to the nearby bus stop `Opp Mayflower Sec Sch` at
+  128.1 m and 100/100; `560234` still defaults to bus stop `Mayflower Sec Sch`
+  at 332.4 m, 76.6% covered, 90.6/100. This confirms Best Transit is now
+  bus-aware, but it can hide the separate Mayflower MRT shelter-route QA issue.
 
 ## Human Feedback Loop
 

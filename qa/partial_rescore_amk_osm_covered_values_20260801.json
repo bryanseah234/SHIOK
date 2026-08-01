@@ -1,0 +1,1442 @@
+{
+  "after_state_counts": {
+    "NO_TRANSIT_IN_RANGE": 6,
+    "SCORED": 5,
+    "SCORED_PARTIAL": 7
+  },
+  "areas": [
+    "ANG_MO_KIO"
+  ],
+  "before_state_counts": {
+    "NO_TRANSIT_IN_RANGE": 13,
+    "SCORED": 5
+  },
+  "bundle": "generated_20260801_no_transit_wide_targeted",
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 2.4,
+        "paths": {
+          "covered_m": 128.1,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 128.1,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 14,
+          "candidate_scores": 12,
+          "nearest_routed_m": 128.1,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 7,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 2.4,
+        "paths": {
+          "covered_m": 128.1,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 128.1,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 14,
+          "candidate_scores": 12,
+          "nearest_routed_m": 128.1,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 7,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "postal": "560231",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 12.6,
+        "paths": {
+          "covered_m": 254.5,
+          "covered_ratio": 0.766,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 254.5,
+          "heat_comfort_ratio": 0.766,
+          "routing_type": "shortest_due_to_detour",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.766,
+          "shortest_m": 332.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 13,
+          "candidate_scores": 12,
+          "nearest_routed_m": 247.8,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 76.6,
+          "rain": 76.6
+        },
+        "total": 90.6,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 12.6,
+        "paths": {
+          "covered_m": 254.5,
+          "covered_ratio": 0.766,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 254.5,
+          "heat_comfort_ratio": 0.766,
+          "routing_type": "shortest_due_to_detour",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.766,
+          "shortest_m": 332.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 13,
+          "candidate_scores": 12,
+          "nearest_routed_m": 247.8,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 76.6,
+          "rain": 76.6
+        },
+        "total": 90.6,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "postal": "560234",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 431.2,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 1.9,
+        "paths": {
+          "covered_m": 305.4,
+          "covered_ratio": 0.704,
+          "detour_pct": 0.6,
+          "heat_comfort_m": 305.4,
+          "heat_comfort_ratio": 0.704,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 433.7,
+          "shortest_covered_ratio": 0.576,
+          "shortest_m": 431.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 10,
+          "nearest_routed_m": 201.6,
+          "route_results": 10,
+          "routes_within_access_range": 10
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 95.3,
+          "bus": 93.8,
+          "crossing": 100.0,
+          "heat": 70.4,
+          "rain": 70.4
+        },
+        "total": 85.3,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 431.2,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 1.9,
+        "paths": {
+          "covered_m": 305.4,
+          "covered_ratio": 0.704,
+          "detour_pct": 0.6,
+          "heat_comfort_m": 305.4,
+          "heat_comfort_ratio": 0.704,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 433.7,
+          "shortest_covered_ratio": 0.576,
+          "shortest_m": 431.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 10,
+          "nearest_routed_m": 201.6,
+          "route_results": 10,
+          "routes_within_access_range": 10
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 95.3,
+          "bus": 93.8,
+          "crossing": 100.0,
+          "heat": 70.4,
+          "rain": 70.4
+        },
+        "total": 85.3,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 7
+        }
+      },
+      "postal": "560225",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 24.0,
+        "paths": {
+          "covered_m": 129.0,
+          "covered_ratio": 0.636,
+          "detour_pct": 19.7,
+          "heat_comfort_m": 129.0,
+          "heat_comfort_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 12,
+          "candidate_scores": 12,
+          "nearest_routed_m": 169.6,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 63.6,
+          "rain": 63.6
+        },
+        "total": 85.4,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 8,
+          "mrt_lrt_exit_candidates": 4
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 24.0,
+        "paths": {
+          "covered_m": 129.0,
+          "covered_ratio": 0.636,
+          "detour_pct": 19.7,
+          "heat_comfort_m": 129.0,
+          "heat_comfort_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 12,
+          "candidate_scores": 12,
+          "nearest_routed_m": 169.6,
+          "route_results": 12,
+          "routes_within_access_range": 12
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 63.6,
+          "rain": 63.6
+        },
+        "total": 85.4,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 8,
+          "mrt_lrt_exit_candidates": 4
+        }
+      },
+      "postal": "560700",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 0.6,
+        "paths": {
+          "covered_m": 76.6,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 76.6,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 9,
+          "candidate_scores": 9,
+          "nearest_routed_m": 76.6,
+          "route_results": 9,
+          "routes_within_access_range": 9
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 5,
+          "mrt_lrt_exit_candidates": 4
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 0.6,
+        "paths": {
+          "covered_m": 76.6,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 76.6,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 9,
+          "candidate_scores": 9,
+          "nearest_routed_m": 76.6,
+          "route_results": 9,
+          "routes_within_access_range": 9
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 100.0,
+          "rain": 100.0
+        },
+        "total": 100.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 5,
+          "mrt_lrt_exit_candidates": 4
+        }
+      },
+      "postal": "560710",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55171",
+          "name": "Castle Green",
+          "routed_m": null,
+          "snap_distance_m": 21.5,
+          "station": "Castle Green",
+          "straight_line_m": 104.9,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 0.555,
+          "candidate_count": 5,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 104.9,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 42.0,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 104.9,
+          "shortest_m": 104.9
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 13,
+          "candidate_scores": 5,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 5,
+          "mrt_lrt_exit_candidates": 8
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 42.0,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 13,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 5,
+          "mrt_lrt_exit_candidates": 8
+        }
+      },
+      "postal": "569788",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55171",
+          "name": "Castle Green",
+          "routed_m": null,
+          "snap_distance_m": 21.5,
+          "station": "Castle Green",
+          "straight_line_m": 207.1,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 0.555,
+          "candidate_count": 3,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 207.1,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 27.5,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 207.1,
+          "shortest_m": 207.1
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 8,
+          "candidate_scores": 3,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 3,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 27.5,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 8,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 3,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "postal": "787056",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55171",
+          "name": "Castle Green",
+          "routed_m": null,
+          "snap_distance_m": 21.5,
+          "station": "Castle Green",
+          "straight_line_m": 148.7,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 0.555,
+          "candidate_count": 4,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 148.7,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 15.1,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 148.7,
+          "shortest_m": 148.7
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 12,
+          "candidate_scores": 4,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 8
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 15.1,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 12,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 8
+        }
+      },
+      "postal": "787057",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55029",
+          "name": "Seasons Pk",
+          "routed_m": null,
+          "snap_distance_m": 17.4,
+          "station": "Seasons Pk",
+          "straight_line_m": 174.5,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 0.555,
+          "candidate_count": 6,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 174.5,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 30.6,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 174.5,
+          "shortest_m": 174.5
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 6,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 30.6,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "postal": "787058",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55029",
+          "name": "Seasons Pk",
+          "routed_m": null,
+          "snap_distance_m": 17.4,
+          "station": "Seasons Pk",
+          "straight_line_m": 143.8,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 0.788,
+          "candidate_count": 4,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 143.8,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 32.9,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 143.8,
+          "shortest_m": 143.8
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 9,
+          "candidate_scores": 4,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 32.9,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 9,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 4,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "postal": "787059",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55021",
+          "name": "Opp Seasons Pk",
+          "routed_m": null,
+          "snap_distance_m": 2.2,
+          "station": "Opp Seasons Pk",
+          "straight_line_m": 183.0,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 1.026,
+          "candidate_count": 6,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 70.3,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 31.8,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 183.0,
+          "shortest_m": 183.0
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 6,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 31.8,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "postal": "789311",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55021",
+          "name": "Opp Seasons Pk",
+          "routed_m": null,
+          "snap_distance_m": 2.2,
+          "station": "Opp Seasons Pk",
+          "straight_line_m": 176.1,
+          "type": "bus_stop"
+        },
+        "direct_bus_fallback": {
+          "best_expected_wait_min": 1.026,
+          "candidate_count": 6,
+          "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+          "nearest_direct_m": 76.1,
+          "radius_m": 300.0,
+          "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+          "untrusted_subscores": [
+            "rain",
+            "heat",
+            "crossing"
+          ]
+        },
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 31.0,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 176.1,
+          "shortest_m": 176.1
+        },
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 6,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": {
+          "max_distance_m": 50.0,
+          "reason": "no_transit_reachable_component_within_resnap_cap"
+        },
+        "origin_snap_distance_m": 31.0,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 11,
+          "candidate_scores": 0,
+          "nearest_routed_m": null,
+          "route_results": 0,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 6,
+          "mrt_lrt_exit_candidates": 5
+        }
+      },
+      "postal": "789312",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "postal": "567754",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "postal": "567755",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "postal": "567756",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "postal": "567757",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 49.3,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 3,
+          "candidate_scores": 3,
+          "nearest_routed_m": 1823.0,
+          "route_results": 3,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 3
+        }
+      },
+      "postal": "567758",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 4.8,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 6,
+          "candidate_scores": 1,
+          "nearest_routed_m": 3330.4,
+          "route_results": 1,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 6
+        }
+      },
+      "area": "SOUTHERN_ISLANDS",
+      "before": {
+        "best_node": null,
+        "direct_bus_fallback": null,
+        "origin_resnap": null,
+        "origin_snap_distance_m": 4.8,
+        "paths": null,
+        "routing_diagnostics": {
+          "candidate_destination_nodes": 6,
+          "candidate_scores": 1,
+          "nearest_routed_m": 3330.4,
+          "route_results": 1,
+          "routes_within_access_range": 0
+        },
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null,
+        "transit_node_set": {
+          "bus_stop_candidate_radius_m": 300.0,
+          "bus_stop_candidates_direct": 0,
+          "mrt_lrt_exit_candidates": 6
+        }
+      },
+      "postal": "009901",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 7,
+  "converted_from_no_transit": [
+    "569788",
+    "787056",
+    "787057",
+    "787058",
+    "787059",
+    "789311",
+    "789312"
+  ],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "per_area": 12,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 18
+}
