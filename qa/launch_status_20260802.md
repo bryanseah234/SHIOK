@@ -26,6 +26,7 @@ Root directory: `web`
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
 - Multi-postal keyboard browser smoke for 560231, 560234, 570234: passed
+- No-transit keyboard browser smoke for 567754: passed
 - Release helper safe-plan mode: passed
 - Feedback-route drawing zoom-reset regression guard: passed
 - Known-postal smoke including 570234: passed

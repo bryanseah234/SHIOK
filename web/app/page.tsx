@@ -664,16 +664,20 @@ function ScoreCard({
           ))}
         </div>
       )}
-      <div className={styles.modeRow}>
-        <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
-        <span>{modeStatus(comfortMode)}</span>
-      </div>
+      {score.paths && (
+        <>
+          <div className={styles.modeRow}>
+            <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
+            <span>{modeStatus(comfortMode)}</span>
+          </div>
 
-      <div className={styles.summaryGrid}>
-        <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />
-        <Metric label="Sheltered" value={formatPercent(selectedCoverage)} />
-        <Metric label="Extra walk" value={extraWalkLabel} />
-      </div>
+          <div className={styles.summaryGrid}>
+            <Metric label={selectedRouteLabel} value={formatDistance(selectedDistance)} />
+            <Metric label="Sheltered" value={formatPercent(selectedCoverage)} />
+            <Metric label="Extra walk" value={extraWalkLabel} />
+          </div>
+        </>
+      )}
 
       <div className={styles.reasonList} aria-label="Score reasons">
         {reasons.map((reason) => (

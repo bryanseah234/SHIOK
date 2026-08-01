@@ -36,9 +36,11 @@ describe("deployment packaging", () => {
 
     expect(packageJson.scripts["qa:browser"]).toBe("node scripts/browser-smoke.mjs");
     expect(script).toContain("--postals");
+    expect(script).toContain("--expected-state");
     expect(script).toContain("result_count");
     expect(script).toContain("Input.dispatchKeyEvent");
     expect(script).toContain("keyboard_search_used");
+    expect(script).toContain("pending_badge_absent");
     expect(script).toContain("score_has_max_denominator");
     expect(script).toContain("map_has_text_equivalent");
     expect(script).toContain("short_mobile_card_bottom_visible");

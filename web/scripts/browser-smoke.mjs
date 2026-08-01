@@ -39,6 +39,7 @@ function parseArgs(argv) {
     chrome: process.env.CHROME_PATH || "",
     timeoutMs: 30000,
     inputMode: "keyboard",
+    expectedState: "scored",
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -57,6 +58,7 @@ function parseArgs(argv) {
     else if (arg === "--chrome") args.chrome = next();
     else if (arg === "--timeout-ms") args.timeoutMs = Number(next());
     else if (arg === "--input-mode") args.inputMode = next();
+    else if (arg === "--expected-state") args.expectedState = next();
     else if (arg === "--screenshots") args.screenshots = true;
     else if (arg === "--no-screenshots") args.screenshots = false;
     else throw new Error(`unknown arg: ${arg}`);
@@ -74,6 +76,9 @@ function parseArgs(argv) {
   }
   if (!["keyboard", "programmatic"].includes(args.inputMode)) {
     throw new Error(`invalid input mode: ${args.inputMode}`);
+  }
+  if (!["scored", "no_transit", "not_yet_scored", "any"].includes(args.expectedState)) {
+    throw new Error(`invalid expected state: ${args.expectedState}`);
   }
   if (!args.out) {
     const suffix = args.postals.length === 1 ? args.postal : `${args.postals[0]}_plus_${args.postals.length - 1}`;
@@ -290,7 +295,7 @@ async function searchPostal(cdp, postal, timeoutMs, inputMode) {
   }
   await waitForExpression(
     cdp,
-    `document.body.innerText.includes('Postal ${postal}') && document.body.innerText.includes('/100')`,
+    `document.body.innerText.includes('Postal ${postal}')`,
     timeoutMs
   );
   await new Promise((resolvePromise) => setTimeout(resolvePromise, 1500));
@@ -338,18 +343,41 @@ async function collectPageSummary(cdp) {
   return result.result.value;
 }
 
-function collectChecks(summary, postal, inputMode) {
-  return {
-    score_has_max_denominator: summary.cardText.includes("/100"),
+function collectChecks(summary, postal, inputMode, expectedState) {
+  const hasScore = summary.cardText.includes("/100");
+  const hasNoTransit =
+    summary.cardText.includes("No routed") ||
+    summary.cardText.includes("No transit found nearby") ||
+    summary.cardText.includes("No best transit walk was found");
+  const hasNotYetScored =
+    summary.cardText.includes("Not scored") ||
+    (summary.cardText.includes("No score") && summary.cardText.includes("needs usable location evidence"));
+  const checks = {
     score_panel_loaded: summary.cardText.includes(`Postal ${postal}`),
-    transit_legend_present: summary.cardText.includes("MRT/LRT") && summary.cardText.includes("Bus stop"),
-    route_mode_present: summary.cardText.includes("Shiokest"),
+    pending_badge_absent: !summary.cardText
+      .split("\n")
+      .some((line) => line.trim().toLowerCase() === "pending"),
     map_has_text_equivalent: Boolean(summary.mapSummary),
     short_mobile_card_bottom_visible:
       typeof summary.metrics.cardBottom === "number" &&
       summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2,
     keyboard_search_used: inputMode === "keyboard",
   };
+  if (expectedState === "scored") {
+    return {
+      ...checks,
+      score_has_max_denominator: hasScore,
+      transit_legend_present: summary.cardText.includes("MRT/LRT") && summary.cardText.includes("Bus stop"),
+      route_mode_present: summary.cardText.includes("Shiokest"),
+    };
+  }
+  if (expectedState === "no_transit") {
+    return { ...checks, no_transit_state_present: hasNoTransit };
+  }
+  if (expectedState === "not_yet_scored") {
+    return { ...checks, not_yet_scored_state_present: hasNotYetScored };
+  }
+  return checks;
 }
 
 async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
@@ -382,10 +410,11 @@ async function runPostalCase(cdp, args, postal, outputDir, shotBase) {
     Object.assign(summary, await collectPageSummary(cdp));
   }
 
-  const checks = collectChecks(summary, postal, args.inputMode);
+  const checks = collectChecks(summary, postal, args.inputMode, args.expectedState);
   return {
     postal,
     input_mode: args.inputMode,
+    expected_state: args.expectedState,
     screenshots,
     score_panel_excerpt: summary.cardText.split("\n").slice(0, 32),
     map_label: summary.mapLabel,
@@ -435,6 +464,7 @@ async function runSmoke(args) {
       generated_at: new Date().toISOString(),
       url: args.url,
       input_mode: args.inputMode,
+      expected_state: args.expectedState,
     };
     const payload =
       results.length === 1

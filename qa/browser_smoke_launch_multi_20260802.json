@@ -1,7 +1,8 @@
 {
-  "generated_at": "2026-08-01T20:09:33.653Z",
-  "url": "http://127.0.0.1:3105/",
+  "generated_at": "2026-08-01T20:19:28.544Z",
+  "url": "http://127.0.0.1:3107/",
   "input_mode": "keyboard",
+  "expected_state": "scored",
   "postals": [
     "560231",
     "560234",
@@ -12,6 +13,7 @@
     {
       "postal": "560231",
       "input_mode": "keyboard",
+      "expected_state": "scored",
       "screenshots": [],
       "score_panel_excerpt": [
         "Postal 560231",
@@ -59,19 +61,21 @@
         "overlayScrollHeight": 500
       },
       "checks": {
-        "score_has_max_denominator": true,
         "score_panel_loaded": true,
-        "transit_legend_present": true,
-        "route_mode_present": true,
+        "pending_badge_absent": true,
         "map_has_text_equivalent": true,
         "short_mobile_card_bottom_visible": true,
-        "keyboard_search_used": true
+        "keyboard_search_used": true,
+        "score_has_max_denominator": true,
+        "transit_legend_present": true,
+        "route_mode_present": true
       },
       "ok": true
     },
     {
       "postal": "560234",
       "input_mode": "keyboard",
+      "expected_state": "scored",
       "screenshots": [],
       "score_panel_excerpt": [
         "Postal 560234",
@@ -119,19 +123,21 @@
         "overlayScrollHeight": 500
       },
       "checks": {
-        "score_has_max_denominator": true,
         "score_panel_loaded": true,
-        "transit_legend_present": true,
-        "route_mode_present": true,
+        "pending_badge_absent": true,
         "map_has_text_equivalent": true,
         "short_mobile_card_bottom_visible": true,
-        "keyboard_search_used": true
+        "keyboard_search_used": true,
+        "score_has_max_denominator": true,
+        "transit_legend_present": true,
+        "route_mode_present": true
       },
       "ok": true
     },
     {
       "postal": "570234",
       "input_mode": "keyboard",
+      "expected_state": "scored",
       "screenshots": [],
       "score_panel_excerpt": [
         "Postal 570234",
@@ -179,13 +185,14 @@
         "overlayScrollHeight": 500
       },
       "checks": {
-        "score_has_max_denominator": true,
         "score_panel_loaded": true,
-        "transit_legend_present": true,
-        "route_mode_present": true,
+        "pending_badge_absent": true,
         "map_has_text_equivalent": true,
         "short_mobile_card_bottom_visible": true,
-        "keyboard_search_used": true
+        "keyboard_search_used": true,
+        "score_has_max_denominator": true,
+        "transit_legend_present": true,
+        "route_mode_present": true
       },
       "ok": true
     }

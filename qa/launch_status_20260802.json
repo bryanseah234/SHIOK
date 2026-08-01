@@ -39,6 +39,7 @@
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
     "multi_postal_keyboard_browser_smoke": "560231, 560234, 570234 passed",
+    "no_transit_keyboard_browser_smoke": "567754 passed",
     "release_helper_safe_plan_mode": "passed",
     "feedback_route_zoom_reset_regression_guard": "passed",
     "known_postal_smoke": "passed"

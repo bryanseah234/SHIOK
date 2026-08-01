@@ -198,12 +198,20 @@ same browser session:
 npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postals 560231,560234,570234 --out ..\qa\browser_smoke_launch.json
 ```
 
+To verify an explicit no-score state, set the expected state:
+
+```powershell
+npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 567754 --expected-state no_transit --out ..\qa\browser_smoke_no_transit.json
+```
+
 The script launches headless Chrome, focuses the postal input, types with
 Chrome's keyboard input API, submits with Enter, checks the score card, route
 legend, map text equivalent, and short-mobile card fit, then writes a JSON
 report. Multi-postal runs write one `results[]` entry per postal. `--input-mode
-programmatic` is available only as a diagnostic fallback. PNG screenshots under
-`qa/` remain ignored by Git; commit the JSON/Markdown summaries instead.
+programmatic` is available only as a diagnostic fallback. `--expected-state`
+defaults to `scored`; use `no_transit` or `not_yet_scored` when validating
+explicit non-score states. PNG screenshots under `qa/` remain ignored by Git;
+commit the JSON/Markdown summaries instead.
 
 ## Local Cleanup
 
