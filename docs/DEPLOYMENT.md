@@ -120,7 +120,7 @@ Current pending local bundle, blocked only by Vercel Hobby deploy quota on
 2026-08-01:
 
 ```powershell
-.\scripts\deploy-production.bat -DataBundle generated_20260801_mayflower_1km_approved_corrections_targeted
+.\scripts\deploy-production.bat -DataBundle generated_20260801_165500
 ```
 
 ## Vercel Hobby Limits

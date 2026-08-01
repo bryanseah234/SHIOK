@@ -1,0 +1,82 @@
+{
+  "activated": false,
+  "bundle": "generated_20260801_165500",
+  "combined_manifest": {
+    "chunk_count": 252,
+    "ok": true,
+    "records": 124032,
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112880,
+      "SCORED_PARTIAL": 1449
+    }
+  },
+  "date": "2026-08-01",
+  "deployed": false,
+  "deployment_blocker": "Vercel Hobby daily deploy quota: api-deployments-free-per-day",
+  "export": {
+    "output_dir": "web/public/data/generated_20260801_165500",
+    "record_count": 124032,
+    "score_area_count": 56,
+    "score_shard_count": 201,
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112880,
+      "SCORED_PARTIAL": 1449
+    }
+  },
+  "readiness": {
+    "active_bundle_reflects_current_network": true,
+    "errors": [],
+    "ok": true,
+    "warnings": []
+  },
+  "validation": {
+    "errors": [],
+    "file_count": 1657,
+    "geometry_postals": 114329,
+    "geometry_postals_with_route_segments": 114329,
+    "indexed_postals": 124032,
+    "ok": true,
+    "score_prefixes": 530,
+    "transit_features": 6011,
+    "warnings": []
+  },
+  "web_build": {
+    "command": "npm --prefix web run build",
+    "ok": true
+  },
+  "worker_outputs": [
+    {
+      "not_yet_scored_records_written": 86,
+      "part": "part01",
+      "ready": 30922,
+      "records_written": 31008,
+      "rows": 31008
+    },
+    {
+      "not_yet_scored_records_written": 75,
+      "part": "part02",
+      "ready": 30933,
+      "records_written": 31008,
+      "rows": 31008
+    },
+    {
+      "not_yet_scored_records_written": 81,
+      "part": "part03",
+      "ready": 30927,
+      "records_written": 31008,
+      "rows": 31008
+    },
+    {
+      "not_yet_scored_records_written": 77,
+      "part": "part04",
+      "ready": 30931,
+      "records_written": 31008,
+      "rows": 31008
+    }
+  ],
+  "wrapper_note": "Wrapper stopped before combine/export with worker-failed message, but all four worker batch manifests reported ok true and stderr logs were empty; chunks were combined and exported manually."
+}

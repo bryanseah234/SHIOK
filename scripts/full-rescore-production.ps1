@@ -120,7 +120,32 @@ for index in range(workers):
     }
     $failed = $processes | Where-Object { $_.ExitCode -ne 0 }
     if ($failed) {
-        throw "One or more score-batch workers failed. Check logs: $LogDir"
+        $RecoverableWorkerFailure = $true
+        for ($index = 1; $index -le $Workers; $index++) {
+            $partOut = Join-Path $RunRoot ("part{0:D2}_of{1:D2}" -f $index, $Workers)
+            $manifestPath = Join-Path $partOut "batch_manifest.json"
+            $chunkDir = Join-Path $partOut "chunks"
+            if (-not (Test-Path $manifestPath) -or -not (Test-Path $chunkDir)) {
+                $RecoverableWorkerFailure = $false
+                break
+            }
+            $manifest = Get-Content $manifestPath -Raw | ConvertFrom-Json
+            $chunkCount = @(Get-ChildItem $chunkDir -Filter "chunk_*.json").Count
+            if (
+                -not $manifest.ok -or
+                [int]$manifest.records_written -ne [int]$manifest.selected_postals -or
+                [int]$manifest.chunk_count -ne [int]$chunkCount
+            ) {
+                $RecoverableWorkerFailure = $false
+                break
+            }
+        }
+        if ($RecoverableWorkerFailure) {
+            Write-Warning "One or more worker processes returned non-zero, but all batch manifests and chunks are complete; continuing to combine/export. Check logs: $LogDir"
+        }
+        else {
+            throw "One or more score-batch workers failed. Check logs: $LogDir"
+        }
     }
 
     for ($index = 1; $index -le $Workers; $index++) {
