@@ -1,0 +1,61 @@
+{
+  "generated_at": "2026-08-01T19:44:27.054Z",
+  "url": "http://127.0.0.1:3101/",
+  "postal": "560234",
+  "screenshots": [
+    "qa/browser_qa_560234_desktop_20260802.png",
+    "qa/browser_qa_560234_mobile_20260802.png",
+    "qa/browser_qa_560234_mobile_short_20260802.png"
+  ],
+  "score_panel_excerpt": [
+    "Postal 560234",
+    "",
+    "Mayflower Sec Sch",
+    "",
+    "90/100",
+    "Best transit",
+    "MRT/LRT",
+    "Bus",
+    "Shiokest",
+    "Exposed",
+    "HDB inferred",
+    "Bridge/underpass",
+    "MRT/LRT",
+    "Bus stop",
+    "HDB inferred 161 m",
+    "Exposed 78 m",
+    "Bridge/underpass 38 m",
+    "Audited shelter 37 m",
+    "Mode",
+    "Balanced",
+    "Rain + AM",
+    "Rain + PM",
+    "Sunny + AM",
+    "Sunny + PM",
+    "Sunny midday",
+    "Balanced scoring with scheduled buses",
+    "Shiokest walk",
+    "326 m"
+  ],
+  "map_label": "Route evidence map for Postal 560234, showing Shiokest route",
+  "map_summary": "Route evidence for Postal 560234. Showing 13 Shiokest segments, 2 exposed gaps, and 3 MRT or LRT stations, 15 exits, and 92 bus stops.",
+  "checks": {
+    "score_has_max_denominator": true,
+    "score_panel_loaded": true,
+    "transit_legend_present": true,
+    "map_has_text_equivalent": true,
+    "short_mobile_card_bottom_visible": true
+  },
+  "short_mobile_metrics": {
+    "viewport": {
+      "width": 390,
+      "height": 667
+    },
+    "overlayClientHeight": 500,
+    "overlayScrollHeight": 500,
+    "cardClientHeight": 498,
+    "cardBottomPx": 646.046875,
+    "viewportBottomPx": 667,
+    "detailsVisible": true
+  }
+}
