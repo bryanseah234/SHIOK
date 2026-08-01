@@ -97,16 +97,31 @@ For Git auto-deploys, the bundle is not in the repository. Before `next build`, 
 
 After a new score/export batch is generated and validated:
 
-1. Update `web/data-bundle.json` to the new `generated_...` directory.
-2. Update both `.vercelignore` and `web/.vercelignore` so only that active
-   generated bundle is whitelisted.
-3. Run `.\scripts\preflight-production.bat -SkipNetworkPreflight`.
-4. Run `vercel deploy --prod --yes --scope theprawnvercel --no-wait` from the
-   repo root, then inspect the deployment until it is Ready.
-5. Commit and push the source/config/docs changes. The following Git
+1. Validate the new bundle with `uv run python run.py validate --input
+   web/public/data/<bundle>`.
+2. Direct-deploy that local bundle first:
+
+   ```powershell
+   .\scripts\deploy-production.bat -DataBundle <bundle>
+   ```
+
+   The deploy helper stages only the selected bundle and writes matching
+   `.vercelignore` rules into the staged source.
+3. Inspect the deployment until it is Ready.
+4. Update `web/data-bundle.json` to the same `<bundle>` only after that bundle is
+   already published in production.
+5. Run `.\scripts\preflight-production.bat -SkipNetworkPreflight`.
+6. Commit and push the source/config/docs changes. The following Git
    auto-deploy can now download the already-published bundle during `next build`.
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
+
+Current pending local bundle, blocked only by Vercel Hobby deploy quota on
+2026-08-01:
+
+```powershell
+.\scripts\deploy-production.bat -DataBundle generated_20260801_mayflower_1km_approved_corrections_targeted
+```
 
 ## Vercel Hobby Limits
 
