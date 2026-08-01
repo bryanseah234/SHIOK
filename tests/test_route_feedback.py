@@ -64,6 +64,50 @@ def test_feedback_audit_flags_bridge_endpoint_snap_when_bridge_evidence_is_nearb
     assert bool(audited.iloc[0]["needs_model_qa"]) is False
 
 
+def test_feedback_audit_flags_covered_component_gap():
+    segments = gpd.GeoDataFrame(
+        [
+            {
+                "postal": "560231",
+                "destination": "Mayflower",
+                "segment_index": 0,
+                "label": "void_deck",
+                "length_m": 100.0,
+                "geometry": LineString([(0, 0), (100, 0)]),
+            }
+        ],
+        crs="EPSG:3414",
+    )
+    network = gpd.GeoDataFrame(
+        [
+            {
+                "is_covered": 1,
+                "source_layer": "inferred_hdb_precinct",
+                "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR",
+                "highway": "footway",
+                "geometry": LineString([(0, 0), (10, 0)]),
+            },
+            {
+                "is_covered": 1,
+                "source_layer": "inferred_hdb_point_footway",
+                "synth_class": "INFERRED_HDB_POINT_FOOTWAY",
+                "highway": "footway",
+                "geometry": LineString([(90, 0), (100, 0)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+
+    audited = classify_feedback_segments(segments, network, search_m=2.0)
+    row = audited.iloc[0]
+
+    assert row["classification"] == "hdb_void_deck_component_gap"
+    assert bool(row["needs_model_qa"]) is True
+    assert bool(row["same_component"]) is False
+    assert row["start_component_id"] != row["end_component_id"]
+    assert row["endpoint_component_gap_m"] == 100.0
+
+
 def test_feedback_report_counts_routes_and_classifications():
     audited = gpd.GeoDataFrame(
         [

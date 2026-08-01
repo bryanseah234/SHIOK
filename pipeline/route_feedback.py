@@ -10,7 +10,7 @@ import geopandas as gpd
 import pandas as pd
 from pyproj import Transformer
 from shapely import wkt
-from shapely.geometry import LineString, mapping
+from shapely.geometry import LineString, Point, mapping
 from shapely.ops import transform
 
 COVERED_LABELS = {"sheltered", "void_deck", "covered_bridge", "underpass"}
@@ -118,6 +118,164 @@ def _edge_source_summary(edges: gpd.GeoDataFrame) -> dict[str, int]:
     return dict(sorted(counter.items()))
 
 
+def _line_endpoints(geometry: Any) -> tuple[tuple[float, float], tuple[float, float]] | None:
+    if geometry is None or geometry.is_empty:
+        return None
+    if geometry.geom_type == "LineString":
+        coords = list(geometry.coords)
+    elif geometry.geom_type == "MultiLineString":
+        parts = [part for part in geometry.geoms if not part.is_empty]
+        if not parts:
+            return None
+        coords = list(parts[0].coords) + list(parts[-1].coords)
+    else:
+        return None
+    if len(coords) < 2:
+        return None
+    return (float(coords[0][0]), float(coords[0][1])), (float(coords[-1][0]), float(coords[-1][1]))
+
+
+class _UnionFind:
+    def __init__(self) -> None:
+        self.parent: list[int] = []
+        self.size: list[int] = []
+
+    def add(self) -> int:
+        node_id = len(self.parent)
+        self.parent.append(node_id)
+        self.size.append(1)
+        return node_id
+
+    def find(self, node_id: int) -> int:
+        parent = self.parent[node_id]
+        if parent != node_id:
+            self.parent[node_id] = self.find(parent)
+        return self.parent[node_id]
+
+    def union(self, left: int, right: int) -> None:
+        left_root = self.find(left)
+        right_root = self.find(right)
+        if left_root == right_root:
+            return
+        if self.size[left_root] < self.size[right_root]:
+            left_root, right_root = right_root, left_root
+        self.parent[right_root] = left_root
+        self.size[left_root] += self.size[right_root]
+
+
+def _component_diagnostics(
+    network: gpd.GeoDataFrame,
+) -> tuple[gpd.GeoDataFrame, gpd.GeoDataFrame, int | None]:
+    """Derive graph components from edge endpoints for QA reporting."""
+    union_find = _UnionFind()
+    node_ids_by_xy: dict[tuple[float, float], int] = {}
+    node_xy: list[tuple[float, float]] = []
+    edge_node_ids: list[tuple[int | None, int | None]] = []
+
+    def node_id_for(xy: tuple[float, float]) -> int:
+        key = (round(xy[0], 3), round(xy[1], 3))
+        if key in node_ids_by_xy:
+            return node_ids_by_xy[key]
+        node_id = union_find.add()
+        node_ids_by_xy[key] = node_id
+        node_xy.append(key)
+        return node_id
+
+    for geometry in network.geometry:
+        endpoints = _line_endpoints(geometry)
+        if endpoints is None:
+            edge_node_ids.append((None, None))
+            continue
+        start_id = node_id_for(endpoints[0])
+        end_id = node_id_for(endpoints[1])
+        union_find.union(start_id, end_id)
+        edge_node_ids.append((start_id, end_id))
+
+    if not node_xy:
+        empty_nodes = gpd.GeoDataFrame(
+            columns=["node_id", "component_id", "component_node_count", "geometry"],
+            geometry="geometry",
+            crs=network.crs,
+        )
+        enriched = network.copy()
+        enriched["component_id"] = None
+        return empty_nodes, enriched, None
+
+    roots = [union_find.find(node_id) for node_id in range(len(node_xy))]
+    root_counts = Counter(roots)
+    root_order = {
+        root: component_id
+        for component_id, (root, _) in enumerate(
+            sorted(root_counts.items(), key=lambda item: (-item[1], item[0]))
+        )
+    }
+    component_ids = [root_order[root] for root in roots]
+    component_sizes = {root_order[root]: count for root, count in root_counts.items()}
+
+    nodes = gpd.GeoDataFrame(
+        [
+            {
+                "node_id": node_id,
+                "component_id": component_ids[node_id],
+                "component_node_count": component_sizes[component_ids[node_id]],
+                "geometry": Point(xy),
+            }
+            for node_id, xy in enumerate(node_xy)
+        ],
+        geometry="geometry",
+        crs=network.crs,
+    )
+
+    enriched = network.copy()
+    edge_component_ids: list[int | None] = []
+    for edge_start_id, edge_end_id in edge_node_ids:
+        if edge_start_id is None or edge_end_id is None:
+            edge_component_ids.append(None)
+        else:
+            edge_component_ids.append(component_ids[edge_start_id])
+    enriched["component_id"] = edge_component_ids
+    return nodes, enriched, 0
+
+
+def _nearest_row(
+    frame: gpd.GeoDataFrame,
+    spatial_index: Any,
+    point: Point,
+    *,
+    max_m: float,
+) -> pd.Series | None:
+    if frame.empty:
+        return None
+    radii = sorted({radius for radius in [5.0, 20.0, 50.0, 100.0, max_m] if radius <= max_m})
+    for query_radius in radii:
+        possible = spatial_index.query(point.buffer(query_radius), predicate="intersects")
+        if len(possible) == 0:
+            continue
+        candidates = frame.iloc[list(possible)].copy()
+        candidates["distance_m"] = candidates.geometry.distance(point)
+        candidates = candidates[candidates["distance_m"] <= query_radius]
+        if not candidates.empty:
+            return candidates.sort_values("distance_m").iloc[0]
+    return None
+
+
+def _nearest_edge_distance(
+    frame: gpd.GeoDataFrame,
+    point: Point,
+    *,
+    max_m: float = 250.0,
+) -> tuple[float | None, dict[str, int]]:
+    if frame.empty:
+        return None, {}
+    spatial_index = frame.sindex
+    nearest = _nearest_row(frame, spatial_index, point, max_m=max_m)
+    if nearest is None:
+        return None, {}
+    return round(float(nearest["distance_m"]), 1), _edge_source_summary(
+        gpd.GeoDataFrame([nearest.to_dict()], geometry="geometry", crs=frame.crs)
+    )
+
+
 def json_nullable(value: Any) -> Any:
     if value is None:
         return None
@@ -179,6 +337,14 @@ def _classify(label: str, nearby: gpd.GeoDataFrame, covered: gpd.GeoDataFrame) -
     return "routable_geometry_nearby"
 
 
+def _component_gap_classification(label: str, covered: gpd.GeoDataFrame) -> str:
+    if label == "void_deck" or _has_hdb_evidence(covered):
+        return "hdb_void_deck_component_gap"
+    if label in BRIDGE_LABELS or _has_bridge_evidence(covered):
+        return "bridge_underpass_component_gap"
+    return "covered_component_gap"
+
+
 def classify_feedback_segments(
     segments: gpd.GeoDataFrame,
     network_edges: gpd.GeoDataFrame,
@@ -190,6 +356,19 @@ def classify_feedback_segments(
     if network_edges.empty:
         audited = segments.copy()
         audited["classification"] = "missing_routable_geometry"
+        audited["needs_model_qa"] = audited["label"].isin(COVERED_LABELS)
+        audited["start_component_id"] = None
+        audited["end_component_id"] = None
+        audited["same_component"] = None
+        audited["start_snap_node_m"] = None
+        audited["end_snap_node_m"] = None
+        audited["start_component_node_count"] = None
+        audited["end_component_node_count"] = None
+        audited["endpoint_component_gap_m"] = None
+        audited["nearest_main_component_edge_m"] = None
+        audited["nearest_main_component_covered_edge_m"] = None
+        audited["nearest_main_component_sources"] = [{} for _ in range(len(audited))]
+        audited["nearest_main_component_covered_sources"] = [{} for _ in range(len(audited))]
         audited["nearby_edge_count"] = 0
         audited["nearby_covered_edge_count"] = 0
         audited["nearest_edge_m"] = None
@@ -198,7 +377,17 @@ def classify_feedback_segments(
         return audited
 
     network = network_edges.to_crs(segments.crs).reset_index(drop=True)
+    component_nodes, network_with_components, main_component_id = _component_diagnostics(network)
     sindex = network.sindex
+    node_sindex = component_nodes.sindex if not component_nodes.empty else None
+    main_edges = (
+        network_with_components[network_with_components["component_id"] == main_component_id].copy()
+        if main_component_id is not None
+        else network_with_components.iloc[0:0].copy()
+    )
+    main_covered_edges = (
+        main_edges[_is_covered(main_edges)].copy() if not main_edges.empty else main_edges
+    )
     rows: list[dict[str, Any]] = []
     for _, segment in segments.iterrows():
         line = segment.geometry
@@ -213,6 +402,42 @@ def classify_feedback_segments(
         classification = _classify(str(segment["label"]), nearby, covered)
 
         row = dict(segment)
+        first_coord = line.coords[0]
+        last_coord = line.coords[-1]
+        start_snap = (
+            _nearest_row(
+                component_nodes,
+                node_sindex,
+                Point(first_coord),
+                max_m=max(search_m, 100.0),
+            )
+            if node_sindex is not None
+            else None
+        )
+        end_snap = (
+            _nearest_row(
+                component_nodes,
+                node_sindex,
+                Point(last_coord),
+                max_m=max(search_m, 100.0),
+            )
+            if node_sindex is not None
+            else None
+        )
+        start_component = int(start_snap["component_id"]) if start_snap is not None else None
+        end_component = int(end_snap["component_id"]) if end_snap is not None else None
+        same_component = (
+            start_component == end_component
+            if start_component is not None and end_component is not None
+            else None
+        )
+        if (
+            str(segment["label"]) in COVERED_LABELS
+            and same_component is False
+            and (not nearby.empty or not covered.empty)
+        ):
+            classification = _component_gap_classification(str(segment["label"]), covered)
+
         row["classification"] = classification
         row["needs_model_qa"] = bool(
             str(segment["label"]) in COVERED_LABELS
@@ -223,6 +448,37 @@ def classify_feedback_segments(
                 "hdb_void_deck_evidence_nearby_check_connectivity",
             }
         )
+        row["start_component_id"] = start_component
+        row["end_component_id"] = end_component
+        row["same_component"] = same_component
+        row["start_snap_node_m"] = (
+            round(float(start_snap["distance_m"]), 1) if start_snap is not None else None
+        )
+        row["end_snap_node_m"] = (
+            round(float(end_snap["distance_m"]), 1) if end_snap is not None else None
+        )
+        row["start_component_node_count"] = (
+            int(start_snap["component_node_count"]) if start_snap is not None else None
+        )
+        row["end_component_node_count"] = (
+            int(end_snap["component_node_count"]) if end_snap is not None else None
+        )
+        row["endpoint_component_gap_m"] = (
+            round(float(start_snap.geometry.distance(end_snap.geometry)), 1)
+            if same_component is False and start_snap is not None and end_snap is not None
+            else None
+        )
+        nearest_main_point = line.interpolate(0.5, normalized=True)
+        nearest_main_edge_m, nearest_main_sources = _nearest_edge_distance(
+            main_edges, nearest_main_point
+        )
+        nearest_main_covered_edge_m, nearest_main_covered_sources = _nearest_edge_distance(
+            main_covered_edges, nearest_main_point
+        )
+        row["nearest_main_component_edge_m"] = nearest_main_edge_m
+        row["nearest_main_component_covered_edge_m"] = nearest_main_covered_edge_m
+        row["nearest_main_component_sources"] = nearest_main_sources
+        row["nearest_main_component_covered_sources"] = nearest_main_covered_sources
         row["nearby_edge_count"] = len(nearby)
         row["nearby_covered_edge_count"] = len(covered)
         row["nearest_edge_m"] = (
@@ -255,6 +511,24 @@ def audit_report(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
                 "length_m": float(row["length_m"]),
                 "classification": row["classification"],
                 "needs_model_qa": bool(row["needs_model_qa"]),
+                "start_component_id": json_nullable(row.get("start_component_id")),
+                "end_component_id": json_nullable(row.get("end_component_id")),
+                "same_component": json_nullable(row.get("same_component")),
+                "start_snap_node_m": json_nullable(row.get("start_snap_node_m")),
+                "end_snap_node_m": json_nullable(row.get("end_snap_node_m")),
+                "start_component_node_count": json_nullable(row.get("start_component_node_count")),
+                "end_component_node_count": json_nullable(row.get("end_component_node_count")),
+                "endpoint_component_gap_m": json_nullable(row.get("endpoint_component_gap_m")),
+                "nearest_main_component_edge_m": json_nullable(
+                    row.get("nearest_main_component_edge_m")
+                ),
+                "nearest_main_component_covered_edge_m": json_nullable(
+                    row.get("nearest_main_component_covered_edge_m")
+                ),
+                "nearest_main_component_sources": row.get("nearest_main_component_sources", {}),
+                "nearest_main_component_covered_sources": row.get(
+                    "nearest_main_component_covered_sources", {}
+                ),
                 "nearby_edge_count": int(row["nearby_edge_count"]),
                 "nearby_covered_edge_count": int(row["nearby_covered_edge_count"]),
                 "nearest_edge_m": json_nullable(row["nearest_edge_m"]),
@@ -277,13 +551,20 @@ def audit_geojson(audited_segments: gpd.GeoDataFrame) -> dict[str, Any]:
         return {"type": "FeatureCollection", "features": []}
     output = audited_segments.to_crs("EPSG:4326")
     features = []
+    dict_properties = {
+        "nearby_sources",
+        "nearest_main_component_sources",
+        "nearest_main_component_covered_sources",
+    }
     for _, row in output.iterrows():
         properties = {
             key: json_nullable(value)
             for key, value in row.drop(labels=["geometry"]).items()
-            if key != "nearby_sources"
+            if key not in dict_properties
         }
-        properties["nearby_sources"] = json.dumps(row["nearby_sources"], sort_keys=True)
+        for key in dict_properties:
+            if key in row:
+                properties[key] = json.dumps(row.get(key, {}), sort_keys=True)
         features.append(
             {
                 "type": "Feature",

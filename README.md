@@ -1,11 +1,13 @@
 # S.H.I.O.K. Index
 
-A free, non-commercial civic web app giving every Singapore postal code an explainable
-"comfort score" for the walk to transit — rain shelter, heat, crossing friction, transit
-access, and bus frequency — computed on real routed paths from open government data.
+A free, non-commercial civic web app giving source-derived Singapore postal records an
+explainable "comfort score" for the walk to transit — rain shelter, heat, crossing
+friction, transit access, and bus frequency — computed on real routed paths from open
+government data.
 
-**Status:** docs-first kickstart. No pipeline or frontend code exists yet — a coding agent
-builds it by working through `docs/BUILD_PLAN.md` task by task.
+**Status:** live static-first pilot with a scored 124,032-record source-derived universe.
+The remaining canonical postal-universe gap is tracked honestly in
+`docs/POSTAL_UNIVERSE.md`.
 **Environment:** Windows 11, native. No WSL, no Docker, no GitHub Actions, no paid services.
 
 ## Repo map

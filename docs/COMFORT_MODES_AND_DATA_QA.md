@@ -223,6 +223,18 @@ tested:
   2.0, and 3.0. Exit 5 stayed 425.9 m and 31.2% sheltered in every case.
   Therefore the Exit 5 false-negative is not solved by a Max Shelter slider;
   it needs graph/data connectivity work.
+- A component-aware rerun of the same AMK feedback audit produced:
+  - 19 `covered_evidence_nearby_check_connectivity_or_snap`
+  - 8 `hdb_void_deck_component_gap`
+  - 2 `hdb_void_deck_evidence_nearby_check_connectivity`
+  - 2 `bridge_underpass_evidence_nearby_check_endpoint_snap`
+  - 1 `user_marked_exposed_no_shelter_expected`
+- For `560231`, the user-marked Mayflower path now exposes specific graph
+  breaks rather than a generic shelter-label problem: segment 1 is a 92.9 m HDB
+  component gap, segment 2 is a 37.7 m HDB component gap, and segment 6 is a
+  128.7 m HDB component gap. This confirms the next work is a source-backed
+  HDB/covered-component connector model, not score-weight tuning or a manual
+  route override.
 
 ## Human Feedback Loop
 

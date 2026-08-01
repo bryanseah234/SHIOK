@@ -4,7 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 export const metadata = {
   title: "S.H.I.O.K. Index",
   description:
-    "An explainable comfort score for every Singapore postal code measuring rain shelter, heat, crossing friction, transit access, and bus frequency.",
+    "An explainable comfort score for source-derived Singapore postal records measuring rain shelter, heat, crossing friction, transit access, and bus frequency.",
 };
 
 export default function RootLayout({
