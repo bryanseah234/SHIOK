@@ -37,9 +37,13 @@ describe("deployment packaging", () => {
     expect(packageJson.scripts["qa:browser"]).toBe("node scripts/browser-smoke.mjs");
     expect(script).toContain("--postals");
     expect(script).toContain("--expected-state");
+    expect(script).toContain("--transit-mode");
+    expect(script).toContain("--must-include");
     expect(script).toContain("result_count");
     expect(script).toContain("Input.dispatchKeyEvent");
     expect(script).toContain("keyboard_search_used");
+    expect(script).toContain("transit_mode_selected");
+    expect(script).toContain("required_text_present");
     expect(script).toContain("pending_badge_absent");
     expect(script).toContain("not_yet_copy_distinct_from_no_transit");
     expect(script).toContain("score_has_max_denominator");
@@ -65,6 +69,7 @@ describe("deployment packaging", () => {
     expect(script).toContain("uv run python run.py readiness");
     expect(script).toContain("--expected-state no_transit");
     expect(script).toContain("--expected-state not_yet_scored");
+    expect(script).toContain("--transit-mode mrt_lrt");
     expect(script).toContain("Release plan only");
     expect(script).not.toContain("deploy-production");
     expect(script).not.toContain("vercel deploy");

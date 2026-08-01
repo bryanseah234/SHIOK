@@ -45,7 +45,8 @@
     "feedback_route_zoom_reset_regression_guard": "passed",
     "transit_poi_popup_static_info_regression_tests": "passed",
     "pending_bundle_readiness_artifact": "qa/readiness_pending_bundle_20260802_0424.json passed",
-    "local_launch_check_wrapper_full_smoke": "20260802_043136 passed",
+    "mayflower_mrt_only_browser_smoke": "560231 passed",
+    "local_launch_check_wrapper_full_smoke": "20260802_043830 passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [

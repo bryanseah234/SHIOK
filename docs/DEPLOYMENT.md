@@ -214,14 +214,24 @@ To verify an explicit no-score state, set the expected state:
 npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 567754 --expected-state no_transit --out ..\qa\browser_smoke_no_transit.json
 ```
 
+To force-check the known Mayflower MRT path even when Best transit chooses a
+nearer bus stop:
+
+```powershell
+npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560231 --transit-mode mrt_lrt --must-include "Mayflower MRT Station" --out ..\qa\browser_smoke_mayflower_mrt.json
+```
+
 The script launches headless Chrome, focuses the postal input, types with
 Chrome's keyboard input API, submits with Enter, checks the score card, route
 legend, map text equivalent, and short-mobile card fit, then writes a JSON
 report. Multi-postal runs write one `results[]` entry per postal. `--input-mode
 programmatic` is available only as a diagnostic fallback. `--expected-state`
 defaults to `scored`; use `no_transit` or `not_yet_scored` when validating
-explicit non-score states. PNG screenshots under `qa/` remain ignored by Git;
-commit the JSON/Markdown summaries instead.
+explicit non-score states. `--transit-mode mrt_lrt` or `--transit-mode bus`
+clicks the visible transit target control after lookup; `--must-include` asserts
+specific text is present in the resulting score card or map summary. PNG
+screenshots under `qa/` remain ignored by Git; commit the JSON/Markdown
+summaries instead.
 
 ## Local Cleanup
 
