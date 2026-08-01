@@ -49,3 +49,22 @@ URA is worth keeping as official-source evidence. It greatly improves the
 conservative `official_current` universe but does not close the canonical
 ~140k target. Continue to describe the production universe as source-derived,
 not complete.
+
+## Bounded Geocode Fill
+
+Command:
+
+```powershell
+uv run python run.py geocode-universe --input tmp\postal_universe_candidate_full_registered_ura_probe.parquet --output tmp\postal_universe_candidate_full_registered_ura_probe_geocoded.parquet --summary tmp\postal_universe_candidate_full_registered_ura_probe_geocoded_summary.json --confirm-bounded-geocode
+```
+
+Result:
+
+- queued postals: 575
+- cache successes: 84
+- HTTP requests: 172
+- filled successes: 99
+- status counts: `SUCCESS` 99, `NOT_FOUND` 476
+- ready to score after: 123,967
+- needs geocode after: 476
+- will brute force: false

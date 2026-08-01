@@ -75,6 +75,16 @@ Active web bundle `generated_20260801_direct_bus_all_targeted`
 - net gain versus the 124,032-record production candidate universe: 411 postals
 - conclusion: URA substantially strengthens official-current dwelling coverage, but it does not close the canonical ~140k target.
 
+`uv run python run.py geocode-universe --input tmp\postal_universe_candidate_full_registered_ura_probe.parquet --output tmp\postal_universe_candidate_full_registered_ura_probe_geocoded.parquet --summary tmp\postal_universe_candidate_full_registered_ura_probe_geocoded_summary.json --confirm-bounded-geocode`
+
+- queued source-derived gaps: 575
+- cache successes: 84
+- HTTP requests: 172
+- filled successes: 99
+- ready to score after bounded OneMap geocode: 123,967
+- needs geocode after bounded OneMap geocode: 476
+- `will_bruteforce`: false
+
 `uv run python run.py postal-universe --mode candidate_full_all --download-missing`
 
 - total unique postals: 132,174
