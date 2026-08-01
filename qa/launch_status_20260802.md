@@ -38,7 +38,7 @@ Root directory: `web`
 - Transit POI popup static-info regression tests: passed
 - Pending-bundle readiness artifact `qa/readiness_pending_bundle_20260802_0424.json`: passed
 - Mayflower MRT-only browser smoke for 560231: passed
-- Local launch-check wrapper full smoke artifact set `20260802_044529`: passed
+- Local launch-check wrapper full smoke artifact set `20260802_053249`: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command

@@ -426,7 +426,9 @@ function collectChecks(summary, postal, inputMode, expectedState, transitMode, r
   const hasNoTransit =
     summary.cardText.includes("No routed") ||
     summary.cardText.includes("No transit found nearby") ||
-    summary.cardText.includes("No best transit walk was found");
+    summary.cardText.includes("No best transit walk was found") ||
+    summary.cardText.includes("Transit beyond scoring range") ||
+    summary.cardText.includes("Closest routed transit");
   const hasNotYetScored =
     summary.cardText.includes("Not scored") ||
     (summary.cardText.includes("No score") && summary.cardText.includes("needs usable location evidence"));
