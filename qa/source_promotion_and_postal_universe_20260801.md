@@ -26,16 +26,20 @@ Current production-safe universe remains 124,032 source-derived postals.
 
 - 123,713 have usable coordinates.
 - 319 remain `NOT_YET_SCORED` after bounded OneMap geocoding.
-- Active bundle `generated_20260801_direct_bus_targeted` emits:
+- Active bundle `generated_20260801_no_transit_wide_targeted` emits:
   - 112,880 `SCORED`
-  - 67 `SCORED_PARTIAL`
-  - 10,766 `NO_TRANSIT_IN_RANGE`
+  - 129 `SCORED_PARTIAL`
+  - 10,704 `NO_TRANSIT_IN_RANGE`
   - 319 `NOT_YET_SCORED`
 
 The commonly cited ~140k figure is not currently reproducible as unique,
 current, legally usable postals under the project constraints. The third-party
 OneMap-derived 2020 dump has 141,848 raw address rows but only 121,515 unique
 valid postal codes after dedupe.
+
+Sidecar review on 2026-08-01 confirmed that the ~140k target likely mixes raw
+address records with unique postal codes. No reviewed source closed the
+remaining gap under the $0/non-commercial constraints.
 
 ## Decision
 
