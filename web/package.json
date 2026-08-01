@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "node scripts/test-web.mjs",
-    "measure:lookup": "node scripts/measure-lookup-transfer.mjs"
+    "measure:lookup": "node scripts/measure-lookup-transfer.mjs",
+    "qa:browser": "node scripts/browser-smoke.mjs"
   },
   "dependencies": {
     "@mapbox/tiny-sdf": "^2.2.0",

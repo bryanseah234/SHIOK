@@ -179,6 +179,20 @@ After derived shards are materialized, Postal 560234 measured 337.8 KB gzipped
 for lookup-specific static artifacts, under the 500 KB PRD target. The initial
 full transit POI overlay is separate and measured 358.0 KB gzipped.
 
+## Browser Smoke Check
+
+After a local `npm --prefix web run build` and while `npm --prefix web run
+start -- -p <port>` is serving the build, run a routed browser smoke test:
+
+```powershell
+npm --prefix web run qa:browser -- --url http://127.0.0.1:<port>/ --postal 560234 --out ..\qa\browser_smoke_560234.json --screenshots
+```
+
+The script launches headless Chrome, searches the postal through the real form,
+checks the score card, route legend, map text equivalent, and short-mobile card
+fit, then writes a JSON report. PNG screenshots under `qa/` remain ignored by
+Git; commit the JSON/Markdown summaries instead.
+
 ## Full Rescore Helper
 
 For a source/model change that requires every known postal to be rescored, run
