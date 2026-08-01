@@ -169,6 +169,10 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
         "outlier review/rescore"
         in report["features"]["not_incorporated"]["overture_addresses_sg_candidate"]
     )
+    assert (
+        "has not been collected/evaluated yet"
+        in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
+    )
 
 
 def test_build_readiness_report_warns_when_bundle_predates_network(tmp_path: Path):

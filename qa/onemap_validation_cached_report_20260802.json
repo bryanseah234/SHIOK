@@ -1,0 +1,39 @@
+{
+  "bundle": "generated_20260801_165500",
+  "cache_dir": "C:\\shiok\\raw\\validation\\onemap_walk",
+  "cached_results": 0,
+  "gate_passed": false,
+  "generated_at": "2026-08-01T23:00:27.261164+00:00",
+  "median_abs_pct_delta": null,
+  "missing_cache_postals_preview": [
+    "138820",
+    "618380",
+    "487926",
+    "426580",
+    "058359",
+    "388535",
+    "538053",
+    "574703",
+    "428344",
+    "437787",
+    "277460",
+    "556807",
+    "079120",
+    "668908",
+    "545195",
+    "570188",
+    "568825",
+    "507916",
+    "249003",
+    "576008"
+  ],
+  "missing_cache_results": 2000,
+  "ok": false,
+  "p95_abs_pct_delta": null,
+  "results_preview": [],
+  "sample_size": 2000,
+  "thresholds": {
+    "median_abs_pct_delta_max": 10.0,
+    "p95_abs_pct_delta_max": 25.0
+  }
+}

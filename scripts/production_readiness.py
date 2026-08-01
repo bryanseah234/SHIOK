@@ -11,7 +11,6 @@ from pipeline.export import validate_static_artifacts
 from pipeline.network_qa import validate_network_qa
 from scripts.audit_current_bundle import active_bundle_dir, build_report, summarize_state_report
 
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 WEB_DIR = PROJECT_ROOT / "web"
 QA_DIR = PROJECT_ROOT / "qa"
@@ -134,6 +133,10 @@ def readiness_features() -> dict[str, Any]:
             "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
             "building_shadow_time_of_day": "future heat model",
             "live_bus_or_mrt_arrivals": "requires runtime proxy or collected static aggregates",
+            "onemap_walk_validation_gate": (
+                "sample planner and cache evaluator implemented; the 2,000-postal "
+                "OneMap walk comparison has not been collected/evaluated yet"
+            ),
             "bellingcat_openinframap_overpass_as_production_feeds": (
                 "QA/discovery only unless raw bounded OSM query output is archived and hashed"
             ),

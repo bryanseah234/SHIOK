@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | bus-arrivals | check | ingest | network | network-preflight | network-qa | overture-addresses | readiness | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
+Tasks: batch-plan | bus-arrivals | check | ingest | network | network-preflight | network-qa | onemap-validation | overture-addresses | readiness | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -21,6 +21,7 @@ STUBS = {
     "network": "build conflated graph + QA report (T1.1)",
     "network-preflight": "verify network build inputs without building graph",
     "network-qa": "validate conflation QA report acceptance gates",
+    "onemap-validation": "plan/evaluate OneMap walk-routing launch validation gate",
     "overture-addresses": "probe Overture Addresses SG postal-universe candidate",
     "readiness": "fast production-readiness report without scoring or deploying",
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
@@ -58,6 +59,8 @@ def run_task(name: str, extra: list[str]) -> int:
         return run_module("pipeline.network_preflight")
     if name == "network-qa":
         return run_module("pipeline.network_qa")
+    if name == "onemap-validation":
+        return run_module("pipeline.onemap_validation")
     if name == "overture-addresses":
         return run_module("pipeline.overture_addresses")
     if name == "readiness":
