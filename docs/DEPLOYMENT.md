@@ -56,6 +56,11 @@ With that root directory, every push to `main` builds the Next.js app from
 downloads the configured production data bundle during `next build` when
 `web/public/data/<bundle>` is absent.
 
+The same script also materializes derived lookup shards for existing local
+bundles: `geom/postal-prefix/*.json.gz`, `transit/h3/*.json.gz`, and gzip
+companions for core indexes. This keeps direct local deploys and Git deploys on
+the same data contract.
+
 `web/vercel.json` also sets `ignoreCommand` to
 `node scripts/ignore-build.mjs`. That means Git commits which do not touch the
 `web` project, such as docs-only or QA-evidence commits, are intentionally
@@ -91,6 +96,19 @@ After a new score/export batch is generated and validated:
    auto-deploy can now download the already-published bundle during `next build`.
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
+
+## Lookup Transfer Check
+
+Use this from the repo root to measure a postal lookup against the active local
+bundle:
+
+```powershell
+npm --prefix web run measure:lookup -- 560234
+```
+
+After derived shards are materialized, Postal 560234 measured 337.8 KB gzipped
+for lookup-specific static artifacts, under the 500 KB PRD target. The initial
+full transit POI overlay is separate and measured 358.0 KB gzipped.
 
 ## Full Rescore Helper
 

@@ -32,6 +32,22 @@ function writeJsonAndGz(path, payload) {
   writeGzJson(`${path}.gz`, payload);
 }
 
+function readJsonMaybeGz(path) {
+  if (existsSync(path)) {
+    return JSON.parse(readFileSync(path, "utf8"));
+  }
+  const gzPath = `${path}.gz`;
+  if (existsSync(gzPath)) {
+    return JSON.parse(gunzipSync(readFileSync(gzPath)).toString("utf8"));
+  }
+  throw new Error(`missing JSON artifact: ${path}`);
+}
+
+function ensureGzipCompanion(path) {
+  if (!existsSync(path)) return;
+  writeFileSync(`${path}.gz`, gzipSync(readFileSync(path)));
+}
+
 function writePostalPrefixShards(targetRoot, postalIndex) {
   const prefixes = new Map();
   for (const [postal, shard] of Object.entries(postalIndex || {})) {
@@ -151,13 +167,28 @@ async function downloadRemoteBundle(bundle, targetRoot) {
   }
 }
 
+function ensureDerivedLookupShards(targetRoot) {
+  ensureGzipCompanion(join(targetRoot, "manifest.json"));
+  ensureGzipCompanion(join(targetRoot, "scores", "index.json"));
+  ensureGzipCompanion(join(targetRoot, "geom", "index.json"));
+  ensureGzipCompanion(join(targetRoot, "geom", "postal-index.json"));
+
+  const geomPostalIndex = readJsonMaybeGz(join(targetRoot, "geom", "postal-index.json"));
+  writePostalPrefixShards(targetRoot, geomPostalIndex);
+
+  const transitPois = readJsonMaybeGz(join(targetRoot, "transit", "pois.json"));
+  writeTransitH3Shards(targetRoot, transitPois);
+}
+
 const bundle = normalizeBundle(process.argv[2] || process.env.SHIOK_DATA_BUNDLE || configuredBundle());
 const target = join(process.cwd(), "public", "data", bundle);
 const manifestPath = join(target, "manifest.json");
 
 if (existsSync(manifestPath)) {
   console.log(`using local data bundle ${target}`);
+  ensureDerivedLookupShards(target);
 } else {
   await downloadRemoteBundle(bundle, target);
+  ensureDerivedLookupShards(target);
   console.log(`downloaded data bundle ${target}`);
 }

@@ -21,4 +21,12 @@ describe("deployment packaging", () => {
 
     expect(config.ignoreCommand).toBe("node scripts/ignore-build.mjs");
   });
+
+  it("materializes derived lookup shards during web builds", () => {
+    const script = readFileSync(join(__dirname, "../../scripts/ensure-data-bundle.mjs"), "utf-8");
+
+    expect(script).toContain("ensureDerivedLookupShards");
+    expect(script).toContain("writePostalPrefixShards");
+    expect(script).toContain("writeTransitH3Shards");
+  });
 });
