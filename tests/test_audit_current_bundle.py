@@ -43,3 +43,15 @@ def test_sample_postals_ignores_scored_records_and_zero_limit():
 
     assert sample_postals(records, replay_limit=0) == []
     assert sample_postals(records, replay_limit=10) == ["100002"]
+
+
+def test_sample_postals_tops_up_when_direct_bus_bucket_is_empty():
+    records = [
+        _record(f"{index:06d}", "SERANGOON" if index % 2 else "BUKIT_TIMAH")
+        for index in range(100001, 100021)
+    ]
+
+    selected = sample_postals(records, replay_limit=12)
+
+    assert len(selected) == 12
+    assert len(set(selected)) == 12

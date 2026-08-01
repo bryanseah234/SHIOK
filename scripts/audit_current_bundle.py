@@ -165,6 +165,10 @@ def sample_postals(records: list[dict[str, Any]], replay_limit: int) -> list[str
             add(record)
             if len(selected) >= replay_limit:
                 return selected
+    for record in no_transit:
+        add(record)
+        if len(selected) >= replay_limit:
+            return selected
     return selected[:replay_limit]
 
 

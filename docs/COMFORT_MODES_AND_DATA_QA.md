@@ -122,6 +122,11 @@ Current implementation:
   300 m direct-radius set. All 1,320 converted to `SCORED_PARTIAL`; active
   bundle counts became 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384
   `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
+- A corrected post-refresh replay audit with `--replay-limit 80` found the
+  remaining no-transit bucket has 0 records with direct bus candidates. The
+  sample split was 74 `all_candidates_beyond_access_range` and 6
+  `candidate_graph_disconnected`; only 1 of the disconnected sample was within
+  75 m of a candidate transit component.
 
 ## Actual Bus Arrivals
 
