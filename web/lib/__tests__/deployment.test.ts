@@ -15,4 +15,10 @@ describe("deployment packaging", () => {
     expect(rootIgnore).toContain(`!web/public/data/${activeBundle}/`);
     expect(rootIgnore).toContain(`!web/public/data/${activeBundle}/**`);
   });
+
+  it("skips Vercel builds for commits outside the web project", () => {
+    const config = JSON.parse(readFileSync(join(__dirname, "../../vercel.json"), "utf-8"));
+
+    expect(config.ignoreCommand).toBe("node scripts/ignore-build.mjs");
+  });
 });

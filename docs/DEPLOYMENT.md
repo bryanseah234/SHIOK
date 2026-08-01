@@ -56,6 +56,12 @@ With that root directory, every push to `main` builds the Next.js app from
 downloads the configured production data bundle during `next build` when
 `web/public/data/<bundle>` is absent.
 
+`web/vercel.json` also sets `ignoreCommand` to
+`node scripts/ignore-build.mjs`. That means Git commits which do not touch the
+`web` project, such as docs-only or QA-evidence commits, are intentionally
+skipped by Vercel instead of consuming Hobby build quota. Changes under `web/`,
+including `web/data-bundle.json`, still trigger a real build.
+
 Only the `sgshiok` Vercel project should be connected to this GitHub repo. On
 2026-08-01, the older `shiok` Vercel project was disconnected from
 `bryanseah234/sgSHIOK2026` because it was still creating duplicate failed commit
