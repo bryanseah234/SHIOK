@@ -68,3 +68,24 @@ Result:
 - ready to score after: 123,967
 - needs geocode after: 476
 - will brute force: false
+
+## Batch-Plan Dry Run
+
+Command:
+
+```powershell
+uv run python run.py batch-plan --universe tmp\postal_universe_candidate_full_registered_ura_probe_geocoded.parquet --summary tmp\postal_universe_candidate_full_registered_ura_probe_geocoded_summary.json
+```
+
+Result:
+
+- `ok`: true
+- island network QA: true
+- would emit records: 124,443
+- would score after bounded geocoding: 123,967
+- would emit `NOT_YET_SCORED`: 476
+- full batch allowed now: false
+- blockers:
+  - human approval required before full geocode/scoring batch
+  - human approval required before production deploy or mock-to-real frontend cutover
+  - postal universe uses third-party OneMap-derived 2020 source
