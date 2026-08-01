@@ -1,0 +1,657 @@
+{
+  "generated_at": "2026-08-01T19:37:17.768Z",
+  "bundle": "generated_20260801_165500",
+  "total_records": 124032,
+  "state_counts": {
+    "SCORED": 112880,
+    "SCORED_PARTIAL": 1449,
+    "NO_TRANSIT_IN_RANGE": 9384,
+    "NOT_YET_SCORED": 319
+  },
+  "no_transit": {
+    "count": 9384,
+    "direct_bus_candidate_counts": {
+      "zero": 9384,
+      "nonzero": 0
+    },
+    "nearest_routed_m_quantiles": {
+      "min": 1200.2,
+      "p50": 1966.7,
+      "p90": 3297,
+      "p95": 4675.9,
+      "max": 13776.3
+    },
+    "origin_snap_distance_m_quantiles": {
+      "p50": 26.3,
+      "p90": 69.4,
+      "p95": 114.6,
+      "max": 7961.7
+    },
+    "candidate_destination_nodes_quantiles": {
+      "p50": 4,
+      "p90": 7,
+      "max": 19
+    },
+    "route_results_quantiles": {
+      "p50": 3,
+      "p90": 7,
+      "max": 11
+    },
+    "top_areas": [
+      {
+        "area": "BUKIT_TIMAH",
+        "no_transit": 2005,
+        "postals": [
+          "266100",
+          "266102",
+          "266104",
+          "266106",
+          "266107",
+          "266108",
+          "266109",
+          "266111"
+        ]
+      },
+      {
+        "area": "SERANGOON",
+        "no_transit": 1980,
+        "postals": [
+          "080739",
+          "358542",
+          "358543",
+          "358544",
+          "358545",
+          "358546",
+          "358547",
+          "358548"
+        ]
+      },
+      {
+        "area": "ANG_MO_KIO",
+        "no_transit": 557,
+        "postals": [
+          "567754",
+          "567755",
+          "567756",
+          "567757",
+          "567758",
+          "567759",
+          "786192",
+          "786636"
+        ]
+      },
+      {
+        "area": "SOUTHERN_ISLANDS",
+        "no_transit": 544,
+        "postals": [
+          "009901",
+          "098027",
+          "098028",
+          "098032",
+          "098035",
+          "098037",
+          "098042",
+          "098043"
+        ]
+      },
+      {
+        "area": "SUNGEI_KADUT",
+        "no_transit": 416,
+        "postals": [
+          "728630",
+          "728675",
+          "728676",
+          "728681",
+          "728682",
+          "728683",
+          "728684",
+          "728685"
+        ]
+      },
+      {
+        "area": "HOUGANG",
+        "no_transit": 397,
+        "postals": [
+          "530137",
+          "533750",
+          "533757",
+          "533758",
+          "533951",
+          "534335",
+          "534336",
+          "534363"
+        ]
+      },
+      {
+        "area": "CLEMENTI",
+        "no_transit": 361,
+        "postals": [
+          "126988",
+          "126990",
+          "126992",
+          "127227",
+          "127229",
+          "127231",
+          "127233",
+          "127235"
+        ]
+      },
+      {
+        "area": "TANGLIN",
+        "no_transit": 316,
+        "postals": [
+          "247656",
+          "247661",
+          "247662",
+          "247663",
+          "247664",
+          "247665",
+          "247696",
+          "247697"
+        ]
+      },
+      {
+        "area": "BEDOK",
+        "no_transit": 288,
+        "postals": [
+          "415833",
+          "415834",
+          "415835",
+          "415836",
+          "415837",
+          "415838",
+          "415839",
+          "419546"
+        ]
+      },
+      {
+        "area": "YISHUN",
+        "no_transit": 247,
+        "postals": [
+          "757753",
+          "758532",
+          "758534",
+          "758536",
+          "758538",
+          "758540",
+          "758542",
+          "760967"
+        ]
+      },
+      {
+        "area": "BUKIT_BATOK",
+        "no_transit": 207,
+        "postals": [
+          "596166",
+          "596167",
+          "596168",
+          "596170",
+          "596171",
+          "596172",
+          "596173",
+          "596174"
+        ]
+      },
+      {
+        "area": "TUAS",
+        "no_transit": 188,
+        "postals": [
+          "636743",
+          "636744",
+          "636745",
+          "636748",
+          "636758",
+          "636759",
+          "636760",
+          "636761"
+        ]
+      },
+      {
+        "area": "NOVENA",
+        "no_transit": 179,
+        "postals": [
+          "297613",
+          "297733",
+          "297906",
+          "297908",
+          "297910",
+          "297912",
+          "297913",
+          "297915"
+        ]
+      },
+      {
+        "area": "WESTERN_ISLANDS",
+        "no_transit": 177,
+        "postals": [
+          "118326",
+          "118327",
+          "118328",
+          "118345",
+          "118363",
+          "118364",
+          "118382",
+          "627449"
+        ]
+      },
+      {
+        "area": "JURONG_EAST",
+        "no_transit": 143,
+        "postals": [
+          "600262",
+          "601274",
+          "608536",
+          "608537",
+          "608538",
+          "608541",
+          "608542",
+          "608543"
+        ]
+      },
+      {
+        "area": "WESTERN_WATER_CATCHMENT",
+        "no_transit": 139,
+        "postals": [
+          "636737",
+          "636738",
+          "636739",
+          "636740",
+          "636956",
+          "637034",
+          "637145",
+          "637146"
+        ]
+      },
+      {
+        "area": "QUEENSTOWN",
+        "no_transit": 118,
+        "postals": [
+          "110024",
+          "110025",
+          "110026",
+          "117314",
+          "117315",
+          "117316",
+          "117317",
+          "117318"
+        ]
+      },
+      {
+        "area": "LIM_CHU_KANG",
+        "no_transit": 111,
+        "postals": [
+          "718778",
+          "718779",
+          "718783",
+          "718785",
+          "718786",
+          "718788",
+          "718793",
+          "718798"
+        ]
+      },
+      {
+        "area": "JURONG_WEST",
+        "no_transit": 108,
+        "postals": [
+          "619824",
+          "619826",
+          "619896",
+          "619898",
+          "619899",
+          "619900",
+          "619901",
+          "619902"
+        ]
+      },
+      {
+        "area": "MARINE_PARADE",
+        "no_transit": 106,
+        "postals": [
+          "029996",
+          "436489",
+          "436519",
+          "436572",
+          "436573",
+          "436574",
+          "437934",
+          "438093"
+        ]
+      },
+      {
+        "area": "PASIR_RIS",
+        "no_transit": 97,
+        "postals": [
+          "506816",
+          "506817",
+          "506818",
+          "506819",
+          "506821",
+          "506822",
+          "506823",
+          "506824"
+        ]
+      },
+      {
+        "area": "SEMBAWANG",
+        "no_transit": 80,
+        "postals": [
+          "737743",
+          "738249",
+          "738250",
+          "738251",
+          "738252",
+          "738955",
+          "738956",
+          "738957"
+        ]
+      },
+      {
+        "area": "BUKIT_PANJANG",
+        "no_transit": 79,
+        "postals": [
+          "587757",
+          "587758",
+          "587759",
+          "587760",
+          "587781",
+          "587782",
+          "587783",
+          "587784"
+        ]
+      },
+      {
+        "area": "SELETAR",
+        "no_transit": 67,
+        "postals": [
+          "797359",
+          "797445",
+          "797446",
+          "797447",
+          "797448",
+          "797455",
+          "797505",
+          "797507"
+        ]
+      },
+      {
+        "area": "WOODLANDS",
+        "no_transit": 56,
+        "postals": [
+          "730913",
+          "730914",
+          "730916",
+          "731913",
+          "732913",
+          "733913",
+          "737703",
+          "737710"
+        ]
+      }
+    ],
+    "samples": [
+      {
+        "postal": "567754",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "567755",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "567756",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "567757",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "567758",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "567759",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 1823,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 3,
+        "origin_snap_distance_m": 49.3
+      },
+      {
+        "postal": "786192",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2235.8,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 37.9
+      },
+      {
+        "postal": "786636",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2745.4,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 27
+      },
+      {
+        "postal": "786637",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2745.4,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 27
+      },
+      {
+        "postal": "787495",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2102.2,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 22.5
+      },
+      {
+        "postal": "787496",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2530.2,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 41.9
+      },
+      {
+        "postal": "787497",
+        "area": "ANG_MO_KIO",
+        "nearest_routed_m": 2139.1,
+        "bus_stop_candidates_direct": 0,
+        "mrt_lrt_exit_candidates": 5,
+        "origin_snap_distance_m": 28.3
+      }
+    ]
+  },
+  "not_yet_scored": {
+    "count": 319,
+    "samples": [
+      {
+        "postal": "000104",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000105",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000106",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000207",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000208",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000315",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000316",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000511",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000512",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part02_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000617",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part03_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000718",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part04_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      },
+      {
+        "postal": "000719",
+        "area": "UNKNOWN",
+        "provenance": {
+          "coordinate_source": null,
+          "postal_universe": "processed\\score_batches\\full_rescore_20260801_165500\\partitions\\part01_of04.parquet",
+          "reason": "missing_coordinates_after_bounded_geocode",
+          "source_status": "NEEDS_GEOCODE",
+          "sources": [
+            "acra_registered_entities"
+          ]
+        }
+      }
+    ]
+  },
+  "interpretation": [
+    "Remaining NO_TRANSIT_IN_RANGE records in this bundle have zero direct bus candidates within the 300 m direct-radius fallback.",
+    "Most have candidate MRT/LRT route results, but none inside the current access scoring range.",
+    "This does not prove every remaining case is correct; it scopes the next QA to access-threshold/product-policy review and isolated graph gaps rather than missing direct-bus fallback."
+  ]
+}
