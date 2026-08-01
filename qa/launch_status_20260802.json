@@ -38,7 +38,7 @@
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
     "routed_browser_smoke_560234": "passed",
-    "keyboard_browser_smoke_560234": "passed",
+    "keyboard_browser_smoke": "560231, 560234, 570234 passed",
     "known_postal_smoke": "passed"
   },
   "not_done": [

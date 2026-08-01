@@ -25,7 +25,7 @@ Root directory: `web`
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
-- Keyboard browser smoke for 560234: passed
+- Keyboard browser smoke for 560231, 560234, 570234: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command
