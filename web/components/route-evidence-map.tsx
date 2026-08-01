@@ -121,6 +121,21 @@ const SOURCE_IDS = [
   "feedback-points",
 ] as const;
 const EMPTY_TRANSIT_POIS: TransitPoiCollection = { type: "FeatureCollection", features: [] };
+const TRANSIT_POI_LAYER_IDS = [
+  "mrt-station-halo",
+  "mrt-station-dot",
+  "mrt-station-label",
+  "mrt-exit-dot",
+  "mrt-exit-label",
+  "bus-stop-dot",
+  "bus-stop-label",
+] as const;
+const FEEDBACK_LAYER_IDS = [
+  "feedback-route-casing",
+  "feedback-route-line",
+  "feedback-point-halo",
+  "feedback-point-dot",
+] as const;
 
 function emptyCollection(): MapFeatureCollection {
   return { type: "FeatureCollection", features: [] };
@@ -344,6 +359,17 @@ function feedbackCollections(points: FeedbackPoint[]) {
   };
 }
 
+function moveLayerToTop(map: maplibregl.Map, layerId: string) {
+  if (map.getLayer(layerId)) {
+    map.moveLayer(layerId);
+  }
+}
+
+function raiseInteractivePointLayers(map: maplibregl.Map) {
+  for (const layerId of TRANSIT_POI_LAYER_IDS) moveLayerToTop(map, layerId);
+  for (const layerId of FEEDBACK_LAYER_IDS) moveLayerToTop(map, layerId);
+}
+
 function ensureRouteLayers(map: maplibregl.Map) {
   for (const id of SOURCE_IDS) {
     if (!map.getSource(id)) {
@@ -417,7 +443,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 14.2,
+      minzoom: 13.8,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#2f5f8f",
@@ -434,7 +460,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 15.1,
+      minzoom: 14.8,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       layout: {
         "text-field": ["get", "label_text"],
@@ -460,12 +486,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.8,
+      minzoom: 13.2,
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
         "circle-color": "#436b5f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.8, 1.8, 16, 2.8, 18, 4],
-        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 13.8, 0.58, 16, 0.8],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 1.7, 16, 2.9, 18, 4.2],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 13.2, 0.5, 16, 0.82],
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
       },
@@ -477,12 +503,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 16,
+      minzoom: 15.5,
       filter: ["==", ["get", "kind"], "bus_stop"],
       layout: {
         "text-field": ["get", "label_text"],
         "text-font": ["Open Sans Regular"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 16, 9, 18, 10.5],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 15.5, 9, 18, 10.5],
         "text-offset": [0.55, 0],
         "text-anchor": "left",
         "text-max-width": 8,
@@ -493,7 +519,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-color": "#36594f",
         "text-halo-color": "#f6faf8",
         "text-halo-width": 1.1,
-        "text-opacity": ["interpolate", ["linear"], ["zoom"], 16, 0.68, 18, 0.9],
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.5, 0.64, 18, 0.9],
       },
     });
   }
@@ -700,6 +726,8 @@ function ensureRouteLayers(map: maplibregl.Map) {
       },
     });
   }
+
+  raiseInteractivePointLayers(map);
 }
 
 type PopupConstructor = typeof import("maplibre-gl").Popup;
