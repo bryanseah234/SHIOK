@@ -108,8 +108,15 @@ After a new score/export batch is generated and validated:
    The deploy helper stages only the selected bundle and writes matching
    `.vercelignore` rules into the staged source.
 3. Inspect the deployment until it is Ready.
-4. Update `web/data-bundle.json` to the same `<bundle>` only after that bundle is
-   already published in production.
+4. Activate the bundle only after it is published in production:
+
+   ```powershell
+   .\scripts\activate-data-bundle.bat -DataBundle <bundle>
+   ```
+
+   This validates the local bundle and confirms the production manifest at
+   `https://sgshiok.vercel.app/data/<bundle>/manifest.json` matches before
+   writing `web/data-bundle.json`.
 5. Run `.\scripts\preflight-production.bat -SkipNetworkPreflight`.
 6. Commit and push the source/config/docs changes. The following Git
    auto-deploy can now download the already-published bundle during `next build`.
@@ -121,6 +128,7 @@ Current pending local bundle, blocked only by Vercel Hobby deploy quota on
 
 ```powershell
 .\scripts\deploy-production.bat -DataBundle generated_20260801_165500
+.\scripts\activate-data-bundle.bat -DataBundle generated_20260801_165500
 ```
 
 ## Vercel Hobby Limits
