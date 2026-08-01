@@ -1,0 +1,324 @@
+{
+  "bundle": "generated_20260801_mayflower_1km_approved_corrections_targeted",
+  "conclusion": {
+    "approved_source_backed_corrections": 5,
+    "blocked_without_more_source_evidence": 3,
+    "ready_for_owner_review": 0,
+    "score_override_used": false
+  },
+  "connector_candidates": {
+    "by_postal": {
+      "560225": [
+        {
+          "audit_id": "feedback-560225-segment-0-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.309,
+          "hdb_overlap_ratio": 0.309,
+          "label": "void_deck",
+          "length_m": 64.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 0
+        },
+        {
+          "audit_id": "feedback-560225-segment-2-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 16.1,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 2
+        },
+        {
+          "audit_id": "feedback-560225-segment-7-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 16.5,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 7
+        },
+        {
+          "audit_id": "feedback-560225-segment-8-covered-source-overlap-review",
+          "candidate_classification": "covered_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 0.216,
+          "label": "covered_bridge",
+          "length_m": 37.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 8
+        },
+        {
+          "audit_id": "feedback-560225-segment-11-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.105,
+          "hdb_overlap_ratio": 0.105,
+          "label": "void_deck",
+          "length_m": 128.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 11
+        }
+      ],
+      "560231": [
+        {
+          "audit_id": "feedback-560231-segment-1-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "void_deck",
+          "length_m": 92.9,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 1
+        },
+        {
+          "audit_id": "feedback-560231-segment-2-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 37.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 2
+        },
+        {
+          "audit_id": "feedback-560231-segment-6-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.105,
+          "hdb_overlap_ratio": 0.105,
+          "label": "void_deck",
+          "length_m": 128.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 6
+        }
+      ]
+    },
+    "candidate_count": 8,
+    "classification_counts": {
+      "covered_source_overlap_review": 1,
+      "hdb_source_overlap_review": 4,
+      "insufficient_source_overlap": 3
+    },
+    "promotion_status_counts": {
+      "blocked_insufficient_source_overlap_not_scoring": 3,
+      "review_ready_not_scoring": 5
+    }
+  },
+  "feedback_segments": {
+    "by_postal": {
+      "560225": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 6,
+        "hdb_void_deck_component_gap": 5,
+        "hdb_void_deck_evidence_nearby_check_connectivity": 2
+      },
+      "560231": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 5,
+        "hdb_void_deck_component_gap": 3
+      }
+    },
+    "classification_counts": {
+      "covered_evidence_nearby_check_connectivity_or_snap": 11,
+      "hdb_void_deck_component_gap": 8,
+      "hdb_void_deck_evidence_nearby_check_connectivity": 2
+    },
+    "segment_count": 21
+  },
+  "ok": true,
+  "postals": [
+    "560231",
+    "560234",
+    "560225"
+  ],
+  "scores": {
+    "560225": {
+      "best_transit": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 425.0,
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.7,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 427.4,
+          "shortest_covered_ratio": 0.57,
+          "shortest_m": 425.0
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "bus": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 425.0,
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.7,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 427.4,
+          "shortest_covered_ratio": 0.57,
+          "shortest_m": 425.0
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 644.4,
+          "straight_line_m": 404.4,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.363,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.434,
+          "sheltered_m": 646.9,
+          "shortest_covered_ratio": 0.276,
+          "shortest_m": 644.4
+        },
+        "state": "SCORED",
+        "total": 59.7
+      },
+      "state": "SCORED",
+      "total": 85.4
+    },
+    "560231": {
+      "best_transit": {
+        "best_node": {
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "bus": {
+        "best_node": {
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 425.9,
+          "straight_line_m": 259.2,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.312,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.66,
+          "sheltered_m": 425.9,
+          "shortest_covered_ratio": 0.312,
+          "shortest_m": 425.9
+        },
+        "state": "SCORED",
+        "total": 72.1
+      },
+      "state": "SCORED",
+      "total": 100.0
+    },
+    "560234": {
+      "best_transit": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 326.2,
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.761,
+          "routing_type": "shortest_due_to_detour",
+          "shade_ratio": 0.0,
+          "sheltered_m": 326.2,
+          "shortest_covered_ratio": 0.761,
+          "shortest_m": 326.2
+        },
+        "state": "SCORED",
+        "total": 90.4
+      },
+      "bus": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 326.2,
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.761,
+          "routing_type": "shortest_due_to_detour",
+          "shade_ratio": 0.0,
+          "sheltered_m": 326.2,
+          "shortest_covered_ratio": 0.761,
+          "shortest_m": 326.2
+        },
+        "state": "SCORED",
+        "total": 90.4
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 545.6,
+          "straight_line_m": 398.6,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.523,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.444,
+          "sheltered_m": 632.9,
+          "shortest_covered_ratio": 0.337,
+          "shortest_m": 545.6
+        },
+        "state": "SCORED",
+        "total": 72.6
+      },
+      "state": "SCORED",
+      "total": 90.4
+    }
+  }
+}
