@@ -1,0 +1,473 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749889582384,
+            1.3680715025408114
+          ],
+          [
+            103.83700936506972,
+            1.3687519289548573
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 1238,
+        "endpoint_component_gap_m": 92.9,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 1.0,
+        "label": "void_deck",
+        "length_m": 92.9,
+        "nearby_bridge_edge_count": 0,
+        "nearby_covered_edge_count": 155,
+        "nearby_edge_count": 288,
+        "nearby_hdb_edge_count": 132,
+        "nearby_official_shelter_edge_count": 3,
+        "nearby_osm_shelter_edge_count": 23,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 5,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 86,
+          "INFERRED_HDB_VOID_DECK": 2,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "UNREPRESENTED-surface": 1,
+          "covered_linkway": 2,
+          "inferred_hdb_point_footway": 11,
+          "inferred_hdb_precinct_footway": 30,
+          "osm_building_roof": 1,
+          "osm_explicit_shelter": 3,
+          "osm_native_covered": 11
+        },
+        "nearest_bridge_edge_m": null,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": 76.4,
+        "nearest_osm_shelter_edge_m": 0.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "review_ready_not_scoring",
+        "segment_index": 1,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83700936506972,
+            1.3687519289548573
+          ],
+          [
+            103.83668819804306,
+            1.3686427003091393
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 37.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 1.0,
+        "label": "sheltered",
+        "length_m": 37.7,
+        "nearby_bridge_edge_count": 1,
+        "nearby_covered_edge_count": 80,
+        "nearby_edge_count": 150,
+        "nearby_hdb_edge_count": 56,
+        "nearby_official_shelter_edge_count": 8,
+        "nearby_osm_shelter_edge_count": 23,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 4,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 32,
+          "INFERRED_HDB_VOID_DECK": 2,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "UNREPRESENTED-surface": 2,
+          "covered_linkway": 5,
+          "inferred_hdb_point_footway": 4,
+          "inferred_hdb_precinct_footway": 15,
+          "osm_explicit_shelter": 3,
+          "osm_native_covered": 9,
+          "overhead_bridge_underpass": 1
+        },
+        "nearest_bridge_edge_m": 71.6,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": 39.7,
+        "nearest_osm_shelter_edge_m": 0.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "review_ready_not_scoring",
+        "segment_index": 2,
+        "start_component_id": 1238
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83691010092744,
+            1.36934650340926
+          ],
+          [
+            103.83637210130074,
+            1.3703766022086374
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "insufficient_source_overlap",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 0.105,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 2099,
+        "endpoint_component_gap_m": 128.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 0.105,
+        "label": "void_deck",
+        "length_m": 128.7,
+        "nearby_bridge_edge_count": 0,
+        "nearby_covered_edge_count": 135,
+        "nearby_edge_count": 214,
+        "nearby_hdb_edge_count": 123,
+        "nearby_official_shelter_edge_count": 0,
+        "nearby_osm_shelter_edge_count": 12,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 4,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 54,
+          "INFERRED_HDB_VOID_DECK": 4,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "inferred_hdb_point_footway": 25,
+          "inferred_hdb_precinct_footway": 37,
+          "osm_explicit_shelter": 1,
+          "osm_native_covered": 7
+        },
+        "nearest_bridge_edge_m": null,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": null,
+        "nearest_osm_shelter_edge_m": 66.7,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 0.0,
+        "postal": "560231",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+        "segment_index": 6,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83815151669218,
+            1.3674082495775297
+          ],
+          [
+            103.8375847172196,
+            1.36750508094085
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "insufficient_source_overlap",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 0.309,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 4513,
+        "endpoint_component_gap_m": 64.0,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 0.309,
+        "label": "void_deck",
+        "length_m": 64.0,
+        "nearby_bridge_edge_count": 0,
+        "nearby_covered_edge_count": 98,
+        "nearby_edge_count": 204,
+        "nearby_hdb_edge_count": 91,
+        "nearby_official_shelter_edge_count": 0,
+        "nearby_osm_shelter_edge_count": 7,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 2,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 67,
+          "INFERRED_HDB_VOID_DECK": 1,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+          "inferred_hdb_point_footway": 7,
+          "inferred_hdb_precinct_footway": 15,
+          "osm_building_roof": 2,
+          "osm_native_covered": 3
+        },
+        "nearest_bridge_edge_m": null,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": null,
+        "nearest_osm_shelter_edge_m": 9.6,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 0.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+        "segment_index": 0,
+        "start_component_id": 3335
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83749890382008,
+            1.3674976653049646
+          ],
+          [
+            103.8373540993553,
+            1.3675030013028202
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 16.1,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 1.0,
+        "label": "sheltered",
+        "length_m": 16.1,
+        "nearby_bridge_edge_count": 0,
+        "nearby_covered_edge_count": 101,
+        "nearby_edge_count": 200,
+        "nearby_hdb_edge_count": 92,
+        "nearby_official_shelter_edge_count": 0,
+        "nearby_osm_shelter_edge_count": 9,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 2,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 66,
+          "INFERRED_HDB_VOID_DECK": 1,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "inferred_hdb_point_footway": 6,
+          "inferred_hdb_precinct_footway": 16,
+          "osm_building_roof": 3,
+          "osm_native_covered": 4
+        },
+        "nearest_bridge_edge_m": null,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": null,
+        "nearest_osm_shelter_edge_m": 0.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "review_ready_not_scoring",
+        "segment_index": 2,
+        "start_component_id": 4513
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83688510169024,
+            1.3686568985432714
+          ],
+          [
+            103.83674177085527,
+            1.368694863965631
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 1238,
+        "endpoint_component_gap_m": 16.5,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 1.0,
+        "label": "sheltered",
+        "length_m": 16.5,
+        "nearby_bridge_edge_count": 1,
+        "nearby_covered_edge_count": 67,
+        "nearby_edge_count": 128,
+        "nearby_hdb_edge_count": 47,
+        "nearby_official_shelter_edge_count": 4,
+        "nearby_osm_shelter_edge_count": 19,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 4,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 29,
+          "INFERRED_HDB_VOID_DECK": 2,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "UNREPRESENTED-surface": 1,
+          "covered_linkway": 2,
+          "inferred_hdb_point_footway": 1,
+          "inferred_hdb_precinct_footway": 12,
+          "osm_explicit_shelter": 3,
+          "osm_native_covered": 9,
+          "overhead_bridge_underpass": 1
+        },
+        "nearest_bridge_edge_m": 79.2,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": 46.1,
+        "nearest_osm_shelter_edge_m": 0.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "review_ready_not_scoring",
+        "segment_index": 7,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83674177085527,
+            1.368694863965631
+          ],
+          [
+            103.83644010313604,
+            1.3688351041490185
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "covered_source_overlap_review",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 0,
+        "endpoint_component_gap_m": 37.0,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 0.216,
+        "label": "covered_bridge",
+        "length_m": 37.0,
+        "nearby_bridge_edge_count": 1,
+        "nearby_covered_edge_count": 71,
+        "nearby_edge_count": 128,
+        "nearby_hdb_edge_count": 43,
+        "nearby_official_shelter_edge_count": 12,
+        "nearby_osm_shelter_edge_count": 27,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 4,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 26,
+          "INFERRED_HDB_VOID_DECK": 2,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 2,
+          "UNREPRESENTED-surface": 3,
+          "covered_linkway": 8,
+          "inferred_hdb_point_footway": 1,
+          "inferred_hdb_precinct_footway": 12,
+          "osm_explicit_shelter": 3,
+          "osm_native_covered": 9,
+          "overhead_bridge_underpass": 1
+        },
+        "nearest_bridge_edge_m": 79.2,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": 24.6,
+        "nearest_osm_shelter_edge_m": 0.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "review_ready_not_scoring",
+        "segment_index": 8,
+        "start_component_id": 1238
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83691010092744,
+            1.36934650340926
+          ],
+          [
+            103.83637210130074,
+            1.3703766022086374
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "insufficient_source_overlap",
+        "classification": "hdb_void_deck_component_gap",
+        "covered_overlap_ratio": 0.105,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "end_component_id": 2099,
+        "endpoint_component_gap_m": 128.7,
+        "evidence_status": "qa_candidate_not_scoring",
+        "hdb_overlap_ratio": 0.105,
+        "label": "void_deck",
+        "length_m": 128.7,
+        "nearby_bridge_edge_count": 0,
+        "nearby_covered_edge_count": 135,
+        "nearby_edge_count": 214,
+        "nearby_hdb_edge_count": 123,
+        "nearby_official_shelter_edge_count": 0,
+        "nearby_osm_shelter_edge_count": 12,
+        "nearby_sources": {
+          "AUDITED_SHELTER_CORRECTION": 4,
+          "INFERRED_HDB_PRECINCT_CONNECTOR": 54,
+          "INFERRED_HDB_VOID_DECK": 4,
+          "INFERRED_HDB_VOID_DECK_ANCHOR": 3,
+          "inferred_hdb_point_footway": 25,
+          "inferred_hdb_precinct_footway": 37,
+          "osm_explicit_shelter": 1,
+          "osm_native_covered": 7
+        },
+        "nearest_bridge_edge_m": null,
+        "nearest_covered_edge_m": 0.0,
+        "nearest_hdb_edge_m": 0.0,
+        "nearest_official_shelter_edge_m": null,
+        "nearest_osm_shelter_edge_m": 66.7,
+        "official_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 0.0,
+        "postal": "560225",
+        "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+        "segment_index": 11,
+        "start_component_id": 0
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

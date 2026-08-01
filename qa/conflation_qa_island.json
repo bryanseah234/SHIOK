@@ -1,7 +1,7 @@
 {
   "nodes": 653107,
-  "edges": 871566,
-  "mean_edge_length_m": 17.821336776907284,
+  "edges": 871571,
+  "mean_edge_length_m": 17.82146425593392,
   "connected_components_count": 2838,
   "top_5_component_sizes": [
     617694,
@@ -1709,10 +1709,10 @@
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
-  "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 3822652.708269239,
-  "shade_proxy_edge_count": 64288,
-  "shade_proxy_weighted_length_m": 840905.5987623793,
+  "covered_edge_length_m_audited_corrections": 200.21370660214617,
+  "covered_edge_length_m_union": 3822852.921975841,
+  "shade_proxy_edge_count": 64289,
+  "shade_proxy_weighted_length_m": 840922.083412397,
   "shade_proxy_sources": {
     "nparks_heritage_road_green_buffers": {
       "status": "loaded",
@@ -1821,9 +1821,9 @@
     "confidence": "inferred_existing_pedestrian_edge_point_proxy"
   },
   "audited_shelter_corrections": {
-    "approved_features": 0,
-    "candidate_lines": 0,
-    "added_edges": 0,
+    "approved_features": 5,
+    "candidate_lines": 5,
+    "added_edges": 5,
     "skipped_edges": 0,
     "snap_max_m": 8.0,
     "path": "data\\audited_shelter_corrections.geojson"

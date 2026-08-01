@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
+import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -23,6 +24,7 @@ DEFAULT_FEEDBACK_AUDIT = (
     PROJECT_ROOT / "qa" / "route_feedback_algorithm_qa_amk_20260801_osm_covered_values_network.json"
 )
 DEFAULT_POSTALS = ["560231", "560234", "560225"]
+DEFAULT_APPROVED_CORRECTIONS = PROJECT_ROOT / "data" / "audited_shelter_corrections.geojson"
 
 
 def read_json(path: Path) -> Any:
@@ -42,6 +44,20 @@ def active_bundle_dir() -> Path:
 
 def normalize_postal(value: str) -> str:
     return str(value).strip().zfill(6)
+
+
+def safe_id_text(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", str(value).strip().lower()).strip("-")
+
+
+def candidate_audit_id(candidate: dict[str, Any]) -> str:
+    explicit = str(candidate.get("audit_id") or "").strip()
+    if explicit:
+        return explicit
+    postal = normalize_postal(str(candidate.get("postal", "")))
+    segment_index = candidate.get("segment_index", -1)
+    classification = str(candidate.get("candidate_classification", ""))
+    return f"feedback-{safe_id_text(postal)}-segment-{segment_index}-{safe_id_text(classification)}"
 
 
 def find_score_record(bundle_dir: Path, postal: str) -> dict[str, Any] | None:
@@ -121,6 +137,7 @@ def connector_summary(component_audit: dict[str, Any], postals: list[str]) -> di
     for candidate in candidates:
         by_postal[normalize_postal(str(candidate.get("postal")))].append(
             {
+                "audit_id": candidate_audit_id(candidate),
                 "segment_index": candidate.get("segment_index"),
                 "label": candidate.get("label"),
                 "length_m": candidate.get("length_m"),
@@ -165,16 +182,47 @@ def feedback_summary(feedback_audit: dict[str, Any], postals: list[str]) -> dict
     }
 
 
+def approved_correction_ids(path: Path) -> set[str]:
+    if not path.is_file():
+        return set()
+    payload = read_json(path)
+    ids: set[str] = set()
+    for feature in payload.get("features", []):
+        if not isinstance(feature, dict):
+            continue
+        props = feature.get("properties")
+        if not isinstance(props, dict):
+            continue
+        if props.get("status") != "approved":
+            continue
+        audit_id = str(props.get("audit_id") or props.get("id") or "").strip()
+        if audit_id:
+            ids.add(audit_id)
+    return ids
+
+
 def build_summary(
     bundle_dir: Path,
     component_audit_path: Path,
     feedback_audit_path: Path,
     postals: list[str],
+    approved_corrections_path: Path | None = None,
 ) -> dict[str, Any]:
     normalized = [normalize_postal(postal) for postal in postals]
     component_audit = read_json(component_audit_path)
     feedback_audit = read_json(feedback_audit_path)
     connectors = connector_summary(component_audit, normalized)
+    approved_ids = (
+        approved_correction_ids(approved_corrections_path) if approved_corrections_path else set()
+    )
+    review_ready = connectors["promotion_status_counts"].get("review_ready_not_scoring", 0)
+    approved_review_ready = sum(
+        1
+        for items in connectors["by_postal"].values()
+        for item in items
+        if item.get("promotion_status") == "review_ready_not_scoring"
+        and str(item.get("audit_id") or "") in approved_ids
+    )
     return {
         "ok": True,
         "bundle": bundle_dir.name,
@@ -184,9 +232,8 @@ def build_summary(
         "connector_candidates": connectors,
         "conclusion": {
             "score_override_used": False,
-            "ready_for_owner_review": connectors["promotion_status_counts"].get(
-                "review_ready_not_scoring", 0
-            ),
+            "approved_source_backed_corrections": approved_review_ready,
+            "ready_for_owner_review": max(0, review_ready - approved_review_ready),
             "blocked_without_more_source_evidence": connectors["promotion_status_counts"].get(
                 "blocked_insufficient_source_overlap_not_scoring", 0
             ),
@@ -226,6 +273,7 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
             "",
             "## Conclusion",
             f"- score override used: `{summary['conclusion']['score_override_used']}`",
+            f"- approved source-backed corrections: `{summary['conclusion']['approved_source_backed_corrections']}`",
             f"- ready for owner review: `{summary['conclusion']['ready_for_owner_review']}`",
             f"- blocked without more source evidence: `{summary['conclusion']['blocked_without_more_source_evidence']}`",
         ]
@@ -239,6 +287,7 @@ def main() -> int:
     parser.add_argument("--bundle-dir", type=Path, default=None)
     parser.add_argument("--component-audit", type=Path, default=DEFAULT_COMPONENT_AUDIT)
     parser.add_argument("--feedback-audit", type=Path, default=DEFAULT_FEEDBACK_AUDIT)
+    parser.add_argument("--approved-corrections", type=Path, default=DEFAULT_APPROVED_CORRECTIONS)
     parser.add_argument("--postal", action="append", dest="postals", default=[])
     parser.add_argument(
         "--output-json",
@@ -257,6 +306,7 @@ def main() -> int:
         component_audit_path=args.component_audit,
         feedback_audit_path=args.feedback_audit,
         postals=args.postals or DEFAULT_POSTALS,
+        approved_corrections_path=args.approved_corrections,
     )
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
@@ -267,6 +317,9 @@ def main() -> int:
                 "ok": True,
                 "output_json": str(args.output_json),
                 "output_md": str(args.output_md),
+                "approved_source_backed_corrections": summary["conclusion"][
+                    "approved_source_backed_corrections"
+                ],
                 "ready_for_owner_review": summary["conclusion"]["ready_for_owner_review"],
                 "blocked_without_more_source_evidence": summary["conclusion"][
                     "blocked_without_more_source_evidence"

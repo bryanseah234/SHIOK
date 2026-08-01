@@ -1,0 +1,330 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 128.1,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 128.1,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54219",
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "snap_distance_m": 13.6,
+          "station": "Opp Mayflower Sec Sch",
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 128.1,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 128.1,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "postal": "560231",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 326.2,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 248.3,
+          "covered_ratio": 0.761,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 248.3,
+          "heat_comfort_ratio": 0.761,
+          "routing_type": "shortest_due_to_detour",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 326.2,
+          "shortest_covered_ratio": 0.761,
+          "shortest_m": 326.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 90.4
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 332.4,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 254.5,
+          "covered_ratio": 0.766,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 254.5,
+          "heat_comfort_ratio": 0.766,
+          "routing_type": "shortest_due_to_detour",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 332.4,
+          "shortest_covered_ratio": 0.766,
+          "shortest_m": 332.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 90.6
+      },
+      "postal": "560234",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 425.0,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 299.2,
+          "covered_ratio": 0.7,
+          "detour_pct": 0.6,
+          "heat_comfort_m": 299.2,
+          "heat_comfort_ratio": 0.7,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 427.4,
+          "shortest_covered_ratio": 0.57,
+          "shortest_m": 425.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 431.2,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 305.4,
+          "covered_ratio": 0.704,
+          "detour_pct": 0.6,
+          "heat_comfort_m": 305.4,
+          "heat_comfort_ratio": 0.704,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 433.7,
+          "shortest_covered_ratio": 0.576,
+          "shortest_m": 431.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.3
+      },
+      "postal": "560225",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 129.0,
+          "covered_ratio": 0.636,
+          "detour_pct": 19.7,
+          "heat_comfort_m": 129.0,
+          "heat_comfort_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54241",
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "snap_distance_m": 4.5,
+          "station": "Blk 700B",
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 129.0,
+          "covered_ratio": 0.636,
+          "detour_pct": 19.7,
+          "heat_comfort_m": 129.0,
+          "heat_comfort_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "postal": "560700",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "covered_m": 76.6,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 76.6,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54391",
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "snap_distance_m": 15.8,
+          "station": "Aft Ang Mo Kio Int",
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 76.6,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 76.6,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "postal": "560710",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_shards_touched": [
+    "88652636c1fffff",
+    "88652636c5fffff"
+  ],
+  "geometry_postals": 114329,
+  "missing_from_bundle": [],
+  "network": "processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 5,
+  "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 5,
+  "source_bundle": "generated_20260801_direct_bus_all_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 9384,
+    "SCORED": 112880,
+    "SCORED_PARTIAL": 1449
+  },
+  "target_bundle": "generated_20260801_mayflower_approved_corrections_targeted"
+}

@@ -34,6 +34,8 @@ def valid_report() -> dict:
         "covered_edge_length_m_inferred_hdb_precinct_footways": 30.0,
         "covered_edge_length_m_inferred_hdb_point_footways": 40.0,
         "covered_edge_length_m_inferred_hdb_void_deck": 25.0,
+        "covered_edge_length_m_audited_corrections": 12.5,
+        "audited_shelter_corrections": {"approved_features": 1, "added_edges": 1},
         "shade_proxy_edge_count": 12,
         "shade_proxy_weighted_length_m": 55.0,
         "shade_proxy_sources": {
@@ -82,6 +84,8 @@ def test_validate_network_qa_accepts_clean_report(tmp_path: Path):
     assert ok, summary
     assert summary["metrics"]["real_disconnection_count_final"] == 0
     assert summary["metrics"]["final_residual_components_gt_50"] == 1
+    assert summary["metrics"]["audited_shelter_corrections"]["approved_features"] == 1
+    assert summary["metrics"]["covered_edge_length_m_audited_corrections"] == 12.5
 
 
 def test_validate_network_qa_rejects_real_disconnections_and_flags(tmp_path: Path):

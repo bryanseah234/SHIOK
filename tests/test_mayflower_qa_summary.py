@@ -77,3 +77,57 @@ def test_build_summary_compacts_scores_and_connector_status(tmp_path):
     }
     assert summary["feedback_segments"]["by_postal"]["560231"]["hdb_void_deck_component_gap"] == 1
     assert summary["conclusion"]["score_override_used"] is False
+
+
+def test_build_summary_subtracts_approved_review_ready_corrections(tmp_path):
+    bundle = tmp_path / "bundle"
+    write_json(bundle / "scores" / "index.json", {"ANG_MO_KIO_PART_001": ["560231"]})
+    write_json(
+        bundle / "scores" / "ANG_MO_KIO_PART_001.json",
+        [
+            {
+                "postal": "560231",
+                "state": "SCORED",
+                "total": 72.1,
+                "best_node": {"type": "mrt_lrt_exit", "name": "Mayflower", "routed_m": 425.9},
+                "paths": {"sheltered_m": 425.9, "shortest_m": 425.9, "covered_ratio": 0.31},
+            }
+        ],
+    )
+    component_audit = tmp_path / "component.json"
+    audit_id = "feedback-560231-segment-1-hdb-source-overlap-review"
+    write_json(
+        component_audit,
+        {
+            "candidates": [
+                {
+                    "audit_id": audit_id,
+                    "postal": "560231",
+                    "segment_index": 1,
+                    "promotion_status": "review_ready_not_scoring",
+                    "candidate_classification": "hdb_source_overlap_review",
+                }
+            ]
+        },
+    )
+    feedback_audit = tmp_path / "feedback.json"
+    write_json(feedback_audit, {"segments": []})
+    approved = tmp_path / "approved.geojson"
+    write_json(
+        approved,
+        {
+            "type": "FeatureCollection",
+            "features": [{"properties": {"audit_id": audit_id, "status": "approved"}}],
+        },
+    )
+
+    summary = build_summary(
+        bundle,
+        component_audit,
+        feedback_audit,
+        ["560231"],
+        approved_corrections_path=approved,
+    )
+
+    assert summary["conclusion"]["approved_source_backed_corrections"] == 1
+    assert summary["conclusion"]["ready_for_owner_review"] == 0

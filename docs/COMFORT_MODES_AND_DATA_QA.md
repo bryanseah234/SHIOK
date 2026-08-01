@@ -365,3 +365,14 @@ approval for autonomous source-audited promotion. The 3
 `blocked_insufficient_source_overlap_not_scoring` candidates remain excluded.
 Next step is a network rebuild plus AMK targeted refresh to measure the real
 route effect; no score override has been applied.
+- After rebuilding the island network with those approved corrections,
+  `qa/conflation_qa_island.json` stayed green with
+  `real_disconnection_count_final=0`, `approved_features=5`, `added_edges=5`,
+  and `covered_edge_length_m_audited_corrections=200.2`.
+- A targeted Mayflower refresh wrote
+  `generated_20260801_mayflower_approved_corrections_targeted` for `560231`,
+  `560234`, `560225`, `560700`, and `560710`. It validated cleanly and changed
+  no global state counts. `560231` still shows Mayflower MRT/LRT at 425.9 m and
+  31.2% covered; `560234` improves the Mayflower MRT/LRT shortest route to
+  545.6 m while remaining 52.3% covered. The false-negative is therefore
+  narrowed but not solved.

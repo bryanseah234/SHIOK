@@ -235,6 +235,10 @@ def validate_network_qa(
             "final_residual_components_gt_50": final_residual_count,
             "shade_proxy_edge_count": report.get("shade_proxy_edge_count"),
             "shade_proxy_weighted_length_m": report.get("shade_proxy_weighted_length_m"),
+            "audited_shelter_corrections": report.get("audited_shelter_corrections"),
+            "covered_edge_length_m_audited_corrections": report.get(
+                "covered_edge_length_m_audited_corrections"
+            ),
         },
     }
     return ok, summary
