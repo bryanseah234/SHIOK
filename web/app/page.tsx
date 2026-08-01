@@ -533,6 +533,14 @@ function InlineRouteLegend({
         <i className={styles.bridgeLine} />
         Bridge/underpass
       </span>
+      <span>
+        <i className={styles.mrtDot} />
+        MRT/LRT
+      </span>
+      <span>
+        <i className={styles.busDot} />
+        Bus stop
+      </span>
     </div>
   );
 }

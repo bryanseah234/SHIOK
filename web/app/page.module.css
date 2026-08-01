@@ -413,6 +413,14 @@
   border-radius: 999px;
 }
 
+.inlineLegend .mrtDot,
+.inlineLegend .busDot {
+  width: 9px;
+  height: 9px;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 0 1px rgba(23, 33, 31, 0.14);
+}
+
 .shiokestLine {
   background: #008f86;
 }
@@ -435,6 +443,14 @@
 
 .bridgeLine {
   background: #4f7690;
+}
+
+.mrtDot {
+  background: #245b8d;
+}
+
+.busDot {
+  background: #436b5f;
 }
 
 .sourceStrip {
