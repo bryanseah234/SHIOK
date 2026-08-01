@@ -21,9 +21,15 @@ def main() -> int:
     parser.add_argument("--evidence-buffer-m", type=float, default=8.0)
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--geojson", type=Path, default=None)
+    parser.add_argument("--draft-corrections", type=Path, default=None)
     args = parser.parse_args()
 
-    from pipeline.connector_candidates import audit_candidate_file, audit_geojson, audit_summary
+    from pipeline.connector_candidates import (
+        audit_candidate_file,
+        audit_geojson,
+        audit_summary,
+        draft_correction_geojson,
+    )
 
     audited = audit_candidate_file(
         args.candidates,
@@ -48,14 +54,25 @@ def main() -> int:
             encoding="utf-8",
         )
 
+    if args.draft_corrections:
+        args.draft_corrections.parent.mkdir(parents=True, exist_ok=True)
+        args.draft_corrections.write_text(
+            json.dumps(draft_correction_geojson(audited), indent=2, sort_keys=True),
+            encoding="utf-8",
+        )
+
     print(
         json.dumps(
             {
                 "ok": report["ok"],
                 "candidate_count": report["candidate_count"],
                 "classification_counts": report["classification_counts"],
+                "promotion_status_counts": report["promotion_status_counts"],
                 "output": str(args.output) if args.output else None,
                 "geojson": str(args.geojson) if args.geojson else None,
+                "draft_corrections": (
+                    str(args.draft_corrections) if args.draft_corrections else None
+                ),
             },
             indent=2,
             sort_keys=True,

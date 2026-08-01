@@ -52,7 +52,7 @@
         "osm_shelter_overlap_ratio": 0.0,
         "postal": "560231",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "review_ready_not_scoring",
         "segment_index": 1,
         "start_component_id": 0
       },
@@ -110,7 +110,7 @@
         "osm_shelter_overlap_ratio": 0.388,
         "postal": "560231",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "review_ready_not_scoring",
         "segment_index": 2,
         "start_component_id": 1238
       },
@@ -165,7 +165,7 @@
         "osm_shelter_overlap_ratio": 0.0,
         "postal": "560231",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
         "segment_index": 6,
         "start_component_id": 0
       },
@@ -220,7 +220,7 @@
         "osm_shelter_overlap_ratio": 0.0,
         "postal": "560225",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
         "segment_index": 0,
         "start_component_id": 3335
       },
@@ -275,7 +275,7 @@
         "osm_shelter_overlap_ratio": 0.0,
         "postal": "560225",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "review_ready_not_scoring",
         "segment_index": 2,
         "start_component_id": 4513
       },
@@ -333,7 +333,7 @@
         "osm_shelter_overlap_ratio": 0.485,
         "postal": "560225",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "review_ready_not_scoring",
         "segment_index": 7,
         "start_component_id": 0
       },
@@ -391,7 +391,7 @@
         "osm_shelter_overlap_ratio": 1.0,
         "postal": "560225",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "review_ready_not_scoring",
         "segment_index": 8,
         "start_component_id": 1238
       },
@@ -446,7 +446,7 @@
         "osm_shelter_overlap_ratio": 0.0,
         "postal": "560225",
         "promotion_rule": "Promote only after source-backed review or a general tested network-build connector rule.",
-        "promotion_status": "manual_review_required_not_scoring",
+        "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
         "segment_index": 11,
         "start_component_id": 0
       },

@@ -248,6 +248,14 @@ tested:
   `560225` segment 11 is still `insufficient_source_overlap` with only 10.5%
   HDB/covered overlap. Do not promote that connector into scoring without
   stronger source evidence or human-approved audited correction.
+- The 2026-08-01 connector audit now emits explicit promotion buckets:
+  5 `review_ready_not_scoring` drafts and 3
+  `blocked_insufficient_source_overlap_not_scoring` candidates. The review-ready
+  draft lines are exported to
+  `qa/draft_audited_shelter_corrections_amk_20260801.geojson` with
+  `status=needs_owner_review`, so the network builder ignores them unless a
+  human verifies the source evidence and changes a reviewed feature to
+  `status=approved` in `data/audited_shelter_corrections.geojson`.
 
 ## Human Feedback Loop
 

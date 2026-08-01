@@ -17,6 +17,13 @@ HDB_MARKERS = ("hdb", "void_deck", "inferred_hdb")
 OFFICIAL_SHELTER_MARKERS = ("covered_linkway", "overhead_bridge_underpass")
 BRIDGE_MARKERS = ("overhead_bridge_underpass", "bridge", "underpass", "tunnel")
 OSM_SHELTER_MARKERS = ("osm_explicit_shelter", "osm_building_roof", "covered")
+REVIEW_READY_CLASSES = {
+    "official_shelter_overlap_review",
+    "bridge_underpass_overlap_review",
+    "hdb_source_overlap_review",
+    "covered_source_overlap_review",
+    "short_partial_hdb_overlap_review",
+}
 
 
 def load_connector_candidates(path: Path) -> gpd.GeoDataFrame:
@@ -96,6 +103,14 @@ def _candidate_classification(row: dict[str, Any]) -> str:
     return "insufficient_source_overlap"
 
 
+def _promotion_status(classification: str) -> str:
+    if classification in REVIEW_READY_CLASSES:
+        return "review_ready_not_scoring"
+    if classification == "missing_network_evidence":
+        return "blocked_missing_network_evidence_not_scoring"
+    return "blocked_insufficient_source_overlap_not_scoring"
+
+
 def audit_connector_candidates(
     candidates: gpd.GeoDataFrame,
     network_edges: gpd.GeoDataFrame,
@@ -109,7 +124,7 @@ def audit_connector_candidates(
         audited = candidates.copy()
         audited["length_m"] = audited.geometry.length.round(1)
         audited["candidate_classification"] = "missing_network_evidence"
-        audited["promotion_status"] = "manual_review_required_not_scoring"
+        audited["promotion_status"] = _promotion_status("missing_network_evidence")
         return audited
 
     network = network_edges.to_crs(candidates.crs).reset_index(drop=True)
@@ -153,7 +168,7 @@ def audit_connector_candidates(
             covered_edges if not covered_edges.empty else nearby
         )
         row["candidate_classification"] = _candidate_classification(row)
-        row["promotion_status"] = "manual_review_required_not_scoring"
+        row["promotion_status"] = _promotion_status(str(row["candidate_classification"]))
         rows.append(row)
 
     return gpd.GeoDataFrame(rows, geometry="geometry", crs=candidates.crs)
@@ -161,8 +176,15 @@ def audit_connector_candidates(
 
 def audit_summary(audited: gpd.GeoDataFrame) -> dict[str, Any]:
     if audited.empty:
-        return {"ok": True, "candidate_count": 0, "classification_counts": {}, "candidates": []}
+        return {
+            "ok": True,
+            "candidate_count": 0,
+            "classification_counts": {},
+            "promotion_status_counts": {},
+            "candidates": [],
+        }
     counts = Counter(audited["candidate_classification"].astype(str))
+    promotion_counts = Counter(audited["promotion_status"].astype(str))
     candidates = []
     for _, row in audited.iterrows():
         candidates.append(
@@ -193,6 +215,7 @@ def audit_summary(audited: gpd.GeoDataFrame) -> dict[str, Any]:
         "ok": True,
         "candidate_count": len(audited),
         "classification_counts": dict(sorted(counts.items())),
+        "promotion_status_counts": dict(sorted(promotion_counts.items())),
         "candidates": candidates,
     }
 
@@ -235,6 +258,80 @@ def audit_geojson(audited: gpd.GeoDataFrame) -> dict[str, Any]:
             }
         )
     return {"type": "FeatureCollection", "features": features}
+
+
+def _safe_id_text(value: Any) -> str:
+    text = str(value or "").strip().lower()
+    safe = []
+    for char in text:
+        if char.isalnum():
+            safe.append(char)
+        elif safe and safe[-1] != "-":
+            safe.append("-")
+    return "".join(safe).strip("-") or "unknown"
+
+
+def draft_correction_geojson(audited: gpd.GeoDataFrame) -> dict[str, Any]:
+    """Export review-ready candidates as non-ingested correction drafts."""
+    if audited.empty:
+        return {"type": "FeatureCollection", "features": []}
+
+    review_ready = audited[audited["promotion_status"].astype(str) == "review_ready_not_scoring"]
+    if review_ready.empty:
+        return {"type": "FeatureCollection", "features": []}
+
+    to_wgs84 = Transformer.from_crs(review_ready.crs, "EPSG:4326", always_xy=True)
+    features = []
+    for _, row in review_ready.iterrows():
+        postal = str(row.get("postal", "")).zfill(6)
+        segment_index = int(row.get("segment_index", -1))
+        classification = str(row.get("candidate_classification", ""))
+        audit_id = (
+            f"feedback-{_safe_id_text(postal)}-segment-{segment_index}-"
+            f"{_safe_id_text(classification)}"
+        )
+        properties = {
+            "audit_id": audit_id,
+            "status": "needs_owner_review",
+            "is_covered": True,
+            "covered": "yes",
+            "source": "route_feedback_component_gap_source_audit",
+            "postal": postal,
+            "destination": str(row.get("destination", "")),
+            "segment_index": segment_index,
+            "label": str(row.get("label", "")),
+            "candidate_classification": classification,
+            "promotion_status": str(row.get("promotion_status", "")),
+            "length_m": float(row.get("length_m", 0.0)),
+            "hdb_overlap_ratio": _float_metric(row, "hdb_overlap_ratio"),
+            "official_shelter_overlap_ratio": _float_metric(row, "official_shelter_overlap_ratio"),
+            "bridge_overlap_ratio": _float_metric(row, "bridge_overlap_ratio"),
+            "osm_shelter_overlap_ratio": _float_metric(row, "osm_shelter_overlap_ratio"),
+            "covered_overlap_ratio": _float_metric(row, "covered_overlap_ratio"),
+            "review_note": (
+                "Draft only. Network build ignores this until a human verifies source "
+                "evidence and changes status to approved."
+            ),
+        }
+        features.append(
+            {
+                "type": "Feature",
+                "geometry": mapping(transform(to_wgs84.transform, row.geometry)),
+                "properties": properties,
+            }
+        )
+
+    return {
+        "type": "FeatureCollection",
+        "name": "draft_audited_shelter_corrections",
+        "schema": "shiok-audited-shelter-corrections-v1",
+        "usage": (
+            "Draft review artifact only. Copy reviewed features into "
+            "data/audited_shelter_corrections.geojson and set status=approved "
+            "only after human source review."
+        ),
+        "features": features,
+    }
 
 
 def audit_candidate_file(
