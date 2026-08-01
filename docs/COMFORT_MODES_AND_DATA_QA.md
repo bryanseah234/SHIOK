@@ -349,3 +349,8 @@ uv run python scripts/promote_audited_shelter_corrections.py `
 The script refuses blocked insufficient-overlap candidates and keeps approvals
 in `data/audited_shelter_corrections.geojson`, which the network builder ingests
 only when `status=approved`.
+
+`qa/mayflower_route_qa_summary_20260801.md` is the compact owner-review summary
+for the current Mayflower state. It shows current best/bus/MRT route scores for
+`560231`, `560234`, and `560225`, plus 5 review-ready connector candidates and
+3 blocked candidates that need stronger source evidence.
