@@ -23,7 +23,13 @@ def test_load_audited_shelter_corrections_filters_to_approved_covered_lines(
             },
             {
                 "audit_id": "draft",
-                "status": "draft",
+                "status": "needs_owner_review",
+                "covered": "yes",
+                "geometry": LineString([(103.8, 1.3), (103.8001, 1.3001)]),
+            },
+            {
+                "audit_id": "blocked",
+                "status": "blocked_insufficient_source_overlap_not_scoring",
                 "covered": "yes",
                 "geometry": LineString([(103.8, 1.3), (103.8001, 1.3001)]),
             },

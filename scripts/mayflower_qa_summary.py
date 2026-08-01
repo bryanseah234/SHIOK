@@ -242,6 +242,13 @@ def build_summary(
 
 
 def write_markdown(path: Path, summary: dict[str, Any]) -> None:
+    def fmt(value: Any) -> str:
+        if value is None:
+            return "n/a"
+        if isinstance(value, float):
+            return f"{value:.3g}"
+        return str(value)
+
     lines = [
         "# Mayflower Route QA Summary",
         "",
@@ -263,6 +270,14 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
                 f"node `{node.get('name')}`, distance `{paths.get('sheltered_m')}`, "
                 f"covered `{paths.get('covered_ratio')}`"
             )
+    lines.extend(["", "## Feedback Segment Classes"])
+    by_feedback = summary["feedback_segments"].get("by_postal", {})
+    if by_feedback:
+        for postal, classes in sorted(by_feedback.items()):
+            lines.append(f"- `{postal}`: `{classes}`")
+    else:
+        lines.append("- none")
+
     lines.extend(
         [
             "",
@@ -270,6 +285,39 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
             f"- candidate count: `{summary['connector_candidates']['candidate_count']}`",
             f"- promotion statuses: `{summary['connector_candidates']['promotion_status_counts']}`",
             f"- classifications: `{summary['connector_candidates']['classification_counts']}`",
+            "",
+            "## Candidate Details",
+        ]
+    )
+    by_candidate = summary["connector_candidates"].get("by_postal", {})
+    if by_candidate:
+        for postal, candidates in sorted(by_candidate.items()):
+            lines.append(f"- `{postal}`")
+            ordered = sorted(
+                candidates,
+                key=lambda item: (
+                    item.get("segment_index") is None,
+                    item.get("segment_index") or 0,
+                    str(item.get("audit_id") or ""),
+                ),
+            )
+            for candidate in ordered:
+                lines.append(
+                    "  - "
+                    f"`{candidate.get('audit_id')}`: segment `{candidate.get('segment_index')}`, "
+                    f"label `{candidate.get('label')}`, length `{fmt(candidate.get('length_m'))}` m, "
+                    f"status `{candidate.get('promotion_status')}`, "
+                    f"class `{candidate.get('candidate_classification')}`, "
+                    f"covered overlap `{fmt(candidate.get('covered_overlap_ratio'))}`, "
+                    f"HDB overlap `{fmt(candidate.get('hdb_overlap_ratio'))}`, "
+                    f"OSM shelter overlap `{fmt(candidate.get('osm_shelter_overlap_ratio'))}`, "
+                    f"official shelter overlap `{fmt(candidate.get('official_shelter_overlap_ratio'))}`"
+                )
+    else:
+        lines.append("- none")
+
+    lines.extend(
+        [
             "",
             "## Conclusion",
             f"- score override used: `{summary['conclusion']['score_override_used']}`",
