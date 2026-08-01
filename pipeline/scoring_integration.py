@@ -845,13 +845,13 @@ def build_provenance(
                 "provisional_covered_plus_nparks_shade_proxy_heat_only"
                 if any(
                     key in sources
-                    for key in {
+                    for key in (
                         "nparks_nature_ways",
                         "nparks_park_connector_loop",
                         "nparks_tracks",
                         "nparks_heritage_trees",
                         "nparks_heritage_road_green_buffers",
-                    }
+                    )
                 )
                 else "provisional_covered_only_until_phase_4"
             ),
@@ -965,6 +965,35 @@ def assemble_score_record(
     if geometry_options:
         record["_geometry_options"] = geometry_options
     return record
+
+
+def annotate_no_transit_reason(
+    provenance: dict[str, Any],
+    candidates: list[CandidateNode],
+    route_distances: list[float],
+    candidate_scores: list[dict[str, Any]],
+    access_zero_m: float,
+) -> None:
+    if any(
+        isinstance(candidate_score.get("total"), int | float)
+        for candidate_score in candidate_scores
+    ):
+        return
+    if provenance.get("reason"):
+        return
+    if not candidates:
+        provenance["reason"] = "no_transit_candidates_selected"
+        return
+    if not route_distances:
+        provenance["reason"] = "transit_candidates_graph_disconnected"
+        return
+    nearest = min(route_distances)
+    if nearest > access_zero_m:
+        provenance["reason"] = "all_routed_transit_candidates_beyond_access_range"
+        provenance["access_zero_credit_m"] = round(access_zero_m, 1)
+        provenance["nearest_routed_m"] = round(nearest, 1)
+        return
+    provenance["reason"] = "no_numeric_candidate_score"
 
 
 def json_safe_geometry(value: Any) -> Any:
@@ -1093,6 +1122,7 @@ def score_postal_row(
     )
 
     if not candidates:
+        provenance["reason"] = "no_transit_candidates_selected"
         provenance["routing_diagnostics"] = {
             "candidate_destination_nodes": 0,
             "route_results": 0,
@@ -1248,6 +1278,13 @@ def score_postal_row(
             1 for distance in route_distances if distance <= access_zero_m
         ),
     }
+    annotate_no_transit_reason(
+        provenance,
+        candidates,
+        route_distances,
+        candidate_scores,
+        access_zero_m,
+    )
 
     record = assemble_score_record(postal, candidate_scores, record_data_as_of, provenance)
     return add_private_origin(record, postal_row.geometry) if include_geometry else record

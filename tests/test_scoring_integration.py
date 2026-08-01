@@ -11,6 +11,7 @@ from pipeline.routing import RoutingGraph, route_worker
 from pipeline.scoring_integration import (
     CandidateNode,
     CrossingCounter,
+    annotate_no_transit_reason,
     assemble_score_record,
     build_provenance,
     bus_connectivity_from_routed_candidates,
@@ -51,6 +52,62 @@ WEIGHTS = {
     "heat_comfort": 0.15,
     "crossing_friction": 0.05,
 }
+
+
+def sample_candidate(node_type: str = "mrt_lrt_exit") -> CandidateNode:
+    return CandidateNode(
+        node_type=node_type,
+        name="Test Transit",
+        station_name="Test",
+        exit_code="Exit 1",
+        graph_node=(10.0, 0.0),
+        straight_line_m=100.0,
+        snap_distance_m=2.0,
+    )
+
+
+def test_annotate_no_transit_reason_marks_no_candidates():
+    provenance: dict[str, object] = {}
+
+    annotate_no_transit_reason(
+        provenance,
+        candidates=[],
+        route_distances=[],
+        candidate_scores=[],
+        access_zero_m=1200.0,
+    )
+
+    assert provenance["reason"] == "no_transit_candidates_selected"
+
+
+def test_annotate_no_transit_reason_marks_graph_disconnected_candidates():
+    provenance: dict[str, object] = {}
+
+    annotate_no_transit_reason(
+        provenance,
+        candidates=[sample_candidate()],
+        route_distances=[],
+        candidate_scores=[],
+        access_zero_m=1200.0,
+    )
+
+    assert provenance["reason"] == "transit_candidates_graph_disconnected"
+
+
+def test_annotate_no_transit_reason_marks_routed_candidates_beyond_access_range():
+    provenance: dict[str, object] = {}
+
+    annotate_no_transit_reason(
+        provenance,
+        candidates=[sample_candidate()],
+        route_distances=[1500.0, 1800.0],
+        candidate_scores=[{"total": "NO_TRANSIT_IN_RANGE"}],
+        access_zero_m=1200.0,
+    )
+
+    assert provenance["reason"] == "all_routed_transit_candidates_beyond_access_range"
+    assert provenance["nearest_routed_m"] == 1500.0
+    assert provenance["access_zero_credit_m"] == 1200.0
 
 
 def test_node_set_includes_all_nearest_exits_and_second_station_within_ratio():

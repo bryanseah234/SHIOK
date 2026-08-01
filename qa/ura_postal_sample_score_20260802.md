@@ -57,8 +57,28 @@ Representative records:
 | 127872 | SCORED | 25.4 | The Japanese Sec Sch | bus_stop | 709.9 | 0.0% |
 | 128746 | SCORED | 44.9 | Blk 701 | bus_stop | 322.5 | 9.7% |
 
+## No-Transit Reason Probe
+
+The score contract now writes explicit `provenance.reason` values for
+`NO_TRANSIT_IN_RANGE` records so the no-transit bucket can be separated without
+manual re-analysis.
+
+Command:
+
+```powershell
+uv run python run.py score-batch --postal-universe tmp\postal_universe_no_transit_reason_probe_20260802.parquet --network processed\network_island.parquet --output-dir tmp\score_no_transit_reason_probe_20260802_0632 --full-batch --confirm-full-batch --chunk-size 2
+```
+
+Result:
+
+| Postal | State | Reason | Nearest routed m |
+| --- | --- | --- | ---: |
+| 266167 | NO_TRANSIT_IN_RANGE | `all_routed_transit_candidates_beyond_access_range` | 1248.7 |
+| 275899 | NO_TRANSIT_IN_RANGE | `transit_candidates_graph_disconnected` | null |
+
 ## Conclusion
 
 URA-backed postals can be scored by the real island network and scoring
-pipeline. This is a sample QA pass only. The URA-expanded universe is not live
-until a full rescore/export/deploy is completed and validated.
+pipeline. The no-transit subset now has machine-readable reason provenance for
+later QA and copy. This is a sample QA pass only. The URA-expanded universe is
+not live until a full rescore/export/deploy is completed and validated.
