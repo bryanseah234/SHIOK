@@ -4,8 +4,10 @@ import pyarrow.parquet as pq
 
 from pipeline.overture_addresses import (
     archive_overture_postcode_rows,
+    compare_coordinate_deltas,
     compare_postcode_sets,
     normalize_postcode,
+    wgs84_to_xy_transformer,
 )
 
 
@@ -32,6 +34,42 @@ def test_compare_postcode_sets_reports_overlap_and_samples():
         "sample_new_from_overture": ["100000"],
         "sample_current_missing_from_overture": ["400000"],
     }
+
+
+def test_compare_coordinate_deltas_reports_current_overlap():
+    x, y = wgs84_to_xy_transformer().transform(103.8, 1.3)
+    report = compare_coordinate_deltas(
+        overture_rows=[
+            {
+                "postcode": "018895",
+                "representative_lon": 103.8,
+                "representative_lat": 1.3,
+                "source_dataset": "OpenAddresses/Singapore Land Authority",
+                "address_rows": 1,
+            },
+            {
+                "postcode": "999999",
+                "representative_lon": 103.9,
+                "representative_lat": 1.4,
+            },
+        ],
+        current_coordinates={
+            "018895": {
+                "x": x,
+                "y": y,
+                "coordinate_source": "current",
+            }
+        },
+    )
+
+    assert report["overlap_with_current_coordinates"] == 1
+    assert report["delta_m"]["count"] == 1
+    assert report["delta_m"]["p50"] < 0.1
+    assert report["within_10m"] == 1
+    assert report["over_100m"] == 0
+    assert report["over_250m"] == 0
+    assert report["over_1000m"] == 0
+    assert report["largest_deltas"][0]["postcode"] == "018895"
 
 
 def test_archive_overture_postcode_rows_writes_hashed_parquet(tmp_path: Path):

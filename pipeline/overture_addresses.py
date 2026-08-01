@@ -14,6 +14,7 @@ from typing import Any
 import duckdb
 import pyarrow as pa
 import pyarrow.parquet as pq
+from pyproj import Transformer
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -26,6 +27,10 @@ DEFAULT_OVERTURE_PATH = (
     "s3://overturemaps-us-west-2/release/2026-07-22.0/theme=addresses/type=address/*"
 )
 POSTCODE_RE = re.compile(r"^[0-9]{6}$")
+
+
+def wgs84_to_xy_transformer() -> Transformer:
+    return Transformer.from_crs("EPSG:4326", "EPSG:3414", always_xy=True)
 
 
 def normalize_postcode(value: Any) -> str | None:
@@ -47,6 +52,41 @@ def current_universe_postcodes(path: Path) -> set[str]:
     return postcodes
 
 
+def current_universe_coordinates(path: Path) -> dict[str, dict[str, Any]]:
+    table = pq.read_table(path, columns=["postal_code", "x", "y", "coordinate_source"])
+    coordinates: dict[str, dict[str, Any]] = {}
+    for row in table.to_pylist():
+        postcode = normalize_postcode(row.get("postal_code"))
+        if postcode is None or row.get("x") is None or row.get("y") is None:
+            continue
+        coordinates[postcode] = {
+            "x": float(row["x"]),
+            "y": float(row["y"]),
+            "coordinate_source": row.get("coordinate_source"),
+        }
+    return coordinates
+
+
+def percentile(values: list[float], pct: float) -> float | None:
+    if not values:
+        return None
+    index = min(len(values) - 1, round((len(values) - 1) * pct))
+    return sorted(values)[index]
+
+
+def value_distribution(values: list[float]) -> dict[str, float | int | None]:
+    if not values:
+        return {"count": 0, "min": None, "p50": None, "p95": None, "max": None}
+    sorted_values = sorted(values)
+    return {
+        "count": len(sorted_values),
+        "min": round(sorted_values[0], 1),
+        "p50": round(percentile(sorted_values, 0.5) or 0.0, 1),
+        "p95": round(percentile(sorted_values, 0.95) or 0.0, 1),
+        "max": round(sorted_values[-1], 1),
+    }
+
+
 def compare_postcode_sets(
     overture_postcodes: set[str],
     current_postcodes: set[str],
@@ -61,6 +101,53 @@ def compare_postcode_sets(
         "current_missing_from_overture": len(current_missing_from_overture),
         "sample_new_from_overture": new_from_overture[:20],
         "sample_current_missing_from_overture": current_missing_from_overture[:20],
+    }
+
+
+def compare_coordinate_deltas(
+    overture_rows: list[dict[str, Any]],
+    current_coordinates: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    transformer = wgs84_to_xy_transformer()
+    rows: list[dict[str, Any]] = []
+    for row in overture_rows:
+        postcode = normalize_postcode(row.get("postcode"))
+        if postcode is None or postcode not in current_coordinates:
+            continue
+        lon_value = row.get("representative_lon")
+        lat_value = row.get("representative_lat")
+        if lon_value is None or lat_value is None:
+            continue
+        try:
+            lon = float(lon_value)
+            lat = float(lat_value)
+        except (TypeError, ValueError):
+            continue
+        x, y = transformer.transform(lon, lat)
+        current = current_coordinates[postcode]
+        delta_m = ((float(current["x"]) - x) ** 2 + (float(current["y"]) - y) ** 2) ** 0.5
+        rows.append(
+            {
+                "postcode": postcode,
+                "delta_m": round(delta_m, 1),
+                "current_source": current.get("coordinate_source"),
+                "overture_source": row.get("source_dataset"),
+                "address_rows": row.get("address_rows"),
+            }
+        )
+
+    deltas = [float(row["delta_m"]) for row in rows]
+    return {
+        "overlap_with_current_coordinates": len(rows),
+        "delta_m": value_distribution(deltas),
+        "within_10m": sum(1 for value in deltas if value <= 10.0),
+        "within_25m": sum(1 for value in deltas if value <= 25.0),
+        "within_50m": sum(1 for value in deltas if value <= 50.0),
+        "within_100m": sum(1 for value in deltas if value <= 100.0),
+        "over_100m": sum(1 for value in deltas if value > 100.0),
+        "over_250m": sum(1 for value in deltas if value > 250.0),
+        "over_1000m": sum(1 for value in deltas if value > 1000.0),
+        "largest_deltas": sorted(rows, key=lambda item: float(item["delta_m"]), reverse=True)[:10],
     }
 
 
@@ -187,9 +274,14 @@ def build_overture_candidate_report(
         return False, {"ok": False, "errors": errors}
 
     current = current_universe_postcodes(current_universe_path)
+    current_coordinates = current_universe_coordinates(current_universe_path)
     overture = query_overture_singapore_postcodes(overture_path)
     overture_postcodes = {str(row["postcode"]) for row in overture["postcode_rows"]}
     comparison = compare_postcode_sets(overture_postcodes, current)
+    coordinate_comparison = compare_coordinate_deltas(
+        overture["postcode_rows"],
+        current_coordinates,
+    )
     raw_archive = None
     if archive_raw:
         raw_archive = archive_overture_postcode_rows(overture["postcode_rows"], raw_dir=raw_dir)
@@ -214,6 +306,7 @@ def build_overture_candidate_report(
         },
         "overture": {key: value for key, value in overture.items() if key != "postcode_rows"},
         "comparison": comparison,
+        "coordinate_comparison": coordinate_comparison,
         "raw_archive": raw_archive,
         "errors": errors,
     }

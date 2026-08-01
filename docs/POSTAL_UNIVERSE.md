@@ -235,4 +235,24 @@ needs_geocode=476
 overture_addresses_sg_candidate_source_only=1671
 ```
 
-This is useful progress, but still not full ~140k coverage.
+Coordinate QA against the current geocoded universe:
+
+```text
+overlap_with_current_coordinates=122195
+delta_m_p50=1.4
+delta_m_p95=23.5
+within_50m=120531
+within_100m=121713
+over_100m=482
+over_250m=126
+over_1000m=41
+largest_delta=26004.4m at postcode 079000
+largest_delta_current_source=osm_addr_postcode
+largest_delta_overture_source=OpenAddresses/Singapore Land Authority
+```
+
+This is useful progress, but still not full ~140k coverage. The coordinate
+distribution is strong enough to keep Overture as a serious candidate for
+targeted validation and future universe expansion, but the outliers prove it
+must remain gated until the largest coordinate mismatches are reviewed and any
+production inclusion is followed by a rescore.
