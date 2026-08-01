@@ -274,6 +274,19 @@ tested:
   blocked insufficient-overlap candidates. For `560231`, segment 6 remains
   blocked with only 10.5% HDB/covered overlap, confirming that greenery shade
   data does not solve the Mayflower rain-shelter/void-deck route gap.
+- After promoting local-PBF `covered=building_arcade`, `covered=shelter`,
+  `covered=roof`, `covered=booth`, and future `covered=canopy` values into
+  `pipeline/config/osm_tags.yaml`, rebuilt the island network again. Network QA
+  stayed green (`real_disconnection_count_final=0`, 653,107 nodes, 871,566
+  edges). AMK feedback audit again stayed materially unchanged: 19 covered
+  connectivity/snap checks, 8 HDB component gaps, 2 HDB nearby-connectivity
+  checks, 2 bridge/underpass endpoint-snap checks, and 1 expected exposed
+  segment. Connector promotion split remained 5 review-ready draft corrections
+  and 3 blocked insufficient-overlap candidates. For `560231`, segment 6 remains
+  blocked at 128.7 m with only 10.5% HDB/covered overlap. Therefore Bellingcat,
+  OpenInfraMap, Overpass, and broader OSM covered-value extraction do not solve
+  the Mayflower false-negative; the next fix is still source-backed connector
+  geometry or owner-approved audited corrections.
 
 ## Human Feedback Loop
 

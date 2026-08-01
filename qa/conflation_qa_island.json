@@ -1,17 +1,17 @@
 {
-  "nodes": 653119,
-  "edges": 871583,
-  "mean_edge_length_m": 17.82097288967555,
+  "nodes": 653107,
+  "edges": 871566,
+  "mean_edge_length_m": 17.821336776907284,
   "connected_components_count": 2838,
   "top_5_component_sizes": [
-    617706,
+    617694,
     1946,
     1470,
     1402,
     1295
   ],
   "osm_only_top_3_component_node_share_pct": 95.07824708064877,
-  "top_3_component_node_share_pct": 95.10089279289073,
+  "top_3_component_node_share_pct": 95.10080277810528,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1252,9 +1252,9 @@
   "real_disconnection_count_final": 0,
   "per_area_classification_counts": {
     "ANG MO KIO": {
-      "ALIGNED": 80,
+      "ALIGNED": 83,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 124,
+      "UNREPRESENTED-surface": 121,
       "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 85
     },
@@ -1343,18 +1343,18 @@
       "NEEDS_MANUAL": 10
     },
     "DOWNTOWN CORE": {
-      "ALIGNED": 38,
-      "OFFSET": 12,
-      "UNREPRESENTED-surface": 33,
+      "ALIGNED": 41,
+      "OFFSET": 13,
+      "UNREPRESENTED-surface": 29,
       "UNDERGROUND_OR_INDOOR": 1,
       "NEEDS_MANUAL": 18
     },
     "GEYLANG": {
       "ALIGNED": 147,
-      "OFFSET": 22,
+      "OFFSET": 23,
       "UNREPRESENTED-surface": 126,
       "UNDERGROUND_OR_INDOOR": 12,
-      "NEEDS_MANUAL": 98
+      "NEEDS_MANUAL": 97
     },
     "HOUGANG": {
       "ALIGNED": 135,
@@ -1638,7 +1638,7 @@
     }
   },
   "per_area_match_pct": {
-    "ANG MO KIO": 34.22338495547219,
+    "ANG MO KIO": 34.93696155873243,
     "BEDOK": 72.03837224615978,
     "BISHAN": 54.14085117006847,
     "BOON LAY": 63.39688482131437,
@@ -1651,7 +1651,7 @@
     "CHANGI BAY": 0.0,
     "CHOA CHU KANG": 75.59959874781227,
     "CLEMENTI": 83.37054481265987,
-    "DOWNTOWN CORE": 41.609230442167835,
+    "DOWNTOWN CORE": 44.435159727502274,
     "GEYLANG": 42.82789169604111,
     "HOUGANG": 52.31245185141351,
     "JURONG EAST": 78.3727676250737,
@@ -1695,22 +1695,22 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1601.381897539438,
-  "synthesized_pct_of_total": 0.4845733987235123,
-  "unsnapped_endpoints_count": 1317,
-  "needs_manual_count": 1317,
-  "covered_edge_length_m_osm_tags": 601287.6775776225,
+  "synthesized_length_m": 1615.577097432283,
+  "synthesized_pct_of_total": 0.4888688239860339,
+  "unsnapped_endpoints_count": 1316,
+  "needs_manual_count": 1316,
+  "covered_edge_length_m_osm_tags": 601903.6874432785,
   "covered_edge_length_m_lta_match": 272495.2290865707,
   "covered_edge_length_m_lta_bridge_underpass_match": 95083.52541082863,
   "covered_edge_length_m_osm_roof_canopy": 33880.75591428681,
-  "covered_edge_length_m_osm_explicit_shelter": 557392.2218836243,
+  "covered_edge_length_m_osm_explicit_shelter": 558121.4302076835,
   "covered_edge_length_m_inferred_hdb_precinct_footways": 384265.58574225206,
   "covered_edge_length_m_inferred_hdb_point_footways": 800228.0897317082,
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
   "covered_edge_length_m_audited_corrections": 0.0,
-  "covered_edge_length_m_union": 3822586.1917195306,
+  "covered_edge_length_m_union": 3822652.708269239,
   "shade_proxy_edge_count": 64288,
   "shade_proxy_weighted_length_m": 840905.5987623793,
   "shade_proxy_sources": {
@@ -1805,7 +1805,7 @@
     "candidate_hdb_points": 13436,
     "eligible_edge_count": 332620,
     "marked_edges": 71955,
-    "newly_marked_edges": 24649,
+    "newly_marked_edges": 24646,
     "length_m": 800228.0897317082,
     "point_buffer_m": 18.0,
     "min_match_ratio": 0.65,
