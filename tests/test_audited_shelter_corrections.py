@@ -81,4 +81,6 @@ def test_build_audited_correction_edges_snaps_approved_lines_to_existing_nodes()
     assert list(edges.iloc[0].geometry.coords)[-1] == (10.0, 0.0)
     assert edges.iloc[0]["is_covered"] == 1
     assert edges.iloc[0]["covered"] == "yes"
+    assert edges.iloc[0]["source_layer"] == "audited_shelter_correction"
+    assert edges.iloc[0]["confidence"] == "human_reviewed_source_backed"
     assert edges.iloc[0]["synth_class"] == "AUDITED_SHELTER_CORRECTION"

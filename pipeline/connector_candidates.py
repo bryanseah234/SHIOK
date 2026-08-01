@@ -16,7 +16,18 @@ from pipeline.route_feedback import load_network_edges
 HDB_MARKERS = ("hdb", "void_deck", "inferred_hdb")
 OFFICIAL_SHELTER_MARKERS = ("covered_linkway", "overhead_bridge_underpass")
 BRIDGE_MARKERS = ("overhead_bridge_underpass", "bridge", "underpass", "tunnel")
-OSM_SHELTER_MARKERS = ("osm_explicit_shelter", "osm_building_roof", "covered")
+OSM_SHELTER_MARKERS = (
+    "osm_explicit_shelter",
+    "osm_building_roof",
+    "osm_native_covered",
+    "building_passage",
+    "canopy",
+    "covered",
+    "platform",
+    "roof",
+    "shelter",
+    "weather_protection",
+)
 REVIEW_READY_CLASSES = {
     "official_shelter_overlap_review",
     "bridge_underpass_overlap_review",
@@ -46,7 +57,23 @@ def _text(row: pd.Series, columns: tuple[str, ...]) -> str:
 
 def _has_marker(markers: tuple[str, ...]) -> Callable[[pd.Series], bool]:
     def check(row: pd.Series) -> bool:
-        text = _text(row, ("synth_class", "source_layer", "highway", "covered", "bridge", "tunnel"))
+        text = _text(
+            row,
+            (
+                "synth_class",
+                "source_layer",
+                "highway",
+                "covered",
+                "bridge",
+                "tunnel",
+                "shelter",
+                "shelter_type",
+                "weather_protection",
+                "man_made",
+                "building:part",
+                "public_transport",
+            ),
+        )
         return any(marker in text for marker in markers)
 
     return check

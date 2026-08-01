@@ -108,7 +108,35 @@ def native_osm_covered_mask(edges_gdf: gpd.GeoDataFrame) -> pd.Series:
     mask |= tunnel.isin(OSM_TUNNEL_COVERED_VALUES)
     mask |= indoor.isin(OSM_INDOOR_COVERED_VALUES)
     mask |= location.isin(OSM_LOCATION_COVERED_VALUES)
+    mask |= osm_positive_shelter_mask(edges_gdf)
     return mask & ~osm_shelter_negative_mask(edges_gdf)
+
+
+def osm_positive_shelter_mask(frame: gpd.GeoDataFrame) -> pd.Series:
+    """Return OSM features with positive rain-shelter tags."""
+    amenity = normalized_text_series(frame, "amenity")
+    building = normalized_text_series(frame, "building")
+    building_part = normalized_text_series(frame, "building:part")
+    covered = normalized_text_series(frame, "covered")
+    highway = normalized_text_series(frame, "highway")
+    man_made = normalized_text_series(frame, "man_made")
+    public_transport = normalized_text_series(frame, "public_transport")
+    shelter = normalized_text_series(frame, "shelter")
+    shelter_type = normalized_text_series(frame, "shelter_type")
+    weather_protection = normalized_text_series(frame, "weather_protection")
+
+    return (
+        amenity.eq("shelter")
+        | building.isin(OSM_ROOF_SHELTER_TAGS)
+        | building_part.isin(OSM_SHELTER_YES_VALUES)
+        | covered.isin(OSM_COVERED_TAG_VALUES)
+        | man_made.eq("canopy")
+        | shelter.isin(OSM_SHELTER_YES_VALUES)
+        | shelter_type.ne("")
+        | weather_protection.isin(OSM_SHELTER_YES_VALUES)
+        | (public_transport.eq("platform") & shelter.isin(OSM_SHELTER_YES_VALUES))
+        | (highway.eq("bus_stop") & shelter.isin(OSM_SHELTER_YES_VALUES))
+    )
 
 
 def osm_shelter_negative_mask(frame: gpd.GeoDataFrame) -> pd.Series:
@@ -727,6 +755,8 @@ def build_audited_correction_edges(
                     "v": -1,
                     "covered": "yes",
                     "highway": "audited_shelter_correction",
+                    "source_layer": "audited_shelter_correction",
+                    "confidence": "human_reviewed_source_backed",
                     "synth_class": "AUDITED_SHELTER_CORRECTION",
                     "audit_id": audit_id,
                     "audit_source": row.get("source", row.get("evidence_url", "")),
@@ -826,28 +856,7 @@ def load_hdb_building_points(union_poly) -> gpd.GeoDataFrame:
 
 
 def explicit_osm_shelter_feature_mask(features: gpd.GeoDataFrame) -> pd.Series:
-    amenity = normalized_text_series(features, "amenity")
-    building_part = normalized_text_series(features, "building:part")
-    covered = normalized_text_series(features, "covered")
-    highway = normalized_text_series(features, "highway")
-    man_made = normalized_text_series(features, "man_made")
-    public_transport = normalized_text_series(features, "public_transport")
-    shelter = normalized_text_series(features, "shelter")
-    shelter_type = normalized_text_series(features, "shelter_type")
-    weather_protection = normalized_text_series(features, "weather_protection")
-
-    positive = (
-        amenity.eq("shelter")
-        | building_part.eq("roof")
-        | covered.isin(OSM_COVERED_TAG_VALUES)
-        | man_made.eq("canopy")
-        | shelter.isin(OSM_SHELTER_YES_VALUES)
-        | shelter_type.ne("")
-        | weather_protection.isin(OSM_SHELTER_YES_VALUES)
-        | (public_transport.eq("platform") & shelter.isin(OSM_SHELTER_YES_VALUES))
-        | (highway.eq("bus_stop") & shelter.isin(OSM_SHELTER_YES_VALUES))
-    )
-    return positive & ~osm_shelter_negative_mask(features)
+    return osm_positive_shelter_mask(features) & ~osm_shelter_negative_mask(features)
 
 
 def prepare_osm_explicit_shelter_geometries(
@@ -1639,7 +1648,21 @@ def run_build(scope: str = "pilot"):
 
     edges_gdf["is_covered"] = 0
     native_covered_mask = native_osm_covered_mask(edges_gdf)
+    ensure_columns(
+        edges_gdf,
+        {
+            "covered": "",
+            "source_layer": "",
+            "confidence": "",
+        },
+    )
     edges_gdf.loc[native_covered_mask, "is_covered"] = 1
+    covered_blank = _blank_text_mask(edges_gdf["covered"])
+    edges_gdf.loc[native_covered_mask & covered_blank, "covered"] = "yes"
+    source_blank = _blank_text_mask(edges_gdf["source_layer"])
+    edges_gdf.loc[native_covered_mask & source_blank, "source_layer"] = "osm_native_covered"
+    confidence_blank = _blank_text_mask(edges_gdf["confidence"])
+    edges_gdf.loc[native_covered_mask & confidence_blank, "confidence"] = "osm_tag"
 
     roof_match_mask, roof_match_edge_length = apply_polygon_coverage_attribution(
         edges_gdf,

@@ -184,13 +184,43 @@ def test_native_osm_covered_mask_includes_underground_and_indoor_location():
                 "covered": "building_passage",
                 "geometry": LineString([(0, 3), (1, 3)]),
             },
+            {
+                "highway": "footway",
+                "shelter": "yes",
+                "geometry": LineString([(0, 4), (1, 4)]),
+            },
+            {
+                "highway": "footway",
+                "weather_protection": "yes",
+                "geometry": LineString([(0, 5), (1, 5)]),
+            },
+            {
+                "highway": "footway",
+                "shelter_type": "roof",
+                "geometry": LineString([(0, 6), (1, 6)]),
+            },
+            {
+                "highway": "footway",
+                "man_made": "canopy",
+                "geometry": LineString([(0, 7), (1, 7)]),
+            },
+            {
+                "highway": "footway",
+                "building:part": "roof",
+                "geometry": LineString([(0, 8), (1, 8)]),
+            },
+            {
+                "highway": "footway",
+                "building": "canopy",
+                "geometry": LineString([(0, 9), (1, 9)]),
+            },
         ],
         crs="EPSG:3414",
     )
 
     mask = native_osm_covered_mask(edges)
 
-    assert mask.tolist() == [True, True, False, True]
+    assert mask.tolist() == [True, True, False, True, True, True, True, True, True, True]
 
 
 def test_osm_negative_shelter_tags_block_native_and_inferred_coverage():
@@ -269,6 +299,10 @@ def test_prepare_osm_explicit_shelter_geometries_filters_supported_tags():
                 "geometry": LineString([(80, 80), (90, 80)]),
             },
             {
+                "building": "canopy",
+                "geometry": Polygon([(90, 0), (95, 0), (95, 5), (90, 5)]),
+            },
+            {
                 "amenity": "shelter",
                 "shelter": "no",
                 "geometry": LineString([(100, 100), (110, 100)]),
@@ -279,7 +313,7 @@ def test_prepare_osm_explicit_shelter_geometries_filters_supported_tags():
 
     shelters = prepare_osm_explicit_shelter_geometries(features)
 
-    assert len(shelters) == 6
+    assert len(shelters) == 7
     assert set(shelters["source_layer"]) == {"osm_explicit_shelter"}
     assert set(shelters["confidence"]) == {"osm_explicit_shelter_tag"}
     assert all(geom.geom_type in {"Polygon", "MultiPolygon"} for geom in shelters.geometry)

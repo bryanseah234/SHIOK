@@ -117,3 +117,38 @@ def test_connector_candidate_summary_handles_empty_network():
     assert summary["classification_counts"] == {"missing_network_evidence": 1}
     assert summary["promotion_status_counts"] == {"blocked_missing_network_evidence_not_scoring": 1}
     assert summary["candidates"][0]["hdb_overlap_ratio"] == 0.0
+
+
+def test_connector_candidate_osm_markers_include_richer_shelter_tags():
+    candidates = gpd.GeoDataFrame(
+        [
+            {
+                "postal": "560231",
+                "destination": "Mayflower",
+                "segment_index": 2,
+                "label": "sheltered",
+                "geometry": LineString([(0, 0), (20, 0)]),
+            }
+        ],
+        crs="EPSG:3414",
+    )
+    network = gpd.GeoDataFrame(
+        [
+            {
+                "is_covered": 1,
+                "source_layer": "osm_native_covered",
+                "highway": "footway",
+                "weather_protection": "yes",
+                "shelter_type": "roof",
+                "geometry": LineString([(0, 1), (20, 1)]),
+            }
+        ],
+        crs="EPSG:3414",
+    )
+
+    audited = audit_connector_candidates(candidates, network, search_m=10, evidence_buffer_m=3)
+    row = audited.iloc[0]
+
+    assert row["nearby_osm_shelter_edge_count"] == 1
+    assert row["osm_shelter_overlap_ratio"] == 1.0
+    assert row["candidate_classification"] == "covered_source_overlap_review"

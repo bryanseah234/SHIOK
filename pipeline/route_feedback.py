@@ -24,8 +24,18 @@ NETWORK_COLUMNS = [
     "highway",
     "covered",
     "bridge",
+    "building:part",
+    "confidence",
+    "layer",
+    "level",
+    "location",
+    "man_made",
+    "public_transport",
+    "shelter",
+    "shelter_type",
     "tunnel",
     "indoor",
+    "weather_protection",
     "length_m",
 ]
 

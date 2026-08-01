@@ -38,6 +38,19 @@ def test_route_edge_source_class_uses_osm_location_provenance():
     assert (
         route_edge_source_class({"is_covered": True, "weather_protection": "yes"}) == "osm_covered"
     )
+    assert (
+        route_edge_source_class({"is_covered": True, "source_layer": "osm_native_covered"})
+        == "osm_covered"
+    )
+    assert route_edge_source_class({"is_covered": True, "building:part": "roof"}) == "osm_covered"
+    assert route_edge_source_class({"is_covered": True, "man_made": "canopy"}) == "osm_covered"
+    assert (
+        route_edge_source_class(
+            {"is_covered": True, "public_transport": "platform", "shelter": "yes"}
+        )
+        == "osm_covered"
+    )
+    assert route_edge_source_class({"is_covered": True, "shelter_type": "roof"}) == "osm_covered"
 
 
 def test_route_edge_source_class_labels_direct_bus_fallback():

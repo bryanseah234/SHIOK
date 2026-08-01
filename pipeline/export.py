@@ -232,10 +232,14 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
     highway = text_value(edge.get("highway")).lower()
     covered = text_value(edge.get("covered")).lower()
     bridge = text_value(edge.get("bridge")).lower()
+    building_part = text_value(edge.get("building:part")).lower()
+    man_made = text_value(edge.get("man_made")).lower()
+    public_transport = text_value(edge.get("public_transport")).lower()
     tunnel = text_value(edge.get("tunnel")).lower()
     indoor = text_value(edge.get("indoor")).lower()
     location = text_value(edge.get("location")).lower()
     shelter = text_value(edge.get("shelter")).lower()
+    shelter_type = text_value(edge.get("shelter_type")).lower()
     weather_protection = text_value(edge.get("weather_protection")).lower()
 
     if "audited_shelter_correction" in {source_layer, highway}:
@@ -253,8 +257,11 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
         return "inferred_hdb_void_deck"
     if "covered_linkway" in source_layer:
         return "lta_covered_linkway"
+    if source_layer in {"osm_building_roof", "osm_explicit_shelter", "osm_native_covered"}:
+        return "osm_covered"
     if (
         indoor in {"yes", "building_passage"}
+        or building_part in {"roof", "canopy", "covered"}
         or covered
         in {
             "yes",
@@ -263,7 +270,10 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
             "colonnade",
             "building_passage",
         }
+        or man_made == "canopy"
+        or (public_transport == "platform" and shelter in {"yes", "roof", "covered", "canopy"})
         or shelter in {"yes", "roof", "covered", "canopy"}
+        or shelter_type not in {"", "no", "none", "0", "false"}
         or weather_protection
         in {
             "yes",
