@@ -261,8 +261,20 @@ bundles.
 
 ## Full Rescore Helper
 
-For a source/model change that requires every known postal to be rescored, run
-the guarded helper from the repo root:
+For a postal-universe source refresh, first prepare the scoreable universe
+without scoring:
+
+```powershell
+.\scripts\prepare-postal-universe.bat -Mode candidate_full_registered -ConfirmBoundedGeocode -DownloadMissing
+```
+
+That helper refreshes `processed\postal_universe_candidate_full_registered.parquet`,
+runs bounded OneMap geocode only for source-derived `NEEDS_GEOCODE` gaps, and
+prints the batch plan. It does not score postals, activate a bundle, or deploy.
+Omitting `-ConfirmBoundedGeocode` prints the plan and exits.
+
+For a source/model change that requires every known postal to be rescored after
+the prep step, run the guarded helper from the repo root:
 
 ```powershell
 .\scripts\full-rescore-production.bat -ConfirmFullBatch -Workers 4 -SkipActivateBundle

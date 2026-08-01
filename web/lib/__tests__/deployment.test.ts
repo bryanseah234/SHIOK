@@ -79,4 +79,22 @@ describe("deployment packaging", () => {
     expect(script).not.toContain("deploy-production");
     expect(script).not.toContain("vercel deploy");
   });
+
+  it("keeps postal universe prep bounded and non-deploying", () => {
+    const script = readFileSync(
+      join(__dirname, "../../../scripts/prepare-postal-universe.ps1"),
+      "utf-8",
+    );
+
+    expect(script).toContain("confirm_bounded_geocode_not_set");
+    expect(script).toContain("postal-universe");
+    expect(script).toContain("geocode-universe");
+    expect(script).toContain("--confirm-bounded-geocode");
+    expect(script).toContain("batch-plan");
+    expect(script).toContain("score=false");
+    expect(script).toContain("deploy=false");
+    expect(script).not.toContain("score-batch");
+    expect(script).not.toContain("deploy-production");
+    expect(script).not.toContain("vercel deploy");
+  });
 });
