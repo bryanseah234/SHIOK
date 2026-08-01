@@ -2,7 +2,12 @@ import httpx
 
 import pytest
 
-from pipeline.fetch import datagov_raw_filename, select_sources, stable_manifest_url
+from pipeline.fetch import (
+    datagov_raw_filename,
+    select_sources,
+    stable_manifest_url,
+    static_raw_filename,
+)
 
 
 def test_datagov_raw_filename_uses_content_disposition_extension() -> None:
@@ -58,3 +63,18 @@ def test_select_sources_filters_requested_keys() -> None:
     assert select_sources(sources, []) == sources
     with pytest.raises(ValueError, match="unknown source key"):
         select_sources(sources, ["missing"])
+
+
+def test_static_raw_filename_prefers_configured_filename() -> None:
+    assert (
+        static_raw_filename(
+            "train_station_codes",
+            "https://example.test/source.zip",
+            {"filename": "train_station_codes.zip"},
+        )
+        == "train_station_codes.zip"
+    )
+    assert (
+        static_raw_filename("train_station_codes", "https://example.test/source.xls", {})
+        == "train_station_codes.xls"
+    )

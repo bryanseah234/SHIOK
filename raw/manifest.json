@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T21:06:46.788583+00:00",
+  "generated_at": "2026-08-01T21:23:07.501695+00:00",
   "sources": {
     "acra_registered_entities": {
       "bytes": 231948757,
@@ -191,13 +191,13 @@
       "url_as_discovered": "https://dmgeospatial.s3.ap-southeast-1.amazonaws.com/TrafficLight.zip"
     },
     "train_station_codes": {
-      "bytes": 9610,
-      "etag": "\"68ae537ab9b0ccf069c0409af6de6ef6\"",
-      "fetched_at": "2026-08-01T21:06:46.788583+00:00",
-      "last_modified": "Thu, 06 Jun 2024 15:00:07 GMT",
-      "sha256": "2f0a6da92ca3ec44f4602fc76783b64b6dda422ee46fca07bf5d46a78721ee7f",
+      "bytes": 16598,
+      "etag": "W/\"40d6-658022315f339\"",
+      "fetched_at": "2026-08-01T21:23:07.501695+00:00",
+      "last_modified": "Sat, 01 Aug 2026 20:27:42 GMT",
+      "sha256": "2d518f326e0e76444722caa96e784b5b86f8767652a2f730417294f1b4c4f2b6",
       "source_name": "Train Station Codes and Chinese Names",
-      "url_as_discovered": "https://s3.ap-southeast-1.amazonaws.com/table-downloads-ingest.data.gov.sg/d_d312a5b127e1ae74299b8ae664cedd4e/55573063eada6be9d60f3b1b5a1b5a84cb36c38a7ebfed97a9f714d4e58e266b.csv"
+      "url_as_discovered": "https://datamall.lta.gov.sg/content/dam/datamall/datasets/Geospatial/Train%20Station%20Codes%20and%20Chinese%20Names.zip"
     }
   }
 }

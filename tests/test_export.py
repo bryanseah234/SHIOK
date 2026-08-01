@@ -14,6 +14,7 @@ from pipeline.export import (
     refresh_transit_manifest,
     route_edge_source_class,
     route_segment_geometries,
+    station_code_rows_from_xls_bytes,
     slugify_area,
     validate_export_batch_args,
     validate_static_artifacts,
@@ -243,6 +244,47 @@ def test_geom_record_emits_multiline_route_parts_for_fallback_rendering():
 
     assert output is not None
     assert len(output["shortest_parts"]) == 2
+
+
+def test_station_code_rows_from_xls_bytes_parses_official_schema(monkeypatch):
+    class FakeSheet:
+        nrows = 3
+        ncols = 5
+
+        values = [
+            [
+                "stn_code",
+                "mrt_station_english",
+                "mrt_station_chinese",
+                "mrt_line_english",
+                "mrt_line_chinese",
+            ],
+            ["TE6", "Mayflower", "美华", "Thomson-East Coast Line", "汤申-东海岸线"],
+            ["", "", "", "", ""],
+        ]
+
+        def cell_value(self, row: int, col: int) -> str:
+            return str(self.values[row][col])
+
+    class FakeBook:
+        def sheets(self):
+            return [FakeSheet()]
+
+    def fake_open_workbook(*, file_contents: bytes):
+        assert file_contents == b"xls"
+        return FakeBook()
+
+    monkeypatch.setattr("pipeline.export.xlrd.open_workbook", fake_open_workbook)
+
+    assert station_code_rows_from_xls_bytes(b"xls") == [
+        {
+            "stn_code": "TE6",
+            "mrt_station_english": "Mayflower",
+            "mrt_station_chinese": "美华",
+            "mrt_line_english": "Thomson-East Coast Line",
+            "mrt_line_chinese": "汤申-东海岸线",
+        }
+    ]
 
 
 def test_build_transit_poi_collection_exports_mrt_and_bus_points():

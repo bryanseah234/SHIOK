@@ -8,6 +8,7 @@ import gzip
 import json
 import math
 import re
+import zipfile
 from collections import Counter, defaultdict
 from collections.abc import Iterable
 from datetime import UTC, datetime
@@ -17,6 +18,7 @@ from typing import Any
 
 import geopandas as gpd
 import h3
+import xlrd
 from pyproj import Transformer
 from shapely import wkt as shapely_wkt
 from shapely.geometry import MultiLineString, Point
@@ -819,6 +821,59 @@ def load_csv_if_present(path: Path | None) -> list[dict[str, Any]] | None:
         return [dict(row) for row in csv.DictReader(f)]
 
 
+def excel_cell_text(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return str(value).strip()
+
+
+def station_code_rows_from_xls_bytes(content: bytes) -> list[dict[str, Any]]:
+    book = xlrd.open_workbook(file_contents=content)
+    rows: list[dict[str, Any]] = []
+    for sheet in book.sheets():
+        if sheet.nrows < 2:
+            continue
+        headers = [excel_cell_text(sheet.cell_value(0, col)) for col in range(sheet.ncols)]
+        normalized_headers = {header.lower() for header in headers}
+        if not {"stn_code", "mrt_station_english"}.issubset(normalized_headers):
+            continue
+        for row_index in range(1, sheet.nrows):
+            row = {
+                headers[col]: excel_cell_text(sheet.cell_value(row_index, col))
+                for col in range(sheet.ncols)
+                if headers[col]
+            }
+            if any(row.values()):
+                rows.append(row)
+    return rows
+
+
+def load_train_station_codes_if_present(path: Path | None) -> list[dict[str, Any]] | None:
+    if path is None or not path.is_file():
+        return None
+    suffix = path.suffix.lower()
+    if suffix == ".csv":
+        return load_csv_if_present(path)
+    if suffix == ".xls":
+        return station_code_rows_from_xls_bytes(path.read_bytes())
+    if suffix == ".zip":
+        with zipfile.ZipFile(path) as archive:
+            xls_names = sorted(name for name in archive.namelist() if name.lower().endswith(".xls"))
+            for name in xls_names:
+                rows = station_code_rows_from_xls_bytes(archive.read(name))
+                if rows:
+                    return rows
+            csv_names = sorted(name for name in archive.namelist() if name.lower().endswith(".csv"))
+            for name in csv_names:
+                text = archive.read(name).decode("utf-8-sig")
+                rows = [dict(row) for row in csv.DictReader(text.splitlines())]
+                if rows:
+                    return rows
+    return None
+
+
 def payload_rows(payload: dict[str, Any] | list[dict[str, Any]] | None) -> list[dict[str, Any]]:
     if isinstance(payload, dict) and isinstance(payload.get("value"), list):
         return [row for row in payload["value"] if isinstance(row, dict)]
@@ -1154,9 +1209,12 @@ def export_transit_pois(output_dir: Path = DEFAULT_EXPORT_DIR) -> dict[str, Any]
     bus_routes_payload = load_json_if_present(
         raw_file_from_manifest("bus_routes", "bus_routes.json")
     )
-    train_station_codes_payload = load_csv_if_present(
-        raw_file_from_manifest("train_station_codes", "train_station_codes.csv")
+    train_station_codes_path = (
+        raw_file_from_manifest("train_station_codes", "train_station_codes.zip")
+        or raw_file_from_manifest("train_station_codes", "train_station_codes.xls")
+        or raw_file_from_manifest("train_station_codes", "train_station_codes.csv")
     )
+    train_station_codes_payload = load_train_station_codes_if_present(train_station_codes_path)
     collection = build_transit_poi_collection(
         mrt_geojson if isinstance(mrt_geojson, dict) else None,
         bus_payload if isinstance(bus_payload, (dict, list)) else None,

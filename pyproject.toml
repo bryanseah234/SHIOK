@@ -20,6 +20,7 @@ dependencies = [
     "python-igraph>=0.11.0",
     "shapely>=2.0.0",
     "types-pyyaml>=6.0.12.20260724",
+    "xlrd>=2.0.1",
 ]
 
 [dependency-groups]

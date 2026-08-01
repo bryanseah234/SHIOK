@@ -46,10 +46,11 @@ sources:
 
   train_station_codes:
     name: "Train Station Codes and Chinese Names"
-    kind: "datagov_polldownload"
-    dataset_id: "d_d312a5b127e1ae74299b8ae664cedd4e"
+    kind: "datamall_static_file"
+    url: "https://datamall.lta.gov.sg/content/dam/datamall/datasets/Geospatial/Train%20Station%20Codes%20and%20Chinese%20Names.zip"
+    filename: "train_station_codes.zip"
     verified: "2026-08-02"
-    notes: "data.gov.sg CSV — station code, English station name, and MRT/LRT line name; used to enrich static MRT/LRT map POIs; incomplete for newer TEL stations such as Mayflower"
+    notes: "LTA DataMall static XLS inside ZIP — station code, English station name, and MRT/LRT line name; used to enrich static MRT/LRT map POIs; verified to include newer TEL stations such as Mayflower"
 
   traffic_signals:
     name: "Traffic Signals"

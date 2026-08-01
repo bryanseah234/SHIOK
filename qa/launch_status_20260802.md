@@ -17,10 +17,10 @@ Root directory: `web`
 - Remote manifest: HTTP 404, not deployed yet
 - State counts: 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384 `NO_TRANSIT_IN_RANGE`, 319 `NOT_YET_SCORED`
 - Static validation: 124,032 indexed postals, 114,329 geometry postals, 114,329 geometry postals with route segments, 6,011 transit features
-- Transit POIs refreshed locally with official Train Station Codes CSV where
-  available: 661 features now have station codes; 160 of 190 station centroid
-  features have station codes. Newer TEL stations such as Mayflower remain
-  missing from that official CSV.
+- Transit POIs refreshed locally with official LTA DataMall Train Station Codes
+  workbook: 774 features now have station codes; 182 of 190 station centroid
+  features have station codes. `MAYFLOWER MRT STATION` is now enriched as
+  `TE6`, `Thomson-East Coast Line`.
 
 ## Verified Checks
 

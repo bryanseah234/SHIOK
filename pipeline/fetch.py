@@ -174,6 +174,14 @@ def datagov_raw_filename(
     return f"{source_key}.geojson"
 
 
+def static_raw_filename(source_key: str, url: str, spec: dict[str, Any]) -> str:
+    filename = str(spec.get("filename", "")).strip()
+    if filename:
+        return filename
+    suffix = Path(unquote(urlsplit(url).path)).suffix.lower()
+    return f"{source_key}{suffix or '.bin'}"
+
+
 def resolve_datamall_static_url(keyword: str) -> str:
     from datetime import timedelta
 
@@ -372,6 +380,31 @@ def run_check(sources: dict[str, Any]) -> int:
                 error_count += 1
                 print(f"[{key}] {name}: Error during check: {e}")
 
+        elif kind == "datamall_static_file":
+            url = str(spec.get("url", "")).strip()
+            if not url:
+                unresolved_count += 1
+                print(f"[{key}] {name}: Skipped (static URL missing)")
+                continue
+
+            checked_count += 1
+            try:
+                with httpx.Client(timeout=60.0, follow_redirects=True) as client:
+                    resp = client.get(url, headers=get_headers())
+                    resp.raise_for_status()
+                    content = resp.content
+
+                sha256 = hashlib.sha256(content).hexdigest()
+                if current_entry.get("sha256") != sha256:
+                    changed_count += 1
+                    print(f"[{key}] {name}: CHANGED (hash mismatch)")
+                else:
+                    unchanged_count += 1
+                    print(f"[{key}] {name}: unchanged")
+            except (httpx.HTTPError, ValueError, OSError) as e:
+                error_count += 1
+                print(f"[{key}] {name}: Error during check: {e}")
+
         else:
             unresolved_count += 1
             print(f"[{key}] {name}: Stub check (listing/probe required)")
@@ -510,6 +543,55 @@ def run_ingest(sources: dict[str, Any]) -> int:
                     print(
                         f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
                     )
+            except (httpx.HTTPError, ValueError, OSError) as e:
+                print(f"[{key}] Error ingesting {name}: {e}")
+
+        elif kind == "datamall_static_file":
+            url = str(spec.get("url", "")).strip()
+            if not url:
+                continue
+
+            current_entry = manifest_sources.get(key, {})
+            try:
+                headers = get_headers()
+                if current_entry.get("etag"):
+                    headers["If-None-Match"] = current_entry["etag"]
+                if current_entry.get("last_modified"):
+                    headers["If-Modified-Since"] = current_entry["last_modified"]
+
+                with httpx.Client(timeout=60.0, follow_redirects=True) as client:
+                    resp = client.get(url, headers=headers)
+                    if resp.status_code == 304:
+                        print(f"[{key}] {name}: unchanged (304 Not Modified), skipping ingest.")
+                        continue
+
+                    resp.raise_for_status()
+                    content = resp.content
+
+                sha256 = hashlib.sha256(content).hexdigest()
+                etag = resp.headers.get("ETag", "")
+                last_modified = resp.headers.get("Last-Modified", "")
+
+                target_dir = RAW_DIR / sha256
+                target_dir.mkdir(parents=True, exist_ok=True)
+                filename = static_raw_filename(key, url, spec)
+                target_path = target_dir / filename
+
+                with open(target_path, "wb") as f:
+                    f.write(content)
+
+                manifest_sources[key] = {
+                    "source_name": name,
+                    "url_as_discovered": stable_manifest_url(url),
+                    "sha256": sha256,
+                    "bytes": len(content),
+                    "etag": etag,
+                    "last_modified": last_modified,
+                    "fetched_at": datetime.now(UTC).isoformat(),
+                }
+                print(
+                    f"[{key}] Ingested {name} -> raw/{sha256[:8]}.../{filename} ({len(content)} bytes)"
+                )
             except (httpx.HTTPError, ValueError, OSError) as e:
                 print(f"[{key}] Error ingesting {name}: {e}")
 

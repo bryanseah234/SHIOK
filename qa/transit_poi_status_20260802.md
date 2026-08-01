@@ -24,9 +24,9 @@ Sample verified from `transit/pois.json`:
 - stop `60201`, `18 Woodsville`: 10 services, first bus `05:57`, last bus
   `00:50`
 
-MRT/LRT exits and station centroids are exported from DataMall MRT/LRT Station
-Exits, enriched where possible by the official data.gov.sg Train Station Codes
-and Chinese Names CSV:
+MRT/LRT exits and station centroids are exported from the MRT/LRT Station Exit
+source, enriched where possible by the official LTA DataMall Train Station
+Codes and Chinese Names workbook:
 
 - station name
 - exit code
@@ -35,22 +35,22 @@ and Chinese Names CSV:
 - station code and line name for stations present in the Train Station Codes
   source
 
-Pending bundle verification after static enrichment:
+Pending bundle verification after DataMall station-code promotion:
 
 - 6,011 total transit POI features
-- 661 features with station codes
-- 160 of 190 MRT/LRT station centroid features with station codes
+- 774 features with station codes
+- 182 of 190 MRT/LRT station centroid features with station codes
 - sample enriched station: `ADMIRALTY MRT STATION`, `NS10`,
-  `North South Line`
+  `North-South Line`
+- TEL sample now covered: `MAYFLOWER MRT STATION`, `TE6`,
+  `Thomson-East Coast Line`
 
 ## Not Active Yet
 
 - Live bus arrivals/ETA/load: requires DataMall `AccountKey` behind a Vercel API
   route with caching, or local collection plus published static aggregates.
-- Complete MRT/LRT line and direction labels: the Train Station Codes CSV is
-  official but incomplete/stale for newer TEL stations. Example:
-  `MAYFLOWER MRT STATION` remains missing station code and line name in this
-  source.
+- Complete MRT/LRT direction labels: station code and line names are static,
+  but train direction/arrival labels are not in the current bulk map contract.
 - MRT/LRT first/last train: not in the current bulk source. Needs an official
   static ingestion path before display.
 
