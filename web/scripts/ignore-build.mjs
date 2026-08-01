@@ -1,11 +1,12 @@
 import { execFileSync } from "node:child_process";
-import { isAbsolute, relative, resolve } from "node:path";
+import * as path from "node:path";
+import { fileURLToPath } from "node:url";
 
 function git(args) {
   return execFileSync("git", args, { encoding: "utf8" }).trim();
 }
 
-function changedFiles() {
+export function changedFiles() {
   try {
     return git(["diff", "--name-only", "HEAD^", "HEAD"])
       .split(/\r?\n/)
@@ -16,21 +17,31 @@ function changedFiles() {
   }
 }
 
-const repoRoot = resolve(git(["rev-parse", "--show-toplevel"]));
-const projectRoot = resolve(process.cwd());
-const files = changedFiles();
-
-const touchesProject = files.some((file) => {
+export function fileTouchesProject(file, repoRoot, projectRoot, pathApi = path) {
   if (file === "__force_build__") return true;
-  const absolute = resolve(repoRoot, file);
-  const rel = relative(projectRoot, absolute);
-  return rel === "" || (!rel.startsWith("..") && !isAbsolute(rel));
-});
-
-if (touchesProject) {
-  console.log("Vercel build required: commit touches web project files.");
-  process.exit(1);
+  const absolute = pathApi.resolve(repoRoot, file);
+  const rel = pathApi.relative(projectRoot, absolute);
+  return rel === "" || (!rel.startsWith("..") && !pathApi.isAbsolute(rel));
 }
 
-console.log("Vercel build skipped: commit does not touch web project files.");
-process.exit(0);
+export function anyFileTouchesProject(files, repoRoot, projectRoot, pathApi = path) {
+  return files.some((file) => fileTouchesProject(file, repoRoot, projectRoot, pathApi));
+}
+
+export function main() {
+  const repoRoot = path.resolve(git(["rev-parse", "--show-toplevel"]));
+  const projectRoot = path.resolve(process.cwd());
+  const touchesProject = anyFileTouchesProject(changedFiles(), repoRoot, projectRoot);
+
+  if (touchesProject) {
+    console.log("Vercel build required: commit touches web project files.");
+    return 1;
+  }
+
+  console.log("Vercel build skipped: commit does not touch web project files.");
+  return 0;
+}
+
+if (path.resolve(process.argv[1] || "") === path.resolve(fileURLToPath(import.meta.url))) {
+  process.exit(main());
+}
