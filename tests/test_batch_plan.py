@@ -4,7 +4,7 @@ from pathlib import Path
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-from pipeline.batch_plan import build_batch_plan, format_duration
+from pipeline.batch_plan import build_batch_plan, default_universe_paths, format_duration
 
 
 def write_json(path: Path, payload: dict) -> None:
@@ -46,6 +46,33 @@ def test_format_duration_compacts_days_hours_minutes_seconds():
     assert format_duration(972) == "16m 12s"
     assert format_duration(17256) == "4h 47m 36s"
     assert format_duration(90061) == "1d 1h 1m 1s"
+
+
+def test_default_universe_paths_prefers_completed_bounded_geocode_pair(tmp_path: Path):
+    base_summary = tmp_path / "postal_universe_candidate_full_registered_summary.json"
+    base_universe = tmp_path / "postal_universe_candidate_full_registered.parquet"
+    geocoded_summary = tmp_path / "postal_universe_candidate_full_registered_geocoded_summary.json"
+    geocoded_universe = tmp_path / "postal_universe_candidate_full_registered_geocoded.parquet"
+    for path in [base_summary, base_universe, geocoded_summary, geocoded_universe]:
+        path.write_text("placeholder", encoding="utf-8")
+
+    assert default_universe_paths("candidate_full_registered", tmp_path) == (
+        geocoded_summary,
+        geocoded_universe,
+    )
+
+
+def test_default_universe_paths_requires_complete_geocoded_pair(tmp_path: Path):
+    base_summary = tmp_path / "postal_universe_candidate_full_registered_summary.json"
+    base_universe = tmp_path / "postal_universe_candidate_full_registered.parquet"
+    geocoded_summary = tmp_path / "postal_universe_candidate_full_registered_geocoded_summary.json"
+    for path in [base_summary, base_universe, geocoded_summary]:
+        path.write_text("placeholder", encoding="utf-8")
+
+    assert default_universe_paths("candidate_full_registered", tmp_path) == (
+        base_summary,
+        base_universe,
+    )
 
 
 def test_batch_plan_reports_bounded_geocoding_and_keeps_gate_closed(tmp_path: Path):

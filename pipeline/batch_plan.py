@@ -85,6 +85,19 @@ def parquet_row_count(path: Path) -> int:
     return int(pq.read_metadata(path).num_rows)
 
 
+def default_universe_paths(
+    mode: str,
+    processed_dir: Path = PROCESSED_DIR,
+) -> tuple[Path, Path]:
+    base_summary = processed_dir / f"postal_universe_{mode}_summary.json"
+    base_universe = processed_dir / f"postal_universe_{mode}.parquet"
+    geocoded_summary = processed_dir / f"postal_universe_{mode}_geocoded_summary.json"
+    geocoded_universe = processed_dir / f"postal_universe_{mode}_geocoded.parquet"
+    if geocoded_summary.is_file() and geocoded_universe.is_file():
+        return geocoded_summary, geocoded_universe
+    return base_summary, base_universe
+
+
 def build_batch_plan(
     *,
     mode: str,
@@ -95,8 +108,9 @@ def build_batch_plan(
     debug_path: Path | None = None,
     onemap_delay_sec: float | None = None,
 ) -> tuple[bool, dict[str, Any]]:
-    summary_path = summary_path or PROCESSED_DIR / f"postal_universe_{mode}_summary.json"
-    universe_path = universe_path or PROCESSED_DIR / f"postal_universe_{mode}.parquet"
+    default_summary_path, default_universe_path = default_universe_paths(mode)
+    summary_path = summary_path or default_summary_path
+    universe_path = universe_path or default_universe_path
     qa_path = qa_path or QA_DIR / "conflation_qa_island.json"
     debug_path = debug_path or QA_DIR / "island_debug.geojson"
 
