@@ -22,6 +22,7 @@ from shapely.geometry import MultiLineString, Point
 from shapely.ops import linemerge
 
 from pipeline.bus import parse_peak_frequency_minutes
+from pipeline.osm_tags import load_osm_tag_schema
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
 from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
 
@@ -34,6 +35,7 @@ GEOM_PROMOTION_THRESHOLD_BYTES = int(MAX_FILE_BYTES * 0.9)
 GEOM_MAX_PROMOTION_RESOLUTION = 12
 VALID_STATES = {"SCORED", "SCORED_PARTIAL", NOT_YET_SCORED, NO_TRANSIT_IN_RANGE}
 TRANSIT_SOURCE_KEYS = ("mrt_lrt_exits", "bus_stops", "bus_services", "bus_routes")
+OSM_TAG_SCHEMA = load_osm_tag_schema()
 
 
 def slugify_area(value: Any) -> str:
@@ -262,14 +264,7 @@ def route_edge_source_class(edge: dict[str, Any]) -> str:
     if (
         indoor in {"yes", "building_passage"}
         or building_part in {"roof", "canopy", "covered"}
-        or covered
-        in {
-            "yes",
-            "covered",
-            "arcade",
-            "colonnade",
-            "building_passage",
-        }
+        or covered in OSM_TAG_SCHEMA.covered_values
         or man_made == "canopy"
         or (public_transport == "platform" and shelter in {"yes", "roof", "covered", "canopy"})
         or shelter in {"yes", "roof", "covered", "canopy"}

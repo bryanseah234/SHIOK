@@ -44,6 +44,11 @@ def test_route_edge_source_class_uses_osm_location_provenance():
     )
     assert route_edge_source_class({"is_covered": True, "building:part": "roof"}) == "osm_covered"
     assert route_edge_source_class({"is_covered": True, "man_made": "canopy"}) == "osm_covered"
+    assert route_edge_source_class({"is_covered": True, "covered": "building_arcade"}) == (
+        "osm_covered"
+    )
+    assert route_edge_source_class({"is_covered": True, "covered": "shelter"}) == "osm_covered"
+    assert route_edge_source_class({"is_covered": True, "covered": "roof"}) == "osm_covered"
     assert (
         route_edge_source_class(
             {"is_covered": True, "public_transport": "platform", "shelter": "yes"}
