@@ -30,6 +30,7 @@ Root directory: `web`
 - Release helper safe-plan mode: passed
 - Feedback-route drawing zoom-reset regression guard: passed
 - Transit POI popup static-info regression tests: passed
+- Pending-bundle readiness artifact `qa/readiness_pending_bundle_20260802_0424.json`: passed
 - Known-postal smoke including 570234: passed
 
 ## Next Production Command
