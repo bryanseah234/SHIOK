@@ -376,3 +376,19 @@ route effect; no score override has been applied.
   31.2% covered; `560234` improves the Mayflower MRT/LRT shortest route to
   545.6 m while remaining 52.3% covered. The false-negative is therefore
   narrowed but not solved.
+- A broader local targeted refresh then selected all 1,920 known, ready-to-score
+  postals within a 1 km EPSG:3414 buffer of the 5 approved correction lines and
+  wrote `generated_20260801_mayflower_1km_approved_corrections_targeted`.
+  Validation passed with 124,032 indexed postals, 114,329 geometry postals,
+  114,329 geometry postals with route segments, 5,208 bus stops, 613 MRT exits,
+  and 190 MRT/LRT stations. Readiness against this bundle reports no freshness
+  warning because the bundle manifest is newer than `processed/network_island.parquet`.
+  The state counts remain 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384
+  `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`. It is ready for direct
+  deploy after Vercel Hobby deployment quota resets, but it is not the Git
+  default until that first data deploy succeeds.
+- In the 1 km refresh, `560231` and `560234` still default to nearby bus stops
+  (`Opp Mayflower Sec Sch` and `Mayflower Sec Sch`) rather than the Mayflower
+  MRT evidence route. This confirms the default product behavior is bus-aware,
+  while the MRT-specific 560231/560234 shelter-route false-negative remains a
+  separate data/model QA issue.
