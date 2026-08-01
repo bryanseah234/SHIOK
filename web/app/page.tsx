@@ -167,12 +167,28 @@ function exposureGapCopy(lenM: number, index: number): string {
   return `${rank} short exposed stretch`;
 }
 
+function nestedNumber(value: unknown, path: string[]): number | null {
+  let cursor = value;
+  for (const key of path) {
+    if (!cursor || typeof cursor !== "object" || !(key in cursor)) return null;
+    cursor = (cursor as Record<string, unknown>)[key];
+  }
+  return typeof cursor === "number" && Number.isFinite(cursor) ? cursor : null;
+}
+
 function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): string | null {
   if (score.state === "SCORED_PARTIAL") {
     return "Partial score: nearby bus service is counted, but exact walking-route shelter is still pending.";
   }
   if (score.state === "NO_TRANSIT_IN_RANGE") {
-    return `No qualifying ${transitModeLabel(transitMode)} walk was found within the current scoring range.`;
+    const nearestM =
+      transitMode === "best_transit"
+        ? nestedNumber(score.provenance, ["routing_diagnostics", "nearest_routed_m"])
+        : null;
+    if (nearestM !== null) {
+      return `Closest routed transit found is about ${formatDistance(nearestM)} away; current scoring range is 1.2 km.`;
+    }
+    return `No ${transitModeLabel(transitMode)} walk was found within the current scoring range.`;
   }
   if (score.state === "NOT_YET_SCORED") {
     return "This postal is in the source universe, but it still needs usable location evidence.";
