@@ -193,6 +193,24 @@ checks the score card, route legend, map text equivalent, and short-mobile card
 fit, then writes a JSON report. PNG screenshots under `qa/` remain ignored by
 Git; commit the JSON/Markdown summaries instead.
 
+## Local Cleanup
+
+Use the cleanup helper to inspect removable local clutter from `logs/` and
+temporary staged deploy/browser directories under `tmp/`:
+
+```powershell
+.\scripts\cleanup-local-artifacts.bat
+```
+
+The default is a dry run. To delete only the listed ignored runtime artifacts:
+
+```powershell
+.\scripts\cleanup-local-artifacts.bat -ConfirmCleanup
+```
+
+The helper intentionally does not remove `qa/` evidence files or generated data
+bundles.
+
 ## Full Rescore Helper
 
 For a source/model change that requires every known postal to be rescored, run
