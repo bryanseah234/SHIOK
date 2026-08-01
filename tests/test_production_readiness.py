@@ -1,4 +1,5 @@
 import json
+import os
 from pathlib import Path
 
 import pyarrow as pa
@@ -161,4 +162,68 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     assert (
         "outlier review/rescore"
         in report["features"]["not_incorporated"]["overture_addresses_sg_candidate"]
+    )
+
+
+def test_build_readiness_report_warns_when_bundle_predates_network(tmp_path: Path):
+    web_dir = tmp_path / "web"
+    bundle_dir = web_dir / "public" / "data" / "generated_test"
+    export_static_artifacts([sample_record("123456")], output_dir=bundle_dir)
+    write_json(web_dir / "data-bundle.json", {"bundle": "generated_test"})
+    write_json(
+        tmp_path / ".vercel" / "project.json",
+        {
+            "projectId": "prj_test",
+            "projectName": "sgshiok",
+            "settings": {"rootDirectory": "web"},
+        },
+    )
+
+    summary_path = tmp_path / "processed" / "postal_universe_candidate_full_registered_summary.json"
+    universe_path = tmp_path / "processed" / "postal_universe_candidate_full_registered.parquet"
+    write_json(
+        summary_path,
+        {
+            "mode": "candidate_full_registered",
+            "total_unique_postals": 1,
+            "ready_to_score": 1,
+            "needs_geocode": 0,
+            "source_stats": [],
+            "source_only_counts": {},
+            "warnings": [],
+        },
+    )
+    write_universe(universe_path, rows=1)
+    params_path = tmp_path / "params.yaml"
+    params_path.write_text("onemap:\n  client_delay_sec: 2.0\n", encoding="utf-8")
+    qa_path = tmp_path / "qa" / "conflation_qa_island.json"
+    debug_path = tmp_path / "qa" / "island_debug.geojson"
+    write_production_island_qa(qa_path)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+    network_path = tmp_path / "processed" / "network_island.parquet"
+    network_path.write_bytes(b"newer network")
+
+    old_time = 1_800_000_000
+    new_time = old_time + 120
+    os.utime(bundle_dir / "manifest.json", (old_time, old_time))
+    os.utime(network_path, (new_time, new_time))
+
+    ok, report = build_readiness_report(
+        project_root=tmp_path,
+        web_dir=web_dir,
+        bundle_dir=bundle_dir,
+        summary_path=summary_path,
+        universe_path=universe_path,
+        params_path=params_path,
+        qa_path=qa_path,
+        debug_path=debug_path,
+        network_path=network_path,
+        postal_universe_path=universe_path,
+    )
+
+    assert ok, report
+    assert report["bundle"]["freshness"]["active_bundle_reflects_current_network"] is False
+    assert report["bundle"]["freshness"]["stale_seconds"] == 120
+    assert any(
+        "active bundle predates current network build" in warning for warning in report["warnings"]
     )

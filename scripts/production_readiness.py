@@ -73,6 +73,41 @@ def vercel_readiness(project_root: Path, web_dir: Path) -> dict[str, Any]:
     }
 
 
+def file_mtime_iso(path: Path) -> str | None:
+    if not path.is_file():
+        return None
+    return datetime.fromtimestamp(path.stat().st_mtime, UTC).isoformat()
+
+
+def bundle_network_freshness(bundle_dir: Path, network_path: Path) -> dict[str, Any]:
+    manifest_path = bundle_dir / "manifest.json"
+    manifest_payload = read_json(manifest_path) if manifest_path.is_file() else {}
+    bundle_mtime = manifest_path.stat().st_mtime if manifest_path.is_file() else None
+    network_mtime = network_path.stat().st_mtime if network_path.is_file() else None
+    stale_seconds: float | None = None
+    if bundle_mtime is not None and network_mtime is not None:
+        stale_seconds = max(0.0, network_mtime - bundle_mtime)
+
+    stale = stale_seconds is not None and stale_seconds > 60.0
+    warning = None
+    if stale:
+        warning = (
+            "active bundle predates current network build; run targeted/full rescore/export "
+            "before claiming latest network corrections are live"
+        )
+
+    return {
+        "active_bundle_reflects_current_network": not stale,
+        "bundle_manifest_path": str(manifest_path),
+        "bundle_manifest_mtime": file_mtime_iso(manifest_path),
+        "bundle_generated_at": manifest_payload.get("generated_at"),
+        "network_path": str(network_path),
+        "network_mtime": file_mtime_iso(network_path),
+        "stale_seconds": round(stale_seconds, 3) if stale_seconds is not None else None,
+        "warning": warning,
+    }
+
+
 def readiness_features() -> dict[str, Any]:
     return {
         "incorporated": {
@@ -146,8 +181,10 @@ def build_readiness_report(
         debug_path=debug_path,
     )
     vercel = vercel_readiness(project_root, web_dir)
+    freshness = bundle_network_freshness(bundle_dir, network_path)
 
     errors: list[str] = []
+    warnings: list[str] = []
     if not validation_ok:
         errors.append("static data validation failed")
     if not state_total_matches_manifest:
@@ -160,6 +197,8 @@ def build_readiness_report(
         errors.append("Vercel project is not linked")
     if not vercel["root_directory_ok"]:
         errors.append("Vercel root directory is not web")
+    if freshness["warning"]:
+        warnings.append(str(freshness["warning"]))
 
     report: dict[str, Any] = {
         "ok": not errors,
@@ -181,6 +220,7 @@ def build_readiness_report(
                 "errors": validation.get("errors", []),
                 "warnings": validation.get("warnings", []),
             },
+            "freshness": freshness,
         },
         "network": {
             "ok": island_qa.get("ok"),
@@ -202,6 +242,7 @@ def build_readiness_report(
         "vercel": vercel,
         "features": readiness_features(),
         "errors": errors,
+        "warnings": warnings,
     }
     return not errors, report
 
