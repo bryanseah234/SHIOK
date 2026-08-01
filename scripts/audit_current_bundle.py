@@ -115,6 +115,9 @@ def source_tuple(record: dict[str, Any]) -> tuple[str, ...]:
 
 
 def sample_postals(records: list[dict[str, Any]], replay_limit: int) -> list[str]:
+    if replay_limit <= 0:
+        return []
+
     no_transit = [record for record in records if record.get("state") == NO_TRANSIT_IN_RANGE]
     with_bus = [
         record
@@ -153,6 +156,8 @@ def sample_postals(records: list[dict[str, Any]], replay_limit: int) -> list[str
         for record in no_transit:
             if record["_area"] == area:
                 add(record)
+                if len(selected) >= replay_limit:
+                    return selected
                 break
     for bucket in [with_bus, without_bus]:
         step = max(1, len(bucket) // max(1, replay_limit // 2))
