@@ -4,11 +4,15 @@ import { join } from "path";
 
 describe("deployment packaging", () => {
   it("uploads the active generated data bundle to Vercel", () => {
-    const ignore = readFileSync(join(__dirname, "../../.vercelignore"), "utf-8");
+    const webIgnore = readFileSync(join(__dirname, "../../.vercelignore"), "utf-8");
+    const rootIgnore = readFileSync(join(__dirname, "../../../.vercelignore"), "utf-8");
     const activeBundle = String(dataBundle.bundle);
 
-    expect(ignore).toContain("public/data/generated_*/");
-    expect(ignore).toContain(`!public/data/${activeBundle}/`);
-    expect(ignore).toContain(`!public/data/${activeBundle}/**`);
+    expect(webIgnore).toContain("public/data/generated_*/");
+    expect(webIgnore).toContain(`!public/data/${activeBundle}/`);
+    expect(webIgnore).toContain(`!public/data/${activeBundle}/**`);
+    expect(rootIgnore).toContain("web/public/data/generated_*/");
+    expect(rootIgnore).toContain(`!web/public/data/${activeBundle}/`);
+    expect(rootIgnore).toContain(`!web/public/data/${activeBundle}/**`);
   });
 });

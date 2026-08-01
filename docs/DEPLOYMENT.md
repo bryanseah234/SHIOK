@@ -58,7 +58,9 @@ downloads the configured production data bundle during `next build` when
 
 ## Why This Exists
 
-`web/public/data/` is generated and intentionally ignored by Git. The current bundle is about 347 MB, so committing it would make GitHub/Vercel deploys brittle and noisy.
+`web/public/data/` is generated and intentionally ignored by Git. The current
+active bundle is hundreds of MB, so committing it would make GitHub/Vercel
+deploys brittle and noisy.
 
 For direct local deploys, Vercel receives the local bundle in `web/public/data/`.
 
@@ -69,8 +71,13 @@ For Git auto-deploys, the bundle is not in the repository. Before `next build`, 
 After a new score/export batch is generated and validated:
 
 1. Update `web/data-bundle.json` to the new `generated_...` directory.
-2. Run `.\scripts\deploy-production.bat`.
-3. Commit and push the source/config changes.
+2. Update both `.vercelignore` and `web/.vercelignore` so only that active
+   generated bundle is whitelisted.
+3. Run `.\scripts\preflight-production.bat -SkipNetworkPreflight`.
+4. Run `vercel deploy --prod --yes --scope theprawnvercel --no-wait` from the
+   repo root, then inspect the deployment until it is Ready.
+5. Commit and push the source/config/docs changes. The following Git
+   auto-deploy can now download the already-published bundle during `next build`.
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
 

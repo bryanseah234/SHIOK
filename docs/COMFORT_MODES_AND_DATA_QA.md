@@ -111,6 +111,17 @@ Current implementation:
   clear the full 10,704-record no-transit bucket, but it proves at least some
   remaining cases are access-threshold/product-policy cases rather than missing
   bus/MRT source data.
+- A broader 2026-08-01 replay audit on the same bundle with `--replay-limit 80`
+  classified 48/80 sampled no-transit records as
+  `all_candidates_beyond_access_range` and 32/80 as
+  `candidate_graph_disconnected`. Among the disconnected sample, 11 were within
+  75 m of a candidate transit component, so a future resnap/model change should
+  be tested carefully instead of increasing the snap cap blindly.
+- `generated_20260801_direct_bus_all_targeted` then patched all 1,320 current
+  no-transit records that already had scheduled bus-stop candidates within the
+  300 m direct-radius set. All 1,320 converted to `SCORED_PARTIAL`; active
+  bundle counts became 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384
+  `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
 
 ## Actual Bus Arrivals
 

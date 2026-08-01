@@ -41,17 +41,17 @@ coverage tradeoff.
 - needs geocode after bounded OneMap geocode: 319
 - bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
 
-Active web bundle `generated_20260801_no_transit_wide_targeted`
+Active web bundle `generated_20260801_direct_bus_all_targeted`
 
 - total score records: 124,032
 - `SCORED`: 112,880
-- `SCORED_PARTIAL`: 129
-- `NO_TRANSIT_IN_RANGE`: 10,704
+- `SCORED_PARTIAL`: 1,449
+- `NO_TRANSIT_IN_RANGE`: 9,384
 - `NOT_YET_SCORED`: 319
-- targeted direct-bus and wide refreshes: 208 sampled prior
-  `NO_TRANSIT_IN_RANGE` postals were patched; 129 converted to
-  `SCORED_PARTIAL` with a straight-line bus estimate and untrusted
-  rain/heat/crossing subscores left null.
+- targeted direct-bus and wide refreshes: all 1,320 current
+  `NO_TRANSIT_IN_RANGE` postals with scheduled bus-stop candidates within
+  300 m direct radius were patched to `SCORED_PARTIAL` with a straight-line bus
+  estimate and untrusted rain/heat/crossing subscores left null.
 
 `uv run python run.py postal-universe --mode candidate_full_all --download-missing`
 
