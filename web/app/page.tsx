@@ -364,7 +364,7 @@ function RouteModeControl({
   }
 
   return (
-    <div className={styles.segmented} aria-label="Route display">
+    <div className={`${styles.segmented} ${styles.routeSegmented}`} aria-label="Route display">
       <button
         type="button"
         className={mode === "shiokest" ? styles.segmentedActive : undefined}
@@ -373,6 +373,15 @@ function RouteModeControl({
         onClick={() => setMode("shiokest")}
       >
         Shiokest
+      </button>
+      <button
+        type="button"
+        className={mode === "both" ? styles.segmentedActive : undefined}
+        aria-pressed={mode === "both"}
+        disabled={disabled}
+        onClick={() => setMode("both")}
+      >
+        Both
       </button>
       <button
         type="button"

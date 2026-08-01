@@ -266,6 +266,10 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.routeSegmented {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .transitSegmented button[data-empty="true"] {
   color: #7a8581;
   background: #f3f6f4;
