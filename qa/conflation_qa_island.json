@@ -1,7 +1,7 @@
 {
   "nodes": 653122,
-  "edges": 896829,
-  "mean_edge_length_m": 17.85299775067322,
+  "edges": 896830,
+  "mean_edge_length_m": 17.853022466092206,
   "connected_components_count": 2752,
   "top_5_component_sizes": [
     618084,
@@ -1710,8 +1710,8 @@
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
   "covered_edge_length_m_inferred_hdb_point_cluster_connectors": 478238.17771681614,
-  "covered_edge_length_m_audited_corrections": 400.2867489100903,
-  "covered_edge_length_m_union": 4301281.344218519,
+  "covered_edge_length_m_audited_corrections": 440.3052758694887,
+  "covered_edge_length_m_union": 4301321.362745478,
   "shade_proxy_edge_count": 64541,
   "shade_proxy_weighted_length_m": 843339.2275912806,
   "shade_proxy_sources": {
@@ -1839,9 +1839,9 @@
     "confidence": "inferred_existing_pedestrian_edge_point_proxy"
   },
   "audited_shelter_corrections": {
-    "approved_features": 11,
-    "candidate_lines": 11,
-    "added_edges": 11,
+    "approved_features": 12,
+    "candidate_lines": 12,
+    "added_edges": 12,
     "skipped_edges": 0,
     "snap_max_m": 8.0,
     "path": "data\\audited_shelter_corrections.geojson"

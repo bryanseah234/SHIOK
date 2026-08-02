@@ -56,7 +56,7 @@
         "type": "LineString"
       },
       "properties": {
-        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560225-segment-3-hdb-source-overlap-review",
         "bridge_overlap_ratio": 0.0,
         "candidate_classification": "hdb_source_overlap_review",
@@ -69,12 +69,12 @@
         "length_m": 17.8,
         "official_shelter_overlap_ratio": 0.0,
         "original_status": "needs_owner_review",
-        "osm_shelter_overlap_ratio": 0.45,
+        "osm_shelter_overlap_ratio": 1.0,
         "postal": "560225",
         "promotion_status": "review_ready_not_scoring",
         "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
         "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
-        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 3,
         "source": "route_feedback_component_gap_source_audit",
@@ -97,7 +97,7 @@
         "type": "LineString"
       },
       "properties": {
-        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560225-segment-7-hdb-source-overlap-review",
         "bridge_overlap_ratio": 0.0,
         "candidate_classification": "hdb_source_overlap_review",
@@ -110,12 +110,12 @@
         "length_m": 16.5,
         "official_shelter_overlap_ratio": 0.0,
         "original_status": "needs_owner_review",
-        "osm_shelter_overlap_ratio": 0.485,
+        "osm_shelter_overlap_ratio": 1.0,
         "postal": "560225",
         "promotion_status": "review_ready_not_scoring",
         "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
         "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
-        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 7,
         "source": "route_feedback_component_gap_source_audit",
@@ -138,7 +138,7 @@
         "type": "LineString"
       },
       "properties": {
-        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560225-segment-8-covered-source-overlap-review",
         "bridge_overlap_ratio": 0.0,
         "candidate_classification": "covered_source_overlap_review",
@@ -156,7 +156,7 @@
         "promotion_status": "review_ready_not_scoring",
         "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
         "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
-        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 8,
         "source": "route_feedback_component_gap_source_audit",
@@ -179,7 +179,7 @@
         "type": "LineString"
       },
       "properties": {
-        "approval_note": "Owner approved autonomous promotion; source audit marked these features review_ready_not_scoring with HDB or OSM covered overlap. Blocked insufficient-overlap candidates remain unapproved.",
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560231-segment-1-hdb-source-overlap-review",
         "bridge_overlap_ratio": 0.0,
         "candidate_classification": "hdb_source_overlap_review",
@@ -192,12 +192,12 @@
         "length_m": 92.9,
         "official_shelter_overlap_ratio": 0.0,
         "original_status": "needs_owner_review",
-        "osm_shelter_overlap_ratio": 0.0,
+        "osm_shelter_overlap_ratio": 1.0,
         "postal": "560231",
         "promotion_status": "review_ready_not_scoring",
         "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
         "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
-        "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 1,
         "source": "route_feedback_component_gap_source_audit",
@@ -343,6 +343,47 @@
         "type": "LineString"
       },
       "properties": {
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560234-segment-4-covered-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "covered_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 0.463,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 40.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560234",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 4,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83714522767019,
+            1.3680060995063459
+          ],
+          [
+            103.83749889582384,
+            1.3680715025408114
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
         "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560234-segment-4-short-partial-hdb-overlap-review",
         "bridge_overlap_ratio": 0.0,
@@ -384,7 +425,7 @@
         "type": "LineString"
       },
       "properties": {
-        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "approval_note": "Source-audited review-ready AMK Mayflower connector candidates; each promoted feature has covered/HDB or OSM shelter overlap under the connector audit. Blocked insufficient-overlap candidates remain excluded.",
         "audit_id": "feedback-560234-segment-6-hdb-source-overlap-review",
         "bridge_overlap_ratio": 0.0,
         "candidate_classification": "hdb_source_overlap_review",
@@ -402,7 +443,7 @@
         "promotion_status": "review_ready_not_scoring",
         "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
         "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
-        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewed_at": "2026-08-02T16:54:36.747726+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 6,
         "source": "route_feedback_component_gap_source_audit",
