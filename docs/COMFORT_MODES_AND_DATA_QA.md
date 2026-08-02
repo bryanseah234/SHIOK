@@ -644,3 +644,14 @@ route effect; no score override has been applied.
   question, not a missing-candidate bug: the current candidate selector allows a
   farther but more sheltered bus stop to beat a shorter transit walk by
   composite score.
+- Eligibility-aware selector experiment: graph-routed bus candidates beyond
+  `bus_connectivity.routed_max_m` are now marked `node_set_eligible=false` for
+  default candidate selection, matching PRD D3's "bus stops within 250 m routed"
+  node-set rule while preserving direct-fallback buses as partial evidence.
+  `qa/candidate_audit_mayflower_amk_eligible_selector_20260803.json` shows the
+  effect: `560710` now defaults to `Aft Ang Mo Kio Int` at 92.9 m / 82.4%
+  covered / 93.0 total instead of the 476.3 m farther sheltered bus. The
+  targeted bundle validated, but
+  `qa/compare_eligible_selector_mayflower_amk_20260803.json` blocks data
+  promotion because four of five postals regress versus the active bundle. No
+  activation/deploy was done; the large temporary bundle was deleted.

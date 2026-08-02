@@ -33,6 +33,7 @@ def compact_candidate_audit(record: dict[str, Any]) -> dict[str, Any]:
         "direct_bus_fallback": provenance.get("direct_bus_fallback"),
         "bus_stop_access_connector": provenance.get("bus_stop_access_connector"),
         "untrusted_bus_routes": provenance.get("untrusted_bus_routes"),
+        "candidate_selection": provenance.get("candidate_selection"),
         "candidate_debug": provenance.get("candidate_debug"),
     }
 

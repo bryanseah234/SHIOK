@@ -1432,6 +1432,58 @@ def test_record_assembly_selects_highest_scoring_candidate():
     assert record["total"] == 75.0
 
 
+def test_record_assembly_prefers_node_set_eligible_bus_over_farther_high_score_bus():
+    near = {
+        "total": 93.0,
+        "node_set_eligible": True,
+        "subscores": {
+            "access": 100.0,
+            "bus": 100.0,
+            "rain": 82.4,
+            "heat": 82.4,
+            "crossing": 100.0,
+        },
+        "best_node": {
+            "type": "bus_stop",
+            "name": "Aft Ang Mo Kio Int",
+            "routed_m": 92.9,
+        },
+        "paths": {"shortest_m": 92.9, "sheltered_m": 92.9, "routing_type": "sheltered"},
+        "exposure_gaps": [],
+    }
+    far = {
+        "total": 95.4,
+        "node_set_eligible": False,
+        "subscores": {
+            "access": 88.6,
+            "bus": 100.0,
+            "rain": 98.4,
+            "heat": 98.4,
+            "crossing": 100.0,
+        },
+        "best_node": {
+            "type": "bus_stop",
+            "name": "Bef Al-Muttaqin Mque",
+            "routed_m": 476.3,
+        },
+        "paths": {"shortest_m": 476.3, "sheltered_m": 476.3, "routing_type": "sheltered"},
+        "exposure_gaps": [],
+    }
+    provenance = {}
+
+    record = assemble_score_record("560710", [near, far], None, provenance)
+
+    assert record["best_node"]["name"] == "Aft Ang Mo Kio Int"
+    assert record["total"] == 93.0
+    assert record["route_options"]["bus"]["best_node"]["name"] == "Aft Ang Mo Kio Int"
+    assert provenance["candidate_selection"] == {
+        "reason": "excluded_graph_routed_bus_candidates_beyond_routed_cap_from_default_choice",
+        "node_set_eligible_count": 1,
+        "skipped_ineligible_count": 1,
+        "selected_total_rank": 2,
+    }
+
+
 def test_candidate_debug_rows_serializes_ranked_candidate_details():
     candidate = CandidateNode(
         node_type="bus_stop",
@@ -1494,6 +1546,7 @@ def test_candidate_debug_rows_serializes_ranked_candidate_details():
             "sheltered_m": 100.0,
             "covered_ratio": 0.7,
             "routing_type": "sheltered",
+            "node_set_eligible": True,
             "straight_line_m": 80.0,
             "snap_distance_m": 5.0,
             "expected_wait_min": 3.0,

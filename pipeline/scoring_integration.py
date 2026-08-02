@@ -648,6 +648,10 @@ def score_candidate_route(
 
     candidate_score: dict[str, Any] = {
         "candidate": candidate,
+        "node_set_eligible": (
+            candidate.node_type != "bus_stop"
+            or shortest_m <= float(params["bus_connectivity"]["routed_max_m"])
+        ),
         "total": composite,
         "subscores": {
             "access": round_nullable_score(access),
@@ -765,6 +769,7 @@ def direct_bus_fallback_candidate_scores(
         }
         score: dict[str, Any] = {
             "candidate": candidate,
+            "node_set_eligible": True,
             "total": composite,
             "subscores": {
                 "access": round_nullable_score(access),
@@ -1457,6 +1462,10 @@ def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, f
     )
 
 
+def candidate_is_node_set_eligible(candidate_score: dict[str, Any]) -> bool:
+    return bool(candidate_score.get("node_set_eligible", True))
+
+
 def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
     has_pending_subscores = any(value is None for value in candidate_score["subscores"].values())
     return {
@@ -1501,6 +1510,7 @@ def candidate_debug_rows(candidate_scores: list[dict[str, Any]]) -> list[dict[st
                 "sheltered_m": paths.get("sheltered_m"),
                 "covered_ratio": paths.get("covered_ratio"),
                 "routing_type": paths.get("routing_type"),
+                "node_set_eligible": candidate_is_node_set_eligible(candidate_score),
                 "straight_line_m": best_node.get("straight_line_m"),
                 "snap_distance_m": best_node.get("snap_distance_m"),
                 "expected_wait_min": (
@@ -1539,6 +1549,21 @@ def best_candidate_by_type(
         if candidate_score["best_node"].get("type") == node_type
     ]
     return max(typed, key=candidate_sort_key) if typed else None
+
+
+def best_eligible_candidate_by_type(
+    scored_candidates: list[dict[str, Any]],
+    node_type: str,
+) -> dict[str, Any] | None:
+    eligible = [
+        candidate_score
+        for candidate_score in scored_candidates
+        if candidate_score["best_node"].get("type") == node_type
+        and candidate_is_node_set_eligible(candidate_score)
+    ]
+    if eligible:
+        return max(eligible, key=candidate_sort_key)
+    return best_candidate_by_type(scored_candidates, node_type)
 
 
 def build_provenance(
@@ -1678,9 +1703,13 @@ def assemble_score_record(
             "provenance": provenance,
         }
 
-    best = max(scored_candidates, key=candidate_sort_key)
+    eligible_candidates = [
+        candidate for candidate in scored_candidates if candidate_is_node_set_eligible(candidate)
+    ]
+    best_pool = eligible_candidates or scored_candidates
+    best = max(best_pool, key=candidate_sort_key)
     best_mrt = best_candidate_by_type(scored_candidates, "mrt_lrt_exit")
-    best_bus = best_candidate_by_type(scored_candidates, "bus_stop")
+    best_bus = best_eligible_candidate_by_type(scored_candidates, "bus_stop")
 
     route_options = {
         "best_transit": public_route_option(best),
@@ -1721,6 +1750,27 @@ def assemble_score_record(
     }
     if geometry_options:
         record["_geometry_options"] = geometry_options
+    skipped_count = len(scored_candidates) - len(eligible_candidates)
+    if skipped_count and eligible_candidates:
+        ranked_debug = candidate_debug_rows(scored_candidates)
+        best_node = best["best_node"]
+        best_paths = best["paths"]
+        selected_rank = next(
+            (
+                int(row["rank"])
+                for row in ranked_debug
+                if row.get("name") == best_node.get("name")
+                and row.get("type") == best_node.get("type")
+                and row.get("shortest_m") == best_paths.get("shortest_m")
+            ),
+            None,
+        )
+        provenance["candidate_selection"] = {
+            "reason": "excluded_graph_routed_bus_candidates_beyond_routed_cap_from_default_choice",
+            "node_set_eligible_count": len(eligible_candidates),
+            "skipped_ineligible_count": skipped_count,
+            "selected_total_rank": selected_rank,
+        }
     return record
 
 
