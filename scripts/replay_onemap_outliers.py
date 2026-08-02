@@ -187,6 +187,63 @@ def route_profile(record: dict[str, Any], mode: str | None = None) -> dict[str, 
     return {"shortest": shortest, "sheltered": sheltered}
 
 
+def merge_length_maps(target: dict[str, float], source: Any) -> None:
+    if not isinstance(source, dict):
+        return
+    for key, value in source.items():
+        try:
+            length_m = float(value)
+        except (TypeError, ValueError):
+            continue
+        target[str(key)] = target.get(str(key), 0.0) + length_m
+
+
+def summarize_profile_kind(rows: list[dict[str, Any]], profile_key: str) -> dict[str, Any]:
+    source_lengths: dict[str, float] = {}
+    synth_lengths: dict[str, float] = {}
+    confidence_lengths: dict[str, float] = {}
+    flag_counts: Counter[str] = Counter()
+    profiled_rows = 0
+    total_m = 0.0
+    covered_m = 0.0
+    exposed_m = 0.0
+    for row in rows:
+        profile = row.get(profile_key)
+        shortest = profile.get("shortest") if isinstance(profile, dict) else None
+        if not isinstance(shortest, dict):
+            continue
+        profiled_rows += 1
+        total_m += float(shortest.get("total_m") or 0.0)
+        covered_m += float(shortest.get("covered_m") or 0.0)
+        exposed_m += float(shortest.get("exposed_m") or 0.0)
+        for flag in [
+            "inferred_hdb_m",
+            "direct_bus_fallback_m",
+            "bridge_underpass_m",
+            "official_lta_shelter_m",
+            "osm_shelter_m",
+        ]:
+            if float(shortest.get(flag) or 0.0) > 0:
+                flag_counts[flag] += 1
+        merge_length_maps(source_lengths, shortest.get("source_layer_m"))
+        merge_length_maps(synth_lengths, shortest.get("synth_class_m"))
+        merge_length_maps(confidence_lengths, shortest.get("confidence_m"))
+
+    def rounded_lengths(values: dict[str, float]) -> dict[str, float]:
+        return {key: round(value, 1) for key, value in sorted(values.items())}
+
+    return {
+        "profiled_rows": profiled_rows,
+        "total_m": round(total_m, 1),
+        "covered_m": round(covered_m, 1),
+        "exposed_m": round(exposed_m, 1),
+        "flag_row_counts": dict(sorted(flag_counts.items())),
+        "source_layer_m": rounded_lengths(source_lengths),
+        "synth_class_m": rounded_lengths(synth_lengths),
+        "confidence_m": rounded_lengths(confidence_lengths),
+    }
+
+
 def replay_row(
     old: dict[str, Any],
     record: dict[str, Any],
@@ -225,7 +282,7 @@ def replay_row(
 def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     fallback_reasons = Counter(str(row.get("direct_bus_fallback_reason") or "none") for row in rows)
     best_types = Counter(str(row.get("new_best_type") or "none") for row in rows)
-    return {
+    summary: dict[str, Any] = {
         "sample_size": len(rows),
         "new_best_direct_bus_fallback_count": sum(
             row.get("new_best_routing_type") == "direct_bus_fallback_unrouted" for row in rows
@@ -236,6 +293,12 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "new_best_type_counts": dict(sorted(best_types.items())),
         "fallback_reason_counts": dict(sorted(fallback_reasons.items())),
     }
+    if any("new_best_route_profile" in row or "new_bus_route_profile" in row for row in rows):
+        summary["route_source_profile_summary"] = {
+            "new_best_shortest": summarize_profile_kind(rows, "new_best_route_profile"),
+            "new_bus_shortest": summarize_profile_kind(rows, "new_bus_route_profile"),
+        }
+    return summary
 
 
 def replay_outliers(

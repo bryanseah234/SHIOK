@@ -4,7 +4,7 @@
     "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius": 46,
     "none": 45
   },
-  "generated_at": "2026-08-02T02:15:49.554417+00:00",
+  "generated_at": "2026-08-02T02:20:41.907963+00:00",
   "network": "processed\\network.parquet",
   "new_best_direct_bus_fallback_count": 54,
   "new_best_type_counts": {
@@ -14,6 +14,84 @@
   },
   "new_bus_direct_bus_fallback_count": 54,
   "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "route_source_profile_summary": {
+    "new_best_shortest": {
+      "confidence_m": {
+        "inferred": 1704.5,
+        "inferred_existing_pedestrian_edge": 49.5,
+        "inferred_existing_pedestrian_edge_point_proxy": 94.1,
+        "partial_unrouted": 8813.0,
+        "source_polygon_match": 649.5,
+        "unknown": 11695.8
+      },
+      "covered_m": 2510.5,
+      "exposed_m": 20495.9,
+      "flag_row_counts": {
+        "bridge_underpass_m": 1,
+        "direct_bus_fallback_m": 54,
+        "inferred_hdb_m": 14,
+        "osm_shelter_m": 13
+      },
+      "profiled_rows": 97,
+      "source_layer_m": {
+        "direct_bus_fallback": 8813.0,
+        "inferred_hdb_point_footway": 94.1,
+        "inferred_hdb_precinct": 1153.5,
+        "inferred_hdb_precinct_footway": 49.5,
+        "inferred_hdb_void_deck": 550.9,
+        "osm_building_roof": 29.2,
+        "osm_explicit_shelter": 543.3,
+        "overhead_bridge_underpass": 77.0,
+        "unknown": 11695.8
+      },
+      "synth_class_m": {
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 1153.5,
+        "INFERRED_HDB_VOID_DECK": 321.8,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 229.1,
+        "none": 12488.6,
+        "unrouted_straight_line": 8813.0
+      },
+      "total_m": 23006.0
+    },
+    "new_bus_shortest": {
+      "confidence_m": {
+        "inferred": 667.0,
+        "inferred_existing_pedestrian_edge": 29.5,
+        "inferred_existing_pedestrian_edge_point_proxy": 89.6,
+        "partial_unrouted": 8813.0,
+        "source_polygon_match": 502.2,
+        "unknown": 4785.7
+      },
+      "covered_m": 1301.2,
+      "exposed_m": 13585.8,
+      "flag_row_counts": {
+        "bridge_underpass_m": 1,
+        "direct_bus_fallback_m": 54,
+        "inferred_hdb_m": 8,
+        "osm_shelter_m": 9
+      },
+      "profiled_rows": 81,
+      "source_layer_m": {
+        "direct_bus_fallback": 8813.0,
+        "inferred_hdb_point_footway": 89.6,
+        "inferred_hdb_precinct": 367.9,
+        "inferred_hdb_precinct_footway": 29.5,
+        "inferred_hdb_void_deck": 299.0,
+        "osm_building_roof": 1.8,
+        "osm_explicit_shelter": 423.4,
+        "overhead_bridge_underpass": 77.0,
+        "unknown": 4785.7
+      },
+      "synth_class_m": {
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 367.9,
+        "INFERRED_HDB_VOID_DECK": 251.0,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 48.0,
+        "none": 5406.8,
+        "unrouted_straight_line": 8813.0
+      },
+      "total_m": 14886.7
+    }
+  },
   "rows": [
     {
       "direct_bus_fallback_reason": null,

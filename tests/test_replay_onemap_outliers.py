@@ -229,3 +229,56 @@ def test_summarize_rows_counts_fallback_shapes():
     assert summary["new_bus_direct_bus_fallback_count"] == 1
     assert summary["new_best_type_counts"] == {"bus_stop": 1, "mrt_lrt_exit": 1}
     assert summary["fallback_reason_counts"] == {"implausible": 1, "none": 1}
+
+
+def test_summarize_rows_aggregates_route_source_profiles():
+    summary = summarize_rows(
+        [
+            {
+                "new_best_type": "bus_stop",
+                "new_best_routing_type": "sheltered",
+                "new_bus_routing_type": "direct_bus_fallback_unrouted",
+                "direct_bus_fallback_reason": None,
+                "new_best_route_profile": {
+                    "shortest": {
+                        "total_m": 100.0,
+                        "covered_m": 40.0,
+                        "exposed_m": 60.0,
+                        "inferred_hdb_m": 40.0,
+                        "direct_bus_fallback_m": 0.0,
+                        "bridge_underpass_m": 0.0,
+                        "official_lta_shelter_m": 0.0,
+                        "osm_shelter_m": 0.0,
+                        "source_layer_m": {"inferred_hdb_precinct": 40.0, "unknown": 60.0},
+                        "synth_class_m": {"INFERRED_HDB_PRECINCT_CONNECTOR": 40.0},
+                        "confidence_m": {"inferred": 40.0, "unknown": 60.0},
+                    }
+                },
+                "new_bus_route_profile": {
+                    "shortest": {
+                        "total_m": 50.0,
+                        "covered_m": 0.0,
+                        "exposed_m": 50.0,
+                        "inferred_hdb_m": 0.0,
+                        "direct_bus_fallback_m": 50.0,
+                        "bridge_underpass_m": 0.0,
+                        "official_lta_shelter_m": 0.0,
+                        "osm_shelter_m": 0.0,
+                        "source_layer_m": {"direct_bus_fallback": 50.0},
+                        "synth_class_m": {"unrouted_straight_line": 50.0},
+                        "confidence_m": {"partial_unrouted": 50.0},
+                    }
+                },
+            }
+        ]
+    )
+
+    profiles = summary["route_source_profile_summary"]
+    assert profiles["new_best_shortest"]["profiled_rows"] == 1
+    assert profiles["new_best_shortest"]["flag_row_counts"] == {"inferred_hdb_m": 1}
+    assert profiles["new_best_shortest"]["source_layer_m"] == {
+        "inferred_hdb_precinct": 40.0,
+        "unknown": 60.0,
+    }
+    assert profiles["new_bus_shortest"]["flag_row_counts"] == {"direct_bus_fallback_m": 1}
+    assert profiles["new_bus_shortest"]["source_layer_m"] == {"direct_bus_fallback": 50.0}

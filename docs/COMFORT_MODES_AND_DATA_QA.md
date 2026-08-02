@@ -506,6 +506,14 @@ route effect; no score override has been applied.
   (1,153.5 m), inferred HDB void deck (550.9 m), and OSM explicit shelter
   (543.3 m). Current evidence does not show the project-shorter queue is mainly
   caused by HDB/bridge over-permissiveness.
+- `qa/onemap_outlier_replay_bus_longer_profile_100_20260802.json` profiles the
+  bus-stop/project-longer queue. Of 92 selected rows, 67 have best-route
+  direct-bus fallback, 12 contain inferred HDB edges, and 1 contains OSM shelter.
+  Best-route source lengths are led by unknown base network edges (11,247.5 m),
+  direct-bus fallback (8,502.3 m), inferred HDB precinct (1,745.3 m), inferred
+  HDB void deck (491.8 m), and OSM explicit shelter (107.6 m). This confirms the
+  longer queue is also mostly bus fallback/missing-connector evidence, not a
+  reason to loosen HDB inference further.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit
