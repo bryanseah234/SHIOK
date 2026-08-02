@@ -13,4 +13,11 @@ describe("score card copy", () => {
     expect(source).toContain("Walking route not connected yet");
     expect(source).toContain("Outside current candidate thresholds");
   });
+
+  it("keeps shortest route context visible when it matches Shiokest", () => {
+    const source = readFileSync(join(__dirname, "../../app/page.tsx"), "utf-8");
+
+    expect(source).toContain("Shortest and Shiokest use the same walk here.");
+    expect(source).toContain('sameRoute ? "Shortest (same)" : "Shortest"');
+  });
 });

@@ -448,7 +448,7 @@ function RouteModeControl({
   if (sameRoute) {
     return (
       <div className={styles.sameRouteNote}>
-        Shortest is already the Shiokest route.
+        Shortest and Shiokest use the same walk here.
       </div>
     );
   }
@@ -554,12 +554,10 @@ function InlineRouteLegend({
       </span>
       {!directBusFallback && (
         <>
-          {!sameRoute && (
-            <span>
-              <i className={styles.shortestLine} />
-              Shortest
-            </span>
-          )}
+          <span>
+            <i className={styles.shortestLine} />
+            {sameRoute ? "Shortest (same)" : "Shortest"}
+          </span>
           <span>
             <i className={styles.gapLine} />
             Exposed
