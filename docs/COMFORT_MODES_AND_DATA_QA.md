@@ -245,6 +245,14 @@ Current implementation:
   from 88.4 to 96.6 with Shiokest covered ratio rising from 70.9% to 91.4%.
   Direct production deploy succeeded, the remote manifest was verified, and
   `web/data-bundle.json` now activates this bundle.
+- A later code-only bus trust fix adds a combined inferred-connector guard for
+  bus-stop routes: when origin/destination snap connectors plus bus-stop access
+  connector geometry dominate the route, the candidate is downgraded to explicit
+  direct-bus partial evidence instead of a fully routed walk. The probe
+  `qa/score_probe_bus_endpoint_combined_connector_guard_20260803.json` shows
+  `760468` and `417471` now become `SCORED_PARTIAL` direct-bus fallbacks under
+  current code. This is not active in the deployed score bundle until a targeted
+  or full rescore/export is promoted.
 
 ## Actual Bus Arrivals
 

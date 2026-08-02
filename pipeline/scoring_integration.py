@@ -943,6 +943,15 @@ def bus_route_trust_rejection_reason(
         return "dominant_unrouted_bus_endpoint_snap"
 
     bus_stop_connector_m = float(route_result.get("bus_stop_access_connector_m") or 0.0)
+    combined_connector_m = endpoint_snap_m + bus_stop_connector_m
+    min_combined_connector_m = float(bus_params.get("combined_connector_guard_min_m", 50.0))
+    min_combined_connector_ratio = float(bus_params.get("combined_connector_guard_min_ratio", 0.5))
+    if (
+        combined_connector_m >= min_combined_connector_m
+        and combined_connector_m >= route_m * min_combined_connector_ratio
+    ):
+        return "dominant_unrouted_bus_endpoint_and_access_connectors"
+
     max_bus_stop_connector_m = float(bus_params.get("access_connector_trust_max_m", 40.0))
     min_bus_stop_connector_ratio = float(bus_params.get("access_connector_trust_min_ratio", 0.2))
     if (
@@ -2144,6 +2153,12 @@ def score_postal_row(
                                 "routing_type": connector_route.get("routing_type"),
                             }
                         )
+                        implausible_bus_candidates.append(candidate)
+                        implausible_bus_route_distances.append(
+                            float(connector_route["shortest_length_m"])
+                        )
+                        implausible_bus_reasons[connector_trust_rejection_reason] += 1
+                        continue
                     else:
                         connector_crossings = crossing_counter.count_for_route(
                             connector_route.get("geometry")

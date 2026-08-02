@@ -466,7 +466,7 @@ def test_refresh_score_provenance_manifest_updates_from_score_shards(tmp_path: P
     assert refreshed["provenance"]["score_provenance_refreshed_at"]
 
 
-def test_refresh_score_provenance_manifest_fills_missing_scoring_fingerprints(
+def test_refresh_score_provenance_manifest_does_not_invent_scoring_fingerprints(
     tmp_path: Path,
 ):
     write_json(tmp_path / "manifest.json", {"provenance": {"record_count": 1}})
@@ -494,14 +494,8 @@ def test_refresh_score_provenance_manifest_fills_missing_scoring_fingerprints(
     report = refresh_score_provenance_manifest(tmp_path)
 
     refreshed = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
-    assert report["scoring_fingerprint_count"] == 5
-    assert set(refreshed["provenance"]["scoring_fingerprints"]) == {
-        "pipeline\\config\\params.yaml",
-        "pipeline\\config\\weights.yaml",
-        "pipeline\\routing.py",
-        "pipeline\\scoring.py",
-        "pipeline\\scoring_integration.py",
-    }
+    assert report["scoring_fingerprint_count"] == 0
+    assert refreshed["provenance"]["scoring_fingerprints"] == {}
 
 
 def test_export_splits_large_score_files(tmp_path: Path):

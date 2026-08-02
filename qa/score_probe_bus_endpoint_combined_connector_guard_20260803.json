@@ -1,0 +1,3149 @@
+[
+  {
+    "_geometry": {
+      "exposure_gap_edges": [],
+      "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+      "sheltered_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+          "is_covered": false,
+          "length_m": 50.85339878682402,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ],
+      "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+      "shortest_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+          "is_covered": false,
+          "length_m": 50.85339878682402,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ]
+    },
+    "_geometry_options": {
+      "best_transit": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      },
+      "bus": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      }
+    },
+    "_origin": {
+      "lat": 1.45575925,
+      "lon": 103.830882087,
+      "x": 27728.858,
+      "y": 48595.98
+    },
+    "best_node": {
+      "exit": "58201",
+      "name": "Aft Queen's Ave",
+      "routed_m": null,
+      "snap_distance_m": 3.2,
+      "station": "Aft Queen's Ave",
+      "straight_line_m": 50.9,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 50.9,
+      "shortest_m": 50.9
+    },
+    "postal": "758588",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 1.129,
+        "nearest_routed_m": 122.5,
+        "routed_stop_count": 2,
+        "service_count": 3,
+        "straight_line_stop_count": 2
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 1.615,
+        "candidate_count": 2,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 50.9,
+        "nearest_graph_routed_m": 153.5,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 2
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 32.8,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 11,
+        "candidate_scores": 10,
+        "nearest_routed_m": 122.5,
+        "route_results": 10,
+        "routes_within_access_range": 2
+      },
+      "scoring_fingerprints": {
+        "pipeline\\config\\params.yaml": "734138a06ffdd13ecd17c5e9ad67284f387051861f9ea9e73c9544719d574d6b",
+        "pipeline\\config\\weights.yaml": "5c62ac5f62e91f777a82f0dfa98eafba11ef47500c9f7822a81a31eae7d2cbec",
+        "pipeline\\routing.py": "8fb450690bf9d024b9c43dd02476a7d4e73805cd3b59b6ecbc2022dcc1a69e7c",
+        "pipeline\\scoring.py": "255b4a225a625848e150673b01bccfbc679eea668a254667a9b01c2179bf610c",
+        "pipeline\\scoring_integration.py": "30257aa3c78626e981eece889309237a18c093f7eeb18dd4cea40cec184a1923"
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 9
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "_geometry": {
+      "exposure_gap_edges": [],
+      "sheltered": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+      "sheltered_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+          "is_covered": false,
+          "length_m": 89.4907171210342,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ],
+      "shortest": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+      "shortest_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+          "is_covered": false,
+          "length_m": 89.4907171210342,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ]
+    },
+    "_geometry_options": {
+      "best_transit": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+            "is_covered": false,
+            "length_m": 89.4907171210342,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+            "is_covered": false,
+            "length_m": 89.4907171210342,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      },
+      "bus": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+            "is_covered": false,
+            "length_m": 89.4907171210342,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (30052.259 45160.223, 30086.31330514304 45077.46496261352)",
+            "is_covered": false,
+            "length_m": 89.4907171210342,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      }
+    },
+    "_origin": {
+      "lat": 1.424687436,
+      "lon": 103.851759997,
+      "x": 30052.259,
+      "y": 45160.223
+    },
+    "best_node": {
+      "exit": "59771",
+      "name": "Blk 469B",
+      "routed_m": null,
+      "snap_distance_m": 8.0,
+      "station": "Blk 469B",
+      "straight_line_m": 89.5,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 89.5,
+      "shortest_m": 89.5
+    },
+    "postal": "760468",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 1.932,
+        "nearest_routed_m": 246.6,
+        "routed_stop_count": 1,
+        "service_count": 3,
+        "straight_line_stop_count": 7
+      },
+      "candidate_selection": {
+        "node_set_eligible_count": 4,
+        "reason": "excluded_graph_routed_bus_candidates_beyond_routed_cap_from_default_choice",
+        "selected_total_rank": 4,
+        "skipped_ineligible_count": 3
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.899,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 89.5,
+        "nearest_graph_routed_m": 115.6,
+        "radius_m": 300.0,
+        "reason": "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius",
+        "reason_counts": {
+          "dominant_unrouted_bus_endpoint_and_access_connectors": 1,
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 31.2,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 16,
+        "candidate_scores": 14,
+        "nearest_routed_m": 246.6,
+        "route_results": 14,
+        "routes_within_access_range": 7
+      },
+      "scoring_fingerprints": {
+        "pipeline\\config\\params.yaml": "734138a06ffdd13ecd17c5e9ad67284f387051861f9ea9e73c9544719d574d6b",
+        "pipeline\\config\\weights.yaml": "5c62ac5f62e91f777a82f0dfa98eafba11ef47500c9f7822a81a31eae7d2cbec",
+        "pipeline\\routing.py": "8fb450690bf9d024b9c43dd02476a7d4e73805cd3b59b6ecbc2022dcc1a69e7c",
+        "pipeline\\scoring.py": "255b4a225a625848e150673b01bccfbc679eea668a254667a9b01c2179bf610c",
+        "pipeline\\scoring_integration.py": "30257aa3c78626e981eece889309237a18c093f7eeb18dd4cea40cec184a1923"
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 7,
+        "mrt_lrt_exit_candidates": 9
+      },
+      "untrusted_bus_routes": {
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
+        "candidate_count": 1,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "examples": [
+          {
+            "bus_stop_code": "59771",
+            "direct_m": 89.5,
+            "name": "Blk 469B",
+            "routed_m": 115.6,
+            "routing_type": "sheltered_with_bus_stop_access_connector"
+          }
+        ],
+        "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+        "reason_counts": {
+          "dominant_unrouted_bus_endpoint_and_access_connectors": 1
+        },
+        "road_centerline_guard_max_pedestrian_m": 25.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "59771",
+          "name": "Blk 469B",
+          "routed_m": null,
+          "snap_distance_m": 8.0,
+          "station": "Blk 469B",
+          "straight_line_m": 89.5,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 89.5,
+          "shortest_m": 89.5
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "59771",
+          "name": "Blk 469B",
+          "routed_m": null,
+          "snap_distance_m": 8.0,
+          "station": "Blk 469B",
+          "straight_line_m": 89.5,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 89.5,
+          "shortest_m": 89.5
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "_geometry": {
+      "exposure_gap_edges": [],
+      "sheltered": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+      "sheltered_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+          "is_covered": false,
+          "length_m": 67.93806446117311,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ],
+      "shortest": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+      "shortest_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+          "is_covered": false,
+          "length_m": 67.93806446117311,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ]
+    },
+    "_geometry_options": {
+      "best_transit": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+            "is_covered": false,
+            "length_m": 67.93806446117311,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+            "is_covered": false,
+            "length_m": 67.93806446117311,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      },
+      "bus": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+            "is_covered": false,
+            "length_m": 67.93806446117311,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (36763.876 34498.653, 36771.03418524033 34431.09309334823)",
+            "is_covered": false,
+            "length_m": 67.93806446117311,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      },
+      "mrt_lrt": {
+        "exposure_gap_edges": [
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36763.876 34498.653, 36815.54 34460.81)",
+            "is_covered": false,
+            "length_m": 64.04109262809702,
+            "source_layer": "origin_graph_snap_connector",
+            "synth_class": "ORIGIN_GRAPH_SNAP_CONNECTOR"
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36815.53684287271 34460.81342039658, 36782.40663899407 34435.75607119876)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 41.594,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36782.40663899407 34435.75607119876, 36750.31133124558 34413.66216866008)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 39.006,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36750.31133124558 34413.66216866008, 36737.32416450064 34402.106671144786)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 17.416,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36737.32416450064 34402.106671144786, 36706.88713017221 34378.08882222941)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 38.829,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36706.88713017221 34378.08882222941, 36675.693207195676 34357.62040986655)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 37.344,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36675.693207195676 34357.62040986655, 36672.9554879189 34357.200138731976)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 2.767,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36672.9554879189 34357.200138731976, 36670.91889212223 34356.87940717605)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 2.06,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36670.91889212223 34356.87940717605, 36657.475175890046 34353.429045039185)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 13.87,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36657.475175890046 34353.429045039185, 36655.61712769235 34337.716282869005)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 15.91,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36655.61712769235 34337.716282869005, 36657.020027065955 34317.16043936437)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 20.719,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36657.020027065955 34317.16043936437, 36659.40302331729 34272.8973524076)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 44.575,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.133,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36659.40302331729 34272.8973524076, 36653.57144122213 34272.49909930534)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 5.839,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36653.57144122213 34272.49909930534, 36652.12467399989 34272.42165139322)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.447,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "bridge": "yes",
+            "confidence": "",
+            "geometry": "LINESTRING (36652.12467399989 34272.42165139322, 36641.11811472627 34271.81314366713)",
+            "highway": "residential",
+            "is_covered": false,
+            "layer": "1",
+            "length_m": 11.011,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36641.12 34271.81, 36630.14 34271.25)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 10.99427123551478,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36630.14 34271.25, 36609.28 34267.04)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 21.280594446584825,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.097,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36609.28 34267.04, 36575.02 34248.58)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 38.91682412530739,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36575.02 34248.58, 36571.44 34216.29)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.48785157562772,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36571.44 34216.29, 36572.38 34188.78)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 27.52605492983153,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36572.38 34188.78, 36567.61 34162.77)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 26.443770532964386,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36567.61 34162.77, 36556.222478396434 34131.92193771584)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.88280089893655,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36556.222478396434 34131.92193771584, 36572.1 34101.4)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 34.40471441824515,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36572.1 34101.4, 36584.3 34084.97)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 20.464234654638712,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36584.3 34084.97, 36639.41 34089.09)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 55.263790134228266,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.075,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36639.41 34089.09, 36641.01 34084.62)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 4.747725771349974,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred_hdb_point_cluster",
+            "covered": "yes",
+            "geometry": "LINESTRING (36641.01 34084.62, 36642.87 34076.36)",
+            "highway": "inferred_hdb_point_cluster",
+            "is_covered": true,
+            "length_m": 8.46682939476377,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_point_cluster",
+            "synth_class": "INFERRED_HDB_POINT_CLUSTER_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36642.87 34076.36, 36649.74 34042.26)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 34.78515344223505,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.208,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred_existing_pedestrian_edge",
+            "covered": "yes",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36649.739158772216 34042.25977214738, 36669.48244584519 34028.59332514743)",
+            "highway": "footway",
+            "is_covered": true,
+            "length_m": 24.037,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct_footway"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36669.48 34028.59, 36675.92 34024.18)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 7.805235422452221,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred_existing_pedestrian_edge",
+            "covered": "yes",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36675.915150695604 34024.1815859041, 36702.970357295555 34005.484209837494)",
+            "highway": "footway",
+            "is_covered": true,
+            "length_m": 32.922,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct_footway"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36702.97 34005.48, 36727.49 33992.48)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 27.75302506033969,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36727.49 33992.48, 36718.523240373346 33986.15539992128)",
+            "highway": "inferred_hdb_void_deck_anchor",
+            "is_covered": true,
+            "length_m": 10.97284577299664,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK_ANCHOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36718.523240373346 33986.15539992128, 36722.99 33953.88)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.58302290520095,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36722.99 33953.88, 36726.3 33936.66)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 17.53523595506551,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36726.3 33936.66, 36732.91 33917.56)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 20.211434882269742,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36732.91 33917.56, 36721.49470085469 33901.82162525344)",
+            "highway": "inferred_hdb_void_deck_anchor",
+            "is_covered": true,
+            "length_m": 19.44236339131947,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK_ANCHOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36721.49470085469 33901.82162525344, 36697.79 33884.03)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 29.638737688523317,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36697.79 33884.03, 36683.22 33871.22)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 19.40054122956192,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36683.220588894335 33871.22345801862, 36639.573080786446 33855.77476658212)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 46.284,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36639.573080786446 33855.77476658212, 36660.5980733884 33782.851232273955)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 76.281,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36660.5980733884 33782.851232273955, 36661.955961395695 33778.1297236237)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 4.938,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36661.955961395695 33778.1297236237, 36658.51713314663 33776.91329124965)",
+            "highway": "service",
+            "is_covered": false,
+            "length_m": 3.646,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36658.51713314663 33776.91329124965, 36673.57629244829 33725.938702385385)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 53.422,
+            "name": "Lorong Mydin",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36673.57629244829 33725.938702385385, 36677.694635668755 33706.62138445359)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 19.856,
+            "name": "Lorong Mydin",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36677.694635668755 33706.62138445359, 36687.32258429067 33663.75177111902)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 44.17,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.627,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36687.32258429067 33663.75177111902, 36690.439063959406 33652.49533713797)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 11.74,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "source_polygon_match",
+            "covered": "yes",
+            "geometry": "LINESTRING (36690.439063959406 33652.49533713797, 36691.9972972813 33647.077212599215)",
+            "highway": "residential",
+            "is_covered": true,
+            "length_m": 5.666,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": "covered_linkway"
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36691.9972972813 33647.077212599215, 36695.02472252537 33636.53951316213)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 11.02,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36695.02472252537 33636.53951316213, 36696.5493893034 33636.838113484395)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 1.552,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36696.5493893034 33636.838113484395, 36734.15413117134 33644.03772825139)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 38.254,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.067,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36734.15413117134 33644.03772825139, 36785.48086610953 33654.07956031613)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 52.254,
+            "name": "Sims Avenue East",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36785.48086610953 33654.07956031613, 36844.2194638167 33666.089873456236)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 59.903,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.103,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36844.2194638167 33666.089873456236, 36847.13524890415 33666.67601402641)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 2.972,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "crossing": "traffic_signals",
+            "footway": "crossing",
+            "geometry": "LINESTRING (36847.13524890415 33666.67601402641, 36845.064908951215 33677.36854770784)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 10.95,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": ""
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36845.064908951215 33677.36854770784, 36842.24910635584 33682.37750397185)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 5.769,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36842.24910635584 33682.37750397185, 36853.62289175547 33684.710999644616)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 11.601,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.377,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36853.62 33684.71, 36861.19940003453 33686.69719991423)",
+            "is_covered": false,
+            "length_m": 7.835577093138509,
+            "source_layer": "destination_graph_snap_connector",
+            "synth_class": "DESTINATION_GRAPH_SNAP_CONNECTOR"
+          }
+        ],
+        "sheltered": "MULTILINESTRING ((36763.876 34498.653, 36815.54 34460.81), (36815.53684287271 34460.81342039658, 36782.40663899407 34435.75607119876, 36750.31133124558 34413.66216866008, 36737.32416450064 34402.106671144786, 36706.88713017221 34378.08882222941, 36675.693207195676 34357.62040986655, 36672.9554879189 34357.200138731976, 36670.91889212223 34356.87940717605, 36657.475175890046 34353.429045039185, 36655.61712769235 34337.716282869005, 36657.020027065955 34317.16043936437, 36659.40302331729 34272.8973524076, 36653.57144122213 34272.49909930534, 36652.12467399989 34272.42165139322, 36641.11811472627 34271.81314366713, 36630.14 34271.25, 36609.28 34267.04, 36575.02 34248.58, 36571.44 34216.29, 36572.38 34188.78, 36567.61 34162.77, 36556.222478396434 34131.92193771584, 36572.1 34101.4, 36584.3 34084.97, 36639.41 34089.09, 36641.01 34084.62, 36642.87 34076.36, 36649.74 34042.26, 36669.48244584519 34028.59332514743, 36675.92 34024.18, 36702.970357295555 34005.484209837494, 36727.49 33992.48, 36718.523240373346 33986.15539992128, 36722.99 33953.88, 36726.3 33936.66, 36732.91 33917.56, 36721.49470085469 33901.82162525344, 36697.79 33884.03, 36683.22 33871.22, 36639.573080786446 33855.77476658212, 36660.5980733884 33782.851232273955, 36661.955961395695 33778.1297236237, 36658.51713314663 33776.91329124965, 36673.57629244829 33725.938702385385, 36677.694635668755 33706.62138445359, 36687.32258429067 33663.75177111902, 36690.439063959406 33652.49533713797, 36691.9972972813 33647.077212599215, 36695.02472252537 33636.53951316213, 36696.5493893034 33636.838113484395, 36734.15413117134 33644.03772825139, 36785.48086610953 33654.07956031613, 36844.2194638167 33666.089873456236, 36847.13524890415 33666.67601402641, 36845.064908951215 33677.36854770784, 36842.24910635584 33682.37750397185, 36853.62289175547 33684.710999644616), (36853.62 33684.71, 36861.19940003453 33686.69719991423))",
+        "sheltered_path_edges": [
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36763.876 34498.653, 36815.54 34460.81)",
+            "is_covered": false,
+            "length_m": 64.04109262809702,
+            "source_layer": "origin_graph_snap_connector",
+            "synth_class": "ORIGIN_GRAPH_SNAP_CONNECTOR"
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36815.53684287271 34460.81342039658, 36782.40663899407 34435.75607119876)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 41.594,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36782.40663899407 34435.75607119876, 36750.31133124558 34413.66216866008)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 39.006,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36750.31133124558 34413.66216866008, 36737.32416450064 34402.106671144786)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 17.416,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36737.32416450064 34402.106671144786, 36706.88713017221 34378.08882222941)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 38.829,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36706.88713017221 34378.08882222941, 36675.693207195676 34357.62040986655)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 37.344,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36675.693207195676 34357.62040986655, 36672.9554879189 34357.200138731976)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 2.767,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36672.9554879189 34357.200138731976, 36670.91889212223 34356.87940717605)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 2.06,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36670.91889212223 34356.87940717605, 36657.475175890046 34353.429045039185)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 13.87,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36657.475175890046 34353.429045039185, 36655.61712769235 34337.716282869005)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 15.91,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36655.61712769235 34337.716282869005, 36657.020027065955 34317.16043936437)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 20.719,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36657.020027065955 34317.16043936437, 36659.40302331729 34272.8973524076)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 44.575,
+            "name": "Lengkong Tiga",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.133,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "right",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36659.40302331729 34272.8973524076, 36653.57144122213 34272.49909930534)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 5.839,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36653.57144122213 34272.49909930534, 36652.12467399989 34272.42165139322)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.447,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "bridge": "yes",
+            "confidence": "",
+            "geometry": "LINESTRING (36652.12467399989 34272.42165139322, 36641.11811472627 34271.81314366713)",
+            "highway": "residential",
+            "is_covered": false,
+            "layer": "1",
+            "length_m": 11.011,
+            "name": "Jalan Daud",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk": "both",
+            "source_layer": ""
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36641.12 34271.81, 36630.14 34271.25)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 10.99427123551478,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36630.14 34271.25, 36609.28 34267.04)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 21.280594446584825,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.097,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36609.28 34267.04, 36575.02 34248.58)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 38.91682412530739,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36575.02 34248.58, 36571.44 34216.29)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.48785157562772,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36571.44 34216.29, 36572.38 34188.78)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 27.52605492983153,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36572.38 34188.78, 36567.61 34162.77)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 26.443770532964386,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36567.61 34162.77, 36556.222478396434 34131.92193771584)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.88280089893655,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36556.222478396434 34131.92193771584, 36572.1 34101.4)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 34.40471441824515,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36572.1 34101.4, 36584.3 34084.97)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 20.464234654638712,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36584.3 34084.97, 36639.41 34089.09)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 55.263790134228266,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.075,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36639.41 34089.09, 36641.01 34084.62)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 4.747725771349974,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred_hdb_point_cluster",
+            "covered": "yes",
+            "geometry": "LINESTRING (36641.01 34084.62, 36642.87 34076.36)",
+            "highway": "inferred_hdb_point_cluster",
+            "is_covered": true,
+            "length_m": 8.46682939476377,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_point_cluster",
+            "synth_class": "INFERRED_HDB_POINT_CLUSTER_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36642.87 34076.36, 36649.74 34042.26)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 34.78515344223505,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.208,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred_existing_pedestrian_edge",
+            "covered": "yes",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36649.739158772216 34042.25977214738, 36669.48244584519 34028.59332514743)",
+            "highway": "footway",
+            "is_covered": true,
+            "length_m": 24.037,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct_footway"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36669.48 34028.59, 36675.92 34024.18)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 7.805235422452221,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred_existing_pedestrian_edge",
+            "covered": "yes",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36675.915150695604 34024.1815859041, 36702.970357295555 34005.484209837494)",
+            "highway": "footway",
+            "is_covered": true,
+            "length_m": 32.922,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct_footway"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36702.97 34005.48, 36727.49 33992.48)",
+            "highway": "inferred_hdb_void_deck",
+            "is_covered": true,
+            "length_m": 27.75302506033969,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36727.49 33992.48, 36718.523240373346 33986.15539992128)",
+            "highway": "inferred_hdb_void_deck_anchor",
+            "is_covered": true,
+            "length_m": 10.97284577299664,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK_ANCHOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36718.523240373346 33986.15539992128, 36722.99 33953.88)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 32.58302290520095,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36722.99 33953.88, 36726.3 33936.66)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 17.53523595506551,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36726.3 33936.66, 36732.91 33917.56)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 20.211434882269742,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36732.91 33917.56, 36721.49470085469 33901.82162525344)",
+            "highway": "inferred_hdb_void_deck_anchor",
+            "is_covered": true,
+            "length_m": 19.44236339131947,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_void_deck",
+            "synth_class": "INFERRED_HDB_VOID_DECK_ANCHOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36721.49470085469 33901.82162525344, 36697.79 33884.03)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 29.638737688523317,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "inferred",
+            "covered": "yes",
+            "geometry": "LINESTRING (36697.79 33884.03, 36683.22 33871.22)",
+            "highway": "inferred_hdb_precinct_connector",
+            "is_covered": true,
+            "length_m": 19.40054122956192,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": "inferred_hdb_precinct",
+            "synth_class": "INFERRED_HDB_PRECINCT_CONNECTOR"
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36683.220588894335 33871.22345801862, 36639.573080786446 33855.77476658212)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 46.284,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36639.573080786446 33855.77476658212, 36660.5980733884 33782.851232273955)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 76.281,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "footway": "sidewalk",
+            "geometry": "LINESTRING (36660.5980733884 33782.851232273955, 36661.955961395695 33778.1297236237)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 4.938,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36661.955961395695 33778.1297236237, 36658.51713314663 33776.91329124965)",
+            "highway": "service",
+            "is_covered": false,
+            "length_m": 3.646,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36658.51713314663 33776.91329124965, 36673.57629244829 33725.938702385385)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 53.422,
+            "name": "Lorong Mydin",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36673.57629244829 33725.938702385385, 36677.694635668755 33706.62138445359)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 19.856,
+            "name": "Lorong Mydin",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36677.694635668755 33706.62138445359, 36687.32258429067 33663.75177111902)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 44.17,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.627,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36687.32258429067 33663.75177111902, 36690.439063959406 33652.49533713797)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 11.74,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "source_polygon_match",
+            "covered": "yes",
+            "geometry": "LINESTRING (36690.439063959406 33652.49533713797, 36691.9972972813 33647.077212599215)",
+            "highway": "residential",
+            "is_covered": true,
+            "length_m": 5.666,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": "covered_linkway"
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36691.9972972813 33647.077212599215, 36695.02472252537 33636.53951316213)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 11.02,
+            "name": "Lorong Mydin",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36695.02472252537 33636.53951316213, 36696.5493893034 33636.838113484395)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 1.552,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36696.5493893034 33636.838113484395, 36734.15413117134 33644.03772825139)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 38.254,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.067,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36734.15413117134 33644.03772825139, 36785.48086610953 33654.07956031613)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 52.254,
+            "name": "Sims Avenue East",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36785.48086610953 33654.07956031613, 36844.2194638167 33666.089873456236)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 59.903,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.103,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36844.2194638167 33666.089873456236, 36847.13524890415 33666.67601402641)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 2.972,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "crossing": "traffic_signals",
+            "footway": "crossing",
+            "geometry": "LINESTRING (36847.13524890415 33666.67601402641, 36845.064908951215 33677.36854770784)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 10.95,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": ""
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36845.064908951215 33677.36854770784, 36842.24910635584 33682.37750397185)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 5.769,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36842.24910635584 33682.37750397185, 36853.62289175547 33684.710999644616)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 11.601,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.377,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36853.62 33684.71, 36861.19940003453 33686.69719991423)",
+            "is_covered": false,
+            "length_m": 7.835577093138509,
+            "source_layer": "destination_graph_snap_connector",
+            "synth_class": "DESTINATION_GRAPH_SNAP_CONNECTOR"
+          }
+        ],
+        "shortest": "MULTILINESTRING ((36763.876 34498.653, 36815.54 34460.81), (36815.53684287271 34460.81342039658, 36843.00245214185 34483.79178226966, 36856.579475570485 34494.462704487705, 36866.57313081506 34499.94754537263, 36877.768830967376 34501.88296856436, 36891.947090627786 34504.10598355301, 36906.303423583486 34506.030452602645, 36910.621475778156 34505.88684495003, 36911.01116193098 34500.590315974616, 36935.58389620927 34502.83578508993, 36935.78440080782 34497.207525032114, 36936.27464661542 34479.64823386922, 36938.79398192795 34350.80634770391, 36944.470368642156 34332.351567729056, 36944.89334839737 34329.95210438634, 36946.5630076936 34320.40953778916, 36948.15483917686 34308.55595158148, 36948.64509866538 34290.58753318844, 36949.747859930285 34260.090989455166, 36950.449608465875 34240.95048319739, 36950.5279111164 34228.64349047312, 36947.85724693277 34219.53202542858, 36944.27392773252 34212.78683537685, 36932.09929782064 34197.4607485007, 36923.38578747378 34182.090544263374, 36922.40666540423 34174.980541440586, 36922.562792735655 34165.05091340283, 36923.59813524385 34154.38046146356, 36932.85955431205 34089.88237629032, 36933.8178649294 34052.32008722439, 36935.55464730674 34032.01857749167, 36937.05741923054 34021.027473342176, 36942.88938419632 34009.771129471534, 36950.01360215919 33958.796295551765, 36950.8042360779 33944.16725163489, 36949.30212518982 33934.735157372794, 36940.922383167155 33922.26202854112, 36941.55678733195 33920.70294189918, 36941.86845301074 33919.05538482859, 36941.846250111914 33917.35252946156, 36941.49017540636 33915.69389327779, 36940.81135611394 33914.134764127746, 36938.685971636674 33906.19541199234, 36938.20759224091 33900.99837259643, 36941.413582528694 33875.21239173098, 36943.40619678114 33859.12379709906, 36950.943101796365 33780.0076453851, 36951.566594222284 33771.74771484537, 36946.43613220012 33771.27207639706, 36950.399308520995 33732.78105550441, 36953.638902032646 33700.38269244841, 36954.852314675474 33689.59061409929, 36945.74883440261 33687.75477498985, 36940.440324686184 33686.715198620754, 36900.39837677668 33678.26597949359, 36847.13524890415 33666.67601402641, 36845.064908951215 33677.36854770784, 36842.24910635584 33682.37750397185, 36853.62289175547 33684.710999644616), (36853.62 33684.71, 36861.19940003453 33686.69719991423))",
+        "shortest_path_edges": [
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36763.876 34498.653, 36815.54 34460.81)",
+            "is_covered": false,
+            "length_m": 64.04109262809702,
+            "source_layer": "origin_graph_snap_connector",
+            "synth_class": "ORIGIN_GRAPH_SNAP_CONNECTOR"
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36815.53684287271 34460.81342039658, 36843.00245214185 34483.79178226966)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 35.869,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36843.00245214185 34483.79178226966, 36856.579475570485 34494.462704487705)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 17.294,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36856.579475570485 34494.462704487705, 36866.57313081506 34499.94754537263)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 11.405,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36866.57313081506 34499.94754537263, 36877.768830967376 34501.88296856436)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 11.351,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36877.768830967376 34501.88296856436, 36891.947090627786 34504.10598355301)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 14.338,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36891.947090627786 34504.10598355301, 36906.303423583486 34506.030452602645)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 14.47,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36906.303423583486 34506.030452602645, 36910.621475778156 34505.88684495003)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 4.316,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36910.621475778156 34505.88684495003, 36911.01116193098 34500.590315974616)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 5.34,
+            "name": "Lengkong Empat",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36911.01116193098 34500.590315974616, 36935.58389620927 34502.83578508993)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 24.649,
+            "name": "Lengkong Empat",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36935.58389620927 34502.83578508993, 36935.78440080782 34497.207525032114)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 5.663,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36935.78440080782 34497.207525032114, 36936.27464661542 34479.64823386922)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 17.665,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36936.27464661542 34479.64823386922, 36938.79398192795 34350.80634770391)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 129.589,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36938.79398192795 34350.80634770391, 36944.470368642156 34332.351567729056)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 19.405,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36944.470368642156 34332.351567729056, 36944.89334839737 34329.95210438634)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 2.45,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36944.89334839737 34329.95210438634, 36946.5630076936 34320.40953778916)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 9.74,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36946.5630076936 34320.40953778916, 36948.15483917686 34308.55595158148)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 12.026,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36948.15483917686 34308.55595158148, 36948.64509866538 34290.58753318844)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 18.076,
+            "name": "Lengkong Lima",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36948.64509866538 34290.58753318844, 36949.747859930285 34260.090989455166)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 30.687,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36949.747859930285 34260.090989455166, 36950.449608465875 34240.95048319739)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 19.261,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.449608465875 34240.95048319739, 36950.5279111164 34228.64349047312)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 12.376,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.5279111164 34228.64349047312, 36947.85724693277 34219.53202542858)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 9.543,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36947.85724693277 34219.53202542858, 36944.27392773252 34212.78683537685)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 7.669,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36944.27392773252 34212.78683537685, 36932.09929782064 34197.4607485007)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 19.632,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36932.09929782064 34197.4607485007, 36923.38578747378 34182.090544263374)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 17.739,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36923.38578747378 34182.090544263374, 36922.40666540423 34174.980541440586)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 7.216,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36922.40666540423 34174.980541440586, 36922.562792735655 34165.05091340283)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 9.987,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36922.562792735655 34165.05091340283, 36923.59813524385 34154.38046146356)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 10.78,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36923.59813524385 34154.38046146356, 36932.85955431205 34089.88237629032)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 65.516,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36932.85955431205 34089.88237629032, 36933.8178649294 34052.32008722439)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 37.785,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36933.8178649294 34052.32008722439, 36935.55464730674 34032.01857749167)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 20.489,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36935.55464730674 34032.01857749167, 36937.05741923054 34021.027473342176)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 11.154,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36937.05741923054 34021.027473342176, 36942.88938419632 34009.771129471534)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 12.731,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36942.88938419632 34009.771129471534, 36950.01360215919 33958.796295551765)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 51.752,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.01360215919 33958.796295551765, 36950.8042360779 33944.16725163489)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 14.732,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.8042360779 33944.16725163489, 36949.30212518982 33934.735157372794)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 9.603,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36949.30212518982 33934.735157372794, 36940.922383167155 33922.26202854112)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 15.08,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36940.922383167155 33922.26202854112, 36941.55678733195 33920.70294189918)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.691,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36941.55678733195 33920.70294189918, 36941.86845301074 33919.05538482859)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.686,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36941.86845301074 33919.05538482859, 36941.846250111914 33917.35252946156)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.713,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36941.846250111914 33917.35252946156, 36941.49017540636 33915.69389327779)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.705,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36941.49017540636 33915.69389327779, 36940.81135611394 33914.134764127746)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 1.708,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36940.81135611394 33914.134764127746, 36938.685971636674 33906.19541199234)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 8.261,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36938.685971636674 33906.19541199234, 36938.20759224091 33900.99837259643)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 5.248,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36938.20759224091 33900.99837259643, 36941.413582528694 33875.21239173098)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 26.128,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36941.413582528694 33875.21239173098, 36943.40619678114 33859.12379709906)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 16.301,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36943.40619678114 33859.12379709906, 36950.943101796365 33780.0076453851)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 79.915,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.943101796365 33780.0076453851, 36951.566594222284 33771.74771484537)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 8.33,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36951.566594222284 33771.74771484537, 36946.43613220012 33771.27207639706)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 5.147,
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36946.43613220012 33771.27207639706, 36950.399308520995 33732.78105550441)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 38.909,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36950.399308520995 33732.78105550441, 36953.638902032646 33700.38269244841)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 32.74,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36953.638902032646 33700.38269244841, 36954.852314675474 33689.59061409929)",
+            "highway": "residential",
+            "is_covered": false,
+            "length_m": 10.92,
+            "name": "Jalan Kembangan",
+            "shade_confidence": "",
+            "shade_ratio": 0.0,
+            "shade_source": "",
+            "sidewalk:left": "separate",
+            "sidewalk:right": "no",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36954.852314675474 33689.59061409929, 36945.74883440261 33687.75477498985)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 9.279,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.263,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36945.74883440261 33687.75477498985, 36940.440324686184 33686.715198620754)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 5.405,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36940.440324686184 33686.715198620754, 36900.39837677668 33678.26597949359)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 40.89,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.199,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "geometry": "LINESTRING (36900.39837677668 33678.26597949359, 36847.13524890415 33666.67601402641)",
+            "highway": "primary",
+            "is_covered": false,
+            "length_m": 54.465,
+            "name": "Sims Avenue East",
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.238,
+            "shade_source": "nparks_greenery_proxy",
+            "sidewalk:both": "separate",
+            "source_layer": ""
+          },
+          {
+            "confidence": "",
+            "crossing": "traffic_signals",
+            "footway": "crossing",
+            "geometry": "LINESTRING (36847.13524890415 33666.67601402641, 36845.064908951215 33677.36854770784)",
+            "highway": "footway",
+            "is_covered": false,
+            "length_m": 10.95,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": ""
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36845.064908951215 33677.36854770784, 36842.24910635584 33682.37750397185)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 5.769,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 1.0,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "osm_tag",
+            "covered": "yes",
+            "geometry": "LINESTRING (36842.24910635584 33682.37750397185, 36853.62289175547 33684.710999644616)",
+            "highway": "footway",
+            "is_covered": true,
+            "layer": "-1",
+            "length_m": 11.601,
+            "shade_confidence": "proxy_heat_only",
+            "shade_ratio": 0.377,
+            "shade_source": "nparks_greenery_proxy",
+            "source_layer": "osm_native_covered"
+          },
+          {
+            "confidence": "inferred_endpoint_snap",
+            "geometry": "LINESTRING (36853.62 33684.71, 36861.19940003453 33686.69719991423)",
+            "is_covered": false,
+            "length_m": 7.835577093138509,
+            "source_layer": "destination_graph_snap_connector",
+            "synth_class": "DESTINATION_GRAPH_SNAP_CONNECTOR"
+          }
+        ]
+      }
+    },
+    "_origin": {
+      "lat": 1.328266822,
+      "lon": 103.91206681,
+      "x": 36763.876,
+      "y": 34498.653
+    },
+    "best_node": {
+      "exit": "83351",
+      "name": "Grosvenor View",
+      "routed_m": null,
+      "snap_distance_m": 11.1,
+      "station": "Grosvenor View",
+      "straight_line_m": 67.9,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 67.9,
+      "shortest_m": 67.9
+    },
+    "postal": "417471",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 5.5,
+        "nearest_routed_m": 248.5,
+        "routed_stop_count": 1,
+        "service_count": 1,
+        "straight_line_stop_count": 2
+      },
+      "candidate_selection": {
+        "node_set_eligible_count": 2,
+        "reason": "excluded_graph_routed_bus_candidates_beyond_routed_cap_from_default_choice",
+        "selected_total_rank": 2,
+        "skipped_ineligible_count": 1
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 5.5,
+        "candidate_count": 1,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 67.9,
+        "nearest_graph_routed_m": 117.9,
+        "radius_m": 300.0,
+        "reason": "dominant_unrouted_bus_endpoint_and_access_connectors",
+        "reason_counts": {
+          "dominant_unrouted_bus_endpoint_and_access_connectors": 1
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 64.0,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 6,
+        "candidate_scores": 6,
+        "nearest_routed_m": 248.5,
+        "route_results": 6,
+        "routes_within_access_range": 4
+      },
+      "scoring_fingerprints": {
+        "pipeline\\config\\params.yaml": "734138a06ffdd13ecd17c5e9ad67284f387051861f9ea9e73c9544719d574d6b",
+        "pipeline\\config\\weights.yaml": "5c62ac5f62e91f777a82f0dfa98eafba11ef47500c9f7822a81a31eae7d2cbec",
+        "pipeline\\routing.py": "8fb450690bf9d024b9c43dd02476a7d4e73805cd3b59b6ecbc2022dcc1a69e7c",
+        "pipeline\\scoring.py": "255b4a225a625848e150673b01bccfbc679eea668a254667a9b01c2179bf610c",
+        "pipeline\\scoring_integration.py": "30257aa3c78626e981eece889309237a18c093f7eeb18dd4cea40cec184a1923"
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 4
+      },
+      "untrusted_bus_routes": {
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
+        "candidate_count": 1,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "examples": [
+          {
+            "bus_stop_code": "83351",
+            "direct_m": 67.9,
+            "name": "Grosvenor View",
+            "routed_m": 117.9,
+            "routing_type": "sheltered_with_bus_stop_access_connector"
+          }
+        ],
+        "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+        "reason_counts": {
+          "dominant_unrouted_bus_endpoint_and_access_connectors": 1
+        },
+        "road_centerline_guard_max_pedestrian_m": 25.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "83351",
+          "name": "Grosvenor View",
+          "routed_m": null,
+          "snap_distance_m": 11.1,
+          "station": "Grosvenor View",
+          "straight_line_m": 67.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 67.9,
+          "shortest_m": 67.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 73.1,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 49.6
+      },
+      "bus": {
+        "best_node": {
+          "exit": "83351",
+          "name": "Grosvenor View",
+          "routed_m": null,
+          "snap_distance_m": 11.1,
+          "station": "Grosvenor View",
+          "straight_line_m": 67.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 67.9,
+          "shortest_m": 67.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 73.1,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 49.6
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "KEMBANGAN MRT STATION Exit A",
+          "routed_m": 1188.0,
+          "snap_distance_m": 7.8,
+          "station": "KEMBANGAN MRT STATION",
+          "straight_line_m": 817.8,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.32728, 103.91171",
+            "len_m": 356.4,
+            "location": {
+              "lat": 1.327284,
+              "lon": 103.911714
+            }
+          },
+          {
+            "label": "exposed gap near 1.32171, 103.91118",
+            "len_m": 260.3,
+            "location": {
+              "lat": 1.321714,
+              "lon": 103.911177
+            }
+          },
+          {
+            "label": "exposed gap near 1.32061, 103.91213",
+            "len_m": 176.9,
+            "location": {
+              "lat": 1.320611,
+              "lon": 103.91213
+            }
+          },
+          {
+            "label": "exposed gap near 1.32091, 103.91291",
+            "len_m": 7.8,
+            "location": {
+              "lat": 1.320915,
+              "lon": 103.912907
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 614.0,
+          "covered_ratio": 0.434,
+          "destination_snap_connector_m": 7.8,
+          "detour_pct": 19.1,
+          "endpoint_snap_connector_m": 71.9,
+          "heat_comfort_m": 663.4,
+          "heat_comfort_ratio": 0.469,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 64.0,
+          "routing_type": "sheltered",
+          "shade_m": 98.9,
+          "shade_ratio": 0.07,
+          "sheltered_m": 1415.5,
+          "shortest_covered_ratio": 0.015,
+          "shortest_m": 1188.0,
+          "shortest_shade_ratio": 0.034
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 1.2,
+          "bus": 73.1,
+          "crossing": 80.0,
+          "heat": 46.9,
+          "rain": 43.4
+        },
+        "total": 36.9
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 73.1,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 49.6
+  }
+]
