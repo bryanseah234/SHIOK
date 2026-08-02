@@ -89,7 +89,16 @@ def sample_record(postal: str = "123456") -> dict:
         "paths": {"shortest_m": 200.0, "sheltered_m": 220.0, "detour_pct": 10.0},
         "exposure_gaps": [{"len_m": 50.0, "label": "open test gap"}],
         "data_as_of": "2026-07-27T00:00:00+00:00",
-        "provenance": {"source_hashes": {"osm_extract": "a" * 64}},
+        "provenance": {
+            "source_hashes": {"osm_extract": "a" * 64},
+            "subscore_status": {
+                "access": "real_routed_shortest_distance",
+                "bus": "real_static_datamall_connectivity",
+                "rain": "real_routed_covered_length_ratio",
+                "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+                "crossing": "real_traffic_signals_with_grade_separated_exemption",
+            },
+        },
         "_area": "Test Area",
         "_origin": {"lat": 1.30001, "lon": 103.80001, "x": 28000.0, "y": 35000.0},
         "_geometry": {
@@ -175,6 +184,12 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert validation["score_prefixes"] == 2
     assert validation["geometry_postals"] == 2
     assert validation["geometry_postals_with_route_segments"] == 2
+    manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["provenance"]["source_hashes"]["osm_extract"] == "a" * 64
+    assert (
+        manifest["provenance"]["subscore_status"]["heat"]
+        == "provisional_covered_plus_nparks_shade_proxy_heat_only"
+    )
     prefix_index = json.loads((tmp_path / "scores" / "prefix-index.json").read_text())
     assert prefix_index["123"] == ["TEST_AREA"]
     assert prefix_index["654"] == ["TEST_AREA"]

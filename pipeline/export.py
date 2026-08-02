@@ -511,6 +511,30 @@ def state_counts(records: list[dict[str, Any]]) -> dict[str, int]:
     return dict(sorted(counts.items()))
 
 
+def score_provenance_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
+    source_hashes: dict[str, str] = {}
+    subscore_status: dict[str, str] = {}
+    for record in records:
+        provenance = record.get("provenance")
+        if not isinstance(provenance, dict):
+            continue
+        raw_hashes = provenance.get("source_hashes")
+        if isinstance(raw_hashes, dict):
+            for key, value in raw_hashes.items():
+                if isinstance(key, str) and isinstance(value, str) and value:
+                    source_hashes[key] = value
+        if not subscore_status:
+            raw_status = provenance.get("subscore_status")
+            if isinstance(raw_status, dict):
+                subscore_status = {
+                    str(key): str(value) for key, value in raw_status.items() if value is not None
+                }
+    return {
+        "source_hashes": dict(sorted(source_hashes.items())),
+        "subscore_status": dict(sorted(subscore_status.items())),
+    }
+
+
 def score_prefix_index(
     score_index: dict[str, list[str]], prefix_len: int = 3
 ) -> dict[str, list[str]]:
@@ -721,6 +745,7 @@ def export_static_artifacts(
             if record.get("data_as_of") is not None
         }
     )
+    score_provenance = score_provenance_summary(records)
     manifest = {
         "generated_at": datetime.now(UTC).isoformat(),
         "data_as_of": data_as_of_values[-1] if data_as_of_values else None,
@@ -728,6 +753,8 @@ def export_static_artifacts(
             "artifact": "shiok-static-json",
             "record_count": len(records),
             "state_counts": state_counts(records),
+            "source_hashes": score_provenance["source_hashes"],
+            "subscore_status": score_provenance["subscore_status"],
         },
         "scores": {
             "planning_areas": sorted(scores_by_area),
