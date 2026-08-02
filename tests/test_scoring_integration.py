@@ -808,6 +808,21 @@ class LargeConnectorBusIndex:
         ]
 
 
+class StillDetouringConnectorBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54326",
+                description="STILL DETOURING CONNECTOR STOP",
+                graph_node=(400.0, 0.0),
+                straight_line_m=70.0,
+                snap_distance_m=330.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(70.0, 0.0),
+            )
+        ]
+
+
 class EndpointSnapBusIndex:
     def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
         return [
@@ -975,6 +990,61 @@ def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():
     assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
         "bus_stop_access_connector"
     )
+
+
+def test_score_postal_row_uses_partial_fallback_when_connector_route_still_detours():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (90.0, 0.0),
+                "length_m": 150.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (90.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (400.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (400.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (90.0, 0.0), (400.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "123460", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=StillDetouringConnectorBusIndex(),  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "SCORED_PARTIAL"
+    assert record["paths"]["routing_type"] == "direct_bus_fallback_unrouted"
+    assert record["best_node"]["routed_m"] is None
+    assert record["best_node"]["straight_line_m"] == 70.0
+    assert record["provenance"]["direct_bus_fallback"]["reason_counts"] == {
+        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 1
+    }
+    assert "bus_stop_access_connector" not in record["provenance"]
 
 
 def test_score_postal_row_uses_partial_fallback_for_untrusted_bus_access_connector():

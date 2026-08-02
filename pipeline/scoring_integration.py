@@ -1718,6 +1718,18 @@ def score_postal_row(
                         candidate=candidate,
                         include_destination=False,
                     )
+                    connector_direct_fallback_reason = bus_route_direct_fallback_reason(
+                        candidate,
+                        connector_route,
+                        params["bus_connectivity"],
+                    )
+                    if connector_direct_fallback_reason is not None:
+                        implausible_bus_candidates.append(candidate)
+                        implausible_bus_route_distances.append(
+                            float(connector_route["shortest_length_m"])
+                        )
+                        implausible_bus_reasons[connector_direct_fallback_reason] += 1
+                        continue
                     connector_trust_rejection_reason = bus_route_trust_rejection_reason(
                         candidate,
                         connector_route,
