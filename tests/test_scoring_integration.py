@@ -16,6 +16,7 @@ from pipeline.scoring_integration import (
     assemble_score_record,
     build_bus_stop_access_connector_route,
     build_provenance,
+    bus_access_connector_is_plausible,
     bus_connectivity_from_routed_candidates,
     bus_route_direct_fallback_reason,
     bus_route_should_use_direct_fallback,
@@ -48,6 +49,8 @@ PARAMS = {
         "access_connector_max_walk_m": 300.0,
         "access_connector_max_direct_ratio": 2.5,
         "access_connector_max_extra_m": 100.0,
+        "direct_fallback_shortcut_ratio": 0.5,
+        "direct_fallback_min_missing_m": 50.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -557,6 +560,79 @@ def test_bus_access_connector_appends_exposed_endpoint_to_plausible_graph_route(
     assert route["path_edges"][-1]["source_layer"] == "bus_stop_access_connector"
     assert route["path_edges"][-1]["is_covered"] is False
     assert route["geometry"].coords[-1] == (100.0, 0.0)
+
+
+def test_bus_access_connector_rejects_implausibly_short_route():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(400.0, 0.0),
+        straight_line_m=180.0,
+        snap_distance_m=300.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(180.0, 0.0),
+    )
+
+    assert not bus_access_connector_is_plausible(
+        candidate,
+        {"shortest_length_m": 40.0},
+        PARAMS["bus_connectivity"],
+    )
+    assert bus_access_connector_is_plausible(
+        candidate,
+        {"shortest_length_m": 100.0},
+        PARAMS["bus_connectivity"],
+    )
+
+
+def test_bus_access_connector_builder_rejects_implausibly_short_origin_snap():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (100.0, 0.0),
+                "v": (105.0, 0.0),
+                "length_m": 5.0,
+                "is_covered": 0,
+                "geometry": LineString([(100.0, 0.0), (105.0, 0.0)]),
+            },
+            {
+                "u": (100.0, 0.0),
+                "v": (400.0, 0.0),
+                "length_m": 300.0,
+                "is_covered": 0,
+                "geometry": LineString([(100.0, 0.0), (400.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(100.0, 0.0), (105.0, 0.0), (400.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(400.0, 0.0),
+        straight_line_m=180.0,
+        snap_distance_m=290.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(110.0, 0.0),
+    )
+
+    route = build_bus_stop_access_connector_route(
+        candidate=candidate,
+        origin_node=(100.0, 0.0),
+        routing_graph=routing_graph,
+        nodes=nodes,
+        node_xy=node_xy,
+        params=PARAMS,
+    )
+
+    assert route is None
 
 
 class ConnectorBusIndex:

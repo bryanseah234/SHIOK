@@ -876,6 +876,10 @@ def bus_access_connector_is_plausible(
     ) + max(0.0, float(bus_params.get("straight_line_candidate_tolerance_m", 0.0)))
     max_ratio = float(bus_params.get("access_connector_max_direct_ratio", 2.5))
     max_extra_m = float(bus_params.get("access_connector_max_extra_m", 100.0))
+    shortcut_ratio = float(bus_params.get("direct_fallback_shortcut_ratio", 0.5))
+    min_missing_m = float(bus_params.get("direct_fallback_min_missing_m", 50.0))
+    if total_m <= direct_m * shortcut_ratio and (direct_m - total_m) >= min_missing_m:
+        return False
     return (
         total_m <= max_walk_m
         and total_m <= direct_m * max_ratio
