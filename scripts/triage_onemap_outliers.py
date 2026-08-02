@@ -24,6 +24,8 @@ DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT = (
 DIRECT_BUS_FALLBACK_ROUTING = "direct_bus_fallback_unrouted"
 FALLBACK_REASONS = {
     "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+    "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius",
+    "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius",
     "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
 }
 MRT_LRT_NAME_MARKERS = (" MRT ", " LRT ", "MRT STATION", "LRT STATION")

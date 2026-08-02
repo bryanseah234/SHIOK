@@ -6,6 +6,7 @@ import argparse
 import copy
 import json
 import sqlite3
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, cast
@@ -743,24 +744,40 @@ def bus_route_should_use_direct_fallback(
     route_result: dict[str, Any],
     bus_params: dict[str, Any],
 ) -> bool:
+    return bus_route_direct_fallback_reason(candidate, route_result, bus_params) is not None
+
+
+def bus_route_direct_fallback_reason(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> str | None:
     if candidate.node_type != "bus_stop":
-        return False
+        return None
     direct_m = float(candidate.straight_line_m)
     if direct_m <= 0:
-        return False
+        return None
     max_direct_m = float(bus_params.get("straight_line_candidate_m", 300.0)) + max(
         0.0,
         float(bus_params.get("straight_line_candidate_tolerance_m", 0.0)),
     )
     if direct_m > max_direct_m:
-        return False
+        return None
 
     routed_m = float(route_result.get("shortest_length_m") or 0.0)
     if routed_m <= 0:
-        return False
+        return None
     detour_ratio = float(bus_params.get("direct_fallback_detour_ratio", 3.0))
     min_extra_m = float(bus_params.get("direct_fallback_min_extra_m", 100.0))
-    return routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m
+    if routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m:
+        return "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+
+    shortcut_ratio = float(bus_params.get("direct_fallback_shortcut_ratio", 0.5))
+    min_missing_m = float(bus_params.get("direct_fallback_min_missing_m", 50.0))
+    if routed_m <= direct_m * shortcut_ratio and (direct_m - routed_m) >= min_missing_m:
+        return "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
+
+    return None
 
 
 def merge_with_connector_geometry(route_geometry: Any, connector: LineString) -> Any:
@@ -1409,15 +1426,17 @@ def score_postal_row(
     candidate_scores = []
     implausible_bus_candidates: list[CandidateNode] = []
     implausible_bus_route_distances: list[float] = []
+    implausible_bus_reasons: Counter[str] = Counter()
     bus_access_connector_rows: list[dict[str, Any]] = []
     for route_result in route_results:
         crossing_count = crossing_counter.count_for_route(route_result.get("geometry"))
         for candidate in candidate_by_destination[route_result["destination"]]:
-            if bus_route_should_use_direct_fallback(
+            direct_fallback_reason = bus_route_direct_fallback_reason(
                 candidate,
                 route_result,
                 params["bus_connectivity"],
-            ):
+            )
+            if direct_fallback_reason is not None:
                 connector_route = build_bus_stop_access_connector_route(
                     candidate=candidate,
                     origin_node=origin_node,
@@ -1462,6 +1481,7 @@ def score_postal_row(
                     continue
                 implausible_bus_candidates.append(candidate)
                 implausible_bus_route_distances.append(float(route_result["shortest_length_m"]))
+                implausible_bus_reasons[direct_fallback_reason] += 1
                 continue
             candidate_scores.append(
                 score_candidate_route(
@@ -1516,8 +1536,14 @@ def score_postal_row(
                 for candidate in implausible_bus_candidates
                 if candidate.expected_wait_min is not None
             ]
+            reason_counts = dict(sorted(implausible_bus_reasons.items()))
             provenance["direct_bus_fallback"] = {
-                "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+                "reason": (
+                    next(iter(reason_counts))
+                    if len(reason_counts) == 1
+                    else "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius"
+                ),
+                "reason_counts": reason_counts,
                 "candidate_count": len(implausible_bus_candidates),
                 "radius_m": round(bus_candidate_radius_m, 1),
                 "coordinate_tolerance_m": round(bus_candidate_tolerance_m, 1),
@@ -1533,6 +1559,14 @@ def score_postal_row(
                 ),
                 "min_extra_m_threshold": round(
                     float(params["bus_connectivity"].get("direct_fallback_min_extra_m", 100.0)),
+                    1,
+                ),
+                "shortcut_ratio_threshold": round(
+                    float(params["bus_connectivity"].get("direct_fallback_shortcut_ratio", 0.5)),
+                    3,
+                ),
+                "min_missing_m_threshold": round(
+                    float(params["bus_connectivity"].get("direct_fallback_min_missing_m", 50.0)),
                     1,
                 ),
                 "best_expected_wait_min": (

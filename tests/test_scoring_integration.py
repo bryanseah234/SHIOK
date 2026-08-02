@@ -17,6 +17,7 @@ from pipeline.scoring_integration import (
     build_bus_stop_access_connector_route,
     build_provenance,
     bus_connectivity_from_routed_candidates,
+    bus_route_direct_fallback_reason,
     bus_route_should_use_direct_fallback,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
@@ -444,6 +445,27 @@ def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
             "straight_line_candidate_m": 300.0,
             "direct_fallback_detour_ratio": 3.0,
             "direct_fallback_min_extra_m": 100.0,
+        },
+    )
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate,
+            {"shortest_length_m": 5.0},
+            {
+                "straight_line_candidate_m": 300.0,
+                "direct_fallback_shortcut_ratio": 0.5,
+                "direct_fallback_min_missing_m": 50.0,
+            },
+        )
+        == "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
+    )
+    assert not bus_route_should_use_direct_fallback(
+        candidate,
+        {"shortest_length_m": 45.0},
+        {
+            "straight_line_candidate_m": 300.0,
+            "direct_fallback_shortcut_ratio": 0.5,
+            "direct_fallback_min_missing_m": 50.0,
         },
     )
 

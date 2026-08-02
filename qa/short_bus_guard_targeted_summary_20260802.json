@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-08-02",
+  "change": "symmetric implausibly-short bus graph route guard added to scoring code",
+  "focused_tests": "39 passed: tests/test_scoring_integration.py tests/test_triage_onemap_outliers.py tests/test_replay_onemap_outliers.py",
+  "baseline_active_gate": {
+    "bundle": "generated_20260802_bus_connector_tolerance_targeted",
+    "gate_passed": false,
+    "sample_size": 2000,
+    "cached_results": 1999,
+    "missing_cache_results": 0,
+    "invalid_cache_results": 1,
+    "median_abs_pct_delta": 11.528,
+    "p95_abs_pct_delta": 93.414
+  },
+  "previous_outlier_targeted_gate": {
+    "bundle": "generated_20260802_active_onemap_outlier_targeted",
+    "gate_passed": false,
+    "sample_size": 2000,
+    "cached_results": 1998,
+    "missing_cache_results": 0,
+    "invalid_cache_results": 2,
+    "median_abs_pct_delta": 11.079,
+    "p95_abs_pct_delta": 78.641
+  },
+  "short_bus_guard_outlier_targeted_gate": {
+    "bundle": "generated_20260802_short_bus_guard_outlier_targeted",
+    "gate_passed": false,
+    "sample_size": 2000,
+    "cached_results": 1998,
+    "missing_cache_results": 0,
+    "invalid_cache_results": 2,
+    "median_abs_pct_delta": 11.079,
+    "p95_abs_pct_delta": 78.641
+  },
+  "delta_vs_active": {
+    "median_abs_pct_delta": -0.449,
+    "p95_abs_pct_delta": -14.773
+  },
+  "delta_vs_previous_targeted": {
+    "median_abs_pct_delta": 0.0,
+    "p95_abs_pct_delta": 0.0
+  },
+  "targeted_refresh": {
+    "selected_count": 208,
+    "patched_count": 208,
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112900,
+      "SCORED_PARTIAL": 1429
+    }
+  },
+  "shorter_replay_after_guard": {
+    "sample_size": 100,
+    "fallback_reason_counts": {
+      "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 25,
+      "none": 75
+    },
+    "new_best_direct_bus_fallback_count": 9,
+    "new_best_type_counts": {
+      "bus_stop": 93,
+      "mrt_lrt_exit": 7
+    }
+  },
+  "deployment_recommendation": "do_not_deploy_as_launch_gate_fix",
+  "reason": "The short-route guard is a defensive model fix, but the 176-postal targeted refresh produced the same OneMap metrics as the prior outlier-targeted refresh: median 11.079 and p95 78.641, still above launch thresholds."
+}
