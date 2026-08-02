@@ -131,6 +131,21 @@ def looks_like_mrt_lrt(row: dict[str, Any]) -> bool:
     return any(marker in name for marker in MRT_LRT_NAME_MARKERS)
 
 
+def routed_vs_validation_direct_sanity(row: dict[str, Any], validation: dict[str, Any]) -> str:
+    try:
+        routed_m = float(row.get("new_best_shortest_m") or 0.0)
+        direct_m = float(validation.get("direct_distance_m") or 0.0)
+    except (TypeError, ValueError):
+        return "unknown"
+    if routed_m <= 0 or direct_m <= 0:
+        return "unknown"
+    if routed_m + 5.0 < direct_m * 0.8:
+        return "current_route_materially_shorter_than_validation_direct"
+    if routed_m + 5.0 < direct_m:
+        return "current_route_slightly_shorter_than_validation_direct"
+    return "plausible"
+
+
 def is_unscored_or_no_best(row: dict[str, Any]) -> bool:
     state = str(row.get("new_state") or "")
     return (
@@ -202,6 +217,9 @@ def compact_row(
         "validation_direct_distance_m": validation.get("direct_distance_m"),
         "validation_onemap_vs_direct_delta_m": validation.get("onemap_vs_direct_delta_m"),
         "validation_distance_sanity": validation.get("distance_sanity"),
+        "current_route_vs_validation_direct_sanity": routed_vs_validation_direct_sanity(
+            row, validation
+        ),
         "endpoint_source": validation.get("endpoint_source"),
         "start": validation.get("start"),
         "end": validation.get("end"),
@@ -230,6 +248,9 @@ def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     best_types = Counter(str(row.get("new_best_type") or "none") for row in rows)
     fallback_reasons = Counter(str(row.get("direct_bus_fallback_reason") or "none") for row in rows)
     sanity = Counter(str(row.get("validation_distance_sanity") or "unknown") for row in rows)
+    route_sanity = Counter(
+        str(row.get("current_route_vs_validation_direct_sanity") or "unknown") for row in rows
+    )
     source_layer_m: dict[str, float] = {}
 
     for row in rows:
@@ -248,6 +269,7 @@ def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "new_best_type_counts": dict(sorted(best_types.items())),
         "fallback_reason_counts": dict(sorted(fallback_reasons.items())),
         "validation_distance_sanity_counts": dict(sorted(sanity.items())),
+        "current_route_vs_validation_direct_sanity_counts": dict(sorted(route_sanity.items())),
         "top_best_source_layer_m": top_lengths(source_layer_m),
     }
 
@@ -307,6 +329,7 @@ def missing_bus_connector_priority_geojson(
         row
         for row in queues.get("missing_bus_connector", [])
         if row.get("validation_distance_sanity") == "plausible"
+        and row.get("current_route_vs_validation_direct_sanity") == "plausible"
     ]
 
     def priority_value(row: dict[str, Any]) -> float:

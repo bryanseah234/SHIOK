@@ -5,6 +5,7 @@ from scripts.triage_onemap_outliers import (
     classify_row,
     compact_row,
     missing_bus_connector_priority_geojson,
+    routed_vs_validation_direct_sanity,
     source_flags,
     triage_geojson,
     validation_lookup,
@@ -160,6 +161,9 @@ def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):
     assert payload["queue_summaries"]["missing_bus_connector"][
         "validation_distance_sanity_counts"
     ] == {"unknown": 1}
+    assert payload["queue_summaries"]["missing_bus_connector"][
+        "current_route_vs_validation_direct_sanity_counts"
+    ] == {"unknown": 1}
     assert payload["queue_summaries"]["possible_overpermissive_project_path"]["count"] == 1
     assert payload["queue_summaries"]["mrt_lrt_outlier"]["count"] == 1
     assert payload["queue_summaries"]["hdb_bridge_connector_review"]["count"] == 1
@@ -180,6 +184,7 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
               "old_direction": "project_longer_than_onemap",
               "new_best_type": "bus_stop",
               "new_best_routing_type": "direct_bus_fallback_unrouted",
+              "new_best_shortest_m": 67.8,
               "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
             }
           ]
@@ -226,11 +231,15 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
     assert row["validation_direct_distance_m"] == 67.7
     assert row["validation_onemap_vs_direct_delta_m"] == -61.7
     assert row["validation_distance_sanity"] == "onemap_materially_shorter_than_direct"
+    assert row["current_route_vs_validation_direct_sanity"] == "plausible"
     assert row["start"] == {"lat": 1.346263, "lon": 103.887204}
     assert row["end"] == {"lat": 1.346168, "lon": 103.887806}
     assert payload["queue_summaries"]["missing_bus_connector"][
         "validation_distance_sanity_counts"
     ] == {"onemap_materially_shorter_than_direct": 1}
+    assert payload["queue_summaries"]["missing_bus_connector"][
+        "current_route_vs_validation_direct_sanity_counts"
+    ] == {"plausible": 1}
 
 
 def test_validation_lookup_keeps_highest_delta_for_postal_direction(tmp_path: Path):
@@ -306,6 +315,7 @@ def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
                     "postal": "111111",
                     "old_abs_pct_delta": 10.0,
                     "validation_distance_sanity": "plausible",
+                    "current_route_vs_validation_direct_sanity": "plausible",
                     "start": {"lat": 1.0, "lon": 103.0},
                     "end": {"lat": 1.1, "lon": 103.1},
                 },
@@ -313,6 +323,7 @@ def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
                     "postal": "222222",
                     "old_abs_pct_delta": 50.0,
                     "validation_distance_sanity": "plausible",
+                    "current_route_vs_validation_direct_sanity": "plausible",
                     "start": {"lat": 1.2, "lon": 103.2},
                     "end": {"lat": 1.3, "lon": 103.3},
                 },
@@ -320,6 +331,17 @@ def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
                     "postal": "333333",
                     "old_abs_pct_delta": 100.0,
                     "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+                    "current_route_vs_validation_direct_sanity": "plausible",
+                    "start": {"lat": 1.4, "lon": 103.4},
+                    "end": {"lat": 1.5, "lon": 103.5},
+                },
+                {
+                    "postal": "444444",
+                    "old_abs_pct_delta": 200.0,
+                    "validation_distance_sanity": "plausible",
+                    "current_route_vs_validation_direct_sanity": (
+                        "current_route_materially_shorter_than_validation_direct"
+                    ),
                     "start": {"lat": 1.4, "lon": 103.4},
                     "end": {"lat": 1.5, "lon": 103.5},
                 },
@@ -332,6 +354,23 @@ def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
         "111111",
     ]
     assert [feature["properties"]["priority_rank"] for feature in geojson["features"]] == [1, 2]
+
+
+def test_routed_vs_validation_direct_sanity():
+    validation = {"direct_distance_m": 100.0}
+
+    assert routed_vs_validation_direct_sanity({"new_best_shortest_m": 60.0}, validation) == (
+        "current_route_materially_shorter_than_validation_direct"
+    )
+    assert routed_vs_validation_direct_sanity({"new_best_shortest_m": 90.0}, validation) == (
+        "current_route_slightly_shorter_than_validation_direct"
+    )
+    assert routed_vs_validation_direct_sanity({"new_best_shortest_m": 105.0}, validation) == (
+        "plausible"
+    )
+    assert routed_vs_validation_direct_sanity({"new_best_shortest_m": None}, validation) == (
+        "unknown"
+    )
 
 
 def test_compact_row_preserves_user_facing_triage_fields():

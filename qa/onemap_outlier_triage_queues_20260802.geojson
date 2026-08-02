@@ -15,6 +15,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 181",
@@ -71,6 +72,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Gul St 1",
@@ -127,6 +129,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 181",
@@ -183,6 +186,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 991B",
@@ -239,6 +243,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Ng Teng Fong General Hosp",
@@ -295,6 +300,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp British American Tobacco",
@@ -351,6 +357,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp ESAB",
@@ -407,6 +414,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Yan San Metals",
@@ -463,6 +471,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -519,6 +528,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Hong San Si Tp",
@@ -575,6 +585,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Corfe Pl",
@@ -631,6 +642,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tosca St",
@@ -687,6 +699,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bet Clementi Loop",
@@ -743,6 +756,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 212",
@@ -803,6 +817,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas Sth St 2",
@@ -859,6 +874,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Index",
@@ -915,6 +931,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tuas Technology Pk",
@@ -971,6 +988,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -1027,6 +1045,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 441",
@@ -1083,6 +1102,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Simei Stn",
@@ -1139,6 +1159,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas Sth St 2",
@@ -1195,6 +1216,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp PUB Recreation Club",
@@ -1251,6 +1273,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Dairy Farm Mall",
@@ -1307,6 +1330,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Neo Tiew Rd",
@@ -1363,6 +1387,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Katong PO",
@@ -1419,6 +1444,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Khatib Camp",
@@ -1475,6 +1501,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 82",
@@ -1531,6 +1558,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 648C",
@@ -1587,6 +1615,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Cashew Pk Condo",
@@ -1643,6 +1672,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -1699,6 +1729,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 730",
@@ -1755,6 +1786,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef VICOM",
@@ -1811,6 +1843,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tampines Nth Int",
@@ -1867,6 +1900,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tampines West Stn",
@@ -1923,6 +1957,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Serenity Pk",
@@ -1979,6 +2014,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 657 CP",
@@ -2035,6 +2071,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 55",
@@ -2091,6 +2128,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Hong San Si Tp",
@@ -2147,6 +2185,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 97",
@@ -2203,6 +2242,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Thomson Hills Dr",
@@ -2259,6 +2299,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 202",
@@ -2315,6 +2356,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Mandai Lake Rd",
@@ -2371,6 +2413,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp S'pore Girls' Hme",
@@ -2427,6 +2470,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Pasir Ris St 72",
@@ -2483,6 +2527,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 477B",
@@ -2539,6 +2584,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 115",
@@ -2595,6 +2641,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Lakeside Stn",
@@ -2651,6 +2698,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Evergreen Gdn",
@@ -2707,6 +2755,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Perpetual Succour Ch",
@@ -2763,6 +2812,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Lor 18 Geylang",
@@ -2819,6 +2869,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 626",
@@ -2875,6 +2926,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 759",
@@ -2931,6 +2983,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -2987,6 +3040,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 991A",
@@ -3043,6 +3097,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Ji Xiang Ct",
@@ -3099,6 +3154,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Tropica Condo",
@@ -3155,6 +3211,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 409 Mkt/FC",
@@ -3211,6 +3268,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Punggol Rd",
@@ -3267,6 +3325,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 239",
@@ -3323,6 +3382,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Marsiling CC",
@@ -3379,6 +3439,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Simei Stn",
@@ -3435,6 +3496,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Shaughnessy",
@@ -3491,6 +3553,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Kaily Packaging",
@@ -3547,6 +3610,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Lentor Gr",
@@ -3603,6 +3667,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Perpetual Succour Ch",
@@ -3659,6 +3724,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -3715,6 +3781,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 688 CP",
@@ -3771,6 +3838,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Seah Im Rd",
@@ -3827,6 +3895,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 181",
@@ -3883,6 +3952,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Gul St 1",
@@ -3939,6 +4009,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 181",
@@ -3995,6 +4066,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 991B",
@@ -4051,6 +4123,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Ng Teng Fong General Hosp",
@@ -4107,6 +4180,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp British American Tobacco",
@@ -4163,6 +4237,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp ESAB",
@@ -4219,6 +4294,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Yan San Metals",
@@ -4275,6 +4351,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -4331,6 +4408,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Hong San Si Tp",
@@ -4387,6 +4465,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Corfe Pl",
@@ -4443,6 +4522,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tosca St",
@@ -4499,6 +4579,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bet Clementi Loop",
@@ -4555,6 +4636,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 212",
@@ -4615,6 +4697,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas Sth St 2",
@@ -4671,6 +4754,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Index",
@@ -4727,6 +4811,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tuas Technology Pk",
@@ -4783,6 +4868,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -4839,6 +4925,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 441",
@@ -4895,6 +4982,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Simei Stn",
@@ -4951,6 +5039,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas Sth St 2",
@@ -5007,6 +5096,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp PUB Recreation Club",
@@ -5063,6 +5153,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Dairy Farm Mall",
@@ -5119,6 +5210,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Neo Tiew Rd",
@@ -5175,6 +5267,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Katong PO",
@@ -5231,6 +5324,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Khatib Camp",
@@ -5287,6 +5381,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 82",
@@ -5343,6 +5438,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 648C",
@@ -5399,6 +5495,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Cashew Pk Condo",
@@ -5455,6 +5552,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -5511,6 +5609,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 730",
@@ -5567,6 +5666,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef VICOM",
@@ -5623,6 +5723,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tampines Nth Int",
@@ -5679,6 +5780,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tampines West Stn",
@@ -5735,6 +5837,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Serenity Pk",
@@ -5791,6 +5894,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 657 CP",
@@ -5847,6 +5951,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 55",
@@ -5903,6 +6008,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Hong San Si Tp",
@@ -5959,6 +6065,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 97",
@@ -6015,6 +6122,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Thomson Hills Dr",
@@ -6071,6 +6179,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 202",
@@ -6127,6 +6236,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Mandai Lake Rd",
@@ -6183,6 +6293,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp S'pore Girls' Hme",
@@ -6239,6 +6350,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Pasir Ris St 72",
@@ -6295,6 +6407,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 477B",
@@ -6351,6 +6464,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 115",
@@ -6407,6 +6521,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Lakeside Stn",
@@ -6463,6 +6578,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Evergreen Gdn",
@@ -6519,6 +6635,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Perpetual Succour Ch",
@@ -6575,6 +6692,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Lor 18 Geylang",
@@ -6631,6 +6749,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 626",
@@ -6687,6 +6806,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 759",
@@ -6743,6 +6863,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -6799,6 +6920,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 991A",
@@ -6855,6 +6977,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Ji Xiang Ct",
@@ -6911,6 +7034,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Tropica Condo",
@@ -6967,6 +7091,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 409 Mkt/FC",
@@ -7023,6 +7148,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Punggol Rd",
@@ -7079,6 +7205,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 239",
@@ -7135,6 +7262,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Marsiling CC",
@@ -7191,6 +7319,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Simei Stn",
@@ -7247,6 +7376,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Shaughnessy",
@@ -7303,6 +7433,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Kaily Packaging",
@@ -7359,6 +7490,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Lentor Gr",
@@ -7415,6 +7547,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Perpetual Succour Ch",
@@ -7471,6 +7604,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "The Rail Mall",
@@ -7527,6 +7661,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 688 CP",
@@ -7583,6 +7718,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Seah Im Rd",
@@ -7639,6 +7775,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Brockhampton Dr",
@@ -7695,6 +7832,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ECO Condo",
@@ -7751,6 +7889,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -7807,6 +7946,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp AMK Ind Pk 2",
@@ -7863,6 +8003,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft C'wealth Dr",
@@ -7919,6 +8060,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Tuas West St",
@@ -7975,6 +8117,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Catholic JC",
@@ -8031,6 +8174,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Sth Buona Vista Rd",
@@ -8087,6 +8231,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Yio Chu Kang Rd",
@@ -8143,6 +8288,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Regent Villa",
@@ -8199,6 +8345,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 136",
@@ -8255,6 +8402,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Kian Teck Rd",
@@ -8311,6 +8459,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 53A CP",
@@ -8367,6 +8516,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Pasir Panjang Stn",
@@ -8423,6 +8573,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Katong PO",
@@ -8479,6 +8630,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Jurong Lake",
@@ -8535,6 +8687,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp VivoCity",
@@ -8591,6 +8744,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Techplace 2",
@@ -8647,6 +8801,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Wang-Fu Ind Pte Ltd",
@@ -8703,6 +8858,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Yio Chu Kang Int",
@@ -8759,6 +8915,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Pasir Ris Int",
@@ -8815,6 +8972,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tampines Ind Dr",
@@ -8871,6 +9029,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 633",
@@ -8927,6 +9086,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 336A CP",
@@ -8983,6 +9143,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tuas Lot",
@@ -9039,6 +9200,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 158",
@@ -9095,6 +9257,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Cliveden At Grange",
@@ -9151,6 +9314,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Still Rd",
@@ -9207,6 +9371,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bullion Pk Condo",
@@ -9263,6 +9428,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Panasonic Ind Devices",
@@ -9319,6 +9485,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "W'lands Nth Stn",
@@ -9375,6 +9542,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Gul Circle Stn Exit A",
@@ -9431,6 +9599,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Panasonic Ind Devices",
@@ -9487,6 +9656,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Twin Waterfalls",
@@ -9543,6 +9713,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Horizon Gdns",
@@ -9599,6 +9770,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Gas Svc Intl",
@@ -9655,6 +9827,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas West Ave",
@@ -9711,6 +9884,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Whitchurch Rd",
@@ -9767,6 +9941,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ECO Condo",
@@ -9823,6 +9998,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Pasir Panjang Stn",
@@ -9879,6 +10055,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Bullion Pk Condo",
@@ -9935,6 +10112,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Japanese Sec Sch",
@@ -9991,6 +10169,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 970A",
@@ -10047,6 +10226,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 189B",
@@ -10103,6 +10283,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Lighthouse",
@@ -10159,6 +10340,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Cycle & Carriage",
@@ -10215,6 +10397,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 126",
@@ -10271,6 +10454,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Index",
@@ -10327,6 +10511,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Piccadilly Circus/TPE",
@@ -10383,6 +10568,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Windsor Pk Rd",
@@ -10439,6 +10625,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Sci Pk 2/The Galen",
@@ -10495,6 +10682,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Pasir View Pk",
@@ -10551,6 +10739,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Ang Mo Kio Ave 2",
@@ -10607,6 +10796,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Nibong Stn Exit A",
@@ -10663,6 +10853,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 506A",
@@ -10719,6 +10910,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "TANAH MERAH MRT STATION Exit A",
@@ -10775,6 +10967,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Brockhampton Dr",
@@ -10831,6 +11024,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KATONG PARK MRT STATION Exit 1",
@@ -10885,6 +11079,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ECO Condo",
@@ -10941,6 +11136,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tg Katong Rd",
@@ -10997,6 +11193,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAYAR LRT STATION Exit A",
@@ -11052,6 +11249,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp AMK Ind Pk 2",
@@ -11108,6 +11306,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft C'wealth Dr",
@@ -11164,6 +11363,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Tuas West St",
@@ -11220,6 +11420,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Toh Tuck Cres",
@@ -11276,6 +11477,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Catholic JC",
@@ -11332,6 +11534,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Toh Tuck Cres",
@@ -11388,6 +11591,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Maple Ave",
@@ -11444,6 +11648,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Sth Buona Vista Rd",
@@ -11500,6 +11705,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Yio Chu Kang Rd",
@@ -11556,6 +11762,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Regent Villa",
@@ -11612,6 +11819,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 136",
@@ -11668,6 +11876,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Kian Teck Rd",
@@ -11724,6 +11933,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 53A CP",
@@ -11780,6 +11990,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Pasir Panjang Stn",
@@ -11836,6 +12047,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -11890,6 +12102,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Katong PO",
@@ -11946,6 +12159,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "MARYMOUNT MRT STATION Exit B",
@@ -12003,6 +12217,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Jurong Lake",
@@ -12059,6 +12274,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Maple Ave",
@@ -12115,6 +12331,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp VivoCity",
@@ -12171,6 +12388,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -12225,6 +12443,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Techplace 2",
@@ -12281,6 +12500,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT BATOK MRT STATION Exit D",
@@ -12338,6 +12558,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft AMK Ind Pk 2",
@@ -12394,6 +12615,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Wang-Fu Ind Pte Ltd",
@@ -12450,6 +12672,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Yio Chu Kang Int",
@@ -12506,6 +12729,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Pasir Ris Int",
@@ -12562,6 +12786,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Forett @ Bt Timah",
@@ -12620,6 +12845,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -12676,6 +12902,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Tampines Ind Dr",
@@ -12732,6 +12959,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ALJUNIED MRT STATION Exit A",
@@ -12788,6 +13016,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -12842,6 +13071,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 633",
@@ -12898,6 +13128,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 336A CP",
@@ -12954,6 +13185,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Tuas Lot",
@@ -13010,6 +13242,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 158",
@@ -13066,6 +13299,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Cliveden At Grange",
@@ -13122,6 +13356,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "TANAH MERAH MRT STATION Exit A",
@@ -13176,6 +13411,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Still Rd",
@@ -13232,6 +13468,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft AMK Ind Pk 2",
@@ -13288,6 +13525,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -13348,6 +13586,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -13402,6 +13641,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bullion Pk Condo",
@@ -13458,6 +13698,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Panasonic Ind Devices",
@@ -13514,6 +13755,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "W'lands Nth Stn",
@@ -13570,6 +13812,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 333",
@@ -13628,6 +13871,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Gul Circle Stn Exit A",
@@ -13684,6 +13928,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Panasonic Ind Devices",
@@ -13740,6 +13985,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Twin Waterfalls",
@@ -13796,6 +14042,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -13856,6 +14103,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Horizon Gdns",
@@ -13912,6 +14160,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Gas Svc Intl",
@@ -13968,6 +14217,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Tuas West Ave",
@@ -14024,6 +14274,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -14084,6 +14335,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ORCHARD MRT STATION Exit 13",
@@ -14139,6 +14391,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Whitchurch Rd",
@@ -14195,6 +14448,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Garlick Ville",
@@ -14251,6 +14505,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ECO Condo",
@@ -14307,6 +14562,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -14363,6 +14619,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Pasir Panjang Stn",
@@ -14419,6 +14676,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Garlick Ville",
@@ -14475,6 +14733,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Bullion Pk Condo",
@@ -14531,6 +14790,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "GARDENS BY THE BAY MRT STATION Exit 1",
@@ -14586,6 +14846,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Japanese Sec Sch",
@@ -14642,6 +14903,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Raya Gdn",
@@ -14698,6 +14960,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 970A",
@@ -14754,6 +15017,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 189B",
@@ -14810,6 +15074,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 622",
@@ -14866,6 +15131,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KOVAN MRT STATION Exit A",
@@ -14921,6 +15187,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -14973,6 +15240,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -15025,6 +15293,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -15077,6 +15346,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bras Basah Cplx",
@@ -15137,6 +15407,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft Haw Par Glass Twr",
@@ -15193,6 +15464,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft S'goon Nth Ave 1",
@@ -15255,6 +15527,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "PIONEER MRT STATION Exit A",
@@ -15312,6 +15585,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Lighthouse",
@@ -15368,6 +15642,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Cycle & Carriage",
@@ -15424,6 +15699,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Viz Holland",
@@ -15482,6 +15758,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 126",
@@ -15538,6 +15815,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "CLEMENTI MRT STATION Exit A",
@@ -15602,6 +15880,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp The Index",
@@ -15658,6 +15937,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Forett @ Bt Timah",
@@ -15716,6 +15996,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Piccadilly Circus/TPE",
@@ -15772,6 +16053,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Windsor Pk Rd",
@@ -15828,6 +16110,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -15884,6 +16167,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Sci Pk 2/The Galen",
@@ -15940,6 +16224,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Pasir View Pk",
@@ -15996,6 +16281,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "MARINE TERRACE MRT STATION Exit 1",
@@ -16050,6 +16336,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Ang Mo Kio Linear Pk",
@@ -16112,6 +16399,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Ang Mo Kio Ave 2",
@@ -16168,6 +16456,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Nibong Stn Exit A",
@@ -16224,6 +16513,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KATONG PARK MRT STATION Exit 1",
@@ -16279,6 +16569,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 506A",
@@ -16335,6 +16626,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -16391,6 +16683,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "HOUGANG MRT STATION Exit A",
@@ -16445,6 +16738,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "YISHUN MRT STATION Exit A",
@@ -16499,6 +16793,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "MOUNTBATTEN MRT STATION Exit A",
@@ -16553,6 +16848,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KHATIB MRT STATION Exit A",
@@ -16607,6 +16903,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -16664,6 +16961,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KHATIB MRT STATION Exit A",
@@ -16718,6 +17016,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT BATOK MRT STATION Exit D",
@@ -16775,6 +17074,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KHATIB MRT STATION Exit A",
@@ -16829,6 +17129,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BAYSHORE MRT STATION Exit 1",
@@ -16883,6 +17184,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -16940,6 +17242,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -16997,6 +17300,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAKESIDE MRT STATION Exit A",
@@ -17054,6 +17358,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "CHINESE GARDEN MRT STATION Exit A",
@@ -17112,6 +17417,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "UBI MRT STATION Exit A",
@@ -17166,6 +17472,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BEDOK MRT STATION Exit A",
@@ -17220,6 +17527,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAKESIDE MRT STATION Exit A",
@@ -17277,6 +17585,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "TANAH MERAH MRT STATION Exit A",
@@ -17333,6 +17642,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KATONG PARK MRT STATION Exit 1",
@@ -17387,6 +17697,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAYAR LRT STATION Exit A",
@@ -17442,6 +17753,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 53A CP",
@@ -17498,6 +17810,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -17552,6 +17865,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "MARYMOUNT MRT STATION Exit B",
@@ -17609,6 +17923,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -17663,6 +17978,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT BATOK MRT STATION Exit D",
@@ -17720,6 +18036,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -17776,6 +18093,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ALJUNIED MRT STATION Exit A",
@@ -17832,6 +18150,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -17886,6 +18205,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "TANAH MERAH MRT STATION Exit A",
@@ -17940,6 +18260,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -17994,6 +18315,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "W'lands Nth Stn",
@@ -18050,6 +18372,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 333",
@@ -18108,6 +18431,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "ORCHARD MRT STATION Exit 13",
@@ -18163,6 +18487,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LENTOR MRT STATION Exit 1",
@@ -18219,6 +18544,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Pasir Panjang Stn",
@@ -18275,6 +18601,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "GARDENS BY THE BAY MRT STATION Exit 1",
@@ -18330,6 +18657,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KOVAN MRT STATION Exit A",
@@ -18385,6 +18713,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -18437,6 +18766,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -18489,6 +18819,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -18541,6 +18872,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "PIONEER MRT STATION Exit A",
@@ -18598,6 +18930,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "CLEMENTI MRT STATION Exit A",
@@ -18662,6 +18995,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -18718,6 +19052,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "MARINE TERRACE MRT STATION Exit 1",
@@ -18772,6 +19107,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bef Ang Mo Kio Ave 2",
@@ -18828,6 +19164,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Nibong Stn Exit A",
@@ -18884,6 +19221,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KATONG PARK MRT STATION Exit 1",
@@ -18939,6 +19277,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -18995,6 +19334,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Blk 212",
@@ -19055,6 +19395,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -19112,6 +19453,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT BATOK MRT STATION Exit D",
@@ -19169,6 +19511,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 461B",
@@ -19231,6 +19574,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -19288,6 +19632,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BOON LAY MRT STATION Exit A",
@@ -19345,6 +19690,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAKESIDE MRT STATION Exit A",
@@ -19402,6 +19748,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "CHINESE GARDEN MRT STATION Exit A",
@@ -19460,6 +19807,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Veerasamy Rd",
@@ -19518,6 +19866,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 461B",
@@ -19580,6 +19929,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAKESIDE MRT STATION Exit A",
@@ -19637,6 +19987,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "LAYAR LRT STATION Exit A",
@@ -19692,6 +20043,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT BATOK MRT STATION Exit D",
@@ -19749,6 +20101,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -19805,6 +20158,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -19865,6 +20219,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Opp Blk 333",
@@ -19923,6 +20278,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -19983,6 +20339,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Clementi Flyover",
@@ -20043,6 +20400,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "KOVAN MRT STATION Exit A",
@@ -20098,6 +20456,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Bras Basah Cplx",
@@ -20158,6 +20517,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Aft S'goon Nth Ave 1",
@@ -20220,6 +20580,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "PIONEER MRT STATION Exit A",
@@ -20277,6 +20638,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Viz Holland",
@@ -20335,6 +20697,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "CLEMENTI MRT STATION Exit A",
@@ -20399,6 +20762,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "BUKIT GOMBAK MRT STATION Exit A",
@@ -20455,6 +20819,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": "Ang Mo Kio Linear Pk",
@@ -20517,6 +20882,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -20569,6 +20935,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,
@@ -20621,6 +20988,7 @@
         "type": "LineString"
       },
       "properties": {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "endpoint_source": "postal_universe_to_transit_poi",
         "new_best_name": null,

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T02:45:05.752617+00:00",
+  "generated_at": "2026-08-02T02:48:37.686906+00:00",
   "inputs": {
     "input_rows": 192,
     "project_longer_profile": "qa\\onemap_outlier_replay_bus_longer_profile_100_20260802.json",
@@ -9,6 +9,11 @@
   "queue_summaries": {
     "direct_bus_fallback_review": {
       "count": 123,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "current_route_materially_shorter_than_validation_direct": 25,
+        "current_route_slightly_shorter_than_validation_direct": 9,
+        "plausible": 89
+      },
       "direction_counts": {
         "project_longer_than_onemap": 68,
         "project_shorter_than_onemap": 55
@@ -34,6 +39,10 @@
     },
     "hdb_bridge_connector_review": {
       "count": 27,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "current_route_slightly_shorter_than_validation_direct": 1,
+        "plausible": 26
+      },
       "direction_counts": {
         "project_longer_than_onemap": 12,
         "project_shorter_than_onemap": 15
@@ -61,6 +70,11 @@
     },
     "missing_bus_connector": {
       "count": 68,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "current_route_materially_shorter_than_validation_direct": 14,
+        "current_route_slightly_shorter_than_validation_direct": 6,
+        "plausible": 48
+      },
       "direction_counts": {
         "project_longer_than_onemap": 68
       },
@@ -85,6 +99,12 @@
     },
     "mrt_lrt_outlier": {
       "count": 47,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "current_route_materially_shorter_than_validation_direct": 3,
+        "current_route_slightly_shorter_than_validation_direct": 1,
+        "plausible": 40,
+        "unknown": 3
+      },
       "direction_counts": {
         "project_longer_than_onemap": 17,
         "project_shorter_than_onemap": 30
@@ -112,6 +132,12 @@
     },
     "possible_overpermissive_project_path": {
       "count": 100,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "current_route_materially_shorter_than_validation_direct": 17,
+        "current_route_slightly_shorter_than_validation_direct": 5,
+        "plausible": 75,
+        "unknown": 3
+      },
       "direction_counts": {
         "project_shorter_than_onemap": 100
       },
@@ -139,6 +165,9 @@
     },
     "still_unscored_or_no_best": {
       "count": 3,
+      "current_route_vs_validation_direct_sanity_counts": {
+        "unknown": 3
+      },
       "direction_counts": {
         "project_shorter_than_onemap": 3
       },
@@ -157,6 +186,7 @@
   "queues": {
     "direct_bus_fallback_review": [
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.346168,
@@ -204,6 +234,7 @@
         "validation_onemap_vs_direct_delta_m": -61.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.319792,
@@ -251,6 +282,7 @@
         "validation_onemap_vs_direct_delta_m": -19.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.346389,
@@ -298,6 +330,7 @@
         "validation_onemap_vs_direct_delta_m": -198.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.383197,
@@ -345,6 +378,7 @@
         "validation_onemap_vs_direct_delta_m": -44.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.332606,
@@ -392,6 +426,7 @@
         "validation_onemap_vs_direct_delta_m": -11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.45761,
@@ -439,6 +474,7 @@
         "validation_onemap_vs_direct_delta_m": -1.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.324961,
@@ -486,6 +522,7 @@
         "validation_onemap_vs_direct_delta_m": -42.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325136,
@@ -533,6 +570,7 @@
         "validation_onemap_vs_direct_delta_m": -11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359409,
@@ -580,6 +618,7 @@
         "validation_onemap_vs_direct_delta_m": 5.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32027,
@@ -627,6 +666,7 @@
         "validation_onemap_vs_direct_delta_m": 42.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.360656,
@@ -674,6 +714,7 @@
         "validation_onemap_vs_direct_delta_m": -0.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.318831,
@@ -721,6 +762,7 @@
         "validation_onemap_vs_direct_delta_m": 151.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.326708,
@@ -768,6 +810,7 @@
         "validation_onemap_vs_direct_delta_m": -20.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.341638,
@@ -819,6 +862,7 @@
         "validation_onemap_vs_direct_delta_m": -87.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.308546,
@@ -866,6 +910,7 @@
         "validation_onemap_vs_direct_delta_m": 21.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.289014,
@@ -913,6 +958,7 @@
         "validation_onemap_vs_direct_delta_m": -5.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.311611,
@@ -960,6 +1006,7 @@
         "validation_onemap_vs_direct_delta_m": -17.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301306,
@@ -1007,6 +1054,7 @@
         "validation_onemap_vs_direct_delta_m": 2.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.353092,
@@ -1054,6 +1102,7 @@
         "validation_onemap_vs_direct_delta_m": -13.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.342262,
@@ -1101,6 +1150,7 @@
         "validation_onemap_vs_direct_delta_m": 124.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.308546,
@@ -1148,6 +1198,7 @@
         "validation_onemap_vs_direct_delta_m": -28.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.343261,
@@ -1195,6 +1246,7 @@
         "validation_onemap_vs_direct_delta_m": -33.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.367726,
@@ -1242,6 +1294,7 @@
         "validation_onemap_vs_direct_delta_m": 3.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.423296,
@@ -1289,6 +1342,7 @@
         "validation_onemap_vs_direct_delta_m": -8.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.3038,
@@ -1336,6 +1390,7 @@
         "validation_onemap_vs_direct_delta_m": 16.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.424958,
@@ -1383,6 +1438,7 @@
         "validation_onemap_vs_direct_delta_m": -42.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32338,
@@ -1430,6 +1486,7 @@
         "validation_onemap_vs_direct_delta_m": 33.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.366506,
@@ -1477,6 +1534,7 @@
         "validation_onemap_vs_direct_delta_m": 29.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.371629,
@@ -1524,6 +1582,7 @@
         "validation_onemap_vs_direct_delta_m": 11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301713,
@@ -1571,6 +1630,7 @@
         "validation_onemap_vs_direct_delta_m": -3.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.35625,
@@ -1618,6 +1678,7 @@
         "validation_onemap_vs_direct_delta_m": 51.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.350271,
@@ -1665,6 +1726,7 @@
         "validation_onemap_vs_direct_delta_m": -33.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.368246,
@@ -1712,6 +1774,7 @@
         "validation_onemap_vs_direct_delta_m": 68.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.341129,
@@ -1759,6 +1822,7 @@
         "validation_onemap_vs_direct_delta_m": 19.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.390494,
@@ -1806,6 +1870,7 @@
         "validation_onemap_vs_direct_delta_m": 94.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.33327,
@@ -1853,6 +1918,7 @@
         "validation_onemap_vs_direct_delta_m": 58.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.26994,
@@ -1900,6 +1966,7 @@
         "validation_onemap_vs_direct_delta_m": 47.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32027,
@@ -1947,6 +2014,7 @@
         "validation_onemap_vs_direct_delta_m": 61.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.305441,
@@ -1994,6 +2062,7 @@
         "validation_onemap_vs_direct_delta_m": 48.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378798,
@@ -2041,6 +2110,7 @@
         "validation_onemap_vs_direct_delta_m": 81.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.373551,
@@ -2088,6 +2158,7 @@
         "validation_onemap_vs_direct_delta_m": 46.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.410565,
@@ -2135,6 +2206,7 @@
         "validation_onemap_vs_direct_delta_m": 186.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.347631,
@@ -2182,6 +2254,7 @@
         "validation_onemap_vs_direct_delta_m": 6.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378372,
@@ -2229,6 +2302,7 @@
         "validation_onemap_vs_direct_delta_m": 88.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.427487,
@@ -2276,6 +2350,7 @@
         "validation_onemap_vs_direct_delta_m": -18.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.333636,
@@ -2323,6 +2398,7 @@
         "validation_onemap_vs_direct_delta_m": 18.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.344324,
@@ -2370,6 +2446,7 @@
         "validation_onemap_vs_direct_delta_m": 276.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.31657,
@@ -2417,6 +2494,7 @@
         "validation_onemap_vs_direct_delta_m": 1.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.320764,
@@ -2464,6 +2542,7 @@
         "validation_onemap_vs_direct_delta_m": 48.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.310546,
@@ -2511,6 +2590,7 @@
         "validation_onemap_vs_direct_delta_m": 70.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.380057,
@@ -2558,6 +2638,7 @@
         "validation_onemap_vs_direct_delta_m": 81.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.446689,
@@ -2605,6 +2686,7 @@
         "validation_onemap_vs_direct_delta_m": 55.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359101,
@@ -2652,6 +2734,7 @@
         "validation_onemap_vs_direct_delta_m": 125.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.38403,
@@ -2699,6 +2782,7 @@
         "validation_onemap_vs_direct_delta_m": -48.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.313064,
@@ -2746,6 +2830,7 @@
         "validation_onemap_vs_direct_delta_m": 19.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.352209,
@@ -2793,6 +2878,7 @@
         "validation_onemap_vs_direct_delta_m": -3.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.36206,
@@ -2840,6 +2926,7 @@
         "validation_onemap_vs_direct_delta_m": 31.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.395274,
@@ -2887,6 +2974,7 @@
         "validation_onemap_vs_direct_delta_m": 78.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.379243,
@@ -2934,6 +3022,7 @@
         "validation_onemap_vs_direct_delta_m": 3.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.441809,
@@ -2981,6 +3070,7 @@
         "validation_onemap_vs_direct_delta_m": 60.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.342262,
@@ -3028,6 +3118,7 @@
         "validation_onemap_vs_direct_delta_m": 175.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.41755,
@@ -3075,6 +3166,7 @@
         "validation_onemap_vs_direct_delta_m": 38.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.331311,
@@ -3122,6 +3214,7 @@
         "validation_onemap_vs_direct_delta_m": 90.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.387082,
@@ -3169,6 +3262,7 @@
         "validation_onemap_vs_direct_delta_m": 34.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.321201,
@@ -3216,6 +3310,7 @@
         "validation_onemap_vs_direct_delta_m": 71.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359101,
@@ -3263,6 +3358,7 @@
         "validation_onemap_vs_direct_delta_m": 134.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.444307,
@@ -3310,6 +3406,7 @@
         "validation_onemap_vs_direct_delta_m": 71.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.267401,
@@ -3357,6 +3454,7 @@
         "validation_onemap_vs_direct_delta_m": -19.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.364121,
@@ -3404,6 +3502,7 @@
         "validation_onemap_vs_direct_delta_m": 746.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322982,
@@ -3451,6 +3550,7 @@
         "validation_onemap_vs_direct_delta_m": 556.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301306,
@@ -3498,6 +3598,7 @@
         "validation_onemap_vs_direct_delta_m": 302.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.377871,
@@ -3545,6 +3646,7 @@
         "validation_onemap_vs_direct_delta_m": 3976.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.297804,
@@ -3592,6 +3694,7 @@
         "validation_onemap_vs_direct_delta_m": 358.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.3328,
@@ -3639,6 +3742,7 @@
         "validation_onemap_vs_direct_delta_m": 3080.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325882,
@@ -3686,6 +3790,7 @@
         "validation_onemap_vs_direct_delta_m": 1814.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.281425,
@@ -3733,6 +3838,7 @@
         "validation_onemap_vs_direct_delta_m": 712.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.376731,
@@ -3780,6 +3886,7 @@
         "validation_onemap_vs_direct_delta_m": -14.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322361,
@@ -3827,6 +3934,7 @@
         "validation_onemap_vs_direct_delta_m": 1025.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.344826,
@@ -3874,6 +3982,7 @@
         "validation_onemap_vs_direct_delta_m": 907.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.333341,
@@ -3921,6 +4030,7 @@
         "validation_onemap_vs_direct_delta_m": 1584.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.29433,
@@ -3968,6 +4078,7 @@
         "validation_onemap_vs_direct_delta_m": 63.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.275812,
@@ -4015,6 +4126,7 @@
         "validation_onemap_vs_direct_delta_m": 1691.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301003,
@@ -4062,6 +4174,7 @@
         "validation_onemap_vs_direct_delta_m": 169.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325343,
@@ -4109,6 +4222,7 @@
         "validation_onemap_vs_direct_delta_m": 2440.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.265924,
@@ -4156,6 +4270,7 @@
         "validation_onemap_vs_direct_delta_m": 1684.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378543,
@@ -4203,6 +4318,7 @@
         "validation_onemap_vs_direct_delta_m": 3067.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.335669,
@@ -4250,6 +4366,7 @@
         "validation_onemap_vs_direct_delta_m": 402.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.381132,
@@ -4297,6 +4414,7 @@
         "validation_onemap_vs_direct_delta_m": 800.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.373696,
@@ -4344,6 +4462,7 @@
         "validation_onemap_vs_direct_delta_m": 103.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.379908,
@@ -4391,6 +4510,7 @@
         "validation_onemap_vs_direct_delta_m": 941.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378109,
@@ -4438,6 +4558,7 @@
         "validation_onemap_vs_direct_delta_m": 44.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.447028,
@@ -4485,6 +4606,7 @@
         "validation_onemap_vs_direct_delta_m": 1094.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32453,
@@ -4532,6 +4654,7 @@
         "validation_onemap_vs_direct_delta_m": 1099.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.328572,
@@ -4579,6 +4702,7 @@
         "validation_onemap_vs_direct_delta_m": 402.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.299068,
@@ -4626,6 +4750,7 @@
         "validation_onemap_vs_direct_delta_m": 936.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.314281,
@@ -4673,6 +4798,7 @@
         "validation_onemap_vs_direct_delta_m": 76.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.389904,
@@ -4720,6 +4846,7 @@
         "validation_onemap_vs_direct_delta_m": 503.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325987,
@@ -4767,6 +4894,7 @@
         "validation_onemap_vs_direct_delta_m": 518.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.447936,
@@ -4814,6 +4942,7 @@
         "validation_onemap_vs_direct_delta_m": 1048.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.319447,
@@ -4861,6 +4990,7 @@
         "validation_onemap_vs_direct_delta_m": 1503.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32754,
@@ -4908,6 +5038,7 @@
         "validation_onemap_vs_direct_delta_m": 532.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.402389,
@@ -4955,6 +5086,7 @@
         "validation_onemap_vs_direct_delta_m": 42.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.376375,
@@ -5002,6 +5134,7 @@
         "validation_onemap_vs_direct_delta_m": 496.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.305051,
@@ -5049,6 +5182,7 @@
         "validation_onemap_vs_direct_delta_m": 953.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.332488,
@@ -5096,6 +5230,7 @@
         "validation_onemap_vs_direct_delta_m": 756.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.294981,
@@ -5143,6 +5278,7 @@
         "validation_onemap_vs_direct_delta_m": 623.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322982,
@@ -5190,6 +5326,7 @@
         "validation_onemap_vs_direct_delta_m": -28.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.276003,
@@ -5237,6 +5374,7 @@
         "validation_onemap_vs_direct_delta_m": 1289.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.389904,
@@ -5284,6 +5422,7 @@
         "validation_onemap_vs_direct_delta_m": 538.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.312595,
@@ -5331,6 +5470,7 @@
         "validation_onemap_vs_direct_delta_m": 385.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.340033,
@@ -5378,6 +5518,7 @@
         "validation_onemap_vs_direct_delta_m": 287.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.436441,
@@ -5425,6 +5566,7 @@
         "validation_onemap_vs_direct_delta_m": 378.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378241,
@@ -5472,6 +5614,7 @@
         "validation_onemap_vs_direct_delta_m": 168.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.292335,
@@ -5519,6 +5662,7 @@
         "validation_onemap_vs_direct_delta_m": 290.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.365146,
@@ -5566,6 +5710,7 @@
         "validation_onemap_vs_direct_delta_m": 741.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.289014,
@@ -5613,6 +5758,7 @@
         "validation_onemap_vs_direct_delta_m": 366.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.402222,
@@ -5660,6 +5806,7 @@
         "validation_onemap_vs_direct_delta_m": 491.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.357772,
@@ -5707,6 +5854,7 @@
         "validation_onemap_vs_direct_delta_m": 442.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.286977,
@@ -5754,6 +5902,7 @@
         "validation_onemap_vs_direct_delta_m": 345.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.281425,
@@ -5801,6 +5950,7 @@
         "validation_onemap_vs_direct_delta_m": 839.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.364037,
@@ -5848,6 +5998,7 @@
         "validation_onemap_vs_direct_delta_m": 1090.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.411773,
@@ -5895,6 +6046,7 @@
         "validation_onemap_vs_direct_delta_m": 216.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.452059,
@@ -5944,6 +6096,7 @@
     ],
     "hdb_bridge_connector_review": [
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.361662,
@@ -5991,6 +6144,7 @@
         "validation_onemap_vs_direct_delta_m": -63.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.341638,
@@ -6042,6 +6196,7 @@
         "validation_onemap_vs_direct_delta_m": -87.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -6090,6 +6245,7 @@
         "validation_onemap_vs_direct_delta_m": 106.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.342172,
@@ -6138,6 +6294,7 @@
         "validation_onemap_vs_direct_delta_m": 123.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.395245,
@@ -6191,6 +6348,7 @@
         "validation_onemap_vs_direct_delta_m": -35.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -6239,6 +6397,7 @@
         "validation_onemap_vs_direct_delta_m": 109.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -6287,6 +6446,7 @@
         "validation_onemap_vs_direct_delta_m": 38.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.338364,
@@ -6335,6 +6495,7 @@
         "validation_onemap_vs_direct_delta_m": 110.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.36187,
@@ -6384,6 +6545,7 @@
         "validation_onemap_vs_direct_delta_m": 23.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.30653,
@@ -6433,6 +6595,7 @@
         "validation_onemap_vs_direct_delta_m": 60.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.39705,
@@ -6486,6 +6649,7 @@
         "validation_onemap_vs_direct_delta_m": -3.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.338364,
@@ -6534,6 +6698,7 @@
         "validation_onemap_vs_direct_delta_m": 143.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.382565,
@@ -6580,6 +6745,7 @@
         "validation_onemap_vs_direct_delta_m": 40.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.353303,
@@ -6628,6 +6794,7 @@
         "validation_onemap_vs_direct_delta_m": 155.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.355843,
@@ -6675,6 +6842,7 @@
         "validation_onemap_vs_direct_delta_m": 429.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -6726,6 +6894,7 @@
         "validation_onemap_vs_direct_delta_m": 615.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.280192,
@@ -6775,6 +6944,7 @@
         "validation_onemap_vs_direct_delta_m": 273.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -6826,6 +6996,7 @@
         "validation_onemap_vs_direct_delta_m": 655.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -6877,6 +7048,7 @@
         "validation_onemap_vs_direct_delta_m": 647.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.36816,
@@ -6923,6 +7095,7 @@
         "validation_onemap_vs_direct_delta_m": 846.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.29699,
@@ -6974,6 +7147,7 @@
         "validation_onemap_vs_direct_delta_m": 181.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.366058,
@@ -7027,6 +7201,7 @@
         "validation_onemap_vs_direct_delta_m": 275.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.347723,
@@ -7075,6 +7250,7 @@
         "validation_onemap_vs_direct_delta_m": 452.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.30852,
@@ -7124,6 +7300,7 @@
         "validation_onemap_vs_direct_delta_m": 352.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.317905,
@@ -7179,6 +7356,7 @@
         "validation_onemap_vs_direct_delta_m": 110.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.35984,
@@ -7226,6 +7404,7 @@
         "validation_onemap_vs_direct_delta_m": 301.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.378638,
@@ -7281,6 +7460,7 @@
     ],
     "missing_bus_connector": [
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.346168,
@@ -7328,6 +7508,7 @@
         "validation_onemap_vs_direct_delta_m": -61.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.319792,
@@ -7375,6 +7556,7 @@
         "validation_onemap_vs_direct_delta_m": -19.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.346389,
@@ -7422,6 +7604,7 @@
         "validation_onemap_vs_direct_delta_m": -198.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.383197,
@@ -7469,6 +7652,7 @@
         "validation_onemap_vs_direct_delta_m": -44.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.332606,
@@ -7516,6 +7700,7 @@
         "validation_onemap_vs_direct_delta_m": -11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.45761,
@@ -7563,6 +7748,7 @@
         "validation_onemap_vs_direct_delta_m": -1.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.324961,
@@ -7610,6 +7796,7 @@
         "validation_onemap_vs_direct_delta_m": -42.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325136,
@@ -7657,6 +7844,7 @@
         "validation_onemap_vs_direct_delta_m": -11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359409,
@@ -7704,6 +7892,7 @@
         "validation_onemap_vs_direct_delta_m": 5.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32027,
@@ -7751,6 +7940,7 @@
         "validation_onemap_vs_direct_delta_m": 42.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.360656,
@@ -7798,6 +7988,7 @@
         "validation_onemap_vs_direct_delta_m": -0.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.318831,
@@ -7845,6 +8036,7 @@
         "validation_onemap_vs_direct_delta_m": 151.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.326708,
@@ -7892,6 +8084,7 @@
         "validation_onemap_vs_direct_delta_m": -20.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.341638,
@@ -7943,6 +8136,7 @@
         "validation_onemap_vs_direct_delta_m": -87.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.308546,
@@ -7990,6 +8184,7 @@
         "validation_onemap_vs_direct_delta_m": 21.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.289014,
@@ -8037,6 +8232,7 @@
         "validation_onemap_vs_direct_delta_m": -5.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.311611,
@@ -8084,6 +8280,7 @@
         "validation_onemap_vs_direct_delta_m": -17.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301306,
@@ -8131,6 +8328,7 @@
         "validation_onemap_vs_direct_delta_m": 2.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.353092,
@@ -8178,6 +8376,7 @@
         "validation_onemap_vs_direct_delta_m": -13.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.342262,
@@ -8225,6 +8424,7 @@
         "validation_onemap_vs_direct_delta_m": 124.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.308546,
@@ -8272,6 +8472,7 @@
         "validation_onemap_vs_direct_delta_m": -28.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.343261,
@@ -8319,6 +8520,7 @@
         "validation_onemap_vs_direct_delta_m": -33.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.367726,
@@ -8366,6 +8568,7 @@
         "validation_onemap_vs_direct_delta_m": 3.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.423296,
@@ -8413,6 +8616,7 @@
         "validation_onemap_vs_direct_delta_m": -8.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.3038,
@@ -8460,6 +8664,7 @@
         "validation_onemap_vs_direct_delta_m": 16.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.424958,
@@ -8507,6 +8712,7 @@
         "validation_onemap_vs_direct_delta_m": -42.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32338,
@@ -8554,6 +8760,7 @@
         "validation_onemap_vs_direct_delta_m": 33.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.366506,
@@ -8601,6 +8808,7 @@
         "validation_onemap_vs_direct_delta_m": 29.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.371629,
@@ -8648,6 +8856,7 @@
         "validation_onemap_vs_direct_delta_m": 11.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301713,
@@ -8695,6 +8904,7 @@
         "validation_onemap_vs_direct_delta_m": -3.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.35625,
@@ -8742,6 +8952,7 @@
         "validation_onemap_vs_direct_delta_m": 51.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.350271,
@@ -8789,6 +9000,7 @@
         "validation_onemap_vs_direct_delta_m": -33.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.368246,
@@ -8836,6 +9048,7 @@
         "validation_onemap_vs_direct_delta_m": 68.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.341129,
@@ -8883,6 +9096,7 @@
         "validation_onemap_vs_direct_delta_m": 19.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.390494,
@@ -8930,6 +9144,7 @@
         "validation_onemap_vs_direct_delta_m": 94.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.33327,
@@ -8977,6 +9192,7 @@
         "validation_onemap_vs_direct_delta_m": 58.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.26994,
@@ -9024,6 +9240,7 @@
         "validation_onemap_vs_direct_delta_m": 47.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32027,
@@ -9071,6 +9288,7 @@
         "validation_onemap_vs_direct_delta_m": 61.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.305441,
@@ -9118,6 +9336,7 @@
         "validation_onemap_vs_direct_delta_m": 48.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378798,
@@ -9165,6 +9384,7 @@
         "validation_onemap_vs_direct_delta_m": 81.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.373551,
@@ -9212,6 +9432,7 @@
         "validation_onemap_vs_direct_delta_m": 46.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.410565,
@@ -9259,6 +9480,7 @@
         "validation_onemap_vs_direct_delta_m": 186.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.347631,
@@ -9306,6 +9528,7 @@
         "validation_onemap_vs_direct_delta_m": 6.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378372,
@@ -9353,6 +9576,7 @@
         "validation_onemap_vs_direct_delta_m": 88.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.427487,
@@ -9400,6 +9624,7 @@
         "validation_onemap_vs_direct_delta_m": -18.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.333636,
@@ -9447,6 +9672,7 @@
         "validation_onemap_vs_direct_delta_m": 18.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.344324,
@@ -9494,6 +9720,7 @@
         "validation_onemap_vs_direct_delta_m": 276.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.31657,
@@ -9541,6 +9768,7 @@
         "validation_onemap_vs_direct_delta_m": 1.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.320764,
@@ -9588,6 +9816,7 @@
         "validation_onemap_vs_direct_delta_m": 48.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.310546,
@@ -9635,6 +9864,7 @@
         "validation_onemap_vs_direct_delta_m": 70.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.380057,
@@ -9682,6 +9912,7 @@
         "validation_onemap_vs_direct_delta_m": 81.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.446689,
@@ -9729,6 +9960,7 @@
         "validation_onemap_vs_direct_delta_m": 55.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359101,
@@ -9776,6 +10008,7 @@
         "validation_onemap_vs_direct_delta_m": 125.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.38403,
@@ -9823,6 +10056,7 @@
         "validation_onemap_vs_direct_delta_m": -48.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.313064,
@@ -9870,6 +10104,7 @@
         "validation_onemap_vs_direct_delta_m": 19.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.352209,
@@ -9917,6 +10152,7 @@
         "validation_onemap_vs_direct_delta_m": -3.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.36206,
@@ -9964,6 +10200,7 @@
         "validation_onemap_vs_direct_delta_m": 31.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.395274,
@@ -10011,6 +10248,7 @@
         "validation_onemap_vs_direct_delta_m": 78.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.379243,
@@ -10058,6 +10296,7 @@
         "validation_onemap_vs_direct_delta_m": 3.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.441809,
@@ -10105,6 +10344,7 @@
         "validation_onemap_vs_direct_delta_m": 60.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.342262,
@@ -10152,6 +10392,7 @@
         "validation_onemap_vs_direct_delta_m": 175.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.41755,
@@ -10199,6 +10440,7 @@
         "validation_onemap_vs_direct_delta_m": 38.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.331311,
@@ -10246,6 +10488,7 @@
         "validation_onemap_vs_direct_delta_m": 90.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.387082,
@@ -10293,6 +10536,7 @@
         "validation_onemap_vs_direct_delta_m": 34.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.321201,
@@ -10340,6 +10584,7 @@
         "validation_onemap_vs_direct_delta_m": 71.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.359101,
@@ -10387,6 +10632,7 @@
         "validation_onemap_vs_direct_delta_m": 134.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.444307,
@@ -10434,6 +10680,7 @@
         "validation_onemap_vs_direct_delta_m": 71.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.267401,
@@ -10483,6 +10730,7 @@
     ],
     "mrt_lrt_outlier": [
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.361662,
@@ -10530,6 +10778,7 @@
         "validation_onemap_vs_direct_delta_m": -63.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.376345,
@@ -10575,6 +10824,7 @@
         "validation_onemap_vs_direct_delta_m": 14.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.431407,
@@ -10620,6 +10870,7 @@
         "validation_onemap_vs_direct_delta_m": 13.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.303159,
@@ -10665,6 +10916,7 @@
         "validation_onemap_vs_direct_delta_m": 78.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.41755,
@@ -10710,6 +10962,7 @@
         "validation_onemap_vs_direct_delta_m": -4.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -10758,6 +11011,7 @@
         "validation_onemap_vs_direct_delta_m": 106.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.41755,
@@ -10803,6 +11057,7 @@
         "validation_onemap_vs_direct_delta_m": 3.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.342172,
@@ -10851,6 +11106,7 @@
         "validation_onemap_vs_direct_delta_m": 123.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.419031,
@@ -10896,6 +11152,7 @@
         "validation_onemap_vs_direct_delta_m": 3.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.316164,
@@ -10941,6 +11198,7 @@
         "validation_onemap_vs_direct_delta_m": -30.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -10989,6 +11247,7 @@
         "validation_onemap_vs_direct_delta_m": 109.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.350532,
@@ -11037,6 +11296,7 @@
         "validation_onemap_vs_direct_delta_m": 38.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.338364,
@@ -11085,6 +11345,7 @@
         "validation_onemap_vs_direct_delta_m": 110.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.36187,
@@ -11134,6 +11395,7 @@
         "validation_onemap_vs_direct_delta_m": 23.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.326801,
@@ -11179,6 +11441,7 @@
         "validation_onemap_vs_direct_delta_m": 74.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.318831,
@@ -11224,6 +11487,7 @@
         "validation_onemap_vs_direct_delta_m": 137.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.338364,
@@ -11272,6 +11536,7 @@
         "validation_onemap_vs_direct_delta_m": 143.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.329455,
@@ -11319,6 +11584,7 @@
         "validation_onemap_vs_direct_delta_m": 427.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.297659,
@@ -11364,6 +11630,7 @@
         "validation_onemap_vs_direct_delta_m": 287.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.382565,
@@ -11410,6 +11677,7 @@
         "validation_onemap_vs_direct_delta_m": 40.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.29433,
@@ -11457,6 +11725,7 @@
         "validation_onemap_vs_direct_delta_m": 63.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -11502,6 +11771,7 @@
         "validation_onemap_vs_direct_delta_m": 811.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.355481,
@@ -11550,6 +11820,7 @@
         "validation_onemap_vs_direct_delta_m": 756.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -11595,6 +11866,7 @@
         "validation_onemap_vs_direct_delta_m": 896.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.353303,
@@ -11643,6 +11915,7 @@
         "validation_onemap_vs_direct_delta_m": 155.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.355843,
@@ -11690,6 +11963,7 @@
         "validation_onemap_vs_direct_delta_m": 429.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.318464,
@@ -11737,6 +12011,7 @@
         "validation_onemap_vs_direct_delta_m": 1506.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -11782,6 +12057,7 @@
         "validation_onemap_vs_direct_delta_m": 921.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.334189,
@@ -11827,6 +12103,7 @@
         "validation_onemap_vs_direct_delta_m": 77.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -11872,6 +12149,7 @@
         "validation_onemap_vs_direct_delta_m": 658.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.447936,
@@ -11919,6 +12197,7 @@
         "validation_onemap_vs_direct_delta_m": 1048.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.280192,
@@ -11968,6 +12247,7 @@
         "validation_onemap_vs_direct_delta_m": 273.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.302127,
@@ -12014,6 +12294,7 @@
         "validation_onemap_vs_direct_delta_m": 753.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.385652,
@@ -12061,6 +12342,7 @@
         "validation_onemap_vs_direct_delta_m": 482.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.276003,
@@ -12108,6 +12390,7 @@
         "validation_onemap_vs_direct_delta_m": 1289.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.280371,
@@ -12154,6 +12437,7 @@
         "validation_onemap_vs_direct_delta_m": 127.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.36816,
@@ -12200,6 +12484,7 @@
         "validation_onemap_vs_direct_delta_m": 846.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -12243,6 +12528,7 @@
         "validation_onemap_vs_direct_delta_m": 1087.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -12286,6 +12572,7 @@
         "validation_onemap_vs_direct_delta_m": 1100.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.387841,
@@ -12329,6 +12616,7 @@
         "validation_onemap_vs_direct_delta_m": 1549.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.347723,
@@ -12377,6 +12665,7 @@
         "validation_onemap_vs_direct_delta_m": 452.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.317905,
@@ -12432,6 +12721,7 @@
         "validation_onemap_vs_direct_delta_m": 110.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.35984,
@@ -12479,6 +12769,7 @@
         "validation_onemap_vs_direct_delta_m": 301.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.312618,
@@ -12524,6 +12815,7 @@
         "validation_onemap_vs_direct_delta_m": 68.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.364037,
@@ -12571,6 +12863,7 @@
         "validation_onemap_vs_direct_delta_m": 1090.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.411773,
@@ -12618,6 +12911,7 @@
         "validation_onemap_vs_direct_delta_m": 216.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.297539,
@@ -12666,6 +12960,7 @@
     ],
     "possible_overpermissive_project_path": [
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.329455,
@@ -12713,6 +13008,7 @@
         "validation_onemap_vs_direct_delta_m": 427.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.364121,
@@ -12760,6 +13056,7 @@
         "validation_onemap_vs_direct_delta_m": 746.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.297659,
@@ -12805,6 +13102,7 @@
         "validation_onemap_vs_direct_delta_m": 287.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322982,
@@ -12852,6 +13150,7 @@
         "validation_onemap_vs_direct_delta_m": 556.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301306,
@@ -12899,6 +13198,7 @@
         "validation_onemap_vs_direct_delta_m": 302.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.382565,
@@ -12945,6 +13245,7 @@
         "validation_onemap_vs_direct_delta_m": 40.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.377871,
@@ -12992,6 +13293,7 @@
         "validation_onemap_vs_direct_delta_m": 3976.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.297804,
@@ -13039,6 +13341,7 @@
         "validation_onemap_vs_direct_delta_m": 358.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.3328,
@@ -13086,6 +13389,7 @@
         "validation_onemap_vs_direct_delta_m": 3080.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.337696,
@@ -13133,6 +13437,7 @@
         "validation_onemap_vs_direct_delta_m": 7.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325882,
@@ -13180,6 +13485,7 @@
         "validation_onemap_vs_direct_delta_m": 1814.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.337696,
@@ -13227,6 +13533,7 @@
         "validation_onemap_vs_direct_delta_m": 2.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.332545,
@@ -13274,6 +13581,7 @@
         "validation_onemap_vs_direct_delta_m": 94.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.281425,
@@ -13321,6 +13629,7 @@
         "validation_onemap_vs_direct_delta_m": 712.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.376731,
@@ -13368,6 +13677,7 @@
         "validation_onemap_vs_direct_delta_m": -14.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322361,
@@ -13415,6 +13725,7 @@
         "validation_onemap_vs_direct_delta_m": 1025.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.344826,
@@ -13462,6 +13773,7 @@
         "validation_onemap_vs_direct_delta_m": 907.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.333341,
@@ -13509,6 +13821,7 @@
         "validation_onemap_vs_direct_delta_m": 1584.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.29433,
@@ -13556,6 +13869,7 @@
         "validation_onemap_vs_direct_delta_m": 63.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.275812,
@@ -13603,6 +13917,7 @@
         "validation_onemap_vs_direct_delta_m": 1691.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -13648,6 +13963,7 @@
         "validation_onemap_vs_direct_delta_m": 811.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.301003,
@@ -13695,6 +14011,7 @@
         "validation_onemap_vs_direct_delta_m": 169.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.355481,
@@ -13743,6 +14060,7 @@
         "validation_onemap_vs_direct_delta_m": 756.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325343,
@@ -13790,6 +14108,7 @@
         "validation_onemap_vs_direct_delta_m": 2440.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.332545,
@@ -13837,6 +14156,7 @@
         "validation_onemap_vs_direct_delta_m": 100.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.265924,
@@ -13884,6 +14204,7 @@
         "validation_onemap_vs_direct_delta_m": 1684.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -13929,6 +14250,7 @@
         "validation_onemap_vs_direct_delta_m": 896.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378543,
@@ -13976,6 +14298,7 @@
         "validation_onemap_vs_direct_delta_m": 3067.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.353303,
@@ -14024,6 +14347,7 @@
         "validation_onemap_vs_direct_delta_m": 155.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.37834,
@@ -14071,6 +14395,7 @@
         "validation_onemap_vs_direct_delta_m": 2993.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.335669,
@@ -14118,6 +14443,7 @@
         "validation_onemap_vs_direct_delta_m": 402.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.381132,
@@ -14165,6 +14491,7 @@
         "validation_onemap_vs_direct_delta_m": 800.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.373696,
@@ -14212,6 +14539,7 @@
         "validation_onemap_vs_direct_delta_m": 103.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.339618,
@@ -14261,6 +14589,7 @@
         "validation_onemap_vs_direct_delta_m": 696.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.355843,
@@ -14308,6 +14637,7 @@
         "validation_onemap_vs_direct_delta_m": 429.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.379908,
@@ -14355,6 +14685,7 @@
         "validation_onemap_vs_direct_delta_m": 941.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.318464,
@@ -14402,6 +14733,7 @@
         "validation_onemap_vs_direct_delta_m": 1506.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -14447,6 +14779,7 @@
         "validation_onemap_vs_direct_delta_m": 921.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378109,
@@ -14494,6 +14827,7 @@
         "validation_onemap_vs_direct_delta_m": 44.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.447028,
@@ -14541,6 +14875,7 @@
         "validation_onemap_vs_direct_delta_m": 1094.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32453,
@@ -14588,6 +14923,7 @@
         "validation_onemap_vs_direct_delta_m": 1099.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.328572,
@@ -14635,6 +14971,7 @@
         "validation_onemap_vs_direct_delta_m": 402.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.299068,
@@ -14682,6 +15019,7 @@
         "validation_onemap_vs_direct_delta_m": 936.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.334189,
@@ -14727,6 +15065,7 @@
         "validation_onemap_vs_direct_delta_m": 77.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.314281,
@@ -14774,6 +15113,7 @@
         "validation_onemap_vs_direct_delta_m": 76.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.378543,
@@ -14821,6 +15161,7 @@
         "validation_onemap_vs_direct_delta_m": 3020.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -14872,6 +15213,7 @@
         "validation_onemap_vs_direct_delta_m": 615.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.389545,
@@ -14917,6 +15259,7 @@
         "validation_onemap_vs_direct_delta_m": 658.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.389904,
@@ -14964,6 +15307,7 @@
         "validation_onemap_vs_direct_delta_m": 503.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.325987,
@@ -15011,6 +15355,7 @@
         "validation_onemap_vs_direct_delta_m": 518.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.447936,
@@ -15058,6 +15403,7 @@
         "validation_onemap_vs_direct_delta_m": 1048.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.280192,
@@ -15107,6 +15453,7 @@
         "validation_onemap_vs_direct_delta_m": 273.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.319447,
@@ -15154,6 +15501,7 @@
         "validation_onemap_vs_direct_delta_m": 1503.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.32754,
@@ -15201,6 +15549,7 @@
         "validation_onemap_vs_direct_delta_m": 532.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.402389,
@@ -15248,6 +15597,7 @@
         "validation_onemap_vs_direct_delta_m": 42.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -15299,6 +15649,7 @@
         "validation_onemap_vs_direct_delta_m": 655.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.376375,
@@ -15346,6 +15697,7 @@
         "validation_onemap_vs_direct_delta_m": 496.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.305051,
@@ -15393,6 +15745,7 @@
         "validation_onemap_vs_direct_delta_m": 953.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.332488,
@@ -15440,6 +15793,7 @@
         "validation_onemap_vs_direct_delta_m": 756.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.308041,
@@ -15491,6 +15845,7 @@
         "validation_onemap_vs_direct_delta_m": 647.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.302127,
@@ -15537,6 +15892,7 @@
         "validation_onemap_vs_direct_delta_m": 753.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.294981,
@@ -15584,6 +15940,7 @@
         "validation_onemap_vs_direct_delta_m": 623.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.325515,
@@ -15631,6 +15988,7 @@
         "validation_onemap_vs_direct_delta_m": 416.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.322982,
@@ -15678,6 +16036,7 @@
         "validation_onemap_vs_direct_delta_m": -28.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.385652,
@@ -15725,6 +16084,7 @@
         "validation_onemap_vs_direct_delta_m": 482.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.276003,
@@ -15772,6 +16132,7 @@
         "validation_onemap_vs_direct_delta_m": 1289.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.325515,
@@ -15819,6 +16180,7 @@
         "validation_onemap_vs_direct_delta_m": 380.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.389904,
@@ -15866,6 +16228,7 @@
         "validation_onemap_vs_direct_delta_m": 538.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.280371,
@@ -15912,6 +16275,7 @@
         "validation_onemap_vs_direct_delta_m": 127.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.312595,
@@ -15959,6 +16323,7 @@
         "validation_onemap_vs_direct_delta_m": 385.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.346768,
@@ -16006,6 +16371,7 @@
         "validation_onemap_vs_direct_delta_m": 260.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.340033,
@@ -16053,6 +16419,7 @@
         "validation_onemap_vs_direct_delta_m": 287.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.436441,
@@ -16100,6 +16467,7 @@
         "validation_onemap_vs_direct_delta_m": 378.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.382262,
@@ -16147,6 +16515,7 @@
         "validation_onemap_vs_direct_delta_m": 594.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.36816,
@@ -16193,6 +16562,7 @@
         "validation_onemap_vs_direct_delta_m": 846.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -16236,6 +16606,7 @@
         "validation_onemap_vs_direct_delta_m": 1087.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -16279,6 +16650,7 @@
         "validation_onemap_vs_direct_delta_m": 1100.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.387841,
@@ -16322,6 +16694,7 @@
         "validation_onemap_vs_direct_delta_m": 1549.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.29699,
@@ -16373,6 +16746,7 @@
         "validation_onemap_vs_direct_delta_m": 181.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.29707,
@@ -16420,6 +16794,7 @@
         "validation_onemap_vs_direct_delta_m": 652.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.366058,
@@ -16473,6 +16848,7 @@
         "validation_onemap_vs_direct_delta_m": 275.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.347723,
@@ -16521,6 +16897,7 @@
         "validation_onemap_vs_direct_delta_m": 452.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.378241,
@@ -16568,6 +16945,7 @@
         "validation_onemap_vs_direct_delta_m": 168.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.292335,
@@ -16615,6 +16993,7 @@
         "validation_onemap_vs_direct_delta_m": 290.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.30852,
@@ -16664,6 +17043,7 @@
         "validation_onemap_vs_direct_delta_m": 352.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.365146,
@@ -16711,6 +17091,7 @@
         "validation_onemap_vs_direct_delta_m": 741.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.317905,
@@ -16766,6 +17147,7 @@
         "validation_onemap_vs_direct_delta_m": 110.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_slightly_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.289014,
@@ -16813,6 +17195,7 @@
         "validation_onemap_vs_direct_delta_m": 366.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.339618,
@@ -16862,6 +17245,7 @@
         "validation_onemap_vs_direct_delta_m": 525.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.402222,
@@ -16909,6 +17293,7 @@
         "validation_onemap_vs_direct_delta_m": 491.2
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.357772,
@@ -16956,6 +17341,7 @@
         "validation_onemap_vs_direct_delta_m": 442.6
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.35984,
@@ -17003,6 +17389,7 @@
         "validation_onemap_vs_direct_delta_m": 301.0
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.286977,
@@ -17050,6 +17437,7 @@
         "validation_onemap_vs_direct_delta_m": 345.4
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.281425,
@@ -17097,6 +17485,7 @@
         "validation_onemap_vs_direct_delta_m": 839.8
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.312618,
@@ -17142,6 +17531,7 @@
         "validation_onemap_vs_direct_delta_m": 68.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.378638,
@@ -17195,6 +17585,7 @@
         "validation_onemap_vs_direct_delta_m": 483.5
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.364037,
@@ -17242,6 +17633,7 @@
         "validation_onemap_vs_direct_delta_m": 1090.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.411773,
@@ -17289,6 +17681,7 @@
         "validation_onemap_vs_direct_delta_m": 216.9
       },
       {
+        "current_route_vs_validation_direct_sanity": "current_route_materially_shorter_than_validation_direct",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.297539,
@@ -17335,6 +17728,7 @@
         "validation_onemap_vs_direct_delta_m": 499.3
       },
       {
+        "current_route_vs_validation_direct_sanity": "plausible",
         "direct_bus_fallback_reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
         "end": {
           "lat": 1.452059,
@@ -17384,6 +17778,7 @@
     ],
     "still_unscored_or_no_best": [
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -17427,6 +17822,7 @@
         "validation_onemap_vs_direct_delta_m": 1087.1
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.276003,
@@ -17470,6 +17866,7 @@
         "validation_onemap_vs_direct_delta_m": 1100.7
       },
       {
+        "current_route_vs_validation_direct_sanity": "unknown",
         "direct_bus_fallback_reason": null,
         "end": {
           "lat": 1.387841,
