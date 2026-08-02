@@ -57,6 +57,13 @@ This reports the active bundle state counts, static artifact validation, island
 network QA, batch-plan gates, Vercel root-directory/data strategy, and known
 incorporated versus pending data features.
 
+If local cleanup removes the ignored `qa/island_debug.geojson` artifact,
+regenerate the compact residual-point debug GeoJSON before readiness:
+
+```powershell
+uv run python run.py network-debug
+```
+
 ## Vercel Git Auto-Deploy
 
 The Vercel project root directory must be `web`.
