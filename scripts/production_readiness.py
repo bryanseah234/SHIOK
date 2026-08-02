@@ -107,7 +107,74 @@ def bundle_network_freshness(bundle_dir: Path, network_path: Path) -> dict[str, 
     }
 
 
-def readiness_features() -> dict[str, Any]:
+def latest_json_report(qa_dir: Path, pattern: str) -> Path | None:
+    reports = [path for path in qa_dir.glob(pattern) if path.is_file()]
+    if not reports:
+        return None
+    return max(reports, key=lambda path: (path.stat().st_mtime, path.name))
+
+
+def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
+    report_path = latest_json_report(qa_dir, "onemap_validation_cached_report*.json")
+    if report_path is None:
+        return {
+            "state": "not_collected",
+            "report_path": None,
+            "summary": (
+                "sample planner, guarded collector, and cache evaluator implemented; "
+                "the 2,000-postal OneMap walk comparison has not been collected yet"
+            ),
+        }
+
+    try:
+        report = read_json(report_path)
+    except (OSError, TypeError, json.JSONDecodeError) as exc:
+        return {
+            "state": "unreadable",
+            "report_path": str(report_path),
+            "summary": f"latest cached OneMap validation report is unreadable: {exc}",
+        }
+
+    gate_passed = bool(report.get("gate_passed"))
+    thresholds = report.get("thresholds", {})
+    median = report.get("median_abs_pct_delta")
+    p95 = report.get("p95_abs_pct_delta")
+    median_max = (
+        thresholds.get("median_abs_pct_delta_max") if isinstance(thresholds, dict) else None
+    )
+    p95_max = thresholds.get("p95_abs_pct_delta_max") if isinstance(thresholds, dict) else None
+    state = "passed" if gate_passed else "failed"
+    summary = (
+        f"latest cached 2,000-postal OneMap walk validation {state}: " f"median abs delta {median}%"
+    )
+    if median_max is not None:
+        summary += f" (max {median_max}%)"
+    summary += f", p95 abs delta {p95}%"
+    if p95_max is not None:
+        summary += f" (max {p95_max}%)"
+    summary += (
+        f", missing cache results {report.get('missing_cache_results')}, "
+        f"invalid cache results {report.get('invalid_cache_results')}"
+    )
+
+    return {
+        "state": state,
+        "report_path": str(report_path),
+        "summary": summary,
+        "gate_passed": gate_passed,
+        "sample_size": report.get("sample_size"),
+        "cached_results": report.get("cached_results"),
+        "missing_cache_results": report.get("missing_cache_results"),
+        "invalid_cache_results": report.get("invalid_cache_results"),
+        "median_abs_pct_delta": median,
+        "p95_abs_pct_delta": p95,
+        "thresholds": thresholds,
+        "generated_at": report.get("generated_at"),
+    }
+
+
+def readiness_features(qa_dir: Path = QA_DIR) -> dict[str, Any]:
+    onemap_status = onemap_validation_status(qa_dir)
     return {
         "incorporated": {
             "nparks_spatial_shade_proxy_heat_only": True,
@@ -133,16 +200,16 @@ def readiness_features() -> dict[str, Any]:
             "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
             "building_shadow_time_of_day": "future heat model",
             "live_bus_or_mrt_arrivals": "requires runtime proxy or collected static aggregates",
-            "onemap_walk_validation_gate": (
-                "sample planner, guarded collector, and cache evaluator implemented; "
-                "the 2,000-postal OneMap walk comparison has not been collected yet"
-            ),
+            "onemap_walk_validation_gate": onemap_status["summary"],
             "bellingcat_openinframap_overpass_as_production_feeds": (
                 "QA/discovery only unless raw bounded OSM query output is archived and hashed"
             ),
             "mayflower_560231_560234_shelter_false_negative": (
                 "needs source-backed connector/correction review; no postal override"
             ),
+        },
+        "validation_gates": {
+            "onemap_walk_validation": onemap_status,
         },
     }
 
@@ -249,7 +316,7 @@ def build_readiness_report(
             "errors": batch_plan.get("errors", []),
         },
         "vercel": vercel,
-        "features": readiness_features(),
+        "features": readiness_features(project_root / "qa"),
         "errors": errors,
         "warnings": warnings,
     }

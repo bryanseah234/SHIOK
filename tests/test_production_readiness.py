@@ -173,6 +173,84 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
         "has not been collected yet"
         in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
     )
+    assert (
+        report["features"]["validation_gates"]["onemap_walk_validation"]["state"] == "not_collected"
+    )
+
+
+def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
+    web_dir = tmp_path / "web"
+    bundle_dir = web_dir / "public" / "data" / "generated_test"
+    export_static_artifacts([sample_record("123456")], output_dir=bundle_dir)
+    write_json(web_dir / "data-bundle.json", {"bundle": "generated_test"})
+    write_json(
+        tmp_path / ".vercel" / "project.json",
+        {
+            "projectId": "prj_test",
+            "projectName": "sgshiok",
+            "settings": {"rootDirectory": "web"},
+        },
+    )
+
+    summary_path = tmp_path / "processed" / "postal_universe_candidate_full_registered_summary.json"
+    universe_path = tmp_path / "processed" / "postal_universe_candidate_full_registered.parquet"
+    write_json(
+        summary_path,
+        {
+            "mode": "candidate_full_registered",
+            "total_unique_postals": 1,
+            "ready_to_score": 1,
+            "needs_geocode": 0,
+            "source_stats": [],
+            "source_only_counts": {},
+            "warnings": [],
+        },
+    )
+    write_universe(universe_path, rows=1)
+    params_path = tmp_path / "params.yaml"
+    params_path.write_text("onemap:\n  client_delay_sec: 2.0\n", encoding="utf-8")
+    qa_path = tmp_path / "qa" / "conflation_qa_island.json"
+    debug_path = tmp_path / "qa" / "island_debug.geojson"
+    write_production_island_qa(qa_path)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+    write_json(
+        tmp_path / "qa" / "onemap_validation_cached_report_20260802.json",
+        {
+            "gate_passed": False,
+            "sample_size": 2000,
+            "cached_results": 1999,
+            "missing_cache_results": 0,
+            "invalid_cache_results": 1,
+            "median_abs_pct_delta": 11.458,
+            "p95_abs_pct_delta": 94.037,
+            "thresholds": {
+                "median_abs_pct_delta_max": 10.0,
+                "p95_abs_pct_delta_max": 25.0,
+            },
+            "generated_at": "2026-08-02T02:40:10+00:00",
+        },
+    )
+
+    ok, report = build_readiness_report(
+        project_root=tmp_path,
+        web_dir=web_dir,
+        bundle_dir=bundle_dir,
+        summary_path=summary_path,
+        universe_path=universe_path,
+        params_path=params_path,
+        qa_path=qa_path,
+        debug_path=debug_path,
+        network_path=tmp_path / "unused_network.parquet",
+        postal_universe_path=universe_path,
+    )
+
+    assert ok, report
+    gate = report["features"]["validation_gates"]["onemap_walk_validation"]
+    assert gate["state"] == "failed"
+    assert gate["sample_size"] == 2000
+    assert gate["gate_passed"] is False
+    assert "failed" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
+    assert "11.458%" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
 
 
 def test_build_readiness_report_warns_when_bundle_predates_network(tmp_path: Path):
