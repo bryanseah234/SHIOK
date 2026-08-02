@@ -9,19 +9,39 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit before this bus access connector pass: `e29da22` (`qa: rerun OneMap replay on island graph`)
+- Latest pushed commit: `d19e340` (`feat: add exposed bus stop access connectors`)
 
-## Pending Fresh Bundle
+## Local Bundle State
 
-- Pending bundle: `generated_20260801_165500`
-- Local readiness: OK
-- Remote manifest: HTTP 404, not deployed yet
+- Active local bundle retained: `generated_20260801_direct_bus_all_targeted`
+- No inactive/pending local bundle is currently retained after cleanup.
+- Earlier local pending bundle `generated_20260801_165500` was not deployed and has been removed from `web/public/data/` to save disk space.
+- Targeted QA bundle `generated_20260802_bus_connector_targeted` was generated and validated for evidence, then removed from `web/public/data/` to save disk space.
+- Any future data release must regenerate or recreate a validated local bundle before direct deploy.
+
+## Active Bundle Counts
+
+- Bundle: `generated_20260801_direct_bus_all_targeted`
 - State counts: 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384 `NO_TRANSIT_IN_RANGE`, 319 `NOT_YET_SCORED`
 - Static validation: 124,032 indexed postals, 114,329 geometry postals, 114,329 geometry postals with route segments, 6,011 transit features
 - Transit POIs refreshed locally with official LTA DataMall Train Station Codes
   workbook: 774 features now have station codes; 182 of 190 station centroid
   features have station codes. `MAYFLOWER MRT STATION` is now enriched as
   `TE6`, `Thomson-East Coast Line`.
+
+## Bus Connector Targeted Refresh Evidence
+
+- Evidence bundle: `generated_20260802_bus_connector_targeted`
+- Source bundle: `generated_20260801_direct_bus_all_targeted`
+- Selected records: 1,449 prior direct-bus fallback partial records.
+- Patched records: 1,449.
+- State counts after targeted refresh: 112,944 `SCORED`, 1,384 `SCORED_PARTIAL`, 9,385 `NO_TRANSIT_IN_RANGE`, 319 `NOT_YET_SCORED`.
+- State transitions: 64 `SCORED_PARTIAL` -> `SCORED`; 1,384 remained `SCORED_PARTIAL`; 1 became `NO_TRANSIT_IN_RANGE`.
+- Route evidence after targeted refresh: 42 best routes use `sheltered_with_bus_stop_access_connector`; 51 records contain connector evidence.
+- Static validation passed before cleanup: 124,032 indexed postals, 114,328 geometry postals, 114,328 geometry postals with route segments, 6,011 transit features.
+- Report: `qa/targeted_bundle_refresh_generated_20260802_bus_connector_targeted.json`.
+- Converted-postal list: `qa/bus_connector_converted_postals_20260802.txt`.
+- Important regression to investigate before activation: postal `557323` moved from `SCORED_PARTIAL` to `NO_TRANSIT_IN_RANGE`.
 
 ## Prepared Next Postal Universe
 
@@ -71,19 +91,21 @@ Root directory: `web`
 - OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json --geojson-output qa\onemap_outlier_triage_queues_20260802.geojson --missing-bus-priority-geojson-output qa\onemap_missing_bus_connector_priority_20260802.geojson` passed locally. It read 192 replay rows, enriched them from `qa/onemap_validation_cached_report_20260802.json`, and emitted 37 `missing_bus_connector` cases, 89 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 13 `mrt_lrt_outlier` cases, 45 `hdb_bridge_connector_review` cases, and 0 `still_unscored_or_no_best` cases.
 - Missing-bus priority worklist: `qa/onemap_missing_bus_connector_priority_20260802.geojson` has 19 strict `missing_bus_connector` line features ranked by largest validation delta. Top rows are `530535`, `417092`, `534317`, `637814`, `320087`, `478983`, `806063`, `601291`, `627662`, and `729761`.
 - Bus-connector diagnostic: `uv run python run.py bus-connector-diagnostics --output qa\bus_connector_diagnostics_priority_20260802.json --geojson-output qa\bus_connector_diagnostics_priority_20260802.geojson` passed locally on all 19 priority rows. Current route states are 16 `implausible_detour` and 3 `routable`; diagnostic classes are 15 `alternate_bus_snap_candidate` and 4 `changed_stop_between_validation_and_replay`.
-- Temporary-file cleanup: removed reproducible caches, `web\node_modules`, stale ignored web data bundles, ignored debug GeoJSONs, and local full-rescore staging/intermediate output; retained the active web bundle `generated_20260801_direct_bus_all_targeted` and newest full bundle `generated_20260801_165500`.
+- Temporary-file cleanup: removed reproducible caches, stale ignored web data bundles, and project `__pycache__` folders; retained only the active web bundle `generated_20260801_direct_bus_all_targeted`.
 
-## Next Production Command
+## Next Production Data Command
 
-Run only after the Vercel Hobby quota window resets:
+There is no currently retained pending local bundle to release. For the next
+data deployment, first regenerate or recreate a validated bundle, then use:
 
 ```powershell
-.\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction
+.\scripts\release-data-bundle.bat -DataBundle <validated_bundle> -ConfirmProduction
 ```
 
 ## Not Done
 
-- Deploy and activate the pending bundle.
+- Regenerate or recreate a validated post-connector bundle before any data deploy.
+- Investigate postal `557323` before activating a connector-targeted refresh.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
 - Work through the remaining `qa/bus_connector_diagnostics_priority_20260802.json` / `.geojson` rows after the general exposed bus-stop access connector fix.

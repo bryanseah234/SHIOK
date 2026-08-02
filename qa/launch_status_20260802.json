@@ -6,32 +6,46 @@
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit": "e29da22"
+    "latest_pushed_commit": "d19e340"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
     "remote_manifest_status": 200,
     "record_count": 124032
   },
-  "pending_bundle": {
-    "bundle": "generated_20260801_165500",
-    "local_readiness_ok": true,
-    "remote_manifest_status": 404,
-    "record_count": 124032,
+  "local_bundle_state": {
+    "active_bundle_retained": "generated_20260801_direct_bus_all_targeted",
+    "inactive_pending_bundle_retained": false,
+    "cleanup_note": "Only the active production bundle is retained locally. Older pending/generated bundles must be regenerated or restored before release."
+  },
+  "bus_connector_targeted_refresh": {
+    "source_bundle": "generated_20260801_direct_bus_all_targeted",
+    "target_bundle": "generated_20260802_bus_connector_targeted",
+    "target_bundle_retained_locally": false,
+    "selected_count": 1449,
+    "patched_count": 1449,
     "state_counts": {
-      "SCORED": 112880,
-      "SCORED_PARTIAL": 1449,
-      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112944,
+      "SCORED_PARTIAL": 1384,
+      "NO_TRANSIT_IN_RANGE": 9385,
       "NOT_YET_SCORED": 319
+    },
+    "transitions": {
+      "SCORED_PARTIAL_to_SCORED": 64,
+      "SCORED_PARTIAL_to_SCORED_PARTIAL": 1384,
+      "SCORED_PARTIAL_to_NO_TRANSIT_IN_RANGE": 1
     },
     "validation": {
       "ok": true,
-      "file_count": 2743,
+      "file_count": 3074,
       "indexed_postals": 124032,
-      "geometry_postals": 114329,
-      "geometry_postals_with_route_segments": 114329,
+      "geometry_postals": 114328,
+      "geometry_postals_with_route_segments": 114328,
       "transit_features": 6011
-    }
+    },
+    "connector_records": 51,
+    "best_route_connector_records": 42,
+    "regression_to_investigate": "557323 moved from SCORED_PARTIAL to NO_TRANSIT_IN_RANGE before activation."
   },
   "verified_checks": {
     "python_tests": "200 passed",
@@ -67,16 +81,17 @@
     "onemap_outlier_triage_queues": "uv run python run.py onemap-outlier-triage --output qa\\onemap_outlier_triage_queues_20260802.json --geojson-output qa\\onemap_outlier_triage_queues_20260802.geojson --missing-bus-priority-geojson-output qa\\onemap_missing_bus_connector_priority_20260802.geojson passed locally. It read 192 replay rows, enriched them from qa/onemap_validation_cached_report_20260802.json, and emitted 37 missing_bus_connector cases, 89 direct_bus_fallback_review cases, 100 possible_overpermissive_project_path cases, 13 mrt_lrt_outlier cases, 45 hdb_bridge_connector_review cases, and 0 still_unscored_or_no_best cases.",
     "missing_bus_priority_worklist": "qa/onemap_missing_bus_connector_priority_20260802.geojson has 19 strict missing_bus_connector line features ranked by largest validation delta. Top rows are 530535, 417092, 534317, 637814, 320087, 478983, 806063, 601291, 627662, and 729761.",
     "bus_connector_diagnostics": "uv run python run.py bus-connector-diagnostics --output qa\\bus_connector_diagnostics_priority_20260802.json --geojson-output qa\\bus_connector_diagnostics_priority_20260802.geojson passed locally on all 19 priority rows. Current route states are 16 implausible_detour and 3 routable; diagnostic classes are 15 alternate_bus_snap_candidate and 4 changed_stop_between_validation_and_replay.",
-    "temporary_file_cleanup": "Removed reproducible caches, web\\node_modules, stale ignored web data bundles, ignored debug GeoJSONs, and local full-rescore staging/intermediate output; retained active web bundle generated_20260801_direct_bus_all_targeted and newest full bundle generated_20260801_165500."
+    "bus_connector_targeted_refresh": "qa\\targeted_bundle_refresh_generated_20260802_bus_connector_targeted.json validated a targeted refresh of 1449 active direct-bus fallback records. 64 moved from SCORED_PARTIAL to SCORED, 1384 stayed SCORED_PARTIAL, and 1 moved to NO_TRANSIT_IN_RANGE. The generated local bundle was removed after evidence capture to save disk space.",
+    "temporary_file_cleanup": "Removed reproducible caches, stale ignored web data bundles, and project __pycache__ folders; retained only active web bundle generated_20260801_direct_bus_all_targeted."
   },
   "not_done": [
-    "Deploy pending bundle after Vercel Hobby quota resets.",
-    "Activate web/data-bundle.json only after remote pending-bundle manifest is reachable.",
+    "Regenerate or restore a validated post-connector bundle before any data deploy.",
+    "Investigate postal 557323 before activating a connector-targeted refresh.",
     "Run broader keyboard-only and multi-postal mobile browser QA after activation.",
     "Work through the remaining qa/bus_connector_diagnostics_priority_20260802.json / .geojson rows after the general exposed bus-stop access connector fix.",
     "Use the reusable outlier replay helper after the next score/export bundle to check whether bus-stop validation outliers shrink before any full rescore.",
     "Resolve Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction; no manual postal score override.",
     "Close canonical ~140k postal universe only with licensed/permitted source; current launchable universe is 124,032."
   ],
-  "next_command_after_quota_reset": ".\\scripts\\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction"
+  "next_command_after_quota_reset": ".\\scripts\\release-data-bundle.bat -DataBundle <validated_bundle> -ConfirmProduction"
 }

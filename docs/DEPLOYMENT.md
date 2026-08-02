@@ -123,13 +123,10 @@ After a new score/export batch is generated and validated:
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
 
-Current pending local bundle, blocked only by Vercel Hobby deploy quota on
-2026-08-01:
-
-```powershell
-.\scripts\deploy-production.bat -DataBundle generated_20260801_165500
-.\scripts\activate-data-bundle.bat -DataBundle generated_20260801_165500
-```
+As of 2026-08-02, there is no retained pending local bundle. Cleanup kept only
+the active production bundle, `generated_20260801_direct_bus_all_targeted`, to
+save disk space. Do not run a release command for older pending bundle names
+unless that bundle has first been regenerated or restored and validated locally.
 
 ## Vercel Hobby Limits
 
@@ -139,18 +136,18 @@ quota window resets. Continue committing source changes to `main`; docs-only and
 QA-only commits should be skipped by `web/scripts/ignore-build.mjs`, while real
 `web/` changes will build after the quota resets.
 
-After the limit resets, deploy the pending local bundle through the
-bundle-aware helper rather than raw `vercel deploy`:
+After the limit resets, deploy a newly generated and validated local bundle
+through the bundle-aware helper rather than raw `vercel deploy`:
 
 ```powershell
-.\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -ConfirmProduction
+.\scripts\release-data-bundle.bat -DataBundle <validated_bundle> -ConfirmProduction
 ```
 
 Before running the production release, use the local launch-check wrapper to run
 the repeatable checks without deploying:
 
 ```powershell
-.\scripts\launch-check.bat -DataBundle generated_20260801_165500
+.\scripts\launch-check.bat -DataBundle <validated_bundle>
 ```
 
 It runs Python tests, web tests, a fresh-bundle build, readiness, scored/no-score
@@ -164,7 +161,7 @@ because it stages the otherwise ignored `web/public/data/<bundle>` directory.
 To see the full sequence without deploying:
 
 ```powershell
-.\scripts\release-data-bundle.bat -DataBundle generated_20260801_165500 -PlanOnly
+.\scripts\release-data-bundle.bat -DataBundle <validated_bundle> -PlanOnly
 ```
 
 Omitting both `-PlanOnly` and `-ConfirmProduction` is also safe: the helper
@@ -183,7 +180,7 @@ For a generated bundle that is not yet active in `web/data-bundle.json`, set
 `SHIOK_DATA_BUNDLE`:
 
 ```powershell
-$env:SHIOK_DATA_BUNDLE = "generated_20260801_165500"
+$env:SHIOK_DATA_BUNDLE = "<validated_bundle>"
 npm --prefix web run measure:lookup -- 560234
 Remove-Item Env:\SHIOK_DATA_BUNDLE
 ```

@@ -196,6 +196,18 @@ Current implementation:
   sample split was 74 `all_candidates_beyond_access_range` and 6
   `candidate_graph_disconnected`; only 1 of the disconnected sample was within
   75 m of a candidate transit component.
+- The bus-stop access connector model is implemented for future scoring runs.
+  It searches for a nearby routed graph point around the actual DataMall bus
+  stop and appends an exposed endpoint connector only when the full
+  route-plus-connector walk stays within the direct bus access policy envelope.
+  It is route evidence, not shelter evidence.
+- `generated_20260802_bus_connector_targeted` was generated as a targeted QA
+  refresh for the 1,449 active direct-bus fallback records. It converted 64
+  records from `SCORED_PARTIAL` to `SCORED`, left 1,384 partial, and introduced
+  one explicit regression (`557323` moved to `NO_TRANSIT_IN_RANGE`). Static
+  validation passed before the local bundle was removed to save disk space.
+  Treat this as evidence for the next model/data QA cycle, not as an active or
+  deployed bundle.
 
 ## Actual Bus Arrivals
 
