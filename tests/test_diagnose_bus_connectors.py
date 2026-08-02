@@ -2,6 +2,7 @@ from pipeline.scoring_integration import CandidateNode
 from scripts.diagnose_bus_connectors import (
     choose_target_bus_candidate,
     diagnostic_class,
+    first_property,
     normalize_stop_name,
     score_recovers_target_bus_stop,
     stop_names_match,
@@ -27,6 +28,14 @@ def test_stop_name_normalization_and_match():
     assert normalize_stop_name("  The   Rail Mall ") == "the rail mall"
     assert stop_names_match("The Rail Mall", " the rail mall ")
     assert not stop_names_match("The Rail Mall", "Opp The Rail Mall")
+
+
+def test_first_property_supports_validation_priority_schema():
+    props = {"best_node_name": "Blk 535", "project_shortest_m": 347.9}
+
+    assert first_property(props, "new_best_name", "best_node_name") == "Blk 535"
+    assert first_property(props, "new_best_shortest_m", "project_shortest_m") == 347.9
+    assert first_property(props, "missing") is None
 
 
 def test_choose_target_bus_candidate_prefers_name_then_endpoint_distance():

@@ -64,6 +64,14 @@ def feature_properties(feature: dict[str, Any]) -> dict[str, Any]:
     return properties if isinstance(properties, dict) else {}
 
 
+def first_property(props: dict[str, Any], *names: str) -> Any:
+    for name in names:
+        value = props.get(name)
+        if value is not None:
+            return value
+    return None
+
+
 def feature_list(collection: Any, path: Path) -> list[dict[str, Any]]:
     raw_features = collection.get("features") if isinstance(collection, dict) else None
     if not isinstance(raw_features, list):
@@ -244,30 +252,38 @@ def diagnose_feature(
     bus_candidates = select_bus_stop_candidates(postal_point, context.bus_index, bus_radius_m)
     target_candidate, match_method = choose_target_bus_candidate(
         bus_candidates,
-        current_name=props.get("new_best_name"),
-        validation_name=props.get("old_validation_best_node"),
+        current_name=first_property(props, "new_best_name", "best_node_name"),
+        validation_name=first_property(props, "old_validation_best_node", "best_node_name"),
         validation_end_xy=validation_end_xy,
     )
 
+    validation_name = first_property(props, "old_validation_best_node", "best_node_name")
+    current_name = first_property(props, "new_best_name", "best_node_name")
     origin_component = component_for_node(context, origin_node)
     result: dict[str, Any] = {
         "postal": postal,
         "priority_rank": props.get("priority_rank"),
-        "validation_area": props.get("validation_area"),
-        "old_validation_best_node": props.get("old_validation_best_node"),
-        "new_best_name": props.get("new_best_name"),
-        "same_validation_and_current_stop_name": stop_names_match(
-            props.get("old_validation_best_node"), props.get("new_best_name")
-        ),
+        "validation_area": first_property(props, "validation_area", "area"),
+        "old_validation_best_node": validation_name,
+        "new_best_name": current_name,
+        "same_validation_and_current_stop_name": stop_names_match(validation_name, current_name),
         "target_match_method": match_method,
         "origin_snap_m": round(float(origin_snap_m), 1),
         "origin_component": origin_component,
         "bus_candidate_count": len(bus_candidates),
-        "validation_direct_distance_m": props.get("validation_direct_distance_m"),
-        "new_best_shortest_m": props.get("new_best_shortest_m"),
-        "old_onemap_walk_m": props.get("old_onemap_walk_m"),
-        "old_project_shortest_m": props.get("old_project_shortest_m"),
-        "old_abs_pct_delta": props.get("old_abs_pct_delta"),
+        "validation_direct_distance_m": first_property(
+            props, "validation_direct_distance_m", "direct_distance_m"
+        ),
+        "new_best_shortest_m": first_property(props, "new_best_shortest_m", "project_shortest_m"),
+        "old_onemap_walk_m": first_property(props, "old_onemap_walk_m", "onemap_walk_m"),
+        "old_project_shortest_m": first_property(
+            props, "old_project_shortest_m", "project_shortest_m"
+        ),
+        "old_abs_pct_delta": first_property(props, "old_abs_pct_delta", "abs_pct_delta"),
+        "old_direction": first_property(props, "old_direction", "direction"),
+        "validation_route_trust": props.get("route_trust"),
+        "validation_routing_type": props.get("routing_type"),
+        "validation_distance_sanity": props.get("distance_sanity"),
         "direct_bus_fallback_reason": props.get("direct_bus_fallback_reason"),
     }
     score_record = score_postal_row(
