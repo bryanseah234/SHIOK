@@ -1,4 +1,5 @@
 import json
+import gzip
 from pathlib import Path
 
 import pandas as pd
@@ -100,6 +101,81 @@ def test_build_validation_sample_prefers_postal_and_transit_source_endpoints(tmp
     assert payload["samples"][0]["endpoint_source"] == "postal_universe_to_transit_poi"
     assert payload["samples"][0]["start"] == {"lat": 1.312345, "lon": 103.801234}
     assert payload["samples"][0]["end"] == {"lat": 1.323456, "lon": 103.812345}
+
+
+def test_build_validation_sample_skips_missing_geometry_shard(tmp_path: Path):
+    records = [sample_record("123456"), sample_record("123457")]
+    bundle_dir = tmp_path / "bundle"
+    export_static_artifacts(records, output_dir=bundle_dir)
+    index_path = bundle_dir / "geom" / "postal-index.json"
+    index = json.loads(index_path.read_text(encoding="utf-8"))
+    index["123456"] = "missing-shard"
+    index_path.write_text(json.dumps(index), encoding="utf-8")
+
+    payload = build_validation_sample(
+        bundle_dir=bundle_dir,
+        sample_size=2,
+        seed="test-seed",
+    )
+
+    assert payload["ok"] is True
+    assert payload["raw_candidate_records"] == 2
+    assert payload["eligible_records"] == 1
+    assert payload["skipped_endpoint_records"] == 1
+    assert payload["sample_size"] == 1
+    assert payload["samples"][0]["postal"] == "123457"
+
+
+def test_build_validation_sample_reads_gzipped_bundle_artifacts(tmp_path: Path):
+    record = sample_record("123456")
+    record["best_node"] = {
+        "type": "bus_stop",
+        "exit": "54321",
+        "name": "Test Stop",
+        "routed_m": 200.0,
+    }
+    bundle_dir = tmp_path / "bundle"
+    export_static_artifacts([record], output_dir=bundle_dir)
+    transit_payload = {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [103.812345, 1.323456]},
+                "properties": {"kind": "bus_stop", "code": "54321", "name": "Test Stop"},
+            }
+        ],
+    }
+    transit_path = bundle_dir / "transit" / "pois.json"
+    transit_path.parent.mkdir(exist_ok=True)
+    transit_path.write_text(json.dumps(transit_payload), encoding="utf-8")
+    for path in [transit_path, next((bundle_dir / "geom" / "h3").glob("*.json"))]:
+        raw_payload = path.read_bytes()
+        with gzip.open(f"{path}.gz", "wb") as f:
+            f.write(raw_payload)
+        path.unlink()
+    universe_path = tmp_path / "universe.parquet"
+    pd.DataFrame(
+        [
+            {
+                "postal_code": "123456",
+                "lat": 1.312345,
+                "lon": 103.801234,
+                "status": "READY_TO_SCORE",
+            }
+        ]
+    ).to_parquet(universe_path, index=False)
+
+    sample_payload = build_validation_sample(
+        bundle_dir=bundle_dir,
+        postal_universe_path=universe_path,
+        sample_size=1,
+    )
+
+    assert sample_payload["ok"] is True
+    assert sample_payload["eligible_records"] == 1
+    assert sample_payload["skipped_endpoint_records"] == 0
+    assert sample_payload["samples"][0]["endpoint_source"] == "postal_universe_to_transit_poi"
 
 
 def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):

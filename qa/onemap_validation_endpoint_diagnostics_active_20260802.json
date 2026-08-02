@@ -1,0 +1,101 @@
+{
+  "generated_at": "2026-08-02",
+  "bundle": "generated_20260802_bus_connector_tolerance_targeted",
+  "raw_candidate_records": 108756,
+  "endpoint_valid_records": 108756,
+  "skipped_records": 0,
+  "skip_reasons": {},
+  "endpoint_source_counts": {
+    "postal_universe_to_transit_poi": 108756
+  },
+  "node_type_counts_valid": {
+    "bus_stop": 87883,
+    "mrt_lrt_exit": 20873
+  },
+  "top_skip_areas": [],
+  "top_valid_areas": [
+    [
+      "BEDOK",
+      15195
+    ],
+    [
+      "BUKIT_TIMAH",
+      9664
+    ],
+    [
+      "SERANGOON",
+      9628
+    ],
+    [
+      "HOUGANG",
+      7610
+    ],
+    [
+      "GEYLANG",
+      5405
+    ],
+    [
+      "ANG_MO_KIO",
+      5041
+    ],
+    [
+      "BISHAN",
+      3787
+    ],
+    [
+      "MARINE_PARADE",
+      3689
+    ],
+    [
+      "NOVENA",
+      3577
+    ],
+    [
+      "PASIR_RIS",
+      3096
+    ],
+    [
+      "TAMPINES",
+      3084
+    ],
+    [
+      "TOA_PAYOH",
+      2907
+    ],
+    [
+      "KALLANG",
+      2723
+    ],
+    [
+      "JURONG_WEST",
+      2637
+    ],
+    [
+      "YISHUN",
+      2602
+    ],
+    [
+      "QUEENSTOWN",
+      2537
+    ],
+    [
+      "BUKIT_BATOK",
+      2350
+    ],
+    [
+      "CLEMENTI",
+      2278
+    ],
+    [
+      "SEMBAWANG",
+      2265
+    ],
+    [
+      "TANGLIN",
+      1859
+    ]
+  ],
+  "examples": {},
+  "transit_index_size": 12442,
+  "origin_index_size": 123967
+}

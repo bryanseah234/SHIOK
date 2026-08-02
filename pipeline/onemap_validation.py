@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import math
@@ -41,8 +42,21 @@ USER_AGENT = "SHIOK-Index-OneMap-Validation/1.0"
 FetchRoute = Callable[[dict[str, Any]], dict[str, Any]]
 
 
+def resolve_json_path(path: Path) -> Path | None:
+    if path.is_file():
+        return path
+    gz_path = Path(f"{path}.gz")
+    if gz_path.is_file():
+        return gz_path
+    return None
+
+
 def read_json(path: Path) -> Any:
-    with path.open("r", encoding="utf-8-sig") as f:
+    actual_path = resolve_json_path(path) or path
+    if actual_path.suffix == ".gz":
+        with gzip.open(actual_path, "rt", encoding="utf-8-sig") as f:
+            return json.load(f)
+    with actual_path.open("r", encoding="utf-8-sig") as f:
         return json.load(f)
 
 
@@ -139,7 +153,7 @@ def transit_key(*parts: Any) -> str:
 
 def load_transit_poi_index(bundle_dir: Path) -> dict[str, dict[str, float]]:
     path = bundle_dir / "transit" / "pois.json"
-    if not path.is_file():
+    if resolve_json_path(path) is None:
         return {}
     payload = read_json(path)
     features = payload.get("features", []) if isinstance(payload, dict) else []
@@ -313,7 +327,10 @@ def load_geom_record(
     if not shard:
         return None
     if shard not in shard_cache:
-        payload = read_json(bundle_dir / "geom" / "h3" / f"{shard}.json")
+        shard_path = bundle_dir / "geom" / "h3" / f"{shard}.json"
+        if resolve_json_path(shard_path) is None:
+            return None
+        payload = read_json(shard_path)
         if not isinstance(payload, list):
             return None
         shard_cache[shard] = payload
@@ -425,27 +442,37 @@ def build_validation_sample(
     for area, items in buckets.items():
         items.sort(key=lambda item: stable_rank(seed, area, str(item["postal"])))
 
-    quotas = allocate_area_quotas(buckets, sample_size)
-    selected = [item for area in sorted(quotas) for item in buckets[area][: quotas[area]]]
-    selected.sort(key=lambda item: stable_rank(seed, str(item["area"]), str(item["postal"])))
-    samples = attach_endpoints(
-        bundle_dir,
-        selected,
-        route_mode=route_mode,
-        geom_postal_index=geom_index,
-        origin_index=origin_index,
-        transit_index=transit_index,
-    )
+    endpoint_buckets: dict[str, list[dict[str, Any]]] = {}
+    for area in sorted(buckets):
+        endpoint_buckets[area] = attach_endpoints(
+            bundle_dir,
+            buckets[area],
+            route_mode=route_mode,
+            geom_postal_index=geom_index,
+            origin_index=origin_index,
+            transit_index=transit_index,
+        )
+    endpoint_buckets = {area: samples for area, samples in endpoint_buckets.items() if samples}
+
+    quotas = allocate_area_quotas(endpoint_buckets, sample_size)
+    samples = [
+        sample for area in sorted(quotas) for sample in endpoint_buckets[area][: quotas[area]]
+    ]
+    samples.sort(key=lambda item: stable_rank(seed, str(item["area"]), str(item["postal"])))
+    raw_candidate_records = sum(len(items) for items in buckets.values())
+    eligible_records = sum(len(items) for items in endpoint_buckets.values())
     projected_seconds = len(samples) * onemap_delay_sec
     return {
-        "ok": len(samples) == min(sample_size, sum(len(items) for items in buckets.values())),
+        "ok": len(samples) == min(sample_size, eligible_records),
         "generated_at": datetime.now(UTC).isoformat(),
         "bundle": bundle_dir.name,
         "route_mode": route_mode,
         "sample_size_requested": sample_size,
         "sample_size": len(samples),
-        "eligible_records": sum(len(items) for items in buckets.values()),
-        "area_count": len(buckets),
+        "eligible_records": eligible_records,
+        "raw_candidate_records": raw_candidate_records,
+        "skipped_endpoint_records": raw_candidate_records - eligible_records,
+        "area_count": len(endpoint_buckets),
         "origin_index_size": len(origin_index),
         "transit_index_size": len(transit_index),
         "area_quotas": quotas,
