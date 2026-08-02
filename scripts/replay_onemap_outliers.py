@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 from pipeline.scoring_integration import (
-    NETWORK_PATH,
     load_postal_universe_points,
     load_scoring_context,
     score_postal_gdf,
@@ -20,6 +19,7 @@ DEFAULT_UNIVERSE = (
     PROJECT_ROOT / "processed" / "postal_universe_candidate_full_registered_geocoded.parquet"
 )
 DEFAULT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_replay_20260802.json"
+DEFAULT_NETWORK = PROJECT_ROOT / "processed" / "network_island.parquet"
 
 
 def read_json(path: Path) -> Any:
@@ -30,6 +30,13 @@ def read_json(path: Path) -> Any:
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def display_path(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(PROJECT_ROOT))
+    except ValueError:
+        return str(path)
 
 
 def select_outliers(
@@ -352,9 +359,9 @@ def replay_outliers(
 
     summary = {
         "generated_at": datetime.now(UTC).isoformat(),
-        "source_report": str(report_path.relative_to(PROJECT_ROOT)),
-        "postal_universe": str(postal_universe_path.relative_to(PROJECT_ROOT)),
-        "network": str(network_path.relative_to(PROJECT_ROOT)),
+        "source_report": display_path(report_path),
+        "postal_universe": display_path(postal_universe_path),
+        "network": display_path(network_path),
         "selection": {
             "limit": int(limit),
             "node_type": node_type,
@@ -377,7 +384,7 @@ def main() -> int:
     )
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--postal-universe", type=Path, default=DEFAULT_UNIVERSE)
-    parser.add_argument("--network", type=Path, default=NETWORK_PATH)
+    parser.add_argument("--network", type=Path, default=DEFAULT_NETWORK)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--limit", type=int, default=100)
     parser.add_argument("--node-type", default="bus_stop")
