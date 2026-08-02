@@ -294,3 +294,7 @@ The helper partitions the postal universe, runs parallel score batches, combines
 chunks, exports `web/public/data/generated_<stamp>`, validates it, updates
 `web/data-bundle.json` unless `-SkipActivateBundle` is set, and optionally calls
 `deploy-production.ps1`.
+
+Ad hoc scoring via `uv run python run.py score ...` defaults to the island
+network, `processed/network_island.parquet`. Pass `--network
+processed\network.parquet` only for explicit pilot-network diagnostics.

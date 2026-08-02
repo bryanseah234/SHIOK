@@ -9,6 +9,7 @@ from shapely.geometry import LineString, Point
 from pipeline.bus import BusStopCandidate
 from pipeline.routing import RoutingGraph, route_worker
 from pipeline.scoring_integration import (
+    NETWORK_PATH,
     CandidateNode,
     CrossingCounter,
     annotate_no_transit_reason,
@@ -61,6 +62,10 @@ WEIGHTS = {
     "heat_comfort": 0.15,
     "crossing_friction": 0.05,
 }
+
+
+def test_default_scoring_network_is_island_graph():
+    assert NETWORK_PATH.name == "network_island.parquet"
 
 
 def sample_candidate(node_type: str = "mrt_lrt_exit") -> CandidateNode:
