@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `f60718a` (`qa: profile OneMap replay route sources`)
+- Latest pushed commit: `b6eab16` (`qa: aggregate replay route source profiles`)
 
 ## Pending Fresh Bundle
 
