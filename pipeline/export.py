@@ -410,10 +410,16 @@ def geom_payload_record(
         output["shortest_parts"] = shortest_parts
     if len(sheltered_parts) > 1:
         output["sheltered_parts"] = sheltered_parts
-    shortest_segments = route_segment_geometries(geometry_payload.get("shortest_path_edges", []))
-    sheltered_segments = route_segment_geometries(
-        geometry_payload.get("sheltered_path_edges", geometry_payload.get("exposure_gap_edges", []))
-    )
+    shortest_path_edges = geometry_payload.get("shortest_path_edges", [])
+    if not isinstance(shortest_path_edges, list):
+        shortest_path_edges = []
+    sheltered_path_edges = geometry_payload.get("sheltered_path_edges")
+    if not isinstance(sheltered_path_edges, list):
+        sheltered_path_edges = geometry_payload.get("exposure_gap_edges", [])
+    if not isinstance(sheltered_path_edges, list):
+        sheltered_path_edges = []
+    shortest_segments = route_segment_geometries(shortest_path_edges)
+    sheltered_segments = route_segment_geometries(sheltered_path_edges)
     if shortest_segments or sheltered_segments:
         output["route_segments"] = {
             "shortest": shortest_segments,

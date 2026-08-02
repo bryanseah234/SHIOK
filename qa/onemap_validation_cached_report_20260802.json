@@ -1,13 +1,198 @@
 {
+  "area_summary": [
+    {
+      "area": "TENGAH",
+      "count": 5,
+      "max_abs_pct_delta": 4475.0,
+      "median_abs_pct_delta": 54.72,
+      "over_25_pct_count": 5,
+      "over_50_pct_count": 3,
+      "p95_abs_pct_delta": 3602.313
+    },
+    {
+      "area": "PIONEER",
+      "count": 14,
+      "max_abs_pct_delta": 1401.111,
+      "median_abs_pct_delta": 16.401,
+      "over_25_pct_count": 6,
+      "over_50_pct_count": 4,
+      "p95_abs_pct_delta": 778.109
+    },
+    {
+      "area": "JURONG_EAST",
+      "count": 12,
+      "max_abs_pct_delta": 503.75,
+      "median_abs_pct_delta": 48.819,
+      "over_25_pct_count": 7,
+      "over_50_pct_count": 6,
+      "p95_abs_pct_delta": 316.452
+    },
+    {
+      "area": "TUAS",
+      "count": 25,
+      "max_abs_pct_delta": 423.235,
+      "median_abs_pct_delta": 32.943,
+      "over_25_pct_count": 14,
+      "over_50_pct_count": 10,
+      "p95_abs_pct_delta": 308.495
+    },
+    {
+      "area": "BUKIT_PANJANG",
+      "count": 28,
+      "max_abs_pct_delta": 401.364,
+      "median_abs_pct_delta": 19.825,
+      "over_25_pct_count": 12,
+      "over_50_pct_count": 6,
+      "p95_abs_pct_delta": 224.589
+    },
+    {
+      "area": "LIM_CHU_KANG",
+      "count": 2,
+      "max_abs_pct_delta": 232.977,
+      "median_abs_pct_delta": 137.342,
+      "over_25_pct_count": 2,
+      "over_50_pct_count": 1,
+      "p95_abs_pct_delta": 223.413
+    },
+    {
+      "area": "YISHUN",
+      "count": 46,
+      "max_abs_pct_delta": 667.619,
+      "median_abs_pct_delta": 10.915,
+      "over_25_pct_count": 15,
+      "over_50_pct_count": 10,
+      "p95_abs_pct_delta": 195.109
+    },
+    {
+      "area": "TAMPINES",
+      "count": 54,
+      "max_abs_pct_delta": 237.205,
+      "median_abs_pct_delta": 21.663,
+      "over_25_pct_count": 25,
+      "over_50_pct_count": 13,
+      "p95_abs_pct_delta": 184.662
+    },
+    {
+      "area": "MANDAI",
+      "count": 5,
+      "max_abs_pct_delta": 226.484,
+      "median_abs_pct_delta": 9.444,
+      "over_25_pct_count": 1,
+      "over_50_pct_count": 1,
+      "p95_abs_pct_delta": 184.374
+    },
+    {
+      "area": "DOWNTOWN_CORE",
+      "count": 8,
+      "max_abs_pct_delta": 241.01,
+      "median_abs_pct_delta": 33.968,
+      "over_25_pct_count": 5,
+      "over_50_pct_count": 2,
+      "p95_abs_pct_delta": 177.393
+    },
+    {
+      "area": "CHANGI",
+      "count": 6,
+      "max_abs_pct_delta": 188.929,
+      "median_abs_pct_delta": 12.331,
+      "over_25_pct_count": 1,
+      "over_50_pct_count": 1,
+      "p95_abs_pct_delta": 146.945
+    },
+    {
+      "area": "JURONG_WEST",
+      "count": 47,
+      "max_abs_pct_delta": 247.143,
+      "median_abs_pct_delta": 33.609,
+      "over_25_pct_count": 29,
+      "over_50_pct_count": 20,
+      "p95_abs_pct_delta": 137.427
+    },
+    {
+      "area": "CENTRAL_WATER_CATCHMENT",
+      "count": 1,
+      "max_abs_pct_delta": 124.466,
+      "median_abs_pct_delta": 124.466,
+      "over_25_pct_count": 1,
+      "over_50_pct_count": 1,
+      "p95_abs_pct_delta": 124.466
+    },
+    {
+      "area": "SENGKANG",
+      "count": 31,
+      "max_abs_pct_delta": 167.303,
+      "median_abs_pct_delta": 16.57,
+      "over_25_pct_count": 9,
+      "over_50_pct_count": 5,
+      "p95_abs_pct_delta": 118.872
+    },
+    {
+      "area": "WOODLANDS",
+      "count": 32,
+      "max_abs_pct_delta": 109.221,
+      "median_abs_pct_delta": 23.427,
+      "over_25_pct_count": 16,
+      "over_50_pct_count": 8,
+      "p95_abs_pct_delta": 95.942
+    },
+    {
+      "area": "MARINE_PARADE",
+      "count": 65,
+      "max_abs_pct_delta": 250.541,
+      "median_abs_pct_delta": 11.292,
+      "over_25_pct_count": 21,
+      "over_50_pct_count": 11,
+      "p95_abs_pct_delta": 93.986
+    },
+    {
+      "area": "BEDOK",
+      "count": 269,
+      "max_abs_pct_delta": 388.977,
+      "median_abs_pct_delta": 9.843,
+      "over_25_pct_count": 64,
+      "over_50_pct_count": 30,
+      "p95_abs_pct_delta": 89.473
+    },
+    {
+      "area": "HOUGANG",
+      "count": 135,
+      "max_abs_pct_delta": 6783.333,
+      "median_abs_pct_delta": 10.294,
+      "over_25_pct_count": 32,
+      "over_50_pct_count": 15,
+      "p95_abs_pct_delta": 87.63
+    },
+    {
+      "area": "BUKIT_MERAH",
+      "count": 28,
+      "max_abs_pct_delta": 137.342,
+      "median_abs_pct_delta": 15.642,
+      "over_25_pct_count": 11,
+      "over_50_pct_count": 4,
+      "p95_abs_pct_delta": 85.95
+    },
+    {
+      "area": "QUEENSTOWN",
+      "count": 45,
+      "max_abs_pct_delta": 132.9,
+      "median_abs_pct_delta": 20.281,
+      "over_25_pct_count": 21,
+      "over_50_pct_count": 16,
+      "p95_abs_pct_delta": 85.479
+    }
+  ],
   "bundle": "generated_20260801_165500",
   "cache_dir": "raw\\validation\\onemap_walk_od",
   "cached_results": 1999,
   "gate_passed": false,
-  "generated_at": "2026-08-02T01:41:27.587749+00:00",
+  "generated_at": "2026-08-02T01:46:31.920255+00:00",
   "invalid_cache_preview": [
     {
       "area": "SOUTHERN_ISLANDS",
+      "best_node_name": "Village Hotel",
+      "best_node_type": "bus_stop",
       "cache_key": "cfdff820886461ec401aead67568de0b1c0b844808e54abeff0cb0f540d5e025",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 0.0,
       "postal": "098679",
       "project_shortest_m": 136.9,
@@ -24,167 +209,509 @@
     {
       "abs_pct_delta": 0.193,
       "area": "QUEENSTOWN",
+      "best_node_name": "Bef Whitchurch Rd",
+      "best_node_type": "bus_stop",
       "cache_key": "c5abe432c3706d6179159cb4f71f36c22b7453a8a86eba40960fb5bfc3f6adfd",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 259.0,
       "postal": "138820",
-      "project_shortest_m": 259.5
+      "project_shortest_m": 259.5,
+      "signed_pct_delta": 0.193
     },
     {
       "abs_pct_delta": 112.73,
       "area": "JURONG_WEST",
+      "best_node_name": "Blk 367",
+      "best_node_type": "bus_stop",
       "cache_key": "d5b77427b2d99f829f233dd0ae57654d2cf0f857997f24f99ce6619d0d58dbe3",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 348.0,
       "postal": "618380",
-      "project_shortest_m": 740.3
+      "project_shortest_m": 740.3,
+      "signed_pct_delta": 112.73
     },
     {
       "abs_pct_delta": 9.839,
       "area": "TAMPINES",
+      "best_node_name": "UPPER CHANGI MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
       "cache_key": "1269014e714a084db5a5a0bbe656ee64ed4e695568f6966543a9016b3c8a70fc",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 436.0,
       "postal": "487926",
-      "project_shortest_m": 393.1
+      "project_shortest_m": 393.1,
+      "signed_pct_delta": -9.839
     },
     {
       "abs_pct_delta": 0.528,
       "area": "GEYLANG",
+      "best_node_name": "Aft Lor 106 Changi",
+      "best_node_type": "bus_stop",
       "cache_key": "1cce5910180b07ceac5eef73ced6fa165ea0bd47390a27269ab6e095997f48be",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 303.0,
       "postal": "426580",
-      "project_shortest_m": 304.6
+      "project_shortest_m": 304.6,
+      "signed_pct_delta": 0.528
     },
     {
       "abs_pct_delta": 45.769,
       "area": "OUTRAM",
+      "best_node_name": "Opp State Ct",
+      "best_node_type": "bus_stop",
       "cache_key": "eb793b081c765c4d8f646f677471d560082336d0119a7e8048ec28bd7eff3874",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 416.0,
       "postal": "058359",
-      "project_shortest_m": 225.6
+      "project_shortest_m": 225.6,
+      "signed_pct_delta": -45.769
     },
     {
       "abs_pct_delta": 5.946,
       "area": "GEYLANG",
+      "best_node_name": "Opp Mohd Salleh Mque",
+      "best_node_type": "bus_stop",
       "cache_key": "b2995e836ce86760585984d517a950af3c4eebf032c6e70495f76b55e8d3b969",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 259.0,
       "postal": "388535",
-      "project_shortest_m": 243.6
+      "project_shortest_m": 243.6,
+      "signed_pct_delta": -5.946
     },
     {
       "abs_pct_delta": 28.354,
       "area": "SERANGOON",
+      "best_node_name": "SERANGOON MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
       "cache_key": "96467fd252af3fbdedbb8d12feb52fc5b8dc76dda3352cb25d672bc58a0e87ab",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 741.0,
       "postal": "538053",
-      "project_shortest_m": 530.9
+      "project_shortest_m": 530.9,
+      "signed_pct_delta": -28.354
     },
     {
       "abs_pct_delta": 9.124,
       "area": "BISHAN",
+      "best_node_name": "Thomson CC",
+      "best_node_type": "bus_stop",
       "cache_key": "a50bcaa4d3661f2dc467a352dc5e8d45f0f5584335871fac0ba6e74d6539baed",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 354.0,
       "postal": "574703",
-      "project_shortest_m": 321.7
+      "project_shortest_m": 321.7,
+      "signed_pct_delta": -9.124
     },
     {
       "abs_pct_delta": 0.164,
       "area": "BEDOK",
+      "best_node_name": "Caltex Stn",
+      "best_node_type": "bus_stop",
       "cache_key": "58815eb0347b194c62547c8beade55bec09b630965d252d09e874f8969507212",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 304.0,
       "postal": "428344",
-      "project_shortest_m": 303.5
+      "project_shortest_m": 303.5,
+      "signed_pct_delta": -0.164
     },
     {
       "abs_pct_delta": 201.628,
       "area": "MARINE_PARADE",
+      "best_node_name": "Bef Tg Katong Rd",
+      "best_node_type": "bus_stop",
       "cache_key": "dbd105cd49f47091bde658f71dfcdf418e5b2de52971d704335546c3d86c00a7",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 86.0,
       "postal": "437787",
-      "project_shortest_m": 259.4
+      "project_shortest_m": 259.4,
+      "signed_pct_delta": 201.628
     },
     {
       "abs_pct_delta": 15.592,
       "area": "BUKIT_TIMAH",
+      "best_node_name": "Hse No. 532",
+      "best_node_type": "bus_stop",
       "cache_key": "fb1a5d94639e6b19e327477eace85a8b761b488a5d8ae1afebecb1ebbdfe6405",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 152.0,
       "postal": "277460",
-      "project_shortest_m": 175.7
+      "project_shortest_m": 175.7,
+      "signed_pct_delta": 15.592
     },
     {
       "abs_pct_delta": 44.689,
       "area": "SERANGOON",
+      "best_node_name": "Opp Trinity Meth Ch",
+      "best_node_type": "bus_stop",
       "cache_key": "488d331fa8f54478e36abd3dbdce665ef549f5c37ec3c43adeb96a13fec6abf2",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 273.0,
       "postal": "556807",
-      "project_shortest_m": 395.0
+      "project_shortest_m": 395.0,
+      "signed_pct_delta": 44.689
     },
     {
       "abs_pct_delta": 6.467,
       "area": "DOWNTOWN_CORE",
+      "best_node_name": "Prince Edward Rd Stn Exit 2",
+      "best_node_type": "bus_stop",
       "cache_key": "c2216f05b24edbff1d77c8efc5a0a2af1d885e155c385f95677194d79c1921f6",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 334.0,
       "postal": "079120",
-      "project_shortest_m": 312.4
+      "project_shortest_m": 312.4,
+      "signed_pct_delta": -6.467
     },
     {
       "abs_pct_delta": 13.535,
       "area": "BUKIT_BATOK",
+      "best_node_name": "Aft Jln Remaja",
+      "best_node_type": "bus_stop",
       "cache_key": "9a986baed467b7bb915d6c2a0aef04152dee2331501959f1a458e9abeb63ca0e",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 314.0,
       "postal": "668908",
-      "project_shortest_m": 271.5
+      "project_shortest_m": 271.5,
+      "signed_pct_delta": -13.535
     },
     {
       "abs_pct_delta": 52.929,
       "area": "HOUGANG",
+      "best_node_name": "Blk 141A",
+      "best_node_type": "bus_stop",
       "cache_key": "9d4b99f28832744ebbfdf62dddf7246b535db3eb70a394f41b94f0adcb5094cf",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 973.0,
       "postal": "545195",
-      "project_shortest_m": 458.0
+      "project_shortest_m": 458.0,
+      "signed_pct_delta": -52.929
     },
     {
       "abs_pct_delta": 16.162,
       "area": "BISHAN",
+      "best_node_name": "Opp Kuo Chuan Presby Sch",
+      "best_node_type": "bus_stop",
       "cache_key": "0aa5d562d6612d755526823ac17a044790584d3eb25b0d078d15d9ee750f4df5",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 297.0,
       "postal": "570188",
-      "project_shortest_m": 345.0
+      "project_shortest_m": 345.0,
+      "signed_pct_delta": 16.162
     },
     {
       "abs_pct_delta": 3.32,
       "area": "ANG_MO_KIO",
+      "best_node_name": "MAYFLOWER MRT STATION Exit 3",
+      "best_node_type": "mrt_lrt_exit",
       "cache_key": "299a1c95ddca83b9521f9d94899775e58fb81ccbb47f8c47ce4d74677a330675",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 247.0,
       "postal": "568825",
-      "project_shortest_m": 238.8
+      "project_shortest_m": 238.8,
+      "signed_pct_delta": -3.32
     },
     {
       "abs_pct_delta": 25.806,
       "area": "PASIR_RIS",
+      "best_node_name": "Changi Baptist Ch",
+      "best_node_type": "bus_stop",
       "cache_key": "06547778c12d17570608a4b79ced907c6958c220c36ef7160630b806eaa2fab1",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 124.0,
       "postal": "507916",
-      "project_shortest_m": 92.0
+      "project_shortest_m": 92.0,
+      "signed_pct_delta": -25.806
     },
     {
       "abs_pct_delta": 47.5,
       "area": "TANGLIN",
+      "best_node_name": "Gan Eng Seng Sec Sch",
+      "best_node_type": "bus_stop",
       "cache_key": "855b3682c14bba2874423c738e2cc6449b71e3a51d4c973921d031853c662ec4",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 732.0,
       "postal": "249003",
-      "project_shortest_m": 384.3
+      "project_shortest_m": 384.3,
+      "signed_pct_delta": -47.5
     },
     {
       "abs_pct_delta": 16.855,
       "area": "BISHAN",
+      "best_node_name": "Opp Whitley Sec Sch",
+      "best_node_type": "bus_stop",
       "cache_key": "11139490cc9f5f9a60e1731090054437a6c5cfe5e208db80e96b96471400e094",
+      "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 283.0,
       "postal": "576008",
-      "project_shortest_m": 330.7
+      "project_shortest_m": 330.7,
+      "signed_pct_delta": 16.855
     }
   ],
   "sample_size": 2000,
   "thresholds": {
     "median_abs_pct_delta_max": 10.0,
     "p95_abs_pct_delta_max": 25.0
-  }
+  },
+  "top_outliers_preview": [
+    {
+      "abs_pct_delta": 6783.333,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 181",
+      "best_node_type": "bus_stop",
+      "cache_key": "54ccadc0ba1608263d9386dc85f89f11237ea083e84260e9275e674b0e915de2",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 6.0,
+      "postal": "532183",
+      "project_shortest_m": 413.0,
+      "signed_pct_delta": 6783.333
+    },
+    {
+      "abs_pct_delta": 4475.0,
+      "area": "TENGAH",
+      "best_node_name": "Blk 306B",
+      "best_node_type": "bus_stop",
+      "cache_key": "1d0923015dd903d6b385b41d8043668c578ef92458c4f6621e485cfd32103980",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 2.0,
+      "postal": "692306",
+      "project_shortest_m": 91.5,
+      "signed_pct_delta": 4475.0
+    },
+    {
+      "abs_pct_delta": 1401.111,
+      "area": "PIONEER",
+      "best_node_name": "Bef Gul St 1",
+      "best_node_type": "bus_stop",
+      "cache_key": "b215518ef7c2da7eee16e76b2f975d410ba971843cf6197159f44cf5b916e0a0",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 9.0,
+      "postal": "629314",
+      "project_shortest_m": 135.1,
+      "signed_pct_delta": 1401.111
+    },
+    {
+      "abs_pct_delta": 1347.424,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 178A",
+      "best_node_type": "bus_stop",
+      "cache_key": "1204995773a195fbda86dbba8346601ce030f1e187a6e78db2a62a972b41cb63",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 66.0,
+      "postal": "535424",
+      "project_shortest_m": 955.3,
+      "signed_pct_delta": 1347.424
+    },
+    {
+      "abs_pct_delta": 1289.844,
+      "area": "HOUGANG",
+      "best_node_name": "Opp Blk 991B",
+      "best_node_type": "bus_stop",
+      "cache_key": "be474a97917a7f72f7d656bf1bf79eba70f11c8fb1a82c27ed58cc268c528ed3",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 64.0,
+      "postal": "534194",
+      "project_shortest_m": 889.5,
+      "signed_pct_delta": 1289.844
+    },
+    {
+      "abs_pct_delta": 709.07,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 535",
+      "best_node_type": "bus_stop",
+      "cache_key": "9c1e9e4601fff19d4beeff5eefd0810eb9a79db64d09928ca921639f9f9e2605",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 43.0,
+      "postal": "530535",
+      "project_shortest_m": 347.9,
+      "signed_pct_delta": 709.07
+    },
+    {
+      "abs_pct_delta": 667.619,
+      "area": "YISHUN",
+      "best_node_name": "Aft Chong Pang CC",
+      "best_node_type": "bus_stop",
+      "cache_key": "d58aca0315f7980865efad4767111d29b74cfb092f787d53e39053ea1155199d",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 42.0,
+      "postal": "760103",
+      "project_shortest_m": 322.4,
+      "signed_pct_delta": 667.619
+    },
+    {
+      "abs_pct_delta": 503.75,
+      "area": "JURONG_EAST",
+      "best_node_name": "Ng Teng Fong General Hosp",
+      "best_node_type": "bus_stop",
+      "cache_key": "1995572bfe95760cf8fc8bd64da847ceaf400fedb8b5310d451ec3e797309a8d",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 72.0,
+      "postal": "609606",
+      "project_shortest_m": 434.7,
+      "signed_pct_delta": 503.75
+    },
+    {
+      "abs_pct_delta": 466.771,
+      "area": "SEMBAWANG",
+      "best_node_name": "Bef British American Tobacco",
+      "best_node_type": "bus_stop",
+      "cache_key": "c4c392cb369c9a1b06f92e50fbc1433597a007b5d3ea009a1b618a579a2dc465",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 96.0,
+      "postal": "758093",
+      "project_shortest_m": 544.1,
+      "signed_pct_delta": 466.771
+    },
+    {
+      "abs_pct_delta": 442.647,
+      "area": "PIONEER",
+      "best_node_name": "Opp ESAB",
+      "best_node_type": "bus_stop",
+      "cache_key": "c441c9d478b93d9dd54bf57e3d6088f8ebe778de50845e3cdb95426f172f552c",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 34.0,
+      "postal": "629065",
+      "project_shortest_m": 184.5,
+      "signed_pct_delta": 442.647
+    },
+    {
+      "abs_pct_delta": 423.235,
+      "area": "TUAS",
+      "best_node_name": "Opp Yan San Metals",
+      "best_node_type": "bus_stop",
+      "cache_key": "ab9d067bf5abdd2ffa021349217769a0977713560e98ce42b41d7455016fc64a",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 34.0,
+      "postal": "639420",
+      "project_shortest_m": 177.9,
+      "signed_pct_delta": 423.235
+    },
+    {
+      "abs_pct_delta": 401.364,
+      "area": "BUKIT_PANJANG",
+      "best_node_name": "The Rail Mall",
+      "best_node_type": "bus_stop",
+      "cache_key": "0fa8e748c3beba10d8a3da544883851af5f0abb77ccbec2cad2a07dfa5190602",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 44.0,
+      "postal": "678069",
+      "project_shortest_m": 220.6,
+      "signed_pct_delta": 401.364
+    },
+    {
+      "abs_pct_delta": 388.977,
+      "area": "BEDOK",
+      "best_node_name": "Opp Hong San Si Tp",
+      "best_node_type": "bus_stop",
+      "cache_key": "b316aacea291a4f5e0d3757f859c7d14d9b1fd2cab91abb49b050d5b91c9f5da",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 176.0,
+      "postal": "417092",
+      "project_shortest_m": 860.6,
+      "signed_pct_delta": 388.977
+    },
+    {
+      "abs_pct_delta": 372.128,
+      "area": "SERANGOON",
+      "best_node_name": "Aft Corfe Pl",
+      "best_node_type": "bus_stop",
+      "cache_key": "a4264a08a877d70b45869a22e8ff884fae2203a98971af0a4cbe9f978de051f4",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 47.0,
+      "postal": "559038",
+      "project_shortest_m": 221.9,
+      "signed_pct_delta": 372.128
+    },
+    {
+      "abs_pct_delta": 371.546,
+      "area": "HOUGANG",
+      "best_node_name": "Raya Gdn",
+      "best_node_type": "bus_stop",
+      "cache_key": "8f654b79882bdcb7cb75893781b02484b3c10477ad6e0c84cfc0090d82ef5969",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 97.0,
+      "postal": "534317",
+      "project_shortest_m": 457.4,
+      "signed_pct_delta": 371.546
+    },
+    {
+      "abs_pct_delta": 366.802,
+      "area": "BEDOK",
+      "best_node_name": "Aft Carmen St",
+      "best_node_type": "bus_stop",
+      "cache_key": "500009caa3139718ff0119d373aacf437cbeae1675db264cf5812dec9a0d2082",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 197.0,
+      "postal": "455383",
+      "project_shortest_m": 919.6,
+      "signed_pct_delta": 366.802
+    },
+    {
+      "abs_pct_delta": 350.882,
+      "area": "CLEMENTI",
+      "best_node_name": "Bet Clementi Loop",
+      "best_node_type": "bus_stop",
+      "cache_key": "0ad55b8f2621ac54b4b217800d7d2e04bd52c198182dcf488abb8862dab0f69c",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 102.0,
+      "postal": "129810",
+      "project_shortest_m": 459.9,
+      "signed_pct_delta": 350.882
+    },
+    {
+      "abs_pct_delta": 324.701,
+      "area": "TOA_PAYOH",
+      "best_node_name": "Blk 212",
+      "best_node_type": "bus_stop",
+      "cache_key": "ff9c1a94322d804ad2b9a74d9171399d875dfb0898b72c01eb0ffaf979870e8a",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 117.0,
+      "postal": "360213",
+      "project_shortest_m": 496.9,
+      "signed_pct_delta": 324.701
+    },
+    {
+      "abs_pct_delta": 314.703,
+      "area": "KALLANG",
+      "best_node_name": "Bef Kg Kayu Rd",
+      "best_node_type": "bus_stop",
+      "cache_key": "c60c96ce04ad8c8609d7cecc46443cc2529676e810842af5b1ecfc03fb005298",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 202.0,
+      "postal": "431007",
+      "project_shortest_m": 837.7,
+      "signed_pct_delta": 314.703
+    },
+    {
+      "abs_pct_delta": 308.933,
+      "area": "TUAS",
+      "best_node_name": "Aft Tuas Sth St 2",
+      "best_node_type": "bus_stop",
+      "cache_key": "24142beb03aef28bb57efc550a7c695b83adc134e71b96aba529c163c2158a3b",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 150.0,
+      "postal": "637814",
+      "project_shortest_m": 613.4,
+      "signed_pct_delta": 308.933
+    }
+  ],
+  "transit_type_summary": [
+    {
+      "best_node_type": "bus_stop",
+      "count": 1602,
+      "max_abs_pct_delta": 6783.333,
+      "median_abs_pct_delta": 12.816,
+      "over_25_pct_count": 513,
+      "over_50_pct_count": 272,
+      "p95_abs_pct_delta": 98.736
+    },
+    {
+      "best_node_type": "mrt_lrt_exit",
+      "count": 397,
+      "max_abs_pct_delta": 263.333,
+      "median_abs_pct_delta": 6.926,
+      "over_25_pct_count": 69,
+      "over_50_pct_count": 29,
+      "p95_abs_pct_delta": 59.645
+    }
+  ]
 }

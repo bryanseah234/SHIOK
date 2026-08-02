@@ -85,6 +85,11 @@ Current implementation status:
 - `qa/onemap_validation_cached_report_20260802.json` does not pass the gate:
   1 invalid OneMap zero-distance result, median absolute delta 11.458% against
   a 10% threshold, and p95 absolute delta 94.037% against a 25% threshold.
+- The cached report now includes transit-type summaries, top area summaries,
+  and top outliers. Current split: bus stops have median absolute delta 12.816%
+  and p95 98.736%; MRT/LRT exits have median absolute delta 6.926% and p95
+  59.645%. This points first at bus-stop access/connector modeling, while MRT
+  routing remains a secondary QA target.
 
 Next external-API collection step, when intentionally scheduled:
 
@@ -100,8 +105,8 @@ uv run python run.py onemap-validation evaluate --sample qa\onemap_validation_sa
 
 Do not treat this launch gate as passed from local route distances alone, and do
 not weaken the thresholds without a PRD decision. The current failure is useful
-QA evidence for missing/extra walking connectors and OneMap-vs-project routing
-differences.
+QA evidence for bus-stop connector modeling, missing/extra walking connectors,
+and OneMap-vs-project routing differences.
 
 ## Mode Matrix
 

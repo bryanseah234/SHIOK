@@ -494,6 +494,40 @@ def percentile(values: list[float], pct: float) -> float | None:
     return ordered[lower] * (upper - index) + ordered[upper] * (index - lower)
 
 
+def summarize_delta_groups(
+    results: list[dict[str, Any]], *, group_key: str, limit: int | None = None
+) -> list[dict[str, Any]]:
+    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for result in results:
+        key = str(result.get(group_key) or "unknown")
+        groups[key].append(result)
+
+    summaries: list[dict[str, Any]] = []
+    for key, items in groups.items():
+        deltas = [float(item["abs_pct_delta"]) for item in items]
+        median = percentile(deltas, 50)
+        p95 = percentile(deltas, 95)
+        summaries.append(
+            {
+                group_key: key,
+                "count": len(items),
+                "median_abs_pct_delta": round(median, 3) if median is not None else None,
+                "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
+                "max_abs_pct_delta": round(max(deltas), 3),
+                "over_25_pct_count": sum(delta > 25 for delta in deltas),
+                "over_50_pct_count": sum(delta > 50 for delta in deltas),
+            }
+        )
+    summaries.sort(
+        key=lambda item: (
+            -(float(item["p95_abs_pct_delta"]) if item["p95_abs_pct_delta"] is not None else -1),
+            -int(item["count"]),
+            str(item[group_key]),
+        )
+    )
+    return summaries[:limit] if limit is not None else summaries
+
+
 def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     missing: list[str] = []
@@ -508,6 +542,8 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             continue
         onemap_m = extract_onemap_distance_m(read_json(cache_path))
         project_m = sample.get("project_shortest_m")
+        raw_best_node = sample.get("best_node")
+        best_node: dict[str, Any] = raw_best_node if isinstance(raw_best_node, dict) else {}
         if (
             not isinstance(onemap_m, int | float)
             or not isinstance(project_m, int | float)
@@ -520,11 +556,15 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
                     "cache_key": cache_key,
                     "project_shortest_m": project_m,
                     "onemap_walk_m": onemap_m,
+                    "best_node_type": best_node.get("type"),
+                    "best_node_name": best_node.get("name") or best_node.get("station"),
+                    "endpoint_source": sample.get("endpoint_source"),
                     "reason": "missing_or_non_positive_distance",
                 }
             )
             continue
         delta_pct = abs(float(project_m) - float(onemap_m)) / float(onemap_m) * 100
+        signed_delta_pct = (float(project_m) - float(onemap_m)) / float(onemap_m) * 100
         results.append(
             {
                 "postal": sample.get("postal"),
@@ -533,6 +573,10 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
                 "project_shortest_m": round(float(project_m), 1),
                 "onemap_walk_m": round(float(onemap_m), 1),
                 "abs_pct_delta": round(delta_pct, 3),
+                "signed_pct_delta": round(signed_delta_pct, 3),
+                "best_node_type": best_node.get("type"),
+                "best_node_name": best_node.get("name") or best_node.get("station"),
+                "endpoint_source": sample.get("endpoint_source"),
             }
         )
 
@@ -565,6 +609,11 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             "p95_abs_pct_delta_max": P95_THRESHOLD_PCT,
         },
         "gate_passed": gate_passed,
+        "transit_type_summary": summarize_delta_groups(results, group_key="best_node_type"),
+        "area_summary": summarize_delta_groups(results, group_key="area", limit=20),
+        "top_outliers_preview": sorted(
+            results, key=lambda item: float(item["abs_pct_delta"]), reverse=True
+        )[:20],
         "results_preview": results[:20],
     }
 

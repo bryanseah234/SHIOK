@@ -58,6 +58,7 @@ Root directory: `web`
 - OneMap walk-validation collector dry-run: passed; `qa/onemap_validation_collect_dry_run_20260802.json` queued 2,000 requests, made 0 HTTP requests, and requires explicit `--confirm-onemap-collection` before external calls.
 - OneMap walk-validation collection: passed as a collection job; `qa/onemap_validation_collect_report_20260802.json` made 2,000 HTTP requests, wrote 2,000 cache results, and returned `ok=true`.
 - OneMap walk-validation evaluation: failed launch gate honestly; `qa/onemap_validation_cached_report_20260802.json` has 1 invalid OneMap zero-distance result, median absolute delta 11.458% vs 10.0% max, and p95 absolute delta 94.037% vs 25.0% max.
+- OneMap walk-validation failure classification: report now includes transit-type, area, and top-outlier summaries. Bus-stop routes: 1,602 valid rows, median absolute delta 12.816%, p95 98.736%. MRT/LRT routes: 397 valid rows, median absolute delta 6.926%, p95 59.645%.
 - Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained corrected `raw/validation/onemap_walk_od` validation cache.
 
 ## Next Production Command
@@ -73,6 +74,6 @@ Run only after the Vercel Hobby quota window resets:
 - Deploy and activate the pending bundle.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
-- Investigate the failed 2,000-postal OneMap walk-validation gate; collection is complete, but evaluation has `gate_passed=false`.
+- Investigate the failed 2,000-postal OneMap walk-validation gate; collection is complete, but evaluation has `gate_passed=false`. First target is bus-stop access/connector modeling, then MRT/LRT p95 outliers.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.
