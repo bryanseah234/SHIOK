@@ -18,6 +18,7 @@ DEFAULT_NETWORK = PROJECT_ROOT / "processed" / "network_island.parquet"
 DEFAULT_UNIVERSE = (
     PROJECT_ROOT / "processed" / "postal_universe_candidate_full_registered_geocoded.parquet"
 )
+REQUIRED_SUBSCORE_STATUS = {"access", "bus", "rain", "heat", "crossing"}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -103,6 +104,53 @@ def bundle_network_freshness(bundle_dir: Path, network_path: Path) -> dict[str, 
         "network_path": str(network_path),
         "network_mtime": file_mtime_iso(network_path),
         "stale_seconds": round(stale_seconds, 3) if stale_seconds is not None else None,
+        "warning": warning,
+    }
+
+
+def bundle_score_provenance_status(bundle_dir: Path) -> dict[str, Any]:
+    manifest_path = bundle_dir / "manifest.json"
+    if not manifest_path.is_file():
+        return {
+            "ok": False,
+            "manifest_path": str(manifest_path),
+            "source_hash_count": 0,
+            "subscore_status_keys": [],
+            "missing_subscore_status": sorted(REQUIRED_SUBSCORE_STATUS),
+            "warning": "bundle manifest is missing",
+        }
+
+    manifest_payload = read_json(manifest_path)
+    provenance = manifest_payload.get("provenance")
+    if not isinstance(provenance, dict):
+        return {
+            "ok": False,
+            "manifest_path": str(manifest_path),
+            "source_hash_count": 0,
+            "subscore_status_keys": [],
+            "missing_subscore_status": sorted(REQUIRED_SUBSCORE_STATUS),
+            "warning": "bundle manifest provenance block is missing",
+        }
+
+    source_hashes = provenance.get("source_hashes")
+    subscore_status = provenance.get("subscore_status")
+    source_hash_count = len(source_hashes) if isinstance(source_hashes, dict) else 0
+    subscore_keys = set(subscore_status) if isinstance(subscore_status, dict) else set()
+    missing_subscores = sorted(REQUIRED_SUBSCORE_STATUS - subscore_keys)
+    ok = source_hash_count > 0 and not missing_subscores
+    warning = None
+    if not ok:
+        warning = (
+            "active bundle manifest lacks score source hashes or complete subscore status; "
+            "regenerate/export the bundle with current code before using it as provenance evidence"
+        )
+
+    return {
+        "ok": ok,
+        "manifest_path": str(manifest_path),
+        "source_hash_count": source_hash_count,
+        "subscore_status_keys": sorted(subscore_keys),
+        "missing_subscore_status": missing_subscores,
         "warning": warning,
     }
 
@@ -287,6 +335,7 @@ def build_readiness_report(
     )
     vercel = vercel_readiness(project_root, web_dir)
     freshness = bundle_network_freshness(bundle_dir, network_path)
+    score_provenance = bundle_score_provenance_status(bundle_dir)
 
     errors: list[str] = []
     warnings: list[str] = []
@@ -304,6 +353,8 @@ def build_readiness_report(
         errors.append("Vercel root directory is not web")
     if freshness["warning"]:
         warnings.append(str(freshness["warning"]))
+    if score_provenance["warning"]:
+        warnings.append(str(score_provenance["warning"]))
 
     report: dict[str, Any] = {
         "ok": not errors,
@@ -326,6 +377,7 @@ def build_readiness_report(
                 "warnings": validation.get("warnings", []),
             },
             "freshness": freshness,
+            "score_provenance": score_provenance,
         },
         "network": {
             "ok": island_qa.get("ok"),
