@@ -19,7 +19,7 @@ from pipeline.bus import datamall_headers
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = PROJECT_ROOT / "raw" / "bus_arrivals" / "arrivals.jsonl"
-BUS_ARRIVAL_ENDPOINT = "https://datamall2.mytransport.sg/ltaodataservice/BusArrivalv2"
+BUS_ARRIVAL_ENDPOINT = "https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival"
 
 
 def snapshot_record(
@@ -31,7 +31,7 @@ def snapshot_record(
 ) -> dict[str, Any]:
     return {
         "fetched_at": fetched_at or datetime.now(UTC).isoformat(),
-        "source": "lta_datamall_bus_arrival_v2",
+        "source": "lta_datamall_bus_arrival_v3",
         "bus_stop_code": bus_stop_code,
         "service_no": service_no,
         "payload": payload,

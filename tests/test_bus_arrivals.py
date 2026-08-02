@@ -15,7 +15,7 @@ def test_snapshot_record_is_honest_local_collection_payload():
 
     assert record == {
         "fetched_at": "2026-07-29T12:00:00+00:00",
-        "source": "lta_datamall_bus_arrival_v2",
+        "source": "lta_datamall_bus_arrival_v3",
         "bus_stop_code": "54211",
         "service_no": "169",
         "payload": payload,
