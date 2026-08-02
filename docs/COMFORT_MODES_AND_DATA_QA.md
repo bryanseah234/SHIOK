@@ -253,6 +253,16 @@ Current implementation:
   `760468` and `417471` now become `SCORED_PARTIAL` direct-bus fallbacks under
   current code. This is not active in the deployed score bundle until a targeted
   or full rescore/export is promoted.
+- A 3-postal targeted candidate refresh for `758588`, `760468`, and `417471`
+  wrote `qa/targeted_bundle_refresh_bus_combined_connector_guard_20260803.json`
+  and validated structurally with 124,032 indexed postals and 114,327 route
+  segment geometries. The resulting counts would be 112,910 `SCORED`, 1,417
+  `SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
+  `qa/compare_bus_combined_connector_guard_20260803.json` blocks promotion as
+  score regressions because all three rows lose trusted route distance and become
+  partial direct-bus evidence. That downgrade is directionally honest, but the
+  bundle was not activated or deployed; the 1.31 GB local candidate bundle was
+  deleted after validation to save space.
 
 ## Actual Bus Arrivals
 

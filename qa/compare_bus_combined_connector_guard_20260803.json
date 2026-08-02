@@ -1,0 +1,144 @@
+{
+  "blocked_postals": [
+    "758588",
+    "760468",
+    "417471"
+  ],
+  "blocking_count": 3,
+  "candidate_count": 3,
+  "compared_count": 3,
+  "comparisons": [
+    {
+      "active": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": 153.5,
+          "station": "Aft Queen's Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.504,
+        "sheltered_m": 153.5,
+        "state": "SCORED",
+        "total": 80.2
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "station": "Aft Queen's Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 50.9,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -102.6,
+        "total": -25.2
+      },
+      "flags": [
+        "total_regression",
+        "best_node_distance_changed"
+      ],
+      "postal": "758588"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "59771",
+          "name": "Blk 469B",
+          "routed_m": 130.3,
+          "station": "Blk 469B",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.586,
+        "sheltered_m": 130.3,
+        "state": "SCORED",
+        "total": 83.5
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "59771",
+          "name": "Blk 469B",
+          "routed_m": null,
+          "station": "Blk 469B",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 89.5,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -40.8,
+        "total": -28.5
+      },
+      "flags": [
+        "total_regression",
+        "best_node_distance_changed"
+      ],
+      "postal": "760468"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83351",
+          "name": "Grosvenor View",
+          "routed_m": 117.9,
+          "station": "Grosvenor View",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 117.9,
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "83351",
+          "name": "Grosvenor View",
+          "routed_m": null,
+          "station": "Grosvenor View",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 67.9,
+        "state": "SCORED_PARTIAL",
+        "total": 49.6
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -50.0,
+        "total": -5.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_distance_changed"
+      ],
+      "postal": "417471"
+    }
+  ],
+  "flag_counts": {
+    "best_node_distance_changed": 3,
+    "total_regression": 3
+  },
+  "inputs": {
+    "bundle_dir": "C:\\shiok\\web\\public\\data\\generated_20260803_safe_mayflower_560234_targeted",
+    "candidate": "qa\\targeted_bundle_refresh_bus_combined_connector_guard_20260803.json",
+    "coverage_tolerance": 0.02,
+    "total_tolerance": 0.5
+  },
+  "ok": false,
+  "promotion_recommendation": "hold_for_review_do_not_promote_wholesale",
+  "safe_improvement_count": 0,
+  "safe_improvement_postals": [],
+  "safe_unchanged_postals": []
+}
