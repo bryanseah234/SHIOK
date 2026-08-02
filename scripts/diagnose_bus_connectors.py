@@ -74,6 +74,22 @@ def first_property(props: dict[str, Any], *names: str) -> Any:
     return None
 
 
+def validation_route_trust(props: dict[str, Any]) -> str | None:
+    explicit = first_property(props, "validation_route_trust", "route_trust")
+    if explicit is not None:
+        return str(explicit)
+    routing_type = str(
+        first_property(props, "validation_routing_type", "routing_type", "new_best_routing_type")
+        or ""
+    )
+    if routing_type == "direct_bus_fallback_unrouted":
+        return "direct_bus_fallback_unrouted"
+    endpoint_source = str(props.get("endpoint_source") or "")
+    if endpoint_source == "postal_universe_to_transit_poi" and "access_connector" in routing_type:
+        return "graph_route_with_endpoint_connector"
+    return None
+
+
 def feature_list(collection: Any, path: Path) -> list[dict[str, Any]]:
     raw_features = collection.get("features") if isinstance(collection, dict) else None
     if not isinstance(raw_features, list):
@@ -458,9 +474,13 @@ def diagnose_feature(
         ),
         "old_abs_pct_delta": first_property(props, "old_abs_pct_delta", "abs_pct_delta"),
         "old_direction": first_property(props, "old_direction", "direction"),
-        "validation_route_trust": props.get("route_trust"),
-        "validation_routing_type": props.get("routing_type"),
-        "validation_distance_sanity": props.get("distance_sanity"),
+        "validation_route_trust": validation_route_trust(props),
+        "validation_routing_type": first_property(
+            props, "validation_routing_type", "routing_type", "new_best_routing_type"
+        ),
+        "validation_distance_sanity": first_property(
+            props, "validation_distance_sanity", "distance_sanity"
+        ),
         "direct_bus_fallback_reason": props.get("direct_bus_fallback_reason"),
     }
     score_record = score_postal_row(
@@ -620,9 +640,13 @@ def diagnose_mrt_lrt_feature(
         ),
         "old_abs_pct_delta": first_property(props, "old_abs_pct_delta", "abs_pct_delta"),
         "old_direction": first_property(props, "old_direction", "direction"),
-        "validation_route_trust": props.get("route_trust"),
-        "validation_routing_type": props.get("routing_type"),
-        "validation_distance_sanity": props.get("distance_sanity"),
+        "validation_route_trust": validation_route_trust(props),
+        "validation_routing_type": first_property(
+            props, "validation_routing_type", "routing_type", "new_best_routing_type"
+        ),
+        "validation_distance_sanity": first_property(
+            props, "validation_distance_sanity", "distance_sanity"
+        ),
     }
     score_record = score_postal_row(
         postal_row,

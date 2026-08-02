@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T21:59:54.627006+00:00",
+  "generated_at": "2026-08-02T22:07:07.872044+00:00",
   "inputs": {
     "alternate_snap_max_candidates": 24,
     "alternate_snap_search_m": 50.0,
@@ -58,9 +58,9 @@
       "target_snap_m": 13.6,
       "validation_area": "HOUGANG",
       "validation_direct_distance_m": 29.0,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 14,
@@ -110,9 +110,9 @@
       "target_snap_m": 15.3,
       "validation_area": "YISHUN",
       "validation_direct_distance_m": 28.7,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 10,
@@ -162,9 +162,9 @@
       "target_snap_m": 12.1,
       "validation_area": "BEDOK",
       "validation_direct_distance_m": 133.1,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 15,
@@ -214,9 +214,9 @@
       "target_snap_m": 11.1,
       "validation_area": "HOUGANG",
       "validation_direct_distance_m": 52.0,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 23,
@@ -266,9 +266,9 @@
       "target_snap_m": 9.6,
       "validation_area": "BEDOK",
       "validation_direct_distance_m": 45.7,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 4,
@@ -318,9 +318,9 @@
       "target_snap_m": 13.0,
       "validation_area": "TUAS",
       "validation_direct_distance_m": 128.4,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 24,
@@ -370,9 +370,9 @@
       "target_snap_m": 15.7,
       "validation_area": "JURONG_WEST",
       "validation_direct_distance_m": 24.7,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 24,
@@ -422,9 +422,9 @@
       "target_snap_m": 4.8,
       "validation_area": "NOVENA",
       "validation_direct_distance_m": 59.3,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 4,
@@ -474,9 +474,9 @@
       "target_snap_m": 16.9,
       "validation_area": "MARINE_PARADE",
       "validation_direct_distance_m": 89.4,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 20,
@@ -526,9 +526,9 @@
       "target_snap_m": 3.2,
       "validation_area": "SEMBAWANG",
       "validation_direct_distance_m": 51.1,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 24,
@@ -578,9 +578,9 @@
       "target_snap_m": 5.0,
       "validation_area": "TAMPINES",
       "validation_direct_distance_m": 169.6,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 16,
@@ -630,9 +630,9 @@
       "target_snap_m": 16.4,
       "validation_area": "SERANGOON",
       "validation_direct_distance_m": 117.3,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 7,
@@ -682,9 +682,9 @@
       "target_snap_m": 33.8,
       "validation_area": "JURONG_EAST",
       "validation_direct_distance_m": 91.5,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 8,
@@ -734,9 +734,9 @@
       "target_snap_m": 20.5,
       "validation_area": "TAMPINES",
       "validation_direct_distance_m": 160.8,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 21,
@@ -786,9 +786,9 @@
       "target_snap_m": 5.7,
       "validation_area": "JURONG_WEST",
       "validation_direct_distance_m": 109.9,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 10,
@@ -838,9 +838,9 @@
       "target_snap_m": 12.1,
       "validation_area": "BEDOK",
       "validation_direct_distance_m": 252.0,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 7,
@@ -890,9 +890,9 @@
       "target_snap_m": 6.6,
       "validation_area": "CENTRAL_WATER_CATCHMENT",
       "validation_direct_distance_m": 66.3,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 18,
@@ -942,9 +942,9 @@
       "target_snap_m": 1.4,
       "validation_area": "HOUGANG",
       "validation_direct_distance_m": 146.4,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 11,
@@ -994,9 +994,9 @@
       "target_snap_m": 4.4,
       "validation_area": "JURONG_WEST",
       "validation_direct_distance_m": 184.6,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 18,
@@ -1046,9 +1046,9 @@
       "target_snap_m": 3.4,
       "validation_area": "YISHUN",
       "validation_direct_distance_m": 164.3,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 4,
@@ -1098,9 +1098,9 @@
       "target_snap_m": 11.6,
       "validation_area": "SENGKANG",
       "validation_direct_distance_m": 165.8,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     },
     {
       "alternate_snap_reachable_count": 19,
@@ -1150,9 +1150,9 @@
       "target_snap_m": 6.8,
       "validation_area": "WOODLANDS",
       "validation_direct_distance_m": 166.9,
-      "validation_distance_sanity": null,
-      "validation_route_trust": null,
-      "validation_routing_type": null
+      "validation_distance_sanity": "plausible",
+      "validation_route_trust": "direct_bus_fallback_unrouted",
+      "validation_routing_type": "direct_bus_fallback_unrouted"
     }
   ],
   "summary": {

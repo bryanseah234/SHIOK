@@ -94,11 +94,11 @@
         "validation_area": "HOUGANG",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 29.0,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 14.0,
         "validation_onemap_walk_m": 43.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -196,11 +196,11 @@
         "validation_area": "YISHUN",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 28.7,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 13.3,
         "validation_onemap_walk_m": 42.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -298,11 +298,11 @@
         "validation_area": "BEDOK",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 133.1,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 42.9,
         "validation_onemap_walk_m": 176.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -400,11 +400,11 @@
         "validation_area": "HOUGANG",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 52.0,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 45.0,
         "validation_onemap_walk_m": 97.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -502,11 +502,11 @@
         "validation_area": "BEDOK",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 45.7,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 151.3,
         "validation_onemap_walk_m": 197.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -604,11 +604,11 @@
         "validation_area": "TUAS",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 128.4,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 21.6,
         "validation_onemap_walk_m": 150.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -706,11 +706,11 @@
         "validation_area": "JURONG_WEST",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 24.7,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 106.3,
         "validation_onemap_walk_m": 131.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -808,11 +808,11 @@
         "validation_area": "NOVENA",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 59.3,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 33.7,
         "validation_onemap_walk_m": 93.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -910,11 +910,11 @@
         "validation_area": "MARINE_PARADE",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 89.4,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": -3.4,
         "validation_onemap_walk_m": 86.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1012,11 +1012,11 @@
         "validation_area": "SEMBAWANG",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 51.1,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 1.9,
         "validation_onemap_walk_m": 53.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1116,11 +1116,11 @@
         "validation_area": "TAMPINES",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 169.6,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 19.4,
         "validation_onemap_walk_m": 189.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1218,11 +1218,11 @@
         "validation_area": "SERANGOON",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 117.3,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 94.7,
         "validation_onemap_walk_m": 212.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1320,11 +1320,11 @@
         "validation_area": "JURONG_EAST",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 91.5,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 123.5,
         "validation_onemap_walk_m": 215.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1424,11 +1424,11 @@
         "validation_area": "TAMPINES",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 160.8,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": -3.8,
         "validation_onemap_walk_m": 157.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1526,11 +1526,11 @@
         "validation_area": "JURONG_WEST",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 109.9,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 58.1,
         "validation_onemap_walk_m": 168.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1628,11 +1628,11 @@
         "validation_area": "BEDOK",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 252.0,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 61.0,
         "validation_onemap_walk_m": 313.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1730,11 +1730,11 @@
         "validation_area": "CENTRAL_WATER_CATCHMENT",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 66.3,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 186.7,
         "validation_onemap_walk_m": 253.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1834,11 +1834,11 @@
         "validation_area": "HOUGANG",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 146.4,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 6.6,
         "validation_onemap_walk_m": 153.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -1936,11 +1936,11 @@
         "validation_area": "JURONG_WEST",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 184.6,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 276.4,
         "validation_onemap_walk_m": 461.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -2038,11 +2038,11 @@
         "validation_area": "YISHUN",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 164.3,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 38.7,
         "validation_onemap_walk_m": 203.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -2140,11 +2140,11 @@
         "validation_area": "SENGKANG",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 165.8,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 78.2,
         "validation_onemap_walk_m": 244.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     },
@@ -2242,11 +2242,11 @@
         "validation_area": "WOODLANDS",
         "validation_best_node_type": "bus_stop",
         "validation_direct_distance_m": 166.9,
-        "validation_distance_sanity": null,
+        "validation_distance_sanity": "plausible",
         "validation_onemap_vs_direct_delta_m": 71.1,
         "validation_onemap_walk_m": 238.0,
-        "validation_route_trust": null,
-        "validation_routing_type": null
+        "validation_route_trust": "direct_bus_fallback_unrouted",
+        "validation_routing_type": "direct_bus_fallback_unrouted"
       },
       "type": "Feature"
     }

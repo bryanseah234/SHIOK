@@ -10,6 +10,7 @@ from scripts.diagnose_bus_connectors import (
     score_recovers_target_bus_stop,
     score_recovers_target_mrt_lrt,
     stop_names_match,
+    validation_route_trust,
     within_onemap_threshold,
 )
 
@@ -60,6 +61,26 @@ def test_first_property_supports_validation_priority_schema():
     assert first_property(props, "new_best_name", "best_node_name") == "Blk 535"
     assert first_property(props, "new_best_shortest_m", "project_shortest_m") == 347.9
     assert first_property(props, "missing") is None
+
+
+def test_validation_route_trust_supports_explicit_and_derived_schema():
+    assert (
+        validation_route_trust({"route_trust": "graph_routed_bus_stop"}) == "graph_routed_bus_stop"
+    )
+    assert (
+        validation_route_trust(
+            {
+                "endpoint_source": "postal_universe_to_transit_poi",
+                "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+            }
+        )
+        == "graph_route_with_endpoint_connector"
+    )
+    assert (
+        validation_route_trust({"new_best_routing_type": "direct_bus_fallback_unrouted"})
+        == "direct_bus_fallback_unrouted"
+    )
+    assert validation_route_trust({"new_best_routing_type": "sheltered"}) is None
 
 
 def test_choose_target_bus_candidate_prefers_name_then_endpoint_distance():
