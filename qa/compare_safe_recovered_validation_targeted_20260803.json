@@ -39,7 +39,7 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "455383"
     },
@@ -79,7 +79,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "431007"
     },
@@ -118,7 +118,7 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "768282"
     },
@@ -158,7 +158,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "456103"
     },
@@ -198,7 +198,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "560405"
     },
@@ -237,13 +237,13 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "348358"
     }
   ],
   "flag_counts": {
-    "best_node_changed": 6,
+    "best_node_distance_changed": 6,
     "coverage_improvement": 3,
     "total_improvement": 6
   },

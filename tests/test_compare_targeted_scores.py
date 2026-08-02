@@ -1,22 +1,31 @@
 from scripts.compare_targeted_scores import (
+    compare_record,
     compare_records,
     load_candidate_records,
     normalize_postal,
 )
 
 
-def record(postal, total, covered, state="SCORED", best_type="mrt_exit"):
+def record(
+    postal,
+    total,
+    covered,
+    state="SCORED",
+    best_type="mrt_exit",
+    best_name="Node",
+    routed_m=100.0,
+):
     return {
         "postal": postal,
         "state": state,
         "total": total,
-        "paths": {"covered_ratio": covered, "sheltered_m": 100.0},
+        "paths": {"covered_ratio": covered, "sheltered_m": routed_m},
         "best_node": {
             "type": best_type,
-            "name": "Node",
-            "station": "Node",
+            "name": best_name,
+            "station": best_name,
             "exit": "1",
-            "routed_m": 100.0,
+            "routed_m": routed_m,
         },
     }
 
@@ -85,6 +94,36 @@ def test_compare_records_allows_safe_improvement_without_wholesale_promotion():
     assert report["safe_improvement_postals"] == ["560234"]
     assert report["blocked_postals"] == ["560710"]
     assert report["promotion_recommendation"] == "promote_safe_improvements_only"
+
+
+def test_compare_record_separates_same_node_distance_change_from_node_change():
+    active = record("560234", 72.0, 0.1, routed_m=300.0)
+    candidate = record("560234", 82.0, 0.1, routed_m=100.0)
+
+    comparison = compare_record(
+        active,
+        candidate,
+        total_tolerance=0.5,
+        coverage_tolerance=0.02,
+    )
+
+    assert "best_node_distance_changed" in comparison["flags"]
+    assert "best_node_changed" not in comparison["flags"]
+
+
+def test_compare_record_flags_true_best_node_identity_change():
+    active = record("560234", 72.0, 0.1, best_name="Old Stop")
+    candidate = record("560234", 82.0, 0.1, best_name="New Stop")
+
+    comparison = compare_record(
+        active,
+        candidate,
+        total_tolerance=0.5,
+        coverage_tolerance=0.02,
+    )
+
+    assert "best_node_changed" in comparison["flags"]
+    assert "best_node_distance_changed" not in comparison["flags"]
 
 
 def test_load_candidate_records_accepts_list(tmp_path):

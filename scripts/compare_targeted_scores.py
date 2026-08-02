@@ -95,6 +95,18 @@ def best_node_summary(record: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def best_node_identity(summary: dict[str, Any]) -> dict[str, Any]:
+    return {
+        key: summary.get(key)
+        for key in (
+            "type",
+            "name",
+            "station",
+            "exit",
+        )
+    }
+
+
 def compare_record(
     active: dict[str, Any] | None,
     candidate: dict[str, Any],
@@ -144,8 +156,18 @@ def compare_record(
 
     active_best = best_node_summary(active or {})
     candidate_best = best_node_summary(candidate)
-    if active_best and candidate_best and active_best != candidate_best:
+    if (
+        active_best
+        and candidate_best
+        and best_node_identity(active_best) != best_node_identity(candidate_best)
+    ):
         flags.append("best_node_changed")
+    elif (
+        active_best
+        and candidate_best
+        and active_best.get("routed_m") != candidate_best.get("routed_m")
+    ):
+        flags.append("best_node_distance_changed")
 
     blocking = any(
         flag

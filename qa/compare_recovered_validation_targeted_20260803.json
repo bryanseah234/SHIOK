@@ -62,7 +62,7 @@
       "flags": [
         "coverage_regression",
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "760103"
     },
@@ -100,7 +100,7 @@
         "total": 0.0
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "559038"
     },
@@ -139,7 +139,7 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "455383"
     },
@@ -179,7 +179,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "431007"
     },
@@ -218,7 +218,7 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "768282"
     },
@@ -256,7 +256,7 @@
         "total": 0.0
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "799452"
     },
@@ -372,7 +372,7 @@
       "flags": [
         "coverage_regression",
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "677768"
     },
@@ -410,7 +410,7 @@
         "total": 0.0
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "618823"
     },
@@ -449,7 +449,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "579399"
     },
@@ -489,7 +489,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "456103"
     },
@@ -529,7 +529,7 @@
       "flags": [
         "total_improvement",
         "coverage_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "560405"
     },
@@ -568,7 +568,7 @@
       },
       "flags": [
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "348358"
     },
@@ -758,7 +758,7 @@
         "total": 0.0
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "598441"
     },
@@ -874,7 +874,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "189768"
     },
@@ -914,7 +914,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "149457"
     },
@@ -954,7 +954,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "408694"
     },
@@ -994,7 +994,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "458671"
     },
@@ -1032,7 +1032,7 @@
         "total": 0.0
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "019396"
     },
@@ -1072,7 +1072,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "117311"
     },
@@ -1111,7 +1111,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "117294"
     },
@@ -1149,7 +1149,7 @@
         "total": -0.4
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "541175"
     },
@@ -1188,7 +1188,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "229385"
     },
@@ -1228,7 +1228,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "400306"
     },
@@ -1267,7 +1267,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "239528"
     },
@@ -1306,7 +1306,7 @@
       },
       "flags": [
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "529544"
     },
@@ -1344,7 +1344,7 @@
         "total": -0.4
       },
       "flags": [
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "788441"
     },
@@ -1383,7 +1383,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "259771"
     },
@@ -1422,7 +1422,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "259605"
     },
@@ -1461,7 +1461,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "109920"
     },
@@ -1500,7 +1500,7 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "267879"
     },
@@ -1540,7 +1540,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "119454"
     },
@@ -1580,7 +1580,7 @@
       "flags": [
         "total_regression",
         "coverage_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "209077"
     },
@@ -1620,7 +1620,7 @@
       "flags": [
         "coverage_regression",
         "total_improvement",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "537408"
     },
@@ -1659,13 +1659,13 @@
       },
       "flags": [
         "total_regression",
-        "best_node_changed"
+        "best_node_distance_changed"
       ],
       "postal": "259633"
     }
   ],
   "flag_counts": {
-    "best_node_changed": 34,
+    "best_node_distance_changed": 34,
     "coverage_improvement": 3,
     "coverage_regression": 12,
     "total_improvement": 9,
