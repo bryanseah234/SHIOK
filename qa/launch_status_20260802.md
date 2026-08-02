@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `d4da3b5` (`qa: summarize OneMap validation failures`)
+- Latest pushed commit: `7498d5b` (`qa: classify OneMap validation direction`)
 
 ## Pending Fresh Bundle
 
