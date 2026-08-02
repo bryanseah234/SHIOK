@@ -4,6 +4,7 @@ from scripts.triage_onemap_outliers import (
     build_triage_queues,
     classify_row,
     compact_row,
+    missing_bus_connector_priority_geojson,
     source_flags,
     triage_geojson,
     validation_lookup,
@@ -295,6 +296,42 @@ def test_triage_geojson_exports_start_end_lines():
             }
         ],
     }
+
+
+def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
+    geojson = missing_bus_connector_priority_geojson(
+        {
+            "missing_bus_connector": [
+                {
+                    "postal": "111111",
+                    "old_abs_pct_delta": 10.0,
+                    "validation_distance_sanity": "plausible",
+                    "start": {"lat": 1.0, "lon": 103.0},
+                    "end": {"lat": 1.1, "lon": 103.1},
+                },
+                {
+                    "postal": "222222",
+                    "old_abs_pct_delta": 50.0,
+                    "validation_distance_sanity": "plausible",
+                    "start": {"lat": 1.2, "lon": 103.2},
+                    "end": {"lat": 1.3, "lon": 103.3},
+                },
+                {
+                    "postal": "333333",
+                    "old_abs_pct_delta": 100.0,
+                    "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+                    "start": {"lat": 1.4, "lon": 103.4},
+                    "end": {"lat": 1.5, "lon": 103.5},
+                },
+            ]
+        }
+    )
+
+    assert [feature["properties"]["postal"] for feature in geojson["features"]] == [
+        "222222",
+        "111111",
+    ]
+    assert [feature["properties"]["priority_rank"] for feature in geojson["features"]] == [1, 2]
 
 
 def test_compact_row_preserves_user_facing_triage_fields():

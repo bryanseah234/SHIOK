@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit before this sanity unit: `53ff5b0` (`qa: add map-ready OneMap triage worklist`)
+- Latest pushed commit before this priority unit: `6f6b465` (`qa: classify OneMap direct-distance sanity`)
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 191 passed
+- Python tests: 192 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -67,6 +67,7 @@ Root directory: `web`
 - Project-shorter route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\onemap_outlier_replay_shorter_profile_100_20260802.json` passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.
 - Project-longer route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_longer_than_onemap --node-type bus_stop --route-source-profile --output qa\onemap_outlier_replay_bus_longer_profile_100_20260802.json` passed locally. Of 92 selected rows, 67 have best-route direct-bus fallback, 12 contain inferred HDB, and 1 contains OSM shelter. The longer queue is mostly bus fallback/missing-connector evidence, not a reason to loosen HDB inference further.
 - OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json --geojson-output qa\onemap_outlier_triage_queues_20260802.geojson` passed locally. It read 192 replay rows, enriched them from `qa/onemap_validation_cached_report_20260802.json`, and emitted 68 `missing_bus_connector` cases, 123 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 47 `mrt_lrt_outlier` cases, 27 `hdb_bridge_connector_review` cases, and 3 `still_unscored_or_no_best` cases. The GeoJSON has 368 start/end line features for map inspection. The `missing_bus_connector` queue has 48 plausible validation distances, 11 materially shorter-than-direct OneMap distances, and 9 slightly shorter-than-direct OneMap distances.
+- Missing-bus priority worklist: `qa/onemap_missing_bus_connector_priority_20260802.geojson` has 48 plausible `missing_bus_connector` line features ranked by largest validation delta. Top rows are `758093`, `678069`, `417092`, `559038`, and `455383`.
 - Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, temporary probe parquets, and an obsolete older full score batch; retained corrected `raw/validation/onemap_walk_od`, current score batch, and current web data bundle.
 
 ## Next Production Command
@@ -82,7 +83,7 @@ Run only after the Vercel Hobby quota window resets:
 - Deploy and activate the pending bundle.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
-- Work through `qa/onemap_outlier_triage_queues_20260802.json` and `qa/onemap_outlier_triage_queues_20260802.geojson`: first `missing_bus_connector`, then `possible_overpermissive_project_path`, then `mrt_lrt_outlier`.
+- Work through `qa/onemap_missing_bus_connector_priority_20260802.geojson` first, then the remaining `qa/onemap_outlier_triage_queues_20260802.json` / `.geojson` queues.
 - Use the reusable outlier replay helper after the next score/export bundle to check whether bus-stop validation outliers shrink before any full rescore.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.

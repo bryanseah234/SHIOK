@@ -530,6 +530,11 @@ route effect; no score override has been applied.
   plausible validation distances, 11 materially shorter-than-direct OneMap
   distances, and 9 slightly shorter-than-direct OneMap distances. This is the
   next worklist for targeted geometry/model QA before any full rescore.
+- `qa/onemap_missing_bus_connector_priority_20260802.geojson` narrows the first
+  QA pass to those 48 plausible `missing_bus_connector` rows and ranks them by
+  largest OneMap/project delta. Top examples: `758093` to `Opp British American
+  Tobacco`, `678069` to `The Rail Mall`, `417092` to `Opp Hong San Si Tp`,
+  `559038` to `Aft Corfe Pl`, and `455383` to `Bef Tosca St`.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

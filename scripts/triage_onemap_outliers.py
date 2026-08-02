@@ -17,6 +17,9 @@ DEFAULT_SHORTER_PROFILE = (
 DEFAULT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_triage_queues_20260802.json"
 DEFAULT_VALIDATION_REPORT = PROJECT_ROOT / "qa" / "onemap_validation_cached_report_20260802.json"
 DEFAULT_GEOJSON_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_triage_queues_20260802.geojson"
+DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT = (
+    PROJECT_ROOT / "qa" / "onemap_missing_bus_connector_priority_20260802.geojson"
+)
 
 DIRECT_BUS_FALLBACK_ROUTING = "direct_bus_fallback_unrouted"
 FALLBACK_REASONS = {
@@ -297,6 +300,33 @@ def triage_geojson(queues: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     }
 
 
+def missing_bus_connector_priority_geojson(
+    queues: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    rows = [
+        row
+        for row in queues.get("missing_bus_connector", [])
+        if row.get("validation_distance_sanity") == "plausible"
+    ]
+
+    def priority_value(row: dict[str, Any]) -> float:
+        try:
+            return float(row.get("old_abs_pct_delta") or 0.0)
+        except (TypeError, ValueError):
+            return 0.0
+
+    features: list[dict[str, Any]] = []
+    for rank, row in enumerate(sorted(rows, key=priority_value, reverse=True), start=1):
+        ranked_row = {**row, "priority_rank": rank}
+        feature = feature_for_row("missing_bus_connector_priority", ranked_row)
+        if feature is not None:
+            features.append(feature)
+    return {
+        "type": "FeatureCollection",
+        "features": features,
+    }
+
+
 def build_triage_queues(
     *,
     longer_profile_path: Path,
@@ -362,6 +392,11 @@ def main() -> int:
     parser.add_argument("--validation-report", type=Path, default=DEFAULT_VALIDATION_REPORT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--geojson-output", type=Path, default=DEFAULT_GEOJSON_OUTPUT)
+    parser.add_argument(
+        "--missing-bus-priority-geojson-output",
+        type=Path,
+        default=DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT,
+    )
     args = parser.parse_args()
 
     payload = build_triage_queues(
@@ -371,8 +406,15 @@ def main() -> int:
     )
     write_json(args.output, payload)
     write_json(args.geojson_output, triage_geojson(payload["queues"]))
+    write_json(
+        args.missing_bus_priority_geojson_output,
+        missing_bus_connector_priority_geojson(payload["queues"]),
+    )
     printable = {key: value for key, value in payload.items() if key != "queues"}
     printable["geojson_output"] = display_path(args.geojson_output)
+    printable["missing_bus_priority_geojson_output"] = display_path(
+        args.missing_bus_priority_geojson_output
+    )
     print(json.dumps(printable, indent=2, sort_keys=True))
     return 0
 
