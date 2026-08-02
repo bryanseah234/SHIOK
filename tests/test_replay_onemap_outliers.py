@@ -107,7 +107,10 @@ def test_replay_row_extracts_bus_and_fallback_fields():
             "provenance": {
                 "direct_bus_fallback": {
                     "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
-                }
+                },
+                "untrusted_bus_routes": {
+                    "reason_counts": {"large_unrouted_bus_stop_access_connector": 1}
+                },
             },
         },
     )
@@ -119,6 +122,9 @@ def test_replay_row_extracts_bus_and_fallback_fields():
         row["direct_bus_fallback_reason"]
         == "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
     )
+    assert row["untrusted_bus_route_reason_counts"] == {
+        "large_unrouted_bus_stop_access_connector": 1
+    }
 
 
 def test_route_source_profile_summarizes_lengths_by_source():
@@ -214,12 +220,16 @@ def test_summarize_rows_counts_fallback_shapes():
                 "new_best_routing_type": "direct_bus_fallback_unrouted",
                 "new_bus_routing_type": "direct_bus_fallback_unrouted",
                 "direct_bus_fallback_reason": "implausible",
+                "untrusted_bus_route_reason_counts": {
+                    "large_unrouted_bus_stop_access_connector": 1
+                },
             },
             {
                 "new_best_type": "mrt_lrt_exit",
                 "new_best_routing_type": "sheltered",
                 "new_bus_routing_type": None,
                 "direct_bus_fallback_reason": None,
+                "untrusted_bus_route_reason_counts": {"dominant_unrouted_bus_endpoint_snap": 2},
             },
         ]
     )
@@ -229,6 +239,10 @@ def test_summarize_rows_counts_fallback_shapes():
     assert summary["new_bus_direct_bus_fallback_count"] == 1
     assert summary["new_best_type_counts"] == {"bus_stop": 1, "mrt_lrt_exit": 1}
     assert summary["fallback_reason_counts"] == {"implausible": 1, "none": 1}
+    assert summary["untrusted_bus_route_reason_counts"] == {
+        "dominant_unrouted_bus_endpoint_snap": 2,
+        "large_unrouted_bus_stop_access_connector": 1,
+    }
 
 
 def test_summarize_rows_aggregates_route_source_profiles():

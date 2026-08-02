@@ -24,6 +24,10 @@ bus_connectivity:
   road_centerline_guard_min_m: 50
   road_centerline_guard_min_ratio: 0.5
   road_centerline_guard_max_pedestrian_m: 25
+  endpoint_snap_guard_min_m: 25
+  endpoint_snap_guard_min_ratio: 0.6
+  access_connector_trust_max_m: 40
+  access_connector_trust_min_ratio: 0.2
   full_credit_wait_min: 2
   zero_credit_wait_min: 15
 crossing_friction:

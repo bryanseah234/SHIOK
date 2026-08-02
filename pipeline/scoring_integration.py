@@ -871,6 +871,28 @@ def bus_route_trust_rejection_reason(
     if not isinstance(edges, list) or not edges:
         return None
 
+    route_m = float(route_result.get("shortest_length_m") or 0.0)
+    if route_m <= 0:
+        return None
+
+    endpoint_snap_m = float(route_result.get("endpoint_snap_connector_m") or 0.0)
+    min_endpoint_snap_m = float(bus_params.get("endpoint_snap_guard_min_m", 25.0))
+    min_endpoint_snap_ratio = float(bus_params.get("endpoint_snap_guard_min_ratio", 0.6))
+    if (
+        endpoint_snap_m >= min_endpoint_snap_m
+        and endpoint_snap_m >= route_m * min_endpoint_snap_ratio
+    ):
+        return "dominant_unrouted_bus_endpoint_snap"
+
+    bus_stop_connector_m = float(route_result.get("bus_stop_access_connector_m") or 0.0)
+    max_bus_stop_connector_m = float(bus_params.get("access_connector_trust_max_m", 40.0))
+    min_bus_stop_connector_ratio = float(bus_params.get("access_connector_trust_min_ratio", 0.2))
+    if (
+        bus_stop_connector_m >= max_bus_stop_connector_m
+        and bus_stop_connector_m >= route_m * min_bus_stop_connector_ratio
+    ):
+        return "large_unrouted_bus_stop_access_connector"
+
     low_trust_road_m = 0.0
     pedestrian_evidence_m = 0.0
     for edge in edges:
@@ -882,7 +904,6 @@ def bus_route_trust_rejection_reason(
         if bus_edge_has_pedestrian_evidence(edge):
             pedestrian_evidence_m += length_m
 
-    route_m = float(route_result.get("shortest_length_m") or 0.0)
     min_road_m = float(bus_params.get("road_centerline_guard_min_m", 50.0))
     min_road_ratio = float(bus_params.get("road_centerline_guard_min_ratio", 0.5))
     max_pedestrian_m = float(bus_params.get("road_centerline_guard_max_pedestrian_m", 25.0))
@@ -1692,38 +1713,68 @@ def score_postal_row(
                         candidate=candidate,
                         include_destination=False,
                     )
-                    connector_crossings = crossing_counter.count_for_route(
-                        connector_route.get("geometry")
+                    connector_trust_rejection_reason = bus_route_trust_rejection_reason(
+                        candidate,
+                        connector_route,
+                        params["bus_connectivity"],
                     )
-                    connector_routed_m = float(connector_route["shortest_length_m"])
-                    routed_bus_wait = (
-                        candidate.expected_wait_min
-                        if connector_routed_m <= float(params["bus_connectivity"]["routed_max_m"])
-                        else bus_result.expected_wait_min if bus_result else None
-                    )
-                    candidate_scores.append(
-                        score_candidate_route(
-                            candidate,
-                            connector_route,
-                            params,
-                            weights,
-                            connector_crossings,
-                            bus_expected_wait_min=routed_bus_wait,
-                            bus_data_available=bus_data_available,
-                            include_geometry=include_geometry,
+                    if connector_trust_rejection_reason is not None:
+                        untrusted_bus_route_reasons[connector_trust_rejection_reason] += 1
+                        untrusted_bus_route_rows.append(
+                            {
+                                "name": candidate.name,
+                                "bus_stop_code": candidate.exit_code,
+                                "direct_m": round(float(candidate.straight_line_m), 1),
+                                "routed_m": round(float(connector_route["shortest_length_m"]), 1),
+                                "routing_type": connector_route.get("routing_type"),
+                            }
                         )
+                    else:
+                        connector_crossings = crossing_counter.count_for_route(
+                            connector_route.get("geometry")
+                        )
+                        connector_routed_m = float(connector_route["shortest_length_m"])
+                        routed_bus_wait = (
+                            candidate.expected_wait_min
+                            if connector_routed_m
+                            <= float(params["bus_connectivity"]["routed_max_m"])
+                            else bus_result.expected_wait_min if bus_result else None
+                        )
+                        candidate_scores.append(
+                            score_candidate_route(
+                                candidate,
+                                connector_route,
+                                params,
+                                weights,
+                                connector_crossings,
+                                bus_expected_wait_min=routed_bus_wait,
+                                bus_data_available=bus_data_available,
+                                include_geometry=include_geometry,
+                            )
+                        )
+                        bus_access_connector_rows.append(
+                            {
+                                "name": candidate.name,
+                                "bus_stop_code": candidate.exit_code,
+                                "direct_m": round(float(candidate.straight_line_m), 1),
+                                "routed_m": round(connector_routed_m, 1),
+                                "connector_m": round(
+                                    float(connector_route["bus_stop_access_connector_m"]), 1
+                                ),
+                            }
+                        )
+                        continue
+                if (
+                    direct_fallback_reason
+                    == "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+                ):
+                    implausible_bus_candidates.append(candidate)
+                    implausible_bus_route_distances.append(
+                        float(candidate_route["shortest_length_m"])
                     )
-                    bus_access_connector_rows.append(
-                        {
-                            "name": candidate.name,
-                            "bus_stop_code": candidate.exit_code,
-                            "direct_m": round(float(candidate.straight_line_m), 1),
-                            "routed_m": round(connector_routed_m, 1),
-                            "connector_m": round(
-                                float(connector_route["bus_stop_access_connector_m"]), 1
-                            ),
-                        }
-                    )
+                    implausible_bus_reasons[direct_fallback_reason] += 1
+                    continue
+                if connector_route is not None:
                     continue
                 implausible_bus_candidates.append(candidate)
                 implausible_bus_route_distances.append(float(candidate_route["shortest_length_m"]))
@@ -1789,7 +1840,19 @@ def score_postal_row(
         provenance["untrusted_bus_routes"] = {
             "reason_counts": dict(sorted(untrusted_bus_route_reasons.items())),
             "candidate_count": sum(untrusted_bus_route_reasons.values()),
-            "policy": "skipped_from_scoring_not_direct_fallback",
+            "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+            "endpoint_snap_guard_min_m": round(
+                float(bus_params.get("endpoint_snap_guard_min_m", 25.0)), 1
+            ),
+            "endpoint_snap_guard_min_ratio": round(
+                float(bus_params.get("endpoint_snap_guard_min_ratio", 0.6)), 3
+            ),
+            "access_connector_trust_max_m": round(
+                float(bus_params.get("access_connector_trust_max_m", 40.0)), 1
+            ),
+            "access_connector_trust_min_ratio": round(
+                float(bus_params.get("access_connector_trust_min_ratio", 0.2)), 3
+            ),
             "road_centerline_guard_min_m": round(
                 float(bus_params.get("road_centerline_guard_min_m", 50.0)), 1
             ),

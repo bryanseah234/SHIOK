@@ -1,0 +1,269 @@
+{
+  "bounded_replay": {
+    "project_longer_bus_stop": {
+      "direct_bus_fallback_count": 19,
+      "examples": [
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "UBI MRT STATION Exit A",
+          "new_best_type": "mrt_lrt_exit",
+          "new_route_type": "sheltered",
+          "old_project_m": 176.5,
+          "onemap_m": 9.0,
+          "postal": "403357",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Blk 220",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 47.6,
+          "onemap_m": 7.0,
+          "postal": "761220",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Mera Terr P/G",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 389.3,
+          "onemap_m": 65.0,
+          "postal": "486747",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Bef Changi Sth St 1",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 124.2,
+          "onemap_m": 27.0,
+          "postal": "486765",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Aft VICOM",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 217.4,
+          "onemap_m": 56.0,
+          "postal": "499617",
+          "untrusted": {
+            "low_trust_bus_stop_road_centerline_route": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Opp Blk 219",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 447.2,
+          "onemap_m": 161.0,
+          "postal": "677750",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": null,
+          "new_best": "Opp Blk 461B",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 449.8,
+          "onemap_m": 165.0,
+          "postal": "799443",
+          "untrusted": {
+            "low_trust_bus_stop_road_centerline_route": 4
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Aft Pasir Ris St 72",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 150.1,
+          "onemap_m": 57.0,
+          "postal": "518766",
+          "untrusted": {
+            "low_trust_bus_stop_road_centerline_route": 1
+          }
+        }
+      ],
+      "fallback_reason_counts": {
+        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 45,
+        "none": 45
+      },
+      "routing_type_counts": {
+        "None": 1,
+        "direct_bus_fallback_unrouted": 19,
+        "sheltered": 63,
+        "sheltered_with_bus_stop_access_connector": 7
+      },
+      "sample_size": 90,
+      "state_counts": {
+        "NO_TRANSIT_IN_RANGE": 1,
+        "SCORED": 70,
+        "SCORED_PARTIAL": 19
+      },
+      "untrusted_reason_counts": {
+        "dominant_unrouted_bus_endpoint_snap": 3,
+        "large_unrouted_bus_stop_access_connector": 11,
+        "low_trust_bus_stop_road_centerline_route": 29
+      }
+    },
+    "project_shorter_bus_stop": {
+      "direct_bus_fallback_count": 11,
+      "examples": [
+        {
+          "direct_fallback_reason": null,
+          "new_best": "Aft Blk 5000",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 198.9,
+          "onemap_m": 4147.0,
+          "postal": "804361",
+          "untrusted": {
+            "low_trust_bus_stop_road_centerline_route": 1
+          }
+        },
+        {
+          "direct_fallback_reason": null,
+          "new_best": "Aft Blk 5000",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 218.1,
+          "onemap_m": 4147.0,
+          "postal": "804360",
+          "untrusted": {
+            "low_trust_bus_stop_road_centerline_route": 1
+          }
+        },
+        {
+          "direct_fallback_reason": null,
+          "new_best": "Aft Medway Dr",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 42.8,
+          "onemap_m": 768.0,
+          "postal": "559916",
+          "untrusted": {
+            "dominant_unrouted_bus_endpoint_snap": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Techplace 2",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 182.1,
+          "onemap_m": 3086.0,
+          "postal": "806764",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Opp Techplace 2",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 204.8,
+          "onemap_m": 3161.0,
+          "postal": "804620",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Bef Kian Teck Rd",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 146.4,
+          "onemap_m": 1595.0,
+          "postal": "628882",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+          "new_best": "Opp Neo Tiew Rd",
+          "new_best_type": "bus_stop",
+          "new_route_type": "direct_bus_fallback_unrouted",
+          "old_project_m": 90.3,
+          "onemap_m": 973.0,
+          "postal": "710005",
+          "untrusted": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        {
+          "direct_fallback_reason": null,
+          "new_best": "Bef Still Rd",
+          "new_best_type": "bus_stop",
+          "new_route_type": "sheltered",
+          "old_project_m": 9.0,
+          "onemap_m": 94.0,
+          "postal": "423983",
+          "untrusted": {
+            "dominant_unrouted_bus_endpoint_snap": 1
+          }
+        }
+      ],
+      "fallback_reason_counts": {
+        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 37,
+        "none": 57
+      },
+      "routing_type_counts": {
+        "None": 1,
+        "direct_bus_fallback_unrouted": 11,
+        "sheltered": 69,
+        "sheltered_with_bus_stop_access_connector": 13
+      },
+      "sample_size": 94,
+      "state_counts": {
+        "NO_TRANSIT_IN_RANGE": 1,
+        "SCORED": 82,
+        "SCORED_PARTIAL": 11
+      },
+      "untrusted_reason_counts": {
+        "dominant_unrouted_bus_endpoint_snap": 7,
+        "large_unrouted_bus_stop_access_connector": 19,
+        "low_trust_bus_stop_road_centerline_route": 32
+      }
+    }
+  },
+  "change": "bus_endpoint_and_access_connector_trust_guard",
+  "focused_examples": {
+    "486747": "large connector route rejected; emitted partial direct bus fallback instead",
+    "559916": "previous Opp Bloxhome Dr 42.8m route rejected as dominant_unrouted_bus_endpoint_snap; scoring selects Aft Medway Dr 350.0m instead",
+    "637442": "not fixed by connector guard because endpoint connector is not dominant; remains barrier/industrial divergence QA",
+    "806764": "previous Techplace 2 connector route rejected as large_unrouted_bus_stop_access_connector; emitted partial direct bus fallback instead"
+  },
+  "full_rescore": "not run; this is code plus bounded replay only",
+  "generated_at": "2026-08-02T12:16:31.029473+00:00",
+  "guard_policy": "skip routed bus candidates dominated by unrouted endpoint snap connectors or large DataMall bus-stop access connectors; long-detour candidates may still use partial direct bus fallback",
+  "parameters": {
+    "access_connector_trust_max_m": 40.0,
+    "access_connector_trust_min_ratio": 0.2,
+    "endpoint_snap_guard_min_m": 25.0,
+    "endpoint_snap_guard_min_ratio": 0.6
+  },
+  "tests": [
+    "uv run pytest tests\\test_scoring_integration.py tests\\test_replay_onemap_outliers.py -> 35 passed",
+    "uv run mypy pipeline\\scoring_integration.py scripts\\replay_onemap_outliers.py tests\\test_scoring_integration.py tests\\test_replay_onemap_outliers.py -> Success: no issues found",
+    "uv run python run.py test -> 217 passed"
+  ]
+}

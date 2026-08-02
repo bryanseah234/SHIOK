@@ -259,9 +259,14 @@ def replay_row(
 ) -> dict[str, Any]:
     bus = route_option(record, "bus")
     fallback = None
+    untrusted_reason_counts: dict[str, Any] = {}
     provenance = record.get("provenance")
     if isinstance(provenance, dict) and isinstance(provenance.get("direct_bus_fallback"), dict):
         fallback = provenance["direct_bus_fallback"]
+    if isinstance(provenance, dict) and isinstance(provenance.get("untrusted_bus_routes"), dict):
+        untrusted = provenance["untrusted_bus_routes"]
+        if isinstance(untrusted.get("reason_counts"), dict):
+            untrusted_reason_counts = dict(untrusted["reason_counts"])
     row = {
         "postal": str(record["postal"]).zfill(6),
         "old_validation_best_node": old.get("best_node_name"),
@@ -279,6 +284,7 @@ def replay_row(
         "new_bus_shortest_m": route_option_path_value(bus, "shortest_m"),
         "new_bus_routing_type": route_option_path_value(bus, "routing_type"),
         "direct_bus_fallback_reason": fallback.get("reason") if fallback else None,
+        "untrusted_bus_route_reason_counts": untrusted_reason_counts,
     }
     if include_route_source_profile:
         row["new_best_route_profile"] = route_profile(record)
@@ -289,6 +295,13 @@ def replay_row(
 def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     fallback_reasons = Counter(str(row.get("direct_bus_fallback_reason") or "none") for row in rows)
     best_types = Counter(str(row.get("new_best_type") or "none") for row in rows)
+    untrusted_reasons: Counter[str] = Counter()
+    for row in rows:
+        counts = row.get("untrusted_bus_route_reason_counts")
+        if not isinstance(counts, dict):
+            continue
+        for reason, count in counts.items():
+            untrusted_reasons[str(reason)] += int(count)
     summary: dict[str, Any] = {
         "sample_size": len(rows),
         "new_best_direct_bus_fallback_count": sum(
@@ -299,6 +312,7 @@ def summarize_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         ),
         "new_best_type_counts": dict(sorted(best_types.items())),
         "fallback_reason_counts": dict(sorted(fallback_reasons.items())),
+        "untrusted_bus_route_reason_counts": dict(sorted(untrusted_reasons.items())),
     }
     if any("new_best_route_profile" in row or "new_bus_route_profile" in row for row in rows):
         summary["route_source_profile_summary"] = {

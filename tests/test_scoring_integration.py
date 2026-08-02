@@ -57,6 +57,10 @@ PARAMS = {
         "road_centerline_guard_min_m": 50.0,
         "road_centerline_guard_min_ratio": 0.5,
         "road_centerline_guard_max_pedestrian_m": 25.0,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -675,12 +679,83 @@ def test_bus_route_trust_rejects_bare_road_centerline_bus_access():
     assert bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"]) is None
 
 
+def test_bus_route_trust_rejects_dominant_unrouted_endpoint_snap():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(30.0, 0.0),
+        straight_line_m=30.0,
+        snap_distance_m=8.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(30.0, 0.0),
+    )
+    route = {
+        "shortest_length_m": 50.0,
+        "endpoint_snap_connector_m": 32.0,
+        "shortest_path_edges": [
+            {"length_m": 32.0, "source_layer": "origin_graph_snap_connector"},
+            {"length_m": 18.0, "highway": "footway", "source_layer": "", "confidence": ""},
+        ],
+    }
+
+    assert (
+        bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"])
+        == "dominant_unrouted_bus_endpoint_snap"
+    )
+
+
+def test_bus_route_trust_rejects_large_bus_stop_access_connector():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(180.0, 0.0),
+        straight_line_m=175.0,
+        snap_distance_m=40.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(180.0, 0.0),
+    )
+    route = {
+        "shortest_length_m": 180.0,
+        "bus_stop_access_connector_m": 45.0,
+        "shortest_path_edges": [
+            {"length_m": 135.0, "highway": "footway", "source_layer": "", "confidence": ""},
+            {"length_m": 45.0, "source_layer": "bus_stop_access_connector"},
+        ],
+    }
+
+    assert (
+        bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"])
+        == "large_unrouted_bus_stop_access_connector"
+    )
+
+
 class ConnectorBusIndex:
     def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
         return [
             BusStopCandidate(
                 bus_stop_code="54321",
                 description="OPP TEST BLK",
+                graph_node=(400.0, 0.0),
+                straight_line_m=95.0,
+                snap_distance_m=300.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(100.0, 0.0),
+            )
+        ]
+
+
+class LargeConnectorBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54325",
+                description="LARGE CONNECTOR STOP",
                 graph_node=(400.0, 0.0),
                 straight_line_m=95.0,
                 snap_distance_m=300.0,
@@ -857,6 +932,61 @@ def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():
     assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
         "bus_stop_access_connector"
     )
+
+
+def test_score_postal_row_uses_partial_fallback_for_untrusted_bus_access_connector():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (50.0, 0.0),
+                "length_m": 50.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (50.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (400.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (400.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (50.0, 0.0), (400.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "123459", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=LargeConnectorBusIndex(),  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "SCORED_PARTIAL"
+    assert record["paths"]["routing_type"] == "direct_bus_fallback_unrouted"
+    assert record["best_node"]["routed_m"] is None
+    assert record["provenance"]["direct_bus_fallback"]["candidate_count"] == 1
+    assert record["provenance"]["untrusted_bus_routes"]["reason_counts"] == {
+        "large_unrouted_bus_stop_access_connector": 1
+    }
+    assert "bus_stop_access_connector" not in record["provenance"]
 
 
 def test_score_postal_row_skips_low_trust_bus_road_centerline_route():
