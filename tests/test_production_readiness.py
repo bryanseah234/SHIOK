@@ -216,6 +216,7 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
     write_json(
         tmp_path / "qa" / "onemap_validation_cached_report_20260802.json",
         {
+            "bundle": "generated_old",
             "gate_passed": False,
             "sample_size": 2000,
             "cached_results": 1999,
@@ -246,10 +247,16 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
 
     assert ok, report
     gate = report["features"]["validation_gates"]["onemap_walk_validation"]
-    assert gate["state"] == "failed"
+    assert gate["state"] == "failed_stale_bundle"
+    assert gate["bundle_matches_active"] is False
+    assert gate["bundle"] == "generated_old"
+    assert gate["active_bundle"] == "generated_test"
     assert gate["sample_size"] == 2000
     assert gate["gate_passed"] is False
     assert "failed" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
+    assert "not active bundle generated_test" in (
+        report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
+    )
     assert "11.458%" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
 
 

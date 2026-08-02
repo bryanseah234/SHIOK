@@ -114,7 +114,11 @@ def latest_json_report(qa_dir: Path, pattern: str) -> Path | None:
     return max(reports, key=lambda path: (path.stat().st_mtime, path.name))
 
 
-def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
+def onemap_validation_status(
+    qa_dir: Path,
+    *,
+    active_bundle: str | None = None,
+) -> dict[str, Any]:
     report_path = latest_json_report(qa_dir, "onemap_validation_cached_report*.json")
     if report_path is None:
         return {
@@ -136,6 +140,11 @@ def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
         }
 
     gate_passed = bool(report.get("gate_passed"))
+    report_bundle = report.get("bundle")
+    bundle_matches_active: bool | None = None
+    if active_bundle and isinstance(report_bundle, str):
+        bundle_matches_active = report_bundle == active_bundle
+
     thresholds = report.get("thresholds", {})
     median = report.get("median_abs_pct_delta")
     p95 = report.get("p95_abs_pct_delta")
@@ -143,10 +152,23 @@ def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
         thresholds.get("median_abs_pct_delta_max") if isinstance(thresholds, dict) else None
     )
     p95_max = thresholds.get("p95_abs_pct_delta_max") if isinstance(thresholds, dict) else None
-    state = "passed" if gate_passed else "failed"
-    summary = (
-        f"latest cached 2,000-postal OneMap walk validation {state}: " f"median abs delta {median}%"
-    )
+    result_state = "passed" if gate_passed else "failed"
+    state = result_state
+    if bundle_matches_active is False:
+        state = f"{result_state}_stale_bundle"
+
+    if bundle_matches_active is False:
+        summary = (
+            "latest cached 2,000-postal OneMap walk validation is for bundle "
+            f"{report_bundle}, not active bundle {active_bundle}; rerun validation before "
+            f"using it as active-bundle launch evidence. That cached validation {result_state}: "
+            f"median abs delta {median}%"
+        )
+    else:
+        summary = (
+            f"latest cached 2,000-postal OneMap walk validation {result_state}: "
+            f"median abs delta {median}%"
+        )
     if median_max is not None:
         summary += f" (max {median_max}%)"
     summary += f", p95 abs delta {p95}%"
@@ -161,6 +183,9 @@ def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
         "state": state,
         "report_path": str(report_path),
         "summary": summary,
+        "bundle": report_bundle,
+        "active_bundle": active_bundle,
+        "bundle_matches_active": bundle_matches_active,
         "gate_passed": gate_passed,
         "sample_size": report.get("sample_size"),
         "cached_results": report.get("cached_results"),
@@ -173,8 +198,12 @@ def onemap_validation_status(qa_dir: Path) -> dict[str, Any]:
     }
 
 
-def readiness_features(qa_dir: Path = QA_DIR) -> dict[str, Any]:
-    onemap_status = onemap_validation_status(qa_dir)
+def readiness_features(
+    qa_dir: Path = QA_DIR,
+    *,
+    active_bundle: str | None = None,
+) -> dict[str, Any]:
+    onemap_status = onemap_validation_status(qa_dir, active_bundle=active_bundle)
     return {
         "incorporated": {
             "nparks_spatial_shade_proxy_heat_only": True,
@@ -316,7 +345,10 @@ def build_readiness_report(
             "errors": batch_plan.get("errors", []),
         },
         "vercel": vercel,
-        "features": readiness_features(project_root / "qa"),
+        "features": readiness_features(
+            project_root / "qa",
+            active_bundle=str(bundle_state.get("bundle") or ""),
+        ),
         "errors": errors,
         "warnings": warnings,
     }
