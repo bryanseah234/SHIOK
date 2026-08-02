@@ -6,20 +6,20 @@ Root directory: `web`
 
 ## Current Live State
 
-- Live bundle: `generated_20260801_direct_bus_all_targeted`
+- Live bundle: `generated_20260802_bus_connector_tolerance_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
 - Latest pushed commit before this evidence update: `6a0e8a2` (`fix: default scoring to island graph`)
 
 ## Local Bundle State
 
-- Active local bundle retained: `generated_20260801_direct_bus_all_targeted`
-- Retained pending local bundle: `generated_20260802_bus_connector_tolerance_targeted`.
+- Active local bundle retained: `generated_20260802_bus_connector_tolerance_targeted`
+- Previous local bundle retained for rollback/reference: `generated_20260801_direct_bus_all_targeted`.
 - Earlier local pending bundle `generated_20260801_165500` was not deployed and has been removed from `web/public/data/` to save disk space.
 - Targeted QA bundle `generated_20260802_bus_connector_targeted` was generated and validated for evidence, then removed from `web/public/data/` to save disk space.
-- Next data release should use `generated_20260802_bus_connector_tolerance_targeted`, unless a newer validated bundle supersedes it.
+- `web/data-bundle.json` now points to `generated_20260802_bus_connector_tolerance_targeted`.
 
-## Active Bundle Counts
+## Previous Bundle Counts
 
 - Bundle: `generated_20260801_direct_bus_all_targeted`
 - State counts: 112,880 `SCORED`, 1,449 `SCORED_PARTIAL`, 9,384 `NO_TRANSIT_IN_RANGE`, 319 `NOT_YET_SCORED`
@@ -50,9 +50,9 @@ Root directory: `web`
   `SCORED_PARTIAL`, total 54.2, direct bus fallback to `Blk 112`, measured
   303.0 m, policy radius 300.0 m, selection radius 305.0 m.
 
-## Current Pending Bundle Evidence
+## Current Live Bundle Evidence
 
-- Pending retained bundle: `generated_20260802_bus_connector_tolerance_targeted`.
+- Live retained bundle: `generated_20260802_bus_connector_tolerance_targeted`.
 - Source bundle: `generated_20260801_direct_bus_all_targeted`.
 - Selected records: 1,449 active direct-bus fallback partial records.
 - Patched records: 1,449.
@@ -75,6 +75,13 @@ Root directory: `web`
 - Full `run.py readiness` still exits 1 because `qa/island_debug.geojson` was
   removed during disk cleanup and the readiness network section requires that
   debug artifact. Static bundle validation is green.
+- Production deploy succeeded through Vercel:
+  `https://sgshiok-j71ji924c-theprawnvercel.vercel.app`.
+- Production manifest check passed:
+  `https://sgshiok.vercel.app/data/generated_20260802_bus_connector_tolerance_targeted/manifest.json`
+  returned HTTP 200 with 124,032 records.
+- Remote score shard check passed for `557323`: HTTP 200, `SCORED_PARTIAL`,
+  total 54.2, `Blk 112`, `303.0 m`, selection radius `305.0 m`.
 
 ## Prepared Next Postal Universe
 
@@ -126,12 +133,11 @@ Root directory: `web`
 - OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json --geojson-output qa\onemap_outlier_triage_queues_20260802.geojson --missing-bus-priority-geojson-output qa\onemap_missing_bus_connector_priority_20260802.geojson` passed locally. It read 192 replay rows, enriched them from `qa/onemap_validation_cached_report_20260802.json`, and emitted 37 `missing_bus_connector` cases, 89 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 13 `mrt_lrt_outlier` cases, 45 `hdb_bridge_connector_review` cases, and 0 `still_unscored_or_no_best` cases.
 - Missing-bus priority worklist: `qa/onemap_missing_bus_connector_priority_20260802.geojson` has 19 strict `missing_bus_connector` line features ranked by largest validation delta. Top rows are `530535`, `417092`, `534317`, `637814`, `320087`, `478983`, `806063`, `601291`, `627662`, and `729761`.
 - Bus-connector diagnostic: `uv run python run.py bus-connector-diagnostics --output qa\bus_connector_diagnostics_priority_20260802.json --geojson-output qa\bus_connector_diagnostics_priority_20260802.geojson` passed locally on all 19 priority rows. Current route states are 16 `implausible_detour` and 3 `routable`; diagnostic classes are 15 `alternate_bus_snap_candidate` and 4 `changed_stop_between_validation_and_replay`.
-- Temporary-file cleanup: removed reproducible caches, stale ignored web data bundles, and project `__pycache__` folders; retained only the active web bundle `generated_20260801_direct_bus_all_targeted`.
+- Temporary-file cleanup: removed reproducible caches, stale ignored web data bundles, and project `__pycache__` folders; retained active bundle `generated_20260802_bus_connector_tolerance_targeted` and previous bundle `generated_20260801_direct_bus_all_targeted`.
 
-## Next Production Data Command
+## Latest Production Data Command
 
-The retained pending local bundle is validated. For the next data deployment,
-use:
+Completed:
 
 ```powershell
 .\scripts\release-data-bundle.bat -DataBundle generated_20260802_bus_connector_tolerance_targeted -ConfirmProduction
@@ -139,7 +145,6 @@ use:
 
 ## Not Done
 
-- Deploy and activate `generated_20260802_bus_connector_tolerance_targeted`.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
 - Work through the remaining `qa/bus_connector_diagnostics_priority_20260802.json` / `.geojson` rows after the general exposed bus-stop access connector fix.

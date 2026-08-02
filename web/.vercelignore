@@ -3,5 +3,5 @@
 node_modules/
 
 public/data/generated_*/
-!public/data/generated_20260801_direct_bus_all_targeted/
-!public/data/generated_20260801_direct_bus_all_targeted/**
+!public/data/generated_20260802_bus_connector_tolerance_targeted/
+!public/data/generated_20260802_bus_connector_tolerance_targeted/**

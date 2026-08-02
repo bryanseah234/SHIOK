@@ -41,17 +41,20 @@ coverage tradeoff.
 - needs geocode after bounded OneMap geocode: 319
 - bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
 
-Active web bundle `generated_20260801_direct_bus_all_targeted`
+Active web bundle `generated_20260802_bus_connector_tolerance_targeted`
 
 - total score records: 124,032
-- `SCORED`: 112,880
-- `SCORED_PARTIAL`: 1,449
+- `SCORED`: 112,950
+- `SCORED_PARTIAL`: 1,379
 - `NO_TRANSIT_IN_RANGE`: 9,384
 - `NOT_YET_SCORED`: 319
 - targeted direct-bus and wide refreshes: all 1,320 current
   `NO_TRANSIT_IN_RANGE` postals with scheduled bus-stop candidates within
   300 m direct radius were patched to `SCORED_PARTIAL` with a straight-line bus
   estimate and untrusted rain/heat/crossing subscores left null.
+- targeted bus-connector tolerance refresh: 70 prior direct-bus fallback
+  partial records became fully routed/scored, and no target record regressed to
+  `NO_TRANSIT_IN_RANGE`.
 
 ## Evidence From 2026-08-02 URA Probe
 
