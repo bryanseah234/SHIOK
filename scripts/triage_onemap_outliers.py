@@ -23,6 +23,9 @@ DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT = (
 DEFAULT_OVERPERMISSIVE_PRIORITY_GEOJSON_OUTPUT = (
     PROJECT_ROOT / "qa" / "onemap_overpermissive_priority_20260802.geojson"
 )
+DEFAULT_VALIDATION_SUBSET_PRIORITY_GEOJSON_OUTPUT = (
+    PROJECT_ROOT / "qa" / "onemap_validation_subset_priority_20260802.geojson"
+)
 
 DIRECT_BUS_FALLBACK_ROUTING = "direct_bus_fallback_unrouted"
 FALLBACK_REASONS = {
@@ -33,6 +36,11 @@ FALLBACK_REASONS = {
 }
 MRT_LRT_NAME_MARKERS = (" MRT ", " LRT ", "MRT STATION", "LRT STATION")
 SHORT_ONEMAP_WALK_REVIEW_M = 20.0
+GRAPH_ROUTED_TRUST = {
+    "graph_routed_bus_stop",
+    "graph_routed_mrt_lrt",
+    "graph_routed_other",
+}
 
 
 def read_json(path: Path) -> Any:
@@ -398,6 +406,124 @@ def feature_for_row(queue_name: str, row: dict[str, Any]) -> dict[str, Any] | No
     }
 
 
+def validation_subset_rows(report: dict[str, Any], subset_name: str) -> list[dict[str, Any]]:
+    results = report.get("results")
+    if not isinstance(results, list):
+        return []
+    rows = [row for row in results if isinstance(row, dict)]
+
+    if subset_name == "all_valid_cached":
+        return rows
+    if subset_name == "graph_routed_without_endpoint_connector":
+        return [row for row in rows if row.get("route_trust") in GRAPH_ROUTED_TRUST]
+    if subset_name == "graph_routed_bus_stop":
+        return [row for row in rows if row.get("route_trust") == "graph_routed_bus_stop"]
+    if subset_name == "graph_routed_mrt_lrt":
+        return [row for row in rows if row.get("route_trust") == "graph_routed_mrt_lrt"]
+    if subset_name == "endpoint_connector":
+        return [
+            row for row in rows if row.get("route_trust") == "graph_route_with_endpoint_connector"
+        ]
+    if subset_name == "plausible_onemap_distance":
+        return [row for row in rows if row.get("distance_sanity") == "plausible"]
+    if subset_name == "non_tiny_onemap_walk_gt_20m":
+        return [row for row in rows if row.get("onemap_walk_bucket") != "le_20m"]
+    raise ValueError(f"unknown validation subset: {subset_name}")
+
+
+def validation_row_sort_value(row: dict[str, Any]) -> tuple[float, float]:
+    try:
+        pct = float(row.get("abs_pct_delta") or 0.0)
+    except (TypeError, ValueError):
+        pct = 0.0
+    try:
+        metres = float(row.get("abs_delta_m") or 0.0)
+    except (TypeError, ValueError):
+        metres = 0.0
+    return (-pct, -metres)
+
+
+def compact_validation_row(
+    row: dict[str, Any],
+    *,
+    subset_name: str,
+    priority_rank: int,
+) -> dict[str, Any]:
+    return {
+        "postal": str(row.get("postal") or "").zfill(6),
+        "subset": subset_name,
+        "priority_rank": priority_rank,
+        "area": row.get("area"),
+        "state": row.get("state"),
+        "route_trust": row.get("route_trust"),
+        "routing_type": row.get("routing_type"),
+        "best_node_type": row.get("best_node_type"),
+        "best_node_name": row.get("best_node_name"),
+        "endpoint_source": row.get("endpoint_source"),
+        "project_shortest_m": row.get("project_shortest_m"),
+        "onemap_walk_m": row.get("onemap_walk_m"),
+        "direct_distance_m": row.get("direct_distance_m"),
+        "abs_delta_m": row.get("abs_delta_m"),
+        "abs_pct_delta": row.get("abs_pct_delta"),
+        "signed_delta_m": row.get("signed_delta_m"),
+        "signed_pct_delta": row.get("signed_pct_delta"),
+        "direction": row.get("direction"),
+        "distance_sanity": row.get("distance_sanity"),
+        "onemap_walk_bucket": row.get("onemap_walk_bucket"),
+        "cache_key": row.get("cache_key"),
+        "start": row.get("start"),
+        "end": row.get("end"),
+    }
+
+
+def validation_subset_priority_geojson(
+    report: dict[str, Any],
+    *,
+    subset_name: str,
+    limit: int = 50,
+) -> dict[str, Any]:
+    rows = validation_subset_rows(report, subset_name)
+    features: list[dict[str, Any]] = []
+    for rank, row in enumerate(sorted(rows, key=validation_row_sort_value)[:limit], start=1):
+        feature = feature_for_row(
+            "validation_subset_priority",
+            compact_validation_row(row, subset_name=subset_name, priority_rank=rank),
+        )
+        if feature is not None:
+            features.append(feature)
+    return {
+        "type": "FeatureCollection",
+        "features": features,
+    }
+
+
+def validation_subset_priority_summary(
+    report: dict[str, Any],
+    *,
+    subset_name: str,
+    limit: int = 10,
+) -> dict[str, Any]:
+    rows = validation_subset_rows(report, subset_name)
+    top_rows = sorted(rows, key=validation_row_sort_value)[:limit]
+    direction_counts = Counter(str(row.get("direction") or "unknown") for row in rows)
+    best_type_counts = Counter(str(row.get("best_node_type") or "unknown") for row in rows)
+    return {
+        "subset": subset_name,
+        "count": len(rows),
+        "direction_counts": dict(sorted(direction_counts.items())),
+        "best_node_type_counts": dict(sorted(best_type_counts.items())),
+        "top_review_rows": [
+            compact_validation_row(row, subset_name=subset_name, priority_rank=rank)
+            for rank, row in enumerate(top_rows, start=1)
+        ],
+        "recommended_next_actions": [
+            "Open the priority GeoJSON and inspect the largest percent deltas first.",
+            "Separate missing connector evidence from overpermissive project paths before rescoring.",
+            "Do not relax route trust thresholds unless audited cases prove the connector class is safe.",
+        ],
+    }
+
+
 def triage_geojson(queues: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
     features: list[dict[str, Any]] = []
     for queue_name, rows in queues.items():
@@ -735,6 +861,25 @@ def main() -> int:
         type=Path,
         default=DEFAULT_OVERPERMISSIVE_PRIORITY_GEOJSON_OUTPUT,
     )
+    parser.add_argument(
+        "--validation-subset-priority-geojson-output",
+        type=Path,
+        default=DEFAULT_VALIDATION_SUBSET_PRIORITY_GEOJSON_OUTPUT,
+    )
+    parser.add_argument(
+        "--validation-subset-priority-subset",
+        default="endpoint_connector",
+        choices=[
+            "all_valid_cached",
+            "endpoint_connector",
+            "graph_routed_bus_stop",
+            "graph_routed_mrt_lrt",
+            "graph_routed_without_endpoint_connector",
+            "non_tiny_onemap_walk_gt_20m",
+            "plausible_onemap_distance",
+        ],
+    )
+    parser.add_argument("--validation-subset-priority-limit", type=int, default=50)
     parser.add_argument("--summary-output", type=Path, default=None)
     args = parser.parse_args()
 
@@ -753,7 +898,22 @@ def main() -> int:
         args.overpermissive_priority_geojson_output,
         overpermissive_priority_geojson(payload["queues"]),
     )
+    validation_report = read_json(args.validation_report)
+    validation_subset_summary = validation_subset_priority_summary(
+        validation_report,
+        subset_name=args.validation_subset_priority_subset,
+        limit=10,
+    )
+    write_json(
+        args.validation_subset_priority_geojson_output,
+        validation_subset_priority_geojson(
+            validation_report,
+            subset_name=args.validation_subset_priority_subset,
+            limit=args.validation_subset_priority_limit,
+        ),
+    )
     summary = validation_failure_summary(payload)
+    summary["validation_subset_priority_summary"] = validation_subset_summary
     if args.summary_output is not None:
         write_json(args.summary_output, summary)
     printable = {key: value for key, value in payload.items() if key != "queues"}
@@ -764,6 +924,9 @@ def main() -> int:
     )
     printable["overpermissive_priority_geojson_output"] = display_path(
         args.overpermissive_priority_geojson_output
+    )
+    printable["validation_subset_priority_geojson_output"] = display_path(
+        args.validation_subset_priority_geojson_output
     )
     printable["summary_output"] = display_path(args.summary_output) if args.summary_output else None
     print(json.dumps(printable, indent=2, sort_keys=True))

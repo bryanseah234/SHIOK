@@ -9,6 +9,9 @@ from scripts.triage_onemap_outliers import (
     routed_vs_validation_direct_sanity,
     source_flags,
     triage_geojson,
+    validation_subset_priority_geojson,
+    validation_subset_priority_summary,
+    validation_subset_rows,
     validation_lookup,
     validation_failure_summary,
 )
@@ -616,6 +619,109 @@ def test_overpermissive_priority_geojson_exports_shorter_and_unknown_rows():
     assert geojson["features"][1]["properties"]["priority_class"] == (
         "unknown_dominant_non_fallback"
     )
+
+
+def test_validation_subset_priority_geojson_filters_and_orders_rows():
+    report = {
+        "results": [
+            {
+                "postal": "556807",
+                "area": "SERANGOON",
+                "route_trust": "graph_route_with_endpoint_connector",
+                "routing_type": "sheltered_with_bus_stop_access_connector",
+                "best_node_type": "bus_stop",
+                "best_node_name": "Aft Chuan Gdn",
+                "project_shortest_m": 69.9,
+                "onemap_walk_m": 947.0,
+                "direct_distance_m": 63.7,
+                "abs_delta_m": 877.1,
+                "abs_pct_delta": 92.619,
+                "signed_delta_m": -877.1,
+                "direction": "project_shorter_than_onemap",
+                "distance_sanity": "plausible",
+                "onemap_walk_bucket": "gt_100m",
+                "endpoint_source": "postal_universe_to_transit_poi",
+                "start": {"lat": 1.362006, "lon": 103.868268},
+                "end": {"lat": 1.361491, "lon": 103.868017},
+            },
+            {
+                "postal": "111111",
+                "route_trust": "graph_routed_bus_stop",
+                "best_node_type": "bus_stop",
+                "abs_delta_m": 999.0,
+                "abs_pct_delta": 99.0,
+                "start": {"lat": 1.1, "lon": 103.1},
+                "end": {"lat": 1.2, "lon": 103.2},
+            },
+            {
+                "postal": "222222",
+                "route_trust": "graph_route_with_endpoint_connector",
+                "best_node_type": "bus_stop",
+                "abs_delta_m": 100.0,
+                "abs_pct_delta": 10.0,
+                "start": {"lat": 1.3, "lon": 103.3},
+                "end": {"lat": 1.4, "lon": 103.4},
+            },
+        ]
+    }
+
+    geojson = validation_subset_priority_geojson(
+        report,
+        subset_name="endpoint_connector",
+        limit=10,
+    )
+
+    assert [feature["properties"]["postal"] for feature in geojson["features"]] == [
+        "556807",
+        "222222",
+    ]
+    assert geojson["features"][0]["geometry"]["coordinates"] == [
+        [103.868268, 1.362006],
+        [103.868017, 1.361491],
+    ]
+    assert geojson["features"][0]["properties"]["queue"] == "validation_subset_priority"
+    assert geojson["features"][0]["properties"]["subset"] == "endpoint_connector"
+    assert geojson["features"][0]["properties"]["priority_rank"] == 1
+    assert geojson["features"][0]["properties"]["best_node_name"] == "Aft Chuan Gdn"
+
+
+def test_validation_subset_priority_summary_surfaces_review_counts():
+    report = {
+        "results": [
+            {
+                "postal": "111111",
+                "route_trust": "graph_routed_bus_stop",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "abs_delta_m": 20.0,
+                "abs_pct_delta": 5.0,
+            },
+            {
+                "postal": "222222",
+                "route_trust": "graph_routed_mrt_lrt",
+                "best_node_type": "mrt_lrt_exit",
+                "direction": "project_shorter_than_onemap",
+                "abs_delta_m": 100.0,
+                "abs_pct_delta": 50.0,
+            },
+        ]
+    }
+
+    rows = validation_subset_rows(report, "graph_routed_without_endpoint_connector")
+    summary = validation_subset_priority_summary(
+        report,
+        subset_name="graph_routed_without_endpoint_connector",
+        limit=1,
+    )
+
+    assert len(rows) == 2
+    assert summary["count"] == 2
+    assert summary["direction_counts"] == {
+        "project_longer_than_onemap": 1,
+        "project_shorter_than_onemap": 1,
+    }
+    assert summary["best_node_type_counts"] == {"bus_stop": 1, "mrt_lrt_exit": 1}
+    assert summary["top_review_rows"][0]["postal"] == "222222"
 
 
 def test_routed_vs_validation_direct_sanity():
