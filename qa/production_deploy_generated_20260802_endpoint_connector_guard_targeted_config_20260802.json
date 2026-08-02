@@ -1,0 +1,129 @@
+{
+  "checks": {
+    "npm_audit": {
+      "cmd": [
+        "npm.cmd",
+        "audit",
+        "--json"
+      ],
+      "cwd": "C:\\shiok\\web",
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "",
+      "vulnerabilities": {
+        "critical": 0,
+        "high": 0,
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "total": 0
+      }
+    },
+    "npm_build": {
+      "cmd": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "cwd": "C:\\shiok\\web",
+      "ok": true,
+      "returncode": 0,
+      "stderr_tail": [
+        "npm notice run shiok-web@0.1.0 build",
+        "npm notice run node scripts/ensure-data-bundle.mjs && next build"
+      ],
+      "stdout_tail": [
+        "   Generating static pages (1/6) ",
+        "   Generating static pages (2/6) ",
+        "   Generating static pages (4/6) ",
+        " \u2713 Generating static pages (6/6)",
+        "   Finalizing page optimization ...",
+        "   Collecting build traces ...",
+        "",
+        "Route (app)                                 Size  First Load JS",
+        "\u250c \u25cb /                                    63.5 kB         166 kB",
+        "\u251c \u25cb /_not-found                            993 B         104 kB",
+        "\u251c \u0192 /api/onemap-search                     123 B         103 kB",
+        "\u2514 \u25cb /icon.svg                                0 B            0 B",
+        "+ First Load JS shared by all             103 kB",
+        "  \u251c chunks/255-62902f04efbdd792.js       46.3 kB",
+        "  \u251c chunks/4bd1b696-c023c6e3521b1417.js  54.2 kB",
+        "  \u2514 other shared chunks (total)          2.04 kB",
+        "",
+        "",
+        "\u25cb  (Static)   prerendered as static content",
+        "\u0192  (Dynamic)  server-rendered on demand"
+      ]
+    },
+    "vercel_whoami": {
+      "cmd": [
+        "vercel.cmd",
+        "whoami"
+      ],
+      "cwd": "C:\\shiok\\web",
+      "ok": true,
+      "returncode": 0,
+      "stderr_tail": [
+        "Vercel CLI 58.1.0 (Node.js 26.5.0)"
+      ],
+      "stdout": "bryanseah234",
+      "stdout_tail": [
+        "bryanseah234"
+      ]
+    }
+  },
+  "deploy_command": [
+    "vercel.cmd",
+    "deploy",
+    "C:\\shiok\\tmp\\vercel_source_generated_20260802_endpoint_connector_guard_targeted_20260802_124824",
+    "--prod",
+    "--archive=tgz",
+    "--yes",
+    "--no-wait"
+  ],
+  "deploy_executed": true,
+  "deploy_result": {
+    "cmd": [
+      "vercel.cmd",
+      "deploy",
+      "C:\\shiok\\tmp\\vercel_source_generated_20260802_endpoint_connector_guard_targeted_20260802_124824",
+      "--prod",
+      "--archive=tgz",
+      "--yes",
+      "--no-wait"
+    ],
+    "cwd": "C:\\shiok\\tmp\\vercel_source_generated_20260802_endpoint_connector_guard_targeted_20260802_124824",
+    "ok": true,
+    "returncode": 0,
+    "stderr": "Vercel CLI 58.1.0 (Node.js 26.5.0)\nRetrieving project\u2026\nDeploying theprawnvercel/sgshiok\nUploading [--------------------] (0.0B/92.2MB)\nUploading [=====---------------] (23.1MB/92.2MB)\nUploading [==========----------] (46.1MB/92.2MB)\nUploading [===============-----] (69.2MB/92.2MB)\nUploading [====================] (92.2MB/92.2MB)\n  Inspect         https://vercel.com/theprawnvercel/sgshiok/FSMB3oizwzKUgHy6HtSrPf9PPFrT\n\u25b2 Production      https://sgshiok-m2fkl51o2-theprawnvercel.vercel.app",
+    "stdout": "{\n  \"status\": \"ok\",\n  \"deployment\": {\n    \"id\": \"dpl_FSMB3oizwzKUgHy6HtSrPf9PPFrT\",\n    \"url\": \"https://sgshiok-m2fkl51o2-theprawnvercel.vercel.app\",\n    \"inspectorUrl\": \"https://vercel.com/theprawnvercel/sgshiok/FSMB3oizwzKUgHy6HtSrPf9PPFrT\",\n    \"readyState\": \"INITIALIZING\",\n    \"target\": \"production\",\n    \"deploymentApiUrl\": \"https://api.vercel.com/v13/deployments/dpl_FSMB3oizwzKUgHy6HtSrPf9PPFrT\"\n  },\n  \"message\": \"Deployment sgshiok-m2fkl51o2-theprawnvercel.vercel.app ready.\",\n  \"next\": [\n    {\n      \"command\": \"vercel curl https://sgshiok-m2fkl51o2-theprawnvercel.vercel.app\",\n      \"when\": \"Verify deployment, including when Deployment Protection is enabled\"\n    },\n    {\n      \"command\": \"vercel inspect sgshiok-m2fkl51o2-theprawnvercel.vercel.app\",\n      \"when\": \"Inspect deployment\"\n    },\n    {\n      \"command\": \"vercel deploy --prod\",\n      \"when\": \"Promote to production\"\n    }\n  ]\n}"
+  },
+  "deploy_source_dir": "C:\\shiok\\tmp\\vercel_source_generated_20260802_endpoint_connector_guard_targeted_20260802_124824",
+  "errors": [],
+  "input_dir": "web\\public\\data\\generated_20260802_endpoint_connector_guard_targeted",
+  "mode": "production",
+  "ok": true,
+  "validation": {
+    "errors": [],
+    "file_count": 3170,
+    "geometry_postals": 114327,
+    "geometry_postals_with_route_segments": 114327,
+    "indexed_postals": 124032,
+    "input_dir": "web\\public\\data\\generated_20260802_endpoint_connector_guard_targeted",
+    "ok": true,
+    "score_prefixes": 530,
+    "transit_features": 6011,
+    "warnings": []
+  },
+  "vercel": {
+    "linked": true,
+    "path": "C:\\shiok\\web\\.vercel\\project.json",
+    "payload": {
+      "orgId": "team_ARK7HKobyCMp0PCArQTLxbz6",
+      "projectId": "prj_y6GIQUdEyXXmtg3UTWkcJECKHdEE",
+      "projectName": "sgshiok"
+    }
+  },
+  "web_dir": "C:\\shiok\\web"
+}

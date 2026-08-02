@@ -1,0 +1,22 @@
+{
+  "deployment_url": "https://sgshiok-m2fkl51o2-theprawnvercel.vercel.app/",
+  "generated_at": "2026-08-02T12:51:44.728413+00:00",
+  "js_chunks": 9,
+  "manifest": {
+    "content_type": "application/gzip",
+    "generated_at": "2026-08-02T12:37:04.971923+00:00",
+    "record_count": 124032,
+    "source_bundle": "generated_20260802_bus_connector_tolerance_targeted",
+    "status": 200,
+    "targeted_refresh_postal_count": 216
+  },
+  "old_bundle": "generated_20260802_bus_connector_tolerance_targeted",
+  "old_bundle_in_js": [],
+  "production_root": "https://sgshiok.vercel.app/",
+  "root_html_len": 7641,
+  "root_status": 200,
+  "target_bundle": "generated_20260802_endpoint_connector_guard_targeted",
+  "target_bundle_in_js": [
+    "/_next/static/chunks/app/page-813fd0d6ecc55ca9.js"
+  ]
+}
