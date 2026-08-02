@@ -497,6 +497,15 @@ route effect; no score override has been applied.
   results, and 3 rows still without a scored best transit result. This is the
   queue to inspect for over-permissive project connectors versus stale bundle
   differences.
+- `qa/onemap_outlier_replay_shorter_profile_100_20260802.json` reruns that
+  project-shorter queue with route-source profiles. Of 97 rows with profiled
+  best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB
+  edges, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The
+  summed shortest-route source layers are led by unknown base network edges
+  (11,695.8 m), direct-bus fallback (8,813.0 m), inferred HDB precinct
+  (1,153.5 m), inferred HDB void deck (550.9 m), and OSM explicit shelter
+  (543.3 m). Current evidence does not show the project-shorter queue is mainly
+  caused by HDB/bridge over-permissiveness.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

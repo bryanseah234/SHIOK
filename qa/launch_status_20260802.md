@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 178 passed
+- Python tests: 180 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -64,6 +64,7 @@ Root directory: `web`
 - Bounded outlier replay: `qa/bus_detour_guard_top_outlier_sample_20260802.json` replays the top 20 bus-stop project-longer validation outliers through current local scoring; 14/20 now expose bus as `direct_bus_fallback_unrouted`, 4/20 choose MRT/LRT as best transit, and 3/20 specifically trigger the new implausible-detour guard.
 - Reusable outlier replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --output qa\onemap_outlier_replay_bus_longer_100_20260802.json` passed locally. It selected 92 bus-stop/project-longer/>25% rows from the widened top-100-per-direction report; current scoring yields 67 bus direct-fallback routes, 75 bus-stop best results, 17 MRT/LRT best results, and 10 rows that specifically trigger the implausible-detour guard.
 - Project-shorter replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\onemap_outlier_replay_shorter_100_20260802.json` passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.
+- Project-shorter route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\onemap_outlier_replay_shorter_profile_100_20260802.json` passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.
 - Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained corrected `raw/validation/onemap_walk_od` validation cache.
 
 ## Next Production Command
