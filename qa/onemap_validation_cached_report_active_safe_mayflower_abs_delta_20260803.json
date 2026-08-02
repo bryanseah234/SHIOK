@@ -276,7 +276,7 @@
     "plausible": 1947
   },
   "gate_passed": false,
-  "generated_at": "2026-08-02T20:27:36.906717+00:00",
+  "generated_at": "2026-08-02T20:40:51.097832+00:00",
   "invalid_cache_preview": [
     {
       "area": "SOUTHERN_ISLANDS",
@@ -61020,6 +61020,16 @@
       "p95_abs_pct_delta": 202.379,
       "thresholds_passed": false
     },
+    "endpoint_connector_plausible_onemap_distance": {
+      "count": 15,
+      "median_abs_delta_m": 419.8,
+      "median_abs_pct_delta": 74.667,
+      "over_25_pct_count": 14,
+      "over_50_pct_count": 14,
+      "p95_abs_delta_m": 1557.7,
+      "p95_abs_pct_delta": 127.943,
+      "thresholds_passed": false
+    },
     "graph_routed_bus_stop": {
       "count": 1594,
       "median_abs_delta_m": 35.8,
@@ -61028,6 +61038,16 @@
       "over_50_pct_count": 272,
       "p95_abs_delta_m": 368.3,
       "p95_abs_pct_delta": 110.959,
+      "thresholds_passed": false
+    },
+    "graph_routed_bus_stop_plausible_onemap_distance": {
+      "count": 1548,
+      "median_abs_delta_m": 34.8,
+      "median_abs_pct_delta": 12.348,
+      "over_25_pct_count": 477,
+      "over_50_pct_count": 240,
+      "p95_abs_delta_m": 364.2,
+      "p95_abs_pct_delta": 95.67,
       "thresholds_passed": false
     },
     "graph_routed_mrt_lrt": {
@@ -61040,6 +61060,16 @@
       "p95_abs_pct_delta": 59.114,
       "thresholds_passed": false
     },
+    "graph_routed_mrt_lrt_plausible_onemap_distance": {
+      "count": 384,
+      "median_abs_delta_m": 42.2,
+      "median_abs_pct_delta": 6.607,
+      "over_25_pct_count": 61,
+      "over_50_pct_count": 26,
+      "p95_abs_delta_m": 352.3,
+      "p95_abs_pct_delta": 55.992,
+      "thresholds_passed": false
+    },
     "graph_routed_without_endpoint_connector": {
       "count": 1980,
       "median_abs_delta_m": 37.1,
@@ -61048,6 +61078,16 @@
       "over_50_pct_count": 300,
       "p95_abs_delta_m": 368.0,
       "p95_abs_pct_delta": 102.714,
+      "thresholds_passed": false
+    },
+    "graph_routed_without_endpoint_connector_plausible_onemap_distance": {
+      "count": 1932,
+      "median_abs_delta_m": 36.4,
+      "median_abs_pct_delta": 11.232,
+      "over_25_pct_count": 538,
+      "over_50_pct_count": 266,
+      "p95_abs_delta_m": 363.1,
+      "p95_abs_pct_delta": 90.252,
       "thresholds_passed": false
     },
     "non_tiny_onemap_walk_gt_20m": {

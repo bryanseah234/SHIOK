@@ -1,0 +1,328 @@
+{
+  "best_node_type_counts": {
+    "bus_stop": 15
+  },
+  "count": 15,
+  "direction_counts": {
+    "project_longer_than_onemap": 2,
+    "project_shorter_than_onemap": 13
+  },
+  "recommended_next_actions": [
+    "Open the priority GeoJSON and inspect the largest percent deltas first.",
+    "Separate missing connector evidence from overpermissive project paths before rescoring.",
+    "Do not relax route trust thresholds unless audited cases prove the connector class is safe."
+  ],
+  "subset": "endpoint_connector_plausible_onemap_distance",
+  "top_review_rows": [
+    {
+      "abs_delta_m": 100.5,
+      "abs_pct_delta": 189.623,
+      "area": "SEMBAWANG",
+      "best_node_name": "Aft Queen's Ave",
+      "best_node_type": "bus_stop",
+      "cache_key": "ff99cc61b65e04f3e9883cdd5d3ec27a19c87903d5945412a83c7dd34d9986a5",
+      "direct_distance_m": 51.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.455312,
+        "lon": 103.83099
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 53.0,
+      "postal": "758588",
+      "priority_rank": 1,
+      "project_shortest_m": 153.5,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": 100.5,
+      "signed_pct_delta": 189.623,
+      "start": {
+        "lat": 1.455759,
+        "lon": 103.830882
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 53.8,
+      "abs_pct_delta": 101.509,
+      "area": "PASIR_RIS",
+      "best_node_name": "Lighthouse",
+      "best_node_type": "bus_stop",
+      "cache_key": "a02d2e837241442b4d12e89974ddbe7e6d78e50498a0b53637aa1dd373c33156",
+      "direct_distance_m": 56.4,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.378241,
+        "lon": 103.959552
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 53.0,
+      "postal": "518145",
+      "priority_rank": 2,
+      "project_shortest_m": 106.8,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": 53.8,
+      "signed_pct_delta": 101.509,
+      "start": {
+        "lat": 1.377949,
+        "lon": 103.959967
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 877.1,
+      "abs_pct_delta": 92.619,
+      "area": "SERANGOON",
+      "best_node_name": "Aft Chuan Gdn",
+      "best_node_type": "bus_stop",
+      "cache_key": "6a8944925c5fcd7bb32a4a6066ab4bc214846ec9d2341c67778ab3114be47729",
+      "direct_distance_m": 63.7,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.361491,
+        "lon": 103.868017
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 947.0,
+      "postal": "556807",
+      "priority_rank": 3,
+      "project_shortest_m": 69.9,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -877.1,
+      "signed_pct_delta": -92.619,
+      "start": {
+        "lat": 1.362006,
+        "lon": 103.868268
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 2944.8,
+      "abs_pct_delta": 91.312,
+      "area": "SERANGOON",
+      "best_node_name": "Opp Techplace 2",
+      "best_node_type": "bus_stop",
+      "cache_key": "cebbdfecbff8c289b09a8dc38e76128a631f880df145f8ccb5b27666bc56c124",
+      "direct_distance_m": 157.5,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.378543,
+        "lon": 103.865519
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 3225.0,
+      "postal": "804651",
+      "priority_rank": 4,
+      "project_shortest_m": 280.2,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -2944.8,
+      "signed_pct_delta": -91.312,
+      "start": {
+        "lat": 1.379959,
+        "lon": 103.865564
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 963.2,
+      "abs_pct_delta": 81.351,
+      "area": "TUAS",
+      "best_node_name": "Aft Tuas Sth Ave 8",
+      "best_node_type": "bus_stop",
+      "cache_key": "f98a8eedeafa7d4a1668f4cedcdd98341121003eebe5466d0848a70afa416f82",
+      "direct_distance_m": 159.5,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.299465,
+        "lon": 103.628768
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 1184.0,
+      "postal": "637737",
+      "priority_rank": 5,
+      "project_shortest_m": 220.8,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -963.2,
+      "signed_pct_delta": -81.351,
+      "start": {
+        "lat": 1.300769,
+        "lon": 103.628171
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 667.6,
+      "abs_pct_delta": 77.358,
+      "area": "JURONG_WEST",
+      "best_node_name": "Aft Kian Teck Rd",
+      "best_node_type": "bus_stop",
+      "cache_key": "bcb24c0467662e3fe73f83d4d7c3199816b2f4cb434a4239d96d014dce53e839",
+      "direct_distance_m": 139.3,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.330713,
+        "lon": 103.688138
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 863.0,
+      "postal": "628798",
+      "priority_rank": 6,
+      "project_shortest_m": 195.4,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -667.6,
+      "signed_pct_delta": -77.358,
+      "start": {
+        "lat": 1.329544,
+        "lon": 103.688588
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 503.8,
+      "abs_pct_delta": 74.748,
+      "area": "YISHUN",
+      "best_node_name": "Opp The Shaughnessy",
+      "best_node_type": "bus_stop",
+      "cache_key": "580d823fc46388c8d1d57f84371290635297aa91661cf6a3368c61baa843e1db",
+      "direct_distance_m": 142.7,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.417255,
+        "lon": 103.845908
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 674.0,
+      "postal": "768424",
+      "priority_rank": 7,
+      "project_shortest_m": 170.2,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -503.8,
+      "signed_pct_delta": -74.748,
+      "start": {
+        "lat": 1.415972,
+        "lon": 103.845903
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 336.0,
+      "abs_pct_delta": 74.667,
+      "area": "BUKIT_PANJANG",
+      "best_node_name": "Blk 127",
+      "best_node_type": "bus_stop",
+      "cache_key": "70b4c2cb1134aad3c7dc410a8349ba7b90710889cc00a2e83e48301913f6ee58",
+      "direct_distance_m": 89.3,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.3761,
+        "lon": 103.769218
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 450.0,
+      "postal": "670140",
+      "priority_rank": 8,
+      "project_shortest_m": 114.0,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -336.0,
+      "signed_pct_delta": -74.667,
+      "start": {
+        "lat": 1.375374,
+        "lon": 103.768874
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 421.9,
+      "abs_pct_delta": 67.83,
+      "area": "QUEENSTOWN",
+      "best_node_name": "Opp Wholesale Ctr",
+      "best_node_type": "bus_stop",
+      "cache_key": "0a872671b5a74c8a0e6a51b9c0fd526ab4544fd934ad499750e99f0ccb68ef63",
+      "direct_distance_m": 122.9,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.286435,
+        "lon": 103.778934
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 622.0,
+      "postal": "110003",
+      "priority_rank": 9,
+      "project_shortest_m": 200.1,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -421.9,
+      "signed_pct_delta": -67.83,
+      "start": {
+        "lat": 1.286479,
+        "lon": 103.777829
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    },
+    {
+      "abs_delta_m": 271.4,
+      "abs_pct_delta": 65.874,
+      "area": "BUKIT_BATOK",
+      "best_node_name": "Bef Summerhill",
+      "best_node_type": "bus_stop",
+      "cache_key": "4dbe921cf3a9591c6f4f09d259427d2906766abc4fe00b8d14d2dadb9096bb75",
+      "direct_distance_m": 116.4,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.358391,
+        "lon": 103.7649
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 412.0,
+      "postal": "596301",
+      "priority_rank": 10,
+      "project_shortest_m": 140.6,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_delta_m": -271.4,
+      "signed_pct_delta": -65.874,
+      "start": {
+        "lat": 1.357542,
+        "lon": 103.765512
+      },
+      "state": "SCORED",
+      "subset": "endpoint_connector_plausible_onemap_distance"
+    }
+  ]
+}

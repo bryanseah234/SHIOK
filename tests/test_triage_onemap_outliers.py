@@ -724,6 +724,55 @@ def test_validation_subset_priority_summary_surfaces_review_counts():
     assert summary["top_review_rows"][0]["postal"] == "222222"
 
 
+def test_validation_subset_rows_supports_plausible_distance_transit_slices():
+    report = {
+        "results": [
+            {
+                "postal": "111111",
+                "route_trust": "graph_routed_bus_stop",
+                "distance_sanity": "plausible",
+            },
+            {
+                "postal": "222222",
+                "route_trust": "graph_routed_bus_stop",
+                "distance_sanity": "onemap_materially_shorter_than_direct",
+            },
+            {
+                "postal": "333333",
+                "route_trust": "graph_routed_mrt_lrt",
+                "distance_sanity": "plausible",
+            },
+            {
+                "postal": "444444",
+                "route_trust": "graph_route_with_endpoint_connector",
+                "distance_sanity": "plausible",
+            },
+        ]
+    }
+
+    assert [
+        row["postal"]
+        for row in validation_subset_rows(
+            report,
+            "graph_routed_bus_stop_plausible_onemap_distance",
+        )
+    ] == ["111111"]
+    assert [
+        row["postal"]
+        for row in validation_subset_rows(
+            report,
+            "graph_routed_without_endpoint_connector_plausible_onemap_distance",
+        )
+    ] == ["111111", "333333"]
+    assert [
+        row["postal"]
+        for row in validation_subset_rows(
+            report,
+            "endpoint_connector_plausible_onemap_distance",
+        )
+    ] == ["444444"]
+
+
 def test_routed_vs_validation_direct_sanity():
     validation = {"direct_distance_m": 100.0}
 

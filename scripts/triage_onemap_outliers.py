@@ -411,21 +411,38 @@ def validation_subset_rows(report: dict[str, Any], subset_name: str) -> list[dic
     if not isinstance(results, list):
         return []
     rows = [row for row in results if isinstance(row, dict)]
+    plausible_distance = [row for row in rows if row.get("distance_sanity") == "plausible"]
 
     if subset_name == "all_valid_cached":
         return rows
     if subset_name == "graph_routed_without_endpoint_connector":
         return [row for row in rows if row.get("route_trust") in GRAPH_ROUTED_TRUST]
+    if subset_name == "graph_routed_without_endpoint_connector_plausible_onemap_distance":
+        return [row for row in plausible_distance if row.get("route_trust") in GRAPH_ROUTED_TRUST]
     if subset_name == "graph_routed_bus_stop":
         return [row for row in rows if row.get("route_trust") == "graph_routed_bus_stop"]
+    if subset_name == "graph_routed_bus_stop_plausible_onemap_distance":
+        return [
+            row for row in plausible_distance if row.get("route_trust") == "graph_routed_bus_stop"
+        ]
     if subset_name == "graph_routed_mrt_lrt":
         return [row for row in rows if row.get("route_trust") == "graph_routed_mrt_lrt"]
+    if subset_name == "graph_routed_mrt_lrt_plausible_onemap_distance":
+        return [
+            row for row in plausible_distance if row.get("route_trust") == "graph_routed_mrt_lrt"
+        ]
     if subset_name == "endpoint_connector":
         return [
             row for row in rows if row.get("route_trust") == "graph_route_with_endpoint_connector"
         ]
+    if subset_name == "endpoint_connector_plausible_onemap_distance":
+        return [
+            row
+            for row in plausible_distance
+            if row.get("route_trust") == "graph_route_with_endpoint_connector"
+        ]
     if subset_name == "plausible_onemap_distance":
-        return [row for row in rows if row.get("distance_sanity") == "plausible"]
+        return plausible_distance
     if subset_name == "non_tiny_onemap_walk_gt_20m":
         return [row for row in rows if row.get("onemap_walk_bucket") != "le_20m"]
     raise ValueError(f"unknown validation subset: {subset_name}")
@@ -872,9 +889,13 @@ def main() -> int:
         choices=[
             "all_valid_cached",
             "endpoint_connector",
+            "endpoint_connector_plausible_onemap_distance",
             "graph_routed_bus_stop",
+            "graph_routed_bus_stop_plausible_onemap_distance",
             "graph_routed_mrt_lrt",
+            "graph_routed_mrt_lrt_plausible_onemap_distance",
             "graph_routed_without_endpoint_connector",
+            "graph_routed_without_endpoint_connector_plausible_onemap_distance",
             "non_tiny_onemap_walk_gt_20m",
             "plausible_onemap_distance",
         ],

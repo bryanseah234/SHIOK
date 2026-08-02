@@ -630,25 +630,38 @@ def validation_subset_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
         "graph_routed_mrt_lrt",
         "graph_routed_other",
     }
+    plausible_distance = [row for row in results if row.get("distance_sanity") == "plausible"]
     subsets = {
         "all_valid_cached": results,
         "graph_routed_without_endpoint_connector": [
             row for row in results if row.get("route_trust") in graph_routed_trust
         ],
+        "graph_routed_without_endpoint_connector_plausible_onemap_distance": [
+            row for row in plausible_distance if row.get("route_trust") in graph_routed_trust
+        ],
         "graph_routed_bus_stop": [
             row for row in results if row.get("route_trust") == "graph_routed_bus_stop"
         ],
+        "graph_routed_bus_stop_plausible_onemap_distance": [
+            row for row in plausible_distance if row.get("route_trust") == "graph_routed_bus_stop"
+        ],
         "graph_routed_mrt_lrt": [
             row for row in results if row.get("route_trust") == "graph_routed_mrt_lrt"
+        ],
+        "graph_routed_mrt_lrt_plausible_onemap_distance": [
+            row for row in plausible_distance if row.get("route_trust") == "graph_routed_mrt_lrt"
         ],
         "endpoint_connector": [
             row
             for row in results
             if row.get("route_trust") == "graph_route_with_endpoint_connector"
         ],
-        "plausible_onemap_distance": [
-            row for row in results if row.get("distance_sanity") == "plausible"
+        "endpoint_connector_plausible_onemap_distance": [
+            row
+            for row in plausible_distance
+            if row.get("route_trust") == "graph_route_with_endpoint_connector"
         ],
+        "plausible_onemap_distance": plausible_distance,
         "non_tiny_onemap_walk_gt_20m": [
             row for row in results if row.get("onemap_walk_bucket") != "le_20m"
         ],
