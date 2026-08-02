@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-08-02T20:54:06.203670+00:00",
+  "generated_at": "2026-08-02T21:08:51.008753+00:00",
   "inputs": {
     "alternate_snap_max_candidates": 24,
     "alternate_snap_search_m": 50.0,
     "feature_count": 100,
     "network": "processed\\network_island.parquet",
     "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
-    "priority_geojson": "qa\\onemap_graph_routed_bus_stop_plausible_onemap_distance_priority_active_safe_mayflower_abs_delta_20260803.geojson"
+    "priority_geojson": "qa\\onemap_graph_routed_bus_stop_plausible_onemap_distance_priority_active_safe_mayflower_abs_delta_20260803.geojson",
+    "transit_type": "bus_stop"
   },
   "rows": [
     {
@@ -5205,9 +5206,10 @@
       "needs_bus_snap_or_connector_model_fix_count": 62,
       "needs_current_routable_route_review_count": 17,
       "needs_rescore_candidate_count": 21,
+      "needs_transit_snap_or_connector_model_fix_count": 62,
       "recommended_next_actions": [
         "Refresh a targeted score bundle for recovered rows before using them as active validation failures.",
-        "Treat alternate-snap rows as bus stop endpoint geometry QA; do not relax trust thresholds globally.",
+        "Treat alternate-snap rows as transit endpoint geometry QA; do not relax trust thresholds globally.",
         "Review current-routable rows for missing pedestrian connectors, barriers, or OneMap endpoint differences."
       ],
       "threshold": "within 25% of OneMap walk distance",
@@ -5222,6 +5224,8 @@
           "onemap_walk_m": 43.0,
           "postal": "530535",
           "target_bus_stop_name": "Blk 535",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Blk 535",
           "validation_project_m": 347.9
         },
         {
@@ -5234,6 +5238,8 @@
           "onemap_walk_m": 176.0,
           "postal": "417092",
           "target_bus_stop_name": "Opp Hong San Si Tp",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Opp Hong San Si Tp",
           "validation_project_m": 860.6
         },
         {
@@ -5246,6 +5252,8 @@
           "onemap_walk_m": 97.0,
           "postal": "534317",
           "target_bus_stop_name": "Raya Gdn",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Raya Gdn",
           "validation_project_m": 457.4
         },
         {
@@ -5258,6 +5266,8 @@
           "onemap_walk_m": 150.0,
           "postal": "637814",
           "target_bus_stop_name": "Aft Tuas Sth St 2",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Tuas Sth St 2",
           "validation_project_m": 613.4
         },
         {
@@ -5270,6 +5280,8 @@
           "onemap_walk_m": 115.0,
           "postal": "768342",
           "target_bus_stop_name": "The Shaughnessy",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "The Shaughnessy",
           "validation_project_m": 408.8
         },
         {
@@ -5282,6 +5294,8 @@
           "onemap_walk_m": 297.0,
           "postal": "489393",
           "target_bus_stop_name": "Simei Stn",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Simei Stn",
           "validation_project_m": 1001.5
         },
         {
@@ -5294,6 +5308,8 @@
           "onemap_walk_m": 109.0,
           "postal": "677662",
           "target_bus_stop_name": "Bef Chestnut Ave",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Bef Chestnut Ave",
           "validation_project_m": 364.0
         },
         {
@@ -5306,6 +5322,8 @@
           "onemap_walk_m": 44.0,
           "postal": "437107",
           "target_bus_stop_name": "Aft Katong PO",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Katong PO",
           "validation_project_m": 143.9
         },
         {
@@ -5318,6 +5336,8 @@
           "onemap_walk_m": 131.0,
           "postal": "648874",
           "target_bus_stop_name": "Aft Westwood Ave",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Westwood Ave",
           "validation_project_m": 421.3
         },
         {
@@ -5330,6 +5350,8 @@
           "onemap_walk_m": 93.0,
           "postal": "320087",
           "target_bus_stop_name": "Blk 82",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Blk 82",
           "validation_project_m": 295.6
         }
       ],
@@ -5344,6 +5366,8 @@
           "onemap_walk_m": 59.0,
           "postal": "427835",
           "target_bus_stop_name": "Bef Mangis Rd",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Bef Mangis Rd",
           "validation_project_m": 148.3
         },
         {
@@ -5356,6 +5380,8 @@
           "onemap_walk_m": 71.0,
           "postal": "459037",
           "target_bus_stop_name": "Aft Jln Buloh Perindu",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Jln Buloh Perindu",
           "validation_project_m": 159.6
         },
         {
@@ -5368,6 +5394,8 @@
           "onemap_walk_m": 78.0,
           "postal": "427920",
           "target_bus_stop_name": "Flora East",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Flora East",
           "validation_project_m": 172.0
         },
         {
@@ -5380,6 +5408,8 @@
           "onemap_walk_m": 59.0,
           "postal": "117586",
           "target_bus_stop_name": "Galen",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Galen",
           "validation_project_m": 129.3
         },
         {
@@ -5392,6 +5422,8 @@
           "onemap_walk_m": 222.0,
           "postal": "469338",
           "target_bus_stop_name": "Casafina",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Casafina",
           "validation_project_m": 477.2
         },
         {
@@ -5404,6 +5436,8 @@
           "onemap_walk_m": 41.0,
           "postal": "588186",
           "target_bus_stop_name": "Pei Hwa Presby Pr Sch",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Pei Hwa Presby Pr Sch",
           "validation_project_m": 87.0
         },
         {
@@ -5416,6 +5450,8 @@
           "onemap_walk_m": 132.0,
           "postal": "437823",
           "target_bus_stop_name": "Aft Tg Katong Rd",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Tg Katong Rd",
           "validation_project_m": 275.9
         },
         {
@@ -5428,6 +5464,8 @@
           "onemap_walk_m": 28.0,
           "postal": "680239",
           "target_bus_stop_name": "Blk 239",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Blk 239",
           "validation_project_m": 56.7
         },
         {
@@ -5440,6 +5478,8 @@
           "onemap_walk_m": 142.0,
           "postal": "139650",
           "target_bus_stop_name": "ACS Independent",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "ACS Independent",
           "validation_project_m": 281.8
         },
         {
@@ -5452,6 +5492,8 @@
           "onemap_walk_m": 72.0,
           "postal": "809024",
           "target_bus_stop_name": "Ch of St. Vincent de Paul",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Ch of St. Vincent de Paul",
           "validation_project_m": 3.3
         }
       ],
@@ -5466,6 +5508,8 @@
           "onemap_walk_m": 42.0,
           "postal": "760103",
           "target_bus_stop_name": "Aft Chong Pang CC",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Chong Pang CC",
           "validation_project_m": 322.4
         },
         {
@@ -5478,6 +5522,8 @@
           "onemap_walk_m": 47.0,
           "postal": "559038",
           "target_bus_stop_name": "Aft Corfe Pl",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Corfe Pl",
           "validation_project_m": 221.9
         },
         {
@@ -5490,6 +5536,8 @@
           "onemap_walk_m": 197.0,
           "postal": "455383",
           "target_bus_stop_name": "Aft Carmen St",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Carmen St",
           "validation_project_m": 919.6
         },
         {
@@ -5502,6 +5550,8 @@
           "onemap_walk_m": 202.0,
           "postal": "431007",
           "target_bus_stop_name": "Bef Kg Kayu Rd",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Bef Kg Kayu Rd",
           "validation_project_m": 837.7
         },
         {
@@ -5514,6 +5564,8 @@
           "onemap_walk_m": 125.0,
           "postal": "768282",
           "target_bus_stop_name": "The Shaughnessy",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "The Shaughnessy",
           "validation_project_m": 389.8
         },
         {
@@ -5526,6 +5578,8 @@
           "onemap_walk_m": 67.0,
           "postal": "799452",
           "target_bus_stop_name": "Jln Kayu Shophouse",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Jln Kayu Shophouse",
           "validation_project_m": 167.0
         },
         {
@@ -5538,6 +5592,8 @@
           "onemap_walk_m": 37.0,
           "postal": "437009",
           "target_bus_stop_name": "Opp Tg Katong Girls' Sch",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Opp Tg Katong Girls' Sch",
           "validation_project_m": 92.0
         },
         {
@@ -5550,6 +5606,8 @@
           "onemap_walk_m": 26.0,
           "postal": "247733",
           "target_bus_stop_name": "Opp Great World City",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Opp Great World City",
           "validation_project_m": 64.0
         },
         {
@@ -5562,6 +5620,8 @@
           "onemap_walk_m": 221.0,
           "postal": "677768",
           "target_bus_stop_name": "Opp Blk 219",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Opp Blk 219",
           "validation_project_m": 506.2
         },
         {
@@ -5574,6 +5634,8 @@
           "onemap_walk_m": 112.0,
           "postal": "618823",
           "target_bus_stop_name": "Aft Quality Rd",
+          "target_mrt_lrt_exit_name": null,
+          "target_transit_name": "Aft Quality Rd",
           "validation_project_m": 249.5
         }
       ]

@@ -1,11 +1,14 @@
 from pipeline.scoring_integration import CandidateNode
 from scripts.diagnose_bus_connectors import (
     choose_target_bus_candidate,
+    choose_target_mrt_lrt_candidate,
     diagnostic_action_summary,
     diagnostic_class,
     first_property,
+    mrt_lrt_diagnostic_class,
     normalize_stop_name,
     score_recovers_target_bus_stop,
+    score_recovers_target_mrt_lrt,
     stop_names_match,
     within_onemap_threshold,
 )
@@ -22,6 +25,25 @@ def bus_candidate(name: str, direct_m: float, point_xy: tuple[float, float]) -> 
         snap_distance_m=3.0,
         service_headways_min={("10", 1): 8.0},
         expected_wait_min=4.0,
+        point_xy=point_xy,
+    )
+
+
+def mrt_candidate(
+    station: str,
+    exit_code: str,
+    direct_m: float,
+    point_xy: tuple[float, float],
+) -> CandidateNode:
+    name = f"{station} {exit_code}".strip()
+    return CandidateNode(
+        node_type="mrt_lrt_exit",
+        name=name,
+        station_name=station,
+        exit_code=exit_code,
+        graph_node=point_xy,
+        straight_line_m=direct_m,
+        snap_distance_m=3.0,
         point_xy=point_xy,
     )
 
@@ -70,6 +92,21 @@ def test_choose_target_bus_candidate_falls_back_to_endpoint_distance():
     assert method == "nearest_candidate_to_validation_end"
     assert candidate is not None
     assert candidate.name == "Near Stop"
+
+
+def test_choose_target_mrt_lrt_candidate_prefers_named_exit():
+    exit_a = mrt_candidate("TEST MRT STATION", "Exit A", 90.0, (0.0, 0.0))
+    exit_b = mrt_candidate("TEST MRT STATION", "Exit B", 120.0, (10.0, 0.0))
+
+    candidate, method = choose_target_mrt_lrt_candidate(
+        [exit_a, exit_b],
+        current_name="TEST MRT STATION Exit B",
+        validation_name=None,
+        validation_end_xy=(0.0, 0.0),
+    )
+
+    assert method == "matched_target_name"
+    assert candidate == exit_b
 
 
 def test_diagnostic_class_prioritizes_changed_stop_and_alternate_snap():
@@ -124,6 +161,34 @@ def test_diagnostic_class_prioritizes_changed_stop_and_alternate_snap():
     )
 
 
+def test_mrt_lrt_diagnostic_class_prioritizes_recovered_exit_and_alternate_snap():
+    recovered = {
+        "target_match_method": "matched_target_name",
+        "same_validation_and_current_stop_name": True,
+        "target_mrt_lrt_exit_name": "TEST MRT STATION Exit B",
+        "current_score_best_name": "test mrt station exit b",
+        "current_score_best_type": "mrt_lrt_exit",
+        "current_score_state": "SCORED",
+        "current_score_best_routed_m": 88.0,
+        "current_graph_route_state": "implausible_detour",
+        "best_alternate_snap": {"route_plus_snap_m": 90.0},
+    }
+
+    assert score_recovers_target_mrt_lrt(recovered)
+    assert mrt_lrt_diagnostic_class(recovered) == "scorer_recovered_target_mrt_lrt_exit"
+    assert (
+        mrt_lrt_diagnostic_class(
+            {
+                "target_match_method": "matched_target_name",
+                "same_validation_and_current_stop_name": True,
+                "current_graph_route_state": "disconnected",
+                "best_alternate_snap": {"route_plus_snap_m": 90.0},
+            }
+        )
+        == "alternate_mrt_lrt_snap_candidate"
+    )
+
+
 def test_diagnostic_action_summary_separates_rescore_and_model_fix_rows():
     rows = [
         {
@@ -145,6 +210,13 @@ def test_diagnostic_action_summary_separates_rescore_and_model_fix_rows():
             "best_alternate_snap": {"route_plus_snap_m": 340.4},
         },
         {
+            "postal": "189768",
+            "diagnostic_class": "scorer_recovered_target_mrt_lrt_exit",
+            "old_onemap_walk_m": 208.0,
+            "current_score_best_routed_m": 220.0,
+            "target_mrt_lrt_exit_name": "ESPLANADE MRT STATION Exit B",
+        },
+        {
             "postal": "427835",
             "diagnostic_class": "current_routable",
             "old_onemap_walk_m": 59.0,
@@ -156,9 +228,13 @@ def test_diagnostic_action_summary_separates_rescore_and_model_fix_rows():
 
     assert within_onemap_threshold(55.0, 50.0)
     assert not within_onemap_threshold(68.0, 42.0)
-    assert summary["needs_rescore_candidate_count"] == 2
+    assert summary["needs_rescore_candidate_count"] == 3
     assert summary["needs_bus_snap_or_connector_model_fix_count"] == 1
+    assert summary["needs_transit_snap_or_connector_model_fix_count"] == 1
     assert summary["needs_current_routable_route_review_count"] == 1
-    assert summary["current_score_within_threshold_count"] == 1
+    assert summary["current_score_within_threshold_count"] == 2
     assert summary["alternate_snap_within_threshold_count"] == 0
     assert summary["top_needs_rescore_candidates"][0]["postal"] == "760103"
+    assert summary["top_needs_rescore_candidates"][2]["target_transit_name"] == (
+        "ESPLANADE MRT STATION Exit B"
+    )

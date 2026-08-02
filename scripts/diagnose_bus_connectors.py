@@ -17,9 +17,11 @@ from pipeline.scoring_integration import (
     bus_route_should_use_direct_fallback,
     load_postal_universe_points,
     load_scoring_context,
+    mrt_lrt_exit_access_connector_reason,
     nearest_graph_node,
     score_postal_row,
     select_bus_stop_candidates,
+    select_mrt_exit_candidates,
 )
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -119,6 +121,39 @@ def choose_target_bus_candidate(
     return min(pool, key=sort_key), method
 
 
+def choose_target_mrt_lrt_candidate(
+    candidates: list[CandidateNode],
+    *,
+    current_name: str | None,
+    validation_name: str | None,
+    validation_end_xy: tuple[float, float] | None,
+) -> tuple[CandidateNode | None, str]:
+    if not candidates:
+        return None, "no_mrt_lrt_exit_candidates"
+    names = [name for name in [current_name, validation_name] if normalize_stop_name(name)]
+    matched = [
+        candidate
+        for candidate in candidates
+        if any(stop_names_match(candidate.name, name) for name in names)
+    ]
+    pool = matched or candidates
+
+    def sort_key(candidate: CandidateNode) -> tuple[float, float, str]:
+        if validation_end_xy is None or candidate.point_xy is None:
+            end_distance_m = candidate.straight_line_m
+        else:
+            end_distance_m = float(
+                np.hypot(
+                    float(candidate.point_xy[0]) - validation_end_xy[0],
+                    float(candidate.point_xy[1]) - validation_end_xy[1],
+                )
+            )
+        return (end_distance_m, candidate.straight_line_m, candidate.name)
+
+    method = "matched_target_name" if matched else "nearest_candidate_to_validation_end"
+    return min(pool, key=sort_key), method
+
+
 def route_to_destination(
     context: ScoringContext,
     origin_node: tuple[float, float],
@@ -194,6 +229,22 @@ def diagnostic_class(row: dict[str, Any]) -> str:
     return str(row["current_graph_route_state"])
 
 
+def mrt_lrt_diagnostic_class(row: dict[str, Any]) -> str:
+    if row["target_match_method"] == "no_mrt_lrt_exit_candidates":
+        return "no_mrt_lrt_exit_candidates"
+    if row.get("same_validation_and_current_stop_name") and score_recovers_target_mrt_lrt(row):
+        return "scorer_recovered_target_mrt_lrt_exit"
+    if not row["same_validation_and_current_stop_name"]:
+        return "changed_exit_between_validation_and_replay"
+    if row["current_graph_route_state"] == "routable":
+        return "current_routable"
+    if row.get("best_alternate_snap") is not None:
+        return "alternate_mrt_lrt_snap_candidate"
+    if row["current_graph_route_state"] == "disconnected":
+        return "mrt_lrt_exit_graph_disconnected"
+    return str(row["current_graph_route_state"])
+
+
 def numeric(row: dict[str, Any], key: str) -> float | None:
     try:
         value = row.get(key)
@@ -224,11 +275,14 @@ def within_onemap_threshold(route_m: float | None, onemap_m: float | None) -> bo
 
 
 def compact_action_row(row: dict[str, Any]) -> dict[str, Any]:
+    target_name = row.get("target_bus_stop_name") or row.get("target_mrt_lrt_exit_name")
     return {
         "postal": row.get("postal"),
         "diagnostic_class": row.get("diagnostic_class"),
         "direction": row.get("old_direction"),
+        "target_transit_name": target_name,
         "target_bus_stop_name": row.get("target_bus_stop_name"),
+        "target_mrt_lrt_exit_name": row.get("target_mrt_lrt_exit_name"),
         "onemap_walk_m": row.get("old_onemap_walk_m"),
         "validation_project_m": row.get("new_best_shortest_m"),
         "current_score_best_routed_m": row.get("current_score_best_routed_m"),
@@ -242,14 +296,21 @@ def compact_action_row(row: dict[str, Any]) -> dict[str, Any]:
 
 def diagnostic_action_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     class_counts = Counter(str(row.get("diagnostic_class")) for row in rows)
+    recovered_classes = {
+        "scorer_recovered_target_bus_stop",
+        "scorer_recovered_target_mrt_lrt_exit",
+    }
+    snap_or_disconnected_classes = {
+        "alternate_bus_snap_candidate",
+        "bus_stop_graph_disconnected",
+        "alternate_mrt_lrt_snap_candidate",
+        "mrt_lrt_exit_graph_disconnected",
+    }
     local_rescore_recovered = [
-        row for row in rows if row.get("diagnostic_class") == "scorer_recovered_target_bus_stop"
+        row for row in rows if row.get("diagnostic_class") in recovered_classes
     ]
     alternate_snap_or_disconnected = [
-        row
-        for row in rows
-        if row.get("diagnostic_class")
-        in {"alternate_bus_snap_candidate", "bus_stop_graph_disconnected"}
+        row for row in rows if row.get("diagnostic_class") in snap_or_disconnected_classes
     ]
     current_routable = [row for row in rows if row.get("diagnostic_class") == "current_routable"]
 
@@ -269,6 +330,7 @@ def diagnostic_action_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "threshold": "within 25% of OneMap walk distance",
         "needs_rescore_candidate_count": len(local_rescore_recovered),
         "needs_bus_snap_or_connector_model_fix_count": len(alternate_snap_or_disconnected),
+        "needs_transit_snap_or_connector_model_fix_count": len(alternate_snap_or_disconnected),
         "needs_current_routable_route_review_count": len(current_routable),
         "current_score_within_threshold_count": sum(
             current_score_within_threshold(row) for row in rows
@@ -288,7 +350,7 @@ def diagnostic_action_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         ],
         "recommended_next_actions": [
             "Refresh a targeted score bundle for recovered rows before using them as active validation failures.",
-            "Treat alternate-snap rows as bus stop endpoint geometry QA; do not relax trust thresholds globally.",
+            "Treat alternate-snap rows as transit endpoint geometry QA; do not relax trust thresholds globally.",
             "Review current-routable rows for missing pedestrian connectors, barriers, or OneMap endpoint differences.",
         ],
     }
@@ -302,6 +364,21 @@ def score_recovers_target_bus_stop(row: dict[str, Any]) -> bool:
     if row.get("current_score_state") != "SCORED":
         return False
     if row.get("current_score_routing_type") == "direct_bus_fallback_unrouted":
+        return False
+    try:
+        return float(row.get("current_score_best_routed_m") or 0.0) > 0
+    except (TypeError, ValueError):
+        return False
+
+
+def score_recovers_target_mrt_lrt(row: dict[str, Any]) -> bool:
+    if not stop_names_match(
+        row.get("target_mrt_lrt_exit_name"), row.get("current_score_best_name")
+    ):
+        return False
+    if row.get("current_score_best_type") != "mrt_lrt_exit":
+        return False
+    if row.get("current_score_state") != "SCORED":
         return False
     try:
         return float(row.get("current_score_best_routed_m") or 0.0) > 0
@@ -483,6 +560,161 @@ def diagnose_feature(
     return result
 
 
+def diagnose_mrt_lrt_feature(
+    feature: dict[str, Any],
+    postal_rows: Any,
+    context: ScoringContext,
+    transformer: Transformer,
+    *,
+    alternate_snap_search_m: float,
+    alternate_snap_max_candidates: int,
+) -> dict[str, Any]:
+    props = feature_properties(feature)
+    postal = str(props.get("postal") or "").zfill(6)
+    rows = postal_rows[postal_rows["postal_code"].astype(str).str.zfill(6) == postal]
+    if rows.empty:
+        return {
+            "postal": postal,
+            "diagnostic_class": "missing_from_universe",
+            "source_properties": props,
+        }
+
+    postal_row = rows.iloc[0]
+    postal_point = postal_row.geometry
+    origin_node, origin_snap_m = nearest_graph_node(postal_point, context.nodes, context.node_xy)
+    validation_end_xy = feature_endpoint_xy(feature, transformer)
+    mrt_candidates = select_mrt_exit_candidates(
+        postal_point,
+        context.mrt_exits_gdf,
+        context.nodes,
+        context.node_xy,
+    )
+    validation_name = first_property(props, "old_validation_best_node", "best_node_name")
+    current_name = first_property(props, "new_best_name", "best_node_name")
+    target_candidate, match_method = choose_target_mrt_lrt_candidate(
+        mrt_candidates,
+        current_name=current_name,
+        validation_name=validation_name,
+        validation_end_xy=validation_end_xy,
+    )
+
+    origin_component = component_for_node(context, origin_node)
+    result: dict[str, Any] = {
+        "postal": postal,
+        "priority_rank": props.get("priority_rank"),
+        "validation_area": first_property(props, "validation_area", "area"),
+        "old_validation_best_node": validation_name,
+        "new_best_name": current_name,
+        "same_validation_and_current_stop_name": stop_names_match(validation_name, current_name),
+        "target_match_method": match_method,
+        "origin_snap_m": round(float(origin_snap_m), 1),
+        "origin_component": origin_component,
+        "mrt_lrt_candidate_count": len(mrt_candidates),
+        "validation_direct_distance_m": first_property(
+            props, "validation_direct_distance_m", "direct_distance_m"
+        ),
+        "new_best_shortest_m": first_property(props, "new_best_shortest_m", "project_shortest_m"),
+        "old_onemap_walk_m": first_property(props, "old_onemap_walk_m", "onemap_walk_m"),
+        "old_project_shortest_m": first_property(
+            props, "old_project_shortest_m", "project_shortest_m"
+        ),
+        "old_abs_pct_delta": first_property(props, "old_abs_pct_delta", "abs_pct_delta"),
+        "old_direction": first_property(props, "old_direction", "direction"),
+        "validation_route_trust": props.get("route_trust"),
+        "validation_routing_type": props.get("routing_type"),
+        "validation_distance_sanity": props.get("distance_sanity"),
+    }
+    score_record = score_postal_row(
+        postal_row,
+        context.mrt_exits_gdf,
+        context.edges_dict,
+        context.routing_graph,
+        context.nodes,
+        context.node_xy,
+        context.params,
+        context.weights,
+        context.crossing_counter,
+        context.bus_index,
+        include_geometry=False,
+        network_path=context.network_path,
+        postal_universe_path=context.postal_universe_path,
+        base_provenance=context.base_provenance,
+        data_as_of=context.data_as_of,
+    )
+    current_best = score_record.get("best_node")
+    current_paths = score_record.get("paths")
+    result.update(
+        {
+            "current_score_state": score_record.get("state"),
+            "current_score_total": score_record.get("total"),
+            "current_score_best_name": (
+                current_best.get("name") if isinstance(current_best, dict) else None
+            ),
+            "current_score_best_type": (
+                current_best.get("type") if isinstance(current_best, dict) else None
+            ),
+            "current_score_best_routed_m": (
+                current_best.get("routed_m") if isinstance(current_best, dict) else None
+            ),
+            "current_score_routing_type": (
+                current_paths.get("routing_type") if isinstance(current_paths, dict) else None
+            ),
+            "current_score_mrt_lrt_exit_access_connector_m": (
+                current_paths.get("mrt_lrt_exit_access_connector_m")
+                if isinstance(current_paths, dict)
+                else None
+            ),
+        }
+    )
+    if target_candidate is None:
+        result["current_graph_route_state"] = "no_target_candidate"
+        result["diagnostic_class"] = mrt_lrt_diagnostic_class(result)
+        return result
+
+    target_component = component_for_node(context, target_candidate.graph_node)
+    current_route = route_to_destination(context, origin_node, target_candidate.graph_node)
+    if current_route is None:
+        route_state = "disconnected"
+        current_route_m = None
+        connector_reason = None
+    else:
+        current_route_m = round(float(current_route["shortest_length_m"]), 1)
+        connector_reason = mrt_lrt_exit_access_connector_reason(
+            target_candidate,
+            current_route,
+            context.params["transit_access"],
+        )
+        route_state = "implausible_detour" if connector_reason is not None else "routable"
+
+    alternate_routes = alternate_snap_routes(
+        context,
+        origin_node=origin_node,
+        stop_xy=target_candidate.point_xy,
+        search_m=alternate_snap_search_m,
+        max_candidates=alternate_snap_max_candidates,
+    )
+    best_alternate = alternate_routes[0] if alternate_routes else None
+    result.update(
+        {
+            "target_mrt_lrt_exit_name": target_candidate.name,
+            "target_station_name": target_candidate.station_name,
+            "target_exit_code": target_candidate.exit_code,
+            "target_direct_m": round(float(target_candidate.straight_line_m), 1),
+            "target_snap_m": round(float(target_candidate.snap_distance_m), 1),
+            "target_component": target_component,
+            "origin_component_reaches_target": origin_component == target_component,
+            "current_graph_route_state": route_state,
+            "current_graph_route_m": current_route_m,
+            "current_mrt_lrt_connector_reason": connector_reason,
+            "alternate_snap_search_m": round(float(alternate_snap_search_m), 1),
+            "alternate_snap_reachable_count": len(alternate_routes),
+            "best_alternate_snap": best_alternate,
+        }
+    )
+    result["diagnostic_class"] = mrt_lrt_diagnostic_class(result)
+    return result
+
+
 def build_diagnostics(
     *,
     priority_geojson_path: Path,
@@ -490,6 +722,7 @@ def build_diagnostics(
     network_path: Path,
     alternate_snap_search_m: float,
     alternate_snap_max_candidates: int,
+    transit_type: str = "bus_stop",
 ) -> dict[str, Any]:
     priority_geojson = read_json(priority_geojson_path)
     features = feature_list(priority_geojson, priority_geojson_path)
@@ -502,8 +735,9 @@ def build_diagnostics(
     )
     postal_rows = load_postal_universe_points(postal_universe_path, postal_codes=postals)
     transformer = Transformer.from_crs("EPSG:4326", "EPSG:3414", always_xy=True)
+    diagnose = diagnose_mrt_lrt_feature if transit_type == "mrt_lrt_exit" else diagnose_feature
     rows = [
-        diagnose_feature(
+        diagnose(
             feature,
             postal_rows,
             context,
@@ -520,6 +754,7 @@ def build_diagnostics(
             "postal_universe": display_path(postal_universe_path),
             "network": display_path(network_path),
             "feature_count": len(features),
+            "transit_type": transit_type,
             "alternate_snap_search_m": round(float(alternate_snap_search_m), 1),
             "alternate_snap_max_candidates": int(alternate_snap_max_candidates),
         },
@@ -580,6 +815,12 @@ def main() -> int:
     parser.add_argument("--network", type=Path, default=DEFAULT_NETWORK)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--geojson-output", type=Path, default=DEFAULT_GEOJSON_OUTPUT)
+    parser.add_argument(
+        "--transit-type",
+        choices=["bus_stop", "mrt_lrt_exit"],
+        default="bus_stop",
+        help="Transit destination type represented by the priority GeoJSON.",
+    )
     parser.add_argument("--alternate-snap-search-m", type=float, default=50.0)
     parser.add_argument("--alternate-snap-max-candidates", type=int, default=24)
     args = parser.parse_args()
@@ -590,6 +831,7 @@ def main() -> int:
         network_path=args.network,
         alternate_snap_search_m=args.alternate_snap_search_m,
         alternate_snap_max_candidates=args.alternate_snap_max_candidates,
+        transit_type=args.transit_type,
     )
     write_json(args.output, diagnostics)
     write_json(args.geojson_output, diagnostics_geojson(args.priority_geojson, diagnostics))
