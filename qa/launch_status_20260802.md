@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `4d9736d` (`qa: add OneMap outlier replay helper`)
+- Latest pushed commit: `c92d55a` (`qa: replay OneMap outliers by direction`)
 
 ## Pending Fresh Bundle
 
