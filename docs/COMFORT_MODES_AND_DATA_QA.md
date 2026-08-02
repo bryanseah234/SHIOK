@@ -635,3 +635,12 @@ route effect; no score override has been applied.
   segment-to-segment gaps for `560231` and `560234` drop to 0.0 m. The score
   compare blocked wholesale promotion (`560225`, `560700`, `560710` regressed),
   so the large temporary bundle was deleted and no activation/deploy was done.
+- `qa/candidate_audit_mayflower_amk_blockers_20260803.json` uses the opt-in
+  candidate-debug path to rank every scored bus/MRT candidate for those five
+  postals without changing production records. For `560710`, the old nearby
+  `Aft Ang Mo Kio Int` bus stop is still present and ranks #2 at 92.9 m /
+  82.4% covered / 93.0 total; the current winner is `Bef Al-Muttaqin Mque` at
+  476.3 m / 98.4% covered / 95.4 total. This is a product/scoring-policy
+  question, not a missing-candidate bug: the current candidate selector allows a
+  farther but more sheltered bus stop to beat a shorter transit walk by
+  composite score.

@@ -894,9 +894,7 @@ def bus_edge_is_low_trust_road_centerline(edge: dict[str, Any]) -> bool:
         return False
     if normalized_text(edge.get("bridge")) in {"yes", "covered"}:
         return False
-    if normalized_text(edge.get("tunnel")) in {"yes", "building_passage"}:
-        return False
-    return True
+    return normalized_text(edge.get("tunnel")) not in {"yes", "building_passage"}
 
 
 def bus_edge_has_pedestrian_evidence(edge: dict[str, Any]) -> bool:
@@ -912,9 +910,7 @@ def bus_edge_has_pedestrian_evidence(edge: dict[str, Any]) -> bool:
         return True
     if normalized_text(edge.get("foot")) in PEDESTRIAN_FOOT_VALUES:
         return True
-    if normalized_text(edge.get("sidewalk")) in {"both", "left", "right", "yes"}:
-        return True
-    return False
+    return normalized_text(edge.get("sidewalk")) in {"both", "left", "right", "yes"}
 
 
 def bus_route_trust_rejection_reason(
@@ -1473,6 +1469,51 @@ def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def candidate_debug_rows(candidate_scores: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for rank, candidate_score in enumerate(
+        sorted(
+            (
+                candidate
+                for candidate in candidate_scores
+                if isinstance(candidate.get("total"), int | float)
+            ),
+            key=candidate_sort_key,
+            reverse=True,
+        ),
+        start=1,
+    ):
+        candidate = candidate_score.get("candidate")
+        raw_paths = candidate_score.get("paths")
+        paths = raw_paths if isinstance(raw_paths, dict) else {}
+        raw_best_node = candidate_score.get("best_node")
+        best_node = raw_best_node if isinstance(raw_best_node, dict) else {}
+        rows.append(
+            {
+                "rank": rank,
+                "type": best_node.get("type"),
+                "name": best_node.get("name"),
+                "station": best_node.get("station"),
+                "exit": best_node.get("exit"),
+                "total": round(float(candidate_score["total"]), 1),
+                "subscores": candidate_score.get("subscores"),
+                "shortest_m": paths.get("shortest_m"),
+                "sheltered_m": paths.get("sheltered_m"),
+                "covered_ratio": paths.get("covered_ratio"),
+                "routing_type": paths.get("routing_type"),
+                "straight_line_m": best_node.get("straight_line_m"),
+                "snap_distance_m": best_node.get("snap_distance_m"),
+                "expected_wait_min": (
+                    round(float(candidate.expected_wait_min), 3)
+                    if isinstance(candidate, CandidateNode)
+                    and candidate.expected_wait_min is not None
+                    else None
+                ),
+            }
+        )
+    return rows
+
+
 def empty_route_option(node_type: str) -> dict[str, Any]:
     return {
         "state": NO_TRANSIT_IN_RANGE,
@@ -1799,6 +1840,7 @@ def score_postal_row(
     postal_universe_path: Path | None = None,
     base_provenance: dict[str, Any] | None = None,
     data_as_of: str | None = None,
+    include_candidate_debug: bool = False,
 ) -> dict[str, Any]:
     postal = str(postal_row["postal_code"])
     origin_node, origin_snap_m = nearest_graph_node(postal_row.geometry, nodes, node_xy)
@@ -2330,6 +2372,12 @@ def score_postal_row(
         candidate_scores,
         access_zero_m,
     )
+    if include_candidate_debug:
+        provenance["candidate_debug"] = {
+            "scope": "qa_only_not_exported_by_default",
+            "candidate_count": len(candidate_scores),
+            "ranked": candidate_debug_rows(candidate_scores),
+        }
 
     record = assemble_score_record(postal, candidate_scores, record_data_as_of, provenance)
     return add_private_origin(record, postal_row.geometry) if include_geometry else record
@@ -2341,6 +2389,7 @@ def score_postals(
     include_geometry: bool = False,
     network_path: Path = NETWORK_PATH,
     postal_universe_path: Path | None = None,
+    include_candidate_debug: bool = False,
 ) -> list[dict[str, Any]]:
     postal_limit = None if postal_codes or limit is None else max(limit * 4, limit)
     if postal_universe_path is not None:
@@ -2361,6 +2410,7 @@ def score_postals(
         context,
         include_geometry=include_geometry,
         limit=None if postal_codes else limit,
+        include_candidate_debug=include_candidate_debug,
     )
 
 
@@ -2369,6 +2419,7 @@ def score_postal_gdf(
     context: ScoringContext,
     include_geometry: bool = False,
     limit: int | None = None,
+    include_candidate_debug: bool = False,
 ) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     for _, postal_row in postal_gdf.iterrows():
@@ -2389,6 +2440,7 @@ def score_postal_gdf(
                 context.postal_universe_path,
                 context.base_provenance,
                 context.data_as_of,
+                include_candidate_debug,
             )
         )
         if limit is not None and len(records) >= limit:

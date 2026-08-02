@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | bus-arrivals | bus-connector-diagnostics | check | compare-targeted | ingest | network | network-preflight | network-qa | onemap-validation | onemap-outlier-replay | onemap-outlier-triage | overture-addresses | readiness | refresh-provenance | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
+Tasks: batch-plan | bus-arrivals | bus-connector-diagnostics | candidate-audit | check | compare-targeted | ingest | network | network-preflight | network-qa | onemap-validation | onemap-outlier-replay | onemap-outlier-triage | overture-addresses | readiness | refresh-provenance | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -32,6 +32,7 @@ STUBS = {
     "score-batch": "resumable postal scoring batch runner",
     "bus-arrivals": "collect local LTA bus-arrival snapshots for future reliability scoring",
     "bus-connector-diagnostics": "diagnose priority OneMap missing-bus connector cases",
+    "candidate-audit": "audit ranked MRT/LRT and bus candidates for selected postals",
     "compare-targeted": "compare a targeted score report against the active bundle",
     "batch-plan": "dry-run full postal geocode/scoring batch plan (checkpoint C)",
     "postal-universe": "build deterministic postal-code universe candidates",
@@ -84,6 +85,8 @@ def run_task(name: str, extra: list[str]) -> int:
         return run_module("pipeline.bus_arrivals")
     if name == "bus-connector-diagnostics":
         return run_module("scripts.diagnose_bus_connectors")
+    if name == "candidate-audit":
+        return run_module("scripts.audit_postal_candidates")
     if name == "compare-targeted":
         return run_module("scripts.compare_targeted_scores")
     if name == "postal-universe":

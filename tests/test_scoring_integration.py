@@ -22,6 +22,7 @@ from pipeline.scoring_integration import (
     bus_route_direct_fallback_reason,
     bus_route_should_use_direct_fallback,
     bus_route_trust_rejection_reason,
+    candidate_debug_rows,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
@@ -1429,6 +1430,75 @@ def test_record_assembly_selects_highest_scoring_candidate():
 
     assert record["best_node"]["name"] == "COVERED EXIT"
     assert record["total"] == 75.0
+
+
+def test_candidate_debug_rows_serializes_ranked_candidate_details():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Test Stop",
+        station_name="Test Stop",
+        exit_code="54321",
+        graph_node=(100.0, 0.0),
+        straight_line_m=80.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 6.0},
+        expected_wait_min=3.0,
+        point_xy=(80.0, 0.0),
+    )
+    rows = candidate_debug_rows(
+        [
+            {
+                "candidate": candidate,
+                "total": 88.88,
+                "subscores": {
+                    "access": 100.0,
+                    "bus": 92.0,
+                    "rain": 70.0,
+                    "heat": 70.0,
+                    "crossing": 100.0,
+                },
+                "best_node": {
+                    "type": "bus_stop",
+                    "name": "Test Stop",
+                    "station": "Test Stop",
+                    "exit": "54321",
+                    "straight_line_m": 80.0,
+                    "snap_distance_m": 5.0,
+                },
+                "paths": {
+                    "shortest_m": 95.0,
+                    "sheltered_m": 100.0,
+                    "covered_ratio": 0.7,
+                    "routing_type": "sheltered",
+                },
+            }
+        ]
+    )
+
+    assert rows == [
+        {
+            "rank": 1,
+            "type": "bus_stop",
+            "name": "Test Stop",
+            "station": "Test Stop",
+            "exit": "54321",
+            "total": 88.9,
+            "subscores": {
+                "access": 100.0,
+                "bus": 92.0,
+                "rain": 70.0,
+                "heat": 70.0,
+                "crossing": 100.0,
+            },
+            "shortest_m": 95.0,
+            "sheltered_m": 100.0,
+            "covered_ratio": 0.7,
+            "routing_type": "sheltered",
+            "straight_line_m": 80.0,
+            "snap_distance_m": 5.0,
+            "expected_wait_min": 3.0,
+        }
+    ]
 
 
 def test_load_postal_universe_points_filters_ready_rows_and_preserves_requested_order(
