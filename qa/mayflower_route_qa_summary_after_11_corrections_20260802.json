@@ -1,0 +1,544 @@
+{
+  "bundle": "generated_20260802_mayflower_11_corrections_targeted",
+  "conclusion": {
+    "approved_source_backed_corrections": 9,
+    "blocked_without_more_source_evidence": 6,
+    "ready_for_owner_review": 0,
+    "score_override_used": false
+  },
+  "connector_candidates": {
+    "by_postal": {
+      "560225": [
+        {
+          "audit_id": "feedback-560225-segment-0-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.309,
+          "hdb_overlap_ratio": 0.309,
+          "label": "void_deck",
+          "length_m": 64.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 0
+        },
+        {
+          "audit_id": "feedback-560225-segment-3-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 17.8,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.45,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 3
+        },
+        {
+          "audit_id": "feedback-560225-segment-7-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 16.5,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 7
+        },
+        {
+          "audit_id": "feedback-560225-segment-8-covered-source-overlap-review",
+          "candidate_classification": "covered_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 0.216,
+          "label": "covered_bridge",
+          "length_m": 37.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 8
+        },
+        {
+          "audit_id": "feedback-560225-segment-11-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.105,
+          "hdb_overlap_ratio": 0.105,
+          "label": "void_deck",
+          "length_m": 128.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 11
+        }
+      ],
+      "560231": [
+        {
+          "audit_id": "feedback-560231-segment-1-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "void_deck",
+          "length_m": 92.9,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 1
+        },
+        {
+          "audit_id": "feedback-560231-segment-3-covered-source-overlap-review",
+          "candidate_classification": "covered_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 0.016,
+          "label": "covered_bridge",
+          "length_m": 34.2,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 3
+        },
+        {
+          "audit_id": "feedback-560231-segment-6-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.105,
+          "hdb_overlap_ratio": 0.105,
+          "label": "void_deck",
+          "length_m": 128.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 6
+        }
+      ],
+      "560234": [
+        {
+          "audit_id": "feedback-560234-segment-0-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "void_deck",
+          "length_m": 52.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.015,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 0
+        },
+        {
+          "audit_id": "feedback-560234-segment-1-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.469,
+          "hdb_overlap_ratio": 0.234,
+          "label": "sheltered",
+          "length_m": 68.3,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.351,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 1
+        },
+        {
+          "audit_id": "feedback-560234-segment-3-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.395,
+          "hdb_overlap_ratio": 0.395,
+          "label": "sheltered",
+          "length_m": 41.1,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 3
+        },
+        {
+          "audit_id": "feedback-560234-segment-4-short-partial-hdb-overlap-review",
+          "candidate_classification": "short_partial_hdb_overlap_review",
+          "covered_overlap_ratio": 0.463,
+          "hdb_overlap_ratio": 0.463,
+          "label": "sheltered",
+          "length_m": 40.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.221,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 4
+        },
+        {
+          "audit_id": "feedback-560234-segment-6-hdb-source-overlap-review",
+          "candidate_classification": "hdb_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 1.0,
+          "label": "sheltered",
+          "length_m": 22.0,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 6
+        },
+        {
+          "audit_id": "feedback-560234-segment-7-covered-source-overlap-review",
+          "candidate_classification": "covered_source_overlap_review",
+          "covered_overlap_ratio": 1.0,
+          "hdb_overlap_ratio": 0.016,
+          "label": "covered_bridge",
+          "length_m": 34.2,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 1.0,
+          "promotion_status": "review_ready_not_scoring",
+          "segment_index": 7
+        },
+        {
+          "audit_id": "feedback-560234-segment-10-insufficient-source-overlap",
+          "candidate_classification": "insufficient_source_overlap",
+          "covered_overlap_ratio": 0.105,
+          "hdb_overlap_ratio": 0.105,
+          "label": "void_deck",
+          "length_m": 128.7,
+          "official_shelter_overlap_ratio": 0.0,
+          "osm_shelter_overlap_ratio": 0.0,
+          "promotion_status": "blocked_insufficient_source_overlap_not_scoring",
+          "segment_index": 10
+        }
+      ]
+    },
+    "candidate_count": 15,
+    "classification_counts": {
+      "covered_source_overlap_review": 3,
+      "hdb_source_overlap_review": 5,
+      "insufficient_source_overlap": 6,
+      "short_partial_hdb_overlap_review": 1
+    },
+    "promotion_status_counts": {
+      "blocked_insufficient_source_overlap_not_scoring": 6,
+      "review_ready_not_scoring": 9
+    }
+  },
+  "feedback_segments": {
+    "by_postal": {
+      "560225": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 6,
+        "hdb_void_deck_component_gap": 5,
+        "hdb_void_deck_evidence_nearby_check_connectivity": 2
+      },
+      "560231": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 5,
+        "hdb_void_deck_component_gap": 3
+      },
+      "560234": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 4,
+        "hdb_void_deck_component_gap": 7,
+        "hdb_void_deck_evidence_nearby_check_connectivity": 1
+      },
+      "560700": {
+        "bridge_underpass_evidence_nearby_check_endpoint_snap": 1,
+        "covered_evidence_nearby_check_connectivity_or_snap": 7
+      },
+      "560710": {
+        "covered_evidence_nearby_check_connectivity_or_snap": 2,
+        "user_marked_exposed_no_shelter_expected": 1
+      }
+    },
+    "classification_counts": {
+      "bridge_underpass_evidence_nearby_check_endpoint_snap": 1,
+      "covered_evidence_nearby_check_connectivity_or_snap": 24,
+      "hdb_void_deck_component_gap": 15,
+      "hdb_void_deck_evidence_nearby_check_connectivity": 3,
+      "user_marked_exposed_no_shelter_expected": 1
+    },
+    "segment_count": 44
+  },
+  "ok": true,
+  "postals": [
+    "560231",
+    "560234",
+    "560225",
+    "560700",
+    "560710"
+  ],
+  "scores": {
+    "560225": {
+      "best_transit": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 403.9,
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.684,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 406.3,
+          "shortest_covered_ratio": 0.547,
+          "shortest_m": 403.9
+        },
+        "state": "SCORED",
+        "total": 85.9
+      },
+      "bus": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 403.9,
+          "straight_line_m": 240.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.684,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 406.3,
+          "shortest_covered_ratio": 0.547,
+          "shortest_m": 403.9
+        },
+        "state": "SCORED",
+        "total": 85.9
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 644.4,
+          "straight_line_m": 404.4,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.363,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.434,
+          "sheltered_m": 646.9,
+          "shortest_covered_ratio": 0.276,
+          "shortest_m": 644.4
+        },
+        "state": "SCORED",
+        "total": 59.7
+      },
+      "state": "SCORED",
+      "total": 85.9
+    },
+    "560231": {
+      "best_transit": {
+        "best_node": {
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "bus": {
+        "best_node": {
+          "name": "Opp Mayflower Sec Sch",
+          "routed_m": 128.1,
+          "straight_line_m": 86.4,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 128.1,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 128.1
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 425.9,
+          "straight_line_m": 259.2,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.312,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.66,
+          "sheltered_m": 425.9,
+          "shortest_covered_ratio": 0.312,
+          "shortest_m": 425.9
+        },
+        "state": "SCORED",
+        "total": 72.1
+      },
+      "state": "SCORED",
+      "total": 100.0
+    },
+    "560234": {
+      "best_transit": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 307.9,
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.747,
+          "routing_type": "shortest_due_to_detour",
+          "shade_ratio": 0.0,
+          "sheltered_m": 307.9,
+          "shortest_covered_ratio": 0.747,
+          "shortest_m": 307.9
+        },
+        "state": "SCORED",
+        "total": 89.9
+      },
+      "bus": {
+        "best_node": {
+          "name": "Mayflower Sec Sch",
+          "routed_m": 307.9,
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.747,
+          "routing_type": "shortest_due_to_detour",
+          "shade_ratio": 0.0,
+          "sheltered_m": 307.9,
+          "shortest_covered_ratio": 0.747,
+          "shortest_m": 307.9
+        },
+        "state": "SCORED",
+        "total": 89.9
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "MAYFLOWER MRT STATION Exit 5",
+          "routed_m": 545.6,
+          "straight_line_m": 398.6,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.523,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.444,
+          "sheltered_m": 632.9,
+          "shortest_covered_ratio": 0.337,
+          "shortest_m": 545.6
+        },
+        "state": "SCORED",
+        "total": 72.6
+      },
+      "state": "SCORED",
+      "total": 89.9
+    },
+    "560700": {
+      "best_transit": {
+        "best_node": {
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "bus": {
+        "best_node": {
+          "name": "Blk 700B",
+          "routed_m": 169.6,
+          "straight_line_m": 102.8,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 0.636,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 202.9,
+          "shortest_covered_ratio": 0.394,
+          "shortest_m": 169.6
+        },
+        "state": "SCORED",
+        "total": 85.4
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "ANG MO KIO MRT STATION Exit D",
+          "routed_m": 561.1,
+          "straight_line_m": 346.8,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.641,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.024,
+          "sheltered_m": 681.8,
+          "shortest_covered_ratio": 0.224,
+          "shortest_m": 561.1
+        },
+        "state": "SCORED",
+        "total": 77.4
+      },
+      "state": "SCORED",
+      "total": 85.4
+    },
+    "560710": {
+      "best_transit": {
+        "best_node": {
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "bus": {
+        "best_node": {
+          "name": "Aft Ang Mo Kio Int",
+          "routed_m": 76.6,
+          "straight_line_m": 56.7,
+          "type": "bus_stop"
+        },
+        "paths": {
+          "covered_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.0,
+          "sheltered_m": 76.6,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 76.6
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "ANG MO KIO MRT STATION Exit D",
+          "routed_m": 282.8,
+          "straight_line_m": 222.8,
+          "type": "mrt_lrt_exit"
+        },
+        "paths": {
+          "covered_ratio": 0.674,
+          "routing_type": "sheltered",
+          "shade_ratio": 0.057,
+          "sheltered_m": 282.8,
+          "shortest_covered_ratio": 0.598,
+          "shortest_m": 282.8
+        },
+        "state": "SCORED",
+        "total": 87.4
+      },
+      "state": "SCORED",
+      "total": 100.0
+    }
+  }
+}

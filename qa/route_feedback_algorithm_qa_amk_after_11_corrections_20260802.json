@@ -1,0 +1,1731 @@
+{
+  "classification_counts": {
+    "bridge_underpass_component_gap": 2,
+    "bridge_underpass_evidence_nearby_check_endpoint_snap": 3,
+    "covered_evidence_nearby_check_connectivity_or_snap": 19,
+    "hdb_void_deck_component_gap": 12,
+    "hdb_void_deck_evidence_nearby_check_connectivity": 4,
+    "routable_but_uncovered_or_missing_shelter_source": 3,
+    "user_marked_exposed_no_shelter_expected": 1
+  },
+  "feedback": "qa\\user_drawn_amk_mayflower_routes.json",
+  "label_counts": {
+    "covered_bridge": 3,
+    "exposed": 1,
+    "sheltered": 30,
+    "underpass": 1,
+    "void_deck": 9
+  },
+  "network": "processed\\network_island.parquet",
+  "ok": true,
+  "route_count": 5,
+  "search_m": 20.0,
+  "segment_count": 44,
+  "segments": [
+    {
+      "classification": "hdb_void_deck_evidence_nearby_check_connectivity",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 1003,
+      "end_component_node_count": 21,
+      "end_snap_node_m": 17.5,
+      "end_snap_x": 28412.11,
+      "end_snap_y": 38772.29,
+      "endpoint_component_gap_m": null,
+      "label": "void_deck",
+      "length_m": 48.1,
+      "nearby_covered_edge_count": 25,
+      "nearby_edge_count": 28,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 1,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 14,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 2,
+        "inferred_hdb_precinct_footway": 4,
+        "osm_building_roof": 1,
+        "osm_native_covered": 2
+      },
+      "nearest_covered_edge_m": 0.1,
+      "nearest_edge_m": 0.1,
+      "nearest_main_component_covered_edge_m": 14.2,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 14.2,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 0,
+      "start_component_id": 1003,
+      "start_component_node_count": 21,
+      "start_snap_node_m": 10.8,
+      "start_snap_x": 28363.14,
+      "start_snap_y": 38789.7
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 10.9,
+      "end_snap_x": 28431.366,
+      "end_snap_y": 38837.868,
+      "endpoint_component_gap_m": 68.3,
+      "label": "sheltered",
+      "length_m": 42.4,
+      "nearby_covered_edge_count": 32,
+      "nearby_edge_count": 36,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 17,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 7,
+        "osm_building_roof": 2,
+        "osm_native_covered": 3
+      },
+      "nearest_covered_edge_m": 8.8,
+      "nearest_edge_m": 8.8,
+      "nearest_main_component_covered_edge_m": 12.2,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 12.2,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 1,
+      "start_component_id": 1003,
+      "start_component_node_count": 21,
+      "start_snap_node_m": 17.5,
+      "start_snap_x": 28412.11,
+      "start_snap_y": 38772.29
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 8.5,
+      "end_snap_x": 28405.324,
+      "end_snap_y": 38857.108,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 30.5,
+      "nearby_covered_edge_count": 23,
+      "nearby_edge_count": 33,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 1,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 13,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 5,
+        "osm_building_roof": 1,
+        "osm_native_covered": 2
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 15.2,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 7.2,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 2,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 10.9,
+      "start_snap_x": 28431.366,
+      "start_snap_y": 38837.868
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 6.6,
+      "end_snap_x": 28425.86,
+      "end_snap_y": 38892.68,
+      "endpoint_component_gap_m": 41.1,
+      "label": "sheltered",
+      "length_m": 35.9,
+      "nearby_covered_edge_count": 10,
+      "nearby_edge_count": 20,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 1,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 9
+      },
+      "nearest_covered_edge_m": 3.1,
+      "nearest_edge_m": 3.1,
+      "nearest_main_component_covered_edge_m": 21.5,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 8.1,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 3,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 8.5,
+      "start_snap_x": 28405.324,
+      "start_snap_y": 38857.108
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 14.7,
+      "end_snap_x": 28465.219,
+      "end_snap_y": 38899.912,
+      "endpoint_component_gap_m": 40.0,
+      "label": "sheltered",
+      "length_m": 23.1,
+      "nearby_covered_edge_count": 12,
+      "nearby_edge_count": 18,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 7,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 20.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 15.2,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 4,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 6.6,
+      "start_snap_x": 28425.86,
+      "start_snap_y": 38892.68
+    },
+    {
+      "classification": "hdb_void_deck_evidence_nearby_check_connectivity",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 6.1,
+      "end_snap_x": 28396.911,
+      "end_snap_y": 38964.642,
+      "endpoint_component_gap_m": null,
+      "label": "void_deck",
+      "length_m": 77.7,
+      "nearby_covered_edge_count": 23,
+      "nearby_edge_count": 24,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 5,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 11,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+        "inferred_hdb_precinct_footway": 5
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 10.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 10.6,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 5,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 14.7,
+      "start_snap_x": 28465.219,
+      "start_snap_y": 38899.912
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 3.6,
+      "end_snap_x": 28375.0,
+      "end_snap_y": 38963.07,
+      "endpoint_component_gap_m": 22.0,
+      "label": "sheltered",
+      "length_m": 24.5,
+      "nearby_covered_edge_count": 25,
+      "nearby_edge_count": 29,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 7,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 8,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "inferred_hdb_precinct_footway": 5,
+        "osm_native_covered": 4
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 4.5,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 4.5,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 6,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 6.1,
+      "start_snap_x": 28396.911,
+      "start_snap_y": 38964.642
+    },
+    {
+      "classification": "bridge_underpass_evidence_nearby_check_endpoint_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 2.1,
+      "end_snap_x": 28345.23,
+      "end_snap_y": 38979.86,
+      "endpoint_component_gap_m": null,
+      "label": "covered_bridge",
+      "length_m": 39.1,
+      "nearby_covered_edge_count": 28,
+      "nearby_edge_count": 40,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 6,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 7,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "inferred_hdb_precinct_footway": 2,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 9
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 0.9,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 0.9,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 7,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 3.6,
+      "start_snap_x": 28375.0,
+      "start_snap_y": 38963.07
+    },
+    {
+      "classification": "bridge_underpass_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 3.8,
+      "end_snap_x": 28409.041,
+      "end_snap_y": 39026.454,
+      "endpoint_component_gap_m": 79.0,
+      "label": "sheltered",
+      "length_m": 80.2,
+      "nearby_covered_edge_count": 12,
+      "nearby_edge_count": 34,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 3,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 6
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 32.2,
+      "nearest_main_component_covered_sources": {
+        "osm_explicit_shelter": 1
+      },
+      "nearest_main_component_edge_m": 4.2,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 8,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 2.1,
+      "start_snap_x": 28345.23,
+      "start_snap_y": 38979.86
+    },
+    {
+      "classification": "routable_but_uncovered_or_missing_shelter_source",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 24.7,
+      "end_snap_x": 28399.693,
+      "end_snap_y": 39040.895,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 38.3,
+      "nearby_covered_edge_count": 0,
+      "nearby_edge_count": 11,
+      "nearby_sources": {
+        "footway": 3,
+        "primary": 6,
+        "service": 2
+      },
+      "nearest_covered_edge_m": null,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 56.8,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 5.6,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 9,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 3.8,
+      "start_snap_x": 28409.041,
+      "start_snap_y": 39026.454
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 11.1,
+      "end_snap_x": 28339.82,
+      "end_snap_y": 39154.798,
+      "endpoint_component_gap_m": 128.7,
+      "label": "void_deck",
+      "length_m": 98.1,
+      "nearby_covered_edge_count": 6,
+      "nearby_edge_count": 9,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 6
+      },
+      "nearest_covered_edge_m": 11.1,
+      "nearest_edge_m": 11.1,
+      "nearest_main_component_covered_edge_m": 74.1,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 32.4,
+      "nearest_main_component_sources": {
+        "secondary": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560234",
+      "same_component": false,
+      "segment_index": 10,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 24.7,
+      "start_snap_x": 28399.693,
+      "start_snap_y": 39040.895
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 2.9,
+      "end_snap_x": 28355.767,
+      "end_snap_y": 39159.453,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 26.8,
+      "nearby_covered_edge_count": 11,
+      "nearby_edge_count": 16,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 11
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 81.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_point_footway": 1
+      },
+      "nearest_main_component_edge_m": 26.8,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560234",
+      "same_component": true,
+      "segment_index": 11,
+      "start_component_id": 2099,
+      "start_component_node_count": 11,
+      "start_snap_node_m": 11.1,
+      "start_snap_x": 28339.82,
+      "start_snap_y": 39154.798
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 18.3,
+      "end_snap_x": 28465.219,
+      "end_snap_y": 38899.912,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 48.8,
+      "nearby_covered_edge_count": 17,
+      "nearby_edge_count": 17,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 7,
+        "INFERRED_HDB_VOID_DECK": 2,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 2,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 3
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 12.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 12.6,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560231",
+      "same_component": true,
+      "segment_index": 0,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 8.8,
+      "start_snap_x": 28492.685,
+      "start_snap_y": 38940.05
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 8.7,
+      "end_snap_x": 28410.74,
+      "end_snap_y": 38975.15,
+      "endpoint_component_gap_m": 92.9,
+      "label": "void_deck",
+      "length_m": 77.9,
+      "nearby_covered_edge_count": 21,
+      "nearby_edge_count": 21,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 5,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 9,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+        "inferred_hdb_precinct_footway": 5
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 10.2,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 10.2,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560231",
+      "same_component": false,
+      "segment_index": 1,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 18.3,
+      "start_snap_x": 28465.219,
+      "start_snap_y": 38899.912
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 1.7,
+      "end_snap_x": 28375.0,
+      "end_snap_y": 38963.07,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 29.8,
+      "nearby_covered_edge_count": 25,
+      "nearby_edge_count": 30,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 7,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 8,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "inferred_hdb_precinct_footway": 5,
+        "osm_native_covered": 4
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 5.9,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 5.9,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560231",
+      "same_component": true,
+      "segment_index": 2,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 8.7,
+      "start_snap_x": 28410.74,
+      "start_snap_y": 38975.15
+    },
+    {
+      "classification": "bridge_underpass_evidence_nearby_check_endpoint_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 3.3,
+      "end_snap_x": 28345.23,
+      "end_snap_y": 38979.86,
+      "endpoint_component_gap_m": null,
+      "label": "covered_bridge",
+      "length_m": 38.7,
+      "nearby_covered_edge_count": 25,
+      "nearby_edge_count": 37,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 6,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 6,
+        "inferred_hdb_precinct_footway": 1,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 9
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.7,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 2.7,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560231",
+      "same_component": true,
+      "segment_index": 3,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 1.7,
+      "start_snap_x": 28375.0,
+      "start_snap_y": 38963.07
+    },
+    {
+      "classification": "bridge_underpass_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 5.0,
+      "end_snap_x": 28402.798,
+      "end_snap_y": 39036.626,
+      "endpoint_component_gap_m": 80.8,
+      "label": "sheltered",
+      "length_m": 82.6,
+      "nearby_covered_edge_count": 12,
+      "nearby_edge_count": 31,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 3,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 6
+      },
+      "nearest_covered_edge_m": 1.2,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 33.2,
+      "nearest_main_component_covered_sources": {
+        "osm_explicit_shelter": 1
+      },
+      "nearest_main_component_edge_m": 2.0,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560231",
+      "same_component": false,
+      "segment_index": 4,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 3.3,
+      "start_snap_x": 28345.23,
+      "start_snap_y": 38979.86
+    },
+    {
+      "classification": "routable_but_uncovered_or_missing_shelter_source",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 24.3,
+      "end_snap_x": 28399.693,
+      "end_snap_y": 39040.895,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 34.3,
+      "nearby_covered_edge_count": 0,
+      "nearby_edge_count": 10,
+      "nearby_sources": {
+        "footway": 3,
+        "primary": 5,
+        "service": 2
+      },
+      "nearest_covered_edge_m": null,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 58.4,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 7.2,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560231",
+      "same_component": true,
+      "segment_index": 5,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 5.0,
+      "start_snap_x": 28402.798,
+      "start_snap_y": 39036.626
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 9.6,
+      "end_snap_x": 28339.82,
+      "end_snap_y": 39154.798,
+      "endpoint_component_gap_m": 128.7,
+      "label": "void_deck",
+      "length_m": 100.7,
+      "nearby_covered_edge_count": 6,
+      "nearby_edge_count": 9,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 6
+      },
+      "nearest_covered_edge_m": 9.6,
+      "nearest_edge_m": 9.6,
+      "nearest_main_component_covered_edge_m": 75.0,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 33.2,
+      "nearest_main_component_sources": {
+        "secondary": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560231",
+      "same_component": false,
+      "segment_index": 6,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 24.3,
+      "start_snap_x": 28399.693,
+      "start_snap_y": 39040.895
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 7.4,
+      "end_snap_x": 28355.767,
+      "end_snap_y": 39159.453,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 30.7,
+      "nearby_covered_edge_count": 11,
+      "nearby_edge_count": 15,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 11
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 79.0,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_point_footway": 1
+      },
+      "nearest_main_component_edge_m": 24.9,
+      "nearest_main_component_sources": {
+        "secondary": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560231",
+      "same_component": true,
+      "segment_index": 7,
+      "start_component_id": 2099,
+      "start_component_node_count": 11,
+      "start_snap_node_m": 9.6,
+      "start_snap_x": 28339.82,
+      "start_snap_y": 39154.798
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit D",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 1.5,
+      "end_snap_x": 29718.821,
+      "end_snap_y": 39165.263,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 95.5,
+      "nearby_covered_edge_count": 24,
+      "nearby_edge_count": 44,
+      "nearby_sources": {
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 3,
+        "UNREPRESENTED-surface": 5,
+        "covered_linkway": 13,
+        "inferred_hdb_point_footway": 2,
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_covered_edge_m": 0.1,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 14.9,
+      "nearest_main_component_covered_sources": {
+        "UNREPRESENTED-surface": 1
+      },
+      "nearest_main_component_edge_m": 0.8,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560710",
+      "same_component": true,
+      "segment_index": 0,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 0.9,
+      "start_snap_x": 29675.32,
+      "start_snap_y": 39250.23
+    },
+    {
+      "classification": "user_marked_exposed_no_shelter_expected",
+      "destination": "ANG MO KIO MRT STATION Exit D",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 1.8,
+      "end_snap_x": 29746.176,
+      "end_snap_y": 39177.372,
+      "endpoint_component_gap_m": null,
+      "label": "exposed",
+      "length_m": 30.4,
+      "nearby_covered_edge_count": 17,
+      "nearby_edge_count": 29,
+      "nearby_sources": {
+        "UNREPRESENTED-surface": 3,
+        "covered_linkway": 9,
+        "osm_explicit_shelter": 1,
+        "osm_native_covered": 4
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 13.4,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 0.0,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560710",
+      "same_component": true,
+      "segment_index": 1,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 1.5,
+      "start_snap_x": 29718.821,
+      "start_snap_y": 39165.263
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit D",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 2.3,
+      "end_snap_x": 29810.534,
+      "end_snap_y": 39070.656,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 126.1,
+      "nearby_covered_edge_count": 15,
+      "nearby_edge_count": 21,
+      "nearby_sources": {
+        "osm_explicit_shelter": 2,
+        "osm_native_covered": 13
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.1,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 2.1,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560710",
+      "same_component": true,
+      "segment_index": 2,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 1.8,
+      "start_snap_x": 29746.176,
+      "start_snap_y": 39177.372
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 1201,
+      "end_component_node_count": 19,
+      "end_snap_node_m": 4.8,
+      "end_snap_x": 28474.77,
+      "end_snap_y": 38837.28,
+      "endpoint_component_gap_m": 64.0,
+      "label": "void_deck",
+      "length_m": 46.3,
+      "nearby_covered_edge_count": 24,
+      "nearby_edge_count": 33,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 1,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 16,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 6
+      },
+      "nearest_covered_edge_m": 4.8,
+      "nearest_edge_m": 4.8,
+      "nearest_main_component_covered_edge_m": 25.8,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 19.6,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": false,
+      "segment_index": 0,
+      "start_component_id": 3335,
+      "start_component_node_count": 7,
+      "start_snap_node_m": 16.5,
+      "start_snap_x": 28537.848,
+      "start_snap_y": 38826.573
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 1201,
+      "end_component_node_count": 19,
+      "end_snap_node_m": 5.6,
+      "end_snap_x": 28465.22,
+      "end_snap_y": 38836.46,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 16.8,
+      "nearby_covered_edge_count": 21,
+      "nearby_edge_count": 33,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 11,
+        "inferred_hdb_point_footway": 2,
+        "inferred_hdb_precinct_footway": 6
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 2.6,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 1,
+      "start_component_id": 1201,
+      "start_component_node_count": 19,
+      "start_snap_node_m": 4.8,
+      "start_snap_x": 28474.77,
+      "start_snap_y": 38837.28
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 1201,
+      "end_component_node_count": 19,
+      "end_snap_node_m": 3.6,
+      "end_snap_x": 28449.11,
+      "end_snap_y": 38837.05,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 13.2,
+      "nearby_covered_edge_count": 23,
+      "nearby_edge_count": 37,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 12,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 7,
+        "osm_native_covered": 1
+      },
+      "nearest_covered_edge_m": 2.2,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 7.9,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 2.1,
+      "nearest_main_component_sources": {
+        "residential": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 2,
+      "start_component_id": 1201,
+      "start_component_node_count": 19,
+      "start_snap_node_m": 5.6,
+      "start_snap_x": 28465.22,
+      "start_snap_y": 38836.46
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 10.0,
+      "end_snap_x": 28431.366,
+      "end_snap_y": 38837.868,
+      "endpoint_component_gap_m": 17.8,
+      "label": "sheltered",
+      "length_m": 28.5,
+      "nearby_covered_edge_count": 31,
+      "nearby_edge_count": 49,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 16,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 9,
+        "osm_building_roof": 1,
+        "osm_native_covered": 2
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.4,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 2.4,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": false,
+      "segment_index": 3,
+      "start_component_id": 1201,
+      "start_component_node_count": 19,
+      "start_snap_node_m": 3.6,
+      "start_snap_x": 28449.11,
+      "start_snap_y": 38837.05
+    },
+    {
+      "classification": "hdb_void_deck_evidence_nearby_check_connectivity",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 16.1,
+      "end_snap_x": 28405.324,
+      "end_snap_y": 38857.108,
+      "endpoint_component_gap_m": null,
+      "label": "void_deck",
+      "length_m": 19.7,
+      "nearby_covered_edge_count": 23,
+      "nearby_edge_count": 29,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 1,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 13,
+        "inferred_hdb_point_footway": 1,
+        "inferred_hdb_precinct_footway": 5,
+        "osm_building_roof": 1,
+        "osm_native_covered": 2
+      },
+      "nearest_covered_edge_m": 10.0,
+      "nearest_edge_m": 10.0,
+      "nearest_main_component_covered_edge_m": 16.5,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 16.5,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 4,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 10.0,
+      "start_snap_x": 28431.366,
+      "start_snap_y": 38837.868
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 11.9,
+      "end_snap_x": 28465.219,
+      "end_snap_y": 38899.912,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 77.2,
+      "nearby_covered_edge_count": 27,
+      "nearby_edge_count": 42,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 2,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 17,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+        "inferred_hdb_precinct_footway": 4,
+        "osm_building_roof": 1,
+        "osm_native_covered": 1
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 13.4,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 13.4,
+      "nearest_main_component_sources": {
+        "osm_building_roof": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 5,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 16.1,
+      "start_snap_x": 28405.324,
+      "start_snap_y": 38857.108
+    },
+    {
+      "classification": "hdb_void_deck_evidence_nearby_check_connectivity",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 8.9,
+      "end_snap_x": 28396.911,
+      "end_snap_y": 38964.642,
+      "endpoint_component_gap_m": null,
+      "label": "void_deck",
+      "length_m": 80.8,
+      "nearby_covered_edge_count": 21,
+      "nearby_edge_count": 21,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 5,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 9,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1,
+        "inferred_hdb_precinct_footway": 5
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 8.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 8.6,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 6,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 11.9,
+      "start_snap_x": 28465.219,
+      "start_snap_y": 38899.912
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 829,
+      "end_component_node_count": 25,
+      "end_snap_node_m": 6.6,
+      "end_snap_x": 28380.96,
+      "end_snap_y": 38968.84,
+      "endpoint_component_gap_m": 16.5,
+      "label": "sheltered",
+      "length_m": 24.1,
+      "nearby_covered_edge_count": 25,
+      "nearby_edge_count": 27,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 7,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 8,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "inferred_hdb_precinct_footway": 5,
+        "osm_native_covered": 4
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.5,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 2.5,
+      "nearest_main_component_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": false,
+      "segment_index": 7,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 8.9,
+      "start_snap_x": 28396.911,
+      "start_snap_y": 38964.642
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 2.6,
+      "end_snap_x": 28347.388,
+      "end_snap_y": 38984.347,
+      "endpoint_component_gap_m": 37.0,
+      "label": "covered_bridge",
+      "length_m": 43.0,
+      "nearby_covered_edge_count": 28,
+      "nearby_edge_count": 40,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 6,
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 7,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "inferred_hdb_precinct_footway": 2,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 9
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 1.0,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 1.0,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": false,
+      "segment_index": 8,
+      "start_component_id": 829,
+      "start_component_node_count": 25,
+      "start_snap_node_m": 6.6,
+      "start_snap_x": 28380.96,
+      "start_snap_y": 38968.84
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 3.7,
+      "end_snap_x": 28409.041,
+      "end_snap_y": 39026.454,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 77.0,
+      "nearby_covered_edge_count": 12,
+      "nearby_edge_count": 31,
+      "nearby_sources": {
+        "AUDITED_SHELTER_CORRECTION": 3,
+        "osm_explicit_shelter": 3,
+        "osm_native_covered": 6
+      },
+      "nearest_covered_edge_m": 1.4,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 33.0,
+      "nearest_main_component_covered_sources": {
+        "osm_explicit_shelter": 1
+      },
+      "nearest_main_component_edge_m": 3.5,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 9,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 2.6,
+      "start_snap_x": 28347.388,
+      "start_snap_y": 38984.347
+    },
+    {
+      "classification": "routable_but_uncovered_or_missing_shelter_source",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 24.7,
+      "end_snap_x": 28399.693,
+      "end_snap_y": 39040.895,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 38.1,
+      "nearby_covered_edge_count": 0,
+      "nearby_edge_count": 10,
+      "nearby_sources": {
+        "footway": 3,
+        "primary": 5,
+        "service": 2
+      },
+      "nearest_covered_edge_m": null,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 57.2,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 5.7,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 10,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 3.7,
+      "start_snap_x": 28409.041,
+      "start_snap_y": 39026.454
+    },
+    {
+      "classification": "hdb_void_deck_component_gap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 7.9,
+      "end_snap_x": 28339.82,
+      "end_snap_y": 39154.798,
+      "endpoint_component_gap_m": 128.7,
+      "label": "void_deck",
+      "length_m": 99.9,
+      "nearby_covered_edge_count": 9,
+      "nearby_edge_count": 12,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 9
+      },
+      "nearest_covered_edge_m": 7.9,
+      "nearest_edge_m": 7.9,
+      "nearest_main_component_covered_edge_m": 73.9,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_precinct_footway": 1
+      },
+      "nearest_main_component_edge_m": 31.9,
+      "nearest_main_component_sources": {
+        "secondary": 1
+      },
+      "needs_model_qa": true,
+      "postal": "560225",
+      "same_component": false,
+      "segment_index": 11,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 24.7,
+      "start_snap_x": 28399.693,
+      "start_snap_y": 39040.895
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "MAYFLOWER MRT STATION Exit 5",
+      "end_component_id": 2099,
+      "end_component_node_count": 11,
+      "end_snap_node_m": 3.6,
+      "end_snap_x": 28355.767,
+      "end_snap_y": 39159.453,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 26.0,
+      "nearby_covered_edge_count": 11,
+      "nearby_edge_count": 14,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 11
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 80.6,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_point_footway": 1
+      },
+      "nearest_main_component_edge_m": 24.6,
+      "nearest_main_component_sources": {
+        "secondary": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560225",
+      "same_component": true,
+      "segment_index": 12,
+      "start_component_id": 2099,
+      "start_component_node_count": 11,
+      "start_snap_node_m": 7.9,
+      "start_snap_x": 28339.82,
+      "start_snap_y": 39154.798
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 6.3,
+      "end_snap_x": 29457.129,
+      "end_snap_y": 39007.107,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 64.1,
+      "nearby_covered_edge_count": 35,
+      "nearby_edge_count": 43,
+      "nearby_sources": {
+        "INFERRED_HDB_PRECINCT_CONNECTOR": 17,
+        "INFERRED_HDB_VOID_DECK": 1,
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 2,
+        "UNREPRESENTED-surface": 2,
+        "covered_linkway": 5,
+        "inferred_hdb_precinct_footway": 8
+      },
+      "nearest_covered_edge_m": 0.3,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 10.2,
+      "nearest_main_component_covered_sources": {
+        "INFERRED_HDB_VOID_DECK_ANCHOR": 1
+      },
+      "nearest_main_component_edge_m": 7.1,
+      "nearest_main_component_sources": {
+        "service": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 0,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 3.2,
+      "start_snap_x": 29477.06,
+      "start_snap_y": 39077.709
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 1.9,
+      "end_snap_x": 29501.833,
+      "end_snap_y": 39009.429,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 45.5,
+      "nearby_covered_edge_count": 15,
+      "nearby_edge_count": 24,
+      "nearby_sources": {
+        "UNREPRESENTED-surface": 4,
+        "covered_linkway": 11
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 0.7,
+      "nearest_main_component_covered_sources": {
+        "covered_linkway": 1
+      },
+      "nearest_main_component_edge_m": 0.7,
+      "nearest_main_component_sources": {
+        "covered_linkway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 1,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 6.3,
+      "start_snap_x": 29457.129,
+      "start_snap_y": 39007.107
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 3.7,
+      "end_snap_x": 29514.72,
+      "end_snap_y": 39008.323,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 15.8,
+      "nearby_covered_edge_count": 9,
+      "nearby_edge_count": 14,
+      "nearby_sources": {
+        "UNREPRESENTED-surface": 2,
+        "covered_linkway": 7
+      },
+      "nearest_covered_edge_m": 0.7,
+      "nearest_edge_m": 0.7,
+      "nearest_main_component_covered_edge_m": 1.0,
+      "nearest_main_component_covered_sources": {
+        "covered_linkway": 1
+      },
+      "nearest_main_component_edge_m": 1.0,
+      "nearest_main_component_sources": {
+        "covered_linkway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 2,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 1.9,
+      "start_snap_x": 29501.833,
+      "start_snap_y": 39009.429
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 2.6,
+      "end_snap_x": 29571.766,
+      "end_snap_y": 39003.646,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 56.1,
+      "nearby_covered_edge_count": 2,
+      "nearby_edge_count": 9,
+      "nearby_sources": {
+        "covered_linkway": 2
+      },
+      "nearest_covered_edge_m": 3.7,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 31.8,
+      "nearest_main_component_covered_sources": {
+        "covered_linkway": 1
+      },
+      "nearest_main_component_edge_m": 11.0,
+      "nearest_main_component_sources": {
+        "primary": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 3,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 3.7,
+      "start_snap_x": 29514.72,
+      "start_snap_y": 39008.323
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 7.8,
+      "end_snap_x": 29567.782,
+      "end_snap_y": 39038.61,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 37.6,
+      "nearby_covered_edge_count": 4,
+      "nearby_edge_count": 9,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 4
+      },
+      "nearest_covered_edge_m": 9.1,
+      "nearest_edge_m": 2.6,
+      "nearest_main_component_covered_edge_m": 24.3,
+      "nearest_main_component_covered_sources": {
+        "inferred_hdb_point_footway": 1
+      },
+      "nearest_main_component_edge_m": 5.0,
+      "nearest_main_component_sources": {
+        "footway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 4,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 2.6,
+      "start_snap_x": 29571.766,
+      "start_snap_y": 39003.646
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 20.8,
+      "end_snap_x": 29785.472,
+      "end_snap_y": 39062.551,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 190.7,
+      "nearby_covered_edge_count": 5,
+      "nearby_edge_count": 10,
+      "nearby_sources": {
+        "inferred_hdb_point_footway": 4,
+        "overhead_bridge_underpass": 1
+      },
+      "nearest_covered_edge_m": 9.1,
+      "nearest_edge_m": 7.6,
+      "nearest_main_component_covered_edge_m": 49.5,
+      "nearest_main_component_covered_sources": {
+        "covered_linkway": 1
+      },
+      "nearest_main_component_edge_m": 49.5,
+      "nearest_main_component_sources": {
+        "covered_linkway": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 5,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 7.8,
+      "start_snap_x": 29567.782,
+      "start_snap_y": 39038.61
+    },
+    {
+      "classification": "bridge_underpass_evidence_nearby_check_endpoint_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 5.1,
+      "end_snap_x": 29816.087,
+      "end_snap_y": 39053.882,
+      "endpoint_component_gap_m": null,
+      "label": "underpass",
+      "length_m": 55.8,
+      "nearby_covered_edge_count": 10,
+      "nearby_edge_count": 13,
+      "nearby_sources": {
+        "osm_explicit_shelter": 1,
+        "osm_native_covered": 7,
+        "overhead_bridge_underpass": 2
+      },
+      "nearest_covered_edge_m": 0.0,
+      "nearest_edge_m": 0.0,
+      "nearest_main_component_covered_edge_m": 2.5,
+      "nearest_main_component_covered_sources": {
+        "overhead_bridge_underpass": 1
+      },
+      "nearest_main_component_edge_m": 2.5,
+      "nearest_main_component_sources": {
+        "overhead_bridge_underpass": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 6,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 20.8,
+      "start_snap_x": 29785.472,
+      "start_snap_y": 39062.551
+    },
+    {
+      "classification": "covered_evidence_nearby_check_connectivity_or_snap",
+      "destination": "ANG MO KIO MRT STATION Exit B",
+      "end_component_id": 0,
+      "end_component_node_count": 637363,
+      "end_snap_node_m": 22.2,
+      "end_snap_x": 29812.493,
+      "end_snap_y": 39071.585,
+      "endpoint_component_gap_m": null,
+      "label": "sheltered",
+      "length_m": 41.5,
+      "nearby_covered_edge_count": 8,
+      "nearby_edge_count": 9,
+      "nearby_sources": {
+        "osm_explicit_shelter": 1,
+        "osm_native_covered": 7
+      },
+      "nearest_covered_edge_m": 1.9,
+      "nearest_edge_m": 1.9,
+      "nearest_main_component_covered_edge_m": 8.0,
+      "nearest_main_component_covered_sources": {
+        "osm_native_covered": 1
+      },
+      "nearest_main_component_edge_m": 8.0,
+      "nearest_main_component_sources": {
+        "osm_native_covered": 1
+      },
+      "needs_model_qa": false,
+      "postal": "560700",
+      "same_component": true,
+      "segment_index": 7,
+      "start_component_id": 0,
+      "start_component_node_count": 637363,
+      "start_snap_node_m": 5.1,
+      "start_snap_x": 29816.087,
+      "start_snap_y": 39053.882
+    }
+  ]
+}
