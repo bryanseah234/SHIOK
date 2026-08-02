@@ -217,6 +217,17 @@ Current implementation:
   `66309` at 303.0 m. Static validation passed before the local bundle was
   removed to save disk space. Treat this as evidence for the next model/data QA
   cycle, not as an active or deployed bundle.
+- `generated_20260802_bus_connector_tolerance_targeted` regenerated the same
+  1,449-record targeted refresh after the coordinate-tolerance fix. Static
+  validation passed with 124,032 indexed postals and 114,329 geometry postals.
+  State counts became 112,950 `SCORED`, 1,379 `SCORED_PARTIAL`, 9,384
+  `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`. Target transitions were 70
+  `SCORED_PARTIAL` -> `SCORED` and 1,379
+  `SCORED_PARTIAL` -> `SCORED_PARTIAL`; no targeted record regressed to
+  `NO_TRANSIT_IN_RANGE`. `557323` remains `SCORED_PARTIAL` at a true measured
+  303.0 m to bus stop `66309`, with 300.0 m policy radius and 305.0 m selection
+  radius recorded in provenance. Web tests and production build passed against
+  this bundle.
 
 ## Actual Bus Arrivals
 

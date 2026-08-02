@@ -9,15 +9,15 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `d19e340` (`feat: add exposed bus stop access connectors`)
+- Latest pushed commit before this evidence update: `6a0e8a2` (`fix: default scoring to island graph`)
 
 ## Local Bundle State
 
 - Active local bundle retained: `generated_20260801_direct_bus_all_targeted`
-- No inactive/pending local bundle is currently retained after cleanup.
+- Retained pending local bundle: `generated_20260802_bus_connector_tolerance_targeted`.
 - Earlier local pending bundle `generated_20260801_165500` was not deployed and has been removed from `web/public/data/` to save disk space.
 - Targeted QA bundle `generated_20260802_bus_connector_targeted` was generated and validated for evidence, then removed from `web/public/data/` to save disk space.
-- Any future data release must regenerate or recreate a validated local bundle before direct deploy.
+- Next data release should use `generated_20260802_bus_connector_tolerance_targeted`, unless a newer validated bundle supersedes it.
 
 ## Active Bundle Counts
 
@@ -31,7 +31,7 @@ Root directory: `web`
 
 ## Bus Connector Targeted Refresh Evidence
 
-- Evidence bundle: `generated_20260802_bus_connector_targeted`
+- Superseded evidence bundle: `generated_20260802_bus_connector_targeted`
 - Source bundle: `generated_20260801_direct_bus_all_targeted`
 - Selected records: 1,449 prior direct-bus fallback partial records.
 - Patched records: 1,449.
@@ -50,6 +50,32 @@ Root directory: `web`
   `SCORED_PARTIAL`, total 54.2, direct bus fallback to `Blk 112`, measured
   303.0 m, policy radius 300.0 m, selection radius 305.0 m.
 
+## Current Pending Bundle Evidence
+
+- Pending retained bundle: `generated_20260802_bus_connector_tolerance_targeted`.
+- Source bundle: `generated_20260801_direct_bus_all_targeted`.
+- Selected records: 1,449 active direct-bus fallback partial records.
+- Patched records: 1,449.
+- State counts after targeted refresh: 112,950 `SCORED`, 1,379
+  `SCORED_PARTIAL`, 9,384 `NO_TRANSIT_IN_RANGE`, 319 `NOT_YET_SCORED`.
+- Targeted state transitions: 70 `SCORED_PARTIAL` -> `SCORED`; 1,379
+  `SCORED_PARTIAL` -> `SCORED_PARTIAL`; 0 target records regressed to
+  `NO_TRANSIT_IN_RANGE`.
+- Route evidence after targeted refresh: 41 best routes use
+  `sheltered_with_bus_stop_access_connector`; 29 target records now have a
+  fully routed `sheltered` best route; 1,379 remain explicit
+  `direct_bus_fallback_unrouted` partial records.
+- Static validation passed: 124,032 indexed postals, 114,329 geometry postals,
+  114,329 geometry postals with route segments, 6,011 transit features.
+- Web tests passed: 31 tests.
+- Production build passed against this bundle.
+- `557323` no longer regresses: it remains `SCORED_PARTIAL`, total 54.2, direct
+  bus fallback to `Blk 112`, true measured distance 303.0 m, policy radius
+  300.0 m, selection radius 305.0 m.
+- Full `run.py readiness` still exits 1 because `qa/island_debug.geojson` was
+  removed during disk cleanup and the readiness network section requires that
+  debug artifact. Static bundle validation is green.
+
 ## Prepared Next Postal Universe
 
 - URA No of Dwelling Units is now wired as an official postal-universe source.
@@ -63,7 +89,9 @@ Root directory: `web`
 ## Verified Checks
 
 - Python tests: 200 passed
-- Web tests: 31 passed
+- Python tests after bus-radius/default-network fixes: 202 passed
+- Web tests against `generated_20260802_bus_connector_tolerance_targeted`: 31 passed
+- Production build against `generated_20260802_bus_connector_tolerance_targeted`: passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
 - Routed browser smoke for 560234: passed
@@ -102,19 +130,16 @@ Root directory: `web`
 
 ## Next Production Data Command
 
-There is no currently retained pending local bundle to release. For the next
-data deployment, first regenerate or recreate a validated bundle, then use:
+The retained pending local bundle is validated. For the next data deployment,
+use:
 
 ```powershell
-.\scripts\release-data-bundle.bat -DataBundle <validated_bundle> -ConfirmProduction
+.\scripts\release-data-bundle.bat -DataBundle generated_20260802_bus_connector_tolerance_targeted -ConfirmProduction
 ```
 
 ## Not Done
 
-- Regenerate or recreate a validated post-connector bundle before any data deploy.
-- Regenerate or recreate the connector-targeted bundle after the bus-radius
-  tolerance fix; active production data does not yet include this code-level
-  correction.
+- Deploy and activate `generated_20260802_bus_connector_tolerance_targeted`.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
 - Work through the remaining `qa/bus_connector_diagnostics_priority_20260802.json` / `.geojson` rows after the general exposed bus-stop access connector fix.
