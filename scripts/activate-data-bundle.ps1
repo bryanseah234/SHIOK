@@ -9,6 +9,8 @@ $ErrorActionPreference = "Stop"
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $WebDir = Join-Path $RepoRoot "web"
 $ConfigPath = Join-Path $WebDir "data-bundle.json"
+$RootIgnorePath = Join-Path $RepoRoot ".vercelignore"
+$WebIgnorePath = Join-Path $WebDir ".vercelignore"
 
 if (-not $DataBundle -or $DataBundle.Contains("/") -or $DataBundle.Contains("\")) {
     throw "Invalid data bundle: $DataBundle"
@@ -52,6 +54,46 @@ try {
     [System.IO.File]::WriteAllText(
         $ConfigPath,
         "{`n  `"bundle`": `"$DataBundle`"`n}",
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    [System.IO.File]::WriteAllText(
+        $RootIgnorePath,
+        @"
+.env
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.next/
+__pycache__/
+*.pyc
+
+raw/
+processed/
+logs/
+qa/
+tmp/
+
+web/.next/
+web/.vercel/
+web/node_modules/
+web/public/data/generated_*/
+!web/public/data/$DataBundle/
+!web/public/data/$DataBundle/**
+"@,
+        [System.Text.UTF8Encoding]::new($false)
+    )
+    [System.IO.File]::WriteAllText(
+        $WebIgnorePath,
+        @"
+.next/
+.vercel/
+node_modules/
+
+public/data/generated_*/
+!public/data/$DataBundle/
+!public/data/$DataBundle/**
+"@,
         [System.Text.UTF8Encoding]::new($false)
     )
     Write-Output "activated_bundle=$DataBundle"

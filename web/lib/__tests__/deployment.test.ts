@@ -65,6 +65,15 @@ describe("deployment packaging", () => {
     expect(script).toContain("-ConfirmProduction");
   });
 
+  it("keeps bundle activation packaging-aware", () => {
+    const script = readFileSync(join(__dirname, "../../../scripts/activate-data-bundle.ps1"), "utf-8");
+
+    expect(script).toContain('Join-Path $WebDir "data-bundle.json"');
+    expect(script).toContain(".vercelignore");
+    expect(script).toContain("!web/public/data/$DataBundle/");
+    expect(script).toContain("!public/data/$DataBundle/");
+  });
+
   it("keeps launch check local-only and broad enough for release rehearsal", () => {
     const script = readFileSync(join(__dirname, "../../../scripts/launch-check.ps1"), "utf-8");
 

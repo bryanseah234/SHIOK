@@ -153,20 +153,20 @@ uv run python run.py validate --input web\public\data\<new_bundle>
 from silently adding unrelated postals from
 `qa/partial_resnap_rescore_sample.json`.
 
-On 2026-08-03, this flow produced local-only bundle
+On 2026-08-03, this flow produced bundle
 `generated_20260803_safe_mayflower_560234_targeted`, patching exactly one
-postal: `560234`. Static validation passed, browser smokes passed, and the
-release helper stopped at plan-only. It is not active in `web/data-bundle.json`
-until it is direct-deployed and activated.
+postal: `560234`. Static validation passed, browser smokes passed, direct
+production deploy succeeded, the remote manifest was verified, and
+`web/data-bundle.json` was activated.
 
 As of 2026-08-03, the active production bundle configured in
 `web/data-bundle.json` is
-`generated_20260802_endpoint_connector_guard_targeted`. It is a targeted
-refresh after the endpoint-connector guard work. Its manifest has 124,032 score
-records: 112,913 `SCORED`, 1,414 `SCORED_PARTIAL`, 9,386
-`NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`. Do not run a release command
-for older bundle names unless that bundle has first been regenerated or
-restored and validated locally.
+`generated_20260803_safe_mayflower_560234_targeted`. It is a one-postal safe
+targeted refresh over `generated_20260802_endpoint_connector_guard_targeted`.
+Its manifest has 124,032 score records: 112,913 `SCORED`, 1,414
+`SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`. Do
+not run a release command for older bundle names unless that bundle has first
+been regenerated or restored and validated locally.
 
 ## Vercel Hobby Limits
 

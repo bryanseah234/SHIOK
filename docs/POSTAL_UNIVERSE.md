@@ -41,7 +41,7 @@ coverage tradeoff.
 - needs geocode after bounded OneMap geocode: 319
 - bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
 
-Active web bundle `generated_20260802_endpoint_connector_guard_targeted`
+Active web bundle `generated_20260803_safe_mayflower_560234_targeted`
 
 - total score records: 124,032
 - `SCORED`: 112,913
@@ -56,9 +56,11 @@ Active web bundle `generated_20260802_endpoint_connector_guard_targeted`
   partial records became fully routed/scored, and no target record regressed to
   `NO_TRANSIT_IN_RANGE`.
 - targeted endpoint-connector guard refresh: 216 active records were refreshed
-  after route-trust and endpoint-connector guard QA. This is the active bundle
-  in `web/data-bundle.json`; later current-network Mayflower experiments are
-  not promoted wholesale unless their comparator gate passes.
+  after route-trust and endpoint-connector guard QA.
+- safe Mayflower targeted refresh: one comparator-approved postal, `560234`,
+  was patched and activated after direct deploy plus remote-manifest
+  verification. Later current-network Mayflower experiments are not promoted
+  wholesale unless their comparator gate passes.
 
 ## Evidence From 2026-08-02 URA Probe
 
