@@ -20,6 +20,9 @@ DEFAULT_GEOJSON_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_triage_queues_202
 DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT = (
     PROJECT_ROOT / "qa" / "onemap_missing_bus_connector_priority_20260802.geojson"
 )
+DEFAULT_OVERPERMISSIVE_PRIORITY_GEOJSON_OUTPUT = (
+    PROJECT_ROOT / "qa" / "onemap_overpermissive_priority_20260802.geojson"
+)
 
 DIRECT_BUS_FALLBACK_ROUTING = "direct_bus_fallback_unrouted"
 FALLBACK_REASONS = {
@@ -436,6 +439,49 @@ def missing_bus_connector_priority_geojson(
     }
 
 
+def overpermissive_priority_geojson(
+    queues: dict[str, list[dict[str, Any]]],
+) -> dict[str, Any]:
+    rows = queues.get("possible_overpermissive_project_path", [])
+
+    def priority_class(row: dict[str, Any]) -> str | None:
+        route_sanity = str(row.get("current_route_vs_validation_direct_sanity") or "")
+        if route_sanity in {
+            "current_route_materially_shorter_than_validation_direct",
+            "current_route_slightly_shorter_than_validation_direct",
+        }:
+            return "shorter_than_validation_direct"
+        if numeric_source_flag(row, "best_unknown_source_m") >= 100.0 and not row.get(
+            "direct_bus_fallback_reason"
+        ):
+            return "unknown_dominant_non_fallback"
+        return None
+
+    def priority_sort(row: dict[str, Any]) -> tuple[int, float]:
+        klass = priority_class(row)
+        try:
+            delta = float(row.get("old_abs_pct_delta") or 0.0)
+        except (TypeError, ValueError):
+            delta = 0.0
+        return (0 if klass == "shorter_than_validation_direct" else 1, -delta)
+
+    features: list[dict[str, Any]] = []
+    priority_rows = [row for row in rows if priority_class(row)]
+    for rank, row in enumerate(sorted(priority_rows, key=priority_sort), start=1):
+        ranked_row = {
+            **row,
+            "priority_rank": rank,
+            "priority_class": priority_class(row),
+        }
+        feature = feature_for_row("overpermissive_priority", ranked_row)
+        if feature is not None:
+            features.append(feature)
+    return {
+        "type": "FeatureCollection",
+        "features": features,
+    }
+
+
 def build_triage_queues(
     *,
     longer_profile_path: Path,
@@ -684,6 +730,11 @@ def main() -> int:
         type=Path,
         default=DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT,
     )
+    parser.add_argument(
+        "--overpermissive-priority-geojson-output",
+        type=Path,
+        default=DEFAULT_OVERPERMISSIVE_PRIORITY_GEOJSON_OUTPUT,
+    )
     parser.add_argument("--summary-output", type=Path, default=None)
     args = parser.parse_args()
 
@@ -698,6 +749,10 @@ def main() -> int:
         args.missing_bus_priority_geojson_output,
         missing_bus_connector_priority_geojson(payload["queues"]),
     )
+    write_json(
+        args.overpermissive_priority_geojson_output,
+        overpermissive_priority_geojson(payload["queues"]),
+    )
     summary = validation_failure_summary(payload)
     if args.summary_output is not None:
         write_json(args.summary_output, summary)
@@ -706,6 +761,9 @@ def main() -> int:
     printable["geojson_output"] = display_path(args.geojson_output)
     printable["missing_bus_priority_geojson_output"] = display_path(
         args.missing_bus_priority_geojson_output
+    )
+    printable["overpermissive_priority_geojson_output"] = display_path(
+        args.overpermissive_priority_geojson_output
     )
     printable["summary_output"] = display_path(args.summary_output) if args.summary_output else None
     print(json.dumps(printable, indent=2, sort_keys=True))

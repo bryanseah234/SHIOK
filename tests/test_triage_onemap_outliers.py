@@ -5,6 +5,7 @@ from scripts.triage_onemap_outliers import (
     classify_row,
     compact_row,
     missing_bus_connector_priority_geojson,
+    overpermissive_priority_geojson,
     routed_vs_validation_direct_sanity,
     source_flags,
     triage_geojson,
@@ -566,6 +567,55 @@ def test_missing_bus_connector_priority_geojson_keeps_plausible_ranked_rows():
         "111111",
     ]
     assert [feature["properties"]["priority_rank"] for feature in geojson["features"]] == [1, 2]
+
+
+def test_overpermissive_priority_geojson_exports_shorter_and_unknown_rows():
+    geojson = overpermissive_priority_geojson(
+        {
+            "possible_overpermissive_project_path": [
+                {
+                    "postal": "436659",
+                    "old_abs_pct_delta": 80.0,
+                    "current_route_vs_validation_direct_sanity": (
+                        "current_route_materially_shorter_than_validation_direct"
+                    ),
+                    "source_flags": {"best_unknown_source_m": 260.1},
+                    "start": {"lat": 1.3, "lon": 103.8},
+                    "end": {"lat": 1.31, "lon": 103.81},
+                },
+                {
+                    "postal": "804360",
+                    "old_abs_pct_delta": 90.0,
+                    "current_route_vs_validation_direct_sanity": "plausible",
+                    "source_flags": {"best_unknown_source_m": 325.1},
+                    "start": {"lat": 1.3, "lon": 103.8},
+                    "end": {"lat": 1.31, "lon": 103.81},
+                },
+                {
+                    "postal": "489929",
+                    "old_abs_pct_delta": 99.0,
+                    "current_route_vs_validation_direct_sanity": "plausible",
+                    "direct_bus_fallback_reason": (
+                        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+                    ),
+                    "source_flags": {"best_unknown_source_m": 0.0},
+                    "start": {"lat": 1.3, "lon": 103.8},
+                    "end": {"lat": 1.31, "lon": 103.81},
+                },
+            ]
+        }
+    )
+
+    assert [feature["properties"]["postal"] for feature in geojson["features"]] == [
+        "436659",
+        "804360",
+    ]
+    assert geojson["features"][0]["properties"]["priority_class"] == (
+        "shorter_than_validation_direct"
+    )
+    assert geojson["features"][1]["properties"]["priority_class"] == (
+        "unknown_dominant_non_fallback"
+    )
 
 
 def test_routed_vs_validation_direct_sanity():
