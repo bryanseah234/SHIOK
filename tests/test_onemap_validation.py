@@ -226,6 +226,8 @@ def test_evaluate_cached_results_keeps_top_100_outlier_preview(tmp_path: Path):
 
     assert len(report["results_preview"]) == 20
     assert len(report["top_outliers_preview"]) == 25
+    assert len(report["top_outliers_by_direction"]["project_longer_than_onemap"]) == 24
+    assert len(report["top_outliers_by_direction"]["same_length"]) == 1
     assert report["top_outliers_preview"][0]["postal"] == "000024"
 
 

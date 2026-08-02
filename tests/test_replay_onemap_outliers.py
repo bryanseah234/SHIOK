@@ -48,6 +48,32 @@ def test_select_outliers_filters_direction_type_delta_and_dedupes():
     assert [row["postal"] for row in selected] == ["123456"]
 
 
+def test_select_outliers_prefers_direction_specific_queue():
+    report = {
+        "top_outliers_preview": [],
+        "top_outliers_by_direction": {
+            "project_shorter_than_onemap": [
+                {
+                    "postal": "123456",
+                    "best_node_type": "mrt_lrt_exit",
+                    "direction": "project_shorter_than_onemap",
+                    "abs_pct_delta": 99.0,
+                }
+            ]
+        },
+    }
+
+    selected = select_outliers(
+        report,
+        limit=10,
+        node_type="any",
+        direction="project_shorter_than_onemap",
+        min_abs_pct_delta=25.0,
+    )
+
+    assert [row["postal"] for row in selected] == ["123456"]
+
+
 def test_replay_row_extracts_bus_and_fallback_fields():
     row = replay_row(
         {

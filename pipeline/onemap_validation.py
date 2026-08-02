@@ -537,6 +537,18 @@ def signed_delta_direction(signed_delta_pct: float) -> str:
     return "same_length"
 
 
+def top_outliers_by_group(
+    results: list[dict[str, Any]], *, group_key: str, limit: int
+) -> dict[str, list[dict[str, Any]]]:
+    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for result in results:
+        groups[str(result.get(group_key) or "unknown")].append(result)
+    return {
+        key: sorted(items, key=lambda item: float(item["abs_pct_delta"]), reverse=True)[:limit]
+        for key, items in sorted(groups.items())
+    }
+
+
 def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     missing: list[str] = []
@@ -627,6 +639,11 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         "top_outliers_preview": sorted(
             results, key=lambda item: float(item["abs_pct_delta"]), reverse=True
         )[:TOP_OUTLIERS_PREVIEW_LIMIT],
+        "top_outliers_by_direction": top_outliers_by_group(
+            results,
+            group_key="direction",
+            limit=TOP_OUTLIERS_PREVIEW_LIMIT,
+        ),
         "results_preview": results[:20],
     }
 

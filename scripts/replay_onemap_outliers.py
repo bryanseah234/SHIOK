@@ -40,7 +40,11 @@ def select_outliers(
     direction: str,
     min_abs_pct_delta: float,
 ) -> list[dict[str, Any]]:
-    outliers = report.get("top_outliers_preview", [])
+    directional = report.get("top_outliers_by_direction")
+    if direction != "any" and isinstance(directional, dict):
+        outliers = directional.get(direction, [])
+    else:
+        outliers = report.get("top_outliers_preview", [])
     if not isinstance(outliers, list):
         return []
 

@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 177 passed
+- Python tests: 178 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -62,7 +62,8 @@ Root directory: `web`
 - Bus-route detour guard: implemented and tested `bus_route_should_use_direct_fallback`; future scoring downgrades implausible graph-routed bus-stop candidates to explicit `direct_bus_fallback_unrouted` partial evidence when direct distance is within 300 m, graph/direct ratio is at least 3.0x, and graph extra distance is at least 100 m.
 - Real scoring probes after the guard: `532183` resolves as `SCORED_PARTIAL` direct-bus fallback; `618380` resolves to Lakeside MRT locally while bus remains `NO_TRANSIT_IN_RANGE`. These are local probes, not a shipped bundle refresh.
 - Bounded outlier replay: `qa/bus_detour_guard_top_outlier_sample_20260802.json` replays the top 20 bus-stop project-longer validation outliers through current local scoring; 14/20 now expose bus as `direct_bus_fallback_unrouted`, 4/20 choose MRT/LRT as best transit, and 3/20 specifically trigger the new implausible-detour guard.
-- Reusable outlier replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --output qa\onemap_outlier_replay_bus_longer_100_20260802.json` passed locally. It selected 84 bus-stop/project-longer/>25% rows from the widened top-100 outlier report; current scoring yields 61 bus direct-fallback routes, 69 bus-stop best results, 15 MRT/LRT best results, and 9 rows that specifically trigger the implausible-detour guard.
+- Reusable outlier replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --output qa\onemap_outlier_replay_bus_longer_100_20260802.json` passed locally. It selected 92 bus-stop/project-longer/>25% rows from the widened top-100-per-direction report; current scoring yields 67 bus direct-fallback routes, 75 bus-stop best results, 17 MRT/LRT best results, and 10 rows that specifically trigger the implausible-detour guard.
+- Project-shorter replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\onemap_outlier_replay_shorter_100_20260802.json` passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.
 - Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained corrected `raw/validation/onemap_walk_od` validation cache.
 
 ## Next Production Command
