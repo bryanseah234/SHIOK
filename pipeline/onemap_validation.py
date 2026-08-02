@@ -18,6 +18,9 @@ from typing import Any
 
 import httpx
 import pandas as pd
+from dotenv import load_dotenv
+
+load_dotenv()
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BUNDLE_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated_20260801_165500"

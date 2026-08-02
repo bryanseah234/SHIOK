@@ -205,26 +205,26 @@
       "live_bus_or_mrt_arrivals": "requires runtime proxy or collected static aggregates",
       "mayflower_560231_560234_shelter_false_negative": "needs source-backed connector/correction review; no postal override",
       "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
-      "onemap_walk_validation_gate": "latest cached 2,000-postal OneMap walk validation is for bundle generated_20260801_165500, not active bundle generated_20260802_bus_connector_tolerance_targeted; rerun validation before using it as active-bundle launch evidence. That cached validation failed: median abs delta 11.458% (max 10.0%), p95 abs delta 94.037% (max 25.0%), missing cache results 0, invalid cache results 1",
+      "onemap_walk_validation_gate": "latest cached 2,000-postal OneMap walk validation failed: median abs delta 11.528% (max 10.0%), p95 abs delta 93.414% (max 25.0%), missing cache results 0, invalid cache results 1",
       "overture_addresses_sg_candidate": "optional archive/probe implemented; produced 125876-postal candidate universe with 1671 Overture-only postcodes; coordinate QA implemented with p95 23.5m and 41 postcodes over 1km; not active production until outlier review/rescore",
       "ura_expanded_scores_live": "postal prep produces 124443 candidate records and 123967 ready-to-score rows; not active production until full rescore/export/deploy"
     },
     "validation_gates": {
       "onemap_walk_validation": {
         "active_bundle": "generated_20260802_bus_connector_tolerance_targeted",
-        "bundle": "generated_20260801_165500",
-        "bundle_matches_active": false,
+        "bundle": "generated_20260802_bus_connector_tolerance_targeted",
+        "bundle_matches_active": true,
         "cached_results": 1999,
         "gate_passed": false,
-        "generated_at": "2026-08-02T02:40:10.143780+00:00",
+        "generated_at": "2026-08-02T07:21:25.628782+00:00",
         "invalid_cache_results": 1,
-        "median_abs_pct_delta": 11.458,
+        "median_abs_pct_delta": 11.528,
         "missing_cache_results": 0,
-        "p95_abs_pct_delta": 94.037,
-        "report_path": "C:\\shiok\\qa\\onemap_validation_cached_report_20260802.json",
+        "p95_abs_pct_delta": 93.414,
+        "report_path": "C:\\shiok\\qa\\onemap_validation_cached_report_active_20260802.json",
         "sample_size": 2000,
-        "state": "failed_stale_bundle",
-        "summary": "latest cached 2,000-postal OneMap walk validation is for bundle generated_20260801_165500, not active bundle generated_20260802_bus_connector_tolerance_targeted; rerun validation before using it as active-bundle launch evidence. That cached validation failed: median abs delta 11.458% (max 10.0%), p95 abs delta 94.037% (max 25.0%), missing cache results 0, invalid cache results 1",
+        "state": "failed",
+        "summary": "latest cached 2,000-postal OneMap walk validation failed: median abs delta 11.528% (max 10.0%), p95 abs delta 93.414% (max 25.0%), missing cache results 0, invalid cache results 1",
         "thresholds": {
           "median_abs_pct_delta_max": 10.0,
           "p95_abs_pct_delta_max": 25.0
@@ -232,7 +232,7 @@
       }
     }
   },
-  "generated_at": "2026-08-02T07:09:01.522317+00:00",
+  "generated_at": "2026-08-02T07:21:59.785545+00:00",
   "network": {
     "debug_path": "C:\\shiok\\qa\\island_debug.geojson",
     "errors": [],
