@@ -1307,6 +1307,148 @@ def build_hdb_precinct_connector_edges(
     return edges_gdf, report
 
 
+def _geometry_parts(geometry):
+    if geometry is None or geometry.is_empty:
+        return []
+    if hasattr(geometry, "geoms"):
+        return [part for part in geometry.geoms if part is not None and not part.is_empty]
+    return [geometry]
+
+
+def build_hdb_cluster_connector_edges(
+    hdb_evidence_gdf: gpd.GeoDataFrame,
+    graph_nodes_gdf: gpd.GeoDataFrame,
+    *,
+    coverage_buffer_m: float = 20.0,
+    max_pair_m: float = 140.0,
+    min_line_m: float = 8.0,
+    min_inside_ratio: float = 0.85,
+    nearest_neighbours: int = 4,
+    max_candidate_nodes: int = 120,
+    max_edges_per_cluster: int = 220,
+    source_layer: str = "inferred_hdb_cluster",
+    synth_class: str = "INFERRED_HDB_CLUSTER_CONNECTOR",
+    source: str = "hdb_points_plus_residential_footprint_clusters",
+    confidence: str = "inferred_hdb_precinct_cluster",
+) -> tuple[gpd.GeoDataFrame, dict[str, object]]:
+    """Connect existing graph nodes through source-backed HDB precinct clusters.
+
+    This is deliberately bounded. It only connects existing graph nodes when the
+    connector line stays inside the union of buffered HDB source evidence.
+    """
+    empty_edges = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    report: dict[str, object] = {
+        "candidate_features": len(hdb_evidence_gdf),
+        "candidate_buildings": len(hdb_evidence_gdf),
+        "clusters": 0,
+        "clusters_with_edges": 0,
+        "added_edges": 0,
+        "length_m": 0.0,
+        "coverage_buffer_m": coverage_buffer_m,
+        "max_pair_m": max_pair_m,
+        "min_inside_ratio": min_inside_ratio,
+        "nearest_neighbours": nearest_neighbours,
+        "max_candidate_nodes": max_candidate_nodes,
+        "source_layer": source_layer,
+        "synth_class": synth_class,
+        "source": source,
+        "confidence": confidence,
+    }
+    if hdb_evidence_gdf.empty or graph_nodes_gdf.empty:
+        return empty_edges, report
+
+    buffered = hdb_evidence_gdf.copy()
+    buffered["geometry"] = buffered.geometry.buffer(coverage_buffer_m)
+    cluster_parts = _geometry_parts(buffered.geometry.union_all())
+    report["clusters"] = len(cluster_parts)
+    if not cluster_parts:
+        return empty_edges, report
+
+    node_sindex = graph_nodes_gdf.sindex
+    cluster_edges: dict[tuple[tuple[float, float], tuple[float, float]], dict[str, object]] = {}
+    clusters_with_edges = 0
+    for cluster_id, cluster in enumerate(cluster_parts):
+        possible = node_sindex.query(cluster, predicate="intersects")
+        if len(possible) < 2:
+            continue
+
+        candidates = graph_nodes_gdf.iloc[possible].copy()
+        candidates["centroid_dist"] = candidates.geometry.distance(cluster.centroid)
+        candidates = candidates.sort_values("centroid_dist").head(max_candidate_nodes)
+        local_nodes: list[tuple[tuple[float, float], Point]] = [
+            (candidate.node, candidate.geometry) for candidate in candidates.itertuples()
+        ]
+        if len(local_nodes) < 2:
+            continue
+
+        local_edges = 0
+        for left_index, (left_node, left_point) in enumerate(local_nodes):
+            neighbours = sorted(
+                (
+                    (
+                        left_point.distance(right_point),
+                        right_index,
+                        right_node,
+                        right_point,
+                    )
+                    for right_index, (right_node, right_point) in enumerate(local_nodes)
+                    if right_index != left_index and left_point.distance(right_point) <= max_pair_m
+                ),
+                key=lambda item: (item[0], item[1]),
+            )[:nearest_neighbours]
+
+            for distance_m, right_index, right_node, right_point in neighbours:
+                if right_index <= left_index or distance_m < min_line_m:
+                    continue
+                edge_key = (
+                    (left_node, right_node) if left_node <= right_node else (right_node, left_node)
+                )
+                if edge_key in cluster_edges:
+                    continue
+                line = LineString([left_point, right_point])
+                inside_ratio = line.intersection(cluster).length / float(line.length)
+                if inside_ratio < min_inside_ratio:
+                    continue
+
+                cluster_edges[edge_key] = {
+                    "geometry": line,
+                    "is_covered": 1,
+                    "is_synthesized": 1,
+                    "length_m": float(line.length),
+                    "u": -1,
+                    "v": -1,
+                    "covered": "yes",
+                    "highway": source_layer,
+                    "synth_class": synth_class,
+                    "source_layer": source_layer,
+                    "confidence": confidence,
+                    "cluster_id": cluster_id,
+                    "inside_ratio": float(inside_ratio),
+                }
+                local_edges += 1
+                if local_edges >= max_edges_per_cluster:
+                    break
+            if local_edges >= max_edges_per_cluster:
+                break
+
+        if local_edges:
+            clusters_with_edges += 1
+
+    if not cluster_edges:
+        report["clusters_with_edges"] = clusters_with_edges
+        return empty_edges, report
+
+    edges_gdf = gpd.GeoDataFrame(
+        list(cluster_edges.values()),
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    report["clusters_with_edges"] = clusters_with_edges
+    report["added_edges"] = len(edges_gdf)
+    report["length_m"] = float(edges_gdf.geometry.length.sum())
+    return edges_gdf, report
+
+
 def get_skeleton(poly):
     try:
         # Some very thin polygons cause Voronoi errors in centerline
@@ -1730,6 +1872,19 @@ def run_build(scope: str = "pilot"):
         hdb_footprints_gdf,
         graph_nodes_gdf,
     )
+    hdb_cluster_edges_gdf, hdb_cluster_report = build_hdb_cluster_connector_edges(
+        hdb_points_gdf,
+        graph_nodes_gdf,
+        coverage_buffer_m=16.0,
+        max_pair_m=60.0,
+        max_candidate_nodes=40,
+        max_edges_per_cluster=80,
+        nearest_neighbours=3,
+        source_layer="inferred_hdb_point_cluster",
+        synth_class="INFERRED_HDB_POINT_CLUSTER_CONNECTOR",
+        source="hdb_existing_building_point_clusters",
+        confidence="inferred_hdb_point_cluster",
+    )
     hdb_void_length_m = (
         float(hdb_void_edges_gdf.geometry.length.sum()) if not hdb_void_edges_gdf.empty else 0.0
     )
@@ -1739,6 +1894,11 @@ def run_build(scope: str = "pilot"):
     hdb_precinct_length_m = (
         float(hdb_precinct_edges_gdf.geometry.length.sum())
         if not hdb_precinct_edges_gdf.empty
+        else 0.0
+    )
+    hdb_cluster_length_m = (
+        float(hdb_cluster_edges_gdf.geometry.length.sum())
+        if not hdb_cluster_edges_gdf.empty
         else 0.0
     )
     print(
@@ -1762,6 +1922,14 @@ def run_build(scope: str = "pilot"):
         f"added={hdb_precinct_report['added_edges']}, "
         f"length={hdb_precinct_length_m:.1f}m"
     )
+    print(
+        "Inferred HDB point-cluster connectors: "
+        f"candidate_features={hdb_cluster_report['candidate_features']}, "
+        f"clusters={hdb_cluster_report['clusters']}, "
+        f"clusters_with_edges={hdb_cluster_report['clusters_with_edges']}, "
+        f"added={hdb_cluster_report['added_edges']}, "
+        f"length={hdb_cluster_length_m:.1f}m"
+    )
     if not hdb_void_edges_gdf.empty:
         edges_gdf = pd.concat([edges_gdf, hdb_void_edges_gdf], ignore_index=True)
         native_covered_mask = pd.concat(
@@ -1778,6 +1946,12 @@ def run_build(scope: str = "pilot"):
         edges_gdf = pd.concat([edges_gdf, hdb_precinct_edges_gdf], ignore_index=True)
         native_covered_mask = pd.concat(
             [native_covered_mask, pd.Series([False] * len(hdb_precinct_edges_gdf))],
+            ignore_index=True,
+        )
+    if not hdb_cluster_edges_gdf.empty:
+        edges_gdf = pd.concat([edges_gdf, hdb_cluster_edges_gdf], ignore_index=True)
+        native_covered_mask = pd.concat(
+            [native_covered_mask, pd.Series([False] * len(hdb_cluster_edges_gdf))],
             ignore_index=True,
         )
 
@@ -2345,6 +2519,7 @@ def run_build(scope: str = "pilot"):
         "covered_edge_length_m_inferred_hdb_void_deck": hdb_void_length_m,
         "covered_edge_length_m_inferred_hdb_void_deck_anchors": hdb_anchor_length_m,
         "covered_edge_length_m_inferred_hdb_precinct_connectors": hdb_precinct_length_m,
+        "covered_edge_length_m_inferred_hdb_point_cluster_connectors": hdb_cluster_length_m,
         "covered_edge_length_m_audited_corrections": correction_length_m,
         "covered_edge_length_m_union": float(covered_union_length),
         "shade_proxy_edge_count": shade_edge_count,
@@ -2353,6 +2528,7 @@ def run_build(scope: str = "pilot"):
         "inferred_hdb_void_deck": hdb_void_report,
         "inferred_hdb_void_deck_anchors": hdb_anchor_report,
         "inferred_hdb_precinct_connectors": hdb_precinct_report,
+        "inferred_hdb_point_cluster_connectors": hdb_cluster_report,
         "inferred_hdb_precinct_footways": hdb_footway_report,
         "inferred_hdb_point_footways": hdb_point_footway_report,
         "audited_shelter_corrections": correction_report,
@@ -2382,6 +2558,10 @@ def run_build(scope: str = "pilot"):
         hpe = hdb_precinct_edges_gdf.to_crs(epsg=4326)
         hpe["class"] = "INFERRED_HDB_PRECINCT_CONNECTOR"
         debug_export = pd.concat([debug_export, hpe[["geometry", "class"]]], ignore_index=True)
+    if not hdb_cluster_edges_gdf.empty:
+        hce = hdb_cluster_edges_gdf.to_crs(epsg=4326)
+        hce["class"] = "INFERRED_HDB_POINT_CLUSTER_CONNECTOR"
+        debug_export = pd.concat([debug_export, hce[["geometry", "class"]]], ignore_index=True)
     if "source_layer" in edges_gdf.columns:
         debug_source_layer = edges_gdf["source_layer"].astype(str)
     else:

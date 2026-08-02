@@ -1,17 +1,17 @@
 {
-  "nodes": 653107,
-  "edges": 871577,
-  "mean_edge_length_m": 17.821571124583237,
-  "connected_components_count": 2838,
+  "nodes": 653122,
+  "edges": 896829,
+  "mean_edge_length_m": 17.85299775067322,
+  "connected_components_count": 2752,
   "top_5_component_sizes": [
-    617694,
+    618084,
     1946,
     1470,
     1402,
     1295
   ],
-  "osm_only_top_3_component_node_share_pct": 95.07824708064877,
-  "top_3_component_node_share_pct": 95.10080277810528,
+  "osm_only_top_3_component_node_share_pct": 95.13551793948072,
+  "top_3_component_node_share_pct": 95.15833182774428,
   "residual_components_gt_50_osm_only": [
     {
       "size": 1946,
@@ -1281,17 +1281,17 @@
     },
     "BUKIT BATOK": {
       "ALIGNED": 226,
-      "OFFSET": 21,
+      "OFFSET": 22,
       "UNREPRESENTED-surface": 41,
       "UNDERGROUND_OR_INDOOR": 1,
-      "NEEDS_MANUAL": 50
+      "NEEDS_MANUAL": 49
     },
     "BUKIT MERAH": {
       "ALIGNED": 252,
-      "OFFSET": 26,
+      "OFFSET": 27,
       "UNREPRESENTED-surface": 46,
       "UNDERGROUND_OR_INDOOR": 3,
-      "NEEDS_MANUAL": 40
+      "NEEDS_MANUAL": 39
     },
     "BUKIT PANJANG": {
       "ALIGNED": 178,
@@ -1534,9 +1534,9 @@
     "SERANGOON": {
       "ALIGNED": 105,
       "OFFSET": 9,
-      "UNREPRESENTED-surface": 45,
+      "UNREPRESENTED-surface": 46,
       "UNDERGROUND_OR_INDOOR": 2,
-      "NEEDS_MANUAL": 25
+      "NEEDS_MANUAL": 24
     },
     "SIMPANG": {
       "ALIGNED": 0,
@@ -1576,9 +1576,9 @@
     "TAMPINES": {
       "ALIGNED": 296,
       "OFFSET": 16,
-      "UNREPRESENTED-surface": 73,
+      "UNREPRESENTED-surface": 74,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 50
+      "NEEDS_MANUAL": 49
     },
     "TANGLIN": {
       "ALIGNED": 45,
@@ -1625,9 +1625,9 @@
     "WOODLANDS": {
       "ALIGNED": 96,
       "OFFSET": 7,
-      "UNREPRESENTED-surface": 163,
+      "UNREPRESENTED-surface": 165,
       "UNDERGROUND_OR_INDOOR": 0,
-      "NEEDS_MANUAL": 82
+      "NEEDS_MANUAL": 80
     },
     "YISHUN": {
       "ALIGNED": 102,
@@ -1695,13 +1695,13 @@
     "YISHUN": 51.11933549450095
   },
   "linkway_total_length_m": 330472.5149498257,
-  "synthesized_length_m": 1615.577097432283,
-  "synthesized_pct_of_total": 0.4888688239860339,
-  "unsnapped_endpoints_count": 1316,
-  "needs_manual_count": 1316,
+  "synthesized_length_m": 1605.771485986874,
+  "synthesized_pct_of_total": 0.4859016751304331,
+  "unsnapped_endpoints_count": 1310,
+  "needs_manual_count": 1310,
   "covered_edge_length_m_osm_tags": 601903.6874432785,
-  "covered_edge_length_m_lta_match": 272495.2290865707,
-  "covered_edge_length_m_lta_bridge_underpass_match": 95083.52541082863,
+  "covered_edge_length_m_lta_match": 276700.21824425936,
+  "covered_edge_length_m_lta_bridge_underpass_match": 96539.9389349166,
   "covered_edge_length_m_osm_roof_canopy": 33880.75591428681,
   "covered_edge_length_m_osm_explicit_shelter": 558121.4302076835,
   "covered_edge_length_m_inferred_hdb_precinct_footways": 384265.58574225206,
@@ -1709,10 +1709,11 @@
   "covered_edge_length_m_inferred_hdb_void_deck": 242523.1376465145,
   "covered_edge_length_m_inferred_hdb_void_deck_anchors": 264991.1536549765,
   "covered_edge_length_m_inferred_hdb_precinct_connectors": 1940349.988357267,
+  "covered_edge_length_m_inferred_hdb_point_cluster_connectors": 478238.17771681614,
   "covered_edge_length_m_audited_corrections": 400.2867489100903,
-  "covered_edge_length_m_union": 3823052.995018149,
-  "shade_proxy_edge_count": 64291,
-  "shade_proxy_weighted_length_m": 840954.5099144597,
+  "covered_edge_length_m_union": 4301281.344218519,
+  "shade_proxy_edge_count": 64541,
+  "shade_proxy_weighted_length_m": 843339.2275912806,
   "shade_proxy_sources": {
     "nparks_heritage_road_green_buffers": {
       "status": "loaded",
@@ -1782,6 +1783,23 @@
     "nearest_neighbours": 3,
     "source": "hdb_points_plus_residential_footprints",
     "confidence": "inferred"
+  },
+  "inferred_hdb_point_cluster_connectors": {
+    "candidate_features": 13436,
+    "candidate_buildings": 13436,
+    "clusters": 1135,
+    "clusters_with_edges": 1094,
+    "added_edges": 25233,
+    "length_m": 478238.17771681614,
+    "coverage_buffer_m": 16.0,
+    "max_pair_m": 60.0,
+    "min_inside_ratio": 0.85,
+    "nearest_neighbours": 3,
+    "max_candidate_nodes": 40,
+    "source_layer": "inferred_hdb_point_cluster",
+    "synth_class": "INFERRED_HDB_POINT_CLUSTER_CONNECTOR",
+    "source": "hdb_existing_building_point_clusters",
+    "confidence": "inferred_hdb_point_cluster"
   },
   "inferred_hdb_precinct_footways": {
     "candidate_buildings": 8544,

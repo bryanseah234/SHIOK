@@ -5,6 +5,7 @@ from scripts.run_network_build import (
     apply_hdb_point_footway_coverage,
     apply_hdb_precinct_footway_coverage,
     apply_polygon_coverage_attribution,
+    build_hdb_cluster_connector_edges,
     build_hdb_precinct_connector_edges,
     build_hdb_void_deck_anchor_edges,
     build_hdb_void_deck_edges,
@@ -141,6 +142,76 @@ def test_build_hdb_precinct_connector_edges_links_nearby_nodes_inside_hdb_buffer
     assert set(edges["synth_class"]) == {"INFERRED_HDB_PRECINCT_CONNECTOR"}
     assert set(edges["is_covered"]) == {1}
     assert all(edge.length <= 30.0 for edge in edges.geometry)
+
+
+def test_build_hdb_cluster_connector_edges_links_nodes_inside_merged_hdb_buffer():
+    hdb_footprints = gpd.GeoDataFrame(
+        [
+            {
+                "id": 1,
+                "postal_code": "560231",
+                "geometry": Polygon([(0, 0), (30, 0), (30, 20), (0, 20)]),
+            },
+            {
+                "id": 2,
+                "postal_code": "560231",
+                "geometry": Polygon([(70, 0), (100, 0), (100, 20), (70, 20)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+    nodes = gpd.GeoDataFrame(
+        {"node": [(5.0, 10.0), (95.0, 10.0), (200.0, 200.0)]},
+        geometry=[Point(5, 10), Point(95, 10), Point(200, 200)],
+        crs="EPSG:3414",
+    )
+
+    edges, report = build_hdb_cluster_connector_edges(
+        hdb_footprints,
+        nodes,
+        coverage_buffer_m=25.0,
+        max_pair_m=120.0,
+    )
+
+    assert report["candidate_buildings"] == 2
+    assert report["clusters_with_edges"] == 1
+    assert report["added_edges"] == 1
+    assert edges.iloc[0]["is_covered"] == 1
+    assert edges.iloc[0]["source_layer"] == "inferred_hdb_cluster"
+    assert edges.iloc[0]["synth_class"] == "INFERRED_HDB_CLUSTER_CONNECTOR"
+
+
+def test_build_hdb_cluster_connector_edges_rejects_lines_outside_cluster():
+    hdb_footprints = gpd.GeoDataFrame(
+        [
+            {
+                "id": 1,
+                "postal_code": "560231",
+                "geometry": Polygon([(0, 0), (20, 0), (20, 20), (0, 20)]),
+            },
+            {
+                "id": 2,
+                "postal_code": "560231",
+                "geometry": Polygon([(80, 80), (100, 80), (100, 100), (80, 100)]),
+            },
+        ],
+        crs="EPSG:3414",
+    )
+    nodes = gpd.GeoDataFrame(
+        {"node": [(10.0, 10.0), (90.0, 90.0)]},
+        geometry=[Point(10, 10), Point(90, 90)],
+        crs="EPSG:3414",
+    )
+
+    edges, report = build_hdb_cluster_connector_edges(
+        hdb_footprints,
+        nodes,
+        coverage_buffer_m=10.0,
+        max_pair_m=140.0,
+    )
+
+    assert report["added_edges"] == 0
+    assert edges.empty
 
 
 def test_compute_polygon_match_ratio_marks_existing_footways_under_roof():
