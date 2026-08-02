@@ -1,0 +1,906 @@
+{
+  "blocked_postals": [
+    "530535",
+    "760103",
+    "758588",
+    "601291",
+    "528585"
+  ],
+  "blocking_count": 5,
+  "candidate_count": 22,
+  "compared_count": 22,
+  "comparisons": [
+    {
+      "active": {
+        "best_node": {
+          "exit": "64361",
+          "name": "Blk 535",
+          "routed_m": 347.9,
+          "station": "Blk 535",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.494,
+        "sheltered_m": 411.2,
+        "state": "SCORED",
+        "total": 58.7
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "64361",
+          "name": "Blk 535",
+          "routed_m": null,
+          "station": "Blk 535",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 28.9,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -382.3,
+        "total": -3.7
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "530535"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 322.4,
+          "station": "Aft Chong Pang CC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.181,
+        "sheltered_m": 348.5,
+        "state": "SCORED",
+        "total": 46.2
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 68.0,
+          "station": "Aft Chong Pang CC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 68.0,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": -0.181,
+        "sheltered_m": -280.5,
+        "total": 13.8
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "760103"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": 860.6,
+          "station": "Opp Hong San Si Tp",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 860.6,
+        "state": "SCORED",
+        "total": 17.3
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "station": "Opp Hong San Si Tp",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 133.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -727.6,
+        "total": 37.7
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "417092"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "62039",
+          "name": "Raya Gdn",
+          "routed_m": 457.4,
+          "station": "Raya Gdn",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 457.4,
+        "state": "SCORED",
+        "total": 36.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "62039",
+          "name": "Raya Gdn",
+          "routed_m": null,
+          "station": "Raya Gdn",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 51.7,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -405.7,
+        "total": 19.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "534317"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 919.6,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 919.6,
+        "state": "SCORED",
+        "total": 14.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 118.5,
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -801.1,
+        "total": 39.8
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "455383"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "26289",
+          "name": "Aft Tuas Sth St 2",
+          "routed_m": 613.4,
+          "station": "Aft Tuas Sth St 2",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 613.4,
+        "state": "SCORED",
+        "total": 28.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "26289",
+          "name": "Aft Tuas Sth St 2",
+          "routed_m": null,
+          "station": "Aft Tuas Sth St 2",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 127.8,
+        "state": "SCORED_PARTIAL",
+        "total": 51.5
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -485.6,
+        "total": 22.7
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "637814"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "27449",
+          "name": "Aft Westwood Ave",
+          "routed_m": 421.3,
+          "station": "Aft Westwood Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.398,
+        "sheltered_m": 479.0,
+        "state": "SCORED",
+        "total": 51.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "27449",
+          "name": "Aft Westwood Ave",
+          "routed_m": null,
+          "station": "Aft Westwood Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 24.6,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -454.4,
+        "total": 3.2
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "648874"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "50991",
+          "name": "Blk 82",
+          "routed_m": 295.6,
+          "station": "Blk 82",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.364,
+        "sheltered_m": 295.6,
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "50991",
+          "name": "Blk 82",
+          "routed_m": null,
+          "station": "Blk 82",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 59.4,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -236.2,
+        "total": 0.4
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "320087"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "91071",
+          "name": "Bef Tg Katong Rd",
+          "routed_m": 259.4,
+          "station": "Bef Tg Katong Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 259.4,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "91071",
+          "name": "Bef Tg Katong Rd",
+          "routed_m": null,
+          "station": "Bef Tg Katong Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 89.4,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -170.0,
+        "total": 15.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "437787"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": 153.5,
+          "station": "Aft Queen's Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.504,
+        "sheltered_m": 153.5,
+        "state": "SCORED",
+        "total": 80.2
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "station": "Aft Queen's Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 50.9,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -102.6,
+        "total": -25.2
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "758588"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "74979",
+          "name": "Blk 967A",
+          "routed_m": 507.3,
+          "station": "Blk 967A",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.274,
+        "sheltered_m": 511.5,
+        "state": "SCORED",
+        "total": 45.3
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "75059",
+          "name": "Bef Tampines West Stn",
+          "routed_m": null,
+          "station": "Bef Tampines West Stn",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 232.6,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -278.9,
+        "total": 9.7
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "478983"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "55109",
+          "name": "Serenity Pk",
+          "routed_m": 559.1,
+          "station": "Serenity Pk",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 559.1,
+        "state": "SCORED",
+        "total": 31.6
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "55109",
+          "name": "Serenity Pk",
+          "routed_m": null,
+          "station": "Serenity Pk",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 116.7,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -442.4,
+        "total": 23.4
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "806063"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "28621",
+          "name": "Blk 241",
+          "routed_m": 565.9,
+          "station": "Blk 241",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.67,
+        "sheltered_m": 570.5,
+        "state": "SCORED",
+        "total": 56.3
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "28621",
+          "name": "Blk 241",
+          "routed_m": null,
+          "station": "Blk 241",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 91.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -479.5,
+        "total": -1.3
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "601291"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "75409",
+          "name": "The Santorini",
+          "routed_m": 406.8,
+          "station": "The Santorini",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.247,
+        "sheltered_m": 406.8,
+        "state": "SCORED",
+        "total": 69.5
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "75259",
+          "name": "Tropica Condo",
+          "routed_m": null,
+          "station": "Tropica Condo",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 215.1,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -191.7,
+        "total": -14.5
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "528585"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "22309",
+          "name": "Aft Fan Yoong Rd",
+          "routed_m": 409.7,
+          "station": "Aft Fan Yoong Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 409.7,
+        "state": "SCORED",
+        "total": 39.5
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "22559",
+          "name": "Opp Blk 657 CP",
+          "routed_m": null,
+          "station": "Opp Blk 657 CP",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 197.1,
+        "state": "SCORED_PARTIAL",
+        "total": 52.3
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -212.6,
+        "total": 12.8
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "627662"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": 731.2,
+          "station": "Opp Hong San Si Tp",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 731.2,
+        "state": "SCORED",
+        "total": 23.1
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "station": "Opp Hong San Si Tp",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 251.1,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -480.1,
+        "total": 31.9
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "417117"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "48029",
+          "name": "Bef Mandai Lake Rd",
+          "routed_m": 567.9,
+          "station": "Bef Mandai Lake Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 567.9,
+        "state": "SCORED",
+        "total": 36.2
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "48029",
+          "name": "Bef Mandai Lake Rd",
+          "routed_m": null,
+          "station": "Bef Mandai Lake Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 66.4,
+        "state": "SCORED_PARTIAL",
+        "total": 54.2
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -501.5,
+        "total": 18.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "729761"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "62239",
+          "name": "Opp S'pore Girls' Hme",
+          "routed_m": 343.2,
+          "station": "Opp S'pore Girls' Hme",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 343.2,
+        "state": "SCORED",
+        "total": 40.5
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "62239",
+          "name": "Opp S'pore Girls' Hme",
+          "routed_m": null,
+          "station": "Opp S'pore Girls' Hme",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 145.6,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -197.6,
+        "total": 14.5
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "530180"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "28099",
+          "name": "Opp Lakeside Stn",
+          "routed_m": 1008.9,
+          "station": "Opp Lakeside Stn",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.609,
+        "sheltered_m": 1045.5,
+        "state": "SCORED",
+        "total": 34.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "28099",
+          "name": "Opp Lakeside Stn",
+          "routed_m": null,
+          "station": "Opp Lakeside Stn",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 183.8,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -861.7,
+        "total": 20.2
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "648320"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 418.3,
+          "station": "The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 418.3,
+        "state": "SCORED",
+        "total": 38.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "59751",
+          "name": "Opp The Shaughnessy",
+          "routed_m": null,
+          "station": "Opp The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 189.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -229.3,
+        "total": 17.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "768106"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "65191",
+          "name": "Bef Punggol Rd",
+          "routed_m": 496.1,
+          "station": "Bef Punggol Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.336,
+        "sheltered_m": 496.1,
+        "state": "SCORED",
+        "total": 48.4
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "65191",
+          "name": "Bef Punggol Rd",
+          "routed_m": null,
+          "station": "Bef Punggol Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 166.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -330.1,
+        "total": 6.6
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "544188"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "47619",
+          "name": "Blk 688 CP",
+          "routed_m": 481.6,
+          "station": "Blk 688 CP",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.026,
+        "sheltered_m": 481.6,
+        "state": "SCORED",
+        "total": 37.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "47619",
+          "name": "Blk 688 CP",
+          "routed_m": null,
+          "station": "Blk 688 CP",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "sheltered_m": 167.1,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -314.5,
+        "total": 18.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "735689"
+    }
+  ],
+  "flag_counts": {
+    "best_node_changed": 22,
+    "coverage_regression": 1,
+    "total_improvement": 17,
+    "total_regression": 4
+  },
+  "inputs": {
+    "bundle_dir": "C:\\shiok\\web\\public\\data\\generated_20260803_safe_mayflower_560234_targeted",
+    "candidate": "qa\\score_guarded_missing_bus_priority_current_20260803.json",
+    "coverage_tolerance": 0.02,
+    "total_tolerance": 0.5
+  },
+  "ok": false,
+  "promotion_recommendation": "promote_safe_improvements_only",
+  "safe_improvement_count": 16,
+  "safe_improvement_postals": [
+    "417092",
+    "534317",
+    "455383",
+    "637814",
+    "648874",
+    "437787",
+    "478983",
+    "806063",
+    "627662",
+    "417117",
+    "729761",
+    "530180",
+    "648320",
+    "768106",
+    "544188",
+    "735689"
+  ],
+  "safe_unchanged_postals": []
+}

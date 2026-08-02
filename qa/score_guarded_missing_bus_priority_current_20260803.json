@@ -1,0 +1,4350 @@
+[
+  {
+    "best_node": {
+      "exit": "64361",
+      "name": "Blk 535",
+      "routed_m": null,
+      "snap_distance_m": 13.6,
+      "station": "Blk 535",
+      "straight_line_m": 28.9,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 28.9,
+      "shortest_m": 28.9
+    },
+    "postal": "530535",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 5
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.684,
+        "candidate_count": 3,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 28.9,
+        "nearest_graph_routed_m": 392.6,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 31.0,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 8,
+        "candidate_scores": 7,
+        "nearest_routed_m": 307.7,
+        "route_results": 7,
+        "routes_within_access_range": 6
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 5,
+        "mrt_lrt_exit_candidates": 3
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "64361",
+          "name": "Blk 535",
+          "routed_m": null,
+          "snap_distance_m": 13.6,
+          "station": "Blk 535",
+          "straight_line_m": 28.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 28.9,
+          "shortest_m": 28.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "64361",
+          "name": "Blk 535",
+          "routed_m": null,
+          "snap_distance_m": 13.6,
+          "station": "Blk 535",
+          "straight_line_m": 28.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 28.9,
+          "shortest_m": 28.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "59139",
+      "name": "Aft Chong Pang CC",
+      "routed_m": 68.0,
+      "snap_distance_m": 15.3,
+      "station": "Aft Chong Pang CC",
+      "straight_line_m": 28.6,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [
+      {
+        "label": "exposed gap near 1.43154, 103.82935",
+        "len_m": 68.0,
+        "location": {
+          "lat": 1.431543,
+          "lon": 103.829346
+        }
+      }
+    ],
+    "paths": {
+      "bus_stop_access_connector_m": 45.1,
+      "covered_m": 0.0,
+      "covered_ratio": 0.0,
+      "destination_snap_connector_m": 0.0,
+      "detour_pct": 0.0,
+      "endpoint_snap_connector_m": 18.9,
+      "heat_comfort_m": 0.0,
+      "heat_comfort_ratio": 0.0,
+      "mrt_lrt_exit_access_connector_m": 0.0,
+      "origin_snap_connector_m": 18.9,
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "shade_m": 0.0,
+      "shade_ratio": 0.0,
+      "sheltered_m": 68.0,
+      "shortest_covered_ratio": 0.0,
+      "shortest_m": 68.0,
+      "shortest_shade_ratio": 0.0
+    },
+    "postal": "760103",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 5
+      },
+      "bus_stop_access_connector": {
+        "candidate_count": 1,
+        "examples": [
+          {
+            "bus_stop_code": "59139",
+            "connector_m": 45.1,
+            "direct_m": 28.6,
+            "name": "Aft Chong Pang CC",
+            "routed_m": 68.0
+          }
+        ],
+        "geometry": "graph_route_plus_exposed_endpoint_connector_to_datamall_bus_stop",
+        "max_candidates": 24,
+        "max_direct_ratio": 2.5,
+        "max_extra_m": 100.0,
+        "max_walk_m": 300.0,
+        "reason": "implausible_bus_stop_graph_snap_replaced_by_nearby_graph_route_plus_exposed_connector",
+        "search_m": 50.0,
+        "source_layer": "bus_stop_access_connector"
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.464,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 51.0,
+        "nearest_graph_routed_m": 379.7,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 18.9,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 10,
+        "candidate_scores": 10,
+        "nearest_routed_m": 322.4,
+        "route_results": 10,
+        "routes_within_access_range": 10
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 5,
+        "mrt_lrt_exit_candidates": 5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 68.0,
+          "snap_distance_m": 15.3,
+          "station": "Aft Chong Pang CC",
+          "straight_line_m": 28.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.43154, 103.82935",
+            "len_m": 68.0,
+            "location": {
+              "lat": 1.431543,
+              "lon": 103.829346
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 45.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 18.9,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 18.9,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 68.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 68.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 0.0,
+          "rain": 0.0
+        },
+        "total": 60.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 68.0,
+          "snap_distance_m": 15.3,
+          "station": "Aft Chong Pang CC",
+          "straight_line_m": 28.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.43154, 103.82935",
+            "len_m": 68.0,
+            "location": {
+              "lat": 1.431543,
+              "lon": 103.829346
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 45.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 18.9,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 18.9,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 68.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 68.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": 100.0,
+          "heat": 0.0,
+          "rain": 0.0
+        },
+        "total": 60.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "YISHUN MRT STATION Exit A",
+          "routed_m": 1010.8,
+          "snap_distance_m": 2.6,
+          "station": "YISHUN MRT STATION",
+          "straight_line_m": 648.8,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.43172, 103.82895",
+            "len_m": 110.7,
+            "location": {
+              "lat": 1.431721,
+              "lon": 103.82895
+            }
+          },
+          {
+            "label": "exposed gap near 1.43199, 103.82915",
+            "len_m": 167.9,
+            "location": {
+              "lat": 1.431985,
+              "lon": 103.829151
+            }
+          },
+          {
+            "label": "exposed gap near 1.43165, 103.82965",
+            "len_m": 8.5,
+            "location": {
+              "lat": 1.431646,
+              "lon": 103.829646
+            }
+          },
+          {
+            "label": "exposed gap near 1.42940, 103.83480",
+            "len_m": 2.6,
+            "location": {
+              "lat": 1.429397,
+              "lon": 103.834795
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 750.5,
+          "covered_ratio": 0.721,
+          "destination_snap_connector_m": 2.6,
+          "detour_pct": 2.9,
+          "endpoint_snap_connector_m": 21.5,
+          "heat_comfort_m": 750.5,
+          "heat_comfort_ratio": 0.721,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 18.9,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 1040.2,
+          "shortest_covered_ratio": 0.568,
+          "shortest_m": 1010.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 18.9,
+          "bus": 0.0,
+          "crossing": 80.0,
+          "heat": 72.1,
+          "rain": 72.1
+        },
+        "total": 39.5
+      }
+    },
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": 100.0,
+      "heat": 0.0,
+      "rain": 0.0
+    },
+    "total": 60.0
+  },
+  {
+    "best_node": {
+      "exit": "83031",
+      "name": "Opp Hong San Si Tp",
+      "routed_m": null,
+      "snap_distance_m": 12.1,
+      "station": "Opp Hong San Si Tp",
+      "straight_line_m": 133.0,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 133.0,
+      "shortest_m": 133.0
+    },
+    "postal": "417092",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 3
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.437,
+        "candidate_count": 3,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 133.0,
+        "nearest_graph_routed_m": 894.4,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 21.7,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 5,
+        "candidate_scores": 5,
+        "nearest_routed_m": 860.6,
+        "route_results": 5,
+        "routes_within_access_range": 4
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 3,
+        "mrt_lrt_exit_candidates": 2
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "snap_distance_m": 12.1,
+          "station": "Opp Hong San Si Tp",
+          "straight_line_m": 133.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 133.0,
+          "shortest_m": 133.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "snap_distance_m": 12.1,
+          "station": "Opp Hong San Si Tp",
+          "straight_line_m": 133.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 133.0,
+          "shortest_m": 133.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "62039",
+      "name": "Raya Gdn",
+      "routed_m": null,
+      "snap_distance_m": 11.1,
+      "station": "Raya Gdn",
+      "straight_line_m": 51.7,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 51.7,
+      "shortest_m": 51.7
+    },
+    "postal": "534317",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 4
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.477,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 51.7,
+        "nearest_graph_routed_m": 493.0,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 24.6,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 6,
+        "candidate_scores": 6,
+        "nearest_routed_m": 457.4,
+        "route_results": 6,
+        "routes_within_access_range": 4
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 4,
+        "mrt_lrt_exit_candidates": 2
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "62039",
+          "name": "Raya Gdn",
+          "routed_m": null,
+          "snap_distance_m": 11.1,
+          "station": "Raya Gdn",
+          "straight_line_m": 51.7,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 51.7,
+          "shortest_m": 51.7
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "62039",
+          "name": "Raya Gdn",
+          "routed_m": null,
+          "snap_distance_m": 11.1,
+          "station": "Raya Gdn",
+          "straight_line_m": 51.7,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 51.7,
+          "shortest_m": 51.7
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "83279",
+      "name": "Aft Carmen St",
+      "routed_m": 118.5,
+      "snap_distance_m": 9.6,
+      "station": "Aft Carmen St",
+      "straight_line_m": 45.5,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [
+      {
+        "label": "exposed gap near 1.31844, 103.92511",
+        "len_m": 118.5,
+        "location": {
+          "lat": 1.318441,
+          "lon": 103.925107
+        }
+      }
+    ],
+    "paths": {
+      "bus_stop_access_connector_m": 43.1,
+      "covered_m": 0.0,
+      "covered_ratio": 0.0,
+      "destination_snap_connector_m": 0.0,
+      "detour_pct": 0.0,
+      "endpoint_snap_connector_m": 16.1,
+      "heat_comfort_m": 0.0,
+      "heat_comfort_ratio": 0.0,
+      "mrt_lrt_exit_access_connector_m": 0.0,
+      "origin_snap_connector_m": 16.1,
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "shade_m": 0.0,
+      "shade_ratio": 0.0,
+      "sheltered_m": 118.5,
+      "shortest_covered_ratio": 0.0,
+      "shortest_m": 118.5,
+      "shortest_shade_ratio": 0.0
+    },
+    "postal": "455383",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 5
+      },
+      "bus_stop_access_connector": {
+        "candidate_count": 1,
+        "examples": [
+          {
+            "bus_stop_code": "83279",
+            "connector_m": 43.1,
+            "direct_m": 45.5,
+            "name": "Aft Carmen St",
+            "routed_m": 118.5
+          }
+        ],
+        "geometry": "graph_route_plus_exposed_endpoint_connector_to_datamall_bus_stop",
+        "max_candidates": 24,
+        "max_direct_ratio": 2.5,
+        "max_extra_m": 100.0,
+        "max_walk_m": 300.0,
+        "reason": "implausible_bus_stop_graph_snap_replaced_by_nearby_graph_route_plus_exposed_connector",
+        "search_m": 50.0,
+        "source_layer": "bus_stop_access_connector"
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 5.5,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 117.4,
+        "nearest_graph_routed_m": 992.5,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 16.1,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 8,
+        "candidate_scores": 8,
+        "nearest_routed_m": 919.6,
+        "route_results": 8,
+        "routes_within_access_range": 5
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 5,
+        "mrt_lrt_exit_candidates": 3
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.31844, 103.92511",
+            "len_m": 118.5,
+            "location": {
+              "lat": 1.318441,
+              "lon": 103.925107
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 43.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 16.1,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 16.1,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 118.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 73.1,
+          "crossing": 100.0,
+          "heat": 0.0,
+          "rain": 0.0
+        },
+        "total": 54.6
+      },
+      "bus": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.31844, 103.92511",
+            "len_m": 118.5,
+            "location": {
+              "lat": 1.318441,
+              "lon": 103.925107
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 43.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 16.1,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 16.1,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 118.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 100.0,
+          "bus": 73.1,
+          "crossing": 100.0,
+          "heat": 0.0,
+          "rain": 0.0
+        },
+        "total": 54.6
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED",
+    "subscores": {
+      "access": 100.0,
+      "bus": 73.1,
+      "crossing": 100.0,
+      "heat": 0.0,
+      "rain": 0.0
+    },
+    "total": 54.6
+  },
+  {
+    "best_node": {
+      "exit": "26289",
+      "name": "Aft Tuas Sth St 2",
+      "routed_m": null,
+      "snap_distance_m": 13.0,
+      "station": "Aft Tuas Sth St 2",
+      "straight_line_m": 127.8,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 127.8,
+      "shortest_m": 127.8
+    },
+    "postal": "637814",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 2
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 4.25,
+        "candidate_count": 2,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 127.8,
+        "nearest_graph_routed_m": 653.9,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 2
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 27.5,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 6,
+        "candidate_scores": 6,
+        "nearest_routed_m": 613.4,
+        "route_results": 6,
+        "routes_within_access_range": 2
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 4
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "26289",
+          "name": "Aft Tuas Sth St 2",
+          "routed_m": null,
+          "snap_distance_m": 13.0,
+          "station": "Aft Tuas Sth St 2",
+          "straight_line_m": 127.8,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 127.8,
+          "shortest_m": 127.8
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 82.7,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 51.5
+      },
+      "bus": {
+        "best_node": {
+          "exit": "26289",
+          "name": "Aft Tuas Sth St 2",
+          "routed_m": null,
+          "snap_distance_m": 13.0,
+          "station": "Aft Tuas Sth St 2",
+          "straight_line_m": 127.8,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 127.8,
+          "shortest_m": 127.8
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 82.7,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 51.5
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 82.7,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 51.5
+  },
+  {
+    "best_node": {
+      "exit": "27449",
+      "name": "Aft Westwood Ave",
+      "routed_m": null,
+      "snap_distance_m": 15.7,
+      "station": "Aft Westwood Ave",
+      "straight_line_m": 24.6,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 24.6,
+      "shortest_m": 24.6
+    },
+    "postal": "648874",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 6
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.841,
+        "candidate_count": 5,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 24.6,
+        "nearest_graph_routed_m": 135.6,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 5
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 21.6,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 13,
+        "candidate_scores": 14,
+        "nearest_routed_m": 421.3,
+        "route_results": 13,
+        "routes_within_access_range": 6
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 6,
+        "mrt_lrt_exit_candidates": 8
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "27449",
+          "name": "Aft Westwood Ave",
+          "routed_m": null,
+          "snap_distance_m": 15.7,
+          "station": "Aft Westwood Ave",
+          "straight_line_m": 24.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 24.6,
+          "shortest_m": 24.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "27449",
+          "name": "Aft Westwood Ave",
+          "routed_m": null,
+          "snap_distance_m": 15.7,
+          "station": "Aft Westwood Ave",
+          "straight_line_m": 24.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 24.6,
+          "shortest_m": 24.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "50991",
+      "name": "Blk 82",
+      "routed_m": null,
+      "snap_distance_m": 4.8,
+      "station": "Blk 82",
+      "straight_line_m": 59.4,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 59.4,
+      "shortest_m": 59.4
+    },
+    "postal": "320087",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 3
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.514,
+        "candidate_count": 3,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 59.4,
+        "nearest_graph_routed_m": 319.9,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 19.5,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 6,
+        "candidate_scores": 6,
+        "nearest_routed_m": 295.6,
+        "route_results": 6,
+        "routes_within_access_range": 3
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 3,
+        "mrt_lrt_exit_candidates": 3
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "50991",
+          "name": "Blk 82",
+          "routed_m": null,
+          "snap_distance_m": 4.8,
+          "station": "Blk 82",
+          "straight_line_m": 59.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 59.4,
+          "shortest_m": 59.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "50991",
+          "name": "Blk 82",
+          "routed_m": null,
+          "snap_distance_m": 4.8,
+          "station": "Blk 82",
+          "straight_line_m": 59.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 59.4,
+          "shortest_m": 59.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "91071",
+      "name": "Bef Tg Katong Rd",
+      "routed_m": null,
+      "snap_distance_m": 16.9,
+      "station": "Bef Tg Katong Rd",
+      "straight_line_m": 89.4,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 89.4,
+      "shortest_m": 89.4
+    },
+    "postal": "437787",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 7
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 2.006,
+        "candidate_count": 1,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 89.4,
+        "nearest_graph_routed_m": 331.3,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 1
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 55.0,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 9,
+        "candidate_scores": 9,
+        "nearest_routed_m": 259.4,
+        "route_results": 8,
+        "routes_within_access_range": 8
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 7,
+        "mrt_lrt_exit_candidates": 3
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "91071",
+          "name": "Bef Tg Katong Rd",
+          "routed_m": null,
+          "snap_distance_m": 16.9,
+          "station": "Bef Tg Katong Rd",
+          "straight_line_m": 89.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 89.4,
+          "shortest_m": 89.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "91071",
+          "name": "Bef Tg Katong Rd",
+          "routed_m": null,
+          "snap_distance_m": 16.9,
+          "station": "Bef Tg Katong Rd",
+          "straight_line_m": 89.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 89.4,
+          "shortest_m": 89.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit 3",
+          "name": "TANJONG KATONG MRT STATION Exit 3",
+          "routed_m": 547.7,
+          "snap_distance_m": 17.9,
+          "station": "TANJONG KATONG MRT STATION",
+          "straight_line_m": 329.3,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.30154, 103.89523",
+            "len_m": 55.0,
+            "location": {
+              "lat": 1.301537,
+              "lon": 103.895234
+            }
+          },
+          {
+            "label": "exposed gap near 1.30132, 103.89689",
+            "len_m": 490.3,
+            "location": {
+              "lat": 1.301322,
+              "lon": 103.896892
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 2.4,
+          "covered_ratio": 0.004,
+          "destination_snap_connector_m": 17.9,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 72.9,
+          "heat_comfort_m": 2.4,
+          "heat_comfort_ratio": 0.004,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 55.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 547.7,
+          "shortest_covered_ratio": 0.004,
+          "shortest_m": 547.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 77.8,
+          "bus": 0.0,
+          "crossing": 80.0,
+          "heat": 0.4,
+          "rain": 0.4
+        },
+        "total": 31.4
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "58201",
+      "name": "Aft Queen's Ave",
+      "routed_m": null,
+      "snap_distance_m": 3.2,
+      "station": "Aft Queen's Ave",
+      "straight_line_m": 50.9,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 50.9,
+      "shortest_m": 50.9
+    },
+    "postal": "758588",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 1.129,
+        "nearest_routed_m": 122.5,
+        "routed_stop_count": 2,
+        "service_count": 3,
+        "straight_line_stop_count": 2
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 1.615,
+        "candidate_count": 2,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 50.9,
+        "nearest_graph_routed_m": 153.5,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 2
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 32.8,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 11,
+        "candidate_scores": 10,
+        "nearest_routed_m": 122.5,
+        "route_results": 10,
+        "routes_within_access_range": 2
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 9
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "75059",
+      "name": "Bef Tampines West Stn",
+      "routed_m": null,
+      "snap_distance_m": 3.5,
+      "station": "Bef Tampines West Stn",
+      "straight_line_m": 232.6,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 232.6,
+      "shortest_m": 232.6
+    },
+    "postal": "478983",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 5
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.32,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 168.6,
+        "nearest_graph_routed_m": 519.3,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 7.0,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 7,
+        "candidate_scores": 6,
+        "nearest_routed_m": 342.1,
+        "route_results": 7,
+        "routes_within_access_range": 7
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 5,
+        "mrt_lrt_exit_candidates": 2
+      },
+      "untrusted_bus_routes": {
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
+        "candidate_count": 1,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "examples": [
+          {
+            "bus_stop_code": "75061",
+            "direct_m": 294.0,
+            "name": "Blk 954D",
+            "routed_m": 379.2,
+            "routing_type": "sheltered"
+          }
+        ],
+        "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+        "reason_counts": {
+          "low_trust_bus_stop_road_centerline_route": 1
+        },
+        "road_centerline_guard_max_pedestrian_m": 25.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "75059",
+          "name": "Bef Tampines West Stn",
+          "routed_m": null,
+          "snap_distance_m": 3.5,
+          "station": "Bef Tampines West Stn",
+          "straight_line_m": 232.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 232.6,
+          "shortest_m": 232.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "75059",
+          "name": "Bef Tampines West Stn",
+          "routed_m": null,
+          "snap_distance_m": 3.5,
+          "station": "Bef Tampines West Stn",
+          "straight_line_m": 232.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 232.6,
+          "shortest_m": 232.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TAMPINES WEST MRT STATION Exit A",
+          "routed_m": 763.4,
+          "snap_distance_m": 10.2,
+          "station": "TAMPINES WEST MRT STATION",
+          "straight_line_m": 375.8,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.34409, 103.93858",
+            "len_m": 613.3,
+            "location": {
+              "lat": 1.344092,
+              "lon": 103.938576
+            }
+          },
+          {
+            "label": "exposed gap near 1.34567, 103.93818",
+            "len_m": 10.2,
+            "location": {
+              "lat": 1.345674,
+              "lon": 103.938182
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 139.9,
+          "covered_ratio": 0.183,
+          "destination_snap_connector_m": 10.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 17.1,
+          "heat_comfort_m": 232.0,
+          "heat_comfort_ratio": 0.304,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 7.0,
+          "routing_type": "sheltered",
+          "shade_m": 184.1,
+          "shade_ratio": 0.241,
+          "sheltered_m": 763.4,
+          "shortest_covered_ratio": 0.183,
+          "shortest_m": 763.4,
+          "shortest_shade_ratio": 0.241
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 45.5,
+          "bus": 0.0,
+          "crossing": 20.0,
+          "heat": 30.4,
+          "rain": 18.3
+        },
+        "total": 26.1
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "55109",
+      "name": "Serenity Pk",
+      "routed_m": null,
+      "snap_distance_m": 16.4,
+      "station": "Serenity Pk",
+      "straight_line_m": 116.7,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 116.7,
+      "shortest_m": 116.7
+    },
+    "postal": "806063",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 2
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.641,
+        "candidate_count": 2,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 116.7,
+        "nearest_graph_routed_m": 602.1,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 2
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 26.6,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 6,
+        "candidate_scores": 6,
+        "nearest_routed_m": 559.1,
+        "route_results": 6,
+        "routes_within_access_range": 2
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 4
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "55109",
+          "name": "Serenity Pk",
+          "routed_m": null,
+          "snap_distance_m": 16.4,
+          "station": "Serenity Pk",
+          "straight_line_m": 116.7,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 116.7,
+          "shortest_m": 116.7
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "55109",
+          "name": "Serenity Pk",
+          "routed_m": null,
+          "snap_distance_m": 16.4,
+          "station": "Serenity Pk",
+          "straight_line_m": 116.7,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 116.7,
+          "shortest_m": 116.7
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "28621",
+      "name": "Blk 241",
+      "routed_m": null,
+      "snap_distance_m": 33.8,
+      "station": "Blk 241",
+      "straight_line_m": 91.0,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 91.0,
+      "shortest_m": 91.0
+    },
+    "postal": "601291",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 4
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.449,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 91.0,
+        "nearest_graph_routed_m": 643.3,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 44.1,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 7,
+        "candidate_scores": 8,
+        "nearest_routed_m": 565.4,
+        "route_results": 7,
+        "routes_within_access_range": 4
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 4,
+        "mrt_lrt_exit_candidates": 4
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "28621",
+          "name": "Blk 241",
+          "routed_m": null,
+          "snap_distance_m": 33.8,
+          "station": "Blk 241",
+          "straight_line_m": 91.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 91.0,
+          "shortest_m": 91.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "28621",
+          "name": "Blk 241",
+          "routed_m": null,
+          "snap_distance_m": 33.8,
+          "station": "Blk 241",
+          "straight_line_m": 91.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 91.0,
+          "shortest_m": 91.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "75259",
+      "name": "Tropica Condo",
+      "routed_m": null,
+      "snap_distance_m": 5.6,
+      "station": "Tropica Condo",
+      "straight_line_m": 215.1,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 215.1,
+      "shortest_m": 215.1
+    },
+    "postal": "528585",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 0.491,
+        "nearest_routed_m": 223.6,
+        "routed_stop_count": 2,
+        "service_count": 9,
+        "straight_line_stop_count": 7
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.693,
+        "candidate_count": 6,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 106.3,
+        "nearest_graph_routed_m": 291.0,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 6
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 62.4,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 8,
+        "candidate_scores": 8,
+        "nearest_routed_m": 223.6,
+        "route_results": 8,
+        "routes_within_access_range": 6
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 7,
+        "mrt_lrt_exit_candidates": 2
+      },
+      "untrusted_bus_routes": {
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
+        "candidate_count": 3,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "examples": [
+          {
+            "bus_stop_code": "75409",
+            "direct_m": 160.0,
+            "name": "The Santorini",
+            "routed_m": 257.0,
+            "routing_type": "sheltered_with_bus_stop_access_connector"
+          },
+          {
+            "bus_stop_code": "75251",
+            "direct_m": 172.7,
+            "name": "Opp Tropica Condo",
+            "routed_m": 296.8,
+            "routing_type": "sheltered"
+          },
+          {
+            "bus_stop_code": "75259",
+            "direct_m": 215.1,
+            "name": "Tropica Condo",
+            "routed_m": 329.4,
+            "routing_type": "sheltered_with_bus_stop_access_connector"
+          }
+        ],
+        "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+        "reason_counts": {
+          "low_trust_bus_stop_road_centerline_route": 3
+        },
+        "road_centerline_guard_max_pedestrian_m": 25.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "75259",
+          "name": "Tropica Condo",
+          "routed_m": null,
+          "snap_distance_m": 5.6,
+          "station": "Tropica Condo",
+          "straight_line_m": 215.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 215.1,
+          "shortest_m": 215.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "75259",
+          "name": "Tropica Condo",
+          "routed_m": null,
+          "snap_distance_m": 5.6,
+          "station": "Tropica Condo",
+          "straight_line_m": 215.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 215.1,
+          "shortest_m": 215.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "22559",
+      "name": "Opp Blk 657 CP",
+      "routed_m": null,
+      "snap_distance_m": 15.0,
+      "station": "Opp Blk 657 CP",
+      "straight_line_m": 197.1,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 197.1,
+      "shortest_m": 197.1
+    },
+    "postal": "627662",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 5
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 3.75,
+        "candidate_count": 5,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 109.7,
+        "nearest_graph_routed_m": 433.5,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 5
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 18.1,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 10,
+        "candidate_scores": 11,
+        "nearest_routed_m": 409.7,
+        "route_results": 10,
+        "routes_within_access_range": 1
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 5,
+        "mrt_lrt_exit_candidates": 6
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "22559",
+          "name": "Opp Blk 657 CP",
+          "routed_m": null,
+          "snap_distance_m": 15.0,
+          "station": "Opp Blk 657 CP",
+          "straight_line_m": 197.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 197.1,
+          "shortest_m": 197.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 86.5,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 52.3
+      },
+      "bus": {
+        "best_node": {
+          "exit": "22559",
+          "name": "Opp Blk 657 CP",
+          "routed_m": null,
+          "snap_distance_m": 15.0,
+          "station": "Opp Blk 657 CP",
+          "straight_line_m": 197.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 197.1,
+          "shortest_m": 197.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 86.5,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 52.3
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 86.5,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 52.3
+  },
+  {
+    "best_node": {
+      "exit": "83031",
+      "name": "Opp Hong San Si Tp",
+      "routed_m": null,
+      "snap_distance_m": 12.1,
+      "station": "Opp Hong San Si Tp",
+      "straight_line_m": 251.1,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 251.1,
+      "shortest_m": 251.1
+    },
+    "postal": "417117",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 1
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.444,
+        "candidate_count": 1,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 251.1,
+        "nearest_graph_routed_m": 773.8,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 1
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 30.5,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 3,
+        "candidate_scores": 3,
+        "nearest_routed_m": 731.2,
+        "route_results": 3,
+        "routes_within_access_range": 3
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 1,
+        "mrt_lrt_exit_candidates": 2
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "snap_distance_m": 12.1,
+          "station": "Opp Hong San Si Tp",
+          "straight_line_m": 251.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 251.1,
+          "shortest_m": 251.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "83031",
+          "name": "Opp Hong San Si Tp",
+          "routed_m": null,
+          "snap_distance_m": 12.1,
+          "station": "Opp Hong San Si Tp",
+          "straight_line_m": 251.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 251.1,
+          "shortest_m": 251.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "KEMBANGAN MRT STATION Exit B",
+          "routed_m": 1120.7,
+          "snap_distance_m": 2.0,
+          "station": "KEMBANGAN MRT STATION",
+          "straight_line_m": 475.5,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.32217, 103.90899",
+            "len_m": 727.5,
+            "location": {
+              "lat": 1.322169,
+              "lon": 103.908986
+            }
+          },
+          {
+            "label": "exposed gap near 1.32061, 103.91213",
+            "len_m": 176.9,
+            "location": {
+              "lat": 1.320611,
+              "lon": 103.91213
+            }
+          },
+          {
+            "label": "exposed gap near 1.32114, 103.91290",
+            "len_m": 2.0,
+            "location": {
+              "lat": 1.321144,
+              "lon": 103.912903
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 228.0,
+          "covered_ratio": 0.201,
+          "destination_snap_connector_m": 2.0,
+          "detour_pct": 1.2,
+          "endpoint_snap_connector_m": 32.5,
+          "heat_comfort_m": 284.5,
+          "heat_comfort_ratio": 0.251,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 30.5,
+          "routing_type": "sheltered",
+          "shade_m": 113.0,
+          "shade_ratio": 0.1,
+          "sheltered_m": 1134.4,
+          "shortest_covered_ratio": 0.05,
+          "shortest_m": 1120.7,
+          "shortest_shade_ratio": 0.068
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 7.9,
+          "bus": 0.0,
+          "crossing": 80.0,
+          "heat": 25.1,
+          "rain": 20.1
+        },
+        "total": 15.6
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "48029",
+      "name": "Bef Mandai Lake Rd",
+      "routed_m": null,
+      "snap_distance_m": 6.6,
+      "station": "Bef Mandai Lake Rd",
+      "straight_line_m": 66.4,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 66.4,
+      "shortest_m": 66.4
+    },
+    "postal": "729761",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 4
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 2.519,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 66.4,
+        "nearest_graph_routed_m": 599.9,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 25.4,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 12,
+        "candidate_scores": 13,
+        "nearest_routed_m": 567.9,
+        "route_results": 12,
+        "routes_within_access_range": 4
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 4,
+        "mrt_lrt_exit_candidates": 9
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "48029",
+          "name": "Bef Mandai Lake Rd",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Bef Mandai Lake Rd",
+          "straight_line_m": 66.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 66.4,
+          "shortest_m": 66.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 96.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 54.2
+      },
+      "bus": {
+        "best_node": {
+          "exit": "48029",
+          "name": "Bef Mandai Lake Rd",
+          "routed_m": null,
+          "snap_distance_m": 6.6,
+          "station": "Bef Mandai Lake Rd",
+          "straight_line_m": 66.4,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 66.4,
+          "shortest_m": 66.4
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 96.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 54.2
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 96.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 54.2
+  },
+  {
+    "best_node": {
+      "exit": "62239",
+      "name": "Opp S'pore Girls' Hme",
+      "routed_m": null,
+      "snap_distance_m": 1.4,
+      "station": "Opp S'pore Girls' Hme",
+      "straight_line_m": 145.6,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 145.6,
+      "shortest_m": 145.6
+    },
+    "postal": "530180",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 6
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.521,
+        "candidate_count": 6,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 145.6,
+        "nearest_graph_routed_m": 372.0,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 6
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 27.4,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 11,
+        "candidate_scores": 11,
+        "nearest_routed_m": 343.2,
+        "route_results": 11,
+        "routes_within_access_range": 6
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 6,
+        "mrt_lrt_exit_candidates": 5
+      },
+      "untrusted_bus_routes": {
+        "access_connector_trust_max_m": 40.0,
+        "access_connector_trust_min_ratio": 0.2,
+        "candidate_count": 1,
+        "endpoint_snap_guard_min_m": 25.0,
+        "endpoint_snap_guard_min_ratio": 0.6,
+        "examples": [
+          {
+            "bus_stop_code": "62239",
+            "direct_m": 145.6,
+            "name": "Opp S'pore Girls' Hme",
+            "routed_m": 202.2,
+            "routing_type": "sheltered_with_bus_stop_access_connector"
+          }
+        ],
+        "policy": "skipped_from_routed_scoring; long-detour bus candidates may still use partial direct fallback",
+        "reason_counts": {
+          "low_trust_bus_stop_road_centerline_route": 1
+        },
+        "road_centerline_guard_max_pedestrian_m": 25.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "62239",
+          "name": "Opp S'pore Girls' Hme",
+          "routed_m": null,
+          "snap_distance_m": 1.4,
+          "station": "Opp S'pore Girls' Hme",
+          "straight_line_m": 145.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 145.6,
+          "shortest_m": 145.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "62239",
+          "name": "Opp S'pore Girls' Hme",
+          "routed_m": null,
+          "snap_distance_m": 1.4,
+          "station": "Opp S'pore Girls' Hme",
+          "straight_line_m": 145.6,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 145.6,
+          "shortest_m": 145.6
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "28099",
+      "name": "Opp Lakeside Stn",
+      "routed_m": null,
+      "snap_distance_m": 4.4,
+      "station": "Opp Lakeside Stn",
+      "straight_line_m": 183.8,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 183.8,
+      "shortest_m": 183.8
+    },
+    "postal": "648320",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 4
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.502,
+        "candidate_count": 3,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 183.8,
+        "nearest_graph_routed_m": 1140.8,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 93.7,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 7,
+        "candidate_scores": 3,
+        "nearest_routed_m": 1042.6,
+        "route_results": 3,
+        "routes_within_access_range": 1
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 4,
+        "mrt_lrt_exit_candidates": 3
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "28099",
+          "name": "Opp Lakeside Stn",
+          "routed_m": null,
+          "snap_distance_m": 4.4,
+          "station": "Opp Lakeside Stn",
+          "straight_line_m": 183.8,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 183.8,
+          "shortest_m": 183.8
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "28099",
+          "name": "Opp Lakeside Stn",
+          "routed_m": null,
+          "snap_distance_m": 4.4,
+          "station": "Opp Lakeside Stn",
+          "straight_line_m": 183.8,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 183.8,
+          "shortest_m": 183.8
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "59751",
+      "name": "Opp The Shaughnessy",
+      "routed_m": null,
+      "snap_distance_m": 4.1,
+      "station": "Opp The Shaughnessy",
+      "straight_line_m": 189.0,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 189.0,
+      "shortest_m": 189.0
+    },
+    "postal": "768106",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 3
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.993,
+        "candidate_count": 3,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 164.2,
+        "nearest_graph_routed_m": 418.3,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 3
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 13.7,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 7,
+        "candidate_scores": 5,
+        "nearest_routed_m": 401.2,
+        "route_results": 5,
+        "routes_within_access_range": 3
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 3,
+        "mrt_lrt_exit_candidates": 4
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "59751",
+          "name": "Opp The Shaughnessy",
+          "routed_m": null,
+          "snap_distance_m": 4.1,
+          "station": "Opp The Shaughnessy",
+          "straight_line_m": 189.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 189.0,
+          "shortest_m": 189.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "59751",
+          "name": "Opp The Shaughnessy",
+          "routed_m": null,
+          "snap_distance_m": 4.1,
+          "station": "Opp The Shaughnessy",
+          "straight_line_m": 189.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 189.0,
+          "shortest_m": 189.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "65191",
+      "name": "Bef Punggol Rd",
+      "routed_m": null,
+      "snap_distance_m": 11.6,
+      "station": "Bef Punggol Rd",
+      "straight_line_m": 166.0,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 166.0,
+      "shortest_m": 166.0
+    },
+    "postal": "544188",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 6
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 0.22,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 166.0,
+        "nearest_graph_routed_m": 529.8,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 22.2,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 8,
+        "candidate_scores": 8,
+        "nearest_routed_m": 261.3,
+        "route_results": 8,
+        "routes_within_access_range": 8
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 6,
+        "mrt_lrt_exit_candidates": 2
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "65191",
+          "name": "Bef Punggol Rd",
+          "routed_m": null,
+          "snap_distance_m": 11.6,
+          "station": "Bef Punggol Rd",
+          "straight_line_m": 166.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 166.0,
+          "shortest_m": 166.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "65191",
+          "name": "Bef Punggol Rd",
+          "routed_m": null,
+          "snap_distance_m": 11.6,
+          "station": "Bef Punggol Rd",
+          "straight_line_m": 166.0,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 166.0,
+          "shortest_m": 166.0
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "COMPASSVALE LRT STATION Exit A",
+          "routed_m": 627.6,
+          "snap_distance_m": 2.3,
+          "station": "COMPASSVALE LRT STATION",
+          "straight_line_m": 377.0,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": [
+          {
+            "label": "exposed gap near 1.39502, 103.90401",
+            "len_m": 22.2,
+            "location": {
+              "lat": 1.395016,
+              "lon": 103.904007
+            }
+          },
+          {
+            "label": "exposed gap near 1.39398, 103.90337",
+            "len_m": 423.5,
+            "location": {
+              "lat": 1.393977,
+              "lon": 103.903372
+            }
+          },
+          {
+            "label": "exposed gap near 1.39427, 103.90153",
+            "len_m": 44.9,
+            "location": {
+              "lat": 1.394269,
+              "lon": 103.901525
+            }
+          },
+          {
+            "label": "exposed gap near 1.39433, 103.90061",
+            "len_m": 2.3,
+            "location": {
+              "lat": 1.39433,
+              "lon": 103.900606
+            }
+          }
+        ],
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 178.8,
+          "covered_ratio": 0.266,
+          "destination_snap_connector_m": 2.3,
+          "detour_pct": 7.0,
+          "endpoint_snap_connector_m": 24.5,
+          "heat_comfort_m": 186.8,
+          "heat_comfort_ratio": 0.278,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 22.2,
+          "routing_type": "sheltered",
+          "shade_m": 16.1,
+          "shade_ratio": 0.024,
+          "sheltered_m": 671.7,
+          "shortest_covered_ratio": 0.109,
+          "shortest_m": 627.6,
+          "shortest_shade_ratio": 0.036
+        },
+        "state": "SCORED",
+        "subscores": {
+          "access": 65.9,
+          "bus": 0.0,
+          "crossing": 80.0,
+          "heat": 27.8,
+          "rain": 26.6
+        },
+        "total": 37.9
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  },
+  {
+    "best_node": {
+      "exit": "47619",
+      "name": "Blk 688 CP",
+      "routed_m": null,
+      "snap_distance_m": 6.8,
+      "station": "Blk 688 CP",
+      "straight_line_m": 167.1,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 167.1,
+      "shortest_m": 167.1
+    },
+    "postal": "735689",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": null,
+        "nearest_routed_m": null,
+        "routed_stop_count": 0,
+        "service_count": 0,
+        "straight_line_stop_count": 4
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 1.027,
+        "candidate_count": 4,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 167.1,
+        "nearest_graph_routed_m": 474.6,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 4
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 19.4,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 8,
+        "candidate_scores": 8,
+        "nearest_routed_m": 448.3,
+        "route_results": 8,
+        "routes_within_access_range": 4
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 4,
+        "mrt_lrt_exit_candidates": 4
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "47619",
+          "name": "Blk 688 CP",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Blk 688 CP",
+          "straight_line_m": 167.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 167.1,
+          "shortest_m": 167.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "47619",
+          "name": "Blk 688 CP",
+          "routed_m": null,
+          "snap_distance_m": 6.8,
+          "station": "Blk 688 CP",
+          "straight_line_m": 167.1,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 167.1,
+          "shortest_m": 167.1
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  }
+]

@@ -1,0 +1,259 @@
+[
+  {
+    "_geometry": {
+      "exposure_gap_edges": [],
+      "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+      "sheltered_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+          "is_covered": false,
+          "length_m": 50.85339878682402,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ],
+      "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+      "shortest_path_edges": [
+        {
+          "confidence": "partial_unrouted",
+          "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+          "is_covered": false,
+          "length_m": 50.85339878682402,
+          "source_layer": "direct_bus_fallback",
+          "synth_class": "unrouted_straight_line"
+        }
+      ]
+    },
+    "_geometry_options": {
+      "best_transit": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      },
+      "bus": {
+        "exposure_gap_edges": [],
+        "sheltered": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "sheltered_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ],
+        "shortest": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+        "shortest_path_edges": [
+          {
+            "confidence": "partial_unrouted",
+            "geometry": "LINESTRING (27728.858 48595.98, 27740.863204590714 48546.56397799391)",
+            "is_covered": false,
+            "length_m": 50.85339878682402,
+            "source_layer": "direct_bus_fallback",
+            "synth_class": "unrouted_straight_line"
+          }
+        ]
+      }
+    },
+    "_origin": {
+      "lat": 1.45575925,
+      "lon": 103.830882087,
+      "x": 27728.858,
+      "y": 48595.98
+    },
+    "best_node": {
+      "exit": "58201",
+      "name": "Aft Queen's Ave",
+      "routed_m": null,
+      "snap_distance_m": 3.2,
+      "station": "Aft Queen's Ave",
+      "straight_line_m": 50.9,
+      "type": "bus_stop"
+    },
+    "data_as_of": "2026-08-01T21:49:20.977890+00:00",
+    "exposure_gaps": [],
+    "paths": {
+      "detour_pct": 0.0,
+      "routing_type": "direct_bus_fallback_unrouted",
+      "sheltered_m": 50.9,
+      "shortest_m": 50.9
+    },
+    "postal": "758588",
+    "provenance": {
+      "bus_connectivity": {
+        "expected_wait_min": 1.129,
+        "nearest_routed_m": 122.5,
+        "routed_stop_count": 2,
+        "service_count": 3,
+        "straight_line_stop_count": 2
+      },
+      "direct_bus_fallback": {
+        "best_expected_wait_min": 1.615,
+        "candidate_count": 2,
+        "coordinate_tolerance_m": 5.0,
+        "detour_ratio_threshold": 3.0,
+        "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+        "min_extra_m_threshold": 100.0,
+        "min_missing_m_threshold": 50.0,
+        "nearest_direct_m": 50.9,
+        "nearest_graph_routed_m": 153.5,
+        "radius_m": 300.0,
+        "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "reason_counts": {
+          "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 2
+        },
+        "selection_radius_m": 305.0,
+        "shortcut_ratio_threshold": 0.5,
+        "untrusted_subscores": [
+          "rain",
+          "heat",
+          "crossing"
+        ]
+      },
+      "manifest": "raw/manifest.json",
+      "origin_snap_distance_m": 32.8,
+      "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+      "routing": {
+        "detour_budget": 1.25,
+        "network": "processed\\network_island.parquet",
+        "shelter_lambda": 2.0
+      },
+      "routing_diagnostics": {
+        "candidate_destination_nodes": 11,
+        "candidate_scores": 10,
+        "nearest_routed_m": 122.5,
+        "route_results": 10,
+        "routes_within_access_range": 2
+      },
+      "source_hashes": {
+        "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+        "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+        "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+        "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+        "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+        "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+        "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+        "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+        "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+        "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+        "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+        "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+        "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+        "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+      },
+      "subscore_status": {
+        "access": "real_routed_shortest_distance",
+        "bus": "real",
+        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+        "rain": "real_routed_covered_length_ratio"
+      },
+      "transit_node_set": {
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidates_direct": 2,
+        "mrt_lrt_exit_candidates": 9
+      }
+    },
+    "route_options": {
+      "best_transit": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "bus": {
+        "best_node": {
+          "exit": "58201",
+          "name": "Aft Queen's Ave",
+          "routed_m": null,
+          "snap_distance_m": 3.2,
+          "station": "Aft Queen's Ave",
+          "straight_line_m": 50.9,
+          "type": "bus_stop"
+        },
+        "exposure_gaps": [],
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 50.9,
+          "shortest_m": 50.9
+        },
+        "state": "SCORED_PARTIAL",
+        "subscores": {
+          "access": 100.0,
+          "bus": 100.0,
+          "crossing": null,
+          "heat": null,
+          "rain": null
+        },
+        "total": 55.0
+      },
+      "mrt_lrt": {
+        "best_node": {
+          "name": "No route found",
+          "routed_m": null,
+          "type": "mrt_lrt_exit"
+        },
+        "exposure_gaps": null,
+        "paths": null,
+        "state": "NO_TRANSIT_IN_RANGE",
+        "subscores": null,
+        "total": null
+      }
+    },
+    "state": "SCORED_PARTIAL",
+    "subscores": {
+      "access": 100.0,
+      "bus": 100.0,
+      "crossing": null,
+      "heat": null,
+      "rain": null
+    },
+    "total": 55.0
+  }
+]
