@@ -40,6 +40,7 @@ PARAMS = {
     "bus_connectivity": {
         "routed_max_m": 250.0,
         "straight_line_candidate_m": 300.0,
+        "straight_line_candidate_tolerance_m": 5.0,
         "access_connector_search_m": 50.0,
         "access_connector_max_candidates": 24,
         "access_connector_max_walk_m": 300.0,
@@ -441,6 +442,40 @@ def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
         },
     )
 
+    boundary_candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Boundary Stop",
+        station_name="Boundary Stop",
+        exit_code="54322",
+        graph_node=(1000.0, 0.0),
+        straight_line_m=303.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(303.0, 0.0),
+    )
+    boundary_route = {"shortest_length_m": 1000.0}
+
+    assert not bus_route_should_use_direct_fallback(
+        boundary_candidate,
+        boundary_route,
+        {
+            "straight_line_candidate_m": 300.0,
+            "direct_fallback_detour_ratio": 3.0,
+            "direct_fallback_min_extra_m": 100.0,
+        },
+    )
+    assert bus_route_should_use_direct_fallback(
+        boundary_candidate,
+        boundary_route,
+        {
+            "straight_line_candidate_m": 300.0,
+            "straight_line_candidate_tolerance_m": 5.0,
+            "direct_fallback_detour_ratio": 3.0,
+            "direct_fallback_min_extra_m": 100.0,
+        },
+    )
+
 
 def test_bus_access_connector_appends_exposed_endpoint_to_plausible_graph_route():
     edges = pd.DataFrame(
@@ -510,6 +545,89 @@ class ConnectorBusIndex:
                 point_xy=(100.0, 0.0),
             )
         ]
+
+
+class BoundaryBusIndex:
+    def __init__(self) -> None:
+        self.requested_radius_m: float | None = None
+
+    def nearby_stop_candidates(self, _postal_point, straight_line_radius_m):
+        self.requested_radius_m = straight_line_radius_m
+        if straight_line_radius_m < 303.0:
+            return []
+        return [
+            BusStopCandidate(
+                bus_stop_code="54322",
+                description="BOUNDARY STOP",
+                graph_node=(1000.0, 0.0),
+                straight_line_m=303.0,
+                snap_distance_m=4.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(303.0, 0.0),
+            )
+        ]
+
+
+def test_score_postal_row_applies_bus_candidate_coordinate_tolerance():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (10.0, 0.0),
+                "length_m": 10.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (10.0, 0.0)]),
+            },
+            {
+                "u": (1000.0, 0.0),
+                "v": (1010.0, 0.0),
+                "length_m": 10.0,
+                "is_covered": 0,
+                "geometry": LineString([(1000.0, 0.0), (1010.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (10.0, 0.0), (1000.0, 0.0), (1010.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+    bus_index = BoundaryBusIndex()
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "557323", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=bus_index,  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert bus_index.requested_radius_m == 305.0
+    assert record["state"] == "SCORED_PARTIAL"
+    assert record["best_node"]["straight_line_m"] == 303.0
+    assert record["paths"]["routing_type"] == "direct_bus_fallback_unrouted"
+    assert record["provenance"]["transit_node_set"] == {
+        "mrt_lrt_exit_candidates": 0,
+        "bus_stop_candidates_direct": 1,
+        "bus_stop_candidate_radius_m": 300.0,
+        "bus_stop_candidate_tolerance_m": 5.0,
+        "bus_stop_candidate_selection_radius_m": 305.0,
+    }
+    assert record["provenance"]["direct_bus_fallback"]["radius_m"] == 300.0
+    assert record["provenance"]["direct_bus_fallback"]["coordinate_tolerance_m"] == 5.0
+    assert record["provenance"]["direct_bus_fallback"]["selection_radius_m"] == 305.0
 
 
 def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():

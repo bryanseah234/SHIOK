@@ -201,13 +201,22 @@ Current implementation:
   stop and appends an exposed endpoint connector only when the full
   route-plus-connector walk stays within the direct bus access policy envelope.
   It is route evidence, not shelter evidence.
+- The 300 m direct bus candidate policy now has an explicit 5 m
+  source-coordinate tolerance. Records keep the true measured distance and
+  provenance exposes `bus_stop_candidate_radius_m`,
+  `bus_stop_candidate_tolerance_m`, and
+  `bus_stop_candidate_selection_radius_m`; this prevents a 1-5 m upstream
+  coordinate drift from flipping a postal between `SCORED_PARTIAL` and
+  `NO_TRANSIT_IN_RANGE` without hiding the actual distance.
 - `generated_20260802_bus_connector_targeted` was generated as a targeted QA
   refresh for the 1,449 active direct-bus fallback records. It converted 64
   records from `SCORED_PARTIAL` to `SCORED`, left 1,384 partial, and introduced
-  one explicit regression (`557323` moved to `NO_TRANSIT_IN_RANGE`). Static
-  validation passed before the local bundle was removed to save disk space.
-  Treat this as evidence for the next model/data QA cycle, not as an active or
-  deployed bundle.
+  one explicit regression (`557323` moved to `NO_TRANSIT_IN_RANGE`). The
+  regression is fixed in code by the coordinate-tolerance rule: a single-postal
+  island-graph score now returns `557323` as `SCORED_PARTIAL` to bus stop
+  `66309` at 303.0 m. Static validation passed before the local bundle was
+  removed to save disk space. Treat this as evidence for the next model/data QA
+  cycle, not as an active or deployed bundle.
 
 ## Actual Bus Arrivals
 

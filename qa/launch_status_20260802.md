@@ -41,7 +41,14 @@ Root directory: `web`
 - Static validation passed before cleanup: 124,032 indexed postals, 114,328 geometry postals, 114,328 geometry postals with route segments, 6,011 transit features.
 - Report: `qa/targeted_bundle_refresh_generated_20260802_bus_connector_targeted.json`.
 - Converted-postal list: `qa/bus_connector_converted_postals_20260802.txt`.
-- Important regression to investigate before activation: postal `557323` moved from `SCORED_PARTIAL` to `NO_TRANSIT_IN_RANGE`.
+- Boundary regression found and fixed in code: postal `557323` moved from
+  `SCORED_PARTIAL` to `NO_TRANSIT_IN_RANGE` because current source coordinates
+  measured bus stop `66309` at 303.0 m, just outside the strict 300 m direct bus
+  radius. The scoring engine now applies an explicit 5 m coordinate-noise
+  tolerance and records true distance plus radius/tolerance provenance.
+- Verification: `qa/score_557323_island_20260802.json` scores `557323` as
+  `SCORED_PARTIAL`, total 54.2, direct bus fallback to `Blk 112`, measured
+  303.0 m, policy radius 300.0 m, selection radius 305.0 m.
 
 ## Prepared Next Postal Universe
 
@@ -105,7 +112,9 @@ data deployment, first regenerate or recreate a validated bundle, then use:
 ## Not Done
 
 - Regenerate or recreate a validated post-connector bundle before any data deploy.
-- Investigate postal `557323` before activating a connector-targeted refresh.
+- Regenerate or recreate the connector-targeted bundle after the bus-radius
+  tolerance fix; active production data does not yet include this code-level
+  correction.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
 - Work through the remaining `qa/bus_connector_diagnostics_priority_20260802.json` / `.geojson` rows after the general exposed bus-stop access connector fix.

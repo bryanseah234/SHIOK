@@ -748,7 +748,10 @@ def bus_route_should_use_direct_fallback(
     direct_m = float(candidate.straight_line_m)
     if direct_m <= 0:
         return False
-    max_direct_m = float(bus_params.get("straight_line_candidate_m", 300.0))
+    max_direct_m = float(bus_params.get("straight_line_candidate_m", 300.0)) + max(
+        0.0,
+        float(bus_params.get("straight_line_candidate_tolerance_m", 0.0)),
+    )
     if direct_m > max_direct_m:
         return False
 
@@ -853,7 +856,7 @@ def bus_access_connector_is_plausible(
             "access_connector_max_walk_m",
             bus_params.get("straight_line_candidate_m", 300.0),
         )
-    )
+    ) + max(0.0, float(bus_params.get("straight_line_candidate_tolerance_m", 0.0)))
     max_ratio = float(bus_params.get("access_connector_max_direct_ratio", 2.5))
     max_extra_m = float(bus_params.get("access_connector_max_extra_m", 100.0))
     return (
@@ -1267,10 +1270,20 @@ def score_postal_row(
             float(params.get("bus_connectivity", {}).get("routed_max_m", 250.0)) + 50.0,
         )
     )
+    bus_candidate_tolerance_m = max(
+        0.0,
+        float(
+            params.get("bus_connectivity", {}).get(
+                "straight_line_candidate_tolerance_m",
+                0.0,
+            )
+        ),
+    )
+    bus_candidate_selection_radius_m = bus_candidate_radius_m + bus_candidate_tolerance_m
     bus_candidates = select_bus_stop_candidates(
         postal_row.geometry,
         bus_index,
-        bus_candidate_radius_m,
+        bus_candidate_selection_radius_m,
     )
     candidates = mrt_candidates + bus_candidates
     provenance = (
@@ -1289,6 +1302,8 @@ def score_postal_row(
         "mrt_lrt_exit_candidates": len(mrt_candidates),
         "bus_stop_candidates_direct": len(bus_candidates),
         "bus_stop_candidate_radius_m": round(bus_candidate_radius_m, 1),
+        "bus_stop_candidate_tolerance_m": round(bus_candidate_tolerance_m, 1),
+        "bus_stop_candidate_selection_radius_m": round(bus_candidate_selection_radius_m, 1),
     }
     record_data_as_of = (
         data_as_of if data_as_of is not None else load_manifest().get("generated_at")
@@ -1505,6 +1520,8 @@ def score_postal_row(
                 "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
                 "candidate_count": len(implausible_bus_candidates),
                 "radius_m": round(bus_candidate_radius_m, 1),
+                "coordinate_tolerance_m": round(bus_candidate_tolerance_m, 1),
+                "selection_radius_m": round(bus_candidate_selection_radius_m, 1),
                 "nearest_direct_m": round(
                     min(candidate.straight_line_m for candidate in implausible_bus_candidates),
                     1,
@@ -1547,6 +1564,8 @@ def score_postal_row(
                 "reason": "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
                 "candidate_count": len(bus_candidates),
                 "radius_m": round(bus_candidate_radius_m, 1),
+                "coordinate_tolerance_m": round(bus_candidate_tolerance_m, 1),
+                "selection_radius_m": round(bus_candidate_selection_radius_m, 1),
                 "nearest_direct_m": round(
                     min(candidate.straight_line_m for candidate in bus_candidates), 1
                 ),
