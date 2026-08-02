@@ -103,6 +103,12 @@ try {
         Invoke-Checked -Label "Python tests" -Command { uv run python run.py test }
     }
 
+    if (-not ($SkipWebTests -and $SkipBuild -and $SkipBrowser)) {
+        Invoke-Checked -Label "Web dependencies" -Command {
+            .\scripts\ensure-web-deps.ps1
+        }
+    }
+
     if (-not $SkipWebTests) {
         Invoke-Checked -Label "Web tests" -Command { npm --prefix web test }
     }

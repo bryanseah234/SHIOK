@@ -53,6 +53,9 @@ try {
     if ($LASTEXITCODE -ne 0) { throw "static data validation failed" }
 
     if (-not $SkipWebTests) {
+        & (Join-Path $PSScriptRoot "ensure-web-deps.ps1")
+        if ($LASTEXITCODE -ne 0) { throw "web dependency install failed" }
+
         Write-Output ""
         Write-Output "== Web tests =="
         npm --prefix web test

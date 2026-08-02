@@ -13,6 +13,11 @@ That wrapper runs:
 1. `npm --prefix web test`
 2. `uv run python run.py publish --input web/public/data/<current bundle> --deploy --confirm-production`
 
+If `web/node_modules/` was cleaned locally, the production wrappers now run
+`.\scripts\ensure-web-deps.bat` automatically before any web test/build step.
+You can also run it directly; it performs `npm ci` only when required web
+binaries are missing.
+
 `run.py publish` then validates static data, runs `npm audit`, runs `npm run build`, checks Vercel auth, and deploys production.
 
 The current bundle is configured in `web/data-bundle.json`.
