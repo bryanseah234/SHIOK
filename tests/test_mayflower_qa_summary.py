@@ -1,6 +1,7 @@
 import json
 
-from scripts.mayflower_qa_summary import build_summary, write_markdown
+from pipeline.export import encode_polyline
+from scripts.mayflower_qa_summary import build_summary, route_gap_features, write_markdown
 
 
 def write_json(path, payload):
@@ -279,3 +280,78 @@ def test_build_summary_subtracts_approved_review_ready_corrections(tmp_path):
 
     assert summary["conclusion"]["approved_source_backed_corrections"] == 1
     assert summary["conclusion"]["ready_for_owner_review"] == 0
+
+
+def test_route_gap_features_exports_exposed_mrt_segments_only(tmp_path):
+    bundle = tmp_path / "bundle"
+    write_json(bundle / "scores" / "index.json", {"ANG_MO_KIO_PART_001": ["560231"]})
+    write_json(
+        bundle / "scores" / "ANG_MO_KIO_PART_001.json",
+        [
+            {
+                "postal": "560231",
+                "state": "SCORED",
+                "total": 80.0,
+                "best_node": {"type": "bus_stop", "name": "Bus", "routed_m": 200.0},
+                "paths": {"covered_ratio": 0.9},
+                "route_options": {
+                    "mrt_lrt": {
+                        "state": "SCORED",
+                        "paths": {"covered_ratio": 0.3},
+                    }
+                },
+            }
+        ],
+    )
+    write_json(bundle / "geom" / "postal-index.json", {"560231": "8_425_259"})
+    write_json(
+        bundle / "geom" / "h3" / "8_425_259.json",
+        [
+            {
+                "postal": "560231",
+                "route_options": {
+                    "mrt_lrt": {
+                        "route_segments": {
+                            "sheltered": [
+                                {
+                                    "geom": encode_polyline(
+                                        [(1.36970, 103.83691), (1.37000, 103.83750)]
+                                    ),
+                                    "is_covered": False,
+                                    "len_m": 291.9,
+                                    "source_class": "exposed",
+                                },
+                                {
+                                    "geom": encode_polyline(
+                                        [(1.37000, 103.83750), (1.37010, 103.83760)]
+                                    ),
+                                    "is_covered": True,
+                                    "len_m": 20.0,
+                                    "source_class": "osm_covered",
+                                },
+                                {
+                                    "geom": encode_polyline(
+                                        [(1.37010, 103.83760), (1.37011, 103.83761)]
+                                    ),
+                                    "is_covered": False,
+                                    "len_m": 4.0,
+                                    "source_class": "exposed",
+                                },
+                            ]
+                        },
+                        "exposure_gaps": [{"len_m": 291.9, "label": "large gap"}],
+                    }
+                },
+            }
+        ],
+    )
+
+    output = route_gap_features(bundle, ["560231"], min_exposed_m=50.0)
+
+    assert output["type"] == "FeatureCollection"
+    assert len(output["features"]) == 1
+    [feature] = output["features"]
+    assert feature["properties"]["postal"] == "560231"
+    assert feature["properties"]["len_m"] == 291.9
+    assert feature["properties"]["mrt_specific_false_negative_signal"] is True
+    assert feature["geometry"]["coordinates"][0] == [103.83691, 1.3697]

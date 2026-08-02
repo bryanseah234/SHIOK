@@ -1,0 +1,310 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83666,
+            1.3708
+          ],
+          [
+            103.83667,
+            1.37071
+          ],
+          [
+            103.83673,
+            1.37043
+          ],
+          [
+            103.83678,
+            1.37028
+          ],
+          [
+            103.83681,
+            1.37021
+          ],
+          [
+            103.83694,
+            1.36992
+          ],
+          [
+            103.8372,
+            1.3695
+          ],
+          [
+            103.83726,
+            1.36941
+          ],
+          [
+            103.8373,
+            1.36935
+          ],
+          [
+            103.83726,
+            1.36932
+          ],
+          [
+            103.83716,
+            1.36925
+          ],
+          [
+            103.83705,
+            1.36918
+          ],
+          [
+            103.83691,
+            1.36907
+          ],
+          [
+            103.8368,
+            1.36896
+          ],
+          [
+            103.83661,
+            1.36875
+          ],
+          [
+            103.83669,
+            1.36868
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "confidence": null,
+        "evidence_status": "active_route_gap_for_network_qa_not_scoring_change",
+        "largest_mrt_exposed_gap_m": 291.9,
+        "len_m": 292.9,
+        "mode": "mrt_lrt",
+        "mrt_specific_false_negative_signal": true,
+        "postal": "560231",
+        "route_kind": "sheltered",
+        "segment_index": 6,
+        "source_class": "exposed",
+        "source_layer": null,
+        "synth_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83666,
+            1.3708
+          ],
+          [
+            103.83667,
+            1.37071
+          ],
+          [
+            103.83673,
+            1.37043
+          ],
+          [
+            103.83678,
+            1.37028
+          ],
+          [
+            103.83681,
+            1.37021
+          ],
+          [
+            103.83694,
+            1.36992
+          ],
+          [
+            103.8372,
+            1.3695
+          ],
+          [
+            103.83726,
+            1.36941
+          ],
+          [
+            103.8373,
+            1.36935
+          ],
+          [
+            103.83726,
+            1.36932
+          ],
+          [
+            103.83716,
+            1.36925
+          ],
+          [
+            103.83705,
+            1.36918
+          ],
+          [
+            103.83691,
+            1.36907
+          ],
+          [
+            103.8368,
+            1.36896
+          ],
+          [
+            103.83661,
+            1.36875
+          ],
+          [
+            103.83669,
+            1.36868
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "confidence": null,
+        "evidence_status": "active_route_gap_for_network_qa_not_scoring_change",
+        "largest_mrt_exposed_gap_m": 291.9,
+        "len_m": 292.9,
+        "mode": "mrt_lrt",
+        "mrt_specific_false_negative_signal": true,
+        "postal": "560234",
+        "route_kind": "sheltered",
+        "segment_index": 14,
+        "source_class": "exposed",
+        "source_layer": null,
+        "synth_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.8375,
+            1.3675
+          ],
+          [
+            103.83739,
+            1.36711
+          ],
+          [
+            103.83752,
+            1.36707
+          ],
+          [
+            103.83765,
+            1.36703
+          ],
+          [
+            103.83768,
+            1.36706
+          ],
+          [
+            103.83775,
+            1.36729
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "confidence": null,
+        "evidence_status": "active_route_gap_for_network_qa_not_scoring_change",
+        "largest_mrt_exposed_gap_m": 292.9,
+        "len_m": 106.0,
+        "mode": "mrt_lrt",
+        "mrt_specific_false_negative_signal": true,
+        "postal": "560225",
+        "route_kind": "sheltered",
+        "segment_index": 1,
+        "source_class": "exposed",
+        "source_layer": null,
+        "synth_class": null
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83666,
+            1.3708
+          ],
+          [
+            103.83667,
+            1.37071
+          ],
+          [
+            103.83673,
+            1.37043
+          ],
+          [
+            103.83678,
+            1.37028
+          ],
+          [
+            103.83681,
+            1.37021
+          ],
+          [
+            103.83694,
+            1.36992
+          ],
+          [
+            103.8372,
+            1.3695
+          ],
+          [
+            103.83726,
+            1.36941
+          ],
+          [
+            103.8373,
+            1.36935
+          ],
+          [
+            103.83726,
+            1.36932
+          ],
+          [
+            103.83716,
+            1.36925
+          ],
+          [
+            103.83705,
+            1.36918
+          ],
+          [
+            103.83691,
+            1.36907
+          ],
+          [
+            103.8368,
+            1.36896
+          ],
+          [
+            103.83661,
+            1.36875
+          ],
+          [
+            103.83669,
+            1.36868
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "confidence": null,
+        "evidence_status": "active_route_gap_for_network_qa_not_scoring_change",
+        "largest_mrt_exposed_gap_m": 292.9,
+        "len_m": 292.9,
+        "mode": "mrt_lrt",
+        "mrt_specific_false_negative_signal": true,
+        "postal": "560225",
+        "route_kind": "sheltered",
+        "segment_index": 9,
+        "source_class": "exposed",
+        "source_layer": null,
+        "synth_class": null
+      },
+      "type": "Feature"
+    }
+  ],
+  "name": "mayflower_active_mrt_exposed_gap_segments",
+  "type": "FeatureCollection"
+}

@@ -15,6 +15,8 @@ from typing import Any
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from pipeline.onemap_validation import decode_polyline
+
 DEFAULT_COMPONENT_AUDIT = (
     PROJECT_ROOT
     / "qa"
@@ -227,6 +229,74 @@ def geom_route_summary(bundle_dir: Path, postals: list[str]) -> dict[str, Any]:
                 "exposure_gaps": route_gap_summary(option),
             }
     return output
+
+
+def route_gap_features(
+    bundle_dir: Path,
+    postals: list[str],
+    *,
+    mode: str = "mrt_lrt",
+    route_kind: str = "sheltered",
+    min_exposed_m: float = 50.0,
+) -> dict[str, Any]:
+    features: list[dict[str, Any]] = []
+    normalized = [normalize_postal(postal) for postal in postals]
+    scores = score_summary(bundle_dir, normalized)
+    geometry = geom_route_summary(bundle_dir, normalized)
+    signals = mrt_gap_signals(scores, geometry)
+    for postal in normalized:
+        geom = find_geom_record(bundle_dir, postal)
+        if geom is None:
+            continue
+        option = geom.get("route_options", {}).get(mode) if mode != "best_transit" else geom
+        if not isinstance(option, dict):
+            continue
+        route_segments = option.get("route_segments")
+        if not isinstance(route_segments, dict):
+            continue
+        segments = route_segments.get(route_kind)
+        if not isinstance(segments, list):
+            continue
+        for segment_index, segment in enumerate(segments):
+            if not isinstance(segment, dict):
+                continue
+            length_m = float(segment.get("len_m") or 0.0)
+            if segment.get("is_covered") or length_m < min_exposed_m:
+                continue
+            encoded = segment.get("geom")
+            if not isinstance(encoded, str) or not encoded:
+                continue
+            coordinates = [[lon, lat] for lat, lon in decode_polyline(encoded)]
+            if len(coordinates) < 2:
+                continue
+            signal = signals.get(postal, {})
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "postal": postal,
+                        "mode": mode,
+                        "route_kind": route_kind,
+                        "segment_index": segment_index,
+                        "len_m": round(length_m, 1),
+                        "source_class": segment.get("source_class") or "exposed",
+                        "source_layer": segment.get("source_layer"),
+                        "synth_class": segment.get("synth_class"),
+                        "confidence": segment.get("confidence"),
+                        "mrt_specific_false_negative_signal": bool(
+                            signal.get("mrt_specific_false_negative_signal")
+                        ),
+                        "largest_mrt_exposed_gap_m": signal.get("largest_mrt_exposed_gap_m"),
+                        "evidence_status": "active_route_gap_for_network_qa_not_scoring_change",
+                    },
+                    "geometry": {"type": "LineString", "coordinates": coordinates},
+                }
+            )
+    return {
+        "type": "FeatureCollection",
+        "name": "mayflower_active_mrt_exposed_gap_segments",
+        "features": features,
+    }
 
 
 def mrt_gap_signals(scores: dict[str, Any], geometry: dict[str, Any]) -> dict[str, Any]:
@@ -519,10 +589,13 @@ def main() -> int:
         type=Path,
         default=PROJECT_ROOT / "qa" / "mayflower_route_qa_summary_20260801.md",
     )
+    parser.add_argument("--output-gap-geojson", type=Path, default=None)
+    parser.add_argument("--gap-min-exposed-m", type=float, default=50.0)
     args = parser.parse_args()
 
+    bundle_dir = args.bundle_dir or active_bundle_dir()
     summary = build_summary(
-        bundle_dir=args.bundle_dir or active_bundle_dir(),
+        bundle_dir=bundle_dir,
         component_audit_path=args.component_audit,
         feedback_audit_path=args.feedback_audit,
         postals=args.postals or DEFAULT_POSTALS,
@@ -531,12 +604,26 @@ def main() -> int:
     args.output_json.parent.mkdir(parents=True, exist_ok=True)
     args.output_json.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
     write_markdown(args.output_md, summary)
+    gap_geojson_path = None
+    if args.output_gap_geojson:
+        gap_geojson = route_gap_features(
+            bundle_dir,
+            args.postals or DEFAULT_POSTALS,
+            min_exposed_m=args.gap_min_exposed_m,
+        )
+        args.output_gap_geojson.parent.mkdir(parents=True, exist_ok=True)
+        args.output_gap_geojson.write_text(
+            json.dumps(gap_geojson, indent=2, sort_keys=True),
+            encoding="utf-8",
+        )
+        gap_geojson_path = str(args.output_gap_geojson)
     print(
         json.dumps(
             {
                 "ok": True,
                 "output_json": str(args.output_json),
                 "output_md": str(args.output_md),
+                "output_gap_geojson": gap_geojson_path,
                 "approved_source_backed_corrections": summary["conclusion"][
                     "approved_source_backed_corrections"
                 ],
