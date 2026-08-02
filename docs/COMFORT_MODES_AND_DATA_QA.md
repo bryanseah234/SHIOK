@@ -158,6 +158,12 @@ Current implementation:
   to transit.
 - The line geometry is explicitly `direct_bus_fallback_unrouted`; rain, heat,
   and crossing subscores remain null.
+- Future scoring runs also downgrade implausible graph-routed bus candidates to
+  the same partial direct-bus fallback when the bus stop is within the direct
+  candidate radius, the graph route is at least 3.0x the direct distance, and
+  the graph route adds at least 100 m. This is a guard against stale/missing
+  foot connectors around bus stops; it is not treated as a sheltered pedestrian
+  route.
 - A wider 2026-08-01 bounded QA sample rescored 128 selected records, including
   126 prior `NO_TRANSIT_IN_RANGE` records plus `560231`/`560234` controls.
   Result: 62 of 126 no-transit records converted to `SCORED_PARTIAL`, 64
@@ -470,6 +476,9 @@ route effect; no score override has been applied.
 - All 9,384 remaining `NO_TRANSIT_IN_RANGE` records in the pending bundle have
   zero direct bus candidates within 300 m, so the remaining population is not an
   obvious direct-bus fallback miss.
+- 2026-08-02 code change: `bus_route_should_use_direct_fallback` is implemented
+  and tested for implausible bus graph detours. It affects the next score
+  batch/export, not the currently deployed static bundle.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

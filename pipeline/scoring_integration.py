@@ -738,6 +738,28 @@ def direct_bus_fallback_candidate_scores(
     return fallback_scores
 
 
+def bus_route_should_use_direct_fallback(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> bool:
+    if candidate.node_type != "bus_stop":
+        return False
+    direct_m = float(candidate.straight_line_m)
+    if direct_m <= 0:
+        return False
+    max_direct_m = float(bus_params.get("straight_line_candidate_m", 300.0))
+    if direct_m > max_direct_m:
+        return False
+
+    routed_m = float(route_result.get("shortest_length_m") or 0.0)
+    if routed_m <= 0:
+        return False
+    detour_ratio = float(bus_params.get("direct_fallback_detour_ratio", 3.0))
+    min_extra_m = float(bus_params.get("direct_fallback_min_extra_m", 100.0))
+    return routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m
+
+
 def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, float]:
     return (
         float(candidate_score["total"]),
@@ -1219,9 +1241,19 @@ def score_postal_row(
         }
 
     candidate_scores = []
+    implausible_bus_candidates: list[CandidateNode] = []
+    implausible_bus_route_distances: list[float] = []
     for route_result in route_results:
         crossing_count = crossing_counter.count_for_route(route_result.get("geometry"))
         for candidate in candidate_by_destination[route_result["destination"]]:
+            if bus_route_should_use_direct_fallback(
+                candidate,
+                route_result,
+                params["bus_connectivity"],
+            ):
+                implausible_bus_candidates.append(candidate)
+                implausible_bus_route_distances.append(float(route_result["shortest_length_m"]))
+                continue
             candidate_scores.append(
                 score_candidate_route(
                     candidate,
@@ -1234,6 +1266,45 @@ def score_postal_row(
                     include_geometry=include_geometry,
                 )
             )
+
+    if implausible_bus_candidates:
+        fallback_scores = direct_bus_fallback_candidate_scores(
+            implausible_bus_candidates,
+            postal_row.geometry,
+            params,
+            weights,
+            include_geometry=include_geometry,
+        )
+        if fallback_scores:
+            candidate_scores.extend(fallback_scores)
+            expected_waits = [
+                candidate.expected_wait_min
+                for candidate in implausible_bus_candidates
+                if candidate.expected_wait_min is not None
+            ]
+            provenance["direct_bus_fallback"] = {
+                "reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+                "candidate_count": len(implausible_bus_candidates),
+                "radius_m": round(bus_candidate_radius_m, 1),
+                "nearest_direct_m": round(
+                    min(candidate.straight_line_m for candidate in implausible_bus_candidates),
+                    1,
+                ),
+                "nearest_graph_routed_m": round(min(implausible_bus_route_distances), 1),
+                "detour_ratio_threshold": round(
+                    float(params["bus_connectivity"].get("direct_fallback_detour_ratio", 3.0)),
+                    3,
+                ),
+                "min_extra_m_threshold": round(
+                    float(params["bus_connectivity"].get("direct_fallback_min_extra_m", 100.0)),
+                    1,
+                ),
+                "best_expected_wait_min": (
+                    round(min(expected_waits), 3) if expected_waits else None
+                ),
+                "geometry": "straight_line_origin_to_bus_stop_not_pedestrian_route",
+                "untrusted_subscores": ["rain", "heat", "crossing"],
+            }
 
     has_numeric_candidate = any(
         isinstance(candidate_score["total"], int | float) for candidate_score in candidate_scores

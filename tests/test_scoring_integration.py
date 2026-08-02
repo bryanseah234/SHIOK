@@ -15,6 +15,7 @@ from pipeline.scoring_integration import (
     assemble_score_record,
     build_provenance,
     bus_connectivity_from_routed_candidates,
+    bus_route_should_use_direct_fallback,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
@@ -397,6 +398,41 @@ def test_direct_bus_fallback_scores_partial_without_routed_shelter_geometry():
     assert record["subscores"]["heat"] is None
     assert record["subscores"]["crossing"] is None
     assert record["_geometry"]["sheltered"].coords[-1] == (95.0, 0.0)
+
+
+def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(400.0, 0.0),
+        straight_line_m=60.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(60.0, 0.0),
+    )
+
+    assert bus_route_should_use_direct_fallback(
+        candidate,
+        {"shortest_length_m": 400.0},
+        {
+            "straight_line_candidate_m": 300.0,
+            "direct_fallback_detour_ratio": 3.0,
+            "direct_fallback_min_extra_m": 100.0,
+        },
+    )
+
+    assert not bus_route_should_use_direct_fallback(
+        candidate,
+        {"shortest_length_m": 150.0},
+        {
+            "straight_line_candidate_m": 300.0,
+            "direct_fallback_detour_ratio": 3.0,
+            "direct_fallback_min_extra_m": 100.0,
+        },
+    )
 
 
 def test_record_assembly_selects_highest_scoring_candidate():
