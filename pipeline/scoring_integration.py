@@ -288,6 +288,7 @@ def select_mrt_exit_candidates(
                     graph_node=graph_node,
                     straight_line_m=float(row.geometry.distance(postal_point)),
                     snap_distance_m=snap_distance,
+                    point_xy=(float(row.geometry.x), float(row.geometry.y)),
                 )
             )
     return candidates
@@ -642,6 +643,15 @@ def score_candidate_route(
             "shortest_shade_ratio": round(
                 float(route_result.get("shortest_shade_ratio") or 0.0), 3
             ),
+            "origin_snap_connector_m": round(
+                float(route_result.get("origin_graph_snap_connector_m") or 0.0), 1
+            ),
+            "destination_snap_connector_m": round(
+                float(route_result.get("destination_graph_snap_connector_m") or 0.0), 1
+            ),
+            "endpoint_snap_connector_m": round(
+                float(route_result.get("endpoint_snap_connector_m") or 0.0), 1
+            ),
         },
         "exposure_gaps": exposure_gaps_from_path_edges(route_result.get("path_edges", [])),
         "crossing_count": crossing_count,
@@ -789,6 +799,117 @@ def merge_with_connector_geometry(route_geometry: Any, connector: LineString) ->
         else [route_geometry]
     )
     return linemerge(MultiLineString([*geometries, connector]))
+
+
+def snap_connector_edge(
+    start_xy: tuple[float, float],
+    end_xy: tuple[float, float],
+    *,
+    source_layer: str,
+    synth_class: str,
+) -> dict[str, Any] | None:
+    connector = LineString([start_xy, end_xy])
+    connector_m = float(connector.length)
+    if connector_m <= 0.05:
+        return None
+    return {
+        "length_m": connector_m,
+        "is_covered": False,
+        "geometry": connector,
+        "source_layer": source_layer,
+        "synth_class": synth_class,
+        "confidence": "inferred_endpoint_snap",
+    }
+
+
+def route_with_endpoint_snap_connectors(
+    route_result: dict[str, Any],
+    *,
+    postal_point: Any,
+    origin_node: tuple[float, float],
+    candidate: CandidateNode,
+    include_destination: bool = True,
+) -> dict[str, Any]:
+    origin_edge = snap_connector_edge(
+        (float(postal_point.x), float(postal_point.y)),
+        (float(origin_node[0]), float(origin_node[1])),
+        source_layer="origin_graph_snap_connector",
+        synth_class="ORIGIN_GRAPH_SNAP_CONNECTOR",
+    )
+    destination_edge = None
+    if include_destination and candidate.point_xy is not None:
+        destination = route_result.get("destination", candidate.graph_node)
+        destination_edge = snap_connector_edge(
+            (float(destination[0]), float(destination[1])),
+            (float(candidate.point_xy[0]), float(candidate.point_xy[1])),
+            source_layer="destination_graph_snap_connector",
+            synth_class="DESTINATION_GRAPH_SNAP_CONNECTOR",
+        )
+
+    connector_edges = [edge for edge in (origin_edge, destination_edge) if edge is not None]
+    if not connector_edges:
+        return route_result
+
+    origin_connector_m = float(origin_edge["length_m"]) if origin_edge is not None else 0.0
+    destination_connector_m = (
+        float(destination_edge["length_m"]) if destination_edge is not None else 0.0
+    )
+    connector_m = origin_connector_m + destination_connector_m
+    shortest_base_m = float(route_result["shortest_length_m"])
+    sheltered_base_m = float(route_result["length_m"])
+    covered_m = float(route_result["covered_m"])
+    shade_m = float(route_result.get("shade_m") or 0.0)
+    shortest_covered_m = shortest_base_m * float(route_result["shortest_covered_ratio"])
+    shortest_shade_m = float(route_result.get("shortest_shade_m") or 0.0)
+    shortest_total_m = shortest_base_m + connector_m
+    sheltered_total_m = sheltered_base_m + connector_m
+
+    attached = dict(route_result)
+    attached.update(
+        {
+            "shortest_length_m": shortest_total_m,
+            "length_m": sheltered_total_m,
+            "covered_ratio": covered_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shade_ratio": shade_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shortest_covered_ratio": (
+                shortest_covered_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "shortest_shade_ratio": (
+                shortest_shade_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "sheltered_length_m": (
+                float(route_result["sheltered_length_m"]) + connector_m
+                if route_result.get("sheltered_length_m") is not None
+                else None
+            ),
+            "origin_graph_snap_connector_m": origin_connector_m,
+            "destination_graph_snap_connector_m": destination_connector_m,
+            "endpoint_snap_connector_m": connector_m,
+        }
+    )
+
+    shortest_edges = [
+        *([origin_edge] if origin_edge is not None else []),
+        *route_result.get("shortest_path_edges", []),
+        *([destination_edge] if destination_edge is not None else []),
+    ]
+    sheltered_edges = [
+        *([origin_edge] if origin_edge is not None else []),
+        *route_result.get("sheltered_path_edges", route_result.get("path_edges", [])),
+        *([destination_edge] if destination_edge is not None else []),
+    ]
+    attached["shortest_path_edges"] = shortest_edges
+    attached["sheltered_path_edges"] = sheltered_edges
+    attached["path_edges"] = sheltered_edges
+
+    shortest_geometry = route_result.get("shortest_geometry")
+    sheltered_geometry = route_result.get("geometry")
+    for edge in connector_edges:
+        shortest_geometry = merge_with_connector_geometry(shortest_geometry, edge["geometry"])
+        sheltered_geometry = merge_with_connector_geometry(sheltered_geometry, edge["geometry"])
+    attached["shortest_geometry"] = shortest_geometry
+    attached["geometry"] = sheltered_geometry
+    return attached
 
 
 def route_with_bus_stop_access_connector(
@@ -1433,11 +1554,17 @@ def score_postal_row(
     implausible_bus_reasons: Counter[str] = Counter()
     bus_access_connector_rows: list[dict[str, Any]] = []
     for route_result in route_results:
-        crossing_count = crossing_counter.count_for_route(route_result.get("geometry"))
         for candidate in candidate_by_destination[route_result["destination"]]:
+            candidate_route = route_with_endpoint_snap_connectors(
+                route_result,
+                postal_point=postal_row.geometry,
+                origin_node=origin_node,
+                candidate=candidate,
+            )
+            crossing_count = crossing_counter.count_for_route(candidate_route.get("geometry"))
             direct_fallback_reason = bus_route_direct_fallback_reason(
                 candidate,
-                route_result,
+                candidate_route,
                 params["bus_connectivity"],
             )
             if direct_fallback_reason is not None:
@@ -1450,6 +1577,13 @@ def score_postal_row(
                     params=params,
                 )
                 if connector_route is not None:
+                    connector_route = route_with_endpoint_snap_connectors(
+                        connector_route,
+                        postal_point=postal_row.geometry,
+                        origin_node=origin_node,
+                        candidate=candidate,
+                        include_destination=False,
+                    )
                     connector_crossings = crossing_counter.count_for_route(
                         connector_route.get("geometry")
                     )
@@ -1484,13 +1618,13 @@ def score_postal_row(
                     )
                     continue
                 implausible_bus_candidates.append(candidate)
-                implausible_bus_route_distances.append(float(route_result["shortest_length_m"]))
+                implausible_bus_route_distances.append(float(candidate_route["shortest_length_m"]))
                 implausible_bus_reasons[direct_fallback_reason] += 1
                 continue
             candidate_scores.append(
                 score_candidate_route(
                     candidate,
-                    route_result,
+                    candidate_route,
                     params,
                     weights,
                     crossing_count,

@@ -650,6 +650,21 @@ class ConnectorBusIndex:
         ]
 
 
+class EndpointSnapBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54323",
+                description="TEST STOP",
+                graph_node=(90.0, 0.0),
+                straight_line_m=100.0,
+                snap_distance_m=10.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(100.0, 0.0),
+            )
+        ]
+
+
 class BoundaryBusIndex:
     def __init__(self) -> None:
         self.requested_radius_m: float | None = None
@@ -786,6 +801,60 @@ def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():
     assert "direct_bus_fallback" not in record["provenance"]
     assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
         "bus_stop_access_connector"
+    )
+
+
+def test_score_postal_row_includes_origin_and_destination_snap_connectors():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (10.0, 0.0),
+                "v": (90.0, 0.0),
+                "length_m": 80.0,
+                "is_covered": 1,
+                "geometry": LineString([(10.0, 0.0), (90.0, 0.0)]),
+            }
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(10.0, 0.0), (90.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "123457", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=EndpointSnapBusIndex(),  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "SCORED"
+    assert record["best_node"]["routed_m"] == 100.0
+    assert record["paths"]["shortest_m"] == 100.0
+    assert record["paths"]["covered_m"] == 80.0
+    assert record["paths"]["covered_ratio"] == 0.8
+    assert record["paths"]["origin_snap_connector_m"] == 10.0
+    assert record["paths"]["destination_snap_connector_m"] == 10.0
+    assert record["paths"]["endpoint_snap_connector_m"] == 20.0
+    assert record["_geometry"]["shortest_path_edges"][0]["source_layer"] == (
+        "origin_graph_snap_connector"
+    )
+    assert record["_geometry"]["shortest_path_edges"][-1]["source_layer"] == (
+        "destination_graph_snap_connector"
     )
 
 
