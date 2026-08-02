@@ -31,6 +31,9 @@ export interface Paths {
   heat_comfort_ratio?: number;
   shortest_covered_ratio?: number;
   shortest_shade_ratio?: number;
+  origin_snap_connector_m?: number;
+  destination_snap_connector_m?: number;
+  endpoint_snap_connector_m?: number;
 }
 
 export interface ExposureGap {

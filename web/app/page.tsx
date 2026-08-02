@@ -62,6 +62,9 @@ const SOURCE_LABELS: Record<string, string> = {
   bridge_underpass: "Bridge/underpass",
   audited_shelter_correction: "Audited shelter",
   direct_unrouted_bus: "Direct bus estimate",
+  bus_stop_access_connector: "Bus stop connector",
+  origin_graph_snap_connector: "Postal connector",
+  destination_graph_snap_connector: "Transit connector",
   covered_unknown: "Covered",
   exposed: "Exposed",
 };
@@ -365,7 +368,12 @@ function routeSourceBreakdown(
 
   const totals = new Map<string, number>();
   for (const segment of segments as RouteSegment[]) {
-    const source = segment.source_class ?? (segment.is_covered ? "covered_unknown" : "exposed");
+    const source =
+      segment.source_layer === "bus_stop_access_connector" ||
+      segment.source_layer === "origin_graph_snap_connector" ||
+      segment.source_layer === "destination_graph_snap_connector"
+        ? segment.source_layer
+        : segment.source_class ?? (segment.is_covered ? "covered_unknown" : "exposed");
     totals.set(source, (totals.get(source) ?? 0) + segment.len_m);
   }
   return Array.from(totals.entries())
@@ -677,6 +685,7 @@ function ScoreCard({
   const displayScore = modeAdjustedTotal(score, comfortMode);
   const sourceBreakdown = routeSourceBreakdown(selection, routeMode, sameRoute);
   const exposureGaps = score.exposure_gaps ? [...score.exposure_gaps].sort((a, b) => b.len_m - a.len_m) : [];
+  const endpointSnapM = score.paths?.endpoint_snap_connector_m ?? 0;
   const extraWalkLabel =
     extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
   const dataDate = manifest?.data_as_of
@@ -813,6 +822,9 @@ function ScoreCard({
           <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
           <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
           <Metric label="Shade proxy" value={formatPercent(Math.round((score.paths.shade_ratio ?? 0) * 100))} />
+          {endpointSnapM > 0 && (
+            <Metric label="Map connector" value={formatDistance(endpointSnapM)} />
+          )}
         </div>
       )}
 
