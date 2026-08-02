@@ -1,0 +1,31 @@
+{
+  "bounded_replay": {
+    "project_longer_bus_stop": {
+      "direct_bus_fallback_count": 14,
+      "fallback_reason_counts": {
+        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 39,
+        "none": 51
+      },
+      "scored_postals": 90,
+      "selected_postals": 90
+    },
+    "project_shorter_bus_stop": {
+      "direct_bus_fallback_count": 2,
+      "fallback_reason_counts": {
+        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 26,
+        "none": 68
+      },
+      "scored_postals": 94,
+      "selected_postals": 94
+    }
+  },
+  "change": "bus_stop_low_trust_road_centerline_guard",
+  "focused_examples": {
+    "637442_559916_806764": "not fixed by this guard; these are endpoint/barrier or industrial divergence classes needing separate QA",
+    "804360_804361": "previous Opp AMK Ind Pk 2 bare road-centerline bus candidate is skipped; scoring selects alternate Aft Blk 5000 bus stop instead"
+  },
+  "generated_at": "2026-08-02T11:46:22+00:00",
+  "guard_policy": "skip bus candidate when route is dominated by bare vehicular road-centerline edges and has little pedestrian evidence; no direct fallback for trust-rejected route",
+  "next_issue": "endpoint snap/barrier trust and industrial/private-access divergence still dominate OneMap p95; full rescore not run",
+  "tests": "uv run python run.py test -> 214 passed"
+}

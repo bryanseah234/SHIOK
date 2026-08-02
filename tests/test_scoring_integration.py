@@ -20,6 +20,7 @@ from pipeline.scoring_integration import (
     bus_connectivity_from_routed_candidates,
     bus_route_direct_fallback_reason,
     bus_route_should_use_direct_fallback,
+    bus_route_trust_rejection_reason,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
@@ -49,8 +50,13 @@ PARAMS = {
         "access_connector_max_walk_m": 300.0,
         "access_connector_max_direct_ratio": 2.5,
         "access_connector_max_extra_m": 100.0,
+        "direct_fallback_detour_ratio": 3.0,
+        "direct_fallback_min_extra_m": 100.0,
         "direct_fallback_shortcut_ratio": 0.5,
         "direct_fallback_min_missing_m": 50.0,
+        "road_centerline_guard_min_m": 50.0,
+        "road_centerline_guard_min_ratio": 0.5,
+        "road_centerline_guard_max_pedestrian_m": 25.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -635,6 +641,40 @@ def test_bus_access_connector_builder_rejects_implausibly_short_origin_snap():
     assert route is None
 
 
+def test_bus_route_trust_rejects_bare_road_centerline_bus_access():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(180.0, 0.0),
+        straight_line_m=175.0,
+        snap_distance_m=0.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(180.0, 0.0),
+    )
+    route = {
+        "shortest_length_m": 180.0,
+        "shortest_path_edges": [
+            {
+                "length_m": 180.0,
+                "highway": "primary",
+                "source_layer": "",
+                "confidence": "",
+            }
+        ],
+    }
+
+    assert (
+        bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"])
+        == "low_trust_bus_stop_road_centerline_route"
+    )
+
+    route["shortest_path_edges"][0]["foot"] = "yes"
+    assert bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"]) is None
+
+
 class ConnectorBusIndex:
     def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
         return [
@@ -682,6 +722,21 @@ class BoundaryBusIndex:
                 snap_distance_m=4.0,
                 service_headways_min={("10", 1): 8.0},
                 point_xy=(303.0, 0.0),
+            )
+        ]
+
+
+class LowTrustRoadBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54324",
+                description="OPP ROAD STOP",
+                graph_node=(180.0, 0.0),
+                straight_line_m=175.0,
+                snap_distance_m=0.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(180.0, 0.0),
             )
         ]
 
@@ -802,6 +857,57 @@ def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():
     assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
         "bus_stop_access_connector"
     )
+
+
+def test_score_postal_row_skips_low_trust_bus_road_centerline_route():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (180.0, 0.0),
+                "length_m": 180.0,
+                "is_covered": 0,
+                "highway": "primary",
+                "source_layer": "",
+                "confidence": "",
+                "geometry": LineString([(0.0, 0.0), (180.0, 0.0)]),
+            }
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (180.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "123458", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=LowTrustRoadBusIndex(),  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "NO_TRANSIT_IN_RANGE"
+    assert record["provenance"]["reason"] == (
+        "all_numeric_transit_candidates_rejected_by_bus_route_trust_gate"
+    )
+    assert record["provenance"]["untrusted_bus_routes"]["reason_counts"] == {
+        "low_trust_bus_stop_road_centerline_route": 1
+    }
+    assert "direct_bus_fallback" not in record["provenance"]
 
 
 def test_score_postal_row_includes_origin_and_destination_snap_connectors():

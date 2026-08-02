@@ -47,6 +47,29 @@ GEOCODE_DB_PATH = RAW_DIR / "geocode_cache.db"
 MANIFEST_PATH = RAW_DIR / "manifest.json"
 SubscoreValue = float | str
 
+LOW_TRUST_BUS_ROAD_HIGHWAYS = {
+    "primary",
+    "primary_link",
+    "secondary",
+    "secondary_link",
+    "tertiary",
+    "tertiary_link",
+    "residential",
+    "service",
+    "unclassified",
+}
+PEDESTRIAN_EVIDENCE_HIGHWAYS = {
+    "corridor",
+    "crossing",
+    "footway",
+    "living_street",
+    "path",
+    "pedestrian",
+    "platform",
+    "steps",
+}
+PEDESTRIAN_FOOT_VALUES = {"yes", "designated", "official", "permissive"}
+
 
 @dataclass(frozen=True)
 class CandidateNode:
@@ -787,6 +810,89 @@ def bus_route_direct_fallback_reason(
     if routed_m <= direct_m * shortcut_ratio and (direct_m - routed_m) >= min_missing_m:
         return "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
 
+    return None
+
+
+def normalized_text(value: Any) -> str:
+    if value is None or (isinstance(value, float) and pd.isna(value)):
+        return ""
+    return str(value).strip().lower()
+
+
+def bus_edge_is_low_trust_road_centerline(edge: dict[str, Any]) -> bool:
+    source_layer = normalized_text(edge.get("source_layer"))
+    synth_class = normalized_text(edge.get("synth_class"))
+    confidence = normalized_text(edge.get("confidence"))
+    if source_layer or synth_class or confidence:
+        return False
+
+    highway = normalized_text(edge.get("highway"))
+    if highway not in LOW_TRUST_BUS_ROAD_HIGHWAYS:
+        return False
+    if normalized_text(edge.get("foot")) in PEDESTRIAN_FOOT_VALUES:
+        return False
+    if normalized_text(edge.get("sidewalk")) in {"both", "left", "right", "yes"}:
+        return False
+    if normalized_text(edge.get("crossing")):
+        return False
+    if normalized_text(edge.get("bridge")) in {"yes", "covered"}:
+        return False
+    if normalized_text(edge.get("tunnel")) in {"yes", "building_passage"}:
+        return False
+    return True
+
+
+def bus_edge_has_pedestrian_evidence(edge: dict[str, Any]) -> bool:
+    source_layer = normalized_text(edge.get("source_layer"))
+    if source_layer and source_layer not in {
+        "origin_graph_snap_connector",
+        "destination_graph_snap_connector",
+        "bus_stop_access_connector",
+    }:
+        return True
+    highway = normalized_text(edge.get("highway"))
+    if highway in PEDESTRIAN_EVIDENCE_HIGHWAYS:
+        return True
+    if normalized_text(edge.get("foot")) in PEDESTRIAN_FOOT_VALUES:
+        return True
+    if normalized_text(edge.get("sidewalk")) in {"both", "left", "right", "yes"}:
+        return True
+    return False
+
+
+def bus_route_trust_rejection_reason(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> str | None:
+    if candidate.node_type != "bus_stop":
+        return None
+    edges = route_result.get("shortest_path_edges")
+    if not isinstance(edges, list) or not edges:
+        return None
+
+    low_trust_road_m = 0.0
+    pedestrian_evidence_m = 0.0
+    for edge in edges:
+        if not isinstance(edge, dict):
+            continue
+        length_m = float(edge.get("length_m") or 0.0)
+        if bus_edge_is_low_trust_road_centerline(edge):
+            low_trust_road_m += length_m
+        if bus_edge_has_pedestrian_evidence(edge):
+            pedestrian_evidence_m += length_m
+
+    route_m = float(route_result.get("shortest_length_m") or 0.0)
+    min_road_m = float(bus_params.get("road_centerline_guard_min_m", 50.0))
+    min_road_ratio = float(bus_params.get("road_centerline_guard_min_ratio", 0.5))
+    max_pedestrian_m = float(bus_params.get("road_centerline_guard_max_pedestrian_m", 25.0))
+    if (
+        route_m > 0
+        and low_trust_road_m >= min_road_m
+        and low_trust_road_m >= route_m * min_road_ratio
+        and pedestrian_evidence_m <= max_pedestrian_m
+    ):
+        return "low_trust_bus_stop_road_centerline_route"
     return None
 
 
@@ -1553,6 +1659,8 @@ def score_postal_row(
     implausible_bus_route_distances: list[float] = []
     implausible_bus_reasons: Counter[str] = Counter()
     bus_access_connector_rows: list[dict[str, Any]] = []
+    untrusted_bus_route_reasons: Counter[str] = Counter()
+    untrusted_bus_route_rows: list[dict[str, Any]] = []
     for route_result in route_results:
         for candidate in candidate_by_destination[route_result["destination"]]:
             candidate_route = route_with_endpoint_snap_connectors(
@@ -1621,6 +1729,23 @@ def score_postal_row(
                 implausible_bus_route_distances.append(float(candidate_route["shortest_length_m"]))
                 implausible_bus_reasons[direct_fallback_reason] += 1
                 continue
+            trust_rejection_reason = bus_route_trust_rejection_reason(
+                candidate,
+                candidate_route,
+                params["bus_connectivity"],
+            )
+            if trust_rejection_reason is not None:
+                untrusted_bus_route_reasons[trust_rejection_reason] += 1
+                untrusted_bus_route_rows.append(
+                    {
+                        "name": candidate.name,
+                        "bus_stop_code": candidate.exit_code,
+                        "direct_m": round(float(candidate.straight_line_m), 1),
+                        "routed_m": round(float(candidate_route["shortest_length_m"]), 1),
+                        "routing_type": candidate_route.get("routing_type"),
+                    }
+                )
+                continue
             candidate_scores.append(
                 score_candidate_route(
                     candidate,
@@ -1657,6 +1782,24 @@ def score_postal_row(
             "geometry": "graph_route_plus_exposed_endpoint_connector_to_datamall_bus_stop",
             "source_layer": "bus_stop_access_connector",
             "examples": bus_access_connector_rows[:5],
+        }
+
+    if untrusted_bus_route_reasons:
+        bus_params = params["bus_connectivity"]
+        provenance["untrusted_bus_routes"] = {
+            "reason_counts": dict(sorted(untrusted_bus_route_reasons.items())),
+            "candidate_count": sum(untrusted_bus_route_reasons.values()),
+            "policy": "skipped_from_scoring_not_direct_fallback",
+            "road_centerline_guard_min_m": round(
+                float(bus_params.get("road_centerline_guard_min_m", 50.0)), 1
+            ),
+            "road_centerline_guard_min_ratio": round(
+                float(bus_params.get("road_centerline_guard_min_ratio", 0.5)), 3
+            ),
+            "road_centerline_guard_max_pedestrian_m": round(
+                float(bus_params.get("road_centerline_guard_max_pedestrian_m", 25.0)), 1
+            ),
+            "examples": untrusted_bus_route_rows[:5],
         }
 
     if implausible_bus_candidates:
@@ -1717,7 +1860,9 @@ def score_postal_row(
     has_numeric_candidate = any(
         isinstance(candidate_score["total"], int | float) for candidate_score in candidate_scores
     )
-    if not has_numeric_candidate and bus_candidates:
+    if not has_numeric_candidate and untrusted_bus_route_reasons:
+        provenance["reason"] = "all_numeric_transit_candidates_rejected_by_bus_route_trust_gate"
+    if not has_numeric_candidate and bus_candidates and not untrusted_bus_route_reasons:
         fallback_scores = direct_bus_fallback_candidate_scores(
             bus_candidates,
             postal_row.geometry,
