@@ -138,6 +138,39 @@ def test_routing_exports_shortest_and_sheltered_path_edges_with_geometry():
     assert result["path_edges"] == result["sheltered_path_edges"]
 
 
+def test_routing_orients_reversed_edge_geometry_in_route_order():
+    edges_dict = {
+        "u": [(0.0, 0.0), (10.0, 0.0)],
+        "v": [(10.0, 0.0), (20.0, 0.0)],
+        "length_m": [10.0, 10.0],
+        "is_covered": [0, 0],
+        "geometry": [
+            LineString([(10.0, 0.0), (0.0, 0.0)]),
+            LineString([(20.0, 0.0), (10.0, 0.0)]),
+        ],
+    }
+
+    result = RoutingGraph.from_edges_dict(edges_dict).route(
+        {(0.0, 0.0): [(20.0, 0.0)]},
+        0.0,
+        1.25,
+    )[0]
+
+    assert list(result["shortest_path_edges"][0]["geometry"].coords) == [
+        (0.0, 0.0),
+        (10.0, 0.0),
+    ]
+    assert list(result["shortest_path_edges"][1]["geometry"].coords) == [
+        (10.0, 0.0),
+        (20.0, 0.0),
+    ]
+    assert list(result["shortest_geometry"].coords) == [
+        (0.0, 0.0),
+        (10.0, 0.0),
+        (20.0, 0.0),
+    ]
+
+
 def test_routing_preserves_pedestrian_qa_metadata_on_path_edges():
     edges_dict = {
         "u": [(0.0, 0.0)],

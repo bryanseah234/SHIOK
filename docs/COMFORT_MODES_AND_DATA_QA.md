@@ -620,3 +620,11 @@ route effect; no score override has been applied.
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit
   scored state for far-but-reachable transit. The 6 disconnected samples still
   need targeted geometry QA before any broad resnap/connector change.
+- 2026-08-03 route geometry export hardening: `pipeline.routing.RoutingGraph`
+  now computes vertex paths alongside igraph edge paths and orients every
+  exported edge geometry in traversal order before building path geometry and
+  `*_path_edges`. This targets map artifacts where undirected graph edges were
+  stored opposite to the actual walk direction, making routes look tangled even
+  when the selected graph edges were valid. This is a code fix only until the
+  affected postals are re-routed and their static geometry shards are exported
+  again.

@@ -6,7 +6,7 @@ import igraph as ig
 import pandas as pd
 import yaml
 from shapely import wkt
-from shapely.geometry import MultiLineString
+from shapely.geometry import LineString, MultiLineString
 from shapely.ops import linemerge
 
 from pipeline.osm_tags import load_osm_tag_schema
@@ -164,25 +164,118 @@ class RoutingGraph:
             ]
         return self._sheltered_costs_by_lambda[lambda_key]
 
-    def geometry_for_epath(self, epath):
+    def _node_xy(self, vertex_idx):
+        node = self.reverse_map.get(vertex_idx)
+        if isinstance(node, (list, tuple)) and len(node) >= 2:
+            return (float(node[0]), float(node[1]))
+        return None
+
+    @staticmethod
+    def _distance_sq(a, b) -> float:
+        return float((float(a[0]) - float(b[0])) ** 2 + (float(a[1]) - float(b[1])) ** 2)
+
+    def oriented_geometry_for_edge(self, edge_id, from_vertex=None, to_vertex=None):
         if self.geometries is None:
             return None
-        lines = [
+        geometry = self.geometries[edge_id]
+        if (
+            geometry is None
+            or from_vertex is None
+            or to_vertex is None
+            or getattr(geometry, "geom_type", None) != "LineString"
+        ):
+            return geometry
+        from_xy = self._node_xy(from_vertex)
+        to_xy = self._node_xy(to_vertex)
+        if from_xy is None or to_xy is None:
+            return geometry
+        coords = list(geometry.coords)
+        if len(coords) < 2:
+            return geometry
+        forward_score = self._distance_sq(coords[0], from_xy) + self._distance_sq(coords[-1], to_xy)
+        reverse_score = self._distance_sq(coords[-1], from_xy) + self._distance_sq(coords[0], to_xy)
+        if reverse_score < forward_score:
+            return LineString(list(reversed(coords)))
+        return geometry
+
+    def oriented_lines_for_epath(self, epath, vpath=None):
+        if self.geometries is None:
+            return []
+        if vpath and len(vpath) == len(epath) + 1:
+            return [
+                self.oriented_geometry_for_edge(edge_id, from_vertex, to_vertex)
+                for edge_id, from_vertex, to_vertex in zip(epath, vpath, vpath[1:])
+                if self.geometries[edge_id] is not None
+            ]
+        return [
             self.geometries[edge_id] for edge_id in epath if self.geometries[edge_id] is not None
         ]
+
+    def vpath_for_epath(self, origin_idx, epath):
+        current = origin_idx
+        vpath = [current]
+        for edge_id in epath:
+            source, target = self.graph.es[edge_id].tuple
+            if source == current:
+                current = target
+            elif target == current:
+                current = source
+            else:
+                return []
+            vpath.append(current)
+        return vpath
+
+    @staticmethod
+    def _same_point(a, b, tolerance_m: float = 0.25) -> bool:
+        return (float(a[0]) - float(b[0])) ** 2 + (float(a[1]) - float(b[1])) ** 2 <= (
+            tolerance_m**2
+        )
+
+    def geometry_for_epath(self, epath, vpath=None):
+        lines = self.oriented_lines_for_epath(epath, vpath)
         if not lines:
             return None
-        return linemerge(MultiLineString(lines))
+        if not vpath:
+            return linemerge(MultiLineString(lines)) if len(lines) > 1 else lines[0]
 
-    def path_edges_for_epath(self, epath):
+        parts = []
+        current_coords = []
+        for line in lines:
+            if getattr(line, "geom_type", None) != "LineString":
+                if current_coords:
+                    parts.append(LineString(current_coords))
+                    current_coords = []
+                parts.append(line)
+                continue
+            coords = list(line.coords)
+            if len(coords) < 2:
+                continue
+            if not current_coords:
+                current_coords = coords
+            elif self._same_point(current_coords[-1], coords[0]):
+                current_coords.extend(coords[1:])
+            else:
+                parts.append(LineString(current_coords))
+                current_coords = coords
+        if current_coords:
+            parts.append(LineString(current_coords))
+        if not parts:
+            return None
+        return parts[0] if len(parts) == 1 else MultiLineString(parts)
+
+    def path_edges_for_epath(self, epath, vpath=None):
         if self.geometries is None:
             return []
         edges = []
-        for edge_id in epath:
+        vertex_pairs = (
+            list(zip(vpath, vpath[1:])) if vpath and len(vpath) == len(epath) + 1 else None
+        )
+        for index, edge_id in enumerate(epath):
+            from_vertex, to_vertex = vertex_pairs[index] if vertex_pairs else (None, None)
             edge = {
                 "length_m": float(self.lengths[edge_id]),
                 "is_covered": bool(self.covered[edge_id]),
-                "geometry": self.geometries[edge_id],
+                "geometry": self.oriented_geometry_for_edge(edge_id, from_vertex, to_vertex),
             }
             for column, values in self.edge_metadata.items():
                 value = values[edge_id]
@@ -223,23 +316,36 @@ class RoutingGraph:
             )
 
             for dest, epath_short, epath_shelt in zip(
-                valid_destinations, paths_shortest, paths_sheltered
+                valid_destinations,
+                paths_shortest,
+                paths_sheltered,
             ):
                 if not epath_short:
                     continue
 
                 len_short = sum(self.lengths[edge_id] for edge_id in epath_short)
+                vpath_short = (
+                    self.vpath_for_epath(origin_idx, epath_short) if include_geometry else None
+                )
+                vpath_shelt = (
+                    self.vpath_for_epath(origin_idx, epath_shelt)
+                    if include_geometry and epath_shelt
+                    else None
+                )
 
                 if not epath_shelt:
                     final_epath = epath_short
+                    final_vpath = vpath_short
                     routing_type = "shortest_fallback"
                 else:
                     len_shelt = sum(self.lengths[edge_id] for edge_id in epath_shelt)
                     if len_shelt <= float(detour_budget) * len_short:
                         final_epath = epath_shelt
+                        final_vpath = vpath_shelt
                         routing_type = "sheltered"
                     else:
                         final_epath = epath_short
+                        final_vpath = vpath_short
                         routing_type = "shortest_due_to_detour"
 
                 final_length = sum(self.lengths[edge_id] for edge_id in final_epath)
@@ -284,11 +390,15 @@ class RoutingGraph:
                     "path_edges": [],
                 }
                 if include_geometry:
-                    result["geometry"] = self.geometry_for_epath(final_epath)
-                    result["shortest_geometry"] = self.geometry_for_epath(epath_short)
-                    result["shortest_path_edges"] = self.path_edges_for_epath(epath_short)
-                    result["sheltered_path_edges"] = self.path_edges_for_epath(final_epath)
-                    result["path_edges"] = self.path_edges_for_epath(final_epath)
+                    result["geometry"] = self.geometry_for_epath(final_epath, final_vpath)
+                    result["shortest_geometry"] = self.geometry_for_epath(epath_short, vpath_short)
+                    result["shortest_path_edges"] = self.path_edges_for_epath(
+                        epath_short, vpath_short
+                    )
+                    result["sheltered_path_edges"] = self.path_edges_for_epath(
+                        final_epath, final_vpath
+                    )
+                    result["path_edges"] = self.path_edges_for_epath(final_epath, final_vpath)
                 results.append(result)
 
         return results
