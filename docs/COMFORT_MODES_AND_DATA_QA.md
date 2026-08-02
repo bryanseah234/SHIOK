@@ -628,3 +628,10 @@ route effect; no score override has been applied.
   when the selected graph edges were valid. This is a code fix only until the
   affected postals are re-routed and their static geometry shards are exported
   again.
+- `qa/targeted_bundle_refresh_oriented_mayflower_amk_20260803.json` rerouted
+  five user-reported AMK/Mayflower QA postals against the oriented-geometry
+  code. The temporary candidate bundle validated structurally, and
+  `qa/oriented_mayflower_amk_geometry_audit_20260803.json` shows the exported
+  segment-to-segment gaps for `560231` and `560234` drop to 0.0 m. The score
+  compare blocked wholesale promotion (`560225`, `560700`, `560710` regressed),
+  so the large temporary bundle was deleted and no activation/deploy was done.

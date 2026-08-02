@@ -1,0 +1,3639 @@
+{
+  "bundles": {
+    "active_safe_mayflower": {
+      "560225": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 115.0,
+          "part_count": 6,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 11,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 50.7,
+              "end": [
+                1.36741,
+                103.83815
+              ],
+              "index": 0,
+              "max_internal_jump_m": 33.6,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36729,
+                103.83775
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 106.0,
+              "end": [
+                1.36729,
+                103.83775
+              ],
+              "index": 1,
+              "max_internal_jump_m": 45.1,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 25.3,
+              "end": [
+                1.3677,
+                103.8376
+              ],
+              "index": 2,
+              "max_internal_jump_m": 21.4,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.1,
+              "end": [
+                1.36775,
+                103.83757
+              ],
+              "index": 3,
+              "max_internal_jump_m": 6.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3677,
+                103.8376
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 13.1,
+              "end": [
+                1.36779,
+                103.83745
+              ],
+              "index": 4,
+              "max_internal_jump_m": 8.1,
+              "points": 3,
+              "source_class": "exposed",
+              "start": [
+                1.36775,
+                103.83757
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.8,
+              "end": [
+                1.36779,
+                103.83745
+              ],
+              "index": 5,
+              "max_internal_jump_m": 20.1,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 6,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 16.5,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 7,
+              "max_internal_jump_m": 17.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 67.0,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 8,
+              "max_internal_jump_m": 35.6,
+              "points": 8,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 9,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 10,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 94.4
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 110.6,
+          "part_count": 6,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 10,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 33.6,
+              "end": [
+                1.36741,
+                103.83815
+              ],
+              "index": 0,
+              "max_internal_jump_m": 33.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36724,
+                103.8379
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 123.1,
+              "end": [
+                1.36724,
+                103.8379
+              ],
+              "index": 1,
+              "max_internal_jump_m": 45.1,
+              "points": 7,
+              "source_class": "exposed",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.1,
+              "end": [
+                1.36754,
+                103.83748
+              ],
+              "index": 2,
+              "max_internal_jump_m": 5.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 50.7,
+              "end": [
+                1.36754,
+                103.83748
+              ],
+              "index": 3,
+              "max_internal_jump_m": 21.9,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.36789,
+                103.83752
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 20.2,
+              "end": [
+                1.36789,
+                103.83752
+              ],
+              "index": 4,
+              "max_internal_jump_m": 20.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 5,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 16.5,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 6,
+              "max_internal_jump_m": 17.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 67.0,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 7,
+              "max_internal_jump_m": 35.6,
+              "points": 8,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 8,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 9,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 94.4
+        }
+      },
+      "560231": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 5.6,
+          "part_count": 6,
+          "part_max_internal_jump_m": 42.2,
+          "segment_count": 9,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 2.4,
+              "end": [
+                1.36857,
+                103.83751
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.2,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36857,
+                103.83753
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 41.7,
+              "end": [
+                1.36893,
+                103.83739
+              ],
+              "index": 1,
+              "max_internal_jump_m": 42.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36857,
+                103.83751
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36898,
+                103.83729
+              ],
+              "index": 2,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36893,
+                103.83739
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.9,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 3,
+              "max_internal_jump_m": 31.8,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36898,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.4,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 4,
+              "max_internal_jump_m": 5.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 71.9,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 5,
+              "max_internal_jump_m": 37.6,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 6,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 7,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 8,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 99.0
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 5.6,
+          "part_count": 6,
+          "part_max_internal_jump_m": 42.2,
+          "segment_count": 9,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 2.4,
+              "end": [
+                1.36857,
+                103.83751
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.2,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36857,
+                103.83753
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 41.7,
+              "end": [
+                1.36893,
+                103.83739
+              ],
+              "index": 1,
+              "max_internal_jump_m": 42.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36857,
+                103.83751
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36898,
+                103.83729
+              ],
+              "index": 2,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36893,
+                103.83739
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.9,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 3,
+              "max_internal_jump_m": 31.8,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36898,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.4,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 4,
+              "max_internal_jump_m": 5.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 71.9,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 5,
+              "max_internal_jump_m": 37.6,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 6,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 7,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 8,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 99.0
+        }
+      },
+      "560234": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 106.4,
+          "part_count": 10,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 16,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 0,
+              "max_internal_jump_m": 13.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36717,
+                103.83665
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.9,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 1,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36703,
+                103.83671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 37.0,
+              "end": [
+                1.36703,
+                103.83671
+              ],
+              "index": 2,
+              "max_internal_jump_m": 36.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36692,
+                103.83702
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.3,
+              "end": [
+                1.3669,
+                103.83709
+              ],
+              "index": 3,
+              "max_internal_jump_m": 8.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36692,
+                103.83702
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 48.3,
+              "end": [
+                1.36731,
+                103.83722
+              ],
+              "index": 4,
+              "max_internal_jump_m": 47.8,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.3669,
+                103.83709
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 21.8,
+              "end": [
+                1.36751,
+                103.83719
+              ],
+              "index": 5,
+              "max_internal_jump_m": 22.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36731,
+                103.83722
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.5,
+              "end": [
+                1.3676,
+                103.83725
+              ],
+              "index": 6,
+              "max_internal_jump_m": 7.0,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36751,
+                103.83719
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 8.9,
+              "end": [
+                1.3676,
+                103.83725
+              ],
+              "index": 7,
+              "max_internal_jump_m": 8.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36767,
+                103.83727
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.0,
+              "end": [
+                1.36767,
+                103.83727
+              ],
+              "index": 8,
+              "max_internal_jump_m": 11.3,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.36777,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.0,
+              "end": [
+                1.36777,
+                103.83729
+              ],
+              "index": 9,
+              "max_internal_jump_m": 6.3,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.36781,
+                103.83733
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 48.3,
+              "end": [
+                1.36781,
+                103.83733
+              ],
+              "index": 10,
+              "max_internal_jump_m": 20.1,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 11,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 56.1,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 12,
+              "max_internal_jump_m": 34.3,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 13,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 14,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 15,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 103.8
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 82.4,
+          "part_count": 8,
+          "part_max_internal_jump_m": 66.3,
+          "segment_count": 13,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 0,
+              "max_internal_jump_m": 13.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36717,
+                103.83665
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.9,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 1,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36703,
+                103.83671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 66.1,
+              "end": [
+                1.36703,
+                103.83671
+              ],
+              "index": 2,
+              "max_internal_jump_m": 66.3,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36737,
+                103.83622
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 52.8,
+              "end": [
+                1.36782,
+                103.83637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 23.4,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36737,
+                103.83622
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.4,
+              "end": [
+                1.36782,
+                103.83637
+              ],
+              "index": 4,
+              "max_internal_jump_m": 12.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36792,
+                103.83641
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 14.6,
+              "end": [
+                1.36792,
+                103.83641
+              ],
+              "index": 5,
+              "max_internal_jump_m": 14.1,
+              "points": 2,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36804,
+                103.83645
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 68.8,
+              "end": [
+                1.36804,
+                103.83645
+              ],
+              "index": 6,
+              "max_internal_jump_m": 16.7,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.36855,
+                103.8368
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 17.2,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 7,
+              "max_internal_jump_m": 16.9,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36855,
+                103.8368
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 8.3,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 8,
+              "max_internal_jump_m": 7.9,
+              "points": 2,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36864,
+                103.83669
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.2,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 9,
+              "max_internal_jump_m": 34.3,
+              "points": 2,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36864,
+                103.83669
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 10,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 11,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 12,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 181.9
+        }
+      },
+      "560700": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 31.3,
+          "part_count": 12,
+          "part_max_internal_jump_m": 33.0,
+          "segment_count": 17,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 8.9,
+              "end": [
+                1.36975,
+                103.84655
+              ],
+              "index": 0,
+              "max_internal_jump_m": 9.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 1,
+              "max_internal_jump_m": 33.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 2,
+              "max_internal_jump_m": 7.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3694,
+                103.84637
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.6,
+              "end": [
+                1.3694,
+                103.84637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 11.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3693,
+                103.84638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 29.5,
+              "end": [
+                1.36932,
+                103.84664
+              ],
+              "index": 4,
+              "max_internal_jump_m": 29.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3693,
+                103.84638
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 15.2,
+              "end": [
+                1.36934,
+                103.84678
+              ],
+              "index": 5,
+              "max_internal_jump_m": 15.7,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36932,
+                103.84664
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 30.7,
+              "end": [
+                1.36934,
+                103.84678
+              ],
+              "index": 6,
+              "max_internal_jump_m": 31.3,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36906,
+                103.84681
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 10.5,
+              "end": [
+                1.36907,
+                103.84672
+              ],
+              "index": 7,
+              "max_internal_jump_m": 10.1,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36906,
+                103.84681
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.5,
+              "end": [
+                1.36907,
+                103.84672
+              ],
+              "index": 8,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84672
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.36907,
+                103.84671
+              ],
+              "index": 9,
+              "max_internal_jump_m": 1.1,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84672
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.7,
+              "end": [
+                1.36907,
+                103.84671
+              ],
+              "index": 10,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 14.7,
+              "end": [
+                1.36907,
+                103.84671
+              ],
+              "index": 11,
+              "max_internal_jump_m": 12.3,
+              "points": 3,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36908,
+                103.84657
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.36908,
+                103.84657
+              ],
+              "index": 12,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36908,
+                103.84657
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 25.7,
+              "end": [
+                1.36908,
+                103.84657
+              ],
+              "index": 13,
+              "max_internal_jump_m": 25.7,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.3691,
+                103.84634
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 4.1,
+              "end": [
+                1.3691,
+                103.84634
+              ],
+              "index": 14,
+              "max_internal_jump_m": 4.4,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3691,
+                103.8463
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.3691,
+                103.8463
+              ],
+              "index": 15,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.3691,
+                103.8463
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.7,
+              "end": [
+                1.3691,
+                103.8463
+              ],
+              "index": 16,
+              "max_internal_jump_m": 10.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36911,
+                103.84621
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 43.8
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 61.2,
+          "part_count": 4,
+          "part_max_internal_jump_m": 60.3,
+          "segment_count": 7,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 8.9,
+              "end": [
+                1.36975,
+                103.84655
+              ],
+              "index": 0,
+              "max_internal_jump_m": 9.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 1,
+              "max_internal_jump_m": 33.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 2,
+              "max_internal_jump_m": 7.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3694,
+                103.84637
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.6,
+              "end": [
+                1.3694,
+                103.84637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 11.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3693,
+                103.84638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 60.6,
+              "end": [
+                1.3693,
+                103.84638
+              ],
+              "index": 4,
+              "max_internal_jump_m": 60.3,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36925,
+                103.84584
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.2,
+              "end": [
+                1.36919,
+                103.84585
+              ],
+              "index": 5,
+              "max_internal_jump_m": 6.8,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36925,
+                103.84584
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 42.1,
+              "end": [
+                1.36911,
+                103.84621
+              ],
+              "index": 6,
+              "max_internal_jump_m": 14.6,
+              "points": 4,
+              "source_class": "exposed",
+              "start": [
+                1.36919,
+                103.84585
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 62.3
+        }
+      },
+      "560710": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 69.0,
+          "part_count": 2,
+          "part_max_internal_jump_m": 44.7,
+          "segment_count": 2,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 32.2,
+              "end": [
+                1.37105,
+                103.8482
+              ],
+              "index": 0,
+              "max_internal_jump_m": 31.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37129,
+                103.84835
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 44.4,
+              "end": [
+                1.37129,
+                103.84835
+              ],
+              "index": 1,
+              "max_internal_jump_m": 44.7,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37167,
+                103.84822
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 69.0
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 69.0,
+          "part_count": 2,
+          "part_max_internal_jump_m": 44.7,
+          "segment_count": 2,
+          "segments": [
+            {
+              "covered": true,
+              "declared_len_m": 32.2,
+              "end": [
+                1.37105,
+                103.8482
+              ],
+              "index": 0,
+              "max_internal_jump_m": 31.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37129,
+                103.84835
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 44.4,
+              "end": [
+                1.37129,
+                103.84835
+              ],
+              "index": 1,
+              "max_internal_jump_m": 44.7,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37167,
+                103.84822
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 69.0
+        }
+      }
+    },
+    "oriented_candidate": {
+      "560225": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 12,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 1.9,
+              "end": [
+                1.36741,
+                103.83815
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.5,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36739,
+                103.83814
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 50.7,
+              "end": [
+                1.36729,
+                103.83775
+              ],
+              "index": 1,
+              "max_internal_jump_m": 33.6,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36741,
+                103.83815
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 106.0,
+              "end": [
+                1.3675,
+                103.8375
+              ],
+              "index": 2,
+              "max_internal_jump_m": 45.1,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.36729,
+                103.83775
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 25.3,
+              "end": [
+                1.3677,
+                103.8376
+              ],
+              "index": 3,
+              "max_internal_jump_m": 21.4,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.1,
+              "end": [
+                1.36775,
+                103.83757
+              ],
+              "index": 4,
+              "max_internal_jump_m": 6.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3677,
+                103.8376
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 13.1,
+              "end": [
+                1.36779,
+                103.83745
+              ],
+              "index": 5,
+              "max_internal_jump_m": 8.1,
+              "points": 3,
+              "source_class": "exposed",
+              "start": [
+                1.36775,
+                103.83757
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.8,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 6,
+              "max_internal_jump_m": 20.1,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36779,
+                103.83745
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36866,
+                103.83689
+              ],
+              "index": 7,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 56.1,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 8,
+              "max_internal_jump_m": 34.3,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 9,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 10,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 11,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 240.8
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 11,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 1.9,
+              "end": [
+                1.36741,
+                103.83815
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.5,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36739,
+                103.83814
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.6,
+              "end": [
+                1.36724,
+                103.8379
+              ],
+              "index": 1,
+              "max_internal_jump_m": 33.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36741,
+                103.83815
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 123.1,
+              "end": [
+                1.3675,
+                103.8375
+              ],
+              "index": 2,
+              "max_internal_jump_m": 45.1,
+              "points": 7,
+              "source_class": "exposed",
+              "start": [
+                1.36724,
+                103.8379
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.1,
+              "end": [
+                1.36754,
+                103.83748
+              ],
+              "index": 3,
+              "max_internal_jump_m": 5.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3675,
+                103.8375
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 50.7,
+              "end": [
+                1.36789,
+                103.83752
+              ],
+              "index": 4,
+              "max_internal_jump_m": 21.9,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.36754,
+                103.83748
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 20.2,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 5,
+              "max_internal_jump_m": 20.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36789,
+                103.83752
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36866,
+                103.83689
+              ],
+              "index": 6,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 56.1,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 7,
+              "max_internal_jump_m": 34.3,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 8,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 9,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 10,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 240.8
+        }
+      },
+      "560231": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 42.2,
+          "segment_count": 9,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 2.4,
+              "end": [
+                1.36857,
+                103.83751
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.2,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36857,
+                103.83753
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 41.7,
+              "end": [
+                1.36893,
+                103.83739
+              ],
+              "index": 1,
+              "max_internal_jump_m": 42.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36857,
+                103.83751
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36898,
+                103.83729
+              ],
+              "index": 2,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36893,
+                103.83739
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.9,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 3,
+              "max_internal_jump_m": 31.8,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36898,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.4,
+              "end": [
+                1.36875,
+                103.83701
+              ],
+              "index": 4,
+              "max_internal_jump_m": 5.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36878,
+                103.83705
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 71.9,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 5,
+              "max_internal_jump_m": 37.6,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 6,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 7,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 8,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 131.2
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 42.2,
+          "segment_count": 9,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 2.4,
+              "end": [
+                1.36857,
+                103.83751
+              ],
+              "index": 0,
+              "max_internal_jump_m": 2.2,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36857,
+                103.83753
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 41.7,
+              "end": [
+                1.36893,
+                103.83739
+              ],
+              "index": 1,
+              "max_internal_jump_m": 42.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36857,
+                103.83751
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36898,
+                103.83729
+              ],
+              "index": 2,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36893,
+                103.83739
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.9,
+              "end": [
+                1.36878,
+                103.83705
+              ],
+              "index": 3,
+              "max_internal_jump_m": 31.8,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36898,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 5.4,
+              "end": [
+                1.36875,
+                103.83701
+              ],
+              "index": 4,
+              "max_internal_jump_m": 5.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36878,
+                103.83705
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 71.9,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 5,
+              "max_internal_jump_m": 37.6,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36875,
+                103.83701
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 6,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 7,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 8,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 131.2
+        }
+      },
+      "560234": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 94.4,
+          "segment_count": 16,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 0,
+              "max_internal_jump_m": 13.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36717,
+                103.83665
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.9,
+              "end": [
+                1.36703,
+                103.83671
+              ],
+              "index": 1,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36713,
+                103.83676
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 37.0,
+              "end": [
+                1.36692,
+                103.83702
+              ],
+              "index": 2,
+              "max_internal_jump_m": 36.6,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36703,
+                103.83671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.3,
+              "end": [
+                1.3669,
+                103.83709
+              ],
+              "index": 3,
+              "max_internal_jump_m": 8.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36692,
+                103.83702
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 48.3,
+              "end": [
+                1.36731,
+                103.83722
+              ],
+              "index": 4,
+              "max_internal_jump_m": 47.8,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.3669,
+                103.83709
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 21.8,
+              "end": [
+                1.36751,
+                103.83719
+              ],
+              "index": 5,
+              "max_internal_jump_m": 22.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36731,
+                103.83722
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.5,
+              "end": [
+                1.3676,
+                103.83725
+              ],
+              "index": 6,
+              "max_internal_jump_m": 7.0,
+              "points": 3,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36751,
+                103.83719
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 8.9,
+              "end": [
+                1.36767,
+                103.83727
+              ],
+              "index": 7,
+              "max_internal_jump_m": 8.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3676,
+                103.83725
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.0,
+              "end": [
+                1.36777,
+                103.83729
+              ],
+              "index": 8,
+              "max_internal_jump_m": 11.3,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.36767,
+                103.83727
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.0,
+              "end": [
+                1.36781,
+                103.83733
+              ],
+              "index": 9,
+              "max_internal_jump_m": 6.3,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.36777,
+                103.83729
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 48.3,
+              "end": [
+                1.36807,
+                103.8375
+              ],
+              "index": 10,
+              "max_internal_jump_m": 20.1,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36781,
+                103.83733
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 94.1,
+              "end": [
+                1.36866,
+                103.83689
+              ],
+              "index": 11,
+              "max_internal_jump_m": 94.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36807,
+                103.8375
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 56.1,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 12,
+              "max_internal_jump_m": 34.3,
+              "points": 3,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36866,
+                103.83689
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 13,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 14,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 15,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 163.6
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 66.3,
+          "segment_count": 13,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 12.6,
+              "end": [
+                1.36713,
+                103.83676
+              ],
+              "index": 0,
+              "max_internal_jump_m": 13.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36717,
+                103.83665
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 12.9,
+              "end": [
+                1.36703,
+                103.83671
+              ],
+              "index": 1,
+              "max_internal_jump_m": 12.4,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36713,
+                103.83676
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 66.1,
+              "end": [
+                1.36737,
+                103.83622
+              ],
+              "index": 2,
+              "max_internal_jump_m": 66.3,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36703,
+                103.83671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 52.8,
+              "end": [
+                1.36782,
+                103.83637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 23.4,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36737,
+                103.83622
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.4,
+              "end": [
+                1.36792,
+                103.83641
+              ],
+              "index": 4,
+              "max_internal_jump_m": 12.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36782,
+                103.83637
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 14.6,
+              "end": [
+                1.36804,
+                103.83645
+              ],
+              "index": 5,
+              "max_internal_jump_m": 14.1,
+              "points": 2,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36792,
+                103.83641
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 68.8,
+              "end": [
+                1.36855,
+                103.8368
+              ],
+              "index": 6,
+              "max_internal_jump_m": 16.7,
+              "points": 6,
+              "source_class": "exposed",
+              "start": [
+                1.36804,
+                103.83645
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 17.2,
+              "end": [
+                1.36869,
+                103.83674
+              ],
+              "index": 7,
+              "max_internal_jump_m": 16.9,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36855,
+                103.8368
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 8.3,
+              "end": [
+                1.36864,
+                103.83669
+              ],
+              "index": 8,
+              "max_internal_jump_m": 7.9,
+              "points": 2,
+              "source_class": "bridge_underpass",
+              "start": [
+                1.36869,
+                103.83674
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 34.2,
+              "end": [
+                1.36879,
+                103.83642
+              ],
+              "index": 9,
+              "max_internal_jump_m": 34.3,
+              "points": 2,
+              "source_class": "audited_shelter_correction",
+              "start": [
+                1.36864,
+                103.83669
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.9,
+              "end": [
+                1.36871,
+                103.83638
+              ],
+              "index": 10,
+              "max_internal_jump_m": 10.5,
+              "points": 3,
+              "source_class": "osm_covered",
+              "start": [
+                1.36879,
+                103.83642
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.1,
+              "end": [
+                1.36864,
+                103.83633
+              ],
+              "index": 11,
+              "max_internal_jump_m": 9.6,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36871,
+                103.83638
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 3.8,
+              "end": [
+                1.36861,
+                103.83635
+              ],
+              "index": 12,
+              "max_internal_jump_m": 4.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36864,
+                103.83633
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 163.6
+        }
+      },
+      "560700": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 2,
+          "part_max_internal_jump_m": 33.0,
+          "segment_count": 19,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 24.0,
+              "end": [
+                1.36975,
+                103.84655
+              ],
+              "index": 0,
+              "max_internal_jump_m": 24.4,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3699,
+                103.84671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 8.9,
+              "end": [
+                1.36968,
+                103.84659
+              ],
+              "index": 1,
+              "max_internal_jump_m": 9.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36975,
+                103.84655
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 2,
+              "max_internal_jump_m": 33.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.1,
+              "end": [
+                1.3694,
+                103.84637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 7.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36943,
+                103.84643
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.6,
+              "end": [
+                1.3693,
+                103.84638
+              ],
+              "index": 4,
+              "max_internal_jump_m": 11.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3694,
+                103.84637
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 29.5,
+              "end": [
+                1.36932,
+                103.84664
+              ],
+              "index": 5,
+              "max_internal_jump_m": 29.0,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3693,
+                103.84638
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 15.2,
+              "end": [
+                1.36934,
+                103.84678
+              ],
+              "index": 6,
+              "max_internal_jump_m": 15.7,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36932,
+                103.84664
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 30.7,
+              "end": [
+                1.36906,
+                103.84681
+              ],
+              "index": 7,
+              "max_internal_jump_m": 31.3,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36934,
+                103.84678
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 10.5,
+              "end": [
+                1.36907,
+                103.84672
+              ],
+              "index": 8,
+              "max_internal_jump_m": 10.1,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36906,
+                103.84681
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.5,
+              "end": [
+                1.36907,
+                103.84672
+              ],
+              "index": 9,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84672
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.36907,
+                103.84671
+              ],
+              "index": 10,
+              "max_internal_jump_m": 1.1,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84672
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.7,
+              "end": [
+                1.36907,
+                103.84671
+              ],
+              "index": 11,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 14.7,
+              "end": [
+                1.36908,
+                103.84657
+              ],
+              "index": 12,
+              "max_internal_jump_m": 12.3,
+              "points": 3,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36907,
+                103.84671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.36908,
+                103.84657
+              ],
+              "index": 13,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36908,
+                103.84657
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 25.7,
+              "end": [
+                1.3691,
+                103.84634
+              ],
+              "index": 14,
+              "max_internal_jump_m": 25.7,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.36908,
+                103.84657
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 4.1,
+              "end": [
+                1.3691,
+                103.8463
+              ],
+              "index": 15,
+              "max_internal_jump_m": 4.4,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3691,
+                103.84634
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 0.4,
+              "end": [
+                1.3691,
+                103.8463
+              ],
+              "index": 16,
+              "max_internal_jump_m": 0.0,
+              "points": 2,
+              "source_class": "lta_covered_linkway",
+              "start": [
+                1.3691,
+                103.8463
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 9.7,
+              "end": [
+                1.36911,
+                103.84621
+              ],
+              "index": 17,
+              "max_internal_jump_m": 10.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3691,
+                103.8463
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 4.5,
+              "end": [
+                1.36914,
+                103.84618
+              ],
+              "index": 18,
+              "max_internal_jump_m": 4.7,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36911,
+                103.84621
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 103.0
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 2,
+          "part_max_internal_jump_m": 60.3,
+          "segment_count": 9,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 24.0,
+              "end": [
+                1.36975,
+                103.84655
+              ],
+              "index": 0,
+              "max_internal_jump_m": 24.4,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3699,
+                103.84671
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 8.9,
+              "end": [
+                1.36968,
+                103.84659
+              ],
+              "index": 1,
+              "max_internal_jump_m": 9.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36975,
+                103.84655
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 33.1,
+              "end": [
+                1.36943,
+                103.84643
+              ],
+              "index": 2,
+              "max_internal_jump_m": 33.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36968,
+                103.84659
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 7.1,
+              "end": [
+                1.3694,
+                103.84637
+              ],
+              "index": 3,
+              "max_internal_jump_m": 7.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36943,
+                103.84643
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 11.6,
+              "end": [
+                1.3693,
+                103.84638
+              ],
+              "index": 4,
+              "max_internal_jump_m": 11.2,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.3694,
+                103.84637
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 60.6,
+              "end": [
+                1.36925,
+                103.84584
+              ],
+              "index": 5,
+              "max_internal_jump_m": 60.3,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.3693,
+                103.84638
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 6.2,
+              "end": [
+                1.36919,
+                103.84585
+              ],
+              "index": 6,
+              "max_internal_jump_m": 6.8,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.36925,
+                103.84584
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 42.1,
+              "end": [
+                1.36911,
+                103.84621
+              ],
+              "index": 7,
+              "max_internal_jump_m": 14.6,
+              "points": 4,
+              "source_class": "exposed",
+              "start": [
+                1.36919,
+                103.84585
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 4.5,
+              "end": [
+                1.36914,
+                103.84618
+              ],
+              "index": 8,
+              "max_internal_jump_m": 4.7,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.36911,
+                103.84621
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 103.0
+        }
+      },
+      "560710": {
+        "sheltered": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 104.1,
+          "segment_count": 10,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 0.6,
+              "end": [
+                1.37105,
+                103.8482
+              ],
+              "index": 0,
+              "max_internal_jump_m": 1.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.37105,
+                103.84819
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 32.2,
+              "end": [
+                1.37129,
+                103.84835
+              ],
+              "index": 1,
+              "max_internal_jump_m": 31.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37105,
+                103.8482
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 123.5,
+              "end": [
+                1.37157,
+                103.84752
+              ],
+              "index": 2,
+              "max_internal_jump_m": 45.0,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37129,
+                103.84835
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 30.2,
+              "end": [
+                1.37154,
+                103.84725
+              ],
+              "index": 3,
+              "max_internal_jump_m": 30.2,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.37157,
+                103.84752
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 17.3,
+              "end": [
+                1.37169,
+                103.84722
+              ],
+              "index": 4,
+              "max_internal_jump_m": 17.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37154,
+                103.84725
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 104.1,
+              "end": [
+                1.37158,
+                103.84629
+              ],
+              "index": 5,
+              "max_internal_jump_m": 104.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37169,
+                103.84722
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 31.1,
+              "end": [
+                1.37172,
+                103.84605
+              ],
+              "index": 6,
+              "max_internal_jump_m": 30.9,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37158,
+                103.84629
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 54.1,
+              "end": [
+                1.37155,
+                103.84559
+              ],
+              "index": 7,
+              "max_internal_jump_m": 54.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37172,
+                103.84605
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 76.2,
+              "end": [
+                1.37087,
+                103.84568
+              ],
+              "index": 8,
+              "max_internal_jump_m": 76.3,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37155,
+                103.84559
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 7.0,
+              "end": [
+                1.37092,
+                103.84564
+              ],
+              "index": 9,
+              "max_internal_jump_m": 7.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.37087,
+                103.84568
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 284.9
+        },
+        "shortest": {
+          "max_gap_between_segment_features_m": 0.0,
+          "part_count": 3,
+          "part_max_internal_jump_m": 104.1,
+          "segment_count": 10,
+          "segments": [
+            {
+              "covered": false,
+              "declared_len_m": 0.6,
+              "end": [
+                1.37105,
+                103.8482
+              ],
+              "index": 0,
+              "max_internal_jump_m": 1.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.37105,
+                103.84819
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 32.2,
+              "end": [
+                1.37129,
+                103.84835
+              ],
+              "index": 1,
+              "max_internal_jump_m": 31.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37105,
+                103.8482
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 123.5,
+              "end": [
+                1.37157,
+                103.84752
+              ],
+              "index": 2,
+              "max_internal_jump_m": 45.0,
+              "points": 4,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37129,
+                103.84835
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 30.2,
+              "end": [
+                1.37154,
+                103.84725
+              ],
+              "index": 3,
+              "max_internal_jump_m": 30.2,
+              "points": 2,
+              "source_class": "osm_covered",
+              "start": [
+                1.37157,
+                103.84752
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 17.3,
+              "end": [
+                1.37169,
+                103.84722
+              ],
+              "index": 4,
+              "max_internal_jump_m": 17.0,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37154,
+                103.84725
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 104.1,
+              "end": [
+                1.37158,
+                103.84629
+              ],
+              "index": 5,
+              "max_internal_jump_m": 104.1,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37169,
+                103.84722
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 31.1,
+              "end": [
+                1.37172,
+                103.84605
+              ],
+              "index": 6,
+              "max_internal_jump_m": 30.9,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37158,
+                103.84629
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 54.1,
+              "end": [
+                1.37155,
+                103.84559
+              ],
+              "index": 7,
+              "max_internal_jump_m": 54.5,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37172,
+                103.84605
+              ]
+            },
+            {
+              "covered": true,
+              "declared_len_m": 76.2,
+              "end": [
+                1.37087,
+                103.84568
+              ],
+              "index": 8,
+              "max_internal_jump_m": 76.3,
+              "points": 2,
+              "source_class": "inferred_hdb_void_deck",
+              "start": [
+                1.37155,
+                103.84559
+              ]
+            },
+            {
+              "covered": false,
+              "declared_len_m": 7.0,
+              "end": [
+                1.37092,
+                103.84564
+              ],
+              "index": 9,
+              "max_internal_jump_m": 7.1,
+              "points": 2,
+              "source_class": "exposed",
+              "start": [
+                1.37087,
+                103.84568
+              ]
+            }
+          ],
+          "top_max_internal_jump_m": 284.9
+        }
+      }
+    }
+  },
+  "postals": [
+    "560231",
+    "560234",
+    "560225",
+    "560700",
+    "560710"
+  ]
+}
