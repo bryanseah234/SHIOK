@@ -814,6 +814,8 @@ def bus_route_direct_fallback_reason(
     if bool(bus_params.get("direct_fallback_scale_min_extra_to_direct", False)):
         min_extra_m = min(min_extra_m, direct_m)
     if routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m:
+        if near_stop_bus_route_within_absolute_envelope(candidate, route_result, bus_params):
+            return None
         return "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
 
     shortcut_ratio = float(bus_params.get("direct_fallback_shortcut_ratio", 0.5))
@@ -822,6 +824,25 @@ def bus_route_direct_fallback_reason(
         return "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
 
     return None
+
+
+def near_stop_bus_route_within_absolute_envelope(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> bool:
+    direct_m = float(candidate.straight_line_m)
+    route_m = float(route_result.get("shortest_length_m") or 0.0)
+    if direct_m <= 0 or route_m <= 0:
+        return False
+    max_direct_m = float(bus_params.get("access_connector_near_stop_direct_m", 0.0))
+    max_walk_m = float(bus_params.get("access_connector_near_stop_max_walk_m", 0.0))
+    max_extra_m = float(bus_params.get("access_connector_near_stop_max_extra_m", 0.0))
+    if min(max_direct_m, max_walk_m, max_extra_m) <= 0:
+        return False
+    return (
+        direct_m <= max_direct_m and route_m <= max_walk_m and (route_m - direct_m) <= max_extra_m
+    )
 
 
 def normalized_text(value: Any) -> str:
@@ -901,6 +922,11 @@ def bus_route_trust_rejection_reason(
     if (
         bus_stop_connector_m >= max_bus_stop_connector_m
         and bus_stop_connector_m >= route_m * min_bus_stop_connector_ratio
+        and not near_stop_bus_connector_trusted(
+            candidate,
+            route_result,
+            bus_params,
+        )
     ):
         return "large_unrouted_bus_stop_access_connector"
 
@@ -926,6 +952,25 @@ def bus_route_trust_rejection_reason(
     ):
         return "low_trust_bus_stop_road_centerline_route"
     return None
+
+
+def near_stop_bus_connector_trusted(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> bool:
+    """Allow slightly longer inferred connectors only for very near bus stops."""
+    connector_m = float(route_result.get("bus_stop_access_connector_m") or 0.0)
+    if connector_m <= 0:
+        return False
+    route_m = float(route_result.get("shortest_length_m") or 0.0)
+    max_connector_m = float(bus_params.get("access_connector_near_stop_trust_max_m", 0.0))
+    if route_m <= 0 or max_connector_m <= 0:
+        return False
+    return (
+        near_stop_bus_route_within_absolute_envelope(candidate, route_result, bus_params)
+        and connector_m <= max_connector_m
+    )
 
 
 def merge_with_connector_geometry(route_geometry: Any, connector: LineString) -> Any:

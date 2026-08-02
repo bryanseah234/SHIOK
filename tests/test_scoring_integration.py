@@ -72,6 +72,10 @@ PARAMS = {
         "endpoint_snap_guard_min_ratio": 0.6,
         "access_connector_trust_max_m": 40.0,
         "access_connector_trust_min_ratio": 0.2,
+        "access_connector_near_stop_direct_m": 60.0,
+        "access_connector_near_stop_max_walk_m": 125.0,
+        "access_connector_near_stop_max_extra_m": 75.0,
+        "access_connector_near_stop_trust_max_m": 50.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -569,6 +573,30 @@ def test_bus_route_direct_fallback_scales_extra_for_near_stop_detour():
     )
 
 
+def test_bus_route_direct_fallback_allows_bounded_near_stop_detour():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Near Stop",
+        station_name="Near Stop",
+        exit_code="54324",
+        graph_node=(115.0, 0.0),
+        straight_line_m=50.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(50.0, 0.0),
+    )
+
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate,
+            {"shortest_length_m": 115.0},
+            PARAMS["bus_connectivity"],
+        )
+        is None
+    )
+
+
 def test_bus_access_connector_appends_exposed_endpoint_to_plausible_graph_route():
     edges = pd.DataFrame(
         [
@@ -896,6 +924,31 @@ def test_bus_route_trust_rejects_large_bus_stop_access_connector():
         bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"])
         == "large_unrouted_bus_stop_access_connector"
     )
+
+
+def test_bus_route_trust_allows_bounded_near_stop_access_connector():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Near Test Stop",
+        station_name="Near Test Stop",
+        exit_code="54320",
+        graph_node=(55.0, 0.0),
+        straight_line_m=50.0,
+        snap_distance_m=45.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(55.0, 0.0),
+    )
+    route = {
+        "shortest_length_m": 115.0,
+        "bus_stop_access_connector_m": 48.0,
+        "shortest_path_edges": [
+            {"length_m": 67.0, "highway": "footway", "source_layer": "", "confidence": ""},
+            {"length_m": 48.0, "source_layer": "bus_stop_access_connector"},
+        ],
+    }
+
+    assert bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"]) is None
 
 
 class ConnectorBusIndex:

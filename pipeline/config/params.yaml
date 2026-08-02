@@ -38,6 +38,10 @@ bus_connectivity:
   endpoint_snap_guard_min_ratio: 0.6
   access_connector_trust_max_m: 40
   access_connector_trust_min_ratio: 0.2
+  access_connector_near_stop_direct_m: 60
+  access_connector_near_stop_max_walk_m: 125
+  access_connector_near_stop_max_extra_m: 75
+  access_connector_near_stop_trust_max_m: 50
   full_credit_wait_min: 2
   zero_credit_wait_min: 15
 crossing_friction:
