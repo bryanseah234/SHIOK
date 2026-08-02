@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T20:48:21.361484+00:00",
+  "generated_at": "2026-08-02T20:54:06.203670+00:00",
   "inputs": {
     "alternate_snap_max_candidates": 24,
     "alternate_snap_search_m": 50.0,
@@ -5193,6 +5193,391 @@
     }
   ],
   "summary": {
+    "action_summary": {
+      "alternate_snap_within_threshold_count": 30,
+      "class_counts": {
+        "alternate_bus_snap_candidate": 61,
+        "bus_stop_graph_disconnected": 1,
+        "current_routable": 17,
+        "scorer_recovered_target_bus_stop": 21
+      },
+      "current_score_within_threshold_count": 9,
+      "needs_bus_snap_or_connector_model_fix_count": 62,
+      "needs_current_routable_route_review_count": 17,
+      "needs_rescore_candidate_count": 21,
+      "recommended_next_actions": [
+        "Refresh a targeted score bundle for recovered rows before using them as active validation failures.",
+        "Treat alternate-snap rows as bus stop endpoint geometry QA; do not relax trust thresholds globally.",
+        "Review current-routable rows for missing pedestrian connectors, barriers, or OneMap endpoint differences."
+      ],
+      "threshold": "within 25% of OneMap walk distance",
+      "top_bus_snap_or_connector_model_fix_candidates": [
+        {
+          "best_alternate_snap_route_plus_snap_m": 340.4,
+          "current_graph_route_m": 347.9,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 43.0,
+          "postal": "530535",
+          "target_bus_stop_name": "Blk 535",
+          "validation_project_m": 347.9
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 827.5,
+          "current_graph_route_m": 860.6,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 176.0,
+          "postal": "417092",
+          "target_bus_stop_name": "Opp Hong San Si Tp",
+          "validation_project_m": 860.6
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 306.2,
+          "current_graph_route_m": 457.4,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 97.0,
+          "postal": "534317",
+          "target_bus_stop_name": "Raya Gdn",
+          "validation_project_m": 457.4
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 589.8,
+          "current_graph_route_m": 613.4,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 150.0,
+          "postal": "637814",
+          "target_bus_stop_name": "Aft Tuas Sth St 2",
+          "validation_project_m": 613.4
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 168.8,
+          "current_graph_route_m": 408.8,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 115.0,
+          "postal": "768342",
+          "target_bus_stop_name": "The Shaughnessy",
+          "validation_project_m": 408.8
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 976.1,
+          "current_graph_route_m": 1001.5,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 297.0,
+          "postal": "489393",
+          "target_bus_stop_name": "Simei Stn",
+          "validation_project_m": 1001.5
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 354.3,
+          "current_graph_route_m": 364.0,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 109.0,
+          "postal": "677662",
+          "target_bus_stop_name": "Bef Chestnut Ave",
+          "validation_project_m": 364.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 42.1,
+          "current_graph_route_m": 143.9,
+          "current_score_best_routed_m": 377.8,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 44.0,
+          "postal": "437107",
+          "target_bus_stop_name": "Aft Katong PO",
+          "validation_project_m": 143.9
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 118.8,
+          "current_graph_route_m": 421.3,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 131.0,
+          "postal": "648874",
+          "target_bus_stop_name": "Aft Westwood Ave",
+          "validation_project_m": 421.3
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 289.7,
+          "current_graph_route_m": 295.6,
+          "current_score_best_routed_m": null,
+          "current_score_routing_type": "direct_bus_fallback_unrouted",
+          "diagnostic_class": "alternate_bus_snap_candidate",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 93.0,
+          "postal": "320087",
+          "target_bus_stop_name": "Blk 82",
+          "validation_project_m": 295.6
+        }
+      ],
+      "top_current_routable_route_review_candidates": [
+        {
+          "best_alternate_snap_route_plus_snap_m": 88.0,
+          "current_graph_route_m": 98.8,
+          "current_score_best_routed_m": 243.5,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 59.0,
+          "postal": "427835",
+          "target_bus_stop_name": "Bef Mangis Rd",
+          "validation_project_m": 148.3
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 118.8,
+          "current_graph_route_m": 115.5,
+          "current_score_best_routed_m": 271.9,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 71.0,
+          "postal": "459037",
+          "target_bus_stop_name": "Aft Jln Buloh Perindu",
+          "validation_project_m": 159.6
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 143.7,
+          "current_graph_route_m": 140.8,
+          "current_score_best_routed_m": 173.5,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 78.0,
+          "postal": "427920",
+          "target_bus_stop_name": "Flora East",
+          "validation_project_m": 172.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 106.9,
+          "current_graph_route_m": 106.9,
+          "current_score_best_routed_m": 441.9,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 59.0,
+          "postal": "117586",
+          "target_bus_stop_name": "Galen",
+          "validation_project_m": 129.3
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 369.0,
+          "current_graph_route_m": 433.5,
+          "current_score_best_routed_m": 313.2,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 222.0,
+          "postal": "469338",
+          "target_bus_stop_name": "Casafina",
+          "validation_project_m": 477.2
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 43.4,
+          "current_graph_route_m": 75.1,
+          "current_score_best_routed_m": 237.8,
+          "current_score_routing_type": "sheltered_with_mrt_lrt_exit_access_connector",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 41.0,
+          "postal": "588186",
+          "target_bus_stop_name": "Pei Hwa Presby Pr Sch",
+          "validation_project_m": 87.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 240.0,
+          "current_graph_route_m": 242.1,
+          "current_score_best_routed_m": 225.7,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 132.0,
+          "postal": "437823",
+          "target_bus_stop_name": "Aft Tg Katong Rd",
+          "validation_project_m": 275.9
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 43.4,
+          "current_graph_route_m": 56.7,
+          "current_score_best_routed_m": 339.8,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 28.0,
+          "postal": "680239",
+          "target_bus_stop_name": "Blk 239",
+          "validation_project_m": 56.7
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 235.2,
+          "current_graph_route_m": 237.1,
+          "current_score_best_routed_m": 332.1,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "current_routable",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 142.0,
+          "postal": "139650",
+          "target_bus_stop_name": "ACS Independent",
+          "validation_project_m": 281.8
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 17.4,
+          "current_graph_route_m": 3.3,
+          "current_score_best_routed_m": 119.1,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "current_routable",
+          "direction": "project_shorter_than_onemap",
+          "onemap_walk_m": 72.0,
+          "postal": "809024",
+          "target_bus_stop_name": "Ch of St. Vincent de Paul",
+          "validation_project_m": 3.3
+        }
+      ],
+      "top_needs_rescore_candidates": [
+        {
+          "best_alternate_snap_route_plus_snap_m": 49.1,
+          "current_graph_route_m": 322.4,
+          "current_score_best_routed_m": 68.0,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 42.0,
+          "postal": "760103",
+          "target_bus_stop_name": "Aft Chong Pang CC",
+          "validation_project_m": 322.4
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 48.4,
+          "current_graph_route_m": 221.9,
+          "current_score_best_routed_m": 63.0,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 47.0,
+          "postal": "559038",
+          "target_bus_stop_name": "Aft Corfe Pl",
+          "validation_project_m": 221.9
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 102.4,
+          "current_graph_route_m": 919.6,
+          "current_score_best_routed_m": 118.5,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 197.0,
+          "postal": "455383",
+          "target_bus_stop_name": "Aft Carmen St",
+          "validation_project_m": 919.6
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 141.6,
+          "current_graph_route_m": 141.3,
+          "current_score_best_routed_m": 163.8,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 202.0,
+          "postal": "431007",
+          "target_bus_stop_name": "Bef Kg Kayu Rd",
+          "validation_project_m": 837.7
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 149.9,
+          "current_graph_route_m": 389.8,
+          "current_score_best_routed_m": 173.4,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 125.0,
+          "postal": "768282",
+          "target_bus_stop_name": "The Shaughnessy",
+          "validation_project_m": 389.8
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 56.6,
+          "current_graph_route_m": 131.3,
+          "current_score_best_routed_m": 81.1,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 67.0,
+          "postal": "799452",
+          "target_bus_stop_name": "Jln Kayu Shophouse",
+          "validation_project_m": 167.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 46.7,
+          "current_graph_route_m": 65.4,
+          "current_score_best_routed_m": 92.0,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 37.0,
+          "postal": "437009",
+          "target_bus_stop_name": "Opp Tg Katong Girls' Sch",
+          "validation_project_m": 92.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 43.7,
+          "current_graph_route_m": 42.8,
+          "current_score_best_routed_m": 64.0,
+          "current_score_routing_type": "sheltered",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 26.0,
+          "postal": "247733",
+          "target_bus_stop_name": "Opp Great World City",
+          "validation_project_m": 64.0
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 189.8,
+          "current_graph_route_m": 506.2,
+          "current_score_best_routed_m": 198.4,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 221.0,
+          "postal": "677768",
+          "target_bus_stop_name": "Opp Blk 219",
+          "validation_project_m": 506.2
+        },
+        {
+          "best_alternate_snap_route_plus_snap_m": 84.3,
+          "current_graph_route_m": 198.7,
+          "current_score_best_routed_m": 118.0,
+          "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+          "diagnostic_class": "scorer_recovered_target_bus_stop",
+          "direction": "project_longer_than_onemap",
+          "onemap_walk_m": 112.0,
+          "postal": "618823",
+          "target_bus_stop_name": "Aft Quality Rd",
+          "validation_project_m": 249.5
+        }
+      ]
+    },
     "current_graph_route_state_counts": {
       "disconnected": 4,
       "implausible_detour": 68,

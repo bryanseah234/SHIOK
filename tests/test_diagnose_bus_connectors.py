@@ -1,11 +1,13 @@
 from pipeline.scoring_integration import CandidateNode
 from scripts.diagnose_bus_connectors import (
     choose_target_bus_candidate,
+    diagnostic_action_summary,
     diagnostic_class,
     first_property,
     normalize_stop_name,
     score_recovers_target_bus_stop,
     stop_names_match,
+    within_onemap_threshold,
 )
 
 
@@ -120,3 +122,43 @@ def test_diagnostic_class_prioritizes_changed_stop_and_alternate_snap():
         )
         == "bus_stop_graph_disconnected"
     )
+
+
+def test_diagnostic_action_summary_separates_rescore_and_model_fix_rows():
+    rows = [
+        {
+            "postal": "760103",
+            "diagnostic_class": "scorer_recovered_target_bus_stop",
+            "old_onemap_walk_m": 42.0,
+            "current_score_best_routed_m": 68.0,
+        },
+        {
+            "postal": "559038",
+            "diagnostic_class": "scorer_recovered_target_bus_stop",
+            "old_onemap_walk_m": 50.0,
+            "current_score_best_routed_m": 55.0,
+        },
+        {
+            "postal": "530535",
+            "diagnostic_class": "alternate_bus_snap_candidate",
+            "old_onemap_walk_m": 43.0,
+            "best_alternate_snap": {"route_plus_snap_m": 340.4},
+        },
+        {
+            "postal": "427835",
+            "diagnostic_class": "current_routable",
+            "old_onemap_walk_m": 59.0,
+            "current_score_best_routed_m": 98.8,
+        },
+    ]
+
+    summary = diagnostic_action_summary(rows)
+
+    assert within_onemap_threshold(55.0, 50.0)
+    assert not within_onemap_threshold(68.0, 42.0)
+    assert summary["needs_rescore_candidate_count"] == 2
+    assert summary["needs_bus_snap_or_connector_model_fix_count"] == 1
+    assert summary["needs_current_routable_route_review_count"] == 1
+    assert summary["current_score_within_threshold_count"] == 1
+    assert summary["alternate_snap_within_threshold_count"] == 0
+    assert summary["top_needs_rescore_candidates"][0]["postal"] == "760103"

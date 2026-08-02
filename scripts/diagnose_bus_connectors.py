@@ -194,6 +194,106 @@ def diagnostic_class(row: dict[str, Any]) -> str:
     return str(row["current_graph_route_state"])
 
 
+def numeric(row: dict[str, Any], key: str) -> float | None:
+    try:
+        value = row.get(key)
+        if value is None:
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def nested_numeric(row: dict[str, Any], outer_key: str, inner_key: str) -> float | None:
+    nested = row.get(outer_key)
+    if not isinstance(nested, dict):
+        return None
+    try:
+        value = nested.get(inner_key)
+        if value is None:
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def within_onemap_threshold(route_m: float | None, onemap_m: float | None) -> bool:
+    if route_m is None or onemap_m is None or onemap_m <= 0:
+        return False
+    return abs(route_m - onemap_m) / onemap_m * 100 <= 25.0
+
+
+def compact_action_row(row: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "postal": row.get("postal"),
+        "diagnostic_class": row.get("diagnostic_class"),
+        "direction": row.get("old_direction"),
+        "target_bus_stop_name": row.get("target_bus_stop_name"),
+        "onemap_walk_m": row.get("old_onemap_walk_m"),
+        "validation_project_m": row.get("new_best_shortest_m"),
+        "current_score_best_routed_m": row.get("current_score_best_routed_m"),
+        "current_score_routing_type": row.get("current_score_routing_type"),
+        "current_graph_route_m": row.get("current_graph_route_m"),
+        "best_alternate_snap_route_plus_snap_m": nested_numeric(
+            row, "best_alternate_snap", "route_plus_snap_m"
+        ),
+    }
+
+
+def diagnostic_action_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    class_counts = Counter(str(row.get("diagnostic_class")) for row in rows)
+    local_rescore_recovered = [
+        row for row in rows if row.get("diagnostic_class") == "scorer_recovered_target_bus_stop"
+    ]
+    alternate_snap_or_disconnected = [
+        row
+        for row in rows
+        if row.get("diagnostic_class")
+        in {"alternate_bus_snap_candidate", "bus_stop_graph_disconnected"}
+    ]
+    current_routable = [row for row in rows if row.get("diagnostic_class") == "current_routable"]
+
+    def current_score_within_threshold(row: dict[str, Any]) -> bool:
+        return within_onemap_threshold(
+            numeric(row, "current_score_best_routed_m"),
+            numeric(row, "old_onemap_walk_m"),
+        )
+
+    def alternate_snap_within_threshold(row: dict[str, Any]) -> bool:
+        return within_onemap_threshold(
+            nested_numeric(row, "best_alternate_snap", "route_plus_snap_m"),
+            numeric(row, "old_onemap_walk_m"),
+        )
+
+    return {
+        "threshold": "within 25% of OneMap walk distance",
+        "needs_rescore_candidate_count": len(local_rescore_recovered),
+        "needs_bus_snap_or_connector_model_fix_count": len(alternate_snap_or_disconnected),
+        "needs_current_routable_route_review_count": len(current_routable),
+        "current_score_within_threshold_count": sum(
+            current_score_within_threshold(row) for row in rows
+        ),
+        "alternate_snap_within_threshold_count": sum(
+            alternate_snap_within_threshold(row) for row in rows
+        ),
+        "class_counts": dict(sorted(class_counts.items())),
+        "top_needs_rescore_candidates": [
+            compact_action_row(row) for row in local_rescore_recovered[:10]
+        ],
+        "top_bus_snap_or_connector_model_fix_candidates": [
+            compact_action_row(row) for row in alternate_snap_or_disconnected[:10]
+        ],
+        "top_current_routable_route_review_candidates": [
+            compact_action_row(row) for row in current_routable[:10]
+        ],
+        "recommended_next_actions": [
+            "Refresh a targeted score bundle for recovered rows before using them as active validation failures.",
+            "Treat alternate-snap rows as bus stop endpoint geometry QA; do not relax trust thresholds globally.",
+            "Review current-routable rows for missing pedestrian connectors, barriers, or OneMap endpoint differences.",
+        ],
+    }
+
+
 def score_recovers_target_bus_stop(row: dict[str, Any]) -> bool:
     if not stop_names_match(row.get("target_bus_stop_name"), row.get("current_score_best_name")):
         return False
@@ -440,6 +540,7 @@ def build_diagnostics(
             "target_match_method_counts": dict(
                 sorted(Counter(str(row.get("target_match_method")) for row in rows).items())
             ),
+            "action_summary": diagnostic_action_summary(rows),
         },
         "rows": rows,
     }
