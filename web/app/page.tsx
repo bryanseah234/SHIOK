@@ -24,6 +24,7 @@ import {
   type RouteDisplayMode,
   type RouteMapItem,
 } from "../components/route-evidence-map";
+import { routesAreSame } from "../lib/route-display";
 import styles from "./page.module.css";
 
 interface SearchResult {
@@ -224,15 +225,6 @@ function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): str
     return "This postal is in the source universe, but it still needs usable location evidence.";
   }
   return null;
-}
-
-function routeSame(selection: LoadedSelection | null): boolean {
-  if (!selection?.geom || !selection.score?.paths) return false;
-  if (selection.score.paths.routing_type === "direct_bus_fallback_unrouted") return true;
-  return (
-    selection.geom.shortest === selection.geom.sheltered ||
-    Math.round(selection.score.paths.shortest_m) === Math.round(selection.score.paths.sheltered_m)
-  );
 }
 
 function routeOptionScore(score: ScoreRecord, mode: TransitAccessMode): ScoreRecord {
@@ -657,7 +649,7 @@ function ScoreCard({
     );
   }
 
-  const sameRoute = routeSame(selection);
+  const sameRoute = routesAreSame(selection);
   const directBusFallback = score.paths?.routing_type === "direct_bus_fallback_unrouted";
   const extraWalkM =
     score.paths && typeof score.paths.shortest_m === "number" && typeof score.paths.sheltered_m === "number"
@@ -877,7 +869,7 @@ export default function Home() {
 
   const activeSelection = useMemo(() => selectionForTransitMode(primary, transitMode), [primary, transitMode]);
   const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
-  const mapRouteMode = routeSame(activeSelection) ? "shiokest" : routeMode;
+  const mapRouteMode = routesAreSame(activeSelection) ? "shiokest" : routeMode;
   const mapTransitPois = routeTransitPois.features.length > 0 ? routeTransitPois : baseTransitPois;
   const showDetailOverlay = Boolean(primary);
 
