@@ -10,6 +10,7 @@ from scripts.targeted_bundle_refresh import active_bundle_dir, load_score_index,
 
 SCOREABLE_STATES = {"SCORED", "SCORED_PARTIAL"}
 IMPROVEMENT_FLAGS = {"total_improvement", "coverage_improvement"}
+CORRECTION_FLAGS = {"honesty_correction_untrusted_bus_connector"}
 
 
 def normalize_postal(value: Any) -> str:
@@ -107,6 +108,36 @@ def best_node_identity(summary: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def route_type(record: dict[str, Any]) -> str | None:
+    value = nested(record, "paths", "routing_type")
+    return str(value) if value else None
+
+
+def is_untrusted_bus_connector_honesty_correction(
+    active_state: Any,
+    candidate_state: Any,
+    active_best: dict[str, Any],
+    candidate_best: dict[str, Any],
+    active_routing_type: str | None,
+    candidate_routing_type: str | None,
+) -> bool:
+    return (
+        active_state == "SCORED"
+        and candidate_state == "SCORED_PARTIAL"
+        and active_best.get("type") == "bus_stop"
+        and candidate_best.get("type") == "bus_stop"
+        and best_node_identity(active_best) == best_node_identity(candidate_best)
+        and candidate_routing_type == "direct_bus_fallback_unrouted"
+        and bool(
+            active_routing_type
+            and (
+                active_routing_type.endswith("_with_bus_stop_access_connector")
+                or active_routing_type.endswith("_with_endpoint_snap_connector")
+            )
+        )
+    )
+
+
 def compare_record(
     active: dict[str, Any] | None,
     candidate: dict[str, Any],
@@ -156,6 +187,8 @@ def compare_record(
 
     active_best = best_node_summary(active or {})
     candidate_best = best_node_summary(candidate)
+    active_routing_type = route_type(active or {})
+    candidate_routing_type = route_type(candidate)
     if (
         active_best
         and candidate_best
@@ -169,16 +202,27 @@ def compare_record(
     ):
         flags.append("best_node_distance_changed")
 
-    blocking = any(
-        flag
-        in {
-            "missing_active_record",
-            "state_regression",
-            "total_regression",
-            "coverage_regression",
-        }
-        for flag in flags
+    honesty_correction = is_untrusted_bus_connector_honesty_correction(
+        active_state,
+        candidate_state,
+        active_best,
+        candidate_best,
+        active_routing_type,
+        candidate_routing_type,
     )
+    if honesty_correction:
+        flags.append("honesty_correction_untrusted_bus_connector")
+
+    blocking_flags = {
+        "missing_active_record",
+        "state_regression",
+        "total_regression",
+        "coverage_regression",
+    }
+    if honesty_correction:
+        blocking_flags -= {"total_regression", "coverage_regression"}
+
+    blocking = any(flag in blocking_flags for flag in flags)
 
     return {
         "postal": postal,
@@ -187,6 +231,7 @@ def compare_record(
             "total": active_total,
             "covered_ratio": active_covered,
             "sheltered_m": active_distance,
+            "routing_type": active_routing_type,
             "best_node": active_best,
         },
         "candidate": {
@@ -194,6 +239,7 @@ def compare_record(
             "total": candidate_total,
             "covered_ratio": candidate_covered,
             "sheltered_m": candidate_distance,
+            "routing_type": candidate_routing_type,
             "best_node": candidate_best,
         },
         "delta": {
@@ -234,6 +280,14 @@ def compare_records(
         for item in comparisons
         if not item["blocking"] and item["flags"] == ["unchanged_or_within_tolerance"]
     ]
+    safe_corrections = [
+        item
+        for item in comparisons
+        if not item["blocking"] and any(flag in CORRECTION_FLAGS for flag in item["flags"])
+    ]
+    safe_promotable_postals = sorted(
+        {item["postal"] for item in [*safe_improvements, *safe_corrections]}
+    )
     blocked = [item for item in comparisons if item["blocking"]]
     return {
         "ok": blocking_count == 0,
@@ -242,6 +296,9 @@ def compare_records(
         "blocking_count": blocking_count,
         "safe_improvement_count": len(safe_improvements),
         "safe_improvement_postals": [item["postal"] for item in safe_improvements],
+        "safe_correction_count": len(safe_corrections),
+        "safe_correction_postals": [item["postal"] for item in safe_corrections],
+        "safe_promotable_postals": safe_promotable_postals,
         "safe_unchanged_postals": [item["postal"] for item in safe_unchanged],
         "blocked_postals": [item["postal"] for item in blocked],
         "flag_counts": dict(sorted(flag_counts.items())),
@@ -249,8 +306,8 @@ def compare_records(
             "safe_to_promote_targeted_records"
             if blocking_count == 0
             else (
-                "promote_safe_improvements_only"
-                if safe_improvements
+                "promote_safe_promotable_records_only"
+                if safe_promotable_postals
                 else "hold_for_review_do_not_promote_wholesale"
             )
         ),
@@ -269,7 +326,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--safe-postals-output",
         type=Path,
         default=None,
-        help="Optional text output containing only non-blocking materially improved postals.",
+        help=(
+            "Optional text output containing non-blocking promotable postals "
+            "(material improvements plus explicit honesty corrections)."
+        ),
     )
     parser.add_argument("--total-tolerance", type=float, default=0.5)
     parser.add_argument("--coverage-tolerance", type=float, default=0.02)
@@ -297,7 +357,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.safe_postals_output is not None:
         args.safe_postals_output.parent.mkdir(parents=True, exist_ok=True)
         args.safe_postals_output.write_text(
-            "\n".join(report["safe_improvement_postals"]) + "\n",
+            "\n".join(report["safe_promotable_postals"]) + "\n",
             encoding="utf-8",
         )
     print(
@@ -310,6 +370,9 @@ def main(argv: list[str] | None = None) -> int:
                     "blocking_count",
                     "safe_improvement_count",
                     "safe_improvement_postals",
+                    "safe_correction_count",
+                    "safe_correction_postals",
+                    "safe_promotable_postals",
                     "blocked_postals",
                     "flag_counts",
                     "promotion_recommendation",

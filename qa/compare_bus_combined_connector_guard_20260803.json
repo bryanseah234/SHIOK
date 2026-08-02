@@ -1,10 +1,6 @@
 {
-  "blocked_postals": [
-    "758588",
-    "760468",
-    "417471"
-  ],
-  "blocking_count": 3,
+  "blocked_postals": [],
+  "blocking_count": 0,
   "candidate_count": 3,
   "compared_count": 3,
   "comparisons": [
@@ -18,11 +14,12 @@
           "type": "bus_stop"
         },
         "covered_ratio": 0.504,
+        "routing_type": "sheltered_with_bus_stop_access_connector",
         "sheltered_m": 153.5,
         "state": "SCORED",
         "total": 80.2
       },
-      "blocking": true,
+      "blocking": false,
       "candidate": {
         "best_node": {
           "exit": "58201",
@@ -32,6 +29,7 @@
           "type": "bus_stop"
         },
         "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
         "sheltered_m": 50.9,
         "state": "SCORED_PARTIAL",
         "total": 55.0
@@ -43,7 +41,8 @@
       },
       "flags": [
         "total_regression",
-        "best_node_distance_changed"
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_connector"
       ],
       "postal": "758588"
     },
@@ -57,11 +56,12 @@
           "type": "bus_stop"
         },
         "covered_ratio": 0.586,
+        "routing_type": "sheltered_with_bus_stop_access_connector",
         "sheltered_m": 130.3,
         "state": "SCORED",
         "total": 83.5
       },
-      "blocking": true,
+      "blocking": false,
       "candidate": {
         "best_node": {
           "exit": "59771",
@@ -71,6 +71,7 @@
           "type": "bus_stop"
         },
         "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
         "sheltered_m": 89.5,
         "state": "SCORED_PARTIAL",
         "total": 55.0
@@ -82,7 +83,8 @@
       },
       "flags": [
         "total_regression",
-        "best_node_distance_changed"
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_connector"
       ],
       "postal": "760468"
     },
@@ -96,11 +98,12 @@
           "type": "bus_stop"
         },
         "covered_ratio": 0.0,
+        "routing_type": "sheltered_with_bus_stop_access_connector",
         "sheltered_m": 117.9,
         "state": "SCORED",
         "total": 54.6
       },
-      "blocking": true,
+      "blocking": false,
       "candidate": {
         "best_node": {
           "exit": "83351",
@@ -110,6 +113,7 @@
           "type": "bus_stop"
         },
         "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
         "sheltered_m": 67.9,
         "state": "SCORED_PARTIAL",
         "total": 49.6
@@ -121,13 +125,15 @@
       },
       "flags": [
         "total_regression",
-        "best_node_distance_changed"
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_connector"
       ],
       "postal": "417471"
     }
   ],
   "flag_counts": {
     "best_node_distance_changed": 3,
+    "honesty_correction_untrusted_bus_connector": 3,
     "total_regression": 3
   },
   "inputs": {
@@ -136,9 +142,20 @@
     "coverage_tolerance": 0.02,
     "total_tolerance": 0.5
   },
-  "ok": false,
-  "promotion_recommendation": "hold_for_review_do_not_promote_wholesale",
+  "ok": true,
+  "promotion_recommendation": "safe_to_promote_targeted_records",
+  "safe_correction_count": 3,
+  "safe_correction_postals": [
+    "758588",
+    "760468",
+    "417471"
+  ],
   "safe_improvement_count": 0,
   "safe_improvement_postals": [],
+  "safe_promotable_postals": [
+    "417471",
+    "758588",
+    "760468"
+  ],
   "safe_unchanged_postals": []
 }

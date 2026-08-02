@@ -14,12 +14,13 @@ def record(
     best_type="mrt_exit",
     best_name="Node",
     routed_m=100.0,
+    routing_type="sheltered",
 ):
     return {
         "postal": postal,
         "state": state,
         "total": total,
-        "paths": {"covered_ratio": covered, "sheltered_m": routed_m},
+        "paths": {"covered_ratio": covered, "sheltered_m": routed_m, "routing_type": routing_type},
         "best_node": {
             "type": best_type,
             "name": best_name,
@@ -93,7 +94,8 @@ def test_compare_records_allows_safe_improvement_without_wholesale_promotion():
     assert report["safe_improvement_count"] == 1
     assert report["safe_improvement_postals"] == ["560234"]
     assert report["blocked_postals"] == ["560710"]
-    assert report["promotion_recommendation"] == "promote_safe_improvements_only"
+    assert report["safe_promotable_postals"] == ["560234"]
+    assert report["promotion_recommendation"] == "promote_safe_promotable_records_only"
 
 
 def test_compare_record_separates_same_node_distance_change_from_node_change():
@@ -124,6 +126,85 @@ def test_compare_record_flags_true_best_node_identity_change():
 
     assert "best_node_changed" in comparison["flags"]
     assert "best_node_distance_changed" not in comparison["flags"]
+
+
+def test_compare_records_allows_bus_connector_honesty_correction():
+    active = {
+        "760468": record(
+            "760468",
+            83.5,
+            0.59,
+            best_type="bus_stop",
+            best_name="Blk 469B",
+            routed_m=130.3,
+            routing_type="sheltered_with_bus_stop_access_connector",
+        )
+    }
+    candidate = [
+        record(
+            "760468",
+            55.0,
+            None,
+            state="SCORED_PARTIAL",
+            best_type="bus_stop",
+            best_name="Blk 469B",
+            routed_m=None,
+            routing_type="direct_bus_fallback_unrouted",
+        )
+    ]
+
+    report = compare_records(
+        active,
+        candidate,
+        total_tolerance=0.5,
+        coverage_tolerance=0.02,
+    )
+
+    assert report["ok"] is True
+    assert report["blocking_count"] == 0
+    assert report["safe_correction_postals"] == ["760468"]
+    assert report["safe_promotable_postals"] == ["760468"]
+    comparison = report["comparisons"][0]
+    assert "total_regression" in comparison["flags"]
+    assert "honesty_correction_untrusted_bus_connector" in comparison["flags"]
+    assert comparison["blocking"] is False
+
+
+def test_compare_records_blocks_non_bus_honesty_shaped_regression():
+    active = {
+        "560234": record(
+            "560234",
+            80.0,
+            0.5,
+            best_type="mrt_exit",
+            best_name="Mayflower",
+            routed_m=300.0,
+            routing_type="sheltered",
+        )
+    }
+    candidate = [
+        record(
+            "560234",
+            55.0,
+            None,
+            state="SCORED_PARTIAL",
+            best_type="mrt_exit",
+            best_name="Mayflower",
+            routed_m=None,
+            routing_type="direct_bus_fallback_unrouted",
+        )
+    ]
+
+    report = compare_records(
+        active,
+        candidate,
+        total_tolerance=0.5,
+        coverage_tolerance=0.02,
+    )
+
+    assert report["ok"] is False
+    assert report["blocked_postals"] == ["560234"]
+    assert "honesty_correction_untrusted_bus_connector" not in report["comparisons"][0]["flags"]
 
 
 def test_load_candidate_records_accepts_list(tmp_path):
