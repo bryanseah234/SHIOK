@@ -9,6 +9,7 @@ from scripts.targeted_bundle_refresh import (
     rebalance_geom_parents,
     selected_postals_from_inputs,
     split_oversized_geom_shards,
+    targeted_refresh_score_provenance,
     unique_postals,
     write_json,
 )
@@ -74,6 +75,27 @@ def test_selected_postals_from_inputs_reads_explicit_partial_report(tmp_path):
         postal_file=None,
         postals=["42"],
     ) == ["000123", "560234", "000042"]
+
+
+def test_targeted_refresh_score_provenance_is_scoped_to_targeted_records():
+    provenance = targeted_refresh_score_provenance(
+        [
+            {
+                "postal": "123456",
+                "provenance": {
+                    "source_hashes": {"osm_extract": "a" * 64},
+                    "scoring_fingerprints": {"pipeline\\scoring.py": "b" * 64},
+                    "subscore_status": {"heat": "provisional"},
+                },
+            }
+        ],
+        postal_count=1,
+    )
+
+    assert provenance["scope"] == "targeted_refresh_records_only"
+    assert provenance["full_bundle_covered"] is False
+    assert provenance["postal_count"] == 1
+    assert provenance["scoring_fingerprints"] == {"pipeline\\scoring.py": "b" * 64}
 
 
 def test_targeted_bundle_refresh_rebalances_oversized_geom_parent(tmp_path, monkeypatch):

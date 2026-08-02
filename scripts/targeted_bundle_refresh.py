@@ -25,6 +25,7 @@ from pipeline.export import (
     geom_record,
     geom_record_shards,
     public_score_record,
+    score_provenance_summary,
     score_record_shards,
     sized_record_shards,
 )
@@ -518,6 +519,20 @@ def compact_record(record: dict[str, Any] | None) -> dict[str, Any] | None:
     }
 
 
+def targeted_refresh_score_provenance(
+    rescored_records: list[dict[str, Any]], postal_count: int
+) -> dict[str, Any]:
+    score_provenance = score_provenance_summary(rescored_records)
+    return {
+        "scope": "targeted_refresh_records_only",
+        "full_bundle_covered": False,
+        "postal_count": postal_count,
+        "source_hashes": score_provenance["source_hashes"],
+        "scoring_fingerprints": score_provenance["scoring_fingerprints"],
+        "subscore_status": score_provenance["subscore_status"],
+    }
+
+
 def refresh_bundle(
     *,
     source_dir: Path,
@@ -572,6 +587,9 @@ def refresh_bundle(
     )
     geom_report = patch_geometry_records(target_dir, list(rescored_by_postal.values()))
     record_count, state_counts = score_state_counts(target_dir, score_index)
+    targeted_score_provenance = targeted_refresh_score_provenance(
+        list(rescored_by_postal.values()), len(existing_postals)
+    )
 
     manifest_path = target_dir / "manifest.json"
     manifest = read_json(manifest_path)
@@ -587,6 +605,7 @@ def refresh_bundle(
         "missing_from_bundle": missing_postals,
         "network": display_path(network_path),
         "postal_universe": display_path(postal_universe_path),
+        "score_provenance": targeted_score_provenance,
     }
     manifest.setdefault("scores", {})["shards"] = sorted(score_index)
     manifest["scores"]["planning_areas"] = sorted({area_from_shard(shard) for shard in score_index})
@@ -638,6 +657,7 @@ def refresh_bundle(
         "converted_from_no_transit": converted,
         "converted_count": len(converted),
         "state_counts": state_counts,
+        "targeted_score_provenance": targeted_score_provenance,
         **geom_report,
         "comparisons": comparisons,
     }

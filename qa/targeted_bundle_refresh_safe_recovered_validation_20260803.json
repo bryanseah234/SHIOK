@@ -429,5 +429,40 @@
     "SCORED": 112913,
     "SCORED_PARTIAL": 1414
   },
-  "target_bundle": "generated_20260803_safe_recovered_validation_targeted"
+  "target_bundle": "generated_20260803_safe_recovered_validation_targeted",
+  "targeted_score_provenance": {
+    "full_bundle_covered": false,
+    "postal_count": 6,
+    "scope": "targeted_refresh_records_only",
+    "scoring_fingerprints": {
+      "pipeline\\config\\params.yaml": "1dbe3e5fc2e8823eb861c7acc8b0bd18042c3438284c5e364a2dce8c688ab32d",
+      "pipeline\\config\\weights.yaml": "5c62ac5f62e91f777a82f0dfa98eafba11ef47500c9f7822a81a31eae7d2cbec",
+      "pipeline\\routing.py": "d95a9d86e9fa1c734f8a366561091f187bc67486c3273c6b3b84b86440f250f1",
+      "pipeline\\scoring.py": "255b4a225a625848e150673b01bccfbc679eea668a254667a9b01c2179bf610c",
+      "pipeline\\scoring_integration.py": "13fd48dce49757b221ba1a7ff539c017af16de5bb6506d68a6d4cf8a86c09d46"
+    },
+    "source_hashes": {
+      "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+      "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+      "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+      "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+      "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+      "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+      "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+      "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+      "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+      "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+      "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+      "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+      "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+      "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+    },
+    "subscore_status": {
+      "access": "real_routed_shortest_distance",
+      "bus": "real",
+      "crossing": "real_traffic_signals_with_grade_separated_exemption",
+      "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+      "rain": "real_routed_covered_length_ratio"
+    }
+  }
 }
