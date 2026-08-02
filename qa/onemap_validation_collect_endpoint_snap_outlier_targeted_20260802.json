@@ -1,0 +1,16 @@
+{
+  "bundle": "generated_20260802_endpoint_snap_outlier_targeted",
+  "cache_dir": "raw\\validation\\onemap_walk_od",
+  "confirm_onemap_collection": true,
+  "delay_sec": 2.0,
+  "dry_run": false,
+  "errors": [],
+  "existing_cache_results": 1956,
+  "generated_at": "2026-08-02T08:56:07.142590+00:00",
+  "http_requests": 44,
+  "ok": true,
+  "queued_requests": 44,
+  "sample_size": 2000,
+  "will_call_onemap": true,
+  "written_cache_results": 44
+}

@@ -1,0 +1,69 @@
+{
+  "active_metrics": {
+    "gate_passed": false,
+    "invalid_cache_results": 1,
+    "median_abs_pct_delta": 11.528,
+    "p95_abs_pct_delta": 93.414
+  },
+  "delta": {
+    "median_abs_pct_delta": -0.662,
+    "p95_abs_pct_delta": -24.779
+  },
+  "deployment_recommendation": "do_not_deploy_as_launch_gate_fix",
+  "generated_at": "2026-08-02T08:57:50.342651+00:00",
+  "next_action": "Run a broader current-code score batch only after deciding whether the remaining bus-stop/OneMap disagreement is a launch blocker or should be reported as bus-access QA debt.",
+  "reason": "Endpoint snap connectors materially improve the targeted validation p95 but the 2,000-sample OneMap gate still fails and this is only a targeted outlier refresh, not a full current-code rescore.",
+  "source_bundle": "generated_20260802_bus_connector_tolerance_targeted",
+  "target_bundle": "generated_20260802_endpoint_snap_outlier_targeted",
+  "target_metrics": {
+    "gate_passed": false,
+    "invalid_cache_results": 2,
+    "median_abs_pct_delta": 10.866,
+    "p95_abs_pct_delta": 68.635,
+    "route_trust_summary": [
+      {
+        "count": 24,
+        "max_abs_pct_delta": 1861.111,
+        "median_abs_pct_delta": 61.779,
+        "over_25_pct_count": 17,
+        "over_50_pct_count": 13,
+        "p95_abs_pct_delta": 332.426,
+        "route_trust": "graph_route_with_endpoint_connector"
+      },
+      {
+        "count": 1585,
+        "max_abs_pct_delta": 796.667,
+        "median_abs_pct_delta": 11.723,
+        "over_25_pct_count": 451,
+        "over_50_pct_count": 181,
+        "p95_abs_pct_delta": 68.971,
+        "route_trust": "graph_routed_bus_stop"
+      },
+      {
+        "count": 389,
+        "max_abs_pct_delta": 265.144,
+        "median_abs_pct_delta": 6.492,
+        "over_25_pct_count": 58,
+        "over_50_pct_count": 23,
+        "p95_abs_pct_delta": 52.594,
+        "route_trust": "graph_routed_mrt_lrt"
+      }
+    ]
+  },
+  "targeted_refresh": {
+    "patched_count": 232,
+    "selected_count": 232,
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112891,
+      "SCORED_PARTIAL": 1438
+    },
+    "state_transitions": {
+      "NO_TRANSIT_IN_RANGE->NO_TRANSIT_IN_RANGE": 5,
+      "SCORED->SCORED": 160,
+      "SCORED->SCORED_PARTIAL": 59,
+      "SCORED_PARTIAL->SCORED_PARTIAL": 8
+    }
+  }
+}
