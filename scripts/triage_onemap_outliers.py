@@ -577,12 +577,95 @@ def validation_failure_summary(payload: dict[str, Any]) -> dict[str, Any]:
         "input_rows": payload.get("inputs", {}).get("input_rows"),
         "queue_counts": queue_counts,
         "strict_missing_bus_connector_priority_count": priority_queue_count(typed_queues),
+        "overpermissive_path_summary": overpermissive_path_summary(typed_queues),
         "priority_order": priority_order,
         "unresolved_review_assignments": unresolved_count,
         "notes": [
             "Queues are review assignments, not mutually exclusive postal counts.",
             "This report uses cached OneMap validation and local replay artifacts only.",
             "Do not mark the OneMap launch gate passed until the 2,000-postal evaluator passes.",
+        ],
+    }
+
+
+def numeric_source_flag(row: dict[str, Any], key: str) -> float:
+    flags = row.get("source_flags")
+    if not isinstance(flags, dict):
+        return 0.0
+    try:
+        return float(flags.get(key) or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def overpermissive_path_summary(queues: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+    rows = queues.get("possible_overpermissive_project_path", [])
+
+    def has_direct_fallback(row: dict[str, Any]) -> bool:
+        return (
+            bool(row.get("direct_bus_fallback_reason"))
+            or numeric_source_flag(row, "best_direct_bus_fallback_m") > 0
+        )
+
+    def has_endpoint_connector(row: dict[str, Any]) -> bool:
+        return numeric_source_flag(row, "best_bus_stop_access_connector_m") > 0
+
+    def has_hdb_or_bridge(row: dict[str, Any]) -> bool:
+        return (
+            numeric_source_flag(row, "best_inferred_hdb_m") > 0
+            or numeric_source_flag(row, "best_bridge_underpass_m") > 0
+        )
+
+    def has_unknown_dominant(row: dict[str, Any]) -> bool:
+        return numeric_source_flag(row, "best_unknown_source_m") >= 100.0
+
+    route_sanity = Counter(
+        str(row.get("current_route_vs_validation_direct_sanity") or "unknown") for row in rows
+    )
+    category_counts = {
+        "current_direct_bus_fallback": sum(has_direct_fallback(row) for row in rows),
+        "endpoint_connector_present": sum(has_endpoint_connector(row) for row in rows),
+        "hdb_or_bridge_present": sum(has_hdb_or_bridge(row) for row in rows),
+        "unknown_source_ge_100m": sum(has_unknown_dominant(row) for row in rows),
+        "current_route_shorter_than_validation_direct": sum(
+            str(row.get("current_route_vs_validation_direct_sanity") or "")
+            in {
+                "current_route_materially_shorter_than_validation_direct",
+                "current_route_slightly_shorter_than_validation_direct",
+            }
+            for row in rows
+        ),
+    }
+    top_rows = sorted(
+        rows,
+        key=lambda row: float(row.get("old_abs_pct_delta") or 0.0),
+        reverse=True,
+    )[:10]
+    return {
+        "count": len(rows),
+        "category_counts": category_counts,
+        "route_sanity_counts": dict(sorted(route_sanity.items())),
+        "top_review_postals": [
+            {
+                "postal": row.get("postal"),
+                "abs_pct_delta": row.get("old_abs_pct_delta"),
+                "best_node": row.get("new_best_name"),
+                "validation_onemap_walk_m": row.get("validation_onemap_walk_m"),
+                "current_shortest_m": row.get("new_best_shortest_m"),
+                "direct_bus_fallback_reason": row.get("direct_bus_fallback_reason"),
+                "unknown_source_m": numeric_source_flag(row, "best_unknown_source_m"),
+                "hdb_m": numeric_source_flag(row, "best_inferred_hdb_m"),
+                "bridge_m": numeric_source_flag(row, "best_bridge_underpass_m"),
+                "endpoint_connector_m": numeric_source_flag(
+                    row, "best_bus_stop_access_connector_m"
+                ),
+            }
+            for row in top_rows
+        ],
+        "recommended_next_actions": [
+            "Treat direct-bus fallback rows as partial-route QA, not proof of a valid shorter walk.",
+            "Inspect unknown-source >=100 m rows for barriers, private access, missing crossings, or OneMap detours.",
+            "Audit HDB/bridge rows against source geometry before weakening connector guards.",
         ],
     }
 

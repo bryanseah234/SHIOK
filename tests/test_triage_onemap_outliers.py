@@ -243,7 +243,24 @@ def test_validation_failure_summary_orders_review_work():
                 },
             ],
             "untrusted_bus_route_review": [{"postal": "417092"}],
-            "possible_overpermissive_project_path": [{"postal": "489929"}],
+            "possible_overpermissive_project_path": [
+                {
+                    "postal": "489929",
+                    "current_route_vs_validation_direct_sanity": (
+                        "current_route_slightly_shorter_than_validation_direct"
+                    ),
+                    "direct_bus_fallback_reason": (
+                        "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+                    ),
+                    "source_flags": {
+                        "best_direct_bus_fallback_m": 50.0,
+                        "best_unknown_source_m": 150.0,
+                        "best_inferred_hdb_m": 20.0,
+                        "best_bridge_underpass_m": 0.0,
+                        "best_bus_stop_access_connector_m": 5.0,
+                    },
+                }
+            ],
             "hdb_bridge_connector_review": [],
             "mrt_lrt_outlier": [],
             "access_barrier_review": [],
@@ -260,6 +277,19 @@ def test_validation_failure_summary_orders_review_work():
     assert summary["priority_order"][0]["strict_priority_count"] == 1
     assert summary["priority_order"][1]["queue"] == "untrusted_bus_route_review"
     assert summary["unresolved_review_assignments"] == 5
+    overpermissive = summary["overpermissive_path_summary"]
+    assert overpermissive["count"] == 1
+    assert overpermissive["category_counts"] == {
+        "current_direct_bus_fallback": 1,
+        "current_route_shorter_than_validation_direct": 1,
+        "endpoint_connector_present": 1,
+        "hdb_or_bridge_present": 1,
+        "unknown_source_ge_100m": 1,
+    }
+    assert (
+        overpermissive["recommended_next_actions"][0]
+        == "Treat direct-bus fallback rows as partial-route QA, not proof of a valid shorter walk."
+    )
 
 
 def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):

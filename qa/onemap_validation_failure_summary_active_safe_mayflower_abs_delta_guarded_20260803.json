@@ -5,6 +5,149 @@
     "This report uses cached OneMap validation and local replay artifacts only.",
     "Do not mark the OneMap launch gate passed until the 2,000-postal evaluator passes."
   ],
+  "overpermissive_path_summary": {
+    "category_counts": {
+      "current_direct_bus_fallback": 75,
+      "current_route_shorter_than_validation_direct": 6,
+      "endpoint_connector_present": 0,
+      "hdb_or_bridge_present": 27,
+      "unknown_source_ge_100m": 53
+    },
+    "count": 100,
+    "recommended_next_actions": [
+      "Treat direct-bus fallback rows as partial-route QA, not proof of a valid shorter walk.",
+      "Inspect unknown-source >=100 m rows for barriers, private access, missing crossings, or OneMap detours.",
+      "Audit HDB/bridge rows against source geometry before weakening connector guards."
+    ],
+    "route_sanity_counts": {
+      "current_route_materially_shorter_than_validation_direct": 2,
+      "current_route_slightly_shorter_than_validation_direct": 4,
+      "plausible": 93,
+      "unknown": 1
+    },
+    "top_review_postals": [
+      {
+        "abs_pct_delta": 99.572,
+        "best_node": "Aft Bedok Rd",
+        "bridge_m": 0.0,
+        "current_shortest_m": 116.4,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "489929",
+        "unknown_source_m": 0.0,
+        "validation_onemap_walk_m": 537.0
+      },
+      {
+        "abs_pct_delta": 97.918,
+        "best_node": "Bef Bedok View Sec Sch",
+        "bridge_m": 0.0,
+        "current_shortest_m": 128.7,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "465460",
+        "unknown_source_m": 0.0,
+        "validation_onemap_walk_m": 658.0
+      },
+      {
+        "abs_pct_delta": 95.417,
+        "best_node": "Bef Gerald Dr",
+        "bridge_m": 0.0,
+        "current_shortest_m": 76.7,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "809024",
+        "unknown_source_m": 0.0,
+        "validation_onemap_walk_m": 72.0
+      },
+      {
+        "abs_pct_delta": 94.293,
+        "best_node": "Blk 37B",
+        "bridge_m": 0.0,
+        "current_shortest_m": 96.6,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 50.8,
+        "postal": "141037",
+        "unknown_source_m": 7.3,
+        "validation_onemap_walk_m": 382.0
+      },
+      {
+        "abs_pct_delta": 92.619,
+        "best_node": "Aft Chuan Gdn",
+        "bridge_m": 0.0,
+        "current_shortest_m": 69.9,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "556807",
+        "unknown_source_m": 25.9,
+        "validation_onemap_walk_m": 947.0
+      },
+      {
+        "abs_pct_delta": 92.302,
+        "best_node": "Opp Tuas West St",
+        "bridge_m": 0.0,
+        "current_shortest_m": 250.2,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "637442",
+        "unknown_source_m": 194.7,
+        "validation_onemap_walk_m": 3250.0
+      },
+      {
+        "abs_pct_delta": 92.157,
+        "best_node": "Aft Toh Tuck Cres",
+        "bridge_m": 0.0,
+        "current_shortest_m": 80.5,
+        "direct_bus_fallback_reason": null,
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "596912",
+        "unknown_source_m": 35.8,
+        "validation_onemap_walk_m": 51.0
+      },
+      {
+        "abs_pct_delta": 91.439,
+        "best_node": "Aft Blk 5000",
+        "bridge_m": 0.0,
+        "current_shortest_m": 359.2,
+        "direct_bus_fallback_reason": null,
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "804360",
+        "unknown_source_m": 325.1,
+        "validation_onemap_walk_m": 4196.0
+      },
+      {
+        "abs_pct_delta": 91.312,
+        "best_node": "Techplace 2",
+        "bridge_m": 0.0,
+        "current_shortest_m": 230.1,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "804651",
+        "unknown_source_m": 0.0,
+        "validation_onemap_walk_m": 3225.0
+      },
+      {
+        "abs_pct_delta": 90.476,
+        "best_node": "Bef Toh Tuck Rise",
+        "bridge_m": 0.0,
+        "current_shortest_m": 262.2,
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_connector_m": 0.0,
+        "hdb_m": 0.0,
+        "postal": "596915",
+        "unknown_source_m": 223.2,
+        "validation_onemap_walk_m": 42.0
+      }
+    ]
+  },
   "priority_order": [
     {
       "count": 13,
