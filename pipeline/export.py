@@ -513,6 +513,7 @@ def state_counts(records: list[dict[str, Any]]) -> dict[str, int]:
 
 def score_provenance_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
     source_hashes: dict[str, str] = {}
+    scoring_fingerprints: dict[str, str] = {}
     subscore_status: dict[str, str] = {}
     for record in records:
         provenance = record.get("provenance")
@@ -523,6 +524,11 @@ def score_provenance_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
             for key, value in raw_hashes.items():
                 if isinstance(key, str) and isinstance(value, str) and value:
                     source_hashes[key] = value
+        raw_fingerprints = provenance.get("scoring_fingerprints")
+        if isinstance(raw_fingerprints, dict):
+            for key, value in raw_fingerprints.items():
+                if isinstance(key, str) and isinstance(value, str) and value:
+                    scoring_fingerprints[key] = value
         if not subscore_status:
             raw_status = provenance.get("subscore_status")
             if isinstance(raw_status, dict):
@@ -530,6 +536,7 @@ def score_provenance_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
                     str(key): str(value) for key, value in raw_status.items() if value is not None
                 }
     return {
+        "scoring_fingerprints": dict(sorted(scoring_fingerprints.items())),
         "source_hashes": dict(sorted(source_hashes.items())),
         "subscore_status": dict(sorted(subscore_status.items())),
     }
@@ -753,6 +760,7 @@ def export_static_artifacts(
             "artifact": "shiok-static-json",
             "record_count": len(records),
             "state_counts": state_counts(records),
+            "scoring_fingerprints": score_provenance["scoring_fingerprints"],
             "source_hashes": score_provenance["source_hashes"],
             "subscore_status": score_provenance["subscore_status"],
         },
@@ -1334,6 +1342,7 @@ def refresh_score_provenance_manifest(output_dir: Path) -> dict[str, Any]:
         provenance = {}
         manifest["provenance"] = provenance
     provenance["source_hashes"] = score_provenance["source_hashes"]
+    provenance["scoring_fingerprints"] = score_provenance["scoring_fingerprints"]
     provenance["subscore_status"] = score_provenance["subscore_status"]
     provenance["score_provenance_refreshed_at"] = datetime.now(UTC).isoformat()
     write_json(manifest_path, manifest)
@@ -1343,6 +1352,7 @@ def refresh_score_provenance_manifest(output_dir: Path) -> dict[str, Any]:
         "manifest_path": str(manifest_path),
         "record_count": len(records),
         "source_hash_count": len(score_provenance["source_hashes"]),
+        "scoring_fingerprint_count": len(score_provenance["scoring_fingerprints"]),
         "subscore_status_keys": sorted(score_provenance["subscore_status"]),
     }
 

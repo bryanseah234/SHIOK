@@ -19,6 +19,13 @@ DEFAULT_UNIVERSE = (
     PROJECT_ROOT / "processed" / "postal_universe_candidate_full_registered_geocoded.parquet"
 )
 REQUIRED_SUBSCORE_STATUS = {"access", "bus", "rain", "heat", "crossing"}
+REQUIRED_SCORING_FINGERPRINTS = {
+    "pipeline\\scoring.py",
+    "pipeline\\scoring_integration.py",
+    "pipeline\\routing.py",
+    "pipeline\\config\\params.yaml",
+    "pipeline\\config\\weights.yaml",
+}
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -115,7 +122,9 @@ def bundle_score_provenance_status(bundle_dir: Path) -> dict[str, Any]:
             "ok": False,
             "manifest_path": str(manifest_path),
             "source_hash_count": 0,
+            "scoring_fingerprint_count": 0,
             "subscore_status_keys": [],
+            "missing_scoring_fingerprints": sorted(REQUIRED_SCORING_FINGERPRINTS),
             "missing_subscore_status": sorted(REQUIRED_SUBSCORE_STATUS),
             "warning": "bundle manifest is missing",
         }
@@ -127,29 +136,39 @@ def bundle_score_provenance_status(bundle_dir: Path) -> dict[str, Any]:
             "ok": False,
             "manifest_path": str(manifest_path),
             "source_hash_count": 0,
+            "scoring_fingerprint_count": 0,
             "subscore_status_keys": [],
+            "missing_scoring_fingerprints": sorted(REQUIRED_SCORING_FINGERPRINTS),
             "missing_subscore_status": sorted(REQUIRED_SUBSCORE_STATUS),
             "warning": "bundle manifest provenance block is missing",
         }
 
     source_hashes = provenance.get("source_hashes")
+    scoring_fingerprints = provenance.get("scoring_fingerprints")
     subscore_status = provenance.get("subscore_status")
     source_hash_count = len(source_hashes) if isinstance(source_hashes, dict) else 0
+    fingerprint_keys = (
+        set(scoring_fingerprints) if isinstance(scoring_fingerprints, dict) else set()
+    )
+    missing_fingerprints = sorted(REQUIRED_SCORING_FINGERPRINTS - fingerprint_keys)
     subscore_keys = set(subscore_status) if isinstance(subscore_status, dict) else set()
     missing_subscores = sorted(REQUIRED_SUBSCORE_STATUS - subscore_keys)
-    ok = source_hash_count > 0 and not missing_subscores
+    ok = source_hash_count > 0 and not missing_subscores and not missing_fingerprints
     warning = None
     if not ok:
         warning = (
-            "active bundle manifest lacks score source hashes or complete subscore status; "
-            "regenerate/export the bundle with current code before using it as provenance evidence"
+            "active bundle manifest lacks score source hashes, scoring code/config fingerprints, "
+            "or complete subscore status; regenerate/export the bundle with current code before "
+            "using it as provenance evidence"
         )
 
     return {
         "ok": ok,
         "manifest_path": str(manifest_path),
         "source_hash_count": source_hash_count,
+        "scoring_fingerprint_count": len(fingerprint_keys),
         "subscore_status_keys": sorted(subscore_keys),
+        "missing_scoring_fingerprints": missing_fingerprints,
         "missing_subscore_status": missing_subscores,
         "warning": warning,
     }

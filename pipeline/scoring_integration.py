@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import copy
+import hashlib
 import json
 import sqlite3
 from collections import Counter
@@ -69,6 +70,13 @@ PEDESTRIAN_EVIDENCE_HIGHWAYS = {
     "steps",
 }
 PEDESTRIAN_FOOT_VALUES = {"yes", "designated", "official", "permissive"}
+SCORING_FINGERPRINT_FILES = (
+    "pipeline/scoring.py",
+    "pipeline/scoring_integration.py",
+    "pipeline/routing.py",
+    "pipeline/config/params.yaml",
+    "pipeline/config/weights.yaml",
+)
 
 
 @dataclass(frozen=True)
@@ -124,6 +132,23 @@ def load_manifest() -> dict[str, Any]:
     if not isinstance(data, dict):
         raise TypeError(f"expected JSON object in {MANIFEST_PATH}")
     return cast(dict[str, Any], data)
+
+
+def file_sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def scoring_fingerprints() -> dict[str, str]:
+    fingerprints: dict[str, str] = {}
+    for rel_path in SCORING_FINGERPRINT_FILES:
+        path = PROJECT_ROOT / rel_path
+        if path.is_file():
+            fingerprints[rel_path.replace("/", "\\")] = file_sha256(path)
+    return dict(sorted(fingerprints.items()))
 
 
 def raw_file_from_manifest(source_key: str, filename: str) -> Path | None:
@@ -1517,6 +1542,7 @@ def build_provenance(
             "shelter_lambda": params["shelter_lambda"],
             "detour_budget": params["detour_budget"],
         },
+        "scoring_fingerprints": scoring_fingerprints(),
         "postal_universe": (
             str(postal_universe_path.relative_to(PROJECT_ROOT))
             if postal_universe_path is not None

@@ -1484,6 +1484,13 @@ def test_build_provenance_records_selected_network_and_postal_universe_paths():
         provenance["postal_universe"]
         == "processed\\postal_universe_candidate_full_registered.parquet"
     )
+    assert set(provenance["scoring_fingerprints"]) == {
+        "pipeline\\config\\params.yaml",
+        "pipeline\\config\\weights.yaml",
+        "pipeline\\routing.py",
+        "pipeline\\scoring.py",
+        "pipeline\\scoring_integration.py",
+    }
     assert provenance["subscore_status"]["bus"] == "real"
 
 

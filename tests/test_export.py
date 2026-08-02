@@ -91,6 +91,13 @@ def sample_record(postal: str = "123456") -> dict:
         "exposure_gaps": [{"len_m": 50.0, "label": "open test gap"}],
         "data_as_of": "2026-07-27T00:00:00+00:00",
         "provenance": {
+            "scoring_fingerprints": {
+                "pipeline\\config\\params.yaml": "b" * 64,
+                "pipeline\\config\\weights.yaml": "c" * 64,
+                "pipeline\\routing.py": "d" * 64,
+                "pipeline\\scoring.py": "e" * 64,
+                "pipeline\\scoring_integration.py": "f" * 64,
+            },
             "source_hashes": {"osm_extract": "a" * 64},
             "subscore_status": {
                 "access": "real_routed_shortest_distance",
@@ -187,6 +194,7 @@ def test_export_and_validate_static_artifacts(tmp_path: Path):
     assert validation["geometry_postals_with_route_segments"] == 2
     manifest = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["provenance"]["source_hashes"]["osm_extract"] == "a" * 64
+    assert manifest["provenance"]["scoring_fingerprints"]["pipeline\\scoring.py"] == "e" * 64
     assert (
         manifest["provenance"]["subscore_status"]["heat"]
         == "provisional_covered_plus_nparks_shade_proxy_heat_only"
@@ -448,7 +456,9 @@ def test_refresh_score_provenance_manifest_updates_from_score_shards(tmp_path: P
     assert report["manifest_updated"] is True
     assert report["record_count"] == 2
     assert report["source_hash_count"] == 1
+    assert report["scoring_fingerprint_count"] == 5
     assert refreshed["provenance"]["source_hashes"]["osm_extract"] == "a" * 64
+    assert refreshed["provenance"]["scoring_fingerprints"]["pipeline\\scoring.py"] == "e" * 64
     assert (
         refreshed["provenance"]["subscore_status"]["heat"]
         == "provisional_covered_plus_nparks_shade_proxy_heat_only"

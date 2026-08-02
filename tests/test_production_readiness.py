@@ -156,6 +156,7 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     assert report["bundle"]["manifest_record_count"] == 1
     assert report["bundle"]["state_total_matches_manifest"] is True
     assert report["bundle"]["score_provenance"]["ok"] is True
+    assert report["bundle"]["score_provenance"]["missing_scoring_fingerprints"] == []
     assert report["bundle"]["score_provenance"]["missing_subscore_status"] == []
     assert report["bundle"]["static_validation"]["geometry_postals_with_route_segments"] == 1
     assert report["network"]["ok"] is True
@@ -427,3 +428,66 @@ def test_build_readiness_report_warns_when_bundle_manifest_lacks_score_provenanc
         "active bundle manifest lacks score source hashes" in warning
         for warning in report["warnings"]
     )
+
+
+def test_build_readiness_report_warns_when_bundle_lacks_scoring_fingerprints(
+    tmp_path: Path,
+):
+    web_dir = tmp_path / "web"
+    bundle_dir = web_dir / "public" / "data" / "generated_test"
+    export_static_artifacts([sample_record("123456")], output_dir=bundle_dir)
+    manifest_path = bundle_dir / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["provenance"].pop("scoring_fingerprints", None)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    write_json(web_dir / "data-bundle.json", {"bundle": "generated_test"})
+    write_json(
+        tmp_path / ".vercel" / "project.json",
+        {
+            "projectId": "prj_test",
+            "projectName": "sgshiok",
+            "settings": {"rootDirectory": "web"},
+        },
+    )
+
+    summary_path = tmp_path / "processed" / "postal_universe_candidate_full_registered_summary.json"
+    universe_path = tmp_path / "processed" / "postal_universe_candidate_full_registered.parquet"
+    write_json(
+        summary_path,
+        {
+            "mode": "candidate_full_registered",
+            "total_unique_postals": 1,
+            "ready_to_score": 1,
+            "needs_geocode": 0,
+            "source_stats": [],
+            "source_only_counts": {},
+            "warnings": [],
+        },
+    )
+    write_universe(universe_path, rows=1)
+    params_path = tmp_path / "params.yaml"
+    params_path.write_text("onemap:\n  client_delay_sec: 2.0\n", encoding="utf-8")
+    qa_path = tmp_path / "qa" / "conflation_qa_island.json"
+    debug_path = tmp_path / "qa" / "island_debug.geojson"
+    write_production_island_qa(qa_path)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+
+    ok, report = build_readiness_report(
+        project_root=tmp_path,
+        web_dir=web_dir,
+        bundle_dir=bundle_dir,
+        summary_path=summary_path,
+        universe_path=universe_path,
+        params_path=params_path,
+        qa_path=qa_path,
+        debug_path=debug_path,
+        network_path=tmp_path / "unused_network.parquet",
+        postal_universe_path=universe_path,
+    )
+
+    assert ok, report
+    score_provenance = report["bundle"]["score_provenance"]
+    assert score_provenance["ok"] is False
+    assert score_provenance["scoring_fingerprint_count"] == 0
+    assert "pipeline\\scoring_integration.py" in score_provenance["missing_scoring_fingerprints"]
+    assert any("scoring code/config fingerprints" in warning for warning in report["warnings"])
