@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-08-02",
+  "source_bundle": "generated_20260802_bus_connector_tolerance_targeted",
+  "target_bundle": "generated_20260802_active_onemap_outlier_targeted",
+  "targeted_refresh": {
+    "selected_count": 208,
+    "patched_count": 208,
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9384,
+      "SCORED": 112900,
+      "SCORED_PARTIAL": 1429
+    }
+  },
+  "active_gate": {
+    "gate_passed": false,
+    "sample_size": 2000,
+    "cached_results": 1999,
+    "missing_cache_results": 0,
+    "invalid_cache_results": 1,
+    "median_abs_pct_delta": 11.528,
+    "p95_abs_pct_delta": 93.414,
+    "bus_median_abs_pct_delta": 12.875,
+    "mrt_median_abs_pct_delta": 6.678
+  },
+  "target_gate": {
+    "gate_passed": false,
+    "sample_size": 2000,
+    "cached_results": 1998,
+    "missing_cache_results": 0,
+    "invalid_cache_results": 2,
+    "median_abs_pct_delta": 11.079,
+    "p95_abs_pct_delta": 78.641,
+    "bus_median_abs_pct_delta": 12.202,
+    "mrt_median_abs_pct_delta": 6.536
+  },
+  "delta": {
+    "median_abs_pct_delta": -0.449,
+    "p95_abs_pct_delta": -14.773,
+    "bus_median_abs_pct_delta": -0.673,
+    "mrt_median_abs_pct_delta": -0.142
+  },
+  "deployment_recommendation": "do_not_deploy_as_launch_gate_fix",
+  "reason": "The targeted outlier refresh improves p95 by 14.773 percentage points but still fails the OneMap launch gate and increases SCORED_PARTIAL by 50 records. Keep as QA evidence; broader model or rescore work is still needed."
+}
