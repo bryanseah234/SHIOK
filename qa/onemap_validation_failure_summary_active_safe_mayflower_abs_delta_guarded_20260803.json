@@ -1,0 +1,66 @@
+{
+  "input_rows": 120,
+  "notes": [
+    "Queues are review assignments, not mutually exclusive postal counts.",
+    "This report uses cached OneMap validation and local replay artifacts only.",
+    "Do not mark the OneMap launch gate passed until the 2,000-postal evaluator passes."
+  ],
+  "priority_order": [
+    {
+      "count": 13,
+      "next_action": "audit bus-stop endpoint connectors and side-of-road access before widening route trust thresholds",
+      "queue": "missing_bus_connector",
+      "rank": 1,
+      "strict_priority_count": 4
+    },
+    {
+      "count": 28,
+      "next_action": "inspect rejected bus routes before promoting any guarded rescore rows",
+      "queue": "untrusted_bus_route_review",
+      "rank": 2
+    },
+    {
+      "count": 100,
+      "next_action": "check whether project paths cut through barriers or unsupported access",
+      "queue": "possible_overpermissive_project_path",
+      "rank": 3
+    },
+    {
+      "count": 30,
+      "next_action": "review inferred HDB, bridge, and underpass connectors against source evidence",
+      "queue": "hdb_bridge_connector_review",
+      "rank": 4
+    },
+    {
+      "count": 2,
+      "next_action": "separately audit MRT/LRT exit snapping and station-side walk geometry",
+      "queue": "mrt_lrt_outlier",
+      "rank": 5
+    },
+    {
+      "count": 38,
+      "next_action": "look for barriers, gates, private access, or missing crossings",
+      "queue": "access_barrier_review",
+      "rank": 6
+    },
+    {
+      "count": 1,
+      "next_action": "treat very short OneMap walks as a separate percent-delta review bucket",
+      "queue": "short_onemap_walk_review",
+      "rank": 7
+    }
+  ],
+  "queue_counts": {
+    "access_barrier_review": 38,
+    "direct_bus_fallback_review": 92,
+    "hdb_bridge_connector_review": 30,
+    "missing_bus_connector": 13,
+    "mrt_lrt_outlier": 2,
+    "possible_overpermissive_project_path": 100,
+    "short_onemap_walk_review": 1,
+    "still_unscored_or_no_best": 1,
+    "untrusted_bus_route_review": 28
+  },
+  "strict_missing_bus_connector_priority_count": 4,
+  "unresolved_review_assignments": 212
+}

@@ -9,6 +9,7 @@ from scripts.triage_onemap_outliers import (
     source_flags,
     triage_geojson,
     validation_lookup,
+    validation_failure_summary,
 )
 
 
@@ -223,6 +224,42 @@ def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):
     assert payload["queue_summaries"]["hdb_bridge_connector_review"]["count"] == 1
     assert payload["queues"]["missing_bus_connector"][0]["postal"] == "532183"
     assert payload["queues"]["mrt_lrt_outlier"][0]["postal"] == "489929"
+
+
+def test_validation_failure_summary_orders_review_work():
+    payload = {
+        "inputs": {"input_rows": 3},
+        "queues": {
+            "missing_bus_connector": [
+                {
+                    "postal": "532183",
+                    "validation_distance_sanity": "plausible",
+                    "current_route_vs_validation_direct_sanity": "plausible",
+                },
+                {
+                    "postal": "532184",
+                    "validation_distance_sanity": "unknown",
+                    "current_route_vs_validation_direct_sanity": "plausible",
+                },
+            ],
+            "untrusted_bus_route_review": [{"postal": "417092"}],
+            "possible_overpermissive_project_path": [{"postal": "489929"}],
+            "hdb_bridge_connector_review": [],
+            "mrt_lrt_outlier": [],
+            "access_barrier_review": [],
+            "short_onemap_walk_review": [{"postal": "000001"}],
+        },
+    }
+
+    summary = validation_failure_summary(payload)
+
+    assert summary["input_rows"] == 3
+    assert summary["queue_counts"]["missing_bus_connector"] == 2
+    assert summary["strict_missing_bus_connector_priority_count"] == 1
+    assert summary["priority_order"][0]["queue"] == "missing_bus_connector"
+    assert summary["priority_order"][0]["strict_priority_count"] == 1
+    assert summary["priority_order"][1]["queue"] == "untrusted_bus_route_review"
+    assert summary["unresolved_review_assignments"] == 5
 
 
 def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):

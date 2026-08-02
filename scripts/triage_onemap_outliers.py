@@ -499,6 +499,94 @@ def build_triage_queues(
     }
 
 
+def priority_queue_count(queues: dict[str, list[dict[str, Any]]]) -> int:
+    return len(
+        [
+            row
+            for row in queues.get("missing_bus_connector", [])
+            if row.get("validation_distance_sanity") == "plausible"
+            and row.get("current_route_vs_validation_direct_sanity") == "plausible"
+        ]
+    )
+
+
+def validation_failure_summary(payload: dict[str, Any]) -> dict[str, Any]:
+    queues = payload.get("queues")
+    if not isinstance(queues, dict):
+        queues = {}
+    typed_queues = {
+        str(name): rows if isinstance(rows, list) else [] for name, rows in queues.items()
+    }
+    queue_counts = {
+        name: len(rows) for name, rows in sorted(typed_queues.items(), key=lambda item: item[0])
+    }
+    priority_order = [
+        {
+            "rank": 1,
+            "queue": "missing_bus_connector",
+            "count": queue_counts.get("missing_bus_connector", 0),
+            "strict_priority_count": priority_queue_count(typed_queues),
+            "next_action": (
+                "audit bus-stop endpoint connectors and side-of-road access before "
+                "widening route trust thresholds"
+            ),
+        },
+        {
+            "rank": 2,
+            "queue": "untrusted_bus_route_review",
+            "count": queue_counts.get("untrusted_bus_route_review", 0),
+            "next_action": "inspect rejected bus routes before promoting any guarded rescore rows",
+        },
+        {
+            "rank": 3,
+            "queue": "possible_overpermissive_project_path",
+            "count": queue_counts.get("possible_overpermissive_project_path", 0),
+            "next_action": "check whether project paths cut through barriers or unsupported access",
+        },
+        {
+            "rank": 4,
+            "queue": "hdb_bridge_connector_review",
+            "count": queue_counts.get("hdb_bridge_connector_review", 0),
+            "next_action": "review inferred HDB, bridge, and underpass connectors against source evidence",
+        },
+        {
+            "rank": 5,
+            "queue": "mrt_lrt_outlier",
+            "count": queue_counts.get("mrt_lrt_outlier", 0),
+            "next_action": "separately audit MRT/LRT exit snapping and station-side walk geometry",
+        },
+        {
+            "rank": 6,
+            "queue": "access_barrier_review",
+            "count": queue_counts.get("access_barrier_review", 0),
+            "next_action": "look for barriers, gates, private access, or missing crossings",
+        },
+        {
+            "rank": 7,
+            "queue": "short_onemap_walk_review",
+            "count": queue_counts.get("short_onemap_walk_review", 0),
+            "next_action": "treat very short OneMap walks as a separate percent-delta review bucket",
+        },
+    ]
+    unresolved_count = 0
+    for item in priority_order:
+        count = item.get("count")
+        if isinstance(count, int):
+            unresolved_count += count
+    return {
+        "input_rows": payload.get("inputs", {}).get("input_rows"),
+        "queue_counts": queue_counts,
+        "strict_missing_bus_connector_priority_count": priority_queue_count(typed_queues),
+        "priority_order": priority_order,
+        "unresolved_review_assignments": unresolved_count,
+        "notes": [
+            "Queues are review assignments, not mutually exclusive postal counts.",
+            "This report uses cached OneMap validation and local replay artifacts only.",
+            "Do not mark the OneMap launch gate passed until the 2,000-postal evaluator passes.",
+        ],
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(
         description="Build concrete QA queues from profiled OneMap validation outlier replays."
@@ -513,6 +601,7 @@ def main() -> int:
         type=Path,
         default=DEFAULT_MISSING_BUS_PRIORITY_GEOJSON_OUTPUT,
     )
+    parser.add_argument("--summary-output", type=Path, default=None)
     args = parser.parse_args()
 
     payload = build_triage_queues(
@@ -526,11 +615,16 @@ def main() -> int:
         args.missing_bus_priority_geojson_output,
         missing_bus_connector_priority_geojson(payload["queues"]),
     )
+    summary = validation_failure_summary(payload)
+    if args.summary_output is not None:
+        write_json(args.summary_output, summary)
     printable = {key: value for key, value in payload.items() if key != "queues"}
+    printable["validation_failure_summary"] = summary
     printable["geojson_output"] = display_path(args.geojson_output)
     printable["missing_bus_priority_geojson_output"] = display_path(
         args.missing_bus_priority_geojson_output
     )
+    printable["summary_output"] = display_path(args.summary_output) if args.summary_output else None
     print(json.dumps(printable, indent=2, sort_keys=True))
     return 0
 
