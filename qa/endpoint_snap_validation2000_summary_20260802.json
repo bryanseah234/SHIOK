@@ -1,0 +1,112 @@
+{
+  "active": {
+    "bundle": "generated_20260802_bus_connector_tolerance_targeted",
+    "cached_results": 1999,
+    "gate_passed": false,
+    "invalid_cache_results": 1,
+    "median_abs_pct_delta": 11.528,
+    "missing_cache_results": 0,
+    "p95_abs_pct_delta": 93.414,
+    "route_trust_summary": [
+      {
+        "count": 1611,
+        "max_abs_pct_delta": 6783.333,
+        "median_abs_pct_delta": 12.857,
+        "over_25_pct_count": 525,
+        "over_50_pct_count": 276,
+        "p95_abs_pct_delta": 98.581,
+        "route_trust": "graph_routed_bus_stop"
+      },
+      {
+        "count": 387,
+        "max_abs_pct_delta": 263.333,
+        "median_abs_pct_delta": 6.678,
+        "over_25_pct_count": 65,
+        "over_50_pct_count": 30,
+        "p95_abs_pct_delta": 59.803,
+        "route_trust": "graph_routed_mrt_lrt"
+      },
+      {
+        "count": 1,
+        "max_abs_pct_delta": 17.315,
+        "median_abs_pct_delta": 17.315,
+        "over_25_pct_count": 0,
+        "over_50_pct_count": 0,
+        "p95_abs_pct_delta": 17.315,
+        "route_trust": "graph_route_with_endpoint_connector"
+      }
+    ]
+  },
+  "bundle": "generated_20260802_endpoint_snap_validation2000_targeted",
+  "comparison_caveat": "target deterministic sample does not match active sample; active-vs-target deltas are diagnostic only, not acceptance evidence",
+  "delta_vs_active": {
+    "median_abs_pct_delta": 1.958,
+    "p95_abs_pct_delta": -5.739
+  },
+  "deployment_recommendation": "do_not_deploy_as_launch_gate_fix",
+  "reason": "target static artifacts validate and OneMap cache is complete, but the target 2,000-postal launch gate still fails: median 13.486%, p95 87.675%, gate_passed=false",
+  "sample_postals_match_active_order": false,
+  "sample_postals_match_active_set": false,
+  "target": {
+    "cached_results": 1998,
+    "distance_sanity_summary": {
+      "onemap_materially_shorter_than_direct": 19,
+      "onemap_slightly_shorter_than_direct": 23,
+      "plausible": 1956
+    },
+    "gate_passed": false,
+    "invalid_cache_results": 2,
+    "median_abs_pct_delta": 13.486,
+    "missing_cache_results": 0,
+    "p95_abs_pct_delta": 87.675,
+    "route_trust_summary": [
+      {
+        "count": 108,
+        "max_abs_pct_delta": 1861.111,
+        "median_abs_pct_delta": 42.727,
+        "over_25_pct_count": 70,
+        "over_50_pct_count": 48,
+        "p95_abs_pct_delta": 171.681,
+        "route_trust": "graph_route_with_endpoint_connector"
+      },
+      {
+        "count": 1540,
+        "max_abs_pct_delta": 796.667,
+        "median_abs_pct_delta": 14.294,
+        "over_25_pct_count": 506,
+        "over_50_pct_count": 226,
+        "p95_abs_pct_delta": 86.883,
+        "route_trust": "graph_routed_bus_stop"
+      },
+      {
+        "count": 350,
+        "max_abs_pct_delta": 593.562,
+        "median_abs_pct_delta": 7.429,
+        "over_25_pct_count": 58,
+        "over_50_pct_count": 25,
+        "p95_abs_pct_delta": 56.683,
+        "route_trust": "graph_routed_mrt_lrt"
+      }
+    ],
+    "transit_type_summary": [
+      {
+        "best_node_type": "bus_stop",
+        "count": 1648,
+        "max_abs_pct_delta": 1861.111,
+        "median_abs_pct_delta": 14.854,
+        "over_25_pct_count": 576,
+        "over_50_pct_count": 274,
+        "p95_abs_pct_delta": 90.785
+      },
+      {
+        "best_node_type": "mrt_lrt_exit",
+        "count": 350,
+        "max_abs_pct_delta": 593.562,
+        "median_abs_pct_delta": 7.429,
+        "over_25_pct_count": 58,
+        "over_50_pct_count": 25,
+        "p95_abs_pct_delta": 56.683
+      }
+    ]
+  }
+}

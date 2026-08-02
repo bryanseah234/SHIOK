@@ -1,0 +1,18 @@
+{
+  "bundle": "generated_20260802_endpoint_snap_validation2000_targeted",
+  "cache_dir": "raw\\validation\\onemap_walk_od",
+  "confirm_onemap_collection": true,
+  "delay_sec": 2.0,
+  "dry_run": false,
+  "errors": [
+    "530457: OneMap HTTP 502"
+  ],
+  "existing_cache_results": 1455,
+  "generated_at": "2026-08-02T11:04:03.251054+00:00",
+  "http_requests": 545,
+  "ok": false,
+  "queued_requests": 545,
+  "sample_size": 2000,
+  "will_call_onemap": true,
+  "written_cache_results": 544
+}
