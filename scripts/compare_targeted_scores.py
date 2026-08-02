@@ -9,6 +9,7 @@ from typing import Any
 from scripts.targeted_bundle_refresh import active_bundle_dir, load_score_index, load_score_records
 
 SCOREABLE_STATES = {"SCORED", "SCORED_PARTIAL"}
+IMPROVEMENT_FLAGS = {"total_improvement", "coverage_improvement"}
 
 
 def normalize_postal(value: Any) -> str:
@@ -187,16 +188,35 @@ def compare_records(
     ]
     flag_counts = Counter(flag for item in comparisons for flag in item["flags"])
     blocking_count = sum(1 for item in comparisons if item["blocking"])
+    safe_improvements = [
+        item
+        for item in comparisons
+        if not item["blocking"] and any(flag in IMPROVEMENT_FLAGS for flag in item["flags"])
+    ]
+    safe_unchanged = [
+        item
+        for item in comparisons
+        if not item["blocking"] and item["flags"] == ["unchanged_or_within_tolerance"]
+    ]
+    blocked = [item for item in comparisons if item["blocking"]]
     return {
         "ok": blocking_count == 0,
         "candidate_count": len(candidate_records),
         "compared_count": len(comparisons),
         "blocking_count": blocking_count,
+        "safe_improvement_count": len(safe_improvements),
+        "safe_improvement_postals": [item["postal"] for item in safe_improvements],
+        "safe_unchanged_postals": [item["postal"] for item in safe_unchanged],
+        "blocked_postals": [item["postal"] for item in blocked],
         "flag_counts": dict(sorted(flag_counts.items())),
         "promotion_recommendation": (
             "safe_to_promote_targeted_records"
             if blocking_count == 0
-            else "hold_for_review_do_not_promote_wholesale"
+            else (
+                "promote_safe_improvements_only"
+                if safe_improvements
+                else "hold_for_review_do_not_promote_wholesale"
+            )
         ),
         "comparisons": comparisons,
     }
@@ -209,6 +229,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--candidate", required=True, type=Path)
     parser.add_argument("--bundle-dir", type=Path, default=None)
     parser.add_argument("--output", required=True, type=Path)
+    parser.add_argument(
+        "--safe-postals-output",
+        type=Path,
+        default=None,
+        help="Optional text output containing only non-blocking materially improved postals.",
+    )
     parser.add_argument("--total-tolerance", type=float, default=0.5)
     parser.add_argument("--coverage-tolerance", type=float, default=0.02)
     return parser
@@ -232,6 +258,12 @@ def main(argv: list[str] | None = None) -> int:
         "coverage_tolerance": args.coverage_tolerance,
     }
     write_json(args.output, report)
+    if args.safe_postals_output is not None:
+        args.safe_postals_output.parent.mkdir(parents=True, exist_ok=True)
+        args.safe_postals_output.write_text(
+            "\n".join(report["safe_improvement_postals"]) + "\n",
+            encoding="utf-8",
+        )
     print(
         json.dumps(
             {
@@ -240,6 +272,9 @@ def main(argv: list[str] | None = None) -> int:
                     "ok",
                     "compared_count",
                     "blocking_count",
+                    "safe_improvement_count",
+                    "safe_improvement_postals",
+                    "blocked_postals",
                     "flag_counts",
                     "promotion_recommendation",
                 )

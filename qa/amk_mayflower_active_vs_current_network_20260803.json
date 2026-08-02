@@ -1,4 +1,9 @@
 {
+  "blocked_postals": [
+    "560225",
+    "560700",
+    "560710"
+  ],
   "blocking_count": 3,
   "candidate_count": 5,
   "compared_count": 5,
@@ -215,5 +220,12 @@
     "total_tolerance": 0.5
   },
   "ok": false,
-  "promotion_recommendation": "hold_for_review_do_not_promote_wholesale"
+  "promotion_recommendation": "promote_safe_improvements_only",
+  "safe_improvement_count": 1,
+  "safe_improvement_postals": [
+    "560234"
+  ],
+  "safe_unchanged_postals": [
+    "560231"
+  ]
 }
