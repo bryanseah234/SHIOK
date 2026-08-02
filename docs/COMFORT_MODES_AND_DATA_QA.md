@@ -228,6 +228,15 @@ Current implementation:
   303.0 m to bus stop `66309`, with 300.0 m policy radius and 305.0 m selection
   radius recorded in provenance. Web tests and production build passed against
   this bundle.
+- `generated_20260802_endpoint_connector_guard_targeted` is the active bundle
+  configured in `web/data-bundle.json` after endpoint-connector guard QA. Its
+  manifest has 124,032 indexed postals, 114,327 geometry postals, 112,913
+  `SCORED`, 1,414 `SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319
+  `NOT_YET_SCORED`. A later AMK/Mayflower current-network candidate report was
+  compared against this active bundle in
+  `qa/amk_mayflower_active_vs_current_network_20260803.json`; it improves
+  `560234`, but blocks wholesale promotion because `560225`, `560700`, and
+  `560710` regress under the comparator gate.
 
 ## Actual Bus Arrivals
 

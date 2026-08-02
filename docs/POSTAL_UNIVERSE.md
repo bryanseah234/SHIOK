@@ -41,20 +41,24 @@ coverage tradeoff.
 - needs geocode after bounded OneMap geocode: 319
 - bounded OneMap fill: 167 successes from 486 queued postals at 2.0s delay
 
-Active web bundle `generated_20260802_bus_connector_tolerance_targeted`
+Active web bundle `generated_20260802_endpoint_connector_guard_targeted`
 
 - total score records: 124,032
-- `SCORED`: 112,950
-- `SCORED_PARTIAL`: 1,379
-- `NO_TRANSIT_IN_RANGE`: 9,384
+- `SCORED`: 112,913
+- `SCORED_PARTIAL`: 1,414
+- `NO_TRANSIT_IN_RANGE`: 9,386
 - `NOT_YET_SCORED`: 319
-- targeted direct-bus and wide refreshes: all 1,320 current
+- targeted direct-bus and wide refreshes: all 1,320 then-current
   `NO_TRANSIT_IN_RANGE` postals with scheduled bus-stop candidates within
   300 m direct radius were patched to `SCORED_PARTIAL` with a straight-line bus
   estimate and untrusted rain/heat/crossing subscores left null.
 - targeted bus-connector tolerance refresh: 70 prior direct-bus fallback
   partial records became fully routed/scored, and no target record regressed to
   `NO_TRANSIT_IN_RANGE`.
+- targeted endpoint-connector guard refresh: 216 active records were refreshed
+  after route-trust and endpoint-connector guard QA. This is the active bundle
+  in `web/data-bundle.json`; later current-network Mayflower experiments are
+  not promoted wholesale unless their comparator gate passes.
 
 ## Evidence From 2026-08-02 URA Probe
 

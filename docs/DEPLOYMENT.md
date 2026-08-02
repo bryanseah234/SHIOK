@@ -75,7 +75,9 @@ the same data contract.
 `web/vercel.json` also sets `ignoreCommand` to
 `node scripts/ignore-build.mjs`. That means Git commits which do not touch the
 `web` project, such as docs-only or QA-evidence commits, are intentionally
-skipped by Vercel instead of consuming Hobby build quota. Changes under `web/`,
+skipped by Vercel instead of consuming Hobby build quota. In the Vercel
+deployments list, these ignored builds appear as short `Canceled` deployments
+with a zero-millisecond build, not as failed builds. Changes under `web/`,
 including `web/data-bundle.json`, still trigger a real build.
 
 Only the `sgshiok` Vercel project should be connected to this GitHub repo. On
@@ -123,11 +125,13 @@ After a new score/export batch is generated and validated:
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
 
-As of 2026-08-02, the active production bundle is
-`generated_20260802_bus_connector_tolerance_targeted`. It is a targeted refresh
-of `generated_20260801_direct_bus_all_targeted` after the bus-stop access
-connector and 5 m direct-bus coordinate-tolerance fixes. Do not run a release
-command for older bundle names unless that bundle has first been regenerated or
+As of 2026-08-03, the active production bundle configured in
+`web/data-bundle.json` is
+`generated_20260802_endpoint_connector_guard_targeted`. It is a targeted
+refresh after the endpoint-connector guard work. Its manifest has 124,032 score
+records: 112,913 `SCORED`, 1,414 `SCORED_PARTIAL`, 9,386
+`NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`. Do not run a release command
+for older bundle names unless that bundle has first been regenerated or
 restored and validated locally.
 
 ## Vercel Hobby Limits
