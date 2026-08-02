@@ -264,10 +264,11 @@ def iter_score_candidates(
             best_node = route_record.get("best_node")
             if not isinstance(best_node, dict):
                 continue
+            routing_type = str(paths.get("routing_type") or "unknown")
             yield {
                 "postal": postal,
                 "area": area,
-                "state": record.get("state"),
+                "state": route_record.get("state", record.get("state")),
                 "total": route_record.get("total", record.get("total")),
                 "best_node": {
                     "type": best_node.get("type"),
@@ -276,7 +277,24 @@ def iter_score_candidates(
                     "station": best_node.get("station"),
                 },
                 "project_shortest_m": round(float(shortest_m), 1),
+                "routing_type": routing_type,
+                "route_trust": validation_route_trust(
+                    node_type=str(best_node.get("type") or "unknown"),
+                    routing_type=routing_type,
+                ),
             }
+
+
+def validation_route_trust(*, node_type: str, routing_type: str) -> str:
+    if routing_type == "direct_bus_fallback_unrouted":
+        return "partial_unrouted_bus_fallback"
+    if routing_type.endswith("_with_bus_stop_access_connector"):
+        return "graph_route_with_endpoint_connector"
+    if node_type == "bus_stop":
+        return "graph_routed_bus_stop"
+    if node_type == "mrt_lrt_exit":
+        return "graph_routed_mrt_lrt"
+    return "graph_routed_other"
 
 
 def allocate_area_quotas(
@@ -659,6 +677,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             {
                 "postal": sample.get("postal"),
                 "area": sample.get("area"),
+                "state": sample.get("state"),
                 "cache_key": cache_key,
                 "start": sample.get("start"),
                 "end": sample.get("end"),
@@ -678,6 +697,8 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
                 "direction": signed_delta_direction(signed_delta_pct),
                 "best_node_type": best_node.get("type"),
                 "best_node_name": best_node.get("name") or best_node.get("station"),
+                "routing_type": sample.get("routing_type"),
+                "route_trust": sample.get("route_trust"),
                 "endpoint_source": sample.get("endpoint_source"),
             }
         )
@@ -715,6 +736,8 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         },
         "gate_passed": gate_passed,
         "distance_sanity_summary": dict(sorted(distance_sanity_counts.items())),
+        "route_trust_summary": summarize_delta_groups(results, group_key="route_trust"),
+        "routing_type_summary": summarize_delta_groups(results, group_key="routing_type"),
         "transit_type_summary": summarize_delta_groups(results, group_key="best_node_type"),
         "direction_summary": summarize_delta_groups(results, group_key="direction"),
         "area_summary": summarize_delta_groups(results, group_key="area", limit=20),

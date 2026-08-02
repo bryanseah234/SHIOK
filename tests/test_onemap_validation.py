@@ -13,6 +13,7 @@ from pipeline.onemap_validation import (
     haversine_distance_m,
     onemap_distance_sanity,
     route_cache_key,
+    validation_route_trust,
 )
 from tests.test_export import sample_record
 
@@ -48,6 +49,8 @@ def test_build_validation_sample_uses_stratified_score_geometry(tmp_path: Path):
     assert set(payload["area_quotas"]) == {"ANG_MO_KIO", "BEDOK"}
     assert all(sample["cache_key"] for sample in payload["samples"])
     assert all(sample["start"]["lat"] != sample["end"]["lat"] for sample in payload["samples"])
+    assert all(sample["routing_type"] == "unknown" for sample in payload["samples"])
+    assert all(sample["route_trust"] == "graph_routed_mrt_lrt" for sample in payload["samples"])
 
 
 def test_build_validation_sample_prefers_postal_and_transit_source_endpoints(tmp_path: Path):
@@ -194,6 +197,8 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
                 "end": end,
                 "project_shortest_m": 105.0,
                 "best_node": {"type": "bus_stop", "name": "Test Stop"},
+                "routing_type": "sheltered_with_bus_stop_access_connector",
+                "route_trust": "graph_route_with_endpoint_connector",
                 "endpoint_source": "postal_universe_to_transit_poi",
             },
             {
@@ -222,11 +227,37 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["results_preview"][0]["signed_pct_delta"] == 5.0
     assert report["results_preview"][0]["direction"] == "project_longer_than_onemap"
     assert report["results_preview"][0]["start"] == start
+    assert report["results_preview"][0]["routing_type"] == (
+        "sheltered_with_bus_stop_access_connector"
+    )
+    assert report["results_preview"][0]["route_trust"] == ("graph_route_with_endpoint_connector")
     assert 150.0 < report["results_preview"][0]["direct_distance_m"] < 160.0
     assert report["results_preview"][0]["distance_sanity"] == (
         "onemap_materially_shorter_than_direct"
     )
     assert report["distance_sanity_summary"] == {"onemap_materially_shorter_than_direct": 1}
+    assert report["route_trust_summary"] == [
+        {
+            "route_trust": "graph_route_with_endpoint_connector",
+            "count": 1,
+            "median_abs_pct_delta": 5.0,
+            "p95_abs_pct_delta": 5.0,
+            "max_abs_pct_delta": 5.0,
+            "over_25_pct_count": 0,
+            "over_50_pct_count": 0,
+        }
+    ]
+    assert report["routing_type_summary"] == [
+        {
+            "routing_type": "sheltered_with_bus_stop_access_connector",
+            "count": 1,
+            "median_abs_pct_delta": 5.0,
+            "p95_abs_pct_delta": 5.0,
+            "max_abs_pct_delta": 5.0,
+            "over_25_pct_count": 0,
+            "over_50_pct_count": 0,
+        }
+    ]
     assert report["transit_type_summary"] == [
         {
             "best_node_type": "bus_stop",
@@ -264,6 +295,31 @@ def test_haversine_distance_and_onemap_distance_sanity():
     assert onemap_distance_sanity(145.0, direct_m) == "onemap_slightly_shorter_than_direct"
     assert onemap_distance_sanity(170.0, direct_m) == "plausible"
     assert onemap_distance_sanity(100.0, None) == "missing_coordinates"
+
+
+def test_validation_route_trust_classifies_route_contract():
+    assert (
+        validation_route_trust(
+            node_type="bus_stop",
+            routing_type="direct_bus_fallback_unrouted",
+        )
+        == "partial_unrouted_bus_fallback"
+    )
+    assert (
+        validation_route_trust(
+            node_type="bus_stop",
+            routing_type="sheltered_with_bus_stop_access_connector",
+        )
+        == "graph_route_with_endpoint_connector"
+    )
+    assert (
+        validation_route_trust(node_type="bus_stop", routing_type="sheltered")
+        == "graph_routed_bus_stop"
+    )
+    assert (
+        validation_route_trust(node_type="mrt_lrt_exit", routing_type="sheltered")
+        == "graph_routed_mrt_lrt"
+    )
 
 
 def test_evaluate_cached_results_reports_zero_distance_as_invalid(tmp_path: Path):
