@@ -34,7 +34,7 @@
     }
   },
   "verified_checks": {
-    "python_tests": "187 passed",
+    "python_tests": "190 passed",
     "web_tests": "31 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
@@ -63,14 +63,14 @@
     "onemap_outlier_replay_project_shorter": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\\onemap_outlier_replay_shorter_100_20260802.json passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.",
     "onemap_outlier_replay_project_shorter_profile": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\\onemap_outlier_replay_shorter_profile_100_20260802.json passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.",
     "onemap_outlier_replay_project_longer_profile": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_longer_than_onemap --node-type bus_stop --route-source-profile --output qa\\onemap_outlier_replay_bus_longer_profile_100_20260802.json passed locally. Of 92 selected rows, 67 have best-route direct-bus fallback, 12 contain inferred HDB, and 1 contains OSM shelter. The longer queue is mostly bus fallback/missing-connector evidence, not a reason to loosen HDB inference further.",
-    "onemap_outlier_triage_queues": "uv run python run.py onemap-outlier-triage --output qa\\onemap_outlier_triage_queues_20260802.json passed locally. It read 192 replay rows and emitted 68 missing_bus_connector cases, 123 direct_bus_fallback_review cases, 100 possible_overpermissive_project_path cases, 47 mrt_lrt_outlier cases, 27 hdb_bridge_connector_review cases, and 3 still_unscored_or_no_best cases.",
+    "onemap_outlier_triage_queues": "uv run python run.py onemap-outlier-triage --output qa\\onemap_outlier_triage_queues_20260802.json --geojson-output qa\\onemap_outlier_triage_queues_20260802.geojson passed locally. It read 192 replay rows, enriched them from qa/onemap_validation_cached_report_20260802.json, and emitted 68 missing_bus_connector cases, 123 direct_bus_fallback_review cases, 100 possible_overpermissive_project_path cases, 47 mrt_lrt_outlier cases, 27 hdb_bridge_connector_review cases, and 3 still_unscored_or_no_best cases. The GeoJSON has 368 start/end line features for map inspection.",
     "temporary_file_cleanup": "Removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, temporary probe parquets, and an obsolete older full score batch; retained raw/validation/onemap_walk_od, current score batch, and current web data bundle."
   },
   "not_done": [
     "Deploy pending bundle after Vercel Hobby quota resets.",
     "Activate web/data-bundle.json only after remote pending-bundle manifest is reachable.",
     "Run broader keyboard-only and multi-postal mobile browser QA after activation.",
-    "Work through qa/onemap_outlier_triage_queues_20260802.json: first missing_bus_connector, then possible_overpermissive_project_path, then mrt_lrt_outlier.",
+    "Work through qa/onemap_outlier_triage_queues_20260802.json and qa/onemap_outlier_triage_queues_20260802.geojson: first missing_bus_connector, then possible_overpermissive_project_path, then mrt_lrt_outlier.",
     "Use the reusable outlier replay helper after the next score/export bundle to check whether bus-stop validation outliers shrink before any full rescore.",
     "Resolve Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction; no manual postal score override.",
     "Close canonical ~140k postal universe only with licensed/permitted source; current launchable universe is 124,032."

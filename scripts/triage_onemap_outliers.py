@@ -15,6 +15,8 @@ DEFAULT_SHORTER_PROFILE = (
     PROJECT_ROOT / "qa" / "onemap_outlier_replay_shorter_profile_100_20260802.json"
 )
 DEFAULT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_triage_queues_20260802.json"
+DEFAULT_VALIDATION_REPORT = PROJECT_ROOT / "qa" / "onemap_validation_cached_report_20260802.json"
+DEFAULT_GEOJSON_OUTPUT = PROJECT_ROOT / "qa" / "onemap_outlier_triage_queues_20260802.geojson"
 
 DIRECT_BUS_FALLBACK_ROUTING = "direct_bus_fallback_unrouted"
 FALLBACK_REASONS = {
@@ -72,6 +74,40 @@ def top_lengths(lengths: Any, *, limit: int = 5) -> dict[str, float]:
         key: round(length_m, 1)
         for key, length_m in sorted(rows, key=lambda item: item[1], reverse=True)[:limit]
     }
+
+
+def validation_lookup(report_path: Path | None) -> dict[tuple[str, str], dict[str, Any]]:
+    if report_path is None:
+        return {}
+    payload = read_json(report_path)
+    if not isinstance(payload, dict):
+        raise TypeError(f"expected JSON object in {report_path}")
+
+    rows: list[dict[str, Any]] = []
+    directional = payload.get("top_outliers_by_direction")
+    if isinstance(directional, dict):
+        for group in directional.values():
+            if isinstance(group, list):
+                rows.extend(row for row in group if isinstance(row, dict))
+    preview = payload.get("top_outliers_preview")
+    if isinstance(preview, list):
+        rows.extend(row for row in preview if isinstance(row, dict))
+
+    lookup: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in rows:
+        postal = str(row.get("postal") or "").zfill(6)
+        direction = str(row.get("direction") or "")
+        if not postal or not direction:
+            continue
+        key = (postal, direction)
+        old_delta = float(lookup.get(key, {}).get("abs_pct_delta") or -1.0)
+        try:
+            new_delta = float(row.get("abs_pct_delta") or 0.0)
+        except (TypeError, ValueError):
+            new_delta = 0.0
+        if key not in lookup or new_delta >= old_delta:
+            lookup[key] = row
+    return lookup
 
 
 def has_direct_bus_fallback(row: dict[str, Any]) -> bool:
@@ -147,11 +183,22 @@ def classify_row(row: dict[str, Any]) -> list[str]:
     return queues
 
 
-def compact_row(row: dict[str, Any], *, source_artifact: str) -> dict[str, Any]:
+def compact_row(
+    row: dict[str, Any],
+    *,
+    source_artifact: str,
+    validation: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     flags = source_flags(row)
-    return {
+    validation = validation or {}
+    compact = {
         "postal": str(row.get("postal") or "").zfill(6),
         "source_artifact": source_artifact,
+        "validation_area": validation.get("area"),
+        "validation_best_node_type": validation.get("best_node_type"),
+        "endpoint_source": validation.get("endpoint_source"),
+        "start": validation.get("start"),
+        "end": validation.get("end"),
         "old_validation_best_node": row.get("old_validation_best_node"),
         "old_project_shortest_m": row.get("old_project_shortest_m"),
         "old_onemap_walk_m": row.get("old_onemap_walk_m"),
@@ -169,6 +216,7 @@ def compact_row(row: dict[str, Any], *, source_artifact: str) -> dict[str, Any]:
         "direct_bus_fallback_reason": row.get("direct_bus_fallback_reason"),
         "source_flags": flags,
     }
+    return compact
 
 
 def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -206,10 +254,49 @@ def load_rows(path: Path) -> list[dict[str, Any]]:
     return [row for row in rows if isinstance(row, dict)]
 
 
+def feature_for_row(queue_name: str, row: dict[str, Any]) -> dict[str, Any] | None:
+    start = row.get("start")
+    end = row.get("end")
+    if not isinstance(start, dict) or not isinstance(end, dict):
+        return None
+    try:
+        start_lon = float(start["lon"])
+        start_lat = float(start["lat"])
+        end_lon = float(end["lon"])
+        end_lat = float(end["lat"])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+    properties = {key: value for key, value in row.items() if key not in {"start", "end"}}
+    properties["queue"] = queue_name
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [[start_lon, start_lat], [end_lon, end_lat]],
+        },
+        "properties": properties,
+    }
+
+
+def triage_geojson(queues: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
+    features: list[dict[str, Any]] = []
+    for queue_name, rows in queues.items():
+        for row in rows:
+            feature = feature_for_row(queue_name, row)
+            if feature is not None:
+                features.append(feature)
+    return {
+        "type": "FeatureCollection",
+        "features": features,
+    }
+
+
 def build_triage_queues(
     *,
     longer_profile_path: Path,
     shorter_profile_path: Path,
+    validation_report_path: Path | None = None,
     generated_at: str | None = None,
 ) -> dict[str, Any]:
     source_rows = [
@@ -226,12 +313,18 @@ def build_triage_queues(
     }
     seen_by_queue: dict[str, set[str]] = {name: set() for name in queues}
     input_row_count = 0
+    validation_by_postal_direction = validation_lookup(validation_report_path)
 
     for source_artifact, rows in source_rows:
         input_row_count += len(rows)
         for row in rows:
-            compact = compact_row(row, source_artifact=source_artifact)
-            postal = compact["postal"]
+            postal = str(row.get("postal") or "").zfill(6)
+            direction = str(row.get("old_direction") or "")
+            compact = compact_row(
+                row,
+                source_artifact=source_artifact,
+                validation=validation_by_postal_direction.get((postal, direction)),
+            )
             for queue_name in classify_row(row):
                 key = f"{postal}|{source_artifact}"
                 if key in seen_by_queue[queue_name]:
@@ -245,6 +338,9 @@ def build_triage_queues(
         "inputs": {
             "project_longer_profile": display_path(longer_profile_path),
             "project_shorter_profile": display_path(shorter_profile_path),
+            "validation_report": (
+                display_path(validation_report_path) if validation_report_path is not None else None
+            ),
             "input_rows": input_row_count,
         },
         "queue_summaries": summaries,
@@ -258,15 +354,20 @@ def main() -> int:
     )
     parser.add_argument("--longer-profile", type=Path, default=DEFAULT_LONGER_PROFILE)
     parser.add_argument("--shorter-profile", type=Path, default=DEFAULT_SHORTER_PROFILE)
+    parser.add_argument("--validation-report", type=Path, default=DEFAULT_VALIDATION_REPORT)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument("--geojson-output", type=Path, default=DEFAULT_GEOJSON_OUTPUT)
     args = parser.parse_args()
 
     payload = build_triage_queues(
         longer_profile_path=args.longer_profile,
         shorter_profile_path=args.shorter_profile,
+        validation_report_path=args.validation_report,
     )
     write_json(args.output, payload)
+    write_json(args.geojson_output, triage_geojson(payload["queues"]))
     printable = {key: value for key, value in payload.items() if key != "queues"}
+    printable["geojson_output"] = display_path(args.geojson_output)
     print(json.dumps(printable, indent=2, sort_keys=True))
     return 0
 

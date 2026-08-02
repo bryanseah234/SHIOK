@@ -5,6 +5,8 @@ from scripts.triage_onemap_outliers import (
     classify_row,
     compact_row,
     source_flags,
+    triage_geojson,
+    validation_lookup,
 )
 
 
@@ -159,6 +161,128 @@ def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):
     assert payload["queue_summaries"]["hdb_bridge_connector_review"]["count"] == 1
     assert payload["queues"]["missing_bus_connector"][0]["postal"] == "532183"
     assert payload["queues"]["mrt_lrt_outlier"][0]["postal"] == "489929"
+
+
+def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
+    longer = tmp_path / "longer.json"
+    shorter = tmp_path / "shorter.json"
+    validation_report = tmp_path / "validation.json"
+    longer.write_text(
+        """
+        {
+          "rows": [
+            {
+              "postal": "532183",
+              "old_direction": "project_longer_than_onemap",
+              "new_best_type": "bus_stop",
+              "new_best_routing_type": "direct_bus_fallback_unrouted",
+              "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+            }
+          ]
+        }
+        """,
+        encoding="utf-8",
+    )
+    shorter.write_text('{"rows":[]}', encoding="utf-8")
+    validation_report.write_text(
+        """
+        {
+          "top_outliers_by_direction": {
+            "project_longer_than_onemap": [
+              {
+                "postal": "532183",
+                "direction": "project_longer_than_onemap",
+                "area": "HOUGANG",
+                "best_node_type": "bus_stop",
+                "endpoint_source": "postal_universe_to_transit_poi",
+                "abs_pct_delta": 100.0,
+                "start": {"lat": 1.346263, "lon": 103.887204},
+                "end": {"lat": 1.346168, "lon": 103.887806}
+              }
+            ]
+          }
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    payload = build_triage_queues(
+        longer_profile_path=longer,
+        shorter_profile_path=shorter,
+        validation_report_path=validation_report,
+        generated_at="2026-08-02T00:00:00+00:00",
+    )
+
+    row = payload["queues"]["missing_bus_connector"][0]
+    assert row["validation_area"] == "HOUGANG"
+    assert row["validation_best_node_type"] == "bus_stop"
+    assert row["start"] == {"lat": 1.346263, "lon": 103.887204}
+    assert row["end"] == {"lat": 1.346168, "lon": 103.887806}
+
+
+def test_validation_lookup_keeps_highest_delta_for_postal_direction(tmp_path: Path):
+    report = tmp_path / "validation.json"
+    report.write_text(
+        """
+        {
+          "top_outliers_by_direction": {
+            "project_longer_than_onemap": [
+              {
+                "postal": "532183",
+                "direction": "project_longer_than_onemap",
+                "abs_pct_delta": 10.0,
+                "area": "LOW"
+              },
+              {
+                "postal": "532183",
+                "direction": "project_longer_than_onemap",
+                "abs_pct_delta": 20.0,
+                "area": "HIGH"
+              }
+            ]
+          }
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    lookup = validation_lookup(report)
+
+    assert lookup[("532183", "project_longer_than_onemap")]["area"] == "HIGH"
+
+
+def test_triage_geojson_exports_start_end_lines():
+    geojson = triage_geojson(
+        {
+            "missing_bus_connector": [
+                {
+                    "postal": "532183",
+                    "start": {"lat": 1.346263, "lon": 103.887204},
+                    "end": {"lat": 1.346168, "lon": 103.887806},
+                    "new_best_name": "Blk 181",
+                }
+            ],
+            "empty": [{"postal": "000000"}],
+        }
+    )
+
+    assert geojson == {
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "LineString",
+                    "coordinates": [[103.887204, 1.346263], [103.887806, 1.346168]],
+                },
+                "properties": {
+                    "postal": "532183",
+                    "new_best_name": "Blk 181",
+                    "queue": "missing_bus_connector",
+                },
+            }
+        ],
+    }
 
 
 def test_compact_row_preserves_user_facing_triage_fields():
