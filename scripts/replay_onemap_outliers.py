@@ -46,6 +46,7 @@ def select_outliers(
     node_type: str,
     direction: str,
     min_abs_pct_delta: float,
+    min_onemap_walk_m_for_pct_rank: float = 0.0,
 ) -> list[dict[str, Any]]:
     full_results = report.get("results")
     if isinstance(full_results, list):
@@ -81,6 +82,13 @@ def select_outliers(
             continue
         if abs_pct_delta < min_abs_pct_delta:
             continue
+        if min_onemap_walk_m_for_pct_rank > 0:
+            try:
+                onemap_walk_m = float(row.get("onemap_walk_m") or 0.0)
+            except (TypeError, ValueError):
+                onemap_walk_m = 0.0
+            if 0 < onemap_walk_m < min_onemap_walk_m_for_pct_rank:
+                continue
         selected.append(row)
         seen.add(postal)
         if len(selected) >= limit:
@@ -340,6 +348,7 @@ def replay_outliers(
     node_type: str,
     direction: str,
     min_abs_pct_delta: float,
+    min_onemap_walk_m_for_pct_rank: float = 0.0,
     include_route_source_profile: bool = False,
 ) -> dict[str, Any]:
     report = read_json(report_path)
@@ -351,6 +360,7 @@ def replay_outliers(
         node_type=node_type,
         direction=direction,
         min_abs_pct_delta=min_abs_pct_delta,
+        min_onemap_walk_m_for_pct_rank=min_onemap_walk_m_for_pct_rank,
     )
     postals = [str(row["postal"]).zfill(6) for row in selected]
     old_by_postal = {str(row["postal"]).zfill(6): row for row in selected}
@@ -389,6 +399,7 @@ def replay_outliers(
             "node_type": node_type,
             "direction": direction,
             "min_abs_pct_delta": float(min_abs_pct_delta),
+            "min_onemap_walk_m_for_pct_rank": float(min_onemap_walk_m_for_pct_rank),
             "selected_postals": len(postals),
             "scored_postals": len(rows),
             "include_route_source_profile": include_route_source_profile,
@@ -412,6 +423,7 @@ def main() -> int:
     parser.add_argument("--node-type", default="bus_stop")
     parser.add_argument("--direction", default="project_longer_than_onemap")
     parser.add_argument("--min-abs-pct-delta", type=float, default=25.0)
+    parser.add_argument("--min-onemap-walk-m-for-pct-rank", type=float, default=0.0)
     parser.add_argument("--route-source-profile", action="store_true")
     args = parser.parse_args()
 
@@ -424,6 +436,7 @@ def main() -> int:
         node_type=args.node_type,
         direction=args.direction,
         min_abs_pct_delta=args.min_abs_pct_delta,
+        min_onemap_walk_m_for_pct_rank=args.min_onemap_walk_m_for_pct_rank,
         include_route_source_profile=bool(args.route_source_profile),
     )
     printable = {key: value for key, value in summary.items() if key != "rows"}

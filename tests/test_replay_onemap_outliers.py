@@ -116,6 +116,38 @@ def test_select_outliers_uses_full_results_when_available():
     assert [row["postal"] for row in selected] == ["222222", "111111"]
 
 
+def test_select_outliers_can_skip_short_onemap_walks():
+    report = {
+        "results": [
+            {
+                "postal": "111111",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "onemap_walk_m": 6.0,
+                "abs_pct_delta": 1000.0,
+            },
+            {
+                "postal": "222222",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "onemap_walk_m": 80.0,
+                "abs_pct_delta": 120.0,
+            },
+        ],
+    }
+
+    selected = select_outliers(
+        report,
+        limit=10,
+        node_type="bus_stop",
+        direction="project_longer_than_onemap",
+        min_abs_pct_delta=25.0,
+        min_onemap_walk_m_for_pct_rank=20.0,
+    )
+
+    assert [row["postal"] for row in selected] == ["222222"]
+
+
 def test_replay_row_extracts_bus_and_fallback_fields():
     row = replay_row(
         {

@@ -29,6 +29,7 @@ FALLBACK_REASONS = {
     "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
 }
 MRT_LRT_NAME_MARKERS = (" MRT ", " LRT ", "MRT STATION", "LRT STATION")
+SHORT_ONEMAP_WALK_REVIEW_M = 20.0
 
 
 def read_json(path: Path) -> Any:
@@ -117,6 +118,9 @@ def validation_lookup(report_path: Path | None) -> dict[tuple[str, str], dict[st
         raise TypeError(f"expected JSON object in {report_path}")
 
     rows: list[dict[str, Any]] = []
+    full_results = payload.get("results")
+    if isinstance(full_results, list):
+        rows.extend(row for row in full_results if isinstance(row, dict))
     directional = payload.get("top_outliers_by_direction")
     if isinstance(directional, dict):
         for group in directional.values():
@@ -287,6 +291,8 @@ def compact_row(
         "validation_area": validation.get("area"),
         "validation_best_node_type": validation.get("best_node_type"),
         "validation_direct_distance_m": validation.get("direct_distance_m"),
+        "validation_onemap_walk_m": validation.get("onemap_walk_m"),
+        "validation_abs_delta_m": validation.get("abs_delta_m"),
         "validation_onemap_vs_direct_delta_m": validation.get("onemap_vs_direct_delta_m"),
         "validation_distance_sanity": validation.get("distance_sanity"),
         "current_route_vs_validation_direct_sanity": routed_vs_validation_direct_sanity(
@@ -313,6 +319,14 @@ def compact_row(
         "source_flags": flags,
     }
     return compact
+
+
+def is_short_onemap_walk_review(row: dict[str, Any]) -> bool:
+    try:
+        onemap_m = float(row.get("validation_onemap_walk_m") or 0.0)
+    except (TypeError, ValueError):
+        return False
+    return 0 < onemap_m <= SHORT_ONEMAP_WALK_REVIEW_M
 
 
 def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
@@ -435,6 +449,7 @@ def build_triage_queues(
     ]
     queues: dict[str, list[dict[str, Any]]] = {
         "missing_bus_connector": [],
+        "short_onemap_walk_review": [],
         "direct_bus_fallback_review": [],
         "possible_overpermissive_project_path": [],
         "access_barrier_review": [],
@@ -457,7 +472,11 @@ def build_triage_queues(
                 source_artifact=source_artifact,
                 validation=validation_by_postal_direction.get((postal, direction)),
             )
-            for queue_name in classify_row(row):
+            queue_names = classify_row(row)
+            if is_short_onemap_walk_review(compact):
+                queue_names = [name for name in queue_names if name != "missing_bus_connector"]
+                queue_names.append("short_onemap_walk_review")
+            for queue_name in queue_names:
                 key = f"{postal}|{source_artifact}"
                 if key in seen_by_queue[queue_name]:
                     continue

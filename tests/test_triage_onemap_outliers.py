@@ -259,6 +259,8 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
                 "best_node_type": "bus_stop",
                 "endpoint_source": "postal_universe_to_transit_poi",
                 "direct_distance_m": 67.7,
+                "onemap_walk_m": 80.0,
+                "abs_delta_m": 12.2,
                 "onemap_vs_direct_delta_m": -61.7,
                 "distance_sanity": "onemap_materially_shorter_than_direct",
                 "abs_pct_delta": 100.0,
@@ -283,6 +285,8 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
     assert row["validation_area"] == "HOUGANG"
     assert row["validation_best_node_type"] == "bus_stop"
     assert row["validation_direct_distance_m"] == 67.7
+    assert row["validation_onemap_walk_m"] == 80.0
+    assert row["validation_abs_delta_m"] == 12.2
     assert row["validation_onemap_vs_direct_delta_m"] == -61.7
     assert row["validation_distance_sanity"] == "onemap_materially_shorter_than_direct"
     assert row["current_route_vs_validation_direct_sanity"] == "plausible"
@@ -325,6 +329,93 @@ def test_validation_lookup_keeps_highest_delta_for_postal_direction(tmp_path: Pa
     lookup = validation_lookup(report)
 
     assert lookup[("532183", "project_longer_than_onemap")]["area"] == "HIGH"
+
+
+def test_validation_lookup_reads_full_results(tmp_path: Path):
+    report = tmp_path / "validation.json"
+    report.write_text(
+        """
+        {
+          "results": [
+            {
+              "postal": "532183",
+              "direction": "project_longer_than_onemap",
+              "abs_pct_delta": 10.0,
+              "area": "FROM_RESULTS"
+            }
+          ]
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    lookup = validation_lookup(report)
+
+    assert lookup[("532183", "project_longer_than_onemap")]["area"] == "FROM_RESULTS"
+
+
+def test_build_triage_queues_sends_short_onemap_walks_to_review(tmp_path: Path):
+    longer = tmp_path / "longer.json"
+    shorter = tmp_path / "shorter.json"
+    validation_report = tmp_path / "validation.json"
+    longer.write_text(
+        """
+        {
+          "rows": [
+            {
+              "postal": "532183",
+              "old_direction": "project_longer_than_onemap",
+              "new_best_type": "bus_stop",
+              "new_best_routing_type": "direct_bus_fallback_unrouted",
+              "new_best_shortest_m": 67.8,
+              "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+              "new_best_route_profile": {
+                "shortest": {
+                  "direct_bus_fallback_m": 67.8,
+                  "source_layer_m": {"direct_bus_fallback": 67.8}
+                }
+              }
+            }
+          ]
+        }
+        """,
+        encoding="utf-8",
+    )
+    shorter.write_text('{"rows":[]}', encoding="utf-8")
+    validation_report.write_text(
+        """
+        {
+          "results": [
+            {
+              "postal": "532183",
+              "direction": "project_longer_than_onemap",
+              "area": "HOUGANG",
+              "best_node_type": "bus_stop",
+              "direct_distance_m": 67.7,
+              "onemap_walk_m": 6.0,
+              "abs_delta_m": 61.8,
+              "onemap_vs_direct_delta_m": -61.7,
+              "distance_sanity": "onemap_materially_shorter_than_direct",
+              "abs_pct_delta": 1030.0,
+              "start": {"lat": 1.346263, "lon": 103.887204},
+              "end": {"lat": 1.346168, "lon": 103.887806}
+            }
+          ]
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    payload = build_triage_queues(
+        longer_profile_path=longer,
+        shorter_profile_path=shorter,
+        validation_report_path=validation_report,
+        generated_at="2026-08-02T00:00:00+00:00",
+    )
+
+    assert payload["queue_summaries"]["missing_bus_connector"]["count"] == 0
+    assert payload["queue_summaries"]["short_onemap_walk_review"]["count"] == 1
+    assert payload["queues"]["short_onemap_walk_review"][0]["postal"] == "532183"
 
 
 def test_triage_geojson_exports_start_end_lines():
