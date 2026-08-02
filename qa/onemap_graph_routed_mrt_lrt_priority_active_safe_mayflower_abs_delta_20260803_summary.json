@@ -1,0 +1,328 @@
+{
+  "best_node_type_counts": {
+    "mrt_lrt_exit": 386
+  },
+  "count": 386,
+  "direction_counts": {
+    "project_longer_than_onemap": 165,
+    "project_shorter_than_onemap": 221
+  },
+  "recommended_next_actions": [
+    "Open the priority GeoJSON and inspect the largest percent deltas first.",
+    "Separate missing connector evidence from overpermissive project paths before rescoring.",
+    "Do not relax route trust thresholds unless audited cases prove the connector class is safe."
+  ],
+  "subset": "graph_routed_mrt_lrt",
+  "top_review_rows": [
+    {
+      "abs_delta_m": 222.3,
+      "abs_pct_delta": 285.0,
+      "area": "GEYLANG",
+      "best_node_name": "UBI MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "5c15fc7b05d587dba5f7cbde83ad9e69847e0447a4b6f09a82739774e8e52214",
+      "direct_distance_m": 131.5,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.329951,
+        "lon": 103.899877
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 78.0,
+      "postal": "403357",
+      "priority_rank": 1,
+      "project_shortest_m": 300.3,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 222.3,
+      "signed_pct_delta": 285.0,
+      "start": {
+        "lat": 1.328805,
+        "lon": 103.899586
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 501.3,
+      "abs_pct_delta": 241.01,
+      "area": "DOWNTOWN_CORE",
+      "best_node_name": "ESPLANADE MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "ba7aede036254596bc181494de5fd697d2f4967ff4c5deed7d5c61ca41fb5eed",
+      "direct_distance_m": 162.6,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.292927,
+        "lon": 103.856176
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 208.0,
+      "postal": "189768",
+      "priority_rank": 2,
+      "project_shortest_m": 709.3,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 501.3,
+      "signed_pct_delta": 241.01,
+      "start": {
+        "lat": 1.294293,
+        "lon": 103.855655
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 595.9,
+      "abs_pct_delta": 223.184,
+      "area": "GEYLANG",
+      "best_node_name": "TAI SENG MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "eb73cff7c63b88ca6a39ca39b34490f26126168a18ce1643f82055ccd9803e1f",
+      "direct_distance_m": 226.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.334621,
+        "lon": 103.888214
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 267.0,
+      "postal": "539939",
+      "priority_rank": 3,
+      "project_shortest_m": 862.9,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 595.9,
+      "signed_pct_delta": 223.184,
+      "start": {
+        "lat": 1.33329,
+        "lon": 103.889752
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 212.0,
+      "abs_pct_delta": 212.0,
+      "area": "BEDOK",
+      "best_node_name": "BEDOK RESERVOIR MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "84a827dcb7a94bc4ce3634a78827a369b5fb90ba704f83dc0ae47ade4230ba06",
+      "direct_distance_m": 106.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_slightly_shorter_than_direct",
+      "end": {
+        "lat": 1.336555,
+        "lon": 103.933487
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 100.0,
+      "postal": "479234",
+      "priority_rank": 4,
+      "project_shortest_m": 312.0,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 212.0,
+      "signed_pct_delta": 212.0,
+      "start": {
+        "lat": 1.337492,
+        "lon": 103.933665
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 345.5,
+      "abs_pct_delta": 206.886,
+      "area": "BEDOK",
+      "best_node_name": "BEDOK MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "c2d49d854cfd752d48a57a34db60768c25eac56ab9b87768486388c617917825",
+      "direct_distance_m": 69.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.324268,
+        "lon": 103.929673
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 167.0,
+      "postal": "467347",
+      "priority_rank": 5,
+      "project_shortest_m": 512.5,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 345.5,
+      "signed_pct_delta": 206.886,
+      "start": {
+        "lat": 1.323967,
+        "lon": 103.930217
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 254.3,
+      "abs_pct_delta": 167.303,
+      "area": "SENGKANG",
+      "best_node_name": "BUANGKOK MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "0712d44a17a155b645f686860449c94d12374efe90a7e5ebad08fbaa9559de30",
+      "direct_distance_m": 149.4,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.38265,
+        "lon": 103.893463
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 152.0,
+      "postal": "541275",
+      "priority_rank": 6,
+      "project_shortest_m": 406.3,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 254.3,
+      "signed_pct_delta": 167.303,
+      "start": {
+        "lat": 1.382865,
+        "lon": 103.89479
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 557.1,
+      "abs_pct_delta": 121.373,
+      "area": "TAMPINES",
+      "best_node_name": "SIMEI MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "4821af3a4747e86dbc7da30c8333af72e449d37418463568bee4f9cf58be8718",
+      "direct_distance_m": 357.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.342662,
+        "lon": 103.953819
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 459.0,
+      "postal": "489249",
+      "priority_rank": 7,
+      "project_shortest_m": 1016.1,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 557.1,
+      "signed_pct_delta": 121.373,
+      "start": {
+        "lat": 1.339817,
+        "lon": 103.955309
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 271.1,
+      "abs_pct_delta": 102.689,
+      "area": "PUNGGOL",
+      "best_node_name": "SAMUDERA LRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "9f7edc0a760d61679b2a0c4e2f8d47bffa302cbff9f74fd923d236a9108c92f0",
+      "direct_distance_m": 247.9,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.415865,
+        "lon": 103.901912
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 264.0,
+      "postal": "822401",
+      "priority_rank": 8,
+      "project_shortest_m": 535.1,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 271.1,
+      "signed_pct_delta": 102.689,
+      "start": {
+        "lat": 1.414109,
+        "lon": 103.900538
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 250.9,
+      "abs_pct_delta": 84.764,
+      "area": "BEDOK",
+      "best_node_name": "TANAH MERAH MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "72f9a4d251634bc22e0823d0de5f187c213b6cf53e196870772b6aaf8cdd9ae5",
+      "direct_distance_m": 259.0,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.326858,
+        "lon": 103.945795
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 296.0,
+      "postal": "469252",
+      "priority_rank": 9,
+      "project_shortest_m": 546.9,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": 250.9,
+      "signed_pct_delta": 84.764,
+      "start": {
+        "lat": 1.324629,
+        "lon": 103.946471
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    },
+    {
+      "abs_delta_m": 118.8,
+      "abs_pct_delta": 83.662,
+      "area": "QUEENSTOWN",
+      "best_node_name": "QUEENSTOWN MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "18674706c6e1bacc395d03cb3ad6a9a3e6e5639478e21f20bd657e3673a80b9a",
+      "direct_distance_m": 78.8,
+      "direction": "project_shorter_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.29433,
+        "lon": 103.806311
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 142.0,
+      "postal": "149457",
+      "priority_rank": 10,
+      "project_shortest_m": 23.2,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_delta_m": -118.8,
+      "signed_pct_delta": -83.662,
+      "start": {
+        "lat": 1.294337,
+        "lon": 103.80702
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_mrt_lrt"
+    }
+  ]
+}

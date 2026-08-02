@@ -1,0 +1,328 @@
+{
+  "best_node_type_counts": {
+    "bus_stop": 1594
+  },
+  "count": 1594,
+  "direction_counts": {
+    "project_longer_than_onemap": 771,
+    "project_shorter_than_onemap": 823
+  },
+  "recommended_next_actions": [
+    "Open the priority GeoJSON and inspect the largest percent deltas first.",
+    "Separate missing connector evidence from overpermissive project paths before rescoring.",
+    "Do not relax route trust thresholds unless audited cases prove the connector class is safe."
+  ],
+  "subset": "graph_routed_bus_stop",
+  "top_review_rows": [
+    {
+      "abs_delta_m": 407.0,
+      "abs_pct_delta": 6783.333,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 181",
+      "best_node_type": "bus_stop",
+      "cache_key": "54ccadc0ba1608263d9386dc85f89f11237ea083e84260e9275e674b0e915de2",
+      "direct_distance_m": 67.7,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.346168,
+        "lon": 103.887806
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "le_20m",
+      "onemap_walk_m": 6.0,
+      "postal": "532183",
+      "priority_rank": 1,
+      "project_shortest_m": 413.0,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 407.0,
+      "signed_pct_delta": 6783.333,
+      "start": {
+        "lat": 1.346263,
+        "lon": 103.887204
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 89.5,
+      "abs_pct_delta": 4475.0,
+      "area": "TENGAH",
+      "best_node_name": "Blk 306B",
+      "best_node_type": "bus_stop",
+      "cache_key": "1d0923015dd903d6b385b41d8043668c578ef92458c4f6621e485cfd32103980",
+      "direct_distance_m": 65.6,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.361662,
+        "lon": 103.735908
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "le_20m",
+      "onemap_walk_m": 2.0,
+      "postal": "692306",
+      "priority_rank": 2,
+      "project_shortest_m": 91.5,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 89.5,
+      "signed_pct_delta": 4475.0,
+      "start": {
+        "lat": 1.361246,
+        "lon": 103.736326
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 126.1,
+      "abs_pct_delta": 1401.111,
+      "area": "PIONEER",
+      "best_node_name": "Bef Gul St 1",
+      "best_node_type": "bus_stop",
+      "cache_key": "b215518ef7c2da7eee16e76b2f975d410ba971843cf6197159f44cf5b916e0a0",
+      "direct_distance_m": 28.5,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.319792,
+        "lon": 103.669004
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "le_20m",
+      "onemap_walk_m": 9.0,
+      "postal": "629314",
+      "priority_rank": 3,
+      "project_shortest_m": 135.1,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 126.1,
+      "signed_pct_delta": 1401.111,
+      "start": {
+        "lat": 1.31954,
+        "lon": 103.66905
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 889.3,
+      "abs_pct_delta": 1347.424,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 178A",
+      "best_node_type": "bus_stop",
+      "cache_key": "1204995773a195fbda86dbba8346601ce030f1e187a6e78db2a62a972b41cb63",
+      "direct_distance_m": 264.7,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.346389,
+        "lon": 103.887888
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 66.0,
+      "postal": "535424",
+      "priority_rank": 4,
+      "project_shortest_m": 955.3,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 889.3,
+      "signed_pct_delta": 1347.424,
+      "start": {
+        "lat": 1.346753,
+        "lon": 103.885535
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 304.9,
+      "abs_pct_delta": 709.07,
+      "area": "HOUGANG",
+      "best_node_name": "Blk 535",
+      "best_node_type": "bus_stop",
+      "cache_key": "9c1e9e4601fff19d4beeff5eefd0810eb9a79db64d09928ca921639f9f9e2605",
+      "direct_distance_m": 29.0,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.376345,
+        "lon": 103.890549
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_20m_le_50m",
+      "onemap_walk_m": 43.0,
+      "postal": "530535",
+      "priority_rank": 5,
+      "project_shortest_m": 347.9,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 304.9,
+      "signed_pct_delta": 709.07,
+      "start": {
+        "lat": 1.376554,
+        "lon": 103.890393
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 280.4,
+      "abs_pct_delta": 667.619,
+      "area": "YISHUN",
+      "best_node_name": "Aft Chong Pang CC",
+      "best_node_type": "bus_stop",
+      "cache_key": "d58aca0315f7980865efad4767111d29b74cfb092f787d53e39053ea1155199d",
+      "direct_distance_m": 28.7,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.431407,
+        "lon": 103.829557
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_20m_le_50m",
+      "onemap_walk_m": 42.0,
+      "postal": "760103",
+      "priority_rank": 6,
+      "project_shortest_m": 322.4,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 280.4,
+      "signed_pct_delta": 667.619,
+      "start": {
+        "lat": 1.431591,
+        "lon": 103.829376
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 362.7,
+      "abs_pct_delta": 503.75,
+      "area": "JURONG_EAST",
+      "best_node_name": "Ng Teng Fong General Hosp",
+      "best_node_type": "bus_stop",
+      "cache_key": "1995572bfe95760cf8fc8bd64da847ceaf400fedb8b5310d451ec3e797309a8d",
+      "direct_distance_m": 83.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_slightly_shorter_than_direct",
+      "end": {
+        "lat": 1.332606,
+        "lon": 103.745807
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_50m_le_100m",
+      "onemap_walk_m": 72.0,
+      "postal": "609606",
+      "priority_rank": 7,
+      "project_shortest_m": 434.7,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 362.7,
+      "signed_pct_delta": 503.75,
+      "start": {
+        "lat": 1.333351,
+        "lon": 103.745865
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 684.6,
+      "abs_pct_delta": 388.977,
+      "area": "BEDOK",
+      "best_node_name": "Opp Hong San Si Tp",
+      "best_node_type": "bus_stop",
+      "cache_key": "b316aacea291a4f5e0d3757f859c7d14d9b1fd2cab91abb49b050d5b91c9f5da",
+      "direct_distance_m": 133.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.32027,
+        "lon": 103.91
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_100m",
+      "onemap_walk_m": 176.0,
+      "postal": "417092",
+      "priority_rank": 8,
+      "project_shortest_m": 860.6,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 684.6,
+      "signed_pct_delta": 388.977,
+      "start": {
+        "lat": 1.320963,
+        "lon": 103.909024
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 109.1,
+      "abs_pct_delta": 376.207,
+      "area": "BEDOK",
+      "best_node_name": "Aft Bedok Sth Ave 3",
+      "best_node_type": "bus_stop",
+      "cache_key": "437f5505b56456d05d57f2d93e55877d36479789682e839d365cf69cdc19af03",
+      "direct_distance_m": 59.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.316164,
+        "lon": 103.944821
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_20m_le_50m",
+      "onemap_walk_m": 29.0,
+      "postal": "466581",
+      "priority_rank": 9,
+      "project_shortest_m": 138.1,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 109.1,
+      "signed_pct_delta": 376.207,
+      "start": {
+        "lat": 1.315791,
+        "lon": 103.9452
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    },
+    {
+      "abs_delta_m": 174.9,
+      "abs_pct_delta": 372.128,
+      "area": "SERANGOON",
+      "best_node_name": "Aft Corfe Pl",
+      "best_node_type": "bus_stop",
+      "cache_key": "a4264a08a877d70b45869a22e8ff884fae2203a98971af0a4cbe9f978de051f4",
+      "direct_distance_m": 47.3,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.360656,
+        "lon": 103.859839
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_bucket": "gt_20m_le_50m",
+      "onemap_walk_m": 47.0,
+      "postal": "559038",
+      "priority_rank": 10,
+      "project_shortest_m": 221.9,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_delta_m": 174.9,
+      "signed_pct_delta": 372.128,
+      "start": {
+        "lat": 1.361073,
+        "lon": 103.859754
+      },
+      "state": "SCORED",
+      "subset": "graph_routed_bus_stop"
+    }
+  ]
+}
