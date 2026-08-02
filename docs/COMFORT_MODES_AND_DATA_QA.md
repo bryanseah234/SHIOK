@@ -566,6 +566,12 @@ route effect; no score override has been applied.
   `qa/onemap_validation_failure_summary_active_safe_mayflower_20260803.json`
   plus matching GeoJSON priority queues. This is review evidence only; the
   2,000-postal OneMap launch gate remains failed until the evaluator passes.
+- `qa/bus_connector_diagnostics_missing_bus_active_safe_mayflower_20260803.json`
+  diagnoses the 22 strict missing-bus rows. Classes: 15
+  `alternate_bus_snap_candidate`, 4 `changed_stop_between_validation_and_replay`,
+  2 `scorer_recovered_target_bus_stop`, and 1 `current_routable`. That makes the
+  next model task bus-stop endpoint geometry/snap QA, not a wider trust-threshold
+  change.
 - `qa/onemap_outlier_replay_shorter_profile_100_20260802.json` reruns that
   project-shorter queue with route-source profiles. Of 100 best-route rows, 9
   contain direct-bus fallback, 18 contain inferred HDB edges, 28 contain OSM
