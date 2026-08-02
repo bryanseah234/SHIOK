@@ -7,6 +7,7 @@ from scripts.targeted_bundle_refresh import (
     postals_from_file,
     rebalance_geom_parents,
     read_json,
+    split_oversized_geom_shards,
     unique_postals,
     write_json,
 )
@@ -97,3 +98,49 @@ def test_targeted_bundle_refresh_rebalances_oversized_geom_parent(tmp_path, monk
     assert not (geom_dir / "parent-cell.json").exists()
     assert read_json(tmp_path / "geom" / "h3" / "child-a.json") == [first]
     assert read_json(tmp_path / "geom" / "h3" / "child-b.json") == [second]
+
+
+def test_targeted_bundle_refresh_splits_oversized_shared_geom_shard(tmp_path):
+    geom_dir = tmp_path / "geom" / "h3"
+    geom_dir.mkdir(parents=True)
+    first = {
+        "postal": "123456",
+        "shortest": encode_polyline([(1.30, 103.80), (1.3001, 103.8001)]),
+        "sheltered": encode_polyline([(1.30, 103.80), (1.3001, 103.8001)]),
+        "exposure_gaps": [],
+        "payload": "x" * 100,
+    }
+    second = {
+        "postal": "654321",
+        "shortest": encode_polyline([(1.32, 103.82), (1.3201, 103.8201)]),
+        "sheltered": encode_polyline([(1.32, 103.82), (1.3201, 103.8201)]),
+        "exposure_gaps": [],
+        "payload": "y" * 100,
+    }
+    geom_index = {
+        "parent-a": ["shared-child", "other-child"],
+        "parent-b": ["shared-child"],
+    }
+    postal_index = {"123456": "shared-child", "654321": "shared-child"}
+    write_json(geom_dir / "shared-child.json", [first, second])
+    write_json(geom_dir / "other-child.json", [])
+
+    max_bytes = json_size([first]) + 20
+    report = split_oversized_geom_shards(
+        tmp_path,
+        geom_index,
+        postal_index,
+        {"shared-child"},
+        max_bytes=max_bytes,
+    )
+
+    assert report["geom_oversized_shard_split_count"] == 1
+    assert not (geom_dir / "shared-child.json").exists()
+    assert geom_index == {
+        "parent-a": ["other-child", "shared-child_PART_001", "shared-child_PART_002"],
+        "parent-b": ["shared-child_PART_001", "shared-child_PART_002"],
+    }
+    assert postal_index == {
+        "123456": "shared-child_PART_001",
+        "654321": "shared-child_PART_002",
+    }

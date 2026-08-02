@@ -26,6 +26,7 @@ from pipeline.export import (
     geom_record_shards,
     public_score_record,
     score_record_shards,
+    sized_record_shards,
     write_json as write_plain_json,
 )
 from pipeline.onemap_validation import decode_polyline
@@ -194,6 +195,18 @@ def write_geom_shard(bundle_dir: Path, shard: str, records: list[dict[str, Any]]
     )
 
 
+def target_geom_shard(geom_index: dict[str, list[str]], lat: float, lon: float) -> tuple[str, str]:
+    parent = h3.latlng_to_cell(lat, lon, 8)
+    children = geom_index.setdefault(parent, [])
+    if children:
+        child = h3.latlng_to_cell(lat, lon, 9)
+        if child not in children:
+            children.append(child)
+            children.sort()
+        return parent, child
+    return parent, parent
+
+
 def delete_geom_shard(bundle_dir: Path, shard: str) -> None:
     path = bundle_dir / "geom" / "h3" / f"{shard}.json"
     path.unlink(missing_ok=True)
@@ -337,6 +350,67 @@ def rebalance_geom_parents(
     return sorted(written_shards)
 
 
+def split_oversized_geom_shards(
+    bundle_dir: Path,
+    geom_index: dict[str, list[str]],
+    postal_index: dict[str, str],
+    candidate_shards: set[str],
+    *,
+    max_bytes: int = MAX_FILE_BYTES,
+) -> dict[str, Any]:
+    split_report: list[dict[str, Any]] = []
+    geom_dir = bundle_dir / "geom" / "h3"
+
+    for shard in sorted(candidate_shards):
+        path = geom_dir / f"{shard}.json"
+        gz_path = path.with_name(f"{path.name}.gz")
+        if not path.is_file() and not gz_path.is_file():
+            continue
+        file_size = path.stat().st_size if path.is_file() else gz_path.stat().st_size
+        if file_size <= max_bytes:
+            continue
+
+        records = load_geom_shard(bundle_dir, shard)
+        parts = sized_record_shards(shard, records, max_bytes)
+        part_ids = [part_id for part_id, _records in parts]
+        if part_ids == [shard]:
+            continue
+
+        delete_geom_shard(bundle_dir, shard)
+        for part_id, part_records in parts:
+            write_geom_shard(bundle_dir, part_id, part_records)
+            for item in part_records:
+                postal_index[normalize_postal(str(item["postal"]))] = part_id
+
+        for parent, children in list(geom_index.items()):
+            targets = children if children else [parent]
+            if shard not in targets:
+                continue
+            if children:
+                next_children: list[str] = []
+                for child in children:
+                    if child == shard:
+                        next_children.extend(part_ids)
+                    else:
+                        next_children.append(child)
+                geom_index[parent] = sorted(dict.fromkeys(next_children))
+            elif parent == shard:
+                geom_index[parent] = [] if part_ids == [parent] else sorted(part_ids)
+
+        split_report.append(
+            {
+                "shard": shard,
+                "input_bytes": file_size,
+                "parts": part_ids,
+            }
+        )
+
+    return {
+        "geom_oversized_shards_split": split_report,
+        "geom_oversized_shard_split_count": len(split_report),
+    }
+
+
 def patch_geometry_records(
     bundle_dir: Path,
     rescored_records: list[dict[str, Any]],
@@ -351,10 +425,8 @@ def patch_geometry_records(
         normalize_postal(str(postal)): str(shard)
         for postal, shard in read_json(postal_index_path).items()
     }
-    touched_parents: set[str] = set()
+    touched_shards: set[str] = set()
     shard_cache: dict[str, list[dict[str, Any]]] = {}
-    origin_by_postal: dict[str, tuple[float, float]] = {}
-    shard_parent_lookup = geom_parent_lookup(geom_index)
 
     def cached_shard(shard: str) -> list[dict[str, Any]]:
         if shard not in shard_cache:
@@ -367,11 +439,11 @@ def patch_geometry_records(
         geometry_record = geom_record(record)
 
         if old_shard:
-            touched_parents.add(shard_parent_lookup.get(old_shard, old_shard))
             old_records = [
                 item for item in cached_shard(old_shard) if str(item.get("postal")) != postal
             ]
             shard_cache[old_shard] = old_records
+            touched_shards.add(old_shard)
             postal_index.pop(postal, None)
 
         if geometry_record is None:
@@ -382,30 +454,29 @@ def patch_geometry_records(
             continue
         lat = float(origin["lat"])
         lon = float(origin["lon"])
-        parent = h3.latlng_to_cell(lat, lon, 8)
-        shard = parent
-        touched_parents.add(parent)
-        origin_by_postal[postal] = (lat, lon)
+        _, shard = target_geom_shard(geom_index, lat, lon)
         shard_records = [item for item in cached_shard(shard) if str(item.get("postal")) != postal]
         shard_records.append(geometry_record)
         shard_cache[shard] = shard_records
         postal_index[postal] = shard
+        touched_shards.add(shard)
 
-    written_shards = rebalance_geom_parents(
+    for shard in touched_shards:
+        write_geom_shard(bundle_dir, shard, shard_cache.get(shard, []))
+
+    split_report = split_oversized_geom_shards(
         bundle_dir,
         geom_index,
         postal_index,
-        touched_parents,
-        shard_cache,
-        origin_by_postal,
+        touched_shards,
     )
 
     write_json(geom_index_path, dict(sorted(geom_index.items())))
     write_json(postal_index_path, dict(sorted(postal_index.items())))
     return {
         "geometry_postals": len(postal_index),
-        "geom_parent_shards_touched": sorted(touched_parents),
-        "geom_shards_touched": written_shards,
+        "geom_shards_touched": sorted(touched_shards),
+        **split_report,
     }
 
 
