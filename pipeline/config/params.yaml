@@ -8,6 +8,14 @@ transit_access:
   score_at_800m: 40
   zero_credit_m: 1200
   bus_interchange_full_credit_m: 200
+  access_connector_search_m: 50
+  access_connector_max_candidates: 24
+  access_connector_max_walk_m: 1200
+  access_connector_max_direct_ratio: 2.5
+  access_connector_max_extra_m: 120
+  access_connector_detour_ratio: 2.0
+  access_connector_min_extra_m: 100
+  access_connector_scale_min_extra_to_direct: true
 bus_connectivity:
   routed_max_m: 250
   straight_line_candidate_m: 300

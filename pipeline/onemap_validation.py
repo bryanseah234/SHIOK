@@ -288,7 +288,9 @@ def iter_score_candidates(
 def validation_route_trust(*, node_type: str, routing_type: str) -> str:
     if routing_type == "direct_bus_fallback_unrouted":
         return "partial_unrouted_bus_fallback"
-    if routing_type.endswith("_with_bus_stop_access_connector"):
+    if routing_type.endswith("_with_bus_stop_access_connector") or routing_type.endswith(
+        "_with_mrt_lrt_exit_access_connector"
+    ):
         return "graph_route_with_endpoint_connector"
     if node_type == "bus_stop":
         return "graph_routed_bus_stop"
@@ -634,7 +636,12 @@ def top_outliers_by_group(
     }
 
 
-def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
+def evaluate_cached_results(
+    sample_payload: dict[str, Any],
+    cache_dir: Path,
+    *,
+    include_results: bool = False,
+) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     missing: list[str] = []
     invalid: list[dict[str, Any]] = []
@@ -717,7 +724,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         and median <= MEDIAN_THRESHOLD_PCT
         and p95 <= P95_THRESHOLD_PCT
     )
-    return {
+    report = {
         "ok": gate_passed,
         "generated_at": datetime.now(UTC).isoformat(),
         "bundle": sample_payload.get("bundle"),
@@ -751,6 +758,9 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         ),
         "results_preview": results[:20],
     }
+    if include_results:
+        report["results"] = results
+    return report
 
 
 def get_onemap_token(client: httpx.Client) -> str | None:
@@ -918,6 +928,11 @@ def main() -> int:
     evaluate.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
     evaluate.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
     evaluate.add_argument("--output", type=Path, default=DEFAULT_REPORT_OUTPUT)
+    evaluate.add_argument(
+        "--include-results",
+        action="store_true",
+        help="Include every evaluated row in the report for targeted QA follow-up.",
+    )
 
     collect = subparsers.add_parser("collect")
     collect.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
@@ -946,7 +961,11 @@ def main() -> int:
         sample_payload = read_json(args.sample)
         if not isinstance(sample_payload, dict):
             raise TypeError(f"sample must contain a JSON object: {args.sample}")
-        payload = evaluate_cached_results(sample_payload, args.cache_dir)
+        payload = evaluate_cached_results(
+            sample_payload,
+            args.cache_dir,
+            include_results=bool(args.include_results),
+        )
         write_json(args.output, payload)
         print(json.dumps(payload, indent=2, sort_keys=True))
         return 0 if payload["ok"] else 1

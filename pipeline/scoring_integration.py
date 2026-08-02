@@ -675,6 +675,12 @@ def score_candidate_route(
             "endpoint_snap_connector_m": round(
                 float(route_result.get("endpoint_snap_connector_m") or 0.0), 1
             ),
+            "bus_stop_access_connector_m": round(
+                float(route_result.get("bus_stop_access_connector_m") or 0.0), 1
+            ),
+            "mrt_lrt_exit_access_connector_m": round(
+                float(route_result.get("mrt_lrt_exit_access_connector_m") or 0.0), 1
+            ),
         },
         "exposure_gaps": exposure_gaps_from_path_edges(route_result.get("path_edges", [])),
         "crossing_count": crossing_count,
@@ -1110,6 +1116,167 @@ def route_with_bus_stop_access_connector(
     )
     attached["geometry"] = merge_with_connector_geometry(route_result.get("geometry"), connector)
     return attached
+
+
+def route_with_mrt_lrt_exit_access_connector(
+    route_result: dict[str, Any],
+    candidate: CandidateNode,
+) -> dict[str, Any]:
+    if candidate.point_xy is None:
+        raise ValueError("mrt/lrt exit connector requires candidate.point_xy")
+
+    destination = route_result["destination"]
+    exit_xy = (float(candidate.point_xy[0]), float(candidate.point_xy[1]))
+    connector = LineString([(float(destination[0]), float(destination[1])), exit_xy])
+    connector_m = float(connector.length)
+    connector_edge = {
+        "length_m": connector_m,
+        "is_covered": False,
+        "geometry": connector,
+        "source_layer": "mrt_lrt_exit_access_connector",
+        "synth_class": "MRT_LRT_EXIT_ACCESS_CONNECTOR",
+        "confidence": "inferred_endpoint_snap",
+    }
+
+    shortest_base_m = float(route_result["shortest_length_m"])
+    sheltered_base_m = float(route_result["length_m"])
+    covered_m = float(route_result["covered_m"])
+    shade_m = float(route_result.get("shade_m") or 0.0)
+    shortest_covered_m = shortest_base_m * float(route_result["shortest_covered_ratio"])
+    shortest_shade_m = float(route_result.get("shortest_shade_m") or 0.0)
+    shortest_total_m = shortest_base_m + connector_m
+    sheltered_total_m = sheltered_base_m + connector_m
+
+    attached = dict(route_result)
+    attached.update(
+        {
+            "destination": candidate.graph_node,
+            "routing_type": f"{route_result['routing_type']}_with_mrt_lrt_exit_access_connector",
+            "length_m": sheltered_total_m,
+            "covered_m": covered_m,
+            "covered_ratio": covered_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shade_m": shade_m,
+            "shade_ratio": shade_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shortest_length_m": shortest_total_m,
+            "shortest_covered_ratio": (
+                shortest_covered_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "shortest_shade_m": shortest_shade_m,
+            "shortest_shade_ratio": (
+                shortest_shade_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "sheltered_length_m": (
+                float(route_result["sheltered_length_m"]) + connector_m
+                if route_result.get("sheltered_length_m") is not None
+                else None
+            ),
+            "mrt_lrt_exit_access_connector_m": connector_m,
+        }
+    )
+
+    shortest_edges = [*route_result.get("shortest_path_edges", []), connector_edge]
+    sheltered_edges = [*route_result.get("sheltered_path_edges", []), connector_edge]
+    attached["shortest_path_edges"] = shortest_edges
+    attached["sheltered_path_edges"] = sheltered_edges
+    attached["path_edges"] = sheltered_edges
+    attached["shortest_geometry"] = merge_with_connector_geometry(
+        route_result.get("shortest_geometry"), connector
+    )
+    attached["geometry"] = merge_with_connector_geometry(route_result.get("geometry"), connector)
+    return attached
+
+
+def mrt_lrt_exit_access_connector_reason(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    access_params: dict[str, Any],
+) -> str | None:
+    if candidate.node_type != "mrt_lrt_exit":
+        return None
+    direct_m = float(candidate.straight_line_m)
+    routed_m = float(route_result.get("shortest_length_m") or 0.0)
+    if direct_m <= 0 or routed_m <= 0:
+        return None
+    detour_ratio = float(access_params.get("access_connector_detour_ratio", 2.0))
+    min_extra_m = float(access_params.get("access_connector_min_extra_m", 100.0))
+    if bool(access_params.get("access_connector_scale_min_extra_to_direct", False)):
+        min_extra_m = min(min_extra_m, direct_m)
+    if routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m:
+        return "implausible_graph_route_to_mrt_lrt_exit_within_direct_range"
+    return None
+
+
+def mrt_lrt_exit_access_connector_is_plausible(
+    candidate: CandidateNode,
+    connector_route: dict[str, Any],
+    access_params: dict[str, Any],
+) -> bool:
+    total_m = float(connector_route["shortest_length_m"])
+    direct_m = float(candidate.straight_line_m)
+    if direct_m <= 0:
+        return False
+    max_walk_m = float(
+        access_params.get(
+            "access_connector_max_walk_m",
+            access_params.get("zero_credit_m", 1200.0),
+        )
+    )
+    max_ratio = float(access_params.get("access_connector_max_direct_ratio", 2.5))
+    max_extra_m = float(access_params.get("access_connector_max_extra_m", 120.0))
+    return (
+        total_m <= max_walk_m
+        and total_m <= direct_m * max_ratio
+        and (total_m - direct_m) <= max_extra_m
+    )
+
+
+def build_mrt_lrt_exit_access_connector_route(
+    *,
+    candidate: CandidateNode,
+    origin_node: tuple[float, float],
+    routing_graph: RoutingGraph,
+    nodes: list[tuple[float, float]],
+    node_xy: np.ndarray,
+    params: dict[str, Any],
+) -> dict[str, Any] | None:
+    if candidate.node_type != "mrt_lrt_exit" or candidate.point_xy is None:
+        return None
+    access_params = params["transit_access"]
+    search_m = float(access_params.get("access_connector_search_m", 0.0))
+    if search_m <= 0:
+        return None
+    exit_array = np.asarray(candidate.point_xy, dtype=float)
+    deltas = node_xy - exit_array
+    distances = np.sqrt(np.einsum("ij,ij->i", deltas, deltas))
+    indices = np.flatnonzero(distances <= search_m)
+    if len(indices) == 0:
+        return None
+
+    max_candidates = int(access_params.get("access_connector_max_candidates", 24))
+    ordered = sorted((float(distances[index]), int(index)) for index in indices)[:max_candidates]
+    destinations = [nodes[index] for _, index in ordered if nodes[index] != candidate.graph_node]
+    if not destinations:
+        return None
+
+    alternate_routes = routing_graph.route(
+        {origin_node: destinations},
+        float(params["shelter_lambda"]),
+        float(params["detour_budget"]),
+        include_geometry=True,
+    )
+    attached_routes = [
+        route_with_mrt_lrt_exit_access_connector(route_result, candidate)
+        for route_result in alternate_routes
+    ]
+    plausible = [
+        route
+        for route in attached_routes
+        if mrt_lrt_exit_access_connector_is_plausible(candidate, route, access_params)
+        and mrt_lrt_exit_access_connector_reason(candidate, route, access_params) is None
+    ]
+    if not plausible:
+        return None
+    return min(plausible, key=lambda route: float(route["shortest_length_m"]))
 
 
 def bus_access_connector_is_plausible(
@@ -1685,6 +1852,7 @@ def score_postal_row(
     implausible_bus_route_distances: list[float] = []
     implausible_bus_reasons: Counter[str] = Counter()
     bus_access_connector_rows: list[dict[str, Any]] = []
+    mrt_lrt_exit_access_connector_rows: list[dict[str, Any]] = []
     untrusted_bus_route_reasons: Counter[str] = Counter()
     untrusted_bus_route_rows: list[dict[str, Any]] = []
     for route_result in route_results:
@@ -1695,6 +1863,45 @@ def score_postal_row(
                 origin_node=origin_node,
                 candidate=candidate,
             )
+            mrt_lrt_connector_reason = mrt_lrt_exit_access_connector_reason(
+                candidate,
+                candidate_route,
+                params["transit_access"],
+            )
+            if mrt_lrt_connector_reason is not None:
+                connector_route = build_mrt_lrt_exit_access_connector_route(
+                    candidate=candidate,
+                    origin_node=origin_node,
+                    routing_graph=routing_graph,
+                    nodes=nodes,
+                    node_xy=node_xy,
+                    params=params,
+                )
+                if connector_route is not None:
+                    connector_route = route_with_endpoint_snap_connectors(
+                        connector_route,
+                        postal_point=postal_row.geometry,
+                        origin_node=origin_node,
+                        candidate=candidate,
+                        include_destination=False,
+                    )
+                    candidate_route = connector_route
+                    mrt_lrt_exit_access_connector_rows.append(
+                        {
+                            "name": candidate.name,
+                            "station": candidate.station_name,
+                            "exit": candidate.exit_code,
+                            "direct_m": round(float(candidate.straight_line_m), 1),
+                            "routed_m": round(float(candidate_route["shortest_length_m"]), 1),
+                            "connector_m": round(
+                                float(
+                                    candidate_route.get("mrt_lrt_exit_access_connector_m") or 0.0
+                                ),
+                                1,
+                            ),
+                            "reason": mrt_lrt_connector_reason,
+                        }
+                    )
             crossing_count = crossing_counter.count_for_route(candidate_route.get("geometry"))
             direct_fallback_reason = bus_route_direct_fallback_reason(
                 candidate,
@@ -1850,6 +2057,39 @@ def score_postal_row(
             "geometry": "graph_route_plus_exposed_endpoint_connector_to_datamall_bus_stop",
             "source_layer": "bus_stop_access_connector",
             "examples": bus_access_connector_rows[:5],
+        }
+
+    if mrt_lrt_exit_access_connector_rows:
+        access_params = params["transit_access"]
+        provenance["mrt_lrt_exit_access_connector"] = {
+            "reason": "implausible_mrt_lrt_exit_graph_snap_replaced_by_nearby_graph_route_plus_exposed_connector",
+            "candidate_count": len(mrt_lrt_exit_access_connector_rows),
+            "search_m": round(float(access_params.get("access_connector_search_m", 0.0)), 1),
+            "max_candidates": int(access_params.get("access_connector_max_candidates", 24)),
+            "max_walk_m": round(
+                float(
+                    access_params.get(
+                        "access_connector_max_walk_m",
+                        access_params.get("zero_credit_m", 1200.0),
+                    )
+                ),
+                1,
+            ),
+            "max_direct_ratio": round(
+                float(access_params.get("access_connector_max_direct_ratio", 2.5)), 3
+            ),
+            "max_extra_m": round(
+                float(access_params.get("access_connector_max_extra_m", 120.0)), 1
+            ),
+            "detour_ratio": round(
+                float(access_params.get("access_connector_detour_ratio", 2.0)), 3
+            ),
+            "min_extra_m": round(
+                float(access_params.get("access_connector_min_extra_m", 100.0)), 1
+            ),
+            "geometry": "graph_route_plus_exposed_endpoint_connector_to_mrt_lrt_exit",
+            "source_layer": "mrt_lrt_exit_access_connector",
+            "examples": mrt_lrt_exit_access_connector_rows[:5],
         }
 
     if untrusted_bus_route_reasons:

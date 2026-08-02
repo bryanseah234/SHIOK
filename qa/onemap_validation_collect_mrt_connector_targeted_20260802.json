@@ -1,0 +1,16 @@
+{
+  "bundle": "generated_20260802_mrt_connector_targeted",
+  "cache_dir": "C:\\shiok\\raw\\validation\\onemap_walk_od",
+  "confirm_onemap_collection": true,
+  "delay_sec": 2.0,
+  "dry_run": false,
+  "errors": [],
+  "existing_cache_results": 1995,
+  "generated_at": "2026-08-02T15:06:41.730113+00:00",
+  "http_requests": 5,
+  "ok": true,
+  "queued_requests": 5,
+  "sample_size": 2000,
+  "will_call_onemap": true,
+  "written_cache_results": 5
+}

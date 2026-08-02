@@ -15,6 +15,7 @@ from pipeline.scoring_integration import (
     annotate_no_transit_reason,
     assemble_score_record,
     build_bus_stop_access_connector_route,
+    build_mrt_lrt_exit_access_connector_route,
     build_provenance,
     bus_access_connector_is_plausible,
     bus_connectivity_from_routed_candidates,
@@ -40,6 +41,14 @@ PARAMS = {
         "score_at_800m": 40.0,
         "zero_credit_m": 1200.0,
         "bus_interchange_full_credit_m": 200.0,
+        "access_connector_search_m": 50.0,
+        "access_connector_max_candidates": 24,
+        "access_connector_max_walk_m": 1200.0,
+        "access_connector_max_direct_ratio": 2.5,
+        "access_connector_max_extra_m": 120.0,
+        "access_connector_detour_ratio": 2.0,
+        "access_connector_min_extra_m": 100.0,
+        "access_connector_scale_min_extra_to_direct": True,
     },
     "bus_connectivity": {
         "routed_max_m": 250.0,
@@ -686,6 +695,117 @@ def test_bus_access_connector_builder_rejects_implausibly_short_origin_snap():
     )
 
     assert route is None
+
+
+def test_mrt_lrt_exit_access_connector_replaces_bad_exit_snap():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (95.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (95.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (105.0, 0.0),
+                "length_m": 105.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (105.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (95.0, 0.0), (105.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    candidate = CandidateNode(
+        node_type="mrt_lrt_exit",
+        name="TEST MRT STATION Exit A",
+        station_name="TEST MRT STATION",
+        exit_code="Exit A",
+        graph_node=(95.0, 0.0),
+        straight_line_m=100.0,
+        snap_distance_m=5.0,
+        point_xy=(100.0, 0.0),
+    )
+
+    route = build_mrt_lrt_exit_access_connector_route(
+        candidate=candidate,
+        origin_node=(0.0, 0.0),
+        routing_graph=routing_graph,
+        nodes=nodes,
+        node_xy=node_xy,
+        params=PARAMS,
+    )
+
+    assert route is not None
+    assert route["routing_type"] == "sheltered_with_mrt_lrt_exit_access_connector"
+    assert route["shortest_length_m"] == 110.0
+    assert route["mrt_lrt_exit_access_connector_m"] == 5.0
+    assert route["path_edges"][-1]["source_layer"] == "mrt_lrt_exit_access_connector"
+
+
+def test_score_postal_row_uses_mrt_lrt_exit_access_connector():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (95.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (95.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (105.0, 0.0),
+                "length_m": 105.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (105.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (95.0, 0.0), (105.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        [
+            {
+                "STATION_NA": "TEST MRT STATION",
+                "EXIT_CODE": "Exit A",
+                "OBJECTID": 1,
+                "geometry": Point(100.0, 0.0),
+            }
+        ],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+
+    record = score_postal_row(
+        pd.Series({"postal_code": "123461", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "SCORED_PARTIAL"
+    assert record["best_node"]["type"] == "mrt_lrt_exit"
+    assert record["best_node"]["routed_m"] == 110.0
+    assert record["paths"]["routing_type"] == "sheltered_with_mrt_lrt_exit_access_connector"
+    assert record["paths"]["mrt_lrt_exit_access_connector_m"] == 5.0
+    assert record["provenance"]["mrt_lrt_exit_access_connector"]["candidate_count"] == 1
+    assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
+        "mrt_lrt_exit_access_connector"
+    )
 
 
 def test_bus_route_trust_rejects_bare_road_centerline_bus_access():

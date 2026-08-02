@@ -235,6 +235,9 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["results_preview"][0]["distance_sanity"] == (
         "onemap_materially_shorter_than_direct"
     )
+    assert "results" not in report
+    full_report = evaluate_cached_results(sample_payload, cache_dir, include_results=True)
+    assert full_report["results"] == full_report["results_preview"]
     assert report["distance_sanity_summary"] == {"onemap_materially_shorter_than_direct": 1}
     assert report["route_trust_summary"] == [
         {
@@ -309,6 +312,13 @@ def test_validation_route_trust_classifies_route_contract():
         validation_route_trust(
             node_type="bus_stop",
             routing_type="sheltered_with_bus_stop_access_connector",
+        )
+        == "graph_route_with_endpoint_connector"
+    )
+    assert (
+        validation_route_trust(
+            node_type="mrt_lrt_exit",
+            routing_type="sheltered_with_mrt_lrt_exit_access_connector",
         )
         == "graph_route_with_endpoint_connector"
     )

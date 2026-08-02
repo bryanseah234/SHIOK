@@ -79,6 +79,43 @@ def test_select_outliers_prefers_direction_specific_queue():
     assert [row["postal"] for row in selected] == ["123456"]
 
 
+def test_select_outliers_uses_full_results_when_available():
+    report = {
+        "results": [
+            {
+                "postal": "111111",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "abs_pct_delta": 80.0,
+            },
+            {
+                "postal": "222222",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "abs_pct_delta": 120.0,
+            },
+        ],
+        "top_outliers_preview": [
+            {
+                "postal": "333333",
+                "best_node_type": "bus_stop",
+                "direction": "project_longer_than_onemap",
+                "abs_pct_delta": 200.0,
+            }
+        ],
+    }
+
+    selected = select_outliers(
+        report,
+        limit=10,
+        node_type="bus_stop",
+        direction="project_longer_than_onemap",
+        min_abs_pct_delta=25.0,
+    )
+
+    assert [row["postal"] for row in selected] == ["222222", "111111"]
+
+
 def test_replay_row_extracts_bus_and_fallback_fields():
     row = replay_row(
         {
