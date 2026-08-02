@@ -258,11 +258,14 @@ Current implementation:
   and validated structurally with 124,032 indexed postals and 114,327 route
   segment geometries. The resulting counts would be 112,910 `SCORED`, 1,417
   `SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
-  `qa/compare_bus_combined_connector_guard_20260803.json` blocks promotion as
-  score regressions because all three rows lose trusted route distance and become
-  partial direct-bus evidence. That downgrade is directionally honest, but the
-  bundle was not activated or deployed; the 1.31 GB local candidate bundle was
-  deleted after validation to save space.
+  `qa/compare_bus_combined_connector_guard_20260803.json` now classifies all
+  three as `honesty_correction_untrusted_bus_connector`: the total scores drop
+  because trusted route distance is removed and replaced with partial direct-bus
+  evidence. Launch check passed web tests, build, readiness, and browser smokes.
+  Direct production deploy was attempted, but Vercel Hobby returned
+  `api-deployments-free-per-day`, so the bundle was not activated; retry after
+  the quota window resets by regenerating the bundle and running the release
+  command.
 
 ## Actual Bus Arrivals
 
