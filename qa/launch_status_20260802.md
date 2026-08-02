@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `cd0dedc` (`score: guard implausible bus detours`)
+- Latest pushed commit: `4bf86e9` (`qa: replay bus detour outliers`)
 
 ## Pending Fresh Bundle
 
