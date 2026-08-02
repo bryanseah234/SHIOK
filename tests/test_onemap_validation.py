@@ -198,6 +198,37 @@ def test_evaluate_cached_results_reports_zero_distance_as_invalid(tmp_path: Path
     assert report["invalid_cache_preview"][0]["reason"] == "missing_or_non_positive_distance"
 
 
+def test_evaluate_cached_results_keeps_top_100_outlier_preview(tmp_path: Path):
+    samples = []
+    for index in range(25):
+        start = {"lat": 1.3, "lon": 103.8 + index / 100000}
+        end = {"lat": 1.301, "lon": 103.801 + index / 100000}
+        cache_key = route_cache_key(start, end)
+        samples.append(
+            {
+                "postal": f"{index:06d}",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 100.0 + index,
+                "best_node": {"type": "bus_stop", "name": f"Stop {index}"},
+                "endpoint_source": "postal_universe_to_transit_poi",
+            }
+        )
+        (tmp_path / f"{cache_key}.json").write_text(
+            json.dumps({"route_summary": {"total_distance": 100.0}}),
+            encoding="utf-8",
+        )
+
+    report = evaluate_cached_results(
+        {"bundle": "generated_test", "sample_size": len(samples), "samples": samples},
+        tmp_path,
+    )
+
+    assert len(report["results_preview"]) == 20
+    assert len(report["top_outliers_preview"]) == 25
+    assert report["top_outliers_preview"][0]["postal"] == "000024"
+
+
 def test_collect_onemap_walk_cache_requires_explicit_confirmation(tmp_path: Path):
     sample_payload = {
         "bundle": "generated_test",

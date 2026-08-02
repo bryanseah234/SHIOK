@@ -484,6 +484,14 @@ route effect; no score override has been applied.
   scoring without calling OneMap. Result: 14/20 now expose bus as
   `direct_bus_fallback_unrouted`, 4/20 choose MRT/LRT as best transit, and 3/20
   specifically trigger the new implausible-detour guard.
+- `uv run python run.py onemap-outlier-replay` is now a reusable local QA helper
+  for replaying OneMap validation outliers through current scoring. The widened
+  `qa/onemap_validation_cached_report_20260802.json` keeps 100 top outliers.
+  `qa/onemap_outlier_replay_bus_longer_100_20260802.json` selects the 84
+  bus-stop/project-longer/>25% rows among those top outliers; current local
+  scoring yields 61 bus direct-fallback routes, 69 bus-stop best results, 15
+  MRT/LRT best results, and 9 rows that specifically trigger the new
+  implausible-detour guard.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

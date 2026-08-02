@@ -31,6 +31,7 @@ DEFAULT_SAMPLE_SIZE = 2000
 DEFAULT_ONEMAP_DELAY_SEC = 2.0
 MEDIAN_THRESHOLD_PCT = 10.0
 P95_THRESHOLD_PCT = 25.0
+TOP_OUTLIERS_PREVIEW_LIMIT = 100
 ONEMAP_AUTH_URL = "https://www.onemap.gov.sg/api/auth/post/getToken"
 ONEMAP_ROUTE_URL = "https://www.onemap.gov.sg/api/public/routingsvc/route"
 USER_AGENT = "SHIOK-Index-OneMap-Validation/1.0"
@@ -625,7 +626,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         "area_summary": summarize_delta_groups(results, group_key="area", limit=20),
         "top_outliers_preview": sorted(
             results, key=lambda item: float(item["abs_pct_delta"]), reverse=True
-        )[:20],
+        )[:TOP_OUTLIERS_PREVIEW_LIMIT],
         "results_preview": results[:20],
     }
 
