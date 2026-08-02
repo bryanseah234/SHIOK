@@ -91,6 +91,20 @@ def postals_from_partial_report(path: Path) -> list[str]:
     return postals
 
 
+def postals_from_file(path: Path | None) -> list[str]:
+    if path is None:
+        return []
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    postals: list[str] = []
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
+        value = line.strip()
+        if not value or value.startswith("#"):
+            continue
+        postals.append(normalize_postal(value))
+    return postals
+
+
 def unique_postals(values: list[str]) -> list[str]:
     seen: set[str] = set()
     output: list[str] = []
@@ -405,6 +419,7 @@ def main() -> int:
     parser.add_argument("--network", type=Path, default=DEFAULT_NETWORK)
     parser.add_argument("--postal-universe", type=Path, default=DEFAULT_UNIVERSE)
     parser.add_argument("--postal", action="append", dest="postals", default=[])
+    parser.add_argument("--postal-file", type=Path, default=None)
     parser.add_argument("--from-partial-report", type=Path, default=DEFAULT_PARTIAL_REPORT)
     parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
@@ -415,6 +430,7 @@ def main() -> int:
     target_dir = PROJECT_ROOT / "web" / "public" / "data" / target_bundle
     selected_postals = [
         *postals_from_partial_report(args.from_partial_report),
+        *postals_from_file(args.postal_file),
         *[normalize_postal(postal) for postal in args.postals],
     ]
     report = refresh_bundle(
