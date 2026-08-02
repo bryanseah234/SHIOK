@@ -45,6 +45,47 @@
       "geometry": {
         "coordinates": [
           [
+            103.83735414428378,
+            1.3675030013027443
+          ],
+          [
+            103.83719470212453,
+            1.3675103992661641
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560225-segment-3-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 17.8,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.45,
+        "postal": "560225",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 3,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
             103.83688510169024,
             1.3686568985432714
           ],
@@ -200,6 +241,211 @@
         "reviewed_at": "2026-08-01T07:15:01.016599+00:00",
         "reviewer": "owner-approved-codex-source-audit",
         "segment_index": 2,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83668821601444,
+            1.368642682221828
+          ],
+          [
+            103.83642070295801,
+            1.368794498217449
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560231-segment-3-covered-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "covered_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 0.016,
+        "is_covered": true,
+        "label": "covered_bridge",
+        "length_m": 34.2,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560231",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 3,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83658164351372,
+            1.3670747859813477
+          ],
+          [
+            103.83702167267708,
+            1.3669173355159498
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560234-segment-0-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "void_deck",
+        "length_m": 52.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.015,
+        "postal": "560234",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 0,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83714522767019,
+            1.3680060995063459
+          ],
+          [
+            103.83749889582384,
+            1.3680715025408114
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560234-segment-4-short-partial-hdb-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "short_partial_hdb_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 0.463,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 0.463,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 40.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 0.221,
+        "postal": "560234",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 4,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83688510169024,
+            1.3686568985432714
+          ],
+          [
+            103.83668821601444,
+            1.368642682221828
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560234-segment-6-hdb-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "hdb_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 1.0,
+        "is_covered": true,
+        "label": "sheltered",
+        "length_m": 22.0,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560234",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 6,
+        "source": "route_feedback_component_gap_source_audit",
+        "status": "approved"
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.83668821601444,
+            1.368642682221828
+          ],
+          [
+            103.83642070295801,
+            1.368794498217449
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "approval_note": "Owner-approved Codex autonomous promotion for review-ready Mayflower connector candidates with source overlap in the 2026-08-02 route-feedback source audit; blocked insufficient-overlap candidates remain excluded.",
+        "audit_id": "feedback-560234-segment-7-covered-source-overlap-review",
+        "bridge_overlap_ratio": 0.0,
+        "candidate_classification": "covered_source_overlap_review",
+        "covered": "yes",
+        "covered_overlap_ratio": 1.0,
+        "destination": "MAYFLOWER MRT STATION Exit 5",
+        "hdb_overlap_ratio": 0.016,
+        "is_covered": true,
+        "label": "covered_bridge",
+        "length_m": 34.2,
+        "official_shelter_overlap_ratio": 0.0,
+        "original_status": "needs_owner_review",
+        "osm_shelter_overlap_ratio": 1.0,
+        "postal": "560234",
+        "promotion_status": "review_ready_not_scoring",
+        "review_note": "Draft only. Network build ignores this until a human verifies source evidence and changes status to approved.",
+        "review_policy": "Approved only after human review of source-backed shelter evidence; network build ingests approved covered LineString/MultiLineString features.",
+        "reviewed_at": "2026-08-02T05:43:00.864569+00:00",
+        "reviewer": "owner-approved-codex-source-audit",
+        "segment_index": 7,
         "source": "route_feedback_component_gap_source_audit",
         "status": "approved"
       },
