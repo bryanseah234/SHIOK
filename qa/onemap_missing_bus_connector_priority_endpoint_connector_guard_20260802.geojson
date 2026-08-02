@@ -1,0 +1,702 @@
+{
+  "features": [
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.629244,
+            1.316675
+          ],
+          [
+            103.629729,
+            1.317384
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Bef Tuas Sth Ave 2",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 95.2,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 95.2,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 51.5,
+        "old_abs_pct_delta": 796.667,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 93.0,
+        "old_project_shortest_m": 833.9,
+        "old_validation_best_node": "Bef Tuas Sth Ave 2",
+        "postal": "637410",
+        "priority_rank": 1,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 95.2,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 95.2
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 95.2,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 95.2
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "TUAS",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 95.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -2.5
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.963666,
+            1.346351
+          ],
+          [
+            103.963112,
+            1.34665
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Mera Terr P/G",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 69.9,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 69.9,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 498.923,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 65.0,
+        "old_project_shortest_m": 389.3,
+        "old_validation_best_node": "Mera Terr P/G",
+        "postal": "486747",
+        "priority_rank": 2,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 69.9,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 69.9
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 69.9,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 69.9
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        "validation_area": "TAMPINES",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 70.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -5.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.835266,
+            1.377641
+          ],
+          [
+            103.834419,
+            1.376375
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Opp Blk 604",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 198.1,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 198.1,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 272.513,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 195.0,
+        "old_project_shortest_m": 726.4,
+        "old_validation_best_node": "Opp Horizon Gdns",
+        "postal": "567923",
+        "priority_rank": 3,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 198.1,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 198.1
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 198.1,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 198.1
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "ANG_MO_KIO",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 25.6
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.773075,
+            1.372476
+          ],
+          [
+            103.772935,
+            1.373551
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Opp Blk 219",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 119.9,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 119.9,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 177.764,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 161.0,
+        "old_project_shortest_m": 447.2,
+        "old_validation_best_node": "Opp Blk 219",
+        "postal": "677750",
+        "priority_rank": 4,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 119.9,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 119.9
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 119.9,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 119.9
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {
+            "large_unrouted_bus_stop_access_connector": 1
+          }
+        },
+        "validation_area": "BUKIT_PANJANG",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 120.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 40.5
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.775948,
+            1.427209
+          ],
+          [
+            103.773788,
+            1.427466
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Blk 425",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 242.1,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 242.1,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 138.781,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 279.0,
+        "old_project_shortest_m": 666.2,
+        "old_validation_best_node": "Blk 425",
+        "postal": "738190",
+        "priority_rank": 5,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 242.1,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 242.1
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 242.1,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 242.1
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "WOODLANDS",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 241.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 37.2
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.62435,
+            1.299425
+          ],
+          [
+            103.623086,
+            1.29847
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "See Hup Seng",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 175.9,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 175.9,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 51.5,
+        "old_abs_pct_delta": 136.147,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 231.0,
+        "old_project_shortest_m": 545.5,
+        "old_validation_best_node": "See Hup Seng",
+        "postal": "637489",
+        "priority_rank": 6,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 175.9,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 175.9
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 175.9,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 175.9
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "TUAS",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 176.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 54.9
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.698685,
+            1.353541
+          ],
+          [
+            103.700823,
+            1.353095
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Westwood Sec Sch",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 243.0,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 243.0,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 127.571,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 387.0,
+        "old_project_shortest_m": 880.7,
+        "old_validation_best_node": "Westwood Sec Sch",
+        "postal": "648558",
+        "priority_rank": 7,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 243.0,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 243.0
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 243.0,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 243.0
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "JURONG_WEST",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 242.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 144.2
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.69881,
+            1.353183
+          ],
+          [
+            103.700823,
+            1.353095
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Westwood Sec Sch",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 224.2,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 224.2,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 108.044,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 409.0,
+        "old_project_shortest_m": 850.9,
+        "old_validation_best_node": "Westwood Sec Sch",
+        "postal": "648425",
+        "priority_rank": 8,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 224.2,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 224.2
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 224.2,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 224.2
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "JURONG_WEST",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 224.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 185.0
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.919351,
+            1.320438
+          ],
+          [
+            103.918104,
+            1.320764
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Aft Perpetual Succour Ch",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 143.3,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 143.3,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 87.701,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 261.0,
+        "old_project_shortest_m": 489.9,
+        "old_validation_best_node": "Aft Perpetual Succour Ch",
+        "postal": "456944",
+        "priority_rank": 9,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 143.3,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 143.3
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 143.3,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 143.3
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "BEDOK",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 143.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 117.7
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.912618,
+            1.316478
+          ],
+          [
+            103.912227,
+            1.318889
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Mjd Kassim",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 270.2,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 270.2,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 87.67,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 575.0,
+        "old_project_shortest_m": 1079.1,
+        "old_validation_best_node": "Mjd Kassim",
+        "postal": "426119",
+        "priority_rank": 10,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 270.2,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 270.2
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 270.2,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 270.2
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "BEDOK",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 271.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 303.4
+      },
+      "type": "Feature"
+    },
+    {
+      "geometry": {
+        "coordinates": [
+          [
+            103.719126,
+            1.340337
+          ],
+          [
+            103.71932,
+            1.338364
+          ]
+        ],
+        "type": "LineString"
+      },
+      "properties": {
+        "current_route_vs_validation_direct_sanity": "plausible",
+        "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+        "endpoint_source": "postal_universe_to_transit_poi",
+        "new_best_name": "Blk 367",
+        "new_best_routing_type": "direct_bus_fallback_unrouted",
+        "new_best_shortest_m": 219.2,
+        "new_best_type": "bus_stop",
+        "new_bus_routing_type": "direct_bus_fallback_unrouted",
+        "new_bus_shortest_m": 219.2,
+        "new_bus_state": "SCORED_PARTIAL",
+        "new_state": "SCORED_PARTIAL",
+        "new_total": 55.0,
+        "old_abs_pct_delta": 86.016,
+        "old_direction": "project_longer_than_onemap",
+        "old_onemap_walk_m": 364.0,
+        "old_project_shortest_m": 677.1,
+        "old_validation_best_node": "Blk 367",
+        "postal": "618469",
+        "priority_rank": 11,
+        "queue": "missing_bus_connector_priority",
+        "source_artifact": "qa\\onemap_outlier_replay_bus_longer_profile_endpoint_connector_guard_20260802.json",
+        "source_flags": {
+          "best_bridge_underpass_m": 0.0,
+          "best_bus_stop_access_connector_m": 0.0,
+          "best_direct_bus_fallback_m": 219.2,
+          "best_inferred_hdb_m": 0.0,
+          "best_official_lta_shelter_m": 0.0,
+          "best_osm_shelter_m": 0.0,
+          "best_top_source_layer_m": {
+            "direct_bus_fallback": 219.2
+          },
+          "best_unknown_source_m": 0.0,
+          "bus_bus_stop_access_connector_m": 0.0,
+          "bus_direct_bus_fallback_m": 219.2,
+          "bus_top_source_layer_m": {
+            "direct_bus_fallback": 219.2
+          },
+          "bus_unknown_source_m": 0.0,
+          "untrusted_bus_route_reason_counts": {}
+        },
+        "validation_area": "JURONG_WEST",
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 220.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 143.6
+      },
+      "type": "Feature"
+    }
+  ],
+  "type": "FeatureCollection"
+}

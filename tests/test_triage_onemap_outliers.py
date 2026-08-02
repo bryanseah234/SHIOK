@@ -67,6 +67,25 @@ def test_classify_row_flags_shorter_hdb_path_for_overpermissive_review():
     ]
 
 
+def test_classify_row_flags_unknown_shorter_bus_path_for_access_barrier_review():
+    row = {
+        "postal": "637442",
+        "old_direction": "project_shorter_than_onemap",
+        "new_best_type": "bus_stop",
+        "new_best_route_profile": profile(
+            inferred_hdb_m=0.0,
+            bridge_underpass_m=0.0,
+            direct_bus_fallback_m=0.0,
+            source_layer_m={"unknown": 194.7, "origin_graph_snap_connector": 43.6},
+        ),
+    }
+
+    assert classify_row(row) == [
+        "possible_overpermissive_project_path",
+        "access_barrier_review",
+    ]
+
+
 def test_classify_row_flags_mrt_and_unscored_queues():
     row = {
         "postal": "489929",
@@ -111,6 +130,7 @@ def test_source_flags_keeps_compact_top_source_lengths():
     assert flags["best_inferred_hdb_m"] == 10.0
     assert flags["best_bridge_underpass_m"] == 5.0
     assert flags["best_bus_stop_access_connector_m"] == 0.0
+    assert flags["best_unknown_source_m"] == 100.0
     assert list(flags["best_top_source_layer_m"]) == [
         "unknown",
         "inferred_hdb_precinct",
@@ -119,6 +139,20 @@ def test_source_flags_keeps_compact_top_source_lengths():
         "osm_explicit_shelter",
     ]
     assert flags["bus_direct_bus_fallback_m"] == 20.0
+    assert flags["untrusted_bus_route_reason_counts"] == {}
+
+
+def test_source_flags_preserves_untrusted_bus_route_counts():
+    flags = source_flags(
+        {
+            "untrusted_bus_route_reason_counts": {
+                "dominant_unrouted_bus_endpoint_snap": "2",
+                "bad": "not-a-number",
+            }
+        }
+    )
+
+    assert flags["untrusted_bus_route_reason_counts"] == {"dominant_unrouted_bus_endpoint_snap": 2}
 
 
 def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):

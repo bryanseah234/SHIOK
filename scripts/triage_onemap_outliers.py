@@ -64,6 +64,34 @@ def profile_m(row: dict[str, Any], metric: str, key: str = "new_best_route_profi
         return 0.0
 
 
+def profile_source_m(
+    row: dict[str, Any],
+    source_layer: str,
+    key: str = "new_best_route_profile",
+) -> float:
+    profile = shortest_profile(row, key)
+    lengths = profile.get("source_layer_m")
+    if not isinstance(lengths, dict):
+        return 0.0
+    try:
+        return float(lengths.get(source_layer) or 0.0)
+    except (TypeError, ValueError):
+        return 0.0
+
+
+def untrusted_route_reason_counts(row: dict[str, Any]) -> dict[str, int]:
+    counts = row.get("untrusted_bus_route_reason_counts")
+    if not isinstance(counts, dict):
+        return {}
+    parsed: dict[str, int] = {}
+    for reason, count in counts.items():
+        try:
+            parsed[str(reason)] = int(count)
+        except (TypeError, ValueError):
+            continue
+    return parsed
+
+
 def top_lengths(lengths: Any, *, limit: int = 5) -> dict[str, float]:
     if not isinstance(lengths, dict):
         return {}
@@ -166,6 +194,28 @@ def is_unscored_or_no_best(row: dict[str, Any]) -> bool:
     )
 
 
+def has_untrusted_bus_route(row: dict[str, Any]) -> bool:
+    return bool(untrusted_route_reason_counts(row))
+
+
+def likely_access_barrier_divergence(row: dict[str, Any]) -> bool:
+    if row.get("old_direction") != "project_shorter_than_onemap":
+        return False
+    if looks_like_mrt_lrt(row) or is_unscored_or_no_best(row):
+        return False
+    unknown_m = max(
+        profile_source_m(row, "unknown"),
+        profile_source_m(row, "unknown", "new_bus_route_profile"),
+    )
+    if unknown_m < 100.0:
+        return False
+    return (
+        profile_m(row, "inferred_hdb_m") <= 0
+        and profile_m(row, "bridge_underpass_m") <= 0
+        and profile_m(row, "direct_bus_fallback_m") <= 0
+    )
+
+
 def source_flags(row: dict[str, Any]) -> dict[str, Any]:
     best = shortest_profile(row, "new_best_route_profile")
     bus = shortest_profile(row, "new_bus_route_profile")
@@ -183,10 +233,13 @@ def source_flags(row: dict[str, Any]) -> dict[str, Any]:
         "best_official_lta_shelter_m": metric("official_lta_shelter_m"),
         "best_osm_shelter_m": metric("osm_shelter_m"),
         "best_bus_stop_access_connector_m": metric("bus_stop_access_connector_m"),
+        "best_unknown_source_m": round(profile_source_m(row, "unknown"), 1),
         "best_top_source_layer_m": top_lengths(best.get("source_layer_m")),
         "bus_direct_bus_fallback_m": bus_metric("direct_bus_fallback_m"),
         "bus_bus_stop_access_connector_m": bus_metric("bus_stop_access_connector_m"),
+        "bus_unknown_source_m": round(profile_source_m(row, "unknown", "new_bus_route_profile"), 1),
         "bus_top_source_layer_m": top_lengths(bus.get("source_layer_m")),
+        "untrusted_bus_route_reason_counts": untrusted_route_reason_counts(row),
     }
 
 
@@ -202,6 +255,9 @@ def classify_row(row: dict[str, Any]) -> list[str]:
     if direction == "project_shorter_than_onemap":
         queues.append("possible_overpermissive_project_path")
 
+    if likely_access_barrier_divergence(row):
+        queues.append("access_barrier_review")
+
     if looks_like_mrt_lrt(row):
         queues.append("mrt_lrt_outlier")
 
@@ -210,6 +266,9 @@ def classify_row(row: dict[str, Any]) -> list[str]:
 
     if is_unscored_or_no_best(row):
         queues.append("still_unscored_or_no_best")
+
+    if has_untrusted_bus_route(row):
+        queues.append("untrusted_bus_route_review")
 
     return queues
 
@@ -378,9 +437,11 @@ def build_triage_queues(
         "missing_bus_connector": [],
         "direct_bus_fallback_review": [],
         "possible_overpermissive_project_path": [],
+        "access_barrier_review": [],
         "mrt_lrt_outlier": [],
         "hdb_bridge_connector_review": [],
         "still_unscored_or_no_best": [],
+        "untrusted_bus_route_review": [],
     }
     seen_by_queue: dict[str, set[str]] = {name: set() for name in queues}
     input_row_count = 0
