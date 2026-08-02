@@ -479,6 +479,11 @@ route effect; no score override has been applied.
 - 2026-08-02 code change: `bus_route_should_use_direct_fallback` is implemented
   and tested for implausible bus graph detours. It affects the next score
   batch/export, not the currently deployed static bundle.
+- `qa/bus_detour_guard_top_outlier_sample_20260802.json` replays the top 20
+  bus-stop project-longer OneMap validation outliers through current local
+  scoring without calling OneMap. Result: 14/20 now expose bus as
+  `direct_bus_fallback_unrouted`, 4/20 choose MRT/LRT as best transit, and 3/20
+  specifically trigger the new implausible-detour guard.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit
