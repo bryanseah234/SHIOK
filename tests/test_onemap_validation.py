@@ -240,6 +240,14 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["results_preview"][0]["distance_sanity"] == (
         "onemap_materially_shorter_than_direct"
     )
+    assert report["subset_summary"]["all_valid_cached"]["count"] == 1
+    assert report["subset_summary"]["all_valid_cached"]["thresholds_passed"] is True
+    assert report["subset_summary"]["endpoint_connector"]["count"] == 1
+    assert report["subset_summary"]["graph_routed_without_endpoint_connector"]["count"] == 0
+    assert (
+        report["subset_summary"]["graph_routed_without_endpoint_connector"]["thresholds_passed"]
+        is None
+    )
     assert "results" not in report
     full_report = evaluate_cached_results(sample_payload, cache_dir, include_results=True)
     assert full_report["results"] == full_report["results_preview"]

@@ -587,6 +587,78 @@ def summarize_delta_groups(
     return summaries[:limit] if limit is not None else summaries
 
 
+def validation_metric_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
+    if not results:
+        return {
+            "count": 0,
+            "median_abs_pct_delta": None,
+            "p95_abs_pct_delta": None,
+            "median_abs_delta_m": None,
+            "p95_abs_delta_m": None,
+            "over_25_pct_count": 0,
+            "over_50_pct_count": 0,
+            "thresholds_passed": None,
+        }
+
+    deltas = [float(item["abs_pct_delta"]) for item in results]
+    metre_deltas = [float(item["abs_delta_m"]) for item in results]
+    median = percentile(deltas, 50)
+    p95 = percentile(deltas, 95)
+    median_m = percentile(metre_deltas, 50)
+    p95_m = percentile(metre_deltas, 95)
+    thresholds_passed = (
+        median is not None
+        and p95 is not None
+        and median <= MEDIAN_THRESHOLD_PCT
+        and p95 <= P95_THRESHOLD_PCT
+    )
+    return {
+        "count": len(results),
+        "median_abs_pct_delta": round(median, 3) if median is not None else None,
+        "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
+        "median_abs_delta_m": round(median_m, 1) if median_m is not None else None,
+        "p95_abs_delta_m": round(p95_m, 1) if p95_m is not None else None,
+        "over_25_pct_count": sum(delta > 25 for delta in deltas),
+        "over_50_pct_count": sum(delta > 50 for delta in deltas),
+        "thresholds_passed": thresholds_passed,
+    }
+
+
+def validation_subset_summary(results: list[dict[str, Any]]) -> dict[str, Any]:
+    graph_routed_trust = {
+        "graph_routed_bus_stop",
+        "graph_routed_mrt_lrt",
+        "graph_routed_other",
+    }
+    subsets = {
+        "all_valid_cached": results,
+        "graph_routed_without_endpoint_connector": [
+            row for row in results if row.get("route_trust") in graph_routed_trust
+        ],
+        "graph_routed_bus_stop": [
+            row for row in results if row.get("route_trust") == "graph_routed_bus_stop"
+        ],
+        "graph_routed_mrt_lrt": [
+            row for row in results if row.get("route_trust") == "graph_routed_mrt_lrt"
+        ],
+        "endpoint_connector": [
+            row
+            for row in results
+            if row.get("route_trust") == "graph_route_with_endpoint_connector"
+        ],
+        "plausible_onemap_distance": [
+            row for row in results if row.get("distance_sanity") == "plausible"
+        ],
+        "non_tiny_onemap_walk_gt_20m": [
+            row for row in results if row.get("onemap_walk_bucket") != "le_20m"
+        ],
+    }
+    return {
+        name: validation_metric_summary(rows)
+        for name, rows in sorted(subsets.items(), key=lambda item: item[0])
+    }
+
+
 def signed_delta_direction(signed_delta_pct: float) -> str:
     if signed_delta_pct > 0:
         return "project_longer_than_onemap"
@@ -768,6 +840,7 @@ def evaluate_cached_results(
             "p95_abs_pct_delta_max": P95_THRESHOLD_PCT,
         },
         "gate_passed": gate_passed,
+        "subset_summary": validation_subset_summary(results),
         "distance_sanity_summary": dict(sorted(distance_sanity_counts.items())),
         "route_trust_summary": summarize_delta_groups(results, group_key="route_trust"),
         "routing_type_summary": summarize_delta_groups(results, group_key="routing_type"),

@@ -276,7 +276,7 @@
     "plausible": 1947
   },
   "gate_passed": false,
-  "generated_at": "2026-08-02T19:39:46.117904+00:00",
+  "generated_at": "2026-08-02T20:27:36.906717+00:00",
   "invalid_cache_preview": [
     {
       "area": "SOUTHERN_ISLANDS",
@@ -60999,6 +60999,78 @@
     }
   ],
   "sample_size": 2000,
+  "subset_summary": {
+    "all_valid_cached": {
+      "count": 1999,
+      "median_abs_delta_m": 37.8,
+      "median_abs_pct_delta": 11.72,
+      "over_25_pct_count": 594,
+      "over_50_pct_count": 318,
+      "p95_abs_delta_m": 380.9,
+      "p95_abs_pct_delta": 106.185,
+      "thresholds_passed": false
+    },
+    "endpoint_connector": {
+      "count": 19,
+      "median_abs_delta_m": 271.4,
+      "median_abs_pct_delta": 77.358,
+      "over_25_pct_count": 18,
+      "over_50_pct_count": 18,
+      "p95_abs_delta_m": 1161.4,
+      "p95_abs_pct_delta": 202.379,
+      "thresholds_passed": false
+    },
+    "graph_routed_bus_stop": {
+      "count": 1594,
+      "median_abs_delta_m": 35.8,
+      "median_abs_pct_delta": 12.781,
+      "over_25_pct_count": 513,
+      "over_50_pct_count": 272,
+      "p95_abs_delta_m": 368.3,
+      "p95_abs_pct_delta": 110.959,
+      "thresholds_passed": false
+    },
+    "graph_routed_mrt_lrt": {
+      "count": 386,
+      "median_abs_delta_m": 42.5,
+      "median_abs_pct_delta": 6.679,
+      "over_25_pct_count": 63,
+      "over_50_pct_count": 28,
+      "p95_abs_delta_m": 351.5,
+      "p95_abs_pct_delta": 59.114,
+      "thresholds_passed": false
+    },
+    "graph_routed_without_endpoint_connector": {
+      "count": 1980,
+      "median_abs_delta_m": 37.1,
+      "median_abs_pct_delta": 11.472,
+      "over_25_pct_count": 576,
+      "over_50_pct_count": 300,
+      "p95_abs_delta_m": 368.0,
+      "p95_abs_pct_delta": 102.714,
+      "thresholds_passed": false
+    },
+    "non_tiny_onemap_walk_gt_20m": {
+      "count": 1995,
+      "median_abs_delta_m": 37.7,
+      "median_abs_pct_delta": 11.686,
+      "over_25_pct_count": 590,
+      "over_50_pct_count": 314,
+      "p95_abs_delta_m": 380.5,
+      "p95_abs_pct_delta": 103.223,
+      "thresholds_passed": false
+    },
+    "plausible_onemap_distance": {
+      "count": 1947,
+      "median_abs_delta_m": 36.7,
+      "median_abs_pct_delta": 11.34,
+      "over_25_pct_count": 552,
+      "over_50_pct_count": 280,
+      "p95_abs_delta_m": 379.5,
+      "p95_abs_pct_delta": 91.878,
+      "thresholds_passed": false
+    }
+  },
   "thresholds": {
     "median_abs_pct_delta_max": 10.0,
     "p95_abs_pct_delta_max": 25.0
