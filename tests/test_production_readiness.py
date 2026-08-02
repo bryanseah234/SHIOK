@@ -230,6 +230,30 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
                 "median_abs_pct_delta_max": 10.0,
                 "p95_abs_pct_delta_max": 25.0,
             },
+            "subset_summary": {
+                "graph_routed_mrt_lrt": {
+                    "count": 386,
+                    "median_abs_pct_delta": 6.679,
+                    "p95_abs_pct_delta": 59.114,
+                    "median_abs_delta_m": 42.5,
+                    "p95_abs_delta_m": 351.5,
+                    "thresholds_passed": False,
+                },
+                "endpoint_connector": {
+                    "count": 19,
+                    "median_abs_pct_delta": 77.358,
+                    "p95_abs_pct_delta": 202.379,
+                    "median_abs_delta_m": 271.4,
+                    "p95_abs_delta_m": 1161.4,
+                    "thresholds_passed": False,
+                },
+                "unused_passed_subset": {
+                    "count": 1,
+                    "median_abs_pct_delta": 1.0,
+                    "p95_abs_pct_delta": 2.0,
+                    "thresholds_passed": True,
+                },
+            },
             "generated_at": "2026-08-02T02:40:10+00:00",
         },
     )
@@ -255,6 +279,12 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
     assert gate["active_bundle"] == "generated_test"
     assert gate["sample_size"] == 2000
     assert gate["gate_passed"] is False
+    assert gate["subset_summary"]["graph_routed_mrt_lrt"]["p95_abs_pct_delta"] == 59.114
+    assert [item["subset"] for item in gate["failing_subset_order"]] == [
+        "endpoint_connector",
+        "graph_routed_mrt_lrt",
+    ]
+    assert gate["failing_subset_order"][0]["p95_abs_delta_m"] == 1161.4
     assert "failed" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
     assert "not active bundle generated_test" in (
         report["features"]["not_incorporated"]["onemap_walk_validation_gate"]

@@ -162,6 +162,40 @@ def latest_json_report(qa_dir: Path, pattern: str) -> Path | None:
     return max(reports, key=lambda path: (path.stat().st_mtime, path.name))
 
 
+def onemap_subset_status(report: dict[str, Any]) -> dict[str, Any]:
+    raw_subsets = report.get("subset_summary")
+    if not isinstance(raw_subsets, dict):
+        return {"subset_summary": {}, "failing_subset_order": []}
+
+    subset_summary = {
+        str(name): value for name, value in raw_subsets.items() if isinstance(value, dict)
+    }
+    failing_subsets: list[dict[str, Any]] = []
+    for name, summary in subset_summary.items():
+        if summary.get("thresholds_passed") is not False:
+            continue
+        failing_subsets.append(
+            {
+                "subset": name,
+                "count": summary.get("count"),
+                "median_abs_pct_delta": summary.get("median_abs_pct_delta"),
+                "p95_abs_pct_delta": summary.get("p95_abs_pct_delta"),
+                "median_abs_delta_m": summary.get("median_abs_delta_m"),
+                "p95_abs_delta_m": summary.get("p95_abs_delta_m"),
+            }
+        )
+    failing_subsets.sort(
+        key=lambda item: (
+            -(float(item["p95_abs_pct_delta"]) if item["p95_abs_pct_delta"] is not None else -1),
+            str(item["subset"]),
+        )
+    )
+    return {
+        "subset_summary": subset_summary,
+        "failing_subset_order": failing_subsets,
+    }
+
+
 def onemap_validation_status(
     qa_dir: Path,
     *,
@@ -194,6 +228,7 @@ def onemap_validation_status(
         bundle_matches_active = report_bundle == active_bundle
 
     thresholds = report.get("thresholds", {})
+    subset_status = onemap_subset_status(report)
     median = report.get("median_abs_pct_delta")
     p95 = report.get("p95_abs_pct_delta")
     median_max = (
@@ -242,6 +277,8 @@ def onemap_validation_status(
         "median_abs_pct_delta": median,
         "p95_abs_pct_delta": p95,
         "thresholds": thresholds,
+        "subset_summary": subset_status["subset_summary"],
+        "failing_subset_order": subset_status["failing_subset_order"],
         "generated_at": report.get("generated_at"),
     }
 
