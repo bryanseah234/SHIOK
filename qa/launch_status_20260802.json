@@ -6,7 +6,7 @@
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit": "pending update after validation commit"
+    "latest_pushed_commit": "0e0dbc3"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
