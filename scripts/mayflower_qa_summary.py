@@ -73,6 +73,25 @@ def find_score_record(bundle_dir: Path, postal: str) -> dict[str, Any] | None:
     return None
 
 
+def find_geom_record(bundle_dir: Path, postal: str) -> dict[str, Any] | None:
+    postal = normalize_postal(postal)
+    postal_index_path = bundle_dir / "geom" / "postal-index.json"
+    if (
+        not postal_index_path.is_file()
+        and not postal_index_path.with_name("postal-index.json.gz").is_file()
+    ):
+        return None
+    postal_index = read_json(postal_index_path)
+    shard = postal_index.get(postal)
+    if not shard:
+        return None
+    records = read_json(bundle_dir / "geom" / "h3" / f"{shard}.json")
+    for record in records:
+        if normalize_postal(str(record.get("postal"))) == postal:
+            return record
+    return None
+
+
 def compact_route_option(option: dict[str, Any] | None) -> dict[str, Any] | None:
     if not isinstance(option, dict):
         return None
@@ -124,6 +143,122 @@ def score_summary(bundle_dir: Path, postals: list[str]) -> dict[str, Any]:
             "bus": compact_route_option(route_options.get("bus")),
         }
     return summary
+
+
+def route_segment_source_summary(option: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(option, dict):
+        return None
+    route_segments = option.get("route_segments")
+    if not isinstance(route_segments, dict):
+        return None
+    output: dict[str, Any] = {}
+    for route_key in ["shortest", "sheltered"]:
+        segments = route_segments.get(route_key)
+        if not isinstance(segments, list):
+            continue
+        source_lengths: dict[str, float] = defaultdict(float)
+        covered_m = 0.0
+        exposed_m = 0.0
+        for segment in segments:
+            if not isinstance(segment, dict):
+                continue
+            length_m = float(segment.get("len_m") or 0.0)
+            source = str(
+                segment.get("source_class")
+                or segment.get("source_layer")
+                or ("covered_unknown" if segment.get("is_covered") else "exposed")
+            )
+            source_lengths[source] += length_m
+            if segment.get("is_covered"):
+                covered_m += length_m
+            else:
+                exposed_m += length_m
+        output[route_key] = {
+            "segment_count": len(segments),
+            "covered_m": round(covered_m, 1),
+            "exposed_m": round(exposed_m, 1),
+            "source_lengths_m": {
+                source: round(length, 1) for source, length in sorted(source_lengths.items())
+            },
+        }
+    return output or None
+
+
+def route_gap_summary(option: dict[str, Any] | None) -> dict[str, Any] | None:
+    if not isinstance(option, dict):
+        return None
+    gaps = option.get("exposure_gaps")
+    if not isinstance(gaps, list):
+        gaps = []
+    compact_gaps = [
+        {
+            "len_m": float(gap.get("len_m") or 0.0),
+            "label": gap.get("label"),
+        }
+        for gap in gaps
+        if isinstance(gap, dict)
+    ]
+    compact_gaps.sort(key=lambda gap: gap["len_m"], reverse=True)
+    return {
+        "gap_count": len(compact_gaps),
+        "largest_gap_m": round(compact_gaps[0]["len_m"], 1) if compact_gaps else 0.0,
+        "largest_gap_label": compact_gaps[0]["label"] if compact_gaps else None,
+        "gaps": [
+            {"len_m": round(gap["len_m"], 1), "label": gap["label"]} for gap in compact_gaps[:5]
+        ],
+    }
+
+
+def geom_route_summary(bundle_dir: Path, postals: list[str]) -> dict[str, Any]:
+    output: dict[str, Any] = {}
+    for postal in postals:
+        geom = find_geom_record(bundle_dir, postal)
+        if geom is None:
+            output[postal] = {"missing": True}
+            continue
+        route_options = (
+            geom.get("route_options") if isinstance(geom.get("route_options"), dict) else {}
+        )
+        output[postal] = {}
+        for mode in ["best_transit", "mrt_lrt", "bus"]:
+            option = route_options.get(mode) if mode != "best_transit" else geom
+            output[postal][mode] = {
+                "route_segments": route_segment_source_summary(option),
+                "exposure_gaps": route_gap_summary(option),
+            }
+    return output
+
+
+def mrt_gap_signals(scores: dict[str, Any], geometry: dict[str, Any]) -> dict[str, Any]:
+    signals: dict[str, Any] = {}
+    for postal, score in scores.items():
+        mrt_score = score.get("mrt_lrt") if isinstance(score, dict) else None
+        best_score = score.get("best_transit") if isinstance(score, dict) else None
+        mrt_paths = mrt_score.get("paths") if isinstance(mrt_score, dict) else {}
+        best_paths = best_score.get("paths") if isinstance(best_score, dict) else {}
+        geom_modes = geometry.get(postal) if isinstance(geometry.get(postal), dict) else {}
+        mrt_geom = geom_modes.get("mrt_lrt") if isinstance(geom_modes, dict) else {}
+        mrt_gaps = mrt_geom.get("exposure_gaps") if isinstance(mrt_geom, dict) else {}
+        largest_gap_m = float((mrt_gaps or {}).get("largest_gap_m") or 0.0)
+        mrt_covered = mrt_paths.get("covered_ratio") if isinstance(mrt_paths, dict) else None
+        best_covered = best_paths.get("covered_ratio") if isinstance(best_paths, dict) else None
+        signals[postal] = {
+            "mrt_lrt_covered_ratio": mrt_covered,
+            "best_transit_covered_ratio": best_covered,
+            "covered_ratio_gap_vs_best": (
+                round(float(best_covered) - float(mrt_covered), 3)
+                if isinstance(best_covered, int | float) and isinstance(mrt_covered, int | float)
+                else None
+            ),
+            "largest_mrt_exposed_gap_m": largest_gap_m,
+            "largest_mrt_exposed_gap_label": (mrt_gaps or {}).get("largest_gap_label"),
+            "mrt_specific_false_negative_signal": (
+                isinstance(mrt_covered, int | float)
+                and float(mrt_covered) < 0.6
+                and largest_gap_m >= 100.0
+            ),
+        }
+    return signals
 
 
 def connector_summary(component_audit: dict[str, Any], postals: list[str]) -> dict[str, Any]:
@@ -223,11 +358,15 @@ def build_summary(
         if item.get("promotion_status") == "review_ready_not_scoring"
         and str(item.get("audit_id") or "") in approved_ids
     )
+    scores = score_summary(bundle_dir, normalized)
+    geometry = geom_route_summary(bundle_dir, normalized)
     return {
         "ok": True,
         "bundle": bundle_dir.name,
         "postals": normalized,
-        "scores": score_summary(bundle_dir, normalized),
+        "scores": scores,
+        "route_geometry": geometry,
+        "mrt_gap_signals": mrt_gap_signals(scores, geometry),
         "feedback_segments": feedback_summary(feedback_audit, normalized),
         "connector_candidates": connectors,
         "conclusion": {
@@ -270,6 +409,39 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
                 f"node `{node.get('name')}`, distance `{paths.get('sheltered_m')}`, "
                 f"covered `{paths.get('covered_ratio')}`"
             )
+    lines.extend(["", "## Active MRT Gap Signals"])
+    for postal, signal in sorted(summary.get("mrt_gap_signals", {}).items()):
+        lines.append(
+            f"- `{postal}`: MRT covered `{fmt(signal.get('mrt_lrt_covered_ratio'))}`, "
+            f"best covered `{fmt(signal.get('best_transit_covered_ratio'))}`, "
+            f"largest MRT exposed gap `{fmt(signal.get('largest_mrt_exposed_gap_m'))}` m, "
+            f"signal `{signal.get('mrt_specific_false_negative_signal')}`"
+        )
+
+    lines.extend(["", "## Active Route Segment Sources"])
+    for postal, modes in sorted(summary.get("route_geometry", {}).items()):
+        if not isinstance(modes, dict) or modes.get("missing"):
+            lines.append(f"- `{postal}`: missing geometry")
+            continue
+        lines.append(f"- `{postal}`")
+        for mode in ["best_transit", "mrt_lrt", "bus"]:
+            mode_summary = modes.get(mode) if isinstance(modes.get(mode), dict) else {}
+            sheltered = (
+                (mode_summary.get("route_segments") or {}).get("sheltered")
+                if isinstance(mode_summary, dict)
+                else None
+            )
+            gaps = mode_summary.get("exposure_gaps") if isinstance(mode_summary, dict) else None
+            if not sheltered:
+                continue
+            lines.append(
+                "  - "
+                f"{mode}: exposed `{fmt(sheltered.get('exposed_m'))}` m, "
+                f"covered `{fmt(sheltered.get('covered_m'))}` m, "
+                f"sources `{sheltered.get('source_lengths_m')}`, "
+                f"largest gap `{fmt((gaps or {}).get('largest_gap_m'))}` m"
+            )
+
     lines.extend(["", "## Feedback Segment Classes"])
     by_feedback = summary["feedback_segments"].get("by_postal", {})
     if by_feedback:

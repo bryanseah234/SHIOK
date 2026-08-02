@@ -39,6 +39,43 @@ def test_build_summary_compacts_scores_and_connector_status(tmp_path):
             }
         ],
     )
+    write_json(bundle / "geom" / "postal-index.json", {"560231": "8_425_259"})
+    write_json(
+        bundle / "geom" / "h3" / "8_425_259.json",
+        [
+            {
+                "postal": "560231",
+                "route_segments": {
+                    "sheltered": [
+                        {
+                            "len_m": 94.6,
+                            "is_covered": True,
+                            "source_class": "inferred_hdb_void_deck",
+                        },
+                        {"len_m": 15.3, "is_covered": False, "source_class": "exposed"},
+                    ]
+                },
+                "exposure_gaps": [{"len_m": 15.3, "label": "exposed gap"}],
+                "route_options": {
+                    "mrt_lrt": {
+                        "route_segments": {
+                            "sheltered": [
+                                {
+                                    "len_m": 124.6,
+                                    "is_covered": True,
+                                    "source_class": "inferred_hdb_void_deck",
+                                },
+                                {"len_m": 307.2, "is_covered": False, "source_class": "exposed"},
+                            ]
+                        },
+                        "exposure_gaps": [
+                            {"len_m": 291.9, "label": "exposed gap near 1.36970, 103.83691"}
+                        ],
+                    }
+                },
+            }
+        ],
+    )
     component_audit = tmp_path / "component.json"
     write_json(
         component_audit,
@@ -74,6 +111,11 @@ def test_build_summary_compacts_scores_and_connector_status(tmp_path):
 
     assert summary["scores"]["560231"]["best_transit"]["best_node"]["name"] == "Opp Mayflower"
     assert summary["scores"]["560231"]["mrt_lrt"]["paths"]["covered_ratio"] == 0.31
+    assert summary["route_geometry"]["560231"]["mrt_lrt"]["route_segments"]["sheltered"][
+        "source_lengths_m"
+    ] == {"exposed": 307.2, "inferred_hdb_void_deck": 124.6}
+    assert summary["mrt_gap_signals"]["560231"]["largest_mrt_exposed_gap_m"] == 291.9
+    assert summary["mrt_gap_signals"]["560231"]["mrt_specific_false_negative_signal"] is True
     assert summary["connector_candidates"]["promotion_status_counts"] == {
         "blocked_insufficient_source_overlap_not_scoring": 1
     }
@@ -99,6 +141,44 @@ def test_write_markdown_includes_reviewable_candidate_details(tmp_path):
                     "paths": {"sheltered_m": 425.9, "covered_ratio": 0.312},
                 },
                 "bus": None,
+            }
+        },
+        "route_geometry": {
+            "560231": {
+                "best_transit": {
+                    "route_segments": {
+                        "sheltered": {
+                            "covered_m": 94.6,
+                            "exposed_m": 15.3,
+                            "source_lengths_m": {
+                                "exposed": 15.3,
+                                "inferred_hdb_void_deck": 94.6,
+                            },
+                        }
+                    },
+                    "exposure_gaps": {"largest_gap_m": 15.3},
+                },
+                "mrt_lrt": {
+                    "route_segments": {
+                        "sheltered": {
+                            "covered_m": 124.6,
+                            "exposed_m": 307.2,
+                            "source_lengths_m": {
+                                "exposed": 307.2,
+                                "inferred_hdb_void_deck": 124.6,
+                            },
+                        }
+                    },
+                    "exposure_gaps": {"largest_gap_m": 291.9},
+                },
+            }
+        },
+        "mrt_gap_signals": {
+            "560231": {
+                "mrt_lrt_covered_ratio": 0.312,
+                "best_transit_covered_ratio": None,
+                "largest_mrt_exposed_gap_m": 291.9,
+                "mrt_specific_false_negative_signal": True,
             }
         },
         "feedback_segments": {
@@ -140,6 +220,8 @@ def test_write_markdown_includes_reviewable_candidate_details(tmp_path):
 
     content = output.read_text(encoding="utf-8")
     assert "## Candidate Details" in content
+    assert "## Active Route Segment Sources" in content
+    assert "largest gap `292` m" in content
     assert "`feedback-560231-segment-6-hdb-source-overlap-review`" in content
     assert "status `blocked_insufficient_source_overlap_not_scoring`" in content
     assert "HDB overlap `0.105`" in content
