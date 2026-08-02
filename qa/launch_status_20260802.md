@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `b6eab16` (`qa: aggregate replay route source profiles`)
+- Latest pushed commit before this triage unit: `38b2d77` (`qa: update status after profile aggregation`)
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 181 passed
+- Python tests: 187 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -66,7 +66,8 @@ Root directory: `web`
 - Project-shorter replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\onemap_outlier_replay_shorter_100_20260802.json` passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.
 - Project-shorter route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\onemap_outlier_replay_shorter_profile_100_20260802.json` passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.
 - Project-longer route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_longer_than_onemap --node-type bus_stop --route-source-profile --output qa\onemap_outlier_replay_bus_longer_profile_100_20260802.json` passed locally. Of 92 selected rows, 67 have best-route direct-bus fallback, 12 contain inferred HDB, and 1 contains OSM shelter. The longer queue is mostly bus fallback/missing-connector evidence, not a reason to loosen HDB inference further.
-- Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained corrected `raw/validation/onemap_walk_od` validation cache.
+- OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json` passed locally. It read 192 replay rows and emitted 68 `missing_bus_connector` cases, 123 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 47 `mrt_lrt_outlier` cases, 27 `hdb_bridge_connector_review` cases, and 3 `still_unscored_or_no_best` cases.
+- Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, temporary probe parquets, and an obsolete older full score batch; retained corrected `raw/validation/onemap_walk_od`, current score batch, and current web data bundle.
 
 ## Next Production Command
 
@@ -81,7 +82,7 @@ Run only after the Vercel Hobby quota window resets:
 - Deploy and activate the pending bundle.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
-- Investigate the failed 2,000-postal OneMap walk-validation gate; collection is complete, but evaluation has `gate_passed=false`. First target is bus-stop access/connector modeling, then MRT/LRT p95 outliers.
+- Work through `qa/onemap_outlier_triage_queues_20260802.json`: first `missing_bus_connector`, then `possible_overpermissive_project_path`, then `mrt_lrt_outlier`.
 - Use the reusable outlier replay helper after the next score/export bundle to check whether bus-stop validation outliers shrink before any full rescore.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.

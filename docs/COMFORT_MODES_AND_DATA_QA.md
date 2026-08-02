@@ -514,6 +514,14 @@ route effect; no score override has been applied.
   HDB void deck (491.8 m), and OSM explicit shelter (107.6 m). This confirms the
   longer queue is also mostly bus fallback/missing-connector evidence, not a
   reason to loosen HDB inference further.
+- `uv run python run.py onemap-outlier-triage --output
+  qa\onemap_outlier_triage_queues_20260802.json` converts those profiled replay
+  artifacts into concrete QA queues without calling OneMap or rescoring. It
+  read 192 replay rows and emitted 68 `missing_bus_connector` cases, 123
+  `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path`
+  cases, 47 `mrt_lrt_outlier` cases, 27 `hdb_bridge_connector_review` cases,
+  and 3 `still_unscored_or_no_best` cases. This is the next worklist for
+  targeted geometry/model QA before any full rescore.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit
