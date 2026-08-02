@@ -3,6 +3,7 @@ from scripts.diagnose_bus_connectors import (
     choose_target_bus_candidate,
     diagnostic_class,
     normalize_stop_name,
+    score_recovers_target_bus_stop,
     stop_names_match,
 )
 
@@ -61,6 +62,22 @@ def test_choose_target_bus_candidate_falls_back_to_endpoint_distance():
 
 
 def test_diagnostic_class_prioritizes_changed_stop_and_alternate_snap():
+    recovered = {
+        "target_match_method": "matched_target_name",
+        "same_validation_and_current_stop_name": True,
+        "target_bus_stop_name": "Aft Chong Pang CC",
+        "current_score_best_name": "aft  chong pang cc",
+        "current_score_best_type": "bus_stop",
+        "current_score_state": "SCORED",
+        "current_score_routing_type": "sheltered_with_bus_stop_access_connector",
+        "current_score_best_routed_m": 68.0,
+        "current_graph_route_state": "implausible_detour",
+        "best_alternate_snap": {"route_plus_snap_m": 49.0},
+    }
+
+    assert score_recovers_target_bus_stop(recovered)
+    assert diagnostic_class(recovered) == "scorer_recovered_target_bus_stop"
+
     assert (
         diagnostic_class(
             {

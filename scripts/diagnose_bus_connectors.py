@@ -18,6 +18,7 @@ from pipeline.scoring_integration import (
     load_postal_universe_points,
     load_scoring_context,
     nearest_graph_node,
+    score_postal_row,
     select_bus_stop_candidates,
 )
 
@@ -172,6 +173,8 @@ def alternate_snap_routes(
 def diagnostic_class(row: dict[str, Any]) -> str:
     if row["target_match_method"] == "no_bus_candidates":
         return "no_bus_candidates"
+    if row.get("same_validation_and_current_stop_name") and score_recovers_target_bus_stop(row):
+        return "scorer_recovered_target_bus_stop"
     if not row["same_validation_and_current_stop_name"]:
         return "changed_stop_between_validation_and_replay"
     if row["current_graph_route_state"] == "routable":
@@ -181,6 +184,21 @@ def diagnostic_class(row: dict[str, Any]) -> str:
     if row["current_graph_route_state"] == "disconnected":
         return "bus_stop_graph_disconnected"
     return str(row["current_graph_route_state"])
+
+
+def score_recovers_target_bus_stop(row: dict[str, Any]) -> bool:
+    if not stop_names_match(row.get("target_bus_stop_name"), row.get("current_score_best_name")):
+        return False
+    if row.get("current_score_best_type") != "bus_stop":
+        return False
+    if row.get("current_score_state") != "SCORED":
+        return False
+    if row.get("current_score_routing_type") == "direct_bus_fallback_unrouted":
+        return False
+    try:
+        return float(row.get("current_score_best_routed_m") or 0.0) > 0
+    except (TypeError, ValueError):
+        return False
 
 
 def feature_endpoint_xy(
@@ -252,6 +270,55 @@ def diagnose_feature(
         "old_abs_pct_delta": props.get("old_abs_pct_delta"),
         "direct_bus_fallback_reason": props.get("direct_bus_fallback_reason"),
     }
+    score_record = score_postal_row(
+        postal_row,
+        context.mrt_exits_gdf,
+        context.edges_dict,
+        context.routing_graph,
+        context.nodes,
+        context.node_xy,
+        context.params,
+        context.weights,
+        context.crossing_counter,
+        context.bus_index,
+        include_geometry=False,
+        network_path=context.network_path,
+        postal_universe_path=context.postal_universe_path,
+        base_provenance=context.base_provenance,
+        data_as_of=context.data_as_of,
+    )
+    current_best = score_record.get("best_node")
+    current_paths = score_record.get("paths")
+    current_provenance = score_record.get("provenance")
+    result.update(
+        {
+            "current_score_state": score_record.get("state"),
+            "current_score_total": score_record.get("total"),
+            "current_score_best_name": (
+                current_best.get("name") if isinstance(current_best, dict) else None
+            ),
+            "current_score_best_type": (
+                current_best.get("type") if isinstance(current_best, dict) else None
+            ),
+            "current_score_best_routed_m": (
+                current_best.get("routed_m") if isinstance(current_best, dict) else None
+            ),
+            "current_score_routing_type": (
+                current_paths.get("routing_type") if isinstance(current_paths, dict) else None
+            ),
+            "current_score_bus_stop_access_connector_m": (
+                current_paths.get("bus_stop_access_connector_m")
+                if isinstance(current_paths, dict)
+                else None
+            ),
+            "current_score_direct_bus_fallback_reason": (
+                (current_provenance.get("direct_bus_fallback") or {}).get("reason")
+                if isinstance(current_provenance, dict)
+                and isinstance(current_provenance.get("direct_bus_fallback"), dict)
+                else None
+            ),
+        }
+    )
     if target_candidate is None:
         result["current_graph_route_state"] = "no_target_candidate"
         result["diagnostic_class"] = diagnostic_class(result)

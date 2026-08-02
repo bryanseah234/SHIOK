@@ -959,16 +959,44 @@ def near_stop_bus_connector_trusted(
     route_result: dict[str, Any],
     bus_params: dict[str, Any],
 ) -> bool:
-    """Allow slightly longer inferred connectors only for very near bus stops."""
+    """Allow slightly longer inferred connectors for tightly bounded bus walks."""
     connector_m = float(route_result.get("bus_stop_access_connector_m") or 0.0)
     if connector_m <= 0:
         return False
     route_m = float(route_result.get("shortest_length_m") or 0.0)
-    max_connector_m = float(bus_params.get("access_connector_near_stop_trust_max_m", 0.0))
-    if route_m <= 0 or max_connector_m <= 0:
+    if route_m <= 0:
+        return False
+    near_stop_connector_m = float(bus_params.get("access_connector_near_stop_trust_max_m", 0.0))
+    if (
+        near_stop_connector_m > 0
+        and near_stop_bus_route_within_absolute_envelope(candidate, route_result, bus_params)
+        and connector_m <= near_stop_connector_m
+    ):
+        return True
+
+    return short_walk_bus_connector_trusted(candidate, route_result, bus_params)
+
+
+def short_walk_bus_connector_trusted(
+    candidate: CandidateNode,
+    route_result: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> bool:
+    direct_m = float(candidate.straight_line_m)
+    route_m = float(route_result.get("shortest_length_m") or 0.0)
+    connector_m = float(route_result.get("bus_stop_access_connector_m") or 0.0)
+    if min(direct_m, route_m, connector_m) <= 0:
+        return False
+    max_direct_m = float(bus_params.get("access_connector_short_walk_direct_m", 0.0))
+    max_walk_m = float(bus_params.get("access_connector_short_walk_max_walk_m", 0.0))
+    max_extra_m = float(bus_params.get("access_connector_short_walk_max_extra_m", 0.0))
+    max_connector_m = float(bus_params.get("access_connector_short_walk_trust_max_m", 0.0))
+    if min(max_direct_m, max_walk_m, max_extra_m, max_connector_m) <= 0:
         return False
     return (
-        near_stop_bus_route_within_absolute_envelope(candidate, route_result, bus_params)
+        direct_m <= max_direct_m
+        and route_m <= max_walk_m
+        and (route_m - direct_m) <= max_extra_m
         and connector_m <= max_connector_m
     )
 

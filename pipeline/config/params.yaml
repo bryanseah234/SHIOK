@@ -42,6 +42,10 @@ bus_connectivity:
   access_connector_near_stop_max_walk_m: 125
   access_connector_near_stop_max_extra_m: 75
   access_connector_near_stop_trust_max_m: 50
+  access_connector_short_walk_direct_m: 250
+  access_connector_short_walk_max_walk_m: 250
+  access_connector_short_walk_max_extra_m: 60
+  access_connector_short_walk_trust_max_m: 50
   full_credit_wait_min: 2
   zero_credit_wait_min: 15
 crossing_friction:

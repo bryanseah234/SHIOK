@@ -76,6 +76,10 @@ PARAMS = {
         "access_connector_near_stop_max_walk_m": 125.0,
         "access_connector_near_stop_max_extra_m": 75.0,
         "access_connector_near_stop_trust_max_m": 50.0,
+        "access_connector_short_walk_direct_m": 250.0,
+        "access_connector_short_walk_max_walk_m": 250.0,
+        "access_connector_short_walk_max_extra_m": 60.0,
+        "access_connector_short_walk_trust_max_m": 50.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -912,11 +916,11 @@ def test_bus_route_trust_rejects_large_bus_stop_access_connector():
         point_xy=(180.0, 0.0),
     )
     route = {
-        "shortest_length_m": 180.0,
-        "bus_stop_access_connector_m": 45.0,
+        "shortest_length_m": 190.0,
+        "bus_stop_access_connector_m": 55.0,
         "shortest_path_edges": [
             {"length_m": 135.0, "highway": "footway", "source_layer": "", "confidence": ""},
-            {"length_m": 45.0, "source_layer": "bus_stop_access_connector"},
+            {"length_m": 55.0, "source_layer": "bus_stop_access_connector"},
         ],
     }
 
@@ -945,6 +949,31 @@ def test_bus_route_trust_allows_bounded_near_stop_access_connector():
         "shortest_path_edges": [
             {"length_m": 67.0, "highway": "footway", "source_layer": "", "confidence": ""},
             {"length_m": 48.0, "source_layer": "bus_stop_access_connector"},
+        ],
+    }
+
+    assert bus_route_trust_rejection_reason(candidate, route, PARAMS["bus_connectivity"]) is None
+
+
+def test_bus_route_trust_allows_bounded_short_walk_access_connector():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Short Walk Stop",
+        station_name="Short Walk Stop",
+        exit_code="54325",
+        graph_node=(175.0, 0.0),
+        straight_line_m=145.0,
+        snap_distance_m=45.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(145.0, 0.0),
+    )
+    route = {
+        "shortest_length_m": 175.0,
+        "bus_stop_access_connector_m": 44.0,
+        "shortest_path_edges": [
+            {"length_m": 131.0, "highway": "footway", "source_layer": "", "confidence": ""},
+            {"length_m": 44.0, "source_layer": "bus_stop_access_connector"},
         ],
     }
 
@@ -1226,7 +1255,7 @@ def test_score_postal_row_uses_partial_fallback_for_untrusted_bus_access_connect
             {
                 "u": (0.0, 0.0),
                 "v": (50.0, 0.0),
-                "length_m": 50.0,
+                "length_m": 130.0,
                 "is_covered": 0,
                 "geometry": LineString([(0.0, 0.0), (50.0, 0.0)]),
             },
