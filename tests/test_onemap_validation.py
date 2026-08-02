@@ -223,6 +223,11 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["missing_cache_results"] == 1
     assert report["median_abs_pct_delta"] == 5.0
     assert report["p95_abs_pct_delta"] == 5.0
+    assert report["median_abs_delta_m"] == 5.0
+    assert report["p95_abs_delta_m"] == 5.0
+    assert report["results_preview"][0]["abs_delta_m"] == 5.0
+    assert report["results_preview"][0]["signed_delta_m"] == 5.0
+    assert report["results_preview"][0]["onemap_walk_bucket"] == "gt_50m_le_100m"
     assert report["results_preview"][0]["abs_pct_delta"] == 5.0
     assert report["results_preview"][0]["signed_pct_delta"] == 5.0
     assert report["results_preview"][0]["direction"] == "project_longer_than_onemap"
@@ -246,6 +251,9 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
             "median_abs_pct_delta": 5.0,
             "p95_abs_pct_delta": 5.0,
             "max_abs_pct_delta": 5.0,
+            "median_abs_delta_m": 5.0,
+            "p95_abs_delta_m": 5.0,
+            "max_abs_delta_m": 5.0,
             "over_25_pct_count": 0,
             "over_50_pct_count": 0,
         }
@@ -257,6 +265,9 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
             "median_abs_pct_delta": 5.0,
             "p95_abs_pct_delta": 5.0,
             "max_abs_pct_delta": 5.0,
+            "median_abs_delta_m": 5.0,
+            "p95_abs_delta_m": 5.0,
+            "max_abs_delta_m": 5.0,
             "over_25_pct_count": 0,
             "over_50_pct_count": 0,
         }
@@ -268,6 +279,9 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
             "median_abs_pct_delta": 5.0,
             "p95_abs_pct_delta": 5.0,
             "max_abs_pct_delta": 5.0,
+            "median_abs_delta_m": 5.0,
+            "p95_abs_delta_m": 5.0,
+            "max_abs_delta_m": 5.0,
             "over_25_pct_count": 0,
             "over_50_pct_count": 0,
         }
@@ -279,6 +293,23 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
             "median_abs_pct_delta": 5.0,
             "p95_abs_pct_delta": 5.0,
             "max_abs_pct_delta": 5.0,
+            "median_abs_delta_m": 5.0,
+            "p95_abs_delta_m": 5.0,
+            "max_abs_delta_m": 5.0,
+            "over_25_pct_count": 0,
+            "over_50_pct_count": 0,
+        }
+    ]
+    assert report["onemap_walk_bucket_summary"] == [
+        {
+            "onemap_walk_bucket": "gt_50m_le_100m",
+            "count": 1,
+            "median_abs_pct_delta": 5.0,
+            "p95_abs_pct_delta": 5.0,
+            "max_abs_pct_delta": 5.0,
+            "median_abs_delta_m": 5.0,
+            "p95_abs_delta_m": 5.0,
+            "max_abs_delta_m": 5.0,
             "over_25_pct_count": 0,
             "over_50_pct_count": 0,
         }

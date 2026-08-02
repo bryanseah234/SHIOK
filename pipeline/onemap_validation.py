@@ -558,8 +558,11 @@ def summarize_delta_groups(
     summaries: list[dict[str, Any]] = []
     for key, items in groups.items():
         deltas = [float(item["abs_pct_delta"]) for item in items]
+        metre_deltas = [float(item["abs_delta_m"]) for item in items]
         median = percentile(deltas, 50)
         p95 = percentile(deltas, 95)
+        median_m = percentile(metre_deltas, 50)
+        p95_m = percentile(metre_deltas, 95)
         summaries.append(
             {
                 group_key: key,
@@ -567,6 +570,9 @@ def summarize_delta_groups(
                 "median_abs_pct_delta": round(median, 3) if median is not None else None,
                 "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
                 "max_abs_pct_delta": round(max(deltas), 3),
+                "median_abs_delta_m": round(median_m, 1) if median_m is not None else None,
+                "p95_abs_delta_m": round(p95_m, 1) if p95_m is not None else None,
+                "max_abs_delta_m": round(max(metre_deltas), 1),
                 "over_25_pct_count": sum(delta > 25 for delta in deltas),
                 "over_50_pct_count": sum(delta > 50 for delta in deltas),
             }
@@ -587,6 +593,16 @@ def signed_delta_direction(signed_delta_pct: float) -> str:
     if signed_delta_pct < 0:
         return "project_shorter_than_onemap"
     return "same_length"
+
+
+def onemap_walk_bucket(onemap_m: float) -> str:
+    if onemap_m <= 20:
+        return "le_20m"
+    if onemap_m <= 50:
+        return "gt_20m_le_50m"
+    if onemap_m <= 100:
+        return "gt_50m_le_100m"
+    return "gt_100m"
 
 
 def haversine_distance_m(start: Any, end: Any) -> float | None:
@@ -678,6 +694,8 @@ def evaluate_cached_results(
             continue
         delta_pct = abs(float(project_m) - float(onemap_m)) / float(onemap_m) * 100
         signed_delta_pct = (float(project_m) - float(onemap_m)) / float(onemap_m) * 100
+        signed_delta_m = float(project_m) - float(onemap_m)
+        abs_delta_m = abs(signed_delta_m)
         direct_distance_m = haversine_distance_m(sample.get("start"), sample.get("end"))
         distance_sanity = onemap_distance_sanity(float(onemap_m), direct_distance_m)
         results.append(
@@ -699,6 +717,9 @@ def evaluate_cached_results(
                 "distance_sanity": distance_sanity,
                 "project_shortest_m": round(float(project_m), 1),
                 "onemap_walk_m": round(float(onemap_m), 1),
+                "onemap_walk_bucket": onemap_walk_bucket(float(onemap_m)),
+                "abs_delta_m": round(abs_delta_m, 1),
+                "signed_delta_m": round(signed_delta_m, 1),
                 "abs_pct_delta": round(delta_pct, 3),
                 "signed_pct_delta": round(signed_delta_pct, 3),
                 "direction": signed_delta_direction(signed_delta_pct),
@@ -711,8 +732,11 @@ def evaluate_cached_results(
         )
 
     deltas = [float(item["abs_pct_delta"]) for item in results]
+    metre_deltas = [float(item["abs_delta_m"]) for item in results]
     median = percentile(deltas, 50)
     p95 = percentile(deltas, 95)
+    median_m = percentile(metre_deltas, 50)
+    p95_m = percentile(metre_deltas, 95)
     distance_sanity_counts = Counter(
         str(item.get("distance_sanity") or "unknown") for item in results
     )
@@ -737,6 +761,8 @@ def evaluate_cached_results(
         "invalid_cache_preview": invalid[:20],
         "median_abs_pct_delta": round(median, 3) if median is not None else None,
         "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
+        "median_abs_delta_m": round(median_m, 1) if median_m is not None else None,
+        "p95_abs_delta_m": round(p95_m, 1) if p95_m is not None else None,
         "thresholds": {
             "median_abs_pct_delta_max": MEDIAN_THRESHOLD_PCT,
             "p95_abs_pct_delta_max": P95_THRESHOLD_PCT,
@@ -747,6 +773,10 @@ def evaluate_cached_results(
         "routing_type_summary": summarize_delta_groups(results, group_key="routing_type"),
         "transit_type_summary": summarize_delta_groups(results, group_key="best_node_type"),
         "direction_summary": summarize_delta_groups(results, group_key="direction"),
+        "onemap_walk_bucket_summary": summarize_delta_groups(
+            results,
+            group_key="onemap_walk_bucket",
+        ),
         "area_summary": summarize_delta_groups(results, group_key="area", limit=20),
         "top_outliers_preview": sorted(
             results, key=lambda item: float(item["abs_pct_delta"]), reverse=True
