@@ -3,15 +3,15 @@ Scoring engine for S.H.I.O.K. Index.
 Implements pure functions for subscores and composite score calculation.
 """
 
-from typing import Dict, Any, Optional, Union
+from typing import Any
 
 NO_TRANSIT_IN_RANGE = "NO_TRANSIT_IN_RANGE"
 NOT_YET_SCORED = "NOT_YET_SCORED"
 
 
 def score_transit_access(
-    dist_mrt_m: float, params: Dict[str, Any], is_bus_interchange: bool = False
-) -> Union[float, str]:
+    dist_mrt_m: float, params: dict[str, Any], is_bus_interchange: bool = False
+) -> float | str:
     """
     Score transit access based on distance to nearest MRT/LRT or Bus Interchange.
     Returns NO_TRANSIT_IN_RANGE if distance exceeds zero_credit_m.
@@ -41,9 +41,7 @@ def score_transit_access(
     return max(0.0, min(100.0, score_at_800 - ratio * score_at_800))
 
 
-def score_bus_connectivity(
-    expected_wait_min: Optional[float], params: Dict[str, Any]
-) -> Union[float, str]:
+def score_bus_connectivity(expected_wait_min: float | None, params: dict[str, Any]) -> float | str:
     """
     Score bus connectivity based on expected wait time.
     If 0 buses (expected_wait_min is None), returns NO_TRANSIT_IN_RANGE.
@@ -75,14 +73,19 @@ def score_rain_shelter(sheltered_m: float, total_m: float) -> float:
 
 def score_heat_comfort(sheltered_m: float, total_m: float) -> float:
     """
-    Score heat comfort. Provisional: identical to rain shelter (covered-only).
+    Score heat comfort from caller-provided heat-comfort evidence length.
+
+    The pure formula intentionally remains a capped percentage. Integration may
+    pass covered length only, or covered length plus heat-only shade proxy
+    evidence such as NParks greenery. Shade evidence must not be counted as rain
+    shelter.
     """
     if total_m <= 0:
         return 100.0
     return max(0.0, min(100.0, (sheltered_m / total_m) * 100.0))
 
 
-def score_crossing_friction(num_at_grade_crossings: int, params: Dict[str, Any]) -> float:
+def score_crossing_friction(num_at_grade_crossings: int, params: dict[str, Any]) -> float:
     """
     Score crossing friction. Subtracts penalty per crossing.
     Floors at 0 (e.g. 6+ crossings floor if penalty is 20).
@@ -93,8 +96,8 @@ def score_crossing_friction(num_at_grade_crossings: int, params: Dict[str, Any])
 
 
 def calculate_composite_score(
-    subscores: Dict[str, Union[float, str]], weights: Dict[str, float]
-) -> Union[float, str]:
+    subscores: dict[str, float | str], weights: dict[str, float]
+) -> float | str:
     """
     Calculate exact weighted sum of subscores.
     If transit_access is NO_TRANSIT_IN_RANGE, composite is NO_TRANSIT_IN_RANGE.
