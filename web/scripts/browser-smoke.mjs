@@ -470,7 +470,7 @@ function collectChecks(summary, postal, inputMode, expectedState, transitMode, r
       ...checks,
       score_has_max_denominator: hasScore,
       transit_legend_present: summary.cardText.includes("MRT/LRT") && summary.cardText.includes("Bus stop"),
-      route_mode_present: summary.cardText.includes("Shiokest"),
+      route_mode_present: summary.cardText.includes("Shiokest") || summary.cardText.includes("Direct bus estimate"),
     };
   }
   if (expectedState === "no_transit") {

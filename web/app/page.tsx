@@ -552,24 +552,28 @@ function InlineRouteLegend({
         <i className={directBusFallback ? styles.directBusLine : styles.shiokestLine} />
         {directBusFallback ? "Direct bus estimate" : "Shiokest"}
       </span>
-      {!sameRoute && !directBusFallback && (
-        <span>
-          <i className={styles.shortestLine} />
-          Shortest
-        </span>
+      {!directBusFallback && (
+        <>
+          {!sameRoute && (
+            <span>
+              <i className={styles.shortestLine} />
+              Shortest
+            </span>
+          )}
+          <span>
+            <i className={styles.gapLine} />
+            Exposed
+          </span>
+          <span>
+            <i className={styles.hdbLine} />
+            HDB inferred
+          </span>
+          <span>
+            <i className={styles.bridgeLine} />
+            Bridge/underpass
+          </span>
+        </>
       )}
-      <span>
-        <i className={styles.gapLine} />
-        Exposed
-      </span>
-      <span>
-        <i className={styles.hdbLine} />
-        HDB inferred
-      </span>
-      <span>
-        <i className={styles.bridgeLine} />
-        Bridge/underpass
-      </span>
       <span>
         <i className={styles.mrtDot} />
         MRT/LRT
@@ -738,7 +742,7 @@ function ScoreCard({
         </div>
       )}
 
-      {score.paths && (
+      {score.paths && !directBusFallback && (
         <RouteModeControl
           mode={routeMode}
           setMode={setRouteMode}
