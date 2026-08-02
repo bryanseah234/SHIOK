@@ -6,7 +6,7 @@
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit_before_this_evidence_update": "6a0e8a2"
+    "latest_pushed_commit_before_this_evidence_update": "3c8512f"
   },
   "live_bundle": {
     "bundle": "generated_20260802_bus_connector_tolerance_targeted",
@@ -96,6 +96,7 @@
     "production_deploy": {
       "ok": true,
       "deployment_url": "https://sgshiok-j71ji924c-theprawnvercel.vercel.app",
+      "ui_refresh_deployment_url": "https://sgshiok-gnmawq5t9-theprawnvercel.vercel.app",
       "production_url": "https://sgshiok.vercel.app/",
       "remote_manifest_status": 200,
       "remote_manifest_record_count": 124032,
@@ -158,7 +159,8 @@
     "bus_connector_targeted_refresh": "qa\\targeted_bundle_refresh_generated_20260802_bus_connector_targeted.json validated a superseded targeted refresh of 1449 active direct-bus fallback records. 64 moved from SCORED_PARTIAL to SCORED, 1384 stayed SCORED_PARTIAL, and 1 moved to NO_TRANSIT_IN_RANGE. The 557323 boundary regression is fixed in code by the 5 m coordinate tolerance, but the generated local bundle was removed after evidence capture to save disk space.",
     "bus_connector_tolerance_targeted_refresh": "qa\\targeted_bundle_refresh_generated_20260802_bus_connector_tolerance_targeted.json validated the regenerated targeted refresh after the tolerance fix. 70 moved from SCORED_PARTIAL to SCORED, 1379 stayed SCORED_PARTIAL, and 0 moved to NO_TRANSIT_IN_RANGE. Static validation, web tests, and production build passed.",
     "temporary_file_cleanup": "Removed reproducible caches, stale ignored web data bundles, and project __pycache__ folders; retained active web bundle generated_20260802_bus_connector_tolerance_targeted and previous bundle generated_20260801_direct_bus_all_targeted.",
-    "production_activation": "release-data-bundle deployed generated_20260802_bus_connector_tolerance_targeted, activated web/data-bundle.json, and preflight passed after updating root and web .vercelignore whitelists."
+    "production_activation": "release-data-bundle deployed generated_20260802_bus_connector_tolerance_targeted, activated web/data-bundle.json, and preflight passed after updating root and web .vercelignore whitelists.",
+    "production_browser_smoke_557323_after_ui_refresh": "qa/browser_smoke_production_557323_card_fit_20260802.json passed against https://sgshiok.vercel.app/. Live card shows 54/100, Direct bus estimate 303 m, and cardBottom 652.734375 within viewportBottom 667."
   },
   "not_done": [
     "Run broader keyboard-only and multi-postal mobile browser QA after activation.",

@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260802_bus_connector_tolerance_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit before this evidence update: `6a0e8a2` (`fix: default scoring to island graph`)
+- Latest pushed commit before this evidence update: `3c8512f` (`fix: compact direct bus mobile card`)
 
 ## Local Bundle State
 
@@ -77,11 +77,16 @@ Root directory: `web`
   debug artifact. Static bundle validation is green.
 - Production deploy succeeded through Vercel:
   `https://sgshiok-j71ji924c-theprawnvercel.vercel.app`.
+- Production UI refresh succeeded through Vercel:
+  `https://sgshiok-gnmawq5t9-theprawnvercel.vercel.app`.
 - Production manifest check passed:
   `https://sgshiok.vercel.app/data/generated_20260802_bus_connector_tolerance_targeted/manifest.json`
   returned HTTP 200 with 124,032 records.
 - Remote score shard check passed for `557323`: HTTP 200, `SCORED_PARTIAL`,
   total 54.2, `Blk 112`, `303.0 m`, selection radius `305.0 m`.
+- Production browser smoke passed for `557323`: live card shows `54/100`,
+  `Direct bus estimate 303 m`, and mobile card bottom `652.7` within a
+  `667 px` viewport.
 
 ## Prepared Next Postal Universe
 
@@ -118,6 +123,7 @@ Root directory: `web`
 - Launch-check local server cleanup: passed; stale-port guard now chooses a free port and stops child `next start` listeners.
 - OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 source-backed postal-to-transit samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
 - OneMap walk-validation collector dry-run: passed; `qa/onemap_validation_collect_dry_run_20260802.json` queued 2,000 requests, made 0 HTTP requests, and requires explicit `--confirm-onemap-collection` before external calls.
+- Production browser smoke for 557323 after UI refresh: passed.
 - OneMap walk-validation collection: passed as a collection job; `qa/onemap_validation_collect_report_20260802.json` made 2,000 HTTP requests, wrote 2,000 cache results, and returned `ok=true`.
 - OneMap walk-validation evaluation: failed launch gate honestly; `qa/onemap_validation_cached_report_20260802.json` has 1 invalid OneMap zero-distance result, median absolute delta 11.458% vs 10.0% max, and p95 absolute delta 94.037% vs 25.0% max. Cached evaluation command exits 1 because the gate remains failed. Direct-distance sanity: 20 `onemap_materially_shorter_than_direct`, 38 `onemap_slightly_shorter_than_direct`, and 1,941 `plausible`.
 - OneMap walk-validation failure classification: report now includes transit-type, direction, area, and top-outlier summaries with start/end coordinates. Bus-stop routes: 1,602 valid rows, median absolute delta 12.816%, p95 98.736%. MRT/LRT routes: 397 valid rows, median absolute delta 6.926%, p95 59.645%. Direction split: 922 project-longer-than-OneMap routes and 1,077 project-shorter-than-OneMap routes.
