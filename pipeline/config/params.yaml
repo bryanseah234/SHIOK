@@ -11,6 +11,11 @@ transit_access:
 bus_connectivity:
   routed_max_m: 250
   straight_line_candidate_m: 300
+  access_connector_search_m: 50
+  access_connector_max_candidates: 24
+  access_connector_max_walk_m: 300
+  access_connector_max_direct_ratio: 2.5
+  access_connector_max_extra_m: 100
   direct_fallback_detour_ratio: 3.0
   direct_fallback_min_extra_m: 100
   full_credit_wait_min: 2

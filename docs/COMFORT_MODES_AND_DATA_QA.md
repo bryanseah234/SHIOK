@@ -494,55 +494,63 @@ route effect; no score override has been applied.
   the committed replay artifacts below have been regenerated on the island
   graph. The widened `qa/onemap_validation_cached_report_20260802.json` keeps
   100 top outliers per direction. `qa/onemap_outlier_replay_bus_longer_100_20260802.json`
-  selects 92 bus-stop/project-longer/>25% rows; island-graph replay yields 49
+  selects 92 bus-stop/project-longer/>25% rows; island-graph replay yields 37
   best direct-bus fallback routes, 90 bus-stop best results, 2 MRT/LRT best
-  results, and 71 rows with the implausible-detour fallback reason.
+  results, and 63 rows with the implausible-detour fallback reason.
 - `qa/onemap_outlier_replay_shorter_100_20260802.json` selects 100
-  project-shorter/>25% rows across transit types; island-graph replay yields 14
+  project-shorter/>25% rows across transit types; island-graph replay yields 9
   best direct-bus fallback routes, 91 bus-stop best results, 9 MRT/LRT best
   results, and no unscored replay rows.
+- General bus-stop access connectors are now implemented for implausible bus
+  graph snaps. The scorer searches up to 50 m around the actual DataMall bus
+  stop, accepts only route+connector walks that remain within 300 m, within
+  2.5x straight-line distance, and within +100 m extra walk, then appends the
+  endpoint connector as an exposed `bus_stop_access_connector` edge with
+  `confidence=inferred_endpoint_snap`. It does not mark the connector as
+  sheltered and does not silently snap the stop without counting the extra walk.
 - `qa/onemap_outlier_replay_shorter_profile_100_20260802.json` reruns that
-  project-shorter queue with route-source profiles. Of 100 best-route rows, 14
+  project-shorter queue with route-source profiles. Of 100 best-route rows, 9
   contain direct-bus fallback, 18 contain inferred HDB edges, 28 contain OSM
   shelter, and 6 contain overhead bridge/underpass. Best-route source lengths
-  are led by unknown base network edges (14,927.7 m), direct-bus fallback
-  (2,586.6 m), OSM native covered edges (1,388.2 m), inferred HDB precinct
-  (889.4 m), and overhead bridge/underpass (425.8 m).
+  are led by unknown base network edges (15,559.6 m), direct-bus fallback
+  (1,896.3 m), OSM native covered edges (1,388.2 m), inferred HDB precinct
+  (889.4 m), and overhead bridge/underpass (425.8 m). The new
+  `bus_stop_access_connector` layer contributes 227.6 m.
 - `qa/onemap_outlier_replay_bus_longer_profile_100_20260802.json` profiles the
-  bus-stop/project-longer queue. Of 92 best-route rows, 49 contain direct-bus
+  bus-stop/project-longer queue. Of 92 best-route rows, 37 contain direct-bus
   fallback, 19 contain inferred HDB edges, 17 contain OSM shelter, and 2 contain
   overhead bridge/underpass. Best-route source lengths are led by unknown base
-  network edges (10,411.9 m), direct-bus fallback (5,978.6 m), OSM native
+  network edges (10,986.6 m), direct-bus fallback (5,051.2 m), OSM native
   covered edges (1,664.8 m), inferred HDB precinct (1,113.4 m), and inferred HDB
-  point footway (577.9 m).
+  point footway (632.1 m). The new `bus_stop_access_connector` layer contributes
+  479.0 m.
 - `uv run python run.py onemap-outlier-triage --output
   qa\onemap_outlier_triage_queues_20260802.json` converts those profiled replay
   artifacts into concrete QA queues without calling OneMap or rescoring. It
   read 192 island-graph replay rows, enriched them from
-  `qa/onemap_validation_cached_report_20260802.json`, and emitted 71
-  `missing_bus_connector` cases, 102 `direct_bus_fallback_review` cases, 100
-  `possible_overpermissive_project_path` cases, 13 `mrt_lrt_outlier` cases, 44
+  `qa/onemap_validation_cached_report_20260802.json`, and emitted 37
+  `missing_bus_connector` cases, 89 `direct_bus_fallback_review` cases, 100
+  `possible_overpermissive_project_path` cases, 13 `mrt_lrt_outlier` cases, 45
   `hdb_bridge_connector_review` cases, and 0 `still_unscored_or_no_best` cases.
   `qa/onemap_outlier_triage_queues_20260802.geojson` contains 368 start/end line
-  features for map inspection. The `missing_bus_connector` queue has 55
-  plausible validation distances, 9 materially shorter-than-direct OneMap
-  distances, and 7 slightly shorter-than-direct OneMap distances. This is the
+  features for map inspection. The `missing_bus_connector` queue has 29
+  plausible validation distances, 4 materially shorter-than-direct OneMap
+  distances, and 4 slightly shorter-than-direct OneMap distances. This is the
   next worklist for targeted geometry/model QA before any full rescore.
 - `qa/onemap_missing_bus_connector_priority_20260802.geojson` narrows the first
-  QA pass to 39 strict `missing_bus_connector` rows where both the OneMap
+  QA pass to 19 strict `missing_bus_connector` rows where both the OneMap
   distance and the current routed/fallback distance are plausible against direct
   distance. Rows where the current fallback is materially shorter than the
   validation straight line are held back for endpoint-drift/wrong-stop review.
-  Top examples: `530535` to `Blk 535`, `760103` to `Aft Chong Pang CC`,
-  `678069` to `Bef Hillview Stn Exit B`, `417092` to `Opp Hong San Si Tp`, and
-  `559038` to `Opp Brockhampton Dr`.
-- `uv run python run.py bus-connector-diagnostics` diagnoses the 39 priority
-  rows on `processed/network_island.parquet`. Current route states: 30
-  `implausible_detour`, 9 `routable`. Diagnostic classes: 19
-  `alternate_bus_snap_candidate`, 14 `changed_stop_between_validation_and_replay`,
-  and 6 `current_routable`. This supports a potential general bus-stop access
-  connector fix, but only if the connector length is counted as exposed route
-  evidence; silently switching to a nearby graph node would be dishonest.
+  Top examples: `530535` to `Blk 535`, `417092` to `Opp Hong San Si Tp`,
+  `534317` to `Raya Gdn`, `637814` to `Aft Tuas Sth St 2`, and `320087` to
+  `Blk 82`.
+- `uv run python run.py bus-connector-diagnostics` diagnoses the 19 priority
+  rows on `processed/network_island.parquet`. Current route states: 16
+  `implausible_detour`, 3 `routable`. Diagnostic classes: 15
+  `alternate_bus_snap_candidate` and 4 `changed_stop_between_validation_and_replay`.
+  These are the remaining bus-connector QA rows after the general exposed
+  connector model has already fixed the plausible short-connector cases.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

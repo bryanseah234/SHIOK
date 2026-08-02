@@ -760,6 +760,157 @@ def bus_route_should_use_direct_fallback(
     return routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m
 
 
+def merge_with_connector_geometry(route_geometry: Any, connector: LineString) -> Any:
+    if route_geometry is None or getattr(route_geometry, "is_empty", False):
+        return connector
+    geometries = (
+        list(route_geometry.geoms)
+        if isinstance(route_geometry, MultiLineString)
+        else [route_geometry]
+    )
+    return linemerge(MultiLineString([*geometries, connector]))
+
+
+def route_with_bus_stop_access_connector(
+    route_result: dict[str, Any],
+    candidate: CandidateNode,
+) -> dict[str, Any]:
+    if candidate.point_xy is None:
+        raise ValueError("bus stop connector requires candidate.point_xy")
+
+    destination = route_result["destination"]
+    stop_xy = (float(candidate.point_xy[0]), float(candidate.point_xy[1]))
+    connector = LineString([(float(destination[0]), float(destination[1])), stop_xy])
+    connector_m = float(connector.length)
+    connector_edge = {
+        "length_m": connector_m,
+        "is_covered": False,
+        "geometry": connector,
+        "source_layer": "bus_stop_access_connector",
+        "synth_class": "BUS_STOP_ACCESS_CONNECTOR",
+        "confidence": "inferred_endpoint_snap",
+    }
+
+    shortest_base_m = float(route_result["shortest_length_m"])
+    sheltered_base_m = float(route_result["length_m"])
+    covered_m = float(route_result["covered_m"])
+    shade_m = float(route_result.get("shade_m") or 0.0)
+    shortest_covered_m = shortest_base_m * float(route_result["shortest_covered_ratio"])
+    shortest_shade_m = float(route_result.get("shortest_shade_m") or 0.0)
+    shortest_total_m = shortest_base_m + connector_m
+    sheltered_total_m = sheltered_base_m + connector_m
+
+    attached = dict(route_result)
+    attached.update(
+        {
+            "destination": candidate.graph_node,
+            "routing_type": f"{route_result['routing_type']}_with_bus_stop_access_connector",
+            "length_m": sheltered_total_m,
+            "covered_m": covered_m,
+            "covered_ratio": covered_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shade_m": shade_m,
+            "shade_ratio": shade_m / sheltered_total_m if sheltered_total_m > 0 else 0.0,
+            "shortest_length_m": shortest_total_m,
+            "shortest_covered_ratio": (
+                shortest_covered_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "shortest_shade_m": shortest_shade_m,
+            "shortest_shade_ratio": (
+                shortest_shade_m / shortest_total_m if shortest_total_m > 0 else 0.0
+            ),
+            "sheltered_length_m": (
+                float(route_result["sheltered_length_m"]) + connector_m
+                if route_result.get("sheltered_length_m") is not None
+                else None
+            ),
+            "bus_stop_access_connector_m": connector_m,
+        }
+    )
+
+    shortest_edges = [*route_result.get("shortest_path_edges", []), connector_edge]
+    sheltered_edges = [*route_result.get("sheltered_path_edges", []), connector_edge]
+    attached["shortest_path_edges"] = shortest_edges
+    attached["sheltered_path_edges"] = sheltered_edges
+    attached["path_edges"] = sheltered_edges
+    attached["shortest_geometry"] = merge_with_connector_geometry(
+        route_result.get("shortest_geometry"), connector
+    )
+    attached["geometry"] = merge_with_connector_geometry(route_result.get("geometry"), connector)
+    return attached
+
+
+def bus_access_connector_is_plausible(
+    candidate: CandidateNode,
+    connector_route: dict[str, Any],
+    bus_params: dict[str, Any],
+) -> bool:
+    total_m = float(connector_route["shortest_length_m"])
+    direct_m = float(candidate.straight_line_m)
+    if direct_m <= 0:
+        return False
+    max_walk_m = float(
+        bus_params.get(
+            "access_connector_max_walk_m",
+            bus_params.get("straight_line_candidate_m", 300.0),
+        )
+    )
+    max_ratio = float(bus_params.get("access_connector_max_direct_ratio", 2.5))
+    max_extra_m = float(bus_params.get("access_connector_max_extra_m", 100.0))
+    return (
+        total_m <= max_walk_m
+        and total_m <= direct_m * max_ratio
+        and (total_m - direct_m) <= max_extra_m
+    )
+
+
+def build_bus_stop_access_connector_route(
+    *,
+    candidate: CandidateNode,
+    origin_node: tuple[float, float],
+    routing_graph: RoutingGraph,
+    nodes: list[tuple[float, float]],
+    node_xy: np.ndarray,
+    params: dict[str, Any],
+) -> dict[str, Any] | None:
+    if candidate.node_type != "bus_stop" or candidate.point_xy is None:
+        return None
+    bus_params = params["bus_connectivity"]
+    search_m = float(bus_params.get("access_connector_search_m", 0.0))
+    if search_m <= 0:
+        return None
+    stop_array = np.asarray(candidate.point_xy, dtype=float)
+    deltas = node_xy - stop_array
+    distances = np.sqrt(np.einsum("ij,ij->i", deltas, deltas))
+    indices = np.flatnonzero(distances <= search_m)
+    if len(indices) == 0:
+        return None
+
+    max_candidates = int(bus_params.get("access_connector_max_candidates", 24))
+    ordered = sorted((float(distances[index]), int(index)) for index in indices)[:max_candidates]
+    destinations = [nodes[index] for _, index in ordered if nodes[index] != candidate.graph_node]
+    if not destinations:
+        return None
+
+    alternate_routes = routing_graph.route(
+        {origin_node: destinations},
+        float(params["shelter_lambda"]),
+        float(params["detour_budget"]),
+        include_geometry=True,
+    )
+    attached_routes = [
+        route_with_bus_stop_access_connector(route_result, candidate)
+        for route_result in alternate_routes
+    ]
+    plausible = [
+        route
+        for route in attached_routes
+        if bus_access_connector_is_plausible(candidate, route, bus_params)
+    ]
+    if not plausible:
+        return None
+    return min(plausible, key=lambda route: float(route["shortest_length_m"]))
+
+
 def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, float]:
     return (
         float(candidate_score["total"]),
@@ -1243,6 +1394,7 @@ def score_postal_row(
     candidate_scores = []
     implausible_bus_candidates: list[CandidateNode] = []
     implausible_bus_route_distances: list[float] = []
+    bus_access_connector_rows: list[dict[str, Any]] = []
     for route_result in route_results:
         crossing_count = crossing_counter.count_for_route(route_result.get("geometry"))
         for candidate in candidate_by_destination[route_result["destination"]]:
@@ -1251,6 +1403,48 @@ def score_postal_row(
                 route_result,
                 params["bus_connectivity"],
             ):
+                connector_route = build_bus_stop_access_connector_route(
+                    candidate=candidate,
+                    origin_node=origin_node,
+                    routing_graph=routing_graph,
+                    nodes=nodes,
+                    node_xy=node_xy,
+                    params=params,
+                )
+                if connector_route is not None:
+                    connector_crossings = crossing_counter.count_for_route(
+                        connector_route.get("geometry")
+                    )
+                    connector_routed_m = float(connector_route["shortest_length_m"])
+                    routed_bus_wait = (
+                        candidate.expected_wait_min
+                        if connector_routed_m <= float(params["bus_connectivity"]["routed_max_m"])
+                        else bus_result.expected_wait_min if bus_result else None
+                    )
+                    candidate_scores.append(
+                        score_candidate_route(
+                            candidate,
+                            connector_route,
+                            params,
+                            weights,
+                            connector_crossings,
+                            bus_expected_wait_min=routed_bus_wait,
+                            bus_data_available=bus_data_available,
+                            include_geometry=include_geometry,
+                        )
+                    )
+                    bus_access_connector_rows.append(
+                        {
+                            "name": candidate.name,
+                            "bus_stop_code": candidate.exit_code,
+                            "direct_m": round(float(candidate.straight_line_m), 1),
+                            "routed_m": round(connector_routed_m, 1),
+                            "connector_m": round(
+                                float(connector_route["bus_stop_access_connector_m"]), 1
+                            ),
+                        }
+                    )
+                    continue
                 implausible_bus_candidates.append(candidate)
                 implausible_bus_route_distances.append(float(route_result["shortest_length_m"]))
                 continue
@@ -1266,6 +1460,31 @@ def score_postal_row(
                     include_geometry=include_geometry,
                 )
             )
+
+    if bus_access_connector_rows:
+        bus_params = params["bus_connectivity"]
+        provenance["bus_stop_access_connector"] = {
+            "reason": "implausible_bus_stop_graph_snap_replaced_by_nearby_graph_route_plus_exposed_connector",
+            "candidate_count": len(bus_access_connector_rows),
+            "search_m": round(float(bus_params.get("access_connector_search_m", 0.0)), 1),
+            "max_candidates": int(bus_params.get("access_connector_max_candidates", 24)),
+            "max_walk_m": round(
+                float(
+                    bus_params.get(
+                        "access_connector_max_walk_m",
+                        bus_params.get("straight_line_candidate_m", 300.0),
+                    )
+                ),
+                1,
+            ),
+            "max_direct_ratio": round(
+                float(bus_params.get("access_connector_max_direct_ratio", 2.5)), 3
+            ),
+            "max_extra_m": round(float(bus_params.get("access_connector_max_extra_m", 100.0)), 1),
+            "geometry": "graph_route_plus_exposed_endpoint_connector_to_datamall_bus_stop",
+            "source_layer": "bus_stop_access_connector",
+            "examples": bus_access_connector_rows[:5],
+        }
 
     if implausible_bus_candidates:
         fallback_scores = direct_bus_fallback_candidate_scores(

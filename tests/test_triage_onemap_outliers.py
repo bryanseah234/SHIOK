@@ -34,6 +34,25 @@ def test_classify_row_flags_project_longer_direct_bus_as_missing_connector():
     ]
 
 
+def test_classify_row_keeps_connector_fixed_bus_out_of_missing_connector_queue():
+    row = {
+        "postal": "760103",
+        "old_direction": "project_longer_than_onemap",
+        "new_best_type": "bus_stop",
+        "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+        "direct_bus_fallback_reason": (
+            "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+        ),
+        "new_best_route_profile": profile(
+            direct_bus_fallback_m=0.0,
+            bus_stop_access_connector_m=45.1,
+            source_layer_m={"bus_stop_access_connector": 45.1},
+        ),
+    }
+
+    assert classify_row(row) == ["direct_bus_fallback_review"]
+
+
 def test_classify_row_flags_shorter_hdb_path_for_overpermissive_review():
     row = {
         "postal": "123456",
@@ -91,6 +110,7 @@ def test_source_flags_keeps_compact_top_source_lengths():
 
     assert flags["best_inferred_hdb_m"] == 10.0
     assert flags["best_bridge_underpass_m"] == 5.0
+    assert flags["best_bus_stop_access_connector_m"] == 0.0
     assert list(flags["best_top_source_layer_m"]) == [
         "unknown",
         "inferred_hdb_precinct",

@@ -124,6 +124,15 @@ def has_direct_bus_fallback(row: dict[str, Any]) -> bool:
     )
 
 
+def has_active_direct_bus_fallback_route(row: dict[str, Any]) -> bool:
+    return (
+        row.get("new_best_routing_type") == DIRECT_BUS_FALLBACK_ROUTING
+        or row.get("new_bus_routing_type") == DIRECT_BUS_FALLBACK_ROUTING
+        or profile_m(row, "direct_bus_fallback_m") > 0
+        or profile_m(row, "direct_bus_fallback_m", "new_bus_route_profile") > 0
+    )
+
+
 def looks_like_mrt_lrt(row: dict[str, Any]) -> bool:
     if row.get("new_best_type") == "mrt_lrt_exit":
         return True
@@ -171,8 +180,10 @@ def source_flags(row: dict[str, Any]) -> dict[str, Any]:
         "best_bridge_underpass_m": metric("bridge_underpass_m"),
         "best_official_lta_shelter_m": metric("official_lta_shelter_m"),
         "best_osm_shelter_m": metric("osm_shelter_m"),
+        "best_bus_stop_access_connector_m": metric("bus_stop_access_connector_m"),
         "best_top_source_layer_m": top_lengths(best.get("source_layer_m")),
         "bus_direct_bus_fallback_m": bus_metric("direct_bus_fallback_m"),
+        "bus_bus_stop_access_connector_m": bus_metric("bus_stop_access_connector_m"),
         "bus_top_source_layer_m": top_lengths(bus.get("source_layer_m")),
     }
 
@@ -183,7 +194,7 @@ def classify_row(row: dict[str, Any]) -> list[str]:
 
     if has_direct_bus_fallback(row):
         queues.append("direct_bus_fallback_review")
-        if direction == "project_longer_than_onemap":
+        if direction == "project_longer_than_onemap" and has_active_direct_bus_fallback_route(row):
             queues.append("missing_bus_connector")
 
     if direction == "project_shorter_than_onemap":

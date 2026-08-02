@@ -1,97 +1,103 @@
 {
   "fallback_reason_counts": {
-    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 71,
-    "none": 21
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 63,
+    "none": 29
   },
-  "generated_at": "2026-08-02T03:10:27.368726+00:00",
+  "generated_at": "2026-08-02T03:41:57.790942+00:00",
   "network": "processed\\network_island.parquet",
-  "new_best_direct_bus_fallback_count": 49,
+  "new_best_direct_bus_fallback_count": 37,
   "new_best_type_counts": {
     "bus_stop": 90,
     "mrt_lrt_exit": 2
   },
-  "new_bus_direct_bus_fallback_count": 49,
+  "new_bus_direct_bus_fallback_count": 37,
   "postal_universe": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
   "route_source_profile_summary": {
     "new_best_shortest": {
       "confidence_m": {
         "inferred": 1380.9,
+        "inferred_endpoint_snap": 479.0,
         "inferred_existing_pedestrian_edge": 23.0,
-        "inferred_existing_pedestrian_edge_point_proxy": 577.9,
+        "inferred_existing_pedestrian_edge_point_proxy": 632.1,
         "osm_tag": 1664.8,
-        "partial_unrouted": 5978.6,
+        "partial_unrouted": 5051.2,
         "source_polygon_match": 211.6,
-        "unknown": 10411.9
+        "unknown": 10986.6
       },
-      "covered_m": 3858.3,
-      "exposed_m": 16390.5,
+      "covered_m": 3912.5,
+      "exposed_m": 16516.8,
       "flag_row_counts": {
         "bridge_underpass_m": 2,
-        "direct_bus_fallback_m": 49,
-        "inferred_hdb_m": 19,
+        "direct_bus_fallback_m": 37,
+        "inferred_hdb_m": 20,
         "official_lta_shelter_m": 3,
         "osm_shelter_m": 17
       },
       "profiled_rows": 92,
       "source_layer_m": {
+        "bus_stop_access_connector": 479.0,
         "covered_linkway": 81.0,
-        "direct_bus_fallback": 5978.6,
-        "inferred_hdb_point_footway": 577.9,
+        "direct_bus_fallback": 5051.2,
+        "inferred_hdb_point_footway": 632.1,
         "inferred_hdb_precinct": 1113.4,
         "inferred_hdb_precinct_footway": 23.0,
         "inferred_hdb_void_deck": 267.5,
         "osm_explicit_shelter": 25.5,
         "osm_native_covered": 1664.8,
         "overhead_bridge_underpass": 105.1,
-        "unknown": 10411.9
+        "unknown": 10986.6
       },
       "synth_class_m": {
+        "BUS_STOP_ACCESS_CONNECTOR": 479.0,
         "INFERRED_HDB_PRECINCT_CONNECTOR": 1113.4,
         "INFERRED_HDB_VOID_DECK_ANCHOR": 267.5,
-        "none": 12889.5,
-        "unrouted_straight_line": 5978.6
+        "none": 13518.4,
+        "unrouted_straight_line": 5051.2
       },
-      "total_m": 20248.9
+      "total_m": 20429.5
     },
     "new_bus_shortest": {
       "confidence_m": {
         "inferred": 1339.4,
+        "inferred_endpoint_snap": 479.0,
         "inferred_existing_pedestrian_edge": 23.0,
-        "inferred_existing_pedestrian_edge_point_proxy": 577.9,
+        "inferred_existing_pedestrian_edge_point_proxy": 632.1,
         "osm_tag": 1509.0,
-        "partial_unrouted": 5978.6,
+        "partial_unrouted": 5051.2,
         "source_polygon_match": 207.4,
-        "unknown": 9799.8
+        "unknown": 10374.5
       },
-      "covered_m": 3656.8,
-      "exposed_m": 15778.4,
+      "covered_m": 3711.0,
+      "exposed_m": 15904.7,
       "flag_row_counts": {
         "bridge_underpass_m": 2,
-        "direct_bus_fallback_m": 49,
-        "inferred_hdb_m": 18,
+        "direct_bus_fallback_m": 37,
+        "inferred_hdb_m": 19,
         "official_lta_shelter_m": 3,
         "osm_shelter_m": 16
       },
       "profiled_rows": 92,
       "source_layer_m": {
+        "bus_stop_access_connector": 479.0,
         "covered_linkway": 81.0,
-        "direct_bus_fallback": 5978.6,
-        "inferred_hdb_point_footway": 577.9,
+        "direct_bus_fallback": 5051.2,
+        "inferred_hdb_point_footway": 632.1,
         "inferred_hdb_precinct": 1071.9,
         "inferred_hdb_precinct_footway": 23.0,
         "inferred_hdb_void_deck": 267.5,
         "osm_explicit_shelter": 21.3,
         "osm_native_covered": 1509.0,
         "overhead_bridge_underpass": 105.1,
-        "unknown": 9799.8
+        "unknown": 10374.5
       },
       "synth_class_m": {
+        "BUS_STOP_ACCESS_CONNECTOR": 479.0,
         "INFERRED_HDB_PRECINCT_CONNECTOR": 1071.9,
         "INFERRED_HDB_VOID_DECK_ANCHOR": 267.5,
-        "none": 12117.4,
-        "unrouted_straight_line": 5978.6
+        "none": 12746.3,
+        "unrouted_straight_line": 5051.2
       },
-      "total_m": 19435.3
+      "total_m": 19615.9
     }
   },
   "rows": [
@@ -541,103 +547,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Blk 991B",
+      "new_best_name": "Opp Blk 991B",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 122.5
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 64.6
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 122.5,
-          "edge_count": 1,
-          "exposed_m": 122.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 9,
+          "exposed_m": 109.2,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 122.5
+            "bus_stop_access_connector": 44.6,
+            "unknown": 64.6
           },
           "synth_class_m": {
-            "unrouted_straight_line": 122.5
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 64.6
           },
-          "total_m": 122.5
+          "total_m": 109.2
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 122.5
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 64.6
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 122.5,
-          "edge_count": 1,
-          "exposed_m": 122.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 9,
+          "exposed_m": 109.2,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 122.5
+            "bus_stop_access_connector": 44.6,
+            "unknown": 64.6
           },
           "synth_class_m": {
-            "unrouted_straight_line": 122.5
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 64.6
           },
-          "total_m": 122.5
+          "total_m": 109.2
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 122.5,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 109.2,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 122.5
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 64.6
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 122.5,
-          "edge_count": 1,
-          "exposed_m": 122.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 9,
+          "exposed_m": 109.2,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 122.5
+            "bus_stop_access_connector": 44.6,
+            "unknown": 64.6
           },
           "synth_class_m": {
-            "unrouted_straight_line": 122.5
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 64.6
           },
-          "total_m": 122.5
+          "total_m": 109.2
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 122.5
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 64.6
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 122.5,
-          "edge_count": 1,
-          "exposed_m": 122.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 9,
+          "exposed_m": 109.2,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 122.5
+            "bus_stop_access_connector": 44.6,
+            "unknown": 64.6
           },
           "synth_class_m": {
-            "unrouted_straight_line": 122.5
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 64.6
           },
-          "total_m": 122.5
+          "total_m": 109.2
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 122.5,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 109.2,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 59.1,
       "old_abs_pct_delta": 1289.844,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 64.0,
@@ -758,98 +776,110 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 28.6
+            "inferred_endpoint_snap": 45.1,
+            "unknown": 4.0
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 28.6,
-          "edge_count": 1,
-          "exposed_m": 28.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 49.1,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 28.6
+            "bus_stop_access_connector": 45.1,
+            "unknown": 4.0
           },
           "synth_class_m": {
-            "unrouted_straight_line": 28.6
+            "BUS_STOP_ACCESS_CONNECTOR": 45.1,
+            "none": 4.0
           },
-          "total_m": 28.6
+          "total_m": 49.1
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 28.6
+            "inferred_endpoint_snap": 45.1,
+            "unknown": 4.0
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 28.6,
-          "edge_count": 1,
-          "exposed_m": 28.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 49.1,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 28.6
+            "bus_stop_access_connector": 45.1,
+            "unknown": 4.0
           },
           "synth_class_m": {
-            "unrouted_straight_line": 28.6
+            "BUS_STOP_ACCESS_CONNECTOR": 45.1,
+            "none": 4.0
           },
-          "total_m": 28.6
+          "total_m": 49.1
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 28.6,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 49.1,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 28.6
+            "inferred_endpoint_snap": 45.1,
+            "unknown": 4.0
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 28.6,
-          "edge_count": 1,
-          "exposed_m": 28.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 49.1,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 28.6
+            "bus_stop_access_connector": 45.1,
+            "unknown": 4.0
           },
           "synth_class_m": {
-            "unrouted_straight_line": 28.6
+            "BUS_STOP_ACCESS_CONNECTOR": 45.1,
+            "none": 4.0
           },
-          "total_m": 28.6
+          "total_m": 49.1
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 28.6
+            "inferred_endpoint_snap": 45.1,
+            "unknown": 4.0
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 28.6,
-          "edge_count": 1,
-          "exposed_m": 28.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 49.1,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 28.6
+            "bus_stop_access_connector": 45.1,
+            "unknown": 4.0
           },
           "synth_class_m": {
-            "unrouted_straight_line": 28.6
+            "BUS_STOP_ACCESS_CONNECTOR": 45.1,
+            "none": 4.0
           },
-          "total_m": 28.6
+          "total_m": 49.1
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 28.6,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 49.1,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 60.0,
       "old_abs_pct_delta": 667.619,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 42.0,
@@ -970,98 +1000,110 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 51.9
+            "inferred_endpoint_snap": 16.0,
+            "unknown": 32.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 51.9,
-          "edge_count": 1,
-          "exposed_m": 51.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 48.5,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 51.9
+            "bus_stop_access_connector": 16.0,
+            "unknown": 32.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 51.9
+            "BUS_STOP_ACCESS_CONNECTOR": 16.0,
+            "none": 32.4
           },
-          "total_m": 51.9
+          "total_m": 48.5
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 51.9
+            "inferred_endpoint_snap": 16.0,
+            "unknown": 32.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 51.9,
-          "edge_count": 1,
-          "exposed_m": 51.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 48.5,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 51.9
+            "bus_stop_access_connector": 16.0,
+            "unknown": 32.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 51.9
+            "BUS_STOP_ACCESS_CONNECTOR": 16.0,
+            "none": 32.4
           },
-          "total_m": 51.9
+          "total_m": 48.5
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 51.9,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 48.5,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 51.9
+            "inferred_endpoint_snap": 16.0,
+            "unknown": 32.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 51.9,
-          "edge_count": 1,
-          "exposed_m": 51.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 48.5,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 51.9
+            "bus_stop_access_connector": 16.0,
+            "unknown": 32.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 51.9
+            "BUS_STOP_ACCESS_CONNECTOR": 16.0,
+            "none": 32.4
           },
-          "total_m": 51.9
+          "total_m": 48.5
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 51.9
+            "inferred_endpoint_snap": 16.0,
+            "unknown": 32.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 51.9,
-          "edge_count": 1,
-          "exposed_m": 51.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 48.5,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 51.9
+            "bus_stop_access_connector": 16.0,
+            "unknown": 32.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 51.9
+            "BUS_STOP_ACCESS_CONNECTOR": 16.0,
+            "none": 32.4
           },
-          "total_m": 51.9
+          "total_m": 48.5
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 51.9,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 48.5,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 60.0,
       "old_abs_pct_delta": 466.771,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 96.0,
@@ -1510,101 +1552,113 @@
       "postal": "417092"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Opp Brockhampton Dr",
+      "direct_bus_fallback_reason": null,
+      "new_best_name": "Aft Corfe Pl",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "unknown": 321.2
+            "inferred_endpoint_snap": 9.3,
+            "unknown": 39.1
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
           "direct_bus_fallback_m": 0.0,
-          "edge_count": 18,
-          "exposed_m": 321.2,
+          "edge_count": 2,
+          "exposed_m": 48.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "unknown": 321.2
+            "bus_stop_access_connector": 9.3,
+            "unknown": 39.1
           },
           "synth_class_m": {
-            "none": 321.2
+            "BUS_STOP_ACCESS_CONNECTOR": 9.3,
+            "none": 39.1
           },
-          "total_m": 321.2
+          "total_m": 48.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "unknown": 321.2
+            "inferred_endpoint_snap": 9.3,
+            "unknown": 39.1
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
           "direct_bus_fallback_m": 0.0,
-          "edge_count": 18,
-          "exposed_m": 321.2,
+          "edge_count": 2,
+          "exposed_m": 48.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "unknown": 321.2
+            "bus_stop_access_connector": 9.3,
+            "unknown": 39.1
           },
           "synth_class_m": {
-            "none": 321.2
+            "BUS_STOP_ACCESS_CONNECTOR": 9.3,
+            "none": 39.1
           },
-          "total_m": 321.2
+          "total_m": 48.4
         }
       },
-      "new_best_routing_type": "sheltered",
-      "new_best_shortest_m": 321.2,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 48.4,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "unknown": 321.2
+            "inferred_endpoint_snap": 9.3,
+            "unknown": 39.1
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
           "direct_bus_fallback_m": 0.0,
-          "edge_count": 18,
-          "exposed_m": 321.2,
+          "edge_count": 2,
+          "exposed_m": 48.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "unknown": 321.2
+            "bus_stop_access_connector": 9.3,
+            "unknown": 39.1
           },
           "synth_class_m": {
-            "none": 321.2
+            "BUS_STOP_ACCESS_CONNECTOR": 9.3,
+            "none": 39.1
           },
-          "total_m": 321.2
+          "total_m": 48.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "unknown": 321.2
+            "inferred_endpoint_snap": 9.3,
+            "unknown": 39.1
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
           "direct_bus_fallback_m": 0.0,
-          "edge_count": 18,
-          "exposed_m": 321.2,
+          "edge_count": 2,
+          "exposed_m": 48.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "unknown": 321.2
+            "bus_stop_access_connector": 9.3,
+            "unknown": 39.1
           },
           "synth_class_m": {
-            "none": 321.2
+            "BUS_STOP_ACCESS_CONNECTOR": 9.3,
+            "none": 39.1
           },
-          "total_m": 321.2
+          "total_m": 48.4
         }
       },
-      "new_bus_routing_type": "sheltered",
-      "new_bus_shortest_m": 321.2,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 48.4,
       "new_bus_state": "SCORED",
       "new_state": "SCORED",
       "new_total": 57.3,
@@ -1728,98 +1782,110 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 45.5
+            "inferred_endpoint_snap": 43.1,
+            "unknown": 59.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 45.5,
-          "edge_count": 1,
-          "exposed_m": 45.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 102.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 45.5
+            "bus_stop_access_connector": 43.1,
+            "unknown": 59.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 45.5
+            "BUS_STOP_ACCESS_CONNECTOR": 43.1,
+            "none": 59.3
           },
-          "total_m": 45.5
+          "total_m": 102.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 45.5
+            "inferred_endpoint_snap": 43.1,
+            "unknown": 59.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 45.5,
-          "edge_count": 1,
-          "exposed_m": 45.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 102.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 45.5
+            "bus_stop_access_connector": 43.1,
+            "unknown": 59.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 45.5
+            "BUS_STOP_ACCESS_CONNECTOR": 43.1,
+            "none": 59.3
           },
-          "total_m": 45.5
+          "total_m": 102.4
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 45.5,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 102.4,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 45.5
+            "inferred_endpoint_snap": 43.1,
+            "unknown": 59.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 45.5,
-          "edge_count": 1,
-          "exposed_m": 45.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 102.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 45.5
+            "bus_stop_access_connector": 43.1,
+            "unknown": 59.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 45.5
+            "BUS_STOP_ACCESS_CONNECTOR": 43.1,
+            "none": 59.3
           },
-          "total_m": 45.5
+          "total_m": 102.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 45.5
+            "inferred_endpoint_snap": 43.1,
+            "unknown": 59.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 45.5,
-          "edge_count": 1,
-          "exposed_m": 45.5,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 102.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 45.5
+            "bus_stop_access_connector": 43.1,
+            "unknown": 59.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 45.5
+            "BUS_STOP_ACCESS_CONNECTOR": 43.1,
+            "none": 59.3
           },
-          "total_m": 45.5
+          "total_m": 102.4
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 45.5,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 49.6,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 102.4,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 54.6,
       "old_abs_pct_delta": 366.802,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 197.0,
@@ -2062,98 +2128,118 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 123.3
+            "inferred_endpoint_snap": 42.7,
+            "inferred_existing_pedestrian_edge_point_proxy": 54.2,
+            "unknown": 58.3
           },
-          "covered_m": 0.0,
-          "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 123.3,
-          "edge_count": 1,
-          "exposed_m": 123.3,
-          "inferred_hdb_m": 0.0,
+          "covered_m": 54.2,
+          "covered_ratio": 0.349,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 100.9,
+          "inferred_hdb_m": 54.2,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 123.3
+            "bus_stop_access_connector": 42.7,
+            "inferred_hdb_point_footway": 54.2,
+            "unknown": 58.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 123.3
+            "BUS_STOP_ACCESS_CONNECTOR": 42.7,
+            "none": 112.5
           },
-          "total_m": 123.3
+          "total_m": 155.2
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 123.3
+            "inferred_endpoint_snap": 42.7,
+            "inferred_existing_pedestrian_edge_point_proxy": 54.2,
+            "unknown": 58.3
           },
-          "covered_m": 0.0,
-          "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 123.3,
-          "edge_count": 1,
-          "exposed_m": 123.3,
-          "inferred_hdb_m": 0.0,
+          "covered_m": 54.2,
+          "covered_ratio": 0.349,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 100.9,
+          "inferred_hdb_m": 54.2,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 123.3
+            "bus_stop_access_connector": 42.7,
+            "inferred_hdb_point_footway": 54.2,
+            "unknown": 58.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 123.3
+            "BUS_STOP_ACCESS_CONNECTOR": 42.7,
+            "none": 112.5
           },
-          "total_m": 123.3
+          "total_m": 155.2
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 123.3,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 155.2,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 123.3
+            "inferred_endpoint_snap": 42.7,
+            "inferred_existing_pedestrian_edge_point_proxy": 54.2,
+            "unknown": 58.3
           },
-          "covered_m": 0.0,
-          "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 123.3,
-          "edge_count": 1,
-          "exposed_m": 123.3,
-          "inferred_hdb_m": 0.0,
+          "covered_m": 54.2,
+          "covered_ratio": 0.349,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 100.9,
+          "inferred_hdb_m": 54.2,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 123.3
+            "bus_stop_access_connector": 42.7,
+            "inferred_hdb_point_footway": 54.2,
+            "unknown": 58.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 123.3
+            "BUS_STOP_ACCESS_CONNECTOR": 42.7,
+            "none": 112.5
           },
-          "total_m": 123.3
+          "total_m": 155.2
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 123.3
+            "inferred_endpoint_snap": 42.7,
+            "inferred_existing_pedestrian_edge_point_proxy": 54.2,
+            "unknown": 58.3
           },
-          "covered_m": 0.0,
-          "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 123.3,
-          "edge_count": 1,
-          "exposed_m": 123.3,
-          "inferred_hdb_m": 0.0,
+          "covered_m": 54.2,
+          "covered_ratio": 0.349,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 100.9,
+          "inferred_hdb_m": 54.2,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 123.3
+            "bus_stop_access_connector": 42.7,
+            "inferred_hdb_point_footway": 54.2,
+            "unknown": 58.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 123.3
+            "BUS_STOP_ACCESS_CONNECTOR": 42.7,
+            "none": 112.5
           },
-          "total_m": 123.3
+          "total_m": 155.2
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 123.3,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 155.2,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 74.0,
       "old_abs_pct_delta": 314.703,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 202.0,
@@ -2481,103 +2567,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Opp The Shaughnessy",
+      "new_best_name": "The Shaughnessy",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 95.4
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 124.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 95.4,
-          "edge_count": 1,
-          "exposed_m": 95.4,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 168.8,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 95.4
+            "bus_stop_access_connector": 44.6,
+            "unknown": 124.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 95.4
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 124.2
           },
-          "total_m": 95.4
+          "total_m": 168.8
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 95.4
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 124.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 95.4,
-          "edge_count": 1,
-          "exposed_m": 95.4,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 168.8,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 95.4
+            "bus_stop_access_connector": 44.6,
+            "unknown": 124.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 95.4
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 124.2
           },
-          "total_m": 95.4
+          "total_m": 168.8
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 95.4,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 168.8,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 95.4
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 124.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 95.4,
-          "edge_count": 1,
-          "exposed_m": 95.4,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 168.8,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 95.4
+            "bus_stop_access_connector": 44.6,
+            "unknown": 124.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 95.4
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 124.2
           },
-          "total_m": 95.4
+          "total_m": 168.8
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 95.4
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 124.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 95.4,
-          "edge_count": 1,
-          "exposed_m": 95.4,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 168.8,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 95.4
+            "bus_stop_access_connector": 44.6,
+            "unknown": 124.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 95.4
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 124.2
           },
-          "total_m": 95.4
+          "total_m": 168.8
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 95.4,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 168.8,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 59.4,
       "old_abs_pct_delta": 255.478,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 115.0,
@@ -3248,98 +3346,110 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 88.9
+            "inferred_endpoint_snap": 48.2,
+            "unknown": 9.7
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 88.9,
-          "edge_count": 1,
-          "exposed_m": 88.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 58.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 88.9
+            "bus_stop_access_connector": 48.2,
+            "unknown": 9.7
           },
           "synth_class_m": {
-            "unrouted_straight_line": 88.9
+            "BUS_STOP_ACCESS_CONNECTOR": 48.2,
+            "none": 9.7
           },
-          "total_m": 88.9
+          "total_m": 58.0
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 88.9
+            "inferred_endpoint_snap": 48.2,
+            "unknown": 9.7
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 88.9,
-          "edge_count": 1,
-          "exposed_m": 88.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 58.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 88.9
+            "bus_stop_access_connector": 48.2,
+            "unknown": 9.7
           },
           "synth_class_m": {
-            "unrouted_straight_line": 88.9
+            "BUS_STOP_ACCESS_CONNECTOR": 48.2,
+            "none": 9.7
           },
-          "total_m": 88.9
+          "total_m": 58.0
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 88.9,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 58.0,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 88.9
+            "inferred_endpoint_snap": 48.2,
+            "unknown": 9.7
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 88.9,
-          "edge_count": 1,
-          "exposed_m": 88.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 58.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 88.9
+            "bus_stop_access_connector": 48.2,
+            "unknown": 9.7
           },
           "synth_class_m": {
-            "unrouted_straight_line": 88.9
+            "BUS_STOP_ACCESS_CONNECTOR": 48.2,
+            "none": 9.7
           },
-          "total_m": 88.9
+          "total_m": 58.0
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 88.9
+            "inferred_endpoint_snap": 48.2,
+            "unknown": 9.7
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 88.9,
-          "edge_count": 1,
-          "exposed_m": 88.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 58.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 88.9
+            "bus_stop_access_connector": 48.2,
+            "unknown": 9.7
           },
           "synth_class_m": {
-            "unrouted_straight_line": 88.9
+            "BUS_STOP_ACCESS_CONNECTOR": 48.2,
+            "none": 9.7
           },
-          "total_m": 88.9
+          "total_m": 58.0
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 88.9,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 53.1,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 58.0,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 58.1,
       "old_abs_pct_delta": 232.977,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 131.0,
@@ -3348,7 +3458,7 @@
       "postal": "710005"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Bef Katong PO",
       "new_best_route_profile": {
         "sheltered": {
@@ -3565,103 +3675,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Aft Westwood Ave",
+      "new_best_name": "Bet Blks 757/758",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 24.6
+            "inferred_endpoint_snap": 30.4,
+            "unknown": 83.5
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 24.6,
-          "edge_count": 1,
-          "exposed_m": 24.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 8,
+          "exposed_m": 113.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 24.6
+            "bus_stop_access_connector": 30.4,
+            "unknown": 83.5
           },
           "synth_class_m": {
-            "unrouted_straight_line": 24.6
+            "BUS_STOP_ACCESS_CONNECTOR": 30.4,
+            "none": 83.5
           },
-          "total_m": 24.6
+          "total_m": 113.9
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 24.6
+            "inferred_endpoint_snap": 30.4,
+            "unknown": 83.5
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 24.6,
-          "edge_count": 1,
-          "exposed_m": 24.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 8,
+          "exposed_m": 113.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 24.6
+            "bus_stop_access_connector": 30.4,
+            "unknown": 83.5
           },
           "synth_class_m": {
-            "unrouted_straight_line": 24.6
+            "BUS_STOP_ACCESS_CONNECTOR": 30.4,
+            "none": 83.5
           },
-          "total_m": 24.6
+          "total_m": 113.9
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 24.6,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 113.9,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 24.6
+            "inferred_endpoint_snap": 30.4,
+            "unknown": 83.5
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 24.6,
-          "edge_count": 1,
-          "exposed_m": 24.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 8,
+          "exposed_m": 113.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 24.6
+            "bus_stop_access_connector": 30.4,
+            "unknown": 83.5
           },
           "synth_class_m": {
-            "unrouted_straight_line": 24.6
+            "BUS_STOP_ACCESS_CONNECTOR": 30.4,
+            "none": 83.5
           },
-          "total_m": 24.6
+          "total_m": 113.9
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 24.6
+            "inferred_endpoint_snap": 30.4,
+            "unknown": 83.5
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 24.6,
-          "edge_count": 1,
-          "exposed_m": 24.6,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 8,
+          "exposed_m": 113.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 24.6
+            "bus_stop_access_connector": 30.4,
+            "unknown": 83.5
           },
           "synth_class_m": {
-            "unrouted_straight_line": 24.6
+            "BUS_STOP_ACCESS_CONNECTOR": 30.4,
+            "none": 83.5
           },
-          "total_m": 24.6
+          "total_m": 113.9
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 24.6,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 113.9,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 60.0,
       "old_abs_pct_delta": 221.603,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 131.0,
@@ -3777,103 +3899,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Opp The Shaughnessy",
+      "new_best_name": "The Shaughnessy",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 84.8
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 105.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 84.8,
-          "edge_count": 1,
-          "exposed_m": 84.8,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 149.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 84.8
+            "bus_stop_access_connector": 44.6,
+            "unknown": 105.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 84.8
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 105.3
           },
-          "total_m": 84.8
+          "total_m": 149.9
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 84.8
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 105.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 84.8,
-          "edge_count": 1,
-          "exposed_m": 84.8,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 149.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 84.8
+            "bus_stop_access_connector": 44.6,
+            "unknown": 105.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 84.8
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 105.3
           },
-          "total_m": 84.8
+          "total_m": 149.9
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 84.8,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 149.9,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 84.8
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 105.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 84.8,
-          "edge_count": 1,
-          "exposed_m": 84.8,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 149.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 84.8
+            "bus_stop_access_connector": 44.6,
+            "unknown": 105.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 84.8
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 105.3
           },
-          "total_m": 84.8
+          "total_m": 149.9
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 84.8
+            "inferred_endpoint_snap": 44.6,
+            "unknown": 105.3
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 84.8,
-          "edge_count": 1,
-          "exposed_m": 84.8,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 3,
+          "exposed_m": 149.9,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 84.8
+            "bus_stop_access_connector": 44.6,
+            "unknown": 105.3
           },
           "synth_class_m": {
-            "unrouted_straight_line": 84.8
+            "BUS_STOP_ACCESS_CONNECTOR": 44.6,
+            "none": 105.3
           },
-          "total_m": 84.8
+          "total_m": 149.9
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 84.8,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 149.9,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 59.4,
       "old_abs_pct_delta": 211.84,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 125.0,
@@ -4014,7 +4148,7 @@
       "postal": "520647"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Aft Cashew Terr",
       "new_best_route_profile": {
         "sheltered": {
@@ -4490,7 +4624,7 @@
       "postal": "499617"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Tampines Nth Int",
       "new_best_route_profile": {
         "sheltered": {
@@ -4923,103 +5057,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Opp The Shaughnessy",
+      "new_best_name": "The Shaughnessy",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 109.0
+            "inferred_endpoint_snap": 46.6,
+            "unknown": 38.9
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 109.0,
-          "edge_count": 1,
-          "exposed_m": 109.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 85.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 109.0
+            "bus_stop_access_connector": 46.6,
+            "unknown": 38.9
           },
           "synth_class_m": {
-            "unrouted_straight_line": 109.0
+            "BUS_STOP_ACCESS_CONNECTOR": 46.6,
+            "none": 38.9
           },
-          "total_m": 109.0
+          "total_m": 85.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 109.0
+            "inferred_endpoint_snap": 46.6,
+            "unknown": 38.9
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 109.0,
-          "edge_count": 1,
-          "exposed_m": 109.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 85.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 109.0
+            "bus_stop_access_connector": 46.6,
+            "unknown": 38.9
           },
           "synth_class_m": {
-            "unrouted_straight_line": 109.0
+            "BUS_STOP_ACCESS_CONNECTOR": 46.6,
+            "none": 38.9
           },
-          "total_m": 109.0
+          "total_m": 85.4
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 109.0,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 85.4,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 109.0
+            "inferred_endpoint_snap": 46.6,
+            "unknown": 38.9
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 109.0,
-          "edge_count": 1,
-          "exposed_m": 109.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 85.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 109.0
+            "bus_stop_access_connector": 46.6,
+            "unknown": 38.9
           },
           "synth_class_m": {
-            "unrouted_straight_line": 109.0
+            "BUS_STOP_ACCESS_CONNECTOR": 46.6,
+            "none": 38.9
           },
-          "total_m": 109.0
+          "total_m": 85.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 109.0
+            "inferred_endpoint_snap": 46.6,
+            "unknown": 38.9
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 109.0,
-          "edge_count": 1,
-          "exposed_m": 109.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 2,
+          "exposed_m": 85.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 109.0
+            "bus_stop_access_connector": 46.6,
+            "unknown": 38.9
           },
           "synth_class_m": {
-            "unrouted_straight_line": 109.0
+            "BUS_STOP_ACCESS_CONNECTOR": 46.6,
+            "none": 38.9
           },
-          "total_m": 109.0
+          "total_m": 85.4
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 109.0,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 85.4,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 59.4,
       "old_abs_pct_delta": 144.915,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 234.0,
@@ -5803,103 +5949,115 @@
     },
     {
       "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
-      "new_best_name": "Aft Thomson Hills Dr",
+      "new_best_name": "Teachers' Housing Est",
       "new_best_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 85.9
+            "inferred_endpoint_snap": 30.8,
+            "unknown": 177.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 85.9,
-          "edge_count": 1,
-          "exposed_m": 85.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 208.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 85.9
+            "bus_stop_access_connector": 30.8,
+            "unknown": 177.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 85.9
+            "BUS_STOP_ACCESS_CONNECTOR": 30.8,
+            "none": 177.2
           },
-          "total_m": 85.9
+          "total_m": 208.0
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 85.9
+            "inferred_endpoint_snap": 30.8,
+            "unknown": 177.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 85.9,
-          "edge_count": 1,
-          "exposed_m": 85.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 208.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 85.9
+            "bus_stop_access_connector": 30.8,
+            "unknown": 177.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 85.9
+            "BUS_STOP_ACCESS_CONNECTOR": 30.8,
+            "none": 177.2
           },
-          "total_m": 85.9
+          "total_m": 208.0
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 85.9,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 208.0,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 85.9
+            "inferred_endpoint_snap": 30.8,
+            "unknown": 177.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 85.9,
-          "edge_count": 1,
-          "exposed_m": 85.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 208.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 85.9
+            "bus_stop_access_connector": 30.8,
+            "unknown": 177.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 85.9
+            "BUS_STOP_ACCESS_CONNECTOR": 30.8,
+            "none": 177.2
           },
-          "total_m": 85.9
+          "total_m": 208.0
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 85.9
+            "inferred_endpoint_snap": 30.8,
+            "unknown": 177.2
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 85.9,
-          "edge_count": 1,
-          "exposed_m": 85.9,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 6,
+          "exposed_m": 208.0,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 85.9
+            "bus_stop_access_connector": 30.8,
+            "unknown": 177.2
           },
           "synth_class_m": {
-            "unrouted_straight_line": 85.9
+            "BUS_STOP_ACCESS_CONNECTOR": 30.8,
+            "none": 177.2
           },
-          "total_m": 85.9
+          "total_m": 208.0
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 85.9,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 208.0,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 60.0,
       "old_abs_pct_delta": 129.42,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 207.0,
@@ -6232,98 +6390,110 @@
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 67.0
+            "inferred_endpoint_snap": 33.0,
+            "unknown": 99.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 67.0,
-          "edge_count": 1,
-          "exposed_m": 67.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 132.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 67.0
+            "bus_stop_access_connector": 33.0,
+            "unknown": 99.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 67.0
+            "BUS_STOP_ACCESS_CONNECTOR": 33.0,
+            "none": 99.4
           },
-          "total_m": 67.0
+          "total_m": 132.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 67.0
+            "inferred_endpoint_snap": 33.0,
+            "unknown": 99.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 67.0,
-          "edge_count": 1,
-          "exposed_m": 67.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 132.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 67.0
+            "bus_stop_access_connector": 33.0,
+            "unknown": 99.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 67.0
+            "BUS_STOP_ACCESS_CONNECTOR": 33.0,
+            "none": 99.4
           },
-          "total_m": 67.0
+          "total_m": 132.4
         }
       },
-      "new_best_routing_type": "direct_bus_fallback_unrouted",
-      "new_best_shortest_m": 67.0,
+      "new_best_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_best_shortest_m": 132.4,
       "new_best_type": "bus_stop",
       "new_bus_route_profile": {
         "sheltered": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 67.0
+            "inferred_endpoint_snap": 33.0,
+            "unknown": 99.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 67.0,
-          "edge_count": 1,
-          "exposed_m": 67.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 132.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 67.0
+            "bus_stop_access_connector": 33.0,
+            "unknown": 99.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 67.0
+            "BUS_STOP_ACCESS_CONNECTOR": 33.0,
+            "none": 99.4
           },
-          "total_m": 67.0
+          "total_m": 132.4
         },
         "shortest": {
           "bridge_underpass_m": 0.0,
           "confidence_m": {
-            "partial_unrouted": 67.0
+            "inferred_endpoint_snap": 33.0,
+            "unknown": 99.4
           },
           "covered_m": 0.0,
           "covered_ratio": 0.0,
-          "direct_bus_fallback_m": 67.0,
-          "edge_count": 1,
-          "exposed_m": 67.0,
+          "direct_bus_fallback_m": 0.0,
+          "edge_count": 4,
+          "exposed_m": 132.4,
           "inferred_hdb_m": 0.0,
           "official_lta_shelter_m": 0.0,
           "osm_shelter_m": 0.0,
           "source_layer_m": {
-            "direct_bus_fallback": 67.0
+            "bus_stop_access_connector": 33.0,
+            "unknown": 99.4
           },
           "synth_class_m": {
-            "unrouted_straight_line": 67.0
+            "BUS_STOP_ACCESS_CONNECTOR": 33.0,
+            "none": 99.4
           },
-          "total_m": 67.0
+          "total_m": 132.4
         }
       },
-      "new_bus_routing_type": "direct_bus_fallback_unrouted",
-      "new_bus_shortest_m": 67.0,
-      "new_bus_state": "SCORED_PARTIAL",
-      "new_state": "SCORED_PARTIAL",
-      "new_total": 55.0,
+      "new_bus_routing_type": "sheltered_with_bus_stop_access_connector",
+      "new_bus_shortest_m": 132.4,
+      "new_bus_state": "SCORED",
+      "new_state": "SCORED",
+      "new_total": 60.0,
       "old_abs_pct_delta": 124.313,
       "old_direction": "project_longer_than_onemap",
       "old_onemap_walk_m": 313.0,
@@ -7354,7 +7524,7 @@
       "postal": "387485"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Blk 238",
       "new_best_route_profile": {
         "sheltered": {
@@ -7488,7 +7658,7 @@
       "postal": "699887"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "MOUNTBATTEN MRT STATION Exit A",
       "new_best_route_profile": {
         "sheltered": {
@@ -8552,7 +8722,7 @@
       "postal": "544188"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Blk 239",
       "new_best_route_profile": {
         "sheltered": {
@@ -9288,7 +9458,7 @@
       "postal": "400337"
     },
     {
-      "direct_bus_fallback_reason": "implausible_graph_route_to_datamall_bus_stop_within_direct_radius",
+      "direct_bus_fallback_reason": null,
       "new_best_name": "Blk 111",
       "new_best_route_profile": {
         "sheltered": {

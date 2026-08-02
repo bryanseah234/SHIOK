@@ -13,6 +13,7 @@ from pipeline.scoring_integration import (
     CrossingCounter,
     annotate_no_transit_reason,
     assemble_score_record,
+    build_bus_stop_access_connector_route,
     build_provenance,
     bus_connectivity_from_routed_candidates,
     bus_route_should_use_direct_fallback,
@@ -21,6 +22,7 @@ from pipeline.scoring_integration import (
     load_postal_universe_points,
     nearest_graph_node_in_components,
     score_candidate_route,
+    score_postal_row,
     select_bus_stop_candidates,
     select_mrt_exit_candidates,
 )
@@ -38,6 +40,11 @@ PARAMS = {
     "bus_connectivity": {
         "routed_max_m": 250.0,
         "straight_line_candidate_m": 300.0,
+        "access_connector_search_m": 50.0,
+        "access_connector_max_candidates": 24,
+        "access_connector_max_walk_m": 300.0,
+        "access_connector_max_direct_ratio": 2.5,
+        "access_connector_max_extra_m": 100.0,
         "full_credit_wait_min": 2.0,
         "zero_credit_wait_min": 15.0,
     },
@@ -432,6 +439,132 @@ def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
             "direct_fallback_detour_ratio": 3.0,
             "direct_fallback_min_extra_m": 100.0,
         },
+    )
+
+
+def test_bus_access_connector_appends_exposed_endpoint_to_plausible_graph_route():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (90.0, 0.0),
+                "length_m": 90.0,
+                "is_covered": 1,
+                "geometry": LineString([(0.0, 0.0), (90.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (400.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (400.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (90.0, 0.0), (400.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Opp Test Blk",
+        station_name="Opp Test Blk",
+        exit_code="54321",
+        graph_node=(400.0, 0.0),
+        straight_line_m=95.0,
+        snap_distance_m=300.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(100.0, 0.0),
+    )
+
+    route = build_bus_stop_access_connector_route(
+        candidate=candidate,
+        origin_node=(0.0, 0.0),
+        routing_graph=routing_graph,
+        nodes=nodes,
+        node_xy=node_xy,
+        params=PARAMS,
+    )
+
+    assert route is not None
+    assert route["routing_type"] == "sheltered_with_bus_stop_access_connector"
+    assert route["shortest_length_m"] == 100.0
+    assert route["length_m"] == 100.0
+    assert route["covered_m"] == 90.0
+    assert round(route["covered_ratio"], 3) == 0.9
+    assert route["path_edges"][-1]["source_layer"] == "bus_stop_access_connector"
+    assert route["path_edges"][-1]["is_covered"] is False
+    assert route["geometry"].coords[-1] == (100.0, 0.0)
+
+
+class ConnectorBusIndex:
+    def nearby_stop_candidates(self, _postal_point, _straight_line_radius_m):
+        return [
+            BusStopCandidate(
+                bus_stop_code="54321",
+                description="OPP TEST BLK",
+                graph_node=(400.0, 0.0),
+                straight_line_m=95.0,
+                snap_distance_m=300.0,
+                service_headways_min={("10", 1): 8.0},
+                point_xy=(100.0, 0.0),
+            )
+        ]
+
+
+def test_score_postal_row_uses_bus_access_connector_before_direct_fallback():
+    edges = pd.DataFrame(
+        [
+            {
+                "u": (0.0, 0.0),
+                "v": (90.0, 0.0),
+                "length_m": 90.0,
+                "is_covered": 1,
+                "geometry": LineString([(0.0, 0.0), (90.0, 0.0)]),
+            },
+            {
+                "u": (0.0, 0.0),
+                "v": (400.0, 0.0),
+                "length_m": 400.0,
+                "is_covered": 0,
+                "geometry": LineString([(0.0, 0.0), (400.0, 0.0)]),
+            },
+        ]
+    )
+    routing_graph = RoutingGraph(edges)
+    nodes = [(0.0, 0.0), (90.0, 0.0), (400.0, 0.0)]
+    node_xy = np.asarray(nodes, dtype=float)
+    mrt_exits = gpd.GeoDataFrame(
+        columns=["STATION_NA", "EXIT_CODE", "OBJECTID", "geometry"],
+        geometry="geometry",
+        crs="EPSG:3414",
+    )
+    empty_signals = gpd.GeoDataFrame(geometry=[], crs="EPSG:3414")
+    crossing_counter = CrossingCounter(empty_signals, None, eps_m=20.0, min_samples=2)
+    record = score_postal_row(
+        pd.Series({"postal_code": "123456", "geometry": Point(0.0, 0.0)}),
+        mrt_exits,
+        edges.to_dict("list"),
+        routing_graph,
+        nodes,
+        node_xy,
+        PARAMS,
+        WEIGHTS,
+        crossing_counter,
+        bus_index=ConnectorBusIndex(),  # type: ignore[arg-type]
+        include_geometry=True,
+        base_provenance={},
+    )
+
+    assert record["state"] == "SCORED"
+    assert record["best_node"]["type"] == "bus_stop"
+    assert record["best_node"]["routed_m"] == 100.0
+    assert record["paths"]["routing_type"] == "sheltered_with_bus_stop_access_connector"
+    assert record["paths"]["covered_ratio"] == 0.9
+    assert record["provenance"]["bus_stop_access_connector"]["candidate_count"] == 1
+    assert "direct_bus_fallback" not in record["provenance"]
+    assert record["_geometry"]["sheltered_path_edges"][-1]["source_layer"] == (
+        "bus_stop_access_connector"
     )
 
 
