@@ -49,7 +49,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 67.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -61.7
       },
       "type": "Feature"
     },
@@ -102,7 +105,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 28.5,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -19.5
       },
       "type": "Feature"
     },
@@ -155,7 +161,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 264.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -198.7
       },
       "type": "Feature"
     },
@@ -208,7 +217,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 108.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -44.9
       },
       "type": "Feature"
     },
@@ -261,7 +273,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 83.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -11.1
       },
       "type": "Feature"
     },
@@ -314,7 +329,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 97.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -1.6
       },
       "type": "Feature"
     },
@@ -367,7 +385,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 76.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -42.7
       },
       "type": "Feature"
     },
@@ -420,7 +441,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -11.1
       },
       "type": "Feature"
     },
@@ -473,7 +497,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 38.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 5.3
       },
       "type": "Feature"
     },
@@ -526,7 +553,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 133.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 42.9
       },
       "type": "Feature"
     },
@@ -579,7 +609,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 47.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -0.3
       },
       "type": "Feature"
     },
@@ -632,7 +665,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 151.3
       },
       "type": "Feature"
     },
@@ -685,7 +721,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 122.9,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -20.9
       },
       "type": "Feature"
     },
@@ -742,7 +781,10 @@
           }
         },
         "validation_area": "TOA_PAYOH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 204.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -87.1
       },
       "type": "Feature"
     },
@@ -795,7 +837,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 128.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 21.6
       },
       "type": "Feature"
     },
@@ -848,7 +893,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 217.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -5.2
       },
       "type": "Feature"
     },
@@ -901,7 +949,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 42.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -17.1
       },
       "type": "Feature"
     },
@@ -954,7 +1005,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 71.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2.9
       },
       "type": "Feature"
     },
@@ -1007,7 +1061,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 34.5,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -13.5
       },
       "type": "Feature"
     },
@@ -1060,7 +1117,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 173.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 124.0
       },
       "type": "Feature"
     },
@@ -1113,7 +1173,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 174.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -28.1
       },
       "type": "Feature"
     },
@@ -1166,7 +1229,10 @@
           }
         },
         "validation_area": "TOA_PAYOH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 181.9,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -33.9
       },
       "type": "Feature"
     },
@@ -1219,7 +1285,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 105.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.6
       },
       "type": "Feature"
     },
@@ -1272,7 +1341,10 @@
           }
         },
         "validation_area": "LIM_CHU_KANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 139.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -8.2
       },
       "type": "Feature"
     },
@@ -1325,7 +1397,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 27.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 16.6
       },
       "type": "Feature"
     },
@@ -1378,7 +1453,10 @@
           }
         },
         "validation_area": "MANDAI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 133.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -42.9
       },
       "type": "Feature"
     },
@@ -1431,7 +1509,10 @@
           }
         },
         "validation_area": "NOVENA",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 59.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 33.7
       },
       "type": "Feature"
     },
@@ -1484,7 +1565,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 111.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 29.5
       },
       "type": "Feature"
     },
@@ -1537,7 +1621,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 49.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 11.1
       },
       "type": "Feature"
     },
@@ -1590,7 +1677,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -3.4
       },
       "type": "Feature"
     },
@@ -1643,7 +1733,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 144.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 51.8
       },
       "type": "Feature"
     },
@@ -1696,7 +1789,10 @@
           }
         },
         "validation_area": "CHANGI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.0,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -33.0
       },
       "type": "Feature"
     },
@@ -1749,7 +1845,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 114.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 68.1
       },
       "type": "Feature"
     },
@@ -1802,7 +1901,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 19.4
       },
       "type": "Feature"
     },
@@ -1855,7 +1957,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 117.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 94.7
       },
       "type": "Feature"
     },
@@ -1908,7 +2013,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 109.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 58.1
       },
       "type": "Feature"
     },
@@ -1961,7 +2069,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 189.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 47.3
       },
       "type": "Feature"
     },
@@ -2014,7 +2125,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 252.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 61.0
       },
       "type": "Feature"
     },
@@ -2067,7 +2181,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 182.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 48.1
       },
       "type": "Feature"
     },
@@ -2120,7 +2237,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 126.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 81.0
       },
       "type": "Feature"
     },
@@ -2173,7 +2293,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 174.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 46.1
       },
       "type": "Feature"
     },
@@ -2226,7 +2349,10 @@
           }
         },
         "validation_area": "CENTRAL_WATER_CATCHMENT",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 66.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 186.7
       },
       "type": "Feature"
     },
@@ -2279,7 +2405,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 146.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 6.6
       },
       "type": "Feature"
     },
@@ -2332,7 +2461,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 224.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 88.5
       },
       "type": "Feature"
     },
@@ -2385,7 +2517,10 @@
           }
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 56.3,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -18.3
       },
       "type": "Feature"
     },
@@ -2438,7 +2573,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 52.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 18.3
       },
       "type": "Feature"
     },
@@ -2491,7 +2629,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 184.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 276.4
       },
       "type": "Feature"
     },
@@ -2544,7 +2685,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 220.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1.7
       },
       "type": "Feature"
     },
@@ -2597,7 +2741,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 131.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 48.6
       },
       "type": "Feature"
     },
@@ -2650,7 +2797,10 @@
           }
         },
         "validation_area": "GEYLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 134.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 70.1
       },
       "type": "Feature"
     },
@@ -2703,7 +2853,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 274.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 81.7
       },
       "type": "Feature"
     },
@@ -2756,7 +2909,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 98.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 55.7
       },
       "type": "Feature"
     },
@@ -2809,7 +2965,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 197.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 125.1
       },
       "type": "Feature"
     },
@@ -2862,7 +3021,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 236.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -48.2
       },
       "type": "Feature"
     },
@@ -2915,7 +3077,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 73.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 19.0
       },
       "type": "Feature"
     },
@@ -2968,7 +3133,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 160.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -3.8
       },
       "type": "Feature"
     },
@@ -3021,7 +3189,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 97.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 31.0
       },
       "type": "Feature"
     },
@@ -3074,7 +3245,10 @@
           }
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 165.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 78.2
       },
       "type": "Feature"
     },
@@ -3127,7 +3301,10 @@
           }
         },
         "validation_area": "CHOA_CHU_KANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.9
       },
       "type": "Feature"
     },
@@ -3180,7 +3357,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 150.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 60.9
       },
       "type": "Feature"
     },
@@ -3233,7 +3413,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 253.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 175.1
       },
       "type": "Feature"
     },
@@ -3286,7 +3469,10 @@
           }
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 164.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 38.7
       },
       "type": "Feature"
     },
@@ -3339,7 +3525,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 130.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 90.8
       },
       "type": "Feature"
     },
@@ -3392,7 +3581,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 125.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 34.0
       },
       "type": "Feature"
     },
@@ -3445,7 +3637,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 120.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 71.8
       },
       "type": "Feature"
     },
@@ -3498,7 +3693,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 228.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 134.6
       },
       "type": "Feature"
     },
@@ -3551,7 +3749,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 166.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 71.1
       },
       "type": "Feature"
     },
@@ -3604,7 +3805,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 182.3,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -19.3
       },
       "type": "Feature"
     },
@@ -3657,7 +3861,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 67.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -61.7
       },
       "type": "Feature"
     },
@@ -3710,7 +3917,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 28.5,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -19.5
       },
       "type": "Feature"
     },
@@ -3763,7 +3973,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 264.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -198.7
       },
       "type": "Feature"
     },
@@ -3816,7 +4029,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 108.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -44.9
       },
       "type": "Feature"
     },
@@ -3869,7 +4085,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 83.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -11.1
       },
       "type": "Feature"
     },
@@ -3922,7 +4141,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 97.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -1.6
       },
       "type": "Feature"
     },
@@ -3975,7 +4197,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 76.7,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -42.7
       },
       "type": "Feature"
     },
@@ -4028,7 +4253,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -11.1
       },
       "type": "Feature"
     },
@@ -4081,7 +4309,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 38.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 5.3
       },
       "type": "Feature"
     },
@@ -4134,7 +4365,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 133.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 42.9
       },
       "type": "Feature"
     },
@@ -4187,7 +4421,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 47.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -0.3
       },
       "type": "Feature"
     },
@@ -4240,7 +4477,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 151.3
       },
       "type": "Feature"
     },
@@ -4293,7 +4533,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 122.9,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -20.9
       },
       "type": "Feature"
     },
@@ -4350,7 +4593,10 @@
           }
         },
         "validation_area": "TOA_PAYOH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 204.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -87.1
       },
       "type": "Feature"
     },
@@ -4403,7 +4649,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 128.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 21.6
       },
       "type": "Feature"
     },
@@ -4456,7 +4705,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 217.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -5.2
       },
       "type": "Feature"
     },
@@ -4509,7 +4761,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 42.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -17.1
       },
       "type": "Feature"
     },
@@ -4562,7 +4817,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 71.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2.9
       },
       "type": "Feature"
     },
@@ -4615,7 +4873,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 34.5,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -13.5
       },
       "type": "Feature"
     },
@@ -4668,7 +4929,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 173.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 124.0
       },
       "type": "Feature"
     },
@@ -4721,7 +4985,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 174.1,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -28.1
       },
       "type": "Feature"
     },
@@ -4774,7 +5041,10 @@
           }
         },
         "validation_area": "TOA_PAYOH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 181.9,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -33.9
       },
       "type": "Feature"
     },
@@ -4827,7 +5097,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 105.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.6
       },
       "type": "Feature"
     },
@@ -4880,7 +5153,10 @@
           }
         },
         "validation_area": "LIM_CHU_KANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 139.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -8.2
       },
       "type": "Feature"
     },
@@ -4933,7 +5209,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 27.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 16.6
       },
       "type": "Feature"
     },
@@ -4986,7 +5265,10 @@
           }
         },
         "validation_area": "MANDAI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 133.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -42.9
       },
       "type": "Feature"
     },
@@ -5039,7 +5321,10 @@
           }
         },
         "validation_area": "NOVENA",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 59.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 33.7
       },
       "type": "Feature"
     },
@@ -5092,7 +5377,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 111.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 29.5
       },
       "type": "Feature"
     },
@@ -5145,7 +5433,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 49.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 11.1
       },
       "type": "Feature"
     },
@@ -5198,7 +5489,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -3.4
       },
       "type": "Feature"
     },
@@ -5251,7 +5545,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 144.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 51.8
       },
       "type": "Feature"
     },
@@ -5304,7 +5601,10 @@
           }
         },
         "validation_area": "CHANGI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.0,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -33.0
       },
       "type": "Feature"
     },
@@ -5357,7 +5657,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 114.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 68.1
       },
       "type": "Feature"
     },
@@ -5410,7 +5713,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 19.4
       },
       "type": "Feature"
     },
@@ -5463,7 +5769,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 117.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 94.7
       },
       "type": "Feature"
     },
@@ -5516,7 +5825,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 109.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 58.1
       },
       "type": "Feature"
     },
@@ -5569,7 +5881,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 189.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 47.3
       },
       "type": "Feature"
     },
@@ -5622,7 +5937,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 252.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 61.0
       },
       "type": "Feature"
     },
@@ -5675,7 +5993,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 182.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 48.1
       },
       "type": "Feature"
     },
@@ -5728,7 +6049,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 126.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 81.0
       },
       "type": "Feature"
     },
@@ -5781,7 +6105,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 174.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 46.1
       },
       "type": "Feature"
     },
@@ -5834,7 +6161,10 @@
           }
         },
         "validation_area": "CENTRAL_WATER_CATCHMENT",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 66.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 186.7
       },
       "type": "Feature"
     },
@@ -5887,7 +6217,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 146.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 6.6
       },
       "type": "Feature"
     },
@@ -5940,7 +6273,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 224.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 88.5
       },
       "type": "Feature"
     },
@@ -5993,7 +6329,10 @@
           }
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 56.3,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -18.3
       },
       "type": "Feature"
     },
@@ -6046,7 +6385,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 52.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 18.3
       },
       "type": "Feature"
     },
@@ -6099,7 +6441,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 184.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 276.4
       },
       "type": "Feature"
     },
@@ -6152,7 +6497,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 220.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1.7
       },
       "type": "Feature"
     },
@@ -6205,7 +6553,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 131.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 48.6
       },
       "type": "Feature"
     },
@@ -6258,7 +6609,10 @@
           }
         },
         "validation_area": "GEYLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 134.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 70.1
       },
       "type": "Feature"
     },
@@ -6311,7 +6665,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 274.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 81.7
       },
       "type": "Feature"
     },
@@ -6364,7 +6721,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 98.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 55.7
       },
       "type": "Feature"
     },
@@ -6417,7 +6777,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 197.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 125.1
       },
       "type": "Feature"
     },
@@ -6470,7 +6833,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 236.2,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -48.2
       },
       "type": "Feature"
     },
@@ -6523,7 +6889,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 73.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 19.0
       },
       "type": "Feature"
     },
@@ -6576,7 +6945,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 160.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -3.8
       },
       "type": "Feature"
     },
@@ -6629,7 +7001,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 97.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 31.0
       },
       "type": "Feature"
     },
@@ -6682,7 +7057,10 @@
           }
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 165.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 78.2
       },
       "type": "Feature"
     },
@@ -6735,7 +7113,10 @@
           }
         },
         "validation_area": "CHOA_CHU_KANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.9
       },
       "type": "Feature"
     },
@@ -6788,7 +7169,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 150.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 60.9
       },
       "type": "Feature"
     },
@@ -6841,7 +7225,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 253.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 175.1
       },
       "type": "Feature"
     },
@@ -6894,7 +7281,10 @@
           }
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 164.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 38.7
       },
       "type": "Feature"
     },
@@ -6947,7 +7337,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 130.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 90.8
       },
       "type": "Feature"
     },
@@ -7000,7 +7393,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 125.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 34.0
       },
       "type": "Feature"
     },
@@ -7053,7 +7449,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 120.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 71.8
       },
       "type": "Feature"
     },
@@ -7106,7 +7505,10 @@
           }
         },
         "validation_area": "BUKIT_PANJANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 228.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 134.6
       },
       "type": "Feature"
     },
@@ -7159,7 +7561,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 166.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 71.1
       },
       "type": "Feature"
     },
@@ -7212,7 +7617,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 182.3,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -19.3
       },
       "type": "Feature"
     },
@@ -7265,7 +7673,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 21.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 746.5
       },
       "type": "Feature"
     },
@@ -7318,7 +7729,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 101.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 556.6
       },
       "type": "Feature"
     },
@@ -7371,7 +7785,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 54.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 302.5
       },
       "type": "Feature"
     },
@@ -7424,7 +7841,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 171.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3976.0
       },
       "type": "Feature"
     },
@@ -7477,7 +7897,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 23.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 358.3
       },
       "type": "Feature"
     },
@@ -7530,7 +7953,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3080.4
       },
       "type": "Feature"
     },
@@ -7583,7 +8009,10 @@
           }
         },
         "validation_area": "NOVENA",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 141.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1814.3
       },
       "type": "Feature"
     },
@@ -7636,7 +8065,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 91.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 712.1
       },
       "type": "Feature"
     },
@@ -7689,7 +8121,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 22.0,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -14.0
       },
       "type": "Feature"
     },
@@ -7742,7 +8177,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 113.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1025.0
       },
       "type": "Feature"
     },
@@ -7795,7 +8233,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 70.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 907.0
       },
       "type": "Feature"
     },
@@ -7848,7 +8289,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 159.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1584.8
       },
       "type": "Feature"
     },
@@ -7901,7 +8345,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 78.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 63.2
       },
       "type": "Feature"
     },
@@ -7954,7 +8401,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 219.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1691.9
       },
       "type": "Feature"
     },
@@ -8007,7 +8457,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 1117.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 169.4
       },
       "type": "Feature"
     },
@@ -8060,7 +8513,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 264.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2440.1
       },
       "type": "Feature"
     },
@@ -8113,7 +8569,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 139.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1684.3
       },
       "type": "Feature"
     },
@@ -8166,7 +8625,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 157.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3067.5
       },
       "type": "Feature"
     },
@@ -8219,7 +8681,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 105.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 402.0
       },
       "type": "Feature"
     },
@@ -8272,7 +8737,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 190.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 800.9
       },
       "type": "Feature"
     },
@@ -8325,7 +8793,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 75.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 103.4
       },
       "type": "Feature"
     },
@@ -8378,7 +8849,10 @@
           }
         },
         "validation_area": "PAYA_LEBAR",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 202.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 941.2
       },
       "type": "Feature"
     },
@@ -8431,7 +8905,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 44.9
       },
       "type": "Feature"
     },
@@ -8484,7 +8961,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 177.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1094.7
       },
       "type": "Feature"
     },
@@ -8537,7 +9017,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 298.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1099.4
       },
       "type": "Feature"
     },
@@ -8590,7 +9073,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 127.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 402.4
       },
       "type": "Feature"
     },
@@ -8643,7 +9129,10 @@
           }
         },
         "validation_area": "TANGLIN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 173.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 936.2
       },
       "type": "Feature"
     },
@@ -8696,7 +9185,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 28.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 76.4
       },
       "type": "Feature"
     },
@@ -8749,7 +9241,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 144.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 503.8
       },
       "type": "Feature"
     },
@@ -8802,7 +9297,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 142.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 518.6
       },
       "type": "Feature"
     },
@@ -8855,7 +9353,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 326.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1048.0
       },
       "type": "Feature"
     },
@@ -8908,7 +9409,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 294.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1503.1
       },
       "type": "Feature"
     },
@@ -8961,7 +9465,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 181.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 532.3
       },
       "type": "Feature"
     },
@@ -9014,7 +9521,10 @@
           }
         },
         "validation_area": "PUNGGOL",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 64.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 42.3
       },
       "type": "Feature"
     },
@@ -9067,7 +9577,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 179.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 496.6
       },
       "type": "Feature"
     },
@@ -9120,7 +9633,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 134.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 953.8
       },
       "type": "Feature"
     },
@@ -9173,7 +9689,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 137.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 756.5
       },
       "type": "Feature"
     },
@@ -9226,7 +9745,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 226.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 623.6
       },
       "type": "Feature"
     },
@@ -9279,7 +9801,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 66.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -28.9
       },
       "type": "Feature"
     },
@@ -9332,7 +9857,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 389.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1289.9
       },
       "type": "Feature"
     },
@@ -9385,7 +9913,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 254.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 538.3
       },
       "type": "Feature"
     },
@@ -9438,7 +9969,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 151.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 385.8
       },
       "type": "Feature"
     },
@@ -9491,7 +10025,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 119.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 287.8
       },
       "type": "Feature"
     },
@@ -9544,7 +10081,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 132.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 378.5
       },
       "type": "Feature"
     },
@@ -9597,7 +10137,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 84.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 168.2
       },
       "type": "Feature"
     },
@@ -9650,7 +10193,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 67.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 290.5
       },
       "type": "Feature"
     },
@@ -9703,7 +10249,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 272.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 741.6
       },
       "type": "Feature"
     },
@@ -9756,7 +10305,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 296.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 366.2
       },
       "type": "Feature"
     },
@@ -9809,7 +10361,10 @@
           }
         },
         "validation_area": "SELETAR",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 300.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 491.2
       },
       "type": "Feature"
     },
@@ -9862,7 +10417,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 194.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 442.6
       },
       "type": "Feature"
     },
@@ -9915,7 +10473,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 65.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 345.4
       },
       "type": "Feature"
     },
@@ -9968,7 +10529,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 192.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 839.8
       },
       "type": "Feature"
     },
@@ -10021,7 +10585,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 282.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1090.1
       },
       "type": "Feature"
     },
@@ -10074,7 +10641,10 @@
           }
         },
         "validation_area": "PUNGGOL",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 163.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 216.9
       },
       "type": "Feature"
     },
@@ -10127,7 +10697,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 110.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 515.9
       },
       "type": "Feature"
     },
@@ -10180,7 +10753,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 109.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 427.8
       },
       "type": "Feature"
     },
@@ -10233,7 +10809,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 21.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 746.5
       },
       "type": "Feature"
     },
@@ -10284,7 +10863,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "KALLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 129.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 287.6
       },
       "type": "Feature"
     },
@@ -10337,7 +10919,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 101.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 556.6
       },
       "type": "Feature"
     },
@@ -10390,7 +10975,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 54.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 302.5
       },
       "type": "Feature"
     },
@@ -10442,7 +11030,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 31.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 40.6
       },
       "type": "Feature"
     },
@@ -10495,7 +11086,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 171.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3976.0
       },
       "type": "Feature"
     },
@@ -10548,7 +11142,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 23.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 358.3
       },
       "type": "Feature"
     },
@@ -10601,7 +11198,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3080.4
       },
       "type": "Feature"
     },
@@ -10654,7 +11254,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 43.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 7.8
       },
       "type": "Feature"
     },
@@ -10707,7 +11310,10 @@
           }
         },
         "validation_area": "NOVENA",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 141.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1814.3
       },
       "type": "Feature"
     },
@@ -10760,7 +11366,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 39.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2.3
       },
       "type": "Feature"
     },
@@ -10813,7 +11422,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 31.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 94.6
       },
       "type": "Feature"
     },
@@ -10866,7 +11478,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 91.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 712.1
       },
       "type": "Feature"
     },
@@ -10919,7 +11534,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 22.0,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -14.0
       },
       "type": "Feature"
     },
@@ -10972,7 +11590,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 113.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1025.0
       },
       "type": "Feature"
     },
@@ -11025,7 +11646,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 70.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 907.0
       },
       "type": "Feature"
     },
@@ -11078,7 +11702,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 159.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1584.8
       },
       "type": "Feature"
     },
@@ -11131,7 +11758,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 78.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 63.2
       },
       "type": "Feature"
     },
@@ -11184,7 +11814,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 219.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1691.9
       },
       "type": "Feature"
     },
@@ -11235,7 +11868,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 101.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 811.8
       },
       "type": "Feature"
     },
@@ -11288,7 +11924,10 @@
           }
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 1117.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 169.4
       },
       "type": "Feature"
     },
@@ -11342,7 +11981,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 122.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 756.8
       },
       "type": "Feature"
     },
@@ -11395,7 +12037,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 264.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2440.1
       },
       "type": "Feature"
     },
@@ -11448,7 +12093,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 52.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 100.9
       },
       "type": "Feature"
     },
@@ -11501,7 +12149,10 @@
           }
         },
         "validation_area": "BUKIT_MERAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 139.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1684.3
       },
       "type": "Feature"
     },
@@ -11552,7 +12203,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 180.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 896.7
       },
       "type": "Feature"
     },
@@ -11605,7 +12259,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 157.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3067.5
       },
       "type": "Feature"
     },
@@ -11659,7 +12316,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 51.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 155.5
       },
       "type": "Feature"
     },
@@ -11712,7 +12372,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 167.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 2993.4
       },
       "type": "Feature"
     },
@@ -11765,7 +12428,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 105.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 402.0
       },
       "type": "Feature"
     },
@@ -11818,7 +12484,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 190.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 800.9
       },
       "type": "Feature"
     },
@@ -11871,7 +12540,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 75.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 103.4
       },
       "type": "Feature"
     },
@@ -11926,7 +12598,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 239.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 696.5
       },
       "type": "Feature"
     },
@@ -11979,7 +12654,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 153.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 429.4
       },
       "type": "Feature"
     },
@@ -12032,7 +12710,10 @@
           }
         },
         "validation_area": "PAYA_LEBAR",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 202.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 941.2
       },
       "type": "Feature"
     },
@@ -12085,7 +12766,10 @@
           }
         },
         "validation_area": "GEYLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 153.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1506.0
       },
       "type": "Feature"
     },
@@ -12136,7 +12820,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 229.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 921.1
       },
       "type": "Feature"
     },
@@ -12189,7 +12876,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 44.9
       },
       "type": "Feature"
     },
@@ -12242,7 +12932,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 177.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1094.7
       },
       "type": "Feature"
     },
@@ -12295,7 +12988,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 298.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1099.4
       },
       "type": "Feature"
     },
@@ -12348,7 +13044,10 @@
           }
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 127.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 402.4
       },
       "type": "Feature"
     },
@@ -12401,7 +13100,10 @@
           }
         },
         "validation_area": "TANGLIN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 173.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 936.2
       },
       "type": "Feature"
     },
@@ -12452,7 +13154,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 77.5
       },
       "type": "Feature"
     },
@@ -12505,7 +13210,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 28.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 76.4
       },
       "type": "Feature"
     },
@@ -12558,7 +13266,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 184.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3020.8
       },
       "type": "Feature"
     },
@@ -12615,7 +13326,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 129.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 615.7
       },
       "type": "Feature"
     },
@@ -12666,7 +13380,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 234.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 658.0
       },
       "type": "Feature"
     },
@@ -12719,7 +13436,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 144.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 503.8
       },
       "type": "Feature"
     },
@@ -12772,7 +13492,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 142.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 518.6
       },
       "type": "Feature"
     },
@@ -12825,7 +13548,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 326.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1048.0
       },
       "type": "Feature"
     },
@@ -12880,7 +13606,10 @@
           }
         },
         "validation_area": "OUTRAM",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 85.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 273.4
       },
       "type": "Feature"
     },
@@ -12933,7 +13662,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 294.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1503.1
       },
       "type": "Feature"
     },
@@ -12986,7 +13718,10 @@
           }
         },
         "validation_area": "PIONEER",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 181.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 532.3
       },
       "type": "Feature"
     },
@@ -13039,7 +13774,10 @@
           }
         },
         "validation_area": "PUNGGOL",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 64.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 42.3
       },
       "type": "Feature"
     },
@@ -13096,7 +13834,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 114.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 655.5
       },
       "type": "Feature"
     },
@@ -13149,7 +13890,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 179.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 496.6
       },
       "type": "Feature"
     },
@@ -13202,7 +13946,10 @@
           }
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 134.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 953.8
       },
       "type": "Feature"
     },
@@ -13255,7 +14002,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 137.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 756.5
       },
       "type": "Feature"
     },
@@ -13312,7 +14062,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 116.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 647.2
       },
       "type": "Feature"
     },
@@ -13364,7 +14117,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "RIVER_VALLEY",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 293.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 753.0
       },
       "type": "Feature"
     },
@@ -13417,7 +14173,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 226.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 623.6
       },
       "type": "Feature"
     },
@@ -13470,7 +14229,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 135.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 416.8
       },
       "type": "Feature"
     },
@@ -13523,7 +14285,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 66.9,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -28.9
       },
       "type": "Feature"
     },
@@ -13576,7 +14341,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 251.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 482.4
       },
       "type": "Feature"
     },
@@ -13629,7 +14397,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 389.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1289.9
       },
       "type": "Feature"
     },
@@ -13682,7 +14453,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 154.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 380.9
       },
       "type": "Feature"
     },
@@ -13735,7 +14509,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 254.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 538.3
       },
       "type": "Feature"
     },
@@ -13787,7 +14564,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "MARINA_SOUTH",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 155.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 127.7
       },
       "type": "Feature"
     },
@@ -13840,7 +14620,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 151.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 385.8
       },
       "type": "Feature"
     },
@@ -13893,7 +14676,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 88.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 260.1
       },
       "type": "Feature"
     },
@@ -13946,7 +14732,10 @@
           }
         },
         "validation_area": "TAMPINES",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 119.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 287.8
       },
       "type": "Feature"
     },
@@ -13999,7 +14788,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 132.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 378.5
       },
       "type": "Feature"
     },
@@ -14052,7 +14844,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 295.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 594.1
       },
       "type": "Feature"
     },
@@ -14104,7 +14899,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 234.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 846.5
       },
       "type": "Feature"
     },
@@ -14153,7 +14951,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 585.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1087.1
       },
       "type": "Feature"
     },
@@ -14202,7 +15003,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 571.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1100.7
       },
       "type": "Feature"
     },
@@ -14251,7 +15055,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 726.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1549.0
       },
       "type": "Feature"
     },
@@ -14308,7 +15115,10 @@
           }
         },
         "validation_area": "DOWNTOWN_CORE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 150.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 181.8
       },
       "type": "Feature"
     },
@@ -14361,7 +15171,10 @@
           }
         },
         "validation_area": "RIVER_VALLEY",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 186.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 652.5
       },
       "type": "Feature"
     },
@@ -14420,7 +15233,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 160.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 275.1
       },
       "type": "Feature"
     },
@@ -14474,7 +15290,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "WESTERN_WATER_CATCHMENT",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 192.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 452.1
       },
       "type": "Feature"
     },
@@ -14527,7 +15346,10 @@
           }
         },
         "validation_area": "PASIR_RIS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 84.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 168.2
       },
       "type": "Feature"
     },
@@ -14580,7 +15402,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 67.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 290.5
       },
       "type": "Feature"
     },
@@ -14635,7 +15460,10 @@
           }
         },
         "validation_area": "TANGLIN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 142.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 352.5
       },
       "type": "Feature"
     },
@@ -14688,7 +15516,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 272.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 741.6
       },
       "type": "Feature"
     },
@@ -14749,7 +15580,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 110.9
       },
       "type": "Feature"
     },
@@ -14802,7 +15636,10 @@
           }
         },
         "validation_area": "TUAS",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 296.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 366.2
       },
       "type": "Feature"
     },
@@ -14857,7 +15694,10 @@
           }
         },
         "validation_area": "BUKIT_TIMAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 282.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 525.3
       },
       "type": "Feature"
     },
@@ -14910,7 +15750,10 @@
           }
         },
         "validation_area": "SELETAR",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 300.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 491.2
       },
       "type": "Feature"
     },
@@ -14963,7 +15806,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 194.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 442.6
       },
       "type": "Feature"
     },
@@ -15016,7 +15862,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 146.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 301.0
       },
       "type": "Feature"
     },
@@ -15069,7 +15918,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 65.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 345.4
       },
       "type": "Feature"
     },
@@ -15122,7 +15974,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 192.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 839.8
       },
       "type": "Feature"
     },
@@ -15173,7 +16028,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 121.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 68.5
       },
       "type": "Feature"
     },
@@ -15232,7 +16090,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 184.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 483.5
       },
       "type": "Feature"
     },
@@ -15285,7 +16146,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 282.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1090.1
       },
       "type": "Feature"
     },
@@ -15338,7 +16202,10 @@
           }
         },
         "validation_area": "PUNGGOL",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 163.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 216.9
       },
       "type": "Feature"
     },
@@ -15390,7 +16257,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 284.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 499.3
       },
       "type": "Feature"
     },
@@ -15443,7 +16313,10 @@
           }
         },
         "validation_area": "SEMBAWANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 110.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 515.9
       },
       "type": "Feature"
     },
@@ -15496,7 +16369,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 65.6,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -63.6
       },
       "type": "Feature"
     },
@@ -15547,7 +16423,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 29.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 14.0
       },
       "type": "Feature"
     },
@@ -15598,7 +16477,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 28.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 13.3
       },
       "type": "Feature"
     },
@@ -15649,7 +16531,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "KALLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 123.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 78.4
       },
       "type": "Feature"
     },
@@ -15700,7 +16585,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 119.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -4.1
       },
       "type": "Feature"
     },
@@ -15754,7 +16642,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 106.3
       },
       "type": "Feature"
     },
@@ -15805,7 +16696,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 121.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.6
       },
       "type": "Feature"
     },
@@ -15859,7 +16753,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 91.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 123.5
       },
       "type": "Feature"
     },
@@ -15910,7 +16807,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "YISHUN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 231.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 3.0
       },
       "type": "Feature"
     },
@@ -15961,7 +16861,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 59.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -30.1
       },
       "type": "Feature"
     },
@@ -16015,7 +16918,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 188.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 109.3
       },
       "type": "Feature"
     },
@@ -16069,7 +16975,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 209.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 38.0
       },
       "type": "Feature"
     },
@@ -16123,7 +17032,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 237.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 110.5
       },
       "type": "Feature"
     },
@@ -16178,7 +17090,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 244.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 23.2
       },
       "type": "Feature"
     },
@@ -16229,7 +17144,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "GEYLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 173.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 74.5
       },
       "type": "Feature"
     },
@@ -16280,7 +17198,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 264.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 137.9
       },
       "type": "Feature"
     },
@@ -16334,7 +17255,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 208.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 143.6
       },
       "type": "Feature"
     },
@@ -16387,7 +17311,10 @@
           }
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 109.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 427.8
       },
       "type": "Feature"
     },
@@ -16438,7 +17365,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "KALLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 129.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 287.6
       },
       "type": "Feature"
     },
@@ -16490,7 +17420,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 31.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 40.6
       },
       "type": "Feature"
     },
@@ -16543,7 +17476,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 78.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 63.2
       },
       "type": "Feature"
     },
@@ -16594,7 +17530,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 101.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 811.8
       },
       "type": "Feature"
     },
@@ -16648,7 +17587,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 122.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 756.8
       },
       "type": "Feature"
     },
@@ -16699,7 +17641,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 180.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 896.7
       },
       "type": "Feature"
     },
@@ -16753,7 +17698,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 51.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 155.5
       },
       "type": "Feature"
     },
@@ -16806,7 +17754,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 153.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 429.4
       },
       "type": "Feature"
     },
@@ -16859,7 +17810,10 @@
           }
         },
         "validation_area": "GEYLANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 153.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1506.0
       },
       "type": "Feature"
     },
@@ -16910,7 +17864,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 229.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 921.1
       },
       "type": "Feature"
     },
@@ -16961,7 +17918,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 89.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 77.5
       },
       "type": "Feature"
     },
@@ -17012,7 +17972,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 234.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 658.0
       },
       "type": "Feature"
     },
@@ -17065,7 +18028,10 @@
           }
         },
         "validation_area": "WOODLANDS",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 326.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1048.0
       },
       "type": "Feature"
     },
@@ -17120,7 +18086,10 @@
           }
         },
         "validation_area": "OUTRAM",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 85.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 273.4
       },
       "type": "Feature"
     },
@@ -17172,7 +18141,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "RIVER_VALLEY",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 293.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 753.0
       },
       "type": "Feature"
     },
@@ -17225,7 +18197,10 @@
           }
         },
         "validation_area": "ANG_MO_KIO",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 251.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 482.4
       },
       "type": "Feature"
     },
@@ -17278,7 +18253,10 @@
           }
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 389.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1289.9
       },
       "type": "Feature"
     },
@@ -17330,7 +18308,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "MARINA_SOUTH",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 155.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 127.7
       },
       "type": "Feature"
     },
@@ -17382,7 +18363,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 234.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 846.5
       },
       "type": "Feature"
     },
@@ -17431,7 +18415,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 585.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1087.1
       },
       "type": "Feature"
     },
@@ -17480,7 +18467,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 571.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1100.7
       },
       "type": "Feature"
     },
@@ -17529,7 +18519,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 726.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1549.0
       },
       "type": "Feature"
     },
@@ -17583,7 +18576,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "WESTERN_WATER_CATCHMENT",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 192.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 452.1
       },
       "type": "Feature"
     },
@@ -17644,7 +18640,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 110.9
       },
       "type": "Feature"
     },
@@ -17697,7 +18696,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 146.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 301.0
       },
       "type": "Feature"
     },
@@ -17748,7 +18750,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BEDOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 121.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 68.5
       },
       "type": "Feature"
     },
@@ -17801,7 +18806,10 @@
           }
         },
         "validation_area": "BISHAN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 282.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1090.1
       },
       "type": "Feature"
     },
@@ -17854,7 +18862,10 @@
           }
         },
         "validation_area": "PUNGGOL",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 163.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 216.9
       },
       "type": "Feature"
     },
@@ -17906,7 +18917,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "MARINE_PARADE",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 284.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 499.3
       },
       "type": "Feature"
     },
@@ -17959,7 +18973,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 65.6,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -63.6
       },
       "type": "Feature"
     },
@@ -18016,7 +19033,10 @@
           }
         },
         "validation_area": "TOA_PAYOH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 204.1,
+        "validation_distance_sanity": "onemap_materially_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -87.1
       },
       "type": "Feature"
     },
@@ -18070,7 +19090,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 24.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 106.3
       },
       "type": "Feature"
     },
@@ -18124,7 +19147,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_EAST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 91.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 123.5
       },
       "type": "Feature"
     },
@@ -18183,7 +19209,10 @@
           }
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 200.6,
+        "validation_distance_sanity": "onemap_slightly_shorter_than_direct",
+        "validation_onemap_vs_direct_delta_m": -35.6
       },
       "type": "Feature"
     },
@@ -18237,7 +19266,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 188.7,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 109.3
       },
       "type": "Feature"
     },
@@ -18291,7 +19323,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 209.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 38.0
       },
       "type": "Feature"
     },
@@ -18345,7 +19380,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 237.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 110.5
       },
       "type": "Feature"
     },
@@ -18400,7 +19438,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 244.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 23.2
       },
       "type": "Feature"
     },
@@ -18455,7 +19496,10 @@
           }
         },
         "validation_area": "ROCHOR",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 169.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 60.9
       },
       "type": "Feature"
     },
@@ -18514,7 +19558,10 @@
           }
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 70.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": -3.8
       },
       "type": "Feature"
     },
@@ -18568,7 +19615,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "JURONG_WEST",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 208.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 143.6
       },
       "type": "Feature"
     },
@@ -18620,7 +19670,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 31.4,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 40.6
       },
       "type": "Feature"
     },
@@ -18674,7 +19727,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 51.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 155.5
       },
       "type": "Feature"
     },
@@ -18727,7 +19783,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "BUKIT_BATOK",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 153.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 429.4
       },
       "type": "Feature"
     },
@@ -18784,7 +19843,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 129.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 615.7
       },
       "type": "Feature"
     },
@@ -18839,7 +19901,10 @@
           }
         },
         "validation_area": "OUTRAM",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 85.6,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 273.4
       },
       "type": "Feature"
     },
@@ -18896,7 +19961,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 114.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 655.5
       },
       "type": "Feature"
     },
@@ -18953,7 +20021,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 116.8,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 647.2
       },
       "type": "Feature"
     },
@@ -19005,7 +20076,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 234.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 846.5
       },
       "type": "Feature"
     },
@@ -19062,7 +20136,10 @@
           }
         },
         "validation_area": "DOWNTOWN_CORE",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 150.2,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 181.8
       },
       "type": "Feature"
     },
@@ -19121,7 +20198,10 @@
           }
         },
         "validation_area": "HOUGANG",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 160.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 275.1
       },
       "type": "Feature"
     },
@@ -19175,7 +20255,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "WESTERN_WATER_CATCHMENT",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 192.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 452.1
       },
       "type": "Feature"
     },
@@ -19230,7 +20313,10 @@
           }
         },
         "validation_area": "TANGLIN",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 142.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 352.5
       },
       "type": "Feature"
     },
@@ -19291,7 +20377,10 @@
           }
         },
         "validation_area": "CLEMENTI",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 45.1,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 110.9
       },
       "type": "Feature"
     },
@@ -19344,7 +20433,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "TENGAH",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 146.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 301.0
       },
       "type": "Feature"
     },
@@ -19403,7 +20495,10 @@
           }
         },
         "validation_area": "SERANGOON",
-        "validation_best_node_type": "bus_stop"
+        "validation_best_node_type": "bus_stop",
+        "validation_direct_distance_m": 184.5,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 483.5
       },
       "type": "Feature"
     },
@@ -19452,7 +20547,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 585.9,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1087.1
       },
       "type": "Feature"
     },
@@ -19501,7 +20599,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "QUEENSTOWN",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 571.3,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1100.7
       },
       "type": "Feature"
     },
@@ -19550,7 +20651,10 @@
           "bus_top_source_layer_m": {}
         },
         "validation_area": "SENGKANG",
-        "validation_best_node_type": "mrt_lrt_exit"
+        "validation_best_node_type": "mrt_lrt_exit",
+        "validation_direct_distance_m": 726.0,
+        "validation_distance_sanity": "plausible",
+        "validation_onemap_vs_direct_delta_m": 1549.0
       },
       "type": "Feature"
     }

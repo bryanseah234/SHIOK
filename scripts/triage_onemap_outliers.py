@@ -196,6 +196,9 @@ def compact_row(
         "source_artifact": source_artifact,
         "validation_area": validation.get("area"),
         "validation_best_node_type": validation.get("best_node_type"),
+        "validation_direct_distance_m": validation.get("direct_distance_m"),
+        "validation_onemap_vs_direct_delta_m": validation.get("onemap_vs_direct_delta_m"),
+        "validation_distance_sanity": validation.get("distance_sanity"),
         "endpoint_source": validation.get("endpoint_source"),
         "start": validation.get("start"),
         "end": validation.get("end"),
@@ -223,6 +226,7 @@ def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     directions = Counter(str(row.get("old_direction") or "unknown") for row in rows)
     best_types = Counter(str(row.get("new_best_type") or "none") for row in rows)
     fallback_reasons = Counter(str(row.get("direct_bus_fallback_reason") or "none") for row in rows)
+    sanity = Counter(str(row.get("validation_distance_sanity") or "unknown") for row in rows)
     source_layer_m: dict[str, float] = {}
 
     for row in rows:
@@ -240,6 +244,7 @@ def queue_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "direction_counts": dict(sorted(directions.items())),
         "new_best_type_counts": dict(sorted(best_types.items())),
         "fallback_reason_counts": dict(sorted(fallback_reasons.items())),
+        "validation_distance_sanity_counts": dict(sorted(sanity.items())),
         "top_best_source_layer_m": top_lengths(source_layer_m),
     }
 

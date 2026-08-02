@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit before this triage unit: `38b2d77` (`qa: update status after profile aggregation`)
+- Latest pushed commit before this sanity unit: `53ff5b0` (`qa: add map-ready OneMap triage worklist`)
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 190 passed
+- Python tests: 191 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -57,7 +57,7 @@ Root directory: `web`
 - OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 source-backed postal-to-transit samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
 - OneMap walk-validation collector dry-run: passed; `qa/onemap_validation_collect_dry_run_20260802.json` queued 2,000 requests, made 0 HTTP requests, and requires explicit `--confirm-onemap-collection` before external calls.
 - OneMap walk-validation collection: passed as a collection job; `qa/onemap_validation_collect_report_20260802.json` made 2,000 HTTP requests, wrote 2,000 cache results, and returned `ok=true`.
-- OneMap walk-validation evaluation: failed launch gate honestly; `qa/onemap_validation_cached_report_20260802.json` has 1 invalid OneMap zero-distance result, median absolute delta 11.458% vs 10.0% max, and p95 absolute delta 94.037% vs 25.0% max.
+- OneMap walk-validation evaluation: failed launch gate honestly; `qa/onemap_validation_cached_report_20260802.json` has 1 invalid OneMap zero-distance result, median absolute delta 11.458% vs 10.0% max, and p95 absolute delta 94.037% vs 25.0% max. Cached evaluation command exits 1 because the gate remains failed. Direct-distance sanity: 20 `onemap_materially_shorter_than_direct`, 38 `onemap_slightly_shorter_than_direct`, and 1,941 `plausible`.
 - OneMap walk-validation failure classification: report now includes transit-type, direction, area, and top-outlier summaries with start/end coordinates. Bus-stop routes: 1,602 valid rows, median absolute delta 12.816%, p95 98.736%. MRT/LRT routes: 397 valid rows, median absolute delta 6.926%, p95 59.645%. Direction split: 922 project-longer-than-OneMap routes and 1,077 project-shorter-than-OneMap routes.
 - Bus-route detour guard: implemented and tested `bus_route_should_use_direct_fallback`; future scoring downgrades implausible graph-routed bus-stop candidates to explicit `direct_bus_fallback_unrouted` partial evidence when direct distance is within 300 m, graph/direct ratio is at least 3.0x, and graph extra distance is at least 100 m.
 - Real scoring probes after the guard: `532183` resolves as `SCORED_PARTIAL` direct-bus fallback; `618380` resolves to Lakeside MRT locally while bus remains `NO_TRANSIT_IN_RANGE`. These are local probes, not a shipped bundle refresh.
@@ -66,7 +66,7 @@ Root directory: `web`
 - Project-shorter replay helper: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\onemap_outlier_replay_shorter_100_20260802.json` passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.
 - Project-shorter route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\onemap_outlier_replay_shorter_profile_100_20260802.json` passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.
 - Project-longer route-source profile: `uv run python run.py onemap-outlier-replay --limit 100 --direction project_longer_than_onemap --node-type bus_stop --route-source-profile --output qa\onemap_outlier_replay_bus_longer_profile_100_20260802.json` passed locally. Of 92 selected rows, 67 have best-route direct-bus fallback, 12 contain inferred HDB, and 1 contains OSM shelter. The longer queue is mostly bus fallback/missing-connector evidence, not a reason to loosen HDB inference further.
-- OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json --geojson-output qa\onemap_outlier_triage_queues_20260802.geojson` passed locally. It read 192 replay rows, enriched them from `qa/onemap_validation_cached_report_20260802.json`, and emitted 68 `missing_bus_connector` cases, 123 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 47 `mrt_lrt_outlier` cases, 27 `hdb_bridge_connector_review` cases, and 3 `still_unscored_or_no_best` cases. The GeoJSON has 368 start/end line features for map inspection.
+- OneMap outlier triage queues: `uv run python run.py onemap-outlier-triage --output qa\onemap_outlier_triage_queues_20260802.json --geojson-output qa\onemap_outlier_triage_queues_20260802.geojson` passed locally. It read 192 replay rows, enriched them from `qa/onemap_validation_cached_report_20260802.json`, and emitted 68 `missing_bus_connector` cases, 123 `direct_bus_fallback_review` cases, 100 `possible_overpermissive_project_path` cases, 47 `mrt_lrt_outlier` cases, 27 `hdb_bridge_connector_review` cases, and 3 `still_unscored_or_no_best` cases. The GeoJSON has 368 start/end line features for map inspection. The `missing_bus_connector` queue has 48 plausible validation distances, 11 materially shorter-than-direct OneMap distances, and 9 slightly shorter-than-direct OneMap distances.
 - Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, temporary probe parquets, and an obsolete older full score batch; retained corrected `raw/validation/onemap_walk_od`, current score batch, and current web data bundle.
 
 ## Next Production Command

@@ -156,6 +156,9 @@ def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):
 
     assert payload["inputs"]["input_rows"] == 2
     assert payload["queue_summaries"]["missing_bus_connector"]["count"] == 1
+    assert payload["queue_summaries"]["missing_bus_connector"][
+        "validation_distance_sanity_counts"
+    ] == {"unknown": 1}
     assert payload["queue_summaries"]["possible_overpermissive_project_path"]["count"] == 1
     assert payload["queue_summaries"]["mrt_lrt_outlier"]["count"] == 1
     assert payload["queue_summaries"]["hdb_bridge_connector_review"]["count"] == 1
@@ -195,6 +198,9 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
                 "area": "HOUGANG",
                 "best_node_type": "bus_stop",
                 "endpoint_source": "postal_universe_to_transit_poi",
+                "direct_distance_m": 67.7,
+                "onemap_vs_direct_delta_m": -61.7,
+                "distance_sanity": "onemap_materially_shorter_than_direct",
                 "abs_pct_delta": 100.0,
                 "start": {"lat": 1.346263, "lon": 103.887204},
                 "end": {"lat": 1.346168, "lon": 103.887806}
@@ -216,8 +222,14 @@ def test_build_triage_queues_enriches_from_validation_report(tmp_path: Path):
     row = payload["queues"]["missing_bus_connector"][0]
     assert row["validation_area"] == "HOUGANG"
     assert row["validation_best_node_type"] == "bus_stop"
+    assert row["validation_direct_distance_m"] == 67.7
+    assert row["validation_onemap_vs_direct_delta_m"] == -61.7
+    assert row["validation_distance_sanity"] == "onemap_materially_shorter_than_direct"
     assert row["start"] == {"lat": 1.346263, "lon": 103.887204}
     assert row["end"] == {"lat": 1.346168, "lon": 103.887806}
+    assert payload["queue_summaries"]["missing_bus_connector"][
+        "validation_distance_sanity_counts"
+    ] == {"onemap_materially_shorter_than_direct": 1}
 
 
 def test_validation_lookup_keeps_highest_delta_for_postal_direction(tmp_path: Path):

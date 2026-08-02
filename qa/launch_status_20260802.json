@@ -6,7 +6,7 @@
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit": "38b2d77"
+    "latest_pushed_commit": "53ff5b0"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
@@ -34,7 +34,7 @@
     }
   },
   "verified_checks": {
-    "python_tests": "190 passed",
+    "python_tests": "191 passed",
     "web_tests": "31 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
@@ -54,7 +54,7 @@
     "onemap_walk_validation_sample_plan": "qa/onemap_validation_sample_2000_20260802.json passed; 2000 source-backed postal-to-transit samples from 112880 eligible scored records across 52 areas; projected 66.7 minutes at 2.0s/request",
     "onemap_walk_validation_collect_dry_run": "qa/onemap_validation_collect_dry_run_20260802.json passed; 2000 queued requests, 0 HTTP requests, requires explicit confirmation before external calls",
     "onemap_walk_validation_collection": "qa/onemap_validation_collect_report_20260802.json passed as collection job; 2000 HTTP requests, 2000 written cache results, ok=true",
-    "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json failed launch gate; cached_results=1999, invalid_cache_results=1, median_abs_pct_delta=11.458, p95_abs_pct_delta=94.037, gate_passed=false",
+    "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json failed launch gate; cached_results=1999, invalid_cache_results=1, median_abs_pct_delta=11.458, p95_abs_pct_delta=94.037, gate_passed=false. Cached evaluation command exits 1 because the gate remains failed. distance_sanity_summary: onemap_materially_shorter_than_direct=20, onemap_slightly_shorter_than_direct=38, plausible=1941.",
     "onemap_walk_validation_failure_classification": "Report includes transit-type, direction, area, and top-outlier summaries with start/end coordinates. Bus-stop routes: n=1602, median_abs_pct_delta=12.816, p95_abs_pct_delta=98.736. MRT/LRT routes: n=397, median_abs_pct_delta=6.926, p95_abs_pct_delta=59.645. Direction split: project_longer_than_onemap n=922, p95_abs_pct_delta=168.358; project_shorter_than_onemap n=1077, p95_abs_pct_delta=67.816.",
     "bus_route_detour_guard": "Implemented and tested bus_route_should_use_direct_fallback. Future scoring downgrades implausible graph-routed bus-stop candidates to explicit direct_bus_fallback_unrouted partial evidence when direct distance is within 300m, graph/direct ratio is at least 3.0x, and graph extra distance is at least 100m.",
     "bus_route_detour_probe": "Local probes after guard: 532183 resolves as SCORED_PARTIAL direct-bus fallback; 618380 resolves to Lakeside MRT locally while bus remains NO_TRANSIT_IN_RANGE. These are local probes, not a shipped bundle refresh.",
@@ -63,7 +63,7 @@
     "onemap_outlier_replay_project_shorter": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --output qa\\onemap_outlier_replay_shorter_100_20260802.json passed locally. It selected 100 project-shorter/>25% rows; current scoring yields 54 bus direct-fallback routes, 76 bus-stop best results, 21 MRT/LRT best results, and 3 rows without a scored best transit result.",
     "onemap_outlier_replay_project_shorter_profile": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_shorter_than_onemap --node-type any --route-source-profile --output qa\\onemap_outlier_replay_shorter_profile_100_20260802.json passed locally. Of 97 rows with profiled best-route edges, 54 contain direct-bus fallback, 14 contain inferred HDB, 13 contain OSM shelter, and 1 contains overhead bridge/underpass. The project-shorter queue is not mainly HDB/bridge over-permissiveness based on current evidence.",
     "onemap_outlier_replay_project_longer_profile": "uv run python run.py onemap-outlier-replay --limit 100 --direction project_longer_than_onemap --node-type bus_stop --route-source-profile --output qa\\onemap_outlier_replay_bus_longer_profile_100_20260802.json passed locally. Of 92 selected rows, 67 have best-route direct-bus fallback, 12 contain inferred HDB, and 1 contains OSM shelter. The longer queue is mostly bus fallback/missing-connector evidence, not a reason to loosen HDB inference further.",
-    "onemap_outlier_triage_queues": "uv run python run.py onemap-outlier-triage --output qa\\onemap_outlier_triage_queues_20260802.json --geojson-output qa\\onemap_outlier_triage_queues_20260802.geojson passed locally. It read 192 replay rows, enriched them from qa/onemap_validation_cached_report_20260802.json, and emitted 68 missing_bus_connector cases, 123 direct_bus_fallback_review cases, 100 possible_overpermissive_project_path cases, 47 mrt_lrt_outlier cases, 27 hdb_bridge_connector_review cases, and 3 still_unscored_or_no_best cases. The GeoJSON has 368 start/end line features for map inspection.",
+    "onemap_outlier_triage_queues": "uv run python run.py onemap-outlier-triage --output qa\\onemap_outlier_triage_queues_20260802.json --geojson-output qa\\onemap_outlier_triage_queues_20260802.geojson passed locally. It read 192 replay rows, enriched them from qa/onemap_validation_cached_report_20260802.json, and emitted 68 missing_bus_connector cases, 123 direct_bus_fallback_review cases, 100 possible_overpermissive_project_path cases, 47 mrt_lrt_outlier cases, 27 hdb_bridge_connector_review cases, and 3 still_unscored_or_no_best cases. The GeoJSON has 368 start/end line features for map inspection. The missing_bus_connector queue has 48 plausible validation distances, 11 materially shorter-than-direct OneMap distances, and 9 slightly shorter-than-direct OneMap distances.",
     "temporary_file_cleanup": "Removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, temporary probe parquets, and an obsolete older full score batch; retained raw/validation/onemap_walk_od, current score batch, and current web data bundle."
   },
   "not_done": [

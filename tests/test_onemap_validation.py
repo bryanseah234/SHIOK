@@ -9,6 +9,8 @@ from pipeline.onemap_validation import (
     collect_onemap_walk_cache,
     decode_polyline,
     evaluate_cached_results,
+    haversine_distance_m,
+    onemap_distance_sanity,
     route_cache_key,
 )
 from tests.test_export import sample_record
@@ -144,6 +146,11 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["results_preview"][0]["signed_pct_delta"] == 5.0
     assert report["results_preview"][0]["direction"] == "project_longer_than_onemap"
     assert report["results_preview"][0]["start"] == start
+    assert 150.0 < report["results_preview"][0]["direct_distance_m"] < 160.0
+    assert report["results_preview"][0]["distance_sanity"] == (
+        "onemap_materially_shorter_than_direct"
+    )
+    assert report["distance_sanity_summary"] == {"onemap_materially_shorter_than_direct": 1}
     assert report["transit_type_summary"] == [
         {
             "best_node_type": "bus_stop",
@@ -167,6 +174,20 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
         }
     ]
     assert report["top_outliers_preview"][0]["best_node_name"] == "Test Stop"
+
+
+def test_haversine_distance_and_onemap_distance_sanity():
+    direct_m = haversine_distance_m(
+        {"lat": 1.3, "lon": 103.8},
+        {"lat": 1.301, "lon": 103.801},
+    )
+
+    assert direct_m is not None
+    assert 150.0 < direct_m < 160.0
+    assert onemap_distance_sanity(100.0, direct_m) == "onemap_materially_shorter_than_direct"
+    assert onemap_distance_sanity(145.0, direct_m) == "onemap_slightly_shorter_than_direct"
+    assert onemap_distance_sanity(170.0, direct_m) == "plausible"
+    assert onemap_distance_sanity(100.0, None) == "missing_coordinates"
 
 
 def test_evaluate_cached_results_reports_zero_distance_as_invalid(tmp_path: Path):

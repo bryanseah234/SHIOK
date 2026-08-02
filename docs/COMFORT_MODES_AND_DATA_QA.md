@@ -86,12 +86,15 @@ Current implementation status:
   1 invalid OneMap zero-distance result, median absolute delta 11.458% against
   a 10% threshold, and p95 absolute delta 94.037% against a 25% threshold.
 - The cached report now includes transit-type summaries, top area summaries,
-  direction summaries, and top outliers with start/end coordinates. Current
-  transit split: bus stops have median absolute delta 12.816% and p95 98.736%;
-  MRT/LRT exits have median absolute delta 6.926% and p95 59.645%. Direction
-  split: 922 routes are longer in the project than OneMap, and 1,077 are shorter.
-  This points first at bus-stop access/connector modeling, while MRT routing
-  remains a secondary QA target.
+  direction summaries, top outliers with start/end coordinates, and
+  direct-distance sanity fields. `distance_sanity_summary`: 20
+  `onemap_materially_shorter_than_direct`, 38
+  `onemap_slightly_shorter_than_direct`, and 1,941 `plausible`. Current transit
+  split: bus stops have median absolute delta 12.816% and p95 98.736%; MRT/LRT
+  exits have median absolute delta 6.926% and p95 59.645%. Direction split: 922
+  routes are longer in the project than OneMap, and 1,077 are shorter. This
+  points first at bus-stop access/connector modeling, while MRT routing remains
+  a secondary QA target.
 
 Next external-API collection step, when intentionally scheduled:
 
@@ -523,8 +526,10 @@ route effect; no score override has been applied.
   `possible_overpermissive_project_path` cases, 47 `mrt_lrt_outlier` cases, 27
   `hdb_bridge_connector_review` cases, and 3 `still_unscored_or_no_best` cases.
   `qa/onemap_outlier_triage_queues_20260802.geojson` contains 368 start/end line
-  features for map inspection. This is the next worklist for targeted
-  geometry/model QA before any full rescore.
+  features for map inspection. The `missing_bus_connector` queue has 48
+  plausible validation distances, 11 materially shorter-than-direct OneMap
+  distances, and 9 slightly shorter-than-direct OneMap distances. This is the
+  next worklist for targeted geometry/model QA before any full rescore.
 - Interpretation: most sampled remaining no-transit records are reachable but
   beyond the current 1.2 km transit-access cutoff. The next product decision is
   whether to keep them as explicit `NO_TRANSIT_IN_RANGE` or add a low/zero-credit

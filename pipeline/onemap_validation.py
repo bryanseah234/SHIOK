@@ -9,7 +9,7 @@ import math
 import os
 import re
 import time
-from collections import defaultdict
+from collections import Counter, defaultdict
 from collections.abc import Callable, Iterable
 from datetime import UTC, datetime
 from pathlib import Path
@@ -32,6 +32,8 @@ DEFAULT_ONEMAP_DELAY_SEC = 2.0
 MEDIAN_THRESHOLD_PCT = 10.0
 P95_THRESHOLD_PCT = 25.0
 TOP_OUTLIERS_PREVIEW_LIMIT = 100
+DIRECT_DISTANCE_TOLERANCE_M = 5.0
+MATERIAL_SHORTER_THAN_DIRECT_RATIO = 0.8
 ONEMAP_AUTH_URL = "https://www.onemap.gov.sg/api/auth/post/getToken"
 ONEMAP_ROUTE_URL = "https://www.onemap.gov.sg/api/public/routingsvc/route"
 USER_AGENT = "SHIOK-Index-OneMap-Validation/1.0"
@@ -537,6 +539,41 @@ def signed_delta_direction(signed_delta_pct: float) -> str:
     return "same_length"
 
 
+def haversine_distance_m(start: Any, end: Any) -> float | None:
+    if not isinstance(start, dict) or not isinstance(end, dict):
+        return None
+    try:
+        start_lat = math.radians(float(start["lat"]))
+        start_lon = math.radians(float(start["lon"]))
+        end_lat = math.radians(float(end["lat"]))
+        end_lon = math.radians(float(end["lon"]))
+    except (KeyError, TypeError, ValueError):
+        return None
+
+    delta_lat = end_lat - start_lat
+    delta_lon = end_lon - start_lon
+    haversine = (
+        math.sin(delta_lat / 2) ** 2
+        + math.cos(start_lat) * math.cos(end_lat) * math.sin(delta_lon / 2) ** 2
+    )
+    return 2 * 6_371_008.8 * math.asin(math.sqrt(haversine))
+
+
+def onemap_distance_sanity(onemap_m: float, direct_distance_m: float | None) -> str:
+    if direct_distance_m is None:
+        return "missing_coordinates"
+    if direct_distance_m <= 0:
+        return "zero_direct_distance"
+    if (
+        onemap_m + DIRECT_DISTANCE_TOLERANCE_M
+        < direct_distance_m * MATERIAL_SHORTER_THAN_DIRECT_RATIO
+    ):
+        return "onemap_materially_shorter_than_direct"
+    if onemap_m + DIRECT_DISTANCE_TOLERANCE_M < direct_distance_m:
+        return "onemap_slightly_shorter_than_direct"
+    return "plausible"
+
+
 def top_outliers_by_group(
     results: list[dict[str, Any]], *, group_key: str, limit: int
 ) -> dict[str, list[dict[str, Any]]]:
@@ -586,6 +623,8 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             continue
         delta_pct = abs(float(project_m) - float(onemap_m)) / float(onemap_m) * 100
         signed_delta_pct = (float(project_m) - float(onemap_m)) / float(onemap_m) * 100
+        direct_distance_m = haversine_distance_m(sample.get("start"), sample.get("end"))
+        distance_sanity = onemap_distance_sanity(float(onemap_m), direct_distance_m)
         results.append(
             {
                 "postal": sample.get("postal"),
@@ -593,6 +632,15 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
                 "cache_key": cache_key,
                 "start": sample.get("start"),
                 "end": sample.get("end"),
+                "direct_distance_m": (
+                    round(direct_distance_m, 1) if direct_distance_m is not None else None
+                ),
+                "onemap_vs_direct_delta_m": (
+                    round(float(onemap_m) - direct_distance_m, 1)
+                    if direct_distance_m is not None
+                    else None
+                ),
+                "distance_sanity": distance_sanity,
                 "project_shortest_m": round(float(project_m), 1),
                 "onemap_walk_m": round(float(onemap_m), 1),
                 "abs_pct_delta": round(delta_pct, 3),
@@ -607,6 +655,9 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
     deltas = [float(item["abs_pct_delta"]) for item in results]
     median = percentile(deltas, 50)
     p95 = percentile(deltas, 95)
+    distance_sanity_counts = Counter(
+        str(item.get("distance_sanity") or "unknown") for item in results
+    )
     gate_passed = (
         len(results) == int(sample_payload.get("sample_size", 0))
         and not invalid
@@ -633,6 +684,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             "p95_abs_pct_delta_max": P95_THRESHOLD_PCT,
         },
         "gate_passed": gate_passed,
+        "distance_sanity_summary": dict(sorted(distance_sanity_counts.items())),
         "transit_type_summary": summarize_delta_groups(results, group_key="best_node_type"),
         "direction_summary": summarize_delta_groups(results, group_key="direction"),
         "area_summary": summarize_delta_groups(results, group_key="area", limit=20),
