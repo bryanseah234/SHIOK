@@ -184,8 +184,28 @@
   "bundle": "generated_20260801_165500",
   "cache_dir": "raw\\validation\\onemap_walk_od",
   "cached_results": 1999,
+  "direction_summary": [
+    {
+      "count": 922,
+      "direction": "project_longer_than_onemap",
+      "max_abs_pct_delta": 6783.333,
+      "median_abs_pct_delta": 11.881,
+      "over_25_pct_count": 302,
+      "over_50_pct_count": 185,
+      "p95_abs_pct_delta": 168.358
+    },
+    {
+      "count": 1077,
+      "direction": "project_shorter_than_onemap",
+      "max_abs_pct_delta": 99.572,
+      "median_abs_pct_delta": 11.344,
+      "over_25_pct_count": 280,
+      "over_50_pct_count": 116,
+      "p95_abs_pct_delta": 67.816
+    }
+  ],
   "gate_passed": false,
-  "generated_at": "2026-08-02T01:46:31.920255+00:00",
+  "generated_at": "2026-08-02T01:50:27.898914+00:00",
   "invalid_cache_preview": [
     {
       "area": "SOUTHERN_ISLANDS",
@@ -212,11 +232,20 @@
       "best_node_name": "Bef Whitchurch Rd",
       "best_node_type": "bus_stop",
       "cache_key": "c5abe432c3706d6179159cb4f71f36c22b7453a8a86eba40960fb5bfc3f6adfd",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.294456,
+        "lon": 103.795944
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 259.0,
       "postal": "138820",
       "project_shortest_m": 259.5,
-      "signed_pct_delta": 0.193
+      "signed_pct_delta": 0.193,
+      "start": {
+        "lat": 1.293571,
+        "lon": 103.797326
+      }
     },
     {
       "abs_pct_delta": 112.73,
@@ -224,11 +253,20 @@
       "best_node_name": "Blk 367",
       "best_node_type": "bus_stop",
       "cache_key": "d5b77427b2d99f829f233dd0ae57654d2cf0f857997f24f99ce6619d0d58dbe3",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.338364,
+        "lon": 103.71932
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 348.0,
       "postal": "618380",
       "project_shortest_m": 740.3,
-      "signed_pct_delta": 112.73
+      "signed_pct_delta": 112.73,
+      "start": {
+        "lat": 1.339377,
+        "lon": 103.717439
+      }
     },
     {
       "abs_pct_delta": 9.839,
@@ -236,11 +274,20 @@
       "best_node_name": "UPPER CHANGI MRT STATION Exit A",
       "best_node_type": "mrt_lrt_exit",
       "cache_key": "1269014e714a084db5a5a0bbe656ee64ed4e695568f6966543a9016b3c8a70fc",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.342007,
+        "lon": 103.960961
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 436.0,
       "postal": "487926",
       "project_shortest_m": 393.1,
-      "signed_pct_delta": -9.839
+      "signed_pct_delta": -9.839,
+      "start": {
+        "lat": 1.343266,
+        "lon": 103.960584
+      }
     },
     {
       "abs_pct_delta": 0.528,
@@ -248,11 +295,20 @@
       "best_node_name": "Aft Lor 106 Changi",
       "best_node_type": "bus_stop",
       "cache_key": "1cce5910180b07ceac5eef73ced6fa165ea0bd47390a27269ab6e095997f48be",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.317095,
+        "lon": 103.902951
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 303.0,
       "postal": "426580",
       "project_shortest_m": 304.6,
-      "signed_pct_delta": 0.528
+      "signed_pct_delta": 0.528,
+      "start": {
+        "lat": 1.315351,
+        "lon": 103.90212
+      }
     },
     {
       "abs_pct_delta": 45.769,
@@ -260,11 +316,20 @@
       "best_node_name": "Opp State Ct",
       "best_node_type": "bus_stop",
       "cache_key": "eb793b081c765c4d8f646f677471d560082336d0119a7e8048ec28bd7eff3874",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.286102,
+        "lon": 103.842536
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 416.0,
       "postal": "058359",
       "project_shortest_m": 225.6,
-      "signed_pct_delta": -45.769
+      "signed_pct_delta": -45.769,
+      "start": {
+        "lat": 1.28577,
+        "lon": 103.84398
+      }
     },
     {
       "abs_pct_delta": 5.946,
@@ -272,11 +337,20 @@
       "best_node_name": "Opp Mohd Salleh Mque",
       "best_node_type": "bus_stop",
       "cache_key": "b2995e836ce86760585984d517a950af3c4eebf032c6e70495f76b55e8d3b969",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.312147,
+        "lon": 103.87715
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 259.0,
       "postal": "388535",
       "project_shortest_m": 243.6,
-      "signed_pct_delta": -5.946
+      "signed_pct_delta": -5.946,
+      "start": {
+        "lat": 1.312996,
+        "lon": 103.878968
+      }
     },
     {
       "abs_pct_delta": 28.354,
@@ -284,11 +358,20 @@
       "best_node_name": "SERANGOON MRT STATION Exit A",
       "best_node_type": "mrt_lrt_exit",
       "cache_key": "96467fd252af3fbdedbb8d12feb52fc5b8dc76dda3352cb25d672bc58a0e87ab",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.349482,
+        "lon": 103.873957
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 741.0,
       "postal": "538053",
       "project_shortest_m": 530.9,
-      "signed_pct_delta": -28.354
+      "signed_pct_delta": -28.354,
+      "start": {
+        "lat": 1.344901,
+        "lon": 103.874164
+      }
     },
     {
       "abs_pct_delta": 9.124,
@@ -296,11 +379,20 @@
       "best_node_name": "Thomson CC",
       "best_node_type": "bus_stop",
       "cache_key": "a50bcaa4d3661f2dc467a352dc5e8d45f0f5584335871fac0ba6e74d6539baed",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.351447,
+        "lon": 103.835911
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 354.0,
       "postal": "574703",
       "project_shortest_m": 321.7,
-      "signed_pct_delta": -9.124
+      "signed_pct_delta": -9.124,
+      "start": {
+        "lat": 1.351629,
+        "lon": 103.833663
+      }
     },
     {
       "abs_pct_delta": 0.164,
@@ -308,11 +400,20 @@
       "best_node_name": "Caltex Stn",
       "best_node_type": "bus_stop",
       "cache_key": "58815eb0347b194c62547c8beade55bec09b630965d252d09e874f8969507212",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.308781,
+        "lon": 103.910892
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 304.0,
       "postal": "428344",
       "project_shortest_m": 303.5,
-      "signed_pct_delta": -0.164
+      "signed_pct_delta": -0.164,
+      "start": {
+        "lat": 1.30748,
+        "lon": 103.911506
+      }
     },
     {
       "abs_pct_delta": 201.628,
@@ -320,11 +421,20 @@
       "best_node_name": "Bef Tg Katong Rd",
       "best_node_type": "bus_stop",
       "cache_key": "dbd105cd49f47091bde658f71dfcdf418e5b2de52971d704335546c3d86c00a7",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.301713,
+        "lon": 103.895991
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 86.0,
       "postal": "437787",
       "project_shortest_m": 259.4,
-      "signed_pct_delta": 201.628
+      "signed_pct_delta": 201.628,
+      "start": {
+        "lat": 1.301782,
+        "lon": 103.89519
+      }
     },
     {
       "abs_pct_delta": 15.592,
@@ -332,11 +442,20 @@
       "best_node_name": "Hse No. 532",
       "best_node_type": "bus_stop",
       "cache_key": "fb1a5d94639e6b19e327477eace85a8b761b488a5d8ae1afebecb1ebbdfe6405",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.319896,
+        "lon": 103.789187
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 152.0,
       "postal": "277460",
       "project_shortest_m": 175.7,
-      "signed_pct_delta": 15.592
+      "signed_pct_delta": 15.592,
+      "start": {
+        "lat": 1.319935,
+        "lon": 103.788369
+      }
     },
     {
       "abs_pct_delta": 44.689,
@@ -344,11 +463,20 @@
       "best_node_name": "Opp Trinity Meth Ch",
       "best_node_type": "bus_stop",
       "cache_key": "488d331fa8f54478e36abd3dbdce665ef549f5c37ec3c43adeb96a13fec6abf2",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.363578,
+        "lon": 103.869291
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 273.0,
       "postal": "556807",
       "project_shortest_m": 395.0,
-      "signed_pct_delta": 44.689
+      "signed_pct_delta": 44.689,
+      "start": {
+        "lat": 1.362006,
+        "lon": 103.868268
+      }
     },
     {
       "abs_pct_delta": 6.467,
@@ -356,11 +484,20 @@
       "best_node_name": "Prince Edward Rd Stn Exit 2",
       "best_node_type": "bus_stop",
       "cache_key": "c2216f05b24edbff1d77c8efc5a0a2af1d885e155c385f95677194d79c1921f6",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.274079,
+        "lon": 103.846874
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 334.0,
       "postal": "079120",
       "project_shortest_m": 312.4,
-      "signed_pct_delta": -6.467
+      "signed_pct_delta": -6.467,
+      "start": {
+        "lat": 1.273249,
+        "lon": 103.844796
+      }
     },
     {
       "abs_pct_delta": 13.535,
@@ -368,11 +505,20 @@
       "best_node_name": "Aft Jln Remaja",
       "best_node_type": "bus_stop",
       "cache_key": "9a986baed467b7bb915d6c2a0aef04152dee2331501959f1a458e9abeb63ca0e",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.357962,
+        "lon": 103.76138
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 314.0,
       "postal": "668908",
       "project_shortest_m": 271.5,
-      "signed_pct_delta": -13.535
+      "signed_pct_delta": -13.535,
+      "start": {
+        "lat": 1.359221,
+        "lon": 103.759412
+      }
     },
     {
       "abs_pct_delta": 52.929,
@@ -380,11 +526,20 @@
       "best_node_name": "Blk 141A",
       "best_node_type": "bus_stop",
       "cache_key": "9d4b99f28832744ebbfdf62dddf7246b535db3eb70a394f41b94f0adcb5094cf",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.367665,
+        "lon": 103.874291
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 973.0,
       "postal": "545195",
       "project_shortest_m": 458.0,
-      "signed_pct_delta": -52.929
+      "signed_pct_delta": -52.929,
+      "start": {
+        "lat": 1.365653,
+        "lon": 103.875938
+      }
     },
     {
       "abs_pct_delta": 16.162,
@@ -392,11 +547,20 @@
       "best_node_name": "Opp Kuo Chuan Presby Sch",
       "best_node_type": "bus_stop",
       "cache_key": "0aa5d562d6612d755526823ac17a044790584d3eb25b0d078d15d9ee750f4df5",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.349346,
+        "lon": 103.853915
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 297.0,
       "postal": "570188",
       "project_shortest_m": 345.0,
-      "signed_pct_delta": 16.162
+      "signed_pct_delta": 16.162,
+      "start": {
+        "lat": 1.349944,
+        "lon": 103.851698
+      }
     },
     {
       "abs_pct_delta": 3.32,
@@ -404,11 +568,20 @@
       "best_node_name": "MAYFLOWER MRT STATION Exit 3",
       "best_node_type": "mrt_lrt_exit",
       "cache_key": "299a1c95ddca83b9521f9d94899775e58fb81ccbb47f8c47ce4d74677a330675",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.373532,
+        "lon": 103.837461
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 247.0,
       "postal": "568825",
       "project_shortest_m": 238.8,
-      "signed_pct_delta": -3.32
+      "signed_pct_delta": -3.32,
+      "start": {
+        "lat": 1.373226,
+        "lon": 103.839268
+      }
     },
     {
       "abs_pct_delta": 25.806,
@@ -416,11 +589,20 @@
       "best_node_name": "Changi Baptist Ch",
       "best_node_type": "bus_stop",
       "cache_key": "06547778c12d17570608a4b79ced907c6958c220c36ef7160630b806eaa2fab1",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.365904,
+        "lon": 103.97535
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 124.0,
       "postal": "507916",
       "project_shortest_m": 92.0,
-      "signed_pct_delta": -25.806
+      "signed_pct_delta": -25.806,
+      "start": {
+        "lat": 1.366113,
+        "lon": 103.974971
+      }
     },
     {
       "abs_pct_delta": 47.5,
@@ -428,11 +610,20 @@
       "best_node_name": "Gan Eng Seng Sec Sch",
       "best_node_type": "bus_stop",
       "cache_key": "855b3682c14bba2874423c738e2cc6449b71e3a51d4c973921d031853c662ec4",
+      "direction": "project_shorter_than_onemap",
+      "end": {
+        "lat": 1.290617,
+        "lon": 103.823623
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 732.0,
       "postal": "249003",
       "project_shortest_m": 384.3,
-      "signed_pct_delta": -47.5
+      "signed_pct_delta": -47.5,
+      "start": {
+        "lat": 1.292614,
+        "lon": 103.82404
+      }
     },
     {
       "abs_pct_delta": 16.855,
@@ -440,11 +631,20 @@
       "best_node_name": "Opp Whitley Sec Sch",
       "best_node_type": "bus_stop",
       "cache_key": "11139490cc9f5f9a60e1731090054437a6c5cfe5e208db80e96b96471400e094",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.355665,
+        "lon": 103.841327
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 283.0,
       "postal": "576008",
       "project_shortest_m": 330.7,
-      "signed_pct_delta": 16.855
+      "signed_pct_delta": 16.855,
+      "start": {
+        "lat": 1.354515,
+        "lon": 103.842951
+      }
     }
   ],
   "sample_size": 2000,
@@ -459,11 +659,20 @@
       "best_node_name": "Blk 181",
       "best_node_type": "bus_stop",
       "cache_key": "54ccadc0ba1608263d9386dc85f89f11237ea083e84260e9275e674b0e915de2",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.346168,
+        "lon": 103.887806
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 6.0,
       "postal": "532183",
       "project_shortest_m": 413.0,
-      "signed_pct_delta": 6783.333
+      "signed_pct_delta": 6783.333,
+      "start": {
+        "lat": 1.346263,
+        "lon": 103.887204
+      }
     },
     {
       "abs_pct_delta": 4475.0,
@@ -471,11 +680,20 @@
       "best_node_name": "Blk 306B",
       "best_node_type": "bus_stop",
       "cache_key": "1d0923015dd903d6b385b41d8043668c578ef92458c4f6621e485cfd32103980",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.361662,
+        "lon": 103.735908
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 2.0,
       "postal": "692306",
       "project_shortest_m": 91.5,
-      "signed_pct_delta": 4475.0
+      "signed_pct_delta": 4475.0,
+      "start": {
+        "lat": 1.361246,
+        "lon": 103.736326
+      }
     },
     {
       "abs_pct_delta": 1401.111,
@@ -483,11 +701,20 @@
       "best_node_name": "Bef Gul St 1",
       "best_node_type": "bus_stop",
       "cache_key": "b215518ef7c2da7eee16e76b2f975d410ba971843cf6197159f44cf5b916e0a0",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.319792,
+        "lon": 103.669004
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 9.0,
       "postal": "629314",
       "project_shortest_m": 135.1,
-      "signed_pct_delta": 1401.111
+      "signed_pct_delta": 1401.111,
+      "start": {
+        "lat": 1.31954,
+        "lon": 103.66905
+      }
     },
     {
       "abs_pct_delta": 1347.424,
@@ -495,11 +722,20 @@
       "best_node_name": "Blk 178A",
       "best_node_type": "bus_stop",
       "cache_key": "1204995773a195fbda86dbba8346601ce030f1e187a6e78db2a62a972b41cb63",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.346389,
+        "lon": 103.887888
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 66.0,
       "postal": "535424",
       "project_shortest_m": 955.3,
-      "signed_pct_delta": 1347.424
+      "signed_pct_delta": 1347.424,
+      "start": {
+        "lat": 1.346753,
+        "lon": 103.885535
+      }
     },
     {
       "abs_pct_delta": 1289.844,
@@ -507,11 +743,20 @@
       "best_node_name": "Opp Blk 991B",
       "best_node_type": "bus_stop",
       "cache_key": "be474a97917a7f72f7d656bf1bf79eba70f11c8fb1a82c27ed58cc268c528ed3",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.383197,
+        "lon": 103.882529
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 64.0,
       "postal": "534194",
       "project_shortest_m": 889.5,
-      "signed_pct_delta": 1289.844
+      "signed_pct_delta": 1289.844,
+      "start": {
+        "lat": 1.383046,
+        "lon": 103.883497
+      }
     },
     {
       "abs_pct_delta": 709.07,
@@ -519,11 +764,20 @@
       "best_node_name": "Blk 535",
       "best_node_type": "bus_stop",
       "cache_key": "9c1e9e4601fff19d4beeff5eefd0810eb9a79db64d09928ca921639f9f9e2605",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.376345,
+        "lon": 103.890549
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 43.0,
       "postal": "530535",
       "project_shortest_m": 347.9,
-      "signed_pct_delta": 709.07
+      "signed_pct_delta": 709.07,
+      "start": {
+        "lat": 1.376554,
+        "lon": 103.890393
+      }
     },
     {
       "abs_pct_delta": 667.619,
@@ -531,11 +785,20 @@
       "best_node_name": "Aft Chong Pang CC",
       "best_node_type": "bus_stop",
       "cache_key": "d58aca0315f7980865efad4767111d29b74cfb092f787d53e39053ea1155199d",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.431407,
+        "lon": 103.829557
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 42.0,
       "postal": "760103",
       "project_shortest_m": 322.4,
-      "signed_pct_delta": 667.619
+      "signed_pct_delta": 667.619,
+      "start": {
+        "lat": 1.431591,
+        "lon": 103.829376
+      }
     },
     {
       "abs_pct_delta": 503.75,
@@ -543,11 +806,20 @@
       "best_node_name": "Ng Teng Fong General Hosp",
       "best_node_type": "bus_stop",
       "cache_key": "1995572bfe95760cf8fc8bd64da847ceaf400fedb8b5310d451ec3e797309a8d",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.332606,
+        "lon": 103.745807
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 72.0,
       "postal": "609606",
       "project_shortest_m": 434.7,
-      "signed_pct_delta": 503.75
+      "signed_pct_delta": 503.75,
+      "start": {
+        "lat": 1.333351,
+        "lon": 103.745865
+      }
     },
     {
       "abs_pct_delta": 466.771,
@@ -555,11 +827,20 @@
       "best_node_name": "Bef British American Tobacco",
       "best_node_type": "bus_stop",
       "cache_key": "c4c392cb369c9a1b06f92e50fbc1433597a007b5d3ea009a1b618a579a2dc465",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.45761,
+        "lon": 103.802148
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 96.0,
       "postal": "758093",
       "project_shortest_m": 544.1,
-      "signed_pct_delta": 466.771
+      "signed_pct_delta": 466.771,
+      "start": {
+        "lat": 1.457395,
+        "lon": 103.802999
+      }
     },
     {
       "abs_pct_delta": 442.647,
@@ -567,11 +848,20 @@
       "best_node_name": "Opp ESAB",
       "best_node_type": "bus_stop",
       "cache_key": "c441c9d478b93d9dd54bf57e3d6088f8ebe778de50845e3cdb95426f172f552c",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.324961,
+        "lon": 103.666996
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 34.0,
       "postal": "629065",
       "project_shortest_m": 184.5,
-      "signed_pct_delta": 442.647
+      "signed_pct_delta": 442.647,
+      "start": {
+        "lat": 1.325552,
+        "lon": 103.66664
+      }
     },
     {
       "abs_pct_delta": 423.235,
@@ -579,11 +869,20 @@
       "best_node_name": "Opp Yan San Metals",
       "best_node_type": "bus_stop",
       "cache_key": "ab9d067bf5abdd2ffa021349217769a0977713560e98ce42b41d7455016fc64a",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.325136,
+        "lon": 103.651473
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 34.0,
       "postal": "639420",
       "project_shortest_m": 177.9,
-      "signed_pct_delta": 423.235
+      "signed_pct_delta": 423.235,
+      "start": {
+        "lat": 1.325168,
+        "lon": 103.651877
+      }
     },
     {
       "abs_pct_delta": 401.364,
@@ -591,11 +890,20 @@
       "best_node_name": "The Rail Mall",
       "best_node_type": "bus_stop",
       "cache_key": "0fa8e748c3beba10d8a3da544883851af5f0abb77ccbec2cad2a07dfa5190602",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.359409,
+        "lon": 103.767436
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 44.0,
       "postal": "678069",
       "project_shortest_m": 220.6,
-      "signed_pct_delta": 401.364
+      "signed_pct_delta": 401.364,
+      "start": {
+        "lat": 1.359711,
+        "lon": 103.767609
+      }
     },
     {
       "abs_pct_delta": 388.977,
@@ -603,11 +911,20 @@
       "best_node_name": "Opp Hong San Si Tp",
       "best_node_type": "bus_stop",
       "cache_key": "b316aacea291a4f5e0d3757f859c7d14d9b1fd2cab91abb49b050d5b91c9f5da",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.32027,
+        "lon": 103.91
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 176.0,
       "postal": "417092",
       "project_shortest_m": 860.6,
-      "signed_pct_delta": 388.977
+      "signed_pct_delta": 388.977,
+      "start": {
+        "lat": 1.320963,
+        "lon": 103.909024
+      }
     },
     {
       "abs_pct_delta": 372.128,
@@ -615,11 +932,20 @@
       "best_node_name": "Aft Corfe Pl",
       "best_node_type": "bus_stop",
       "cache_key": "a4264a08a877d70b45869a22e8ff884fae2203a98971af0a4cbe9f978de051f4",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.360656,
+        "lon": 103.859839
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 47.0,
       "postal": "559038",
       "project_shortest_m": 221.9,
-      "signed_pct_delta": 372.128
+      "signed_pct_delta": 372.128,
+      "start": {
+        "lat": 1.361073,
+        "lon": 103.859754
+      }
     },
     {
       "abs_pct_delta": 371.546,
@@ -627,11 +953,20 @@
       "best_node_name": "Raya Gdn",
       "best_node_type": "bus_stop",
       "cache_key": "8f654b79882bdcb7cb75893781b02484b3c10477ad6e0c84cfc0090d82ef5969",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.346768,
+        "lon": 103.880912
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 97.0,
       "postal": "534317",
       "project_shortest_m": 457.4,
-      "signed_pct_delta": 371.546
+      "signed_pct_delta": 371.546,
+      "start": {
+        "lat": 1.347235,
+        "lon": 103.880887
+      }
     },
     {
       "abs_pct_delta": 366.802,
@@ -639,11 +974,20 @@
       "best_node_name": "Aft Carmen St",
       "best_node_type": "bus_stop",
       "cache_key": "500009caa3139718ff0119d373aacf437cbeae1675db264cf5812dec9a0d2082",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.318831,
+        "lon": 103.925105
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 197.0,
       "postal": "455383",
       "project_shortest_m": 919.6,
-      "signed_pct_delta": 366.802
+      "signed_pct_delta": 366.802,
+      "start": {
+        "lat": 1.318445,
+        "lon": 103.925246
+      }
     },
     {
       "abs_pct_delta": 350.882,
@@ -651,11 +995,20 @@
       "best_node_name": "Bet Clementi Loop",
       "best_node_type": "bus_stop",
       "cache_key": "0ad55b8f2621ac54b4b217800d7d2e04bd52c198182dcf488abb8862dab0f69c",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.326708,
+        "lon": 103.763995
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 102.0,
       "postal": "129810",
       "project_shortest_m": 459.9,
-      "signed_pct_delta": 350.882
+      "signed_pct_delta": 350.882,
+      "start": {
+        "lat": 1.327582,
+        "lon": 103.763318
+      }
     },
     {
       "abs_pct_delta": 324.701,
@@ -663,11 +1016,20 @@
       "best_node_name": "Blk 212",
       "best_node_type": "bus_stop",
       "cache_key": "ff9c1a94322d804ad2b9a74d9171399d875dfb0898b72c01eb0ffaf979870e8a",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.341638,
+        "lon": 103.874179
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 117.0,
       "postal": "360213",
       "project_shortest_m": 496.9,
-      "signed_pct_delta": 324.701
+      "signed_pct_delta": 324.701,
+      "start": {
+        "lat": 1.342883,
+        "lon": 103.87283
+      }
     },
     {
       "abs_pct_delta": 314.703,
@@ -675,11 +1037,20 @@
       "best_node_name": "Bef Kg Kayu Rd",
       "best_node_type": "bus_stop",
       "cache_key": "c60c96ce04ad8c8609d7cecc46443cc2529676e810842af5b1ecfc03fb005298",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.303159,
+        "lon": 103.884367
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 202.0,
       "postal": "431007",
       "project_shortest_m": 837.7,
-      "signed_pct_delta": 314.703
+      "signed_pct_delta": 314.703,
+      "start": {
+        "lat": 1.302364,
+        "lon": 103.88359
+      }
     },
     {
       "abs_pct_delta": 308.933,
@@ -687,11 +1058,20 @@
       "best_node_name": "Aft Tuas Sth St 2",
       "best_node_type": "bus_stop",
       "cache_key": "24142beb03aef28bb57efc550a7c695b83adc134e71b96aba529c163c2158a3b",
+      "direction": "project_longer_than_onemap",
+      "end": {
+        "lat": 1.308546,
+        "lon": 103.626821
+      },
       "endpoint_source": "postal_universe_to_transit_poi",
       "onemap_walk_m": 150.0,
       "postal": "637814",
       "project_shortest_m": 613.4,
-      "signed_pct_delta": 308.933
+      "signed_pct_delta": 308.933,
+      "start": {
+        "lat": 1.309657,
+        "lon": 103.626506
+      }
     }
   ],
   "transit_type_summary": [

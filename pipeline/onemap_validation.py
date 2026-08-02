@@ -528,6 +528,14 @@ def summarize_delta_groups(
     return summaries[:limit] if limit is not None else summaries
 
 
+def signed_delta_direction(signed_delta_pct: float) -> str:
+    if signed_delta_pct > 0:
+        return "project_longer_than_onemap"
+    if signed_delta_pct < 0:
+        return "project_shorter_than_onemap"
+    return "same_length"
+
+
 def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     missing: list[str] = []
@@ -570,10 +578,13 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
                 "postal": sample.get("postal"),
                 "area": sample.get("area"),
                 "cache_key": cache_key,
+                "start": sample.get("start"),
+                "end": sample.get("end"),
                 "project_shortest_m": round(float(project_m), 1),
                 "onemap_walk_m": round(float(onemap_m), 1),
                 "abs_pct_delta": round(delta_pct, 3),
                 "signed_pct_delta": round(signed_delta_pct, 3),
+                "direction": signed_delta_direction(signed_delta_pct),
                 "best_node_type": best_node.get("type"),
                 "best_node_name": best_node.get("name") or best_node.get("station"),
                 "endpoint_source": sample.get("endpoint_source"),
@@ -610,6 +621,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         },
         "gate_passed": gate_passed,
         "transit_type_summary": summarize_delta_groups(results, group_key="best_node_type"),
+        "direction_summary": summarize_delta_groups(results, group_key="direction"),
         "area_summary": summarize_delta_groups(results, group_key="area", limit=20),
         "top_outliers_preview": sorted(
             results, key=lambda item: float(item["abs_pct_delta"]), reverse=True

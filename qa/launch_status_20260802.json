@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-02T01:47:00.320Z",
-  "current_time_sgt": "2026-08-02T09:47+08:00",
+  "generated_at": "2026-08-02T01:50:27.898Z",
+  "current_time_sgt": "2026-08-02T09:50+08:00",
   "project": {
     "repo": "https://github.com/bryanseah234/sgSHIOK2026.git",
     "vercel_project": "theprawnvercel/sgshiok",
@@ -55,7 +55,7 @@
     "onemap_walk_validation_collect_dry_run": "qa/onemap_validation_collect_dry_run_20260802.json passed; 2000 queued requests, 0 HTTP requests, requires explicit confirmation before external calls",
     "onemap_walk_validation_collection": "qa/onemap_validation_collect_report_20260802.json passed as collection job; 2000 HTTP requests, 2000 written cache results, ok=true",
     "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json failed launch gate; cached_results=1999, invalid_cache_results=1, median_abs_pct_delta=11.458, p95_abs_pct_delta=94.037, gate_passed=false",
-    "onemap_walk_validation_failure_classification": "Report includes transit-type, area, and top-outlier summaries. Bus-stop routes: n=1602, median_abs_pct_delta=12.816, p95_abs_pct_delta=98.736. MRT/LRT routes: n=397, median_abs_pct_delta=6.926, p95_abs_pct_delta=59.645.",
+    "onemap_walk_validation_failure_classification": "Report includes transit-type, direction, area, and top-outlier summaries with start/end coordinates. Bus-stop routes: n=1602, median_abs_pct_delta=12.816, p95_abs_pct_delta=98.736. MRT/LRT routes: n=397, median_abs_pct_delta=6.926, p95_abs_pct_delta=59.645. Direction split: project_longer_than_onemap n=922, p95_abs_pct_delta=168.358; project_shorter_than_onemap n=1077, p95_abs_pct_delta=67.816.",
     "temporary_file_cleanup": "Removed about 560.90 MB of local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained raw/validation/onemap_walk_od"
   },
   "not_done": [

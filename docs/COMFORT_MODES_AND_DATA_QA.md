@@ -86,10 +86,12 @@ Current implementation status:
   1 invalid OneMap zero-distance result, median absolute delta 11.458% against
   a 10% threshold, and p95 absolute delta 94.037% against a 25% threshold.
 - The cached report now includes transit-type summaries, top area summaries,
-  and top outliers. Current split: bus stops have median absolute delta 12.816%
-  and p95 98.736%; MRT/LRT exits have median absolute delta 6.926% and p95
-  59.645%. This points first at bus-stop access/connector modeling, while MRT
-  routing remains a secondary QA target.
+  direction summaries, and top outliers with start/end coordinates. Current
+  transit split: bus stops have median absolute delta 12.816% and p95 98.736%;
+  MRT/LRT exits have median absolute delta 6.926% and p95 59.645%. Direction
+  split: 922 routes are longer in the project than OneMap, and 1,077 are shorter.
+  This points first at bus-stop access/connector modeling, while MRT routing
+  remains a secondary QA target.
 
 Next external-API collection step, when intentionally scheduled:
 

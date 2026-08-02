@@ -112,6 +112,8 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
                 "postal": "123456",
                 "area": "TEST",
                 "cache_key": cache_key,
+                "start": start,
+                "end": end,
                 "project_shortest_m": 105.0,
                 "best_node": {"type": "bus_stop", "name": "Test Stop"},
                 "endpoint_source": "postal_universe_to_transit_poi",
@@ -140,9 +142,22 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["p95_abs_pct_delta"] == 5.0
     assert report["results_preview"][0]["abs_pct_delta"] == 5.0
     assert report["results_preview"][0]["signed_pct_delta"] == 5.0
+    assert report["results_preview"][0]["direction"] == "project_longer_than_onemap"
+    assert report["results_preview"][0]["start"] == start
     assert report["transit_type_summary"] == [
         {
             "best_node_type": "bus_stop",
+            "count": 1,
+            "median_abs_pct_delta": 5.0,
+            "p95_abs_pct_delta": 5.0,
+            "max_abs_pct_delta": 5.0,
+            "over_25_pct_count": 0,
+            "over_50_pct_count": 0,
+        }
+    ]
+    assert report["direction_summary"] == [
+        {
+            "direction": "project_longer_than_onemap",
             "count": 1,
             "median_abs_pct_delta": 5.0,
             "p95_abs_pct_delta": 5.0,
