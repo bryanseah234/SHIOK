@@ -226,6 +226,9 @@ def test_build_triage_queues_from_profile_artifacts(tmp_path: Path):
     assert payload["queue_summaries"]["possible_overpermissive_project_path"]["count"] == 1
     assert payload["queue_summaries"]["mrt_lrt_outlier"]["count"] == 1
     assert payload["queue_summaries"]["hdb_bridge_connector_review"]["count"] == 1
+    assert payload["validation_failure_summary"]["priority_order"][0]["queue"] == (
+        "missing_bus_connector"
+    )
     assert payload["queues"]["missing_bus_connector"][0]["postal"] == "532183"
     assert payload["queues"]["mrt_lrt_outlier"][0]["postal"] == "489929"
 

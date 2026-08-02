@@ -673,7 +673,7 @@ def build_triage_queues(
                 seen_by_queue[queue_name].add(key)
 
     summaries = {name: queue_summary(rows) for name, rows in queues.items()}
-    return {
+    payload = {
         "generated_at": generated_at or datetime.now(UTC).isoformat(),
         "inputs": {
             "project_longer_profile": display_path(longer_profile_path),
@@ -686,6 +686,8 @@ def build_triage_queues(
         "queue_summaries": summaries,
         "queues": queues,
     }
+    payload["validation_failure_summary"] = validation_failure_summary(payload)
+    return payload
 
 
 def priority_queue_count(queues: dict[str, list[dict[str, Any]]]) -> int:
@@ -933,7 +935,7 @@ def main() -> int:
             limit=args.validation_subset_priority_limit,
         ),
     )
-    summary = validation_failure_summary(payload)
+    summary = payload["validation_failure_summary"]
     summary["validation_subset_priority_summary"] = validation_subset_summary
     if args.summary_output is not None:
         write_json(args.summary_output, summary)
