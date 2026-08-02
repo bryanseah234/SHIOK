@@ -1,0 +1,365 @@
+{
+  "blocked_postals": [
+    {
+      "active_best_name": "Aft Chong Pang CC",
+      "active_best_type": "bus_stop",
+      "candidate_best_name": "Aft Chong Pang CC",
+      "candidate_best_type": "bus_stop",
+      "delta": {
+        "covered_ratio": -0.181,
+        "sheltered_m": -280.5,
+        "total": 13.8
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "760103"
+    },
+    {
+      "active_best_name": "Opp Blk 219",
+      "active_best_type": "bus_stop",
+      "candidate_best_name": "Opp Blk 219",
+      "candidate_best_type": "bus_stop",
+      "delta": {
+        "covered_ratio": -0.231,
+        "sheltered_m": -349.2,
+        "total": 17.3
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "677768"
+    },
+    {
+      "active_best_name": "Opp Sembawang Hills FC",
+      "active_best_type": "bus_stop",
+      "candidate_best_name": "Opp Sembawang Hills FC",
+      "candidate_best_type": "bus_stop",
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -41.1,
+        "total": -2.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "579399"
+    },
+    {
+      "active_best_name": "ESPLANADE MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "ESPLANADE MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.066,
+        "sheltered_m": 50.2,
+        "total": -5.3
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "189768"
+    },
+    {
+      "active_best_name": "QUEENSTOWN MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "QUEENSTOWN MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.472,
+        "sheltered_m": 291.4,
+        "total": -18.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "149457"
+    },
+    {
+      "active_best_name": "MACPHERSON MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "MACPHERSON MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.05,
+        "sheltered_m": 56.1,
+        "total": -4.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "408694"
+    },
+    {
+      "active_best_name": "SIGLAP MRT STATION Exit 3",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "SIGLAP MRT STATION Exit 3",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.071,
+        "sheltered_m": 34.9,
+        "total": -2.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "458671"
+    },
+    {
+      "active_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.024,
+        "sheltered_m": 80.7,
+        "total": -5.2
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "117311"
+    },
+    {
+      "active_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.018,
+        "sheltered_m": 59.1,
+        "total": -3.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "117294"
+    },
+    {
+      "active_best_name": "SOMERSET MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "SOMERSET MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.003,
+        "sheltered_m": 30.7,
+        "total": -1.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "229385"
+    },
+    {
+      "active_best_name": "UBI MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "UBI MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.069,
+        "sheltered_m": 44.6,
+        "total": -5.1
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "400306"
+    },
+    {
+      "active_best_name": "SOMERSET MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "SOMERSET MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.02,
+        "sheltered_m": 15.7,
+        "total": -1.6
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "239528"
+    },
+    {
+      "active_best_name": "TAMPINES MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "TAMPINES MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.026,
+        "sheltered_m": -14.4,
+        "total": -0.4
+      },
+      "flags": [
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "529544"
+    },
+    {
+      "active_best_name": "BOTANIC GARDENS MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "BOTANIC GARDENS MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 9.2,
+        "total": -0.6
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259771"
+    },
+    {
+      "active_best_name": "NAPIER MRT STATION Exit 1",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "NAPIER MRT STATION Exit 1",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.001,
+        "sheltered_m": 31.9,
+        "total": -1.2
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259605"
+    },
+    {
+      "active_best_name": "TELOK BLANGAH MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "TELOK BLANGAH MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.005,
+        "sheltered_m": 32.8,
+        "total": -1.3
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "109920"
+    },
+    {
+      "active_best_name": "HOLLAND VILLAGE MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "HOLLAND VILLAGE MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.003,
+        "sheltered_m": 47.8,
+        "total": -1.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "267879"
+    },
+    {
+      "active_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "PASIR PANJANG MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.041,
+        "sheltered_m": 29.9,
+        "total": -1.7
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "119454"
+    },
+    {
+      "active_best_name": "LAVENDER MRT STATION Exit B",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "LAVENDER MRT STATION Exit B",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.045,
+        "sheltered_m": 0.2,
+        "total": -3.0
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "209077"
+    },
+    {
+      "active_best_name": "KOVAN MRT STATION Exit C",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "KOVAN MRT STATION Exit C",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.09,
+        "sheltered_m": 54.6,
+        "total": 13.6
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "537408"
+    },
+    {
+      "active_best_name": "BOTANIC GARDENS MRT STATION Exit A",
+      "active_best_type": "mrt_lrt_exit",
+      "candidate_best_name": "BOTANIC GARDENS MRT STATION Exit A",
+      "candidate_best_type": "mrt_lrt_exit",
+      "delta": {
+        "covered_ratio": -0.006,
+        "sheltered_m": 35.5,
+        "total": -1.5
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259633"
+    }
+  ],
+  "blocking_count": 21,
+  "compared_count": 42,
+  "flag_counts": {
+    "best_node_changed": 34,
+    "coverage_improvement": 3,
+    "coverage_regression": 12,
+    "total_improvement": 9,
+    "total_regression": 17,
+    "unchanged_or_within_tolerance": 8
+  },
+  "generated_at": "2026-08-02T21:52:00.534814+00:00",
+  "interpretation": "Guard correctly rejected rows where current targeted rescore improved validation distance but reduced score or route coverage versus active bundle.",
+  "safe_improvement_count": 6,
+  "source_compare_report": "qa/compare_recovered_validation_targeted_20260803.json"
+}

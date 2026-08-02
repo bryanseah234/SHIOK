@@ -1,0 +1,21 @@
+{
+  "activation_changed": false,
+  "blocking_error": {
+    "code": "api-deployments-free-per-day",
+    "message": "Resource is limited - try again in 24 hours (more than 100).",
+    "provider": "vercel",
+    "retry_policy": "do_not_retry_until_quota_window_resets"
+  },
+  "bundle": "generated_20260803_safe_recovered_validation_targeted",
+  "deploy_stage": "vercel deploy --prod --archive=tgz --yes --no-wait",
+  "generated_at": "2026-08-02T21:52:00.532807+00:00",
+  "git_commit_created_by_release": false,
+  "local_gates_before_deploy": {
+    "npm_audit_total_vulnerabilities": 0,
+    "npm_build_ok": true,
+    "static_validation_ok": true,
+    "vercel_whoami": "bryanseah234"
+  },
+  "production_release_attempted": true,
+  "production_release_ok": false
+}
