@@ -67,33 +67,41 @@ Current implementation status:
 
 - `uv run python run.py onemap-validation plan` builds a deterministic
   cache-first sample from the exported score and geometry shards.
-- The planner derives start/end points from the same shortest-route geometry
-  the frontend displays, records per-postal cache keys, and does not call
-  OneMap.
+- The planner derives start/end points from source-backed coordinates: postal
+  origins from `processed/postal_universe_candidate_full_registered_geocoded.parquet`
+  and destinations from exported transit POIs. Route geometry is only a fallback
+  when source endpoints are unavailable.
 - `uv run python run.py onemap-validation collect` is implemented as a
   resumable cache writer, but it refuses external calls unless
   `--confirm-onemap-collection` is provided.
-- `qa/onemap_validation_sample_2000_20260802.json` was generated for
+- `qa/onemap_validation_sample_2000_20260802.json` was regenerated for
   `generated_20260801_165500`: 2,000 samples from 112,880 eligible scored
-  records across 52 areas.
-- At the ratified OneMap throttle of 2.0 seconds/request, collecting the full
-  comparison is projected at 66.7 minutes before retry/backoff overhead.
-- `qa/onemap_validation_cached_report_20260802.json` currently has 0 cached
-  OneMap walk results, so `gate_passed=false`.
+  records across 52 areas, with 2,000 source-backed postal-to-transit endpoints
+  and 0 same-origin/destination endpoints.
+- At the ratified OneMap throttle of 2.0 seconds/request, collection took about
+  70 minutes.
+- `qa/onemap_validation_collect_report_20260802.json` completed 2,000 HTTP
+  requests, wrote 2,000 cache results, and returned `ok=true`.
+- `qa/onemap_validation_cached_report_20260802.json` does not pass the gate:
+  1 invalid OneMap zero-distance result, median absolute delta 11.458% against
+  a 10% threshold, and p95 absolute delta 94.037% against a 25% threshold.
 
 Next external-API collection step, when intentionally scheduled:
 
 ```powershell
-uv run python run.py onemap-validation collect --sample qa\onemap_validation_sample_2000_20260802.json --output qa\onemap_validation_collect_report_20260802.json --confirm-onemap-collection
+uv run python run.py onemap-validation collect --sample qa\onemap_validation_sample_2000_20260802.json --cache-dir raw\validation\onemap_walk_od --output qa\onemap_validation_collect_report_20260802.json --confirm-onemap-collection
 ```
 
 Then evaluate the collected cache:
 
 ```powershell
-uv run python run.py onemap-validation evaluate --sample qa\onemap_validation_sample_2000_20260802.json --output qa\onemap_validation_cached_report_20260802.json
+uv run python run.py onemap-validation evaluate --sample qa\onemap_validation_sample_2000_20260802.json --cache-dir raw\validation\onemap_walk_od --output qa\onemap_validation_cached_report_20260802.json
 ```
 
-Do not treat this launch gate as passed from local route distances alone.
+Do not treat this launch gate as passed from local route distances alone, and do
+not weaken the thresholds without a PRD decision. The current failure is useful
+QA evidence for missing/extra walking connectors and OneMap-vs-project routing
+differences.
 
 ## Mode Matrix
 

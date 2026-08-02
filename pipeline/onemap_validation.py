@@ -16,13 +16,17 @@ from pathlib import Path
 from typing import Any
 
 import httpx
+import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_BUNDLE_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated_20260801_165500"
 DEFAULT_SAMPLE_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_sample_2000.json"
 DEFAULT_REPORT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_cached_report.json"
 DEFAULT_COLLECT_OUTPUT = PROJECT_ROOT / "qa" / "onemap_validation_collect_report.json"
-DEFAULT_CACHE_DIR = PROJECT_ROOT / "raw" / "validation" / "onemap_walk"
+DEFAULT_CACHE_DIR = PROJECT_ROOT / "raw" / "validation" / "onemap_walk_od"
+DEFAULT_POSTAL_UNIVERSE = (
+    PROJECT_ROOT / "processed" / "postal_universe_candidate_full_registered_geocoded.parquet"
+)
 DEFAULT_SAMPLE_SIZE = 2000
 DEFAULT_ONEMAP_DELAY_SEC = 2.0
 MEDIAN_THRESHOLD_PCT = 10.0
@@ -98,6 +102,107 @@ def route_cache_key(start: dict[str, float], end: dict[str, float]) -> str:
     return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
 
 
+def valid_lat_lon(lat: Any, lon: Any) -> tuple[float, float] | None:
+    try:
+        lat_f = float(lat)
+        lon_f = float(lon)
+    except (TypeError, ValueError):
+        return None
+    if not (math.isfinite(lat_f) and math.isfinite(lon_f)):
+        return None
+    if not (1.1 <= lat_f <= 1.6 and 103.5 <= lon_f <= 104.2):
+        return None
+    return lat_f, lon_f
+
+
+def load_postal_origin_index(postal_universe_path: Path) -> dict[str, dict[str, float]]:
+    if not postal_universe_path.is_file():
+        return {}
+    frame = pd.read_parquet(postal_universe_path, columns=["postal_code", "lat", "lon", "status"])
+    origins: dict[str, dict[str, float]] = {}
+    for row in frame.itertuples(index=False):
+        postal = str(row.postal_code).zfill(6)
+        lat_lon = valid_lat_lon(row.lat, row.lon)
+        if lat_lon is None or row.status != "READY_TO_SCORE":
+            continue
+        lat, lon = lat_lon
+        origins[postal] = {"lat": round(lat, 6), "lon": round(lon, 6)}
+    return origins
+
+
+def transit_key(*parts: Any) -> str:
+    return "|".join(str(part or "").strip().lower() for part in parts)
+
+
+def load_transit_poi_index(bundle_dir: Path) -> dict[str, dict[str, float]]:
+    path = bundle_dir / "transit" / "pois.json"
+    if not path.is_file():
+        return {}
+    payload = read_json(path)
+    features = payload.get("features", []) if isinstance(payload, dict) else []
+    index: dict[str, dict[str, float]] = {}
+    for feature in features:
+        if not isinstance(feature, dict):
+            continue
+        geometry = feature.get("geometry")
+        properties = feature.get("properties")
+        if not isinstance(geometry, dict) or not isinstance(properties, dict):
+            continue
+        coordinates = geometry.get("coordinates")
+        if not isinstance(coordinates, list) or len(coordinates) < 2:
+            continue
+        lat_lon = valid_lat_lon(coordinates[1], coordinates[0])
+        if lat_lon is None:
+            continue
+        lat, lon = lat_lon
+        point = {"lat": round(lat, 6), "lon": round(lon, 6)}
+        kind = properties.get("kind")
+        code = properties.get("code")
+        name = properties.get("name")
+        station = properties.get("station")
+        exit_code = properties.get("exit")
+        keys = [
+            transit_key(kind, code),
+            transit_key(kind, name),
+            transit_key(kind, station, exit_code),
+        ]
+        if kind == "mrt_exit":
+            keys.extend(
+                [
+                    transit_key("mrt_lrt_exit", station, exit_code),
+                    transit_key("mrt_lrt_exit", name),
+                ]
+            )
+        if kind == "bus_stop":
+            keys.extend([transit_key("bus_stop", code), transit_key("bus_stop", name)])
+        for key in keys:
+            if key.replace("|", ""):
+                index[key] = point
+    return index
+
+
+def destination_from_best_node(
+    best_node: dict[str, Any], transit_index: dict[str, dict[str, float]]
+) -> dict[str, float] | None:
+    node_type = best_node.get("type")
+    exit_code = best_node.get("exit")
+    name = best_node.get("name")
+    station = best_node.get("station")
+    kind = "mrt_exit" if node_type == "mrt_lrt_exit" else node_type
+    candidate_keys = [
+        transit_key(kind, exit_code),
+        transit_key(kind, station, exit_code),
+        transit_key(kind, name),
+        transit_key(node_type, station, exit_code),
+        transit_key(node_type, name),
+    ]
+    for key in candidate_keys:
+        point = transit_index.get(key)
+        if point is not None:
+            return point
+    return None
+
+
 def score_shard_paths(bundle_dir: Path) -> list[Path]:
     scores_dir = bundle_dir / "scores"
     return sorted(
@@ -146,6 +251,7 @@ def iter_score_candidates(
                 "total": route_record.get("total", record.get("total")),
                 "best_node": {
                     "type": best_node.get("type"),
+                    "exit": best_node.get("exit"),
                     "name": best_node.get("name"),
                     "station": best_node.get("station"),
                 },
@@ -249,6 +355,8 @@ def attach_endpoints(
     *,
     route_mode: str,
     geom_postal_index: dict[str, str],
+    origin_index: dict[str, dict[str, float]],
+    transit_index: dict[str, dict[str, float]],
 ) -> list[dict[str, Any]]:
     shard_cache: dict[str, list[dict[str, Any]]] = {}
     samples: list[dict[str, Any]] = []
@@ -263,18 +371,29 @@ def attach_endpoints(
         if not geom:
             continue
         points = route_points_from_geom(geom, route_mode=route_mode, route_kind="shortest")
-        if len(points) < 2:
+        origin = origin_index.get(postal)
+        destination = destination_from_best_node(
+            candidate.get("best_node", {}) if isinstance(candidate.get("best_node"), dict) else {},
+            transit_index,
+        )
+        endpoint_source = "postal_universe_to_transit_poi"
+        if origin is None or destination is None:
+            if len(points) < 2:
+                continue
+            origin = {"lat": round(points[0][0], 6), "lon": round(points[0][1], 6)}
+            destination = {"lat": round(points[-1][0], 6), "lon": round(points[-1][1], 6)}
+            endpoint_source = "route_geometry_fallback"
+        if origin == destination:
             continue
-        first = {"lat": round(points[0][0], 6), "lon": round(points[0][1], 6)}
-        last = {"lat": round(points[-1][0], 6), "lon": round(points[-1][1], 6)}
         sample = {
             **candidate,
             "route_mode": route_mode,
             "route_kind": "shortest",
-            "start": first,
-            "end": last,
+            "endpoint_source": endpoint_source,
+            "start": origin,
+            "end": destination,
         }
-        sample["cache_key"] = route_cache_key(first, last)
+        sample["cache_key"] = route_cache_key(origin, destination)
         samples.append(sample)
     return samples
 
@@ -282,6 +401,7 @@ def attach_endpoints(
 def build_validation_sample(
     *,
     bundle_dir: Path,
+    postal_universe_path: Path = DEFAULT_POSTAL_UNIVERSE,
     sample_size: int = DEFAULT_SAMPLE_SIZE,
     seed: str = "shiok-onemap-validation-v1",
     route_mode: str = "best_transit",
@@ -290,6 +410,8 @@ def build_validation_sample(
     geom_index = read_json(bundle_dir / "geom" / "postal-index.json")
     if not isinstance(geom_index, dict):
         raise TypeError("geom/postal-index.json must contain a JSON object")
+    origin_index = load_postal_origin_index(postal_universe_path)
+    transit_index = load_transit_poi_index(bundle_dir)
 
     buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for candidate in iter_score_candidates(
@@ -308,6 +430,8 @@ def build_validation_sample(
         selected,
         route_mode=route_mode,
         geom_postal_index=geom_index,
+        origin_index=origin_index,
+        transit_index=transit_index,
     )
     projected_seconds = len(samples) * onemap_delay_sec
     return {
@@ -319,6 +443,8 @@ def build_validation_sample(
         "sample_size": len(samples),
         "eligible_records": sum(len(items) for items in buckets.values()),
         "area_count": len(buckets),
+        "origin_index_size": len(origin_index),
+        "transit_index_size": len(transit_index),
         "area_quotas": quotas,
         "will_call_onemap": False,
         "onemap_delay_sec": onemap_delay_sec,
@@ -371,6 +497,7 @@ def percentile(values: list[float], pct: float) -> float | None:
 def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> dict[str, Any]:
     results: list[dict[str, Any]] = []
     missing: list[str] = []
+    invalid: list[dict[str, Any]] = []
     for sample in sample_payload.get("samples", []):
         if not isinstance(sample, dict):
             continue
@@ -381,7 +508,21 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
             continue
         onemap_m = extract_onemap_distance_m(read_json(cache_path))
         project_m = sample.get("project_shortest_m")
-        if not isinstance(onemap_m, int | float) or not isinstance(project_m, int | float):
+        if (
+            not isinstance(onemap_m, int | float)
+            or not isinstance(project_m, int | float)
+            or float(onemap_m) <= 0
+        ):
+            invalid.append(
+                {
+                    "postal": sample.get("postal"),
+                    "area": sample.get("area"),
+                    "cache_key": cache_key,
+                    "project_shortest_m": project_m,
+                    "onemap_walk_m": onemap_m,
+                    "reason": "missing_or_non_positive_distance",
+                }
+            )
             continue
         delta_pct = abs(float(project_m) - float(onemap_m)) / float(onemap_m) * 100
         results.append(
@@ -400,6 +541,7 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
     p95 = percentile(deltas, 95)
     gate_passed = (
         len(results) == int(sample_payload.get("sample_size", 0))
+        and not invalid
         and median is not None
         and p95 is not None
         and median <= MEDIAN_THRESHOLD_PCT
@@ -413,7 +555,9 @@ def evaluate_cached_results(sample_payload: dict[str, Any], cache_dir: Path) -> 
         "cache_dir": str(cache_dir),
         "cached_results": len(results),
         "missing_cache_results": len(missing),
+        "invalid_cache_results": len(invalid),
         "missing_cache_postals_preview": missing[:20],
+        "invalid_cache_preview": invalid[:20],
         "median_abs_pct_delta": round(median, 3) if median is not None else None,
         "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
         "thresholds": {
@@ -579,6 +723,7 @@ def main() -> int:
 
     plan = subparsers.add_parser("plan")
     plan.add_argument("--bundle-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
+    plan.add_argument("--postal-universe", type=Path, default=DEFAULT_POSTAL_UNIVERSE)
     plan.add_argument("--sample-size", type=int, default=DEFAULT_SAMPLE_SIZE)
     plan.add_argument("--seed", default="shiok-onemap-validation-v1")
     plan.add_argument("--route-mode", default="best_transit")
@@ -603,6 +748,7 @@ def main() -> int:
     if args.action == "plan":
         payload = build_validation_sample(
             bundle_dir=args.bundle_dir,
+            postal_universe_path=args.postal_universe,
             sample_size=args.sample_size,
             seed=args.seed,
             route_mode=args.route_mode,

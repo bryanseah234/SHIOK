@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 
+import pandas as pd
+
 from pipeline.export import export_static_artifacts
 from pipeline.onemap_validation import (
     build_validation_sample,
@@ -45,6 +47,59 @@ def test_build_validation_sample_uses_stratified_score_geometry(tmp_path: Path):
     assert all(sample["start"]["lat"] != sample["end"]["lat"] for sample in payload["samples"])
 
 
+def test_build_validation_sample_prefers_postal_and_transit_source_endpoints(tmp_path: Path):
+    record = sample_record("123456")
+    record["best_node"] = {
+        "type": "bus_stop",
+        "exit": "54321",
+        "name": "Test Stop",
+        "routed_m": 200.0,
+    }
+    bundle_dir = tmp_path / "bundle"
+    export_static_artifacts([record], output_dir=bundle_dir)
+    (bundle_dir / "transit").mkdir(exist_ok=True)
+    (bundle_dir / "transit" / "pois.json").write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {"type": "Point", "coordinates": [103.812345, 1.323456]},
+                        "properties": {
+                            "kind": "bus_stop",
+                            "code": "54321",
+                            "name": "Test Stop",
+                        },
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    universe_path = tmp_path / "universe.parquet"
+    pd.DataFrame(
+        [
+            {
+                "postal_code": "123456",
+                "lat": 1.312345,
+                "lon": 103.801234,
+                "status": "READY_TO_SCORE",
+            }
+        ]
+    ).to_parquet(universe_path, index=False)
+
+    payload = build_validation_sample(
+        bundle_dir=bundle_dir,
+        postal_universe_path=universe_path,
+        sample_size=1,
+    )
+
+    assert payload["samples"][0]["endpoint_source"] == "postal_universe_to_transit_poi"
+    assert payload["samples"][0]["start"] == {"lat": 1.312345, "lon": 103.801234}
+    assert payload["samples"][0]["end"] == {"lat": 1.323456, "lon": 103.812345}
+
+
 def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     start = {"lat": 1.3, "lon": 103.8}
     end = {"lat": 1.301, "lon": 103.801}
@@ -82,6 +137,35 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     assert report["median_abs_pct_delta"] == 5.0
     assert report["p95_abs_pct_delta"] == 5.0
     assert report["results_preview"][0]["abs_pct_delta"] == 5.0
+
+
+def test_evaluate_cached_results_reports_zero_distance_as_invalid(tmp_path: Path):
+    start = {"lat": 1.3, "lon": 103.8}
+    end = {"lat": 1.301, "lon": 103.801}
+    cache_key = route_cache_key(start, end)
+    sample_payload = {
+        "bundle": "generated_test",
+        "sample_size": 1,
+        "samples": [
+            {
+                "postal": "123456",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 105.0,
+            }
+        ],
+    }
+    (tmp_path / f"{cache_key}.json").write_text(
+        json.dumps({"route_summary": {"total_distance": 0}}),
+        encoding="utf-8",
+    )
+
+    report = evaluate_cached_results(sample_payload, tmp_path)
+
+    assert report["gate_passed"] is False
+    assert report["cached_results"] == 0
+    assert report["invalid_cache_results"] == 1
+    assert report["invalid_cache_preview"][0]["reason"] == "missing_or_non_positive_distance"
 
 
 def test_collect_onemap_walk_cache_requires_explicit_confirmation(tmp_path: Path):

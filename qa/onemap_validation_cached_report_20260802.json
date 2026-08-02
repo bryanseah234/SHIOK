@@ -1,36 +1,187 @@
 {
   "bundle": "generated_20260801_165500",
-  "cache_dir": "C:\\shiok\\raw\\validation\\onemap_walk",
-  "cached_results": 0,
+  "cache_dir": "raw\\validation\\onemap_walk_od",
+  "cached_results": 1999,
   "gate_passed": false,
-  "generated_at": "2026-08-01T23:00:27.261164+00:00",
-  "median_abs_pct_delta": null,
-  "missing_cache_postals_preview": [
-    "138820",
-    "618380",
-    "487926",
-    "426580",
-    "058359",
-    "388535",
-    "538053",
-    "574703",
-    "428344",
-    "437787",
-    "277460",
-    "556807",
-    "079120",
-    "668908",
-    "545195",
-    "570188",
-    "568825",
-    "507916",
-    "249003",
-    "576008"
+  "generated_at": "2026-08-02T01:41:27.587749+00:00",
+  "invalid_cache_preview": [
+    {
+      "area": "SOUTHERN_ISLANDS",
+      "cache_key": "cfdff820886461ec401aead67568de0b1c0b844808e54abeff0cb0f540d5e025",
+      "onemap_walk_m": 0.0,
+      "postal": "098679",
+      "project_shortest_m": 136.9,
+      "reason": "missing_or_non_positive_distance"
+    }
   ],
-  "missing_cache_results": 2000,
+  "invalid_cache_results": 1,
+  "median_abs_pct_delta": 11.458,
+  "missing_cache_postals_preview": [],
+  "missing_cache_results": 0,
   "ok": false,
-  "p95_abs_pct_delta": null,
-  "results_preview": [],
+  "p95_abs_pct_delta": 94.037,
+  "results_preview": [
+    {
+      "abs_pct_delta": 0.193,
+      "area": "QUEENSTOWN",
+      "cache_key": "c5abe432c3706d6179159cb4f71f36c22b7453a8a86eba40960fb5bfc3f6adfd",
+      "onemap_walk_m": 259.0,
+      "postal": "138820",
+      "project_shortest_m": 259.5
+    },
+    {
+      "abs_pct_delta": 112.73,
+      "area": "JURONG_WEST",
+      "cache_key": "d5b77427b2d99f829f233dd0ae57654d2cf0f857997f24f99ce6619d0d58dbe3",
+      "onemap_walk_m": 348.0,
+      "postal": "618380",
+      "project_shortest_m": 740.3
+    },
+    {
+      "abs_pct_delta": 9.839,
+      "area": "TAMPINES",
+      "cache_key": "1269014e714a084db5a5a0bbe656ee64ed4e695568f6966543a9016b3c8a70fc",
+      "onemap_walk_m": 436.0,
+      "postal": "487926",
+      "project_shortest_m": 393.1
+    },
+    {
+      "abs_pct_delta": 0.528,
+      "area": "GEYLANG",
+      "cache_key": "1cce5910180b07ceac5eef73ced6fa165ea0bd47390a27269ab6e095997f48be",
+      "onemap_walk_m": 303.0,
+      "postal": "426580",
+      "project_shortest_m": 304.6
+    },
+    {
+      "abs_pct_delta": 45.769,
+      "area": "OUTRAM",
+      "cache_key": "eb793b081c765c4d8f646f677471d560082336d0119a7e8048ec28bd7eff3874",
+      "onemap_walk_m": 416.0,
+      "postal": "058359",
+      "project_shortest_m": 225.6
+    },
+    {
+      "abs_pct_delta": 5.946,
+      "area": "GEYLANG",
+      "cache_key": "b2995e836ce86760585984d517a950af3c4eebf032c6e70495f76b55e8d3b969",
+      "onemap_walk_m": 259.0,
+      "postal": "388535",
+      "project_shortest_m": 243.6
+    },
+    {
+      "abs_pct_delta": 28.354,
+      "area": "SERANGOON",
+      "cache_key": "96467fd252af3fbdedbb8d12feb52fc5b8dc76dda3352cb25d672bc58a0e87ab",
+      "onemap_walk_m": 741.0,
+      "postal": "538053",
+      "project_shortest_m": 530.9
+    },
+    {
+      "abs_pct_delta": 9.124,
+      "area": "BISHAN",
+      "cache_key": "a50bcaa4d3661f2dc467a352dc5e8d45f0f5584335871fac0ba6e74d6539baed",
+      "onemap_walk_m": 354.0,
+      "postal": "574703",
+      "project_shortest_m": 321.7
+    },
+    {
+      "abs_pct_delta": 0.164,
+      "area": "BEDOK",
+      "cache_key": "58815eb0347b194c62547c8beade55bec09b630965d252d09e874f8969507212",
+      "onemap_walk_m": 304.0,
+      "postal": "428344",
+      "project_shortest_m": 303.5
+    },
+    {
+      "abs_pct_delta": 201.628,
+      "area": "MARINE_PARADE",
+      "cache_key": "dbd105cd49f47091bde658f71dfcdf418e5b2de52971d704335546c3d86c00a7",
+      "onemap_walk_m": 86.0,
+      "postal": "437787",
+      "project_shortest_m": 259.4
+    },
+    {
+      "abs_pct_delta": 15.592,
+      "area": "BUKIT_TIMAH",
+      "cache_key": "fb1a5d94639e6b19e327477eace85a8b761b488a5d8ae1afebecb1ebbdfe6405",
+      "onemap_walk_m": 152.0,
+      "postal": "277460",
+      "project_shortest_m": 175.7
+    },
+    {
+      "abs_pct_delta": 44.689,
+      "area": "SERANGOON",
+      "cache_key": "488d331fa8f54478e36abd3dbdce665ef549f5c37ec3c43adeb96a13fec6abf2",
+      "onemap_walk_m": 273.0,
+      "postal": "556807",
+      "project_shortest_m": 395.0
+    },
+    {
+      "abs_pct_delta": 6.467,
+      "area": "DOWNTOWN_CORE",
+      "cache_key": "c2216f05b24edbff1d77c8efc5a0a2af1d885e155c385f95677194d79c1921f6",
+      "onemap_walk_m": 334.0,
+      "postal": "079120",
+      "project_shortest_m": 312.4
+    },
+    {
+      "abs_pct_delta": 13.535,
+      "area": "BUKIT_BATOK",
+      "cache_key": "9a986baed467b7bb915d6c2a0aef04152dee2331501959f1a458e9abeb63ca0e",
+      "onemap_walk_m": 314.0,
+      "postal": "668908",
+      "project_shortest_m": 271.5
+    },
+    {
+      "abs_pct_delta": 52.929,
+      "area": "HOUGANG",
+      "cache_key": "9d4b99f28832744ebbfdf62dddf7246b535db3eb70a394f41b94f0adcb5094cf",
+      "onemap_walk_m": 973.0,
+      "postal": "545195",
+      "project_shortest_m": 458.0
+    },
+    {
+      "abs_pct_delta": 16.162,
+      "area": "BISHAN",
+      "cache_key": "0aa5d562d6612d755526823ac17a044790584d3eb25b0d078d15d9ee750f4df5",
+      "onemap_walk_m": 297.0,
+      "postal": "570188",
+      "project_shortest_m": 345.0
+    },
+    {
+      "abs_pct_delta": 3.32,
+      "area": "ANG_MO_KIO",
+      "cache_key": "299a1c95ddca83b9521f9d94899775e58fb81ccbb47f8c47ce4d74677a330675",
+      "onemap_walk_m": 247.0,
+      "postal": "568825",
+      "project_shortest_m": 238.8
+    },
+    {
+      "abs_pct_delta": 25.806,
+      "area": "PASIR_RIS",
+      "cache_key": "06547778c12d17570608a4b79ced907c6958c220c36ef7160630b806eaa2fab1",
+      "onemap_walk_m": 124.0,
+      "postal": "507916",
+      "project_shortest_m": 92.0
+    },
+    {
+      "abs_pct_delta": 47.5,
+      "area": "TANGLIN",
+      "cache_key": "855b3682c14bba2874423c738e2cc6449b71e3a51d4c973921d031853c662ec4",
+      "onemap_walk_m": 732.0,
+      "postal": "249003",
+      "project_shortest_m": 384.3
+    },
+    {
+      "abs_pct_delta": 16.855,
+      "area": "BISHAN",
+      "cache_key": "11139490cc9f5f9a60e1731090054437a6c5cfe5e208db80e96b96471400e094",
+      "onemap_walk_m": 283.0,
+      "postal": "576008",
+      "project_shortest_m": 330.7
+    }
+  ],
   "sample_size": 2000,
   "thresholds": {
     "median_abs_pct_delta_max": 10.0,

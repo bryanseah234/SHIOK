@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-08-01T23:07:18.974Z",
-  "current_time_sgt": "2026-08-02T07:07+08:00",
+  "generated_at": "2026-08-02T01:43:03.140Z",
+  "current_time_sgt": "2026-08-02T09:43+08:00",
   "project": {
     "repo": "https://github.com/bryanseah234/sgSHIOK2026.git",
     "vercel_project": "theprawnvercel/sgshiok",
     "production_url": "https://sgshiok.vercel.app/",
     "root_directory": "web",
-    "latest_pushed_commit": "cbdd5e8"
+    "latest_pushed_commit": "pending update after validation commit"
   },
   "live_bundle": {
     "bundle": "generated_20260801_direct_bus_all_targeted",
@@ -34,7 +34,7 @@
     }
   },
   "verified_checks": {
-    "python_tests": "170 passed",
+    "python_tests": "172 passed",
     "web_tests": "31 passed",
     "fresh_bundle_web_build": "passed",
     "lighthouse_accessibility": 100,
@@ -51,15 +51,17 @@
     "local_launch_check_wrapper_full_smoke": "20260802_064933 passed",
     "known_postal_smoke": "passed",
     "launch_check_server_cleanup": "passed; free-port guard and child next-start listener cleanup verified",
-    "onemap_walk_validation_sample_plan": "qa/onemap_validation_sample_2000_20260802.json passed; 2000 samples from 112880 eligible scored records across 52 areas; projected 66.7 minutes at 2.0s/request",
+    "onemap_walk_validation_sample_plan": "qa/onemap_validation_sample_2000_20260802.json passed; 2000 source-backed postal-to-transit samples from 112880 eligible scored records across 52 areas; projected 66.7 minutes at 2.0s/request",
     "onemap_walk_validation_collect_dry_run": "qa/onemap_validation_collect_dry_run_20260802.json passed; 2000 queued requests, 0 HTTP requests, requires explicit confirmation before external calls",
-    "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json not passed; 0 of 2000 cache results collected"
+    "onemap_walk_validation_collection": "qa/onemap_validation_collect_report_20260802.json passed as collection job; 2000 HTTP requests, 2000 written cache results, ok=true",
+    "onemap_walk_validation_cached_report": "qa/onemap_validation_cached_report_20260802.json failed launch gate; cached_results=1999, invalid_cache_results=1, median_abs_pct_delta=11.458, p95_abs_pct_delta=94.037, gate_passed=false",
+    "temporary_file_cleanup": "Removed about 560.90 MB of local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained raw/validation/onemap_walk_od"
   },
   "not_done": [
     "Deploy pending bundle after Vercel Hobby quota resets.",
     "Activate web/data-bundle.json only after remote pending-bundle manifest is reachable.",
     "Run broader keyboard-only and multi-postal mobile browser QA after activation.",
-    "Collect/evaluate the 2,000-postal OneMap walk-validation cache; current cached report has 0/2,000 results and gate_passed=false.",
+    "Investigate the failed 2,000-postal OneMap walk-validation gate; collection is complete, but evaluation has gate_passed=false.",
     "Resolve Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction; no manual postal score override.",
     "Close canonical ~140k postal universe only with licensed/permitted source; current launchable universe is 124,032."
   ],

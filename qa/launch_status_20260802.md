@@ -9,7 +9,7 @@ Root directory: `web`
 - Live bundle: `generated_20260801_direct_bus_all_targeted`
 - Live bundle manifest: HTTP 200
 - Record count: 124,032
-- Latest pushed commit: `cbdd5e8` (`qa: add guarded OneMap validation collector`)
+- Latest pushed commit: pending update after this validation commit
 
 ## Pending Fresh Bundle
 
@@ -35,7 +35,7 @@ Root directory: `web`
 
 ## Verified Checks
 
-- Python tests: 170 passed
+- Python tests: 172 passed
 - Web tests: 31 passed
 - Fresh-bundle web build: passed
 - Lighthouse accessibility: 100
@@ -54,8 +54,11 @@ Root directory: `web`
 - Postal-universe prep helper: default plan-only guard passed; confirmed prep run passed.
 - URA 200-postal sample scoring: passed.
 - Launch-check local server cleanup: passed; stale-port guard now chooses a free port and stops child `next start` listeners.
-- OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
+- OneMap walk-validation sample plan: passed; `qa/onemap_validation_sample_2000_20260802.json` contains 2,000 source-backed postal-to-transit samples from 112,880 eligible scored records across 52 areas, projected at 66.7 minutes at 2.0s/request.
 - OneMap walk-validation collector dry-run: passed; `qa/onemap_validation_collect_dry_run_20260802.json` queued 2,000 requests, made 0 HTTP requests, and requires explicit `--confirm-onemap-collection` before external calls.
+- OneMap walk-validation collection: passed as a collection job; `qa/onemap_validation_collect_report_20260802.json` made 2,000 HTTP requests, wrote 2,000 cache results, and returned `ok=true`.
+- OneMap walk-validation evaluation: failed launch gate honestly; `qa/onemap_validation_cached_report_20260802.json` has 1 invalid OneMap zero-distance result, median absolute delta 11.458% vs 10.0% max, and p95 absolute delta 94.037% vs 25.0% max.
+- Temporary-file cleanup: removed local browser smoke caches, local Next build cache, obsolete bad OneMap cache, smoke/retry QA JSONs, and temporary probe parquets; retained corrected `raw/validation/onemap_walk_od` validation cache.
 
 ## Next Production Command
 
@@ -70,6 +73,6 @@ Run only after the Vercel Hobby quota window resets:
 - Deploy and activate the pending bundle.
 - Full rescore/export/deploy using the URA-expanded 124,443-record universe.
 - Run broader keyboard-only and multi-postal mobile QA after activation.
-- Collect/evaluate the 2,000-postal OneMap walk-validation cache; current cached report has 0/2,000 results and `gate_passed=false`.
+- Investigate the failed 2,000-postal OneMap walk-validation gate; collection is complete, but evaluation has `gate_passed=false`.
 - Resolve the Mayflower 560231/560234 MRT shelter false-negative with source-backed connector evidence or owner-approved audited correction.
 - Close the canonical ~140k postal universe only with a licensed/permitted source.
