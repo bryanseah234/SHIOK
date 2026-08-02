@@ -5,8 +5,9 @@ from pipeline.export import encode_polyline, json_size
 from scripts.targeted_bundle_refresh import (
     load_geom_shard,
     postals_from_file,
-    rebalance_geom_parents,
     read_json,
+    rebalance_geom_parents,
+    selected_postals_from_inputs,
     split_oversized_geom_shards,
     unique_postals,
     write_json,
@@ -48,6 +49,31 @@ def test_targeted_bundle_refresh_reads_postal_file(tmp_path):
 
     assert postals_from_file(path) == ["000123", "560234", "000123"]
     assert unique_postals(postals_from_file(path)) == ["000123", "560234"]
+
+
+def test_selected_postals_from_inputs_does_not_read_default_partial_report(tmp_path):
+    postal_file = tmp_path / "safe.txt"
+    postal_file.write_text("560234\n", encoding="utf-8")
+
+    assert selected_postals_from_inputs(
+        partial_report=None,
+        postal_file=postal_file,
+        postals=[],
+    ) == ["560234"]
+
+
+def test_selected_postals_from_inputs_reads_explicit_partial_report(tmp_path):
+    partial_report = tmp_path / "partial.json"
+    partial_report.write_text(
+        json.dumps({"comparisons": [{"postal": "123"}, {"postal": "560234"}]}),
+        encoding="utf-8",
+    )
+
+    assert selected_postals_from_inputs(
+        partial_report=partial_report,
+        postal_file=None,
+        postals=["42"],
+    ) == ["000123", "560234", "000042"]
 
 
 def test_targeted_bundle_refresh_rebalances_oversized_geom_parent(tmp_path, monkeypatch):

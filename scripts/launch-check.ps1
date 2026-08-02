@@ -122,8 +122,13 @@ try {
     }
 
     Invoke-Checked -Label "Pending-bundle readiness" -Command {
-        uv run python run.py readiness --bundle-dir "web\public\data\$DataBundle" |
-            Tee-Object -FilePath "qa\readiness_launch_check_$Timestamp.json"
+        $ReadinessOutput = uv run python run.py readiness --bundle-dir "web\public\data\$DataBundle"
+        $ReadinessExit = $LASTEXITCODE
+        $ReadinessOutput | Set-Content -Path "qa\readiness_launch_check_$Timestamp.json" -Encoding utf8
+        $ReadinessOutput
+        if ($ReadinessExit -ne 0) {
+            exit $ReadinessExit
+        }
     }
 
     if (-not $SkipBrowser) {

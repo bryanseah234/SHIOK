@@ -27,6 +27,8 @@ from pipeline.export import (
     public_score_record,
     score_record_shards,
     sized_record_shards,
+)
+from pipeline.export import (
     write_json as write_plain_json,
 )
 from pipeline.onemap_validation import decode_polyline
@@ -37,7 +39,6 @@ DEFAULT_NETWORK = PROJECT_ROOT / "processed" / "network_island.parquet"
 DEFAULT_UNIVERSE = (
     PROJECT_ROOT / "processed" / "postal_universe_candidate_full_registered_geocoded.parquet"
 )
-DEFAULT_PARTIAL_REPORT = PROJECT_ROOT / "qa" / "partial_resnap_rescore_sample.json"
 
 
 def read_json(path: Path) -> Any:
@@ -85,8 +86,8 @@ def display_path(path: Path) -> str:
         return str(path)
 
 
-def postals_from_partial_report(path: Path) -> list[str]:
-    if not path.is_file():
+def postals_from_partial_report(path: Path | None) -> list[str]:
+    if path is None or not path.is_file():
         return []
     report = read_json(path)
     postals: list[str] = []
@@ -119,6 +120,19 @@ def unique_postals(values: list[str]) -> list[str]:
             seen.add(postal)
             output.append(postal)
     return output
+
+
+def selected_postals_from_inputs(
+    *,
+    partial_report: Path | None,
+    postal_file: Path | None,
+    postals: list[str],
+) -> list[str]:
+    return [
+        *postals_from_partial_report(partial_report),
+        *postals_from_file(postal_file),
+        *[normalize_postal(postal) for postal in postals],
+    ]
 
 
 def copy_bundle(source_dir: Path, target_dir: Path) -> None:
@@ -639,7 +653,12 @@ def main() -> int:
     parser.add_argument("--postal-universe", type=Path, default=DEFAULT_UNIVERSE)
     parser.add_argument("--postal", action="append", dest="postals", default=[])
     parser.add_argument("--postal-file", type=Path, default=None)
-    parser.add_argument("--from-partial-report", type=Path, default=DEFAULT_PARTIAL_REPORT)
+    parser.add_argument(
+        "--from-partial-report",
+        type=Path,
+        default=None,
+        help="Optional targeted-rescore report to read postals from. Omitted means no report input.",
+    )
     parser.add_argument("--output", type=Path, default=None)
     args = parser.parse_args()
 
@@ -647,11 +666,11 @@ def main() -> int:
     stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
     target_bundle = args.target_bundle or f"generated_{stamp}_targeted"
     target_dir = PROJECT_ROOT / "web" / "public" / "data" / target_bundle
-    selected_postals = [
-        *postals_from_partial_report(args.from_partial_report),
-        *postals_from_file(args.postal_file),
-        *[normalize_postal(postal) for postal in args.postals],
-    ]
+    selected_postals = selected_postals_from_inputs(
+        partial_report=args.from_partial_report,
+        postal_file=args.postal_file,
+        postals=args.postals,
+    )
     report = refresh_bundle(
         source_dir=source_dir,
         target_dir=target_dir,

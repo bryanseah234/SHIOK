@@ -1,0 +1,95 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 323.9,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 366.3,
+          "covered_ratio": 0.914,
+          "destination_snap_connector_m": 3.8,
+          "detour_pct": 23.7,
+          "endpoint_snap_connector_m": 16.4,
+          "heat_comfort_m": 366.3,
+          "heat_comfort_ratio": 0.914,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 12.6,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 400.6,
+          "shortest_covered_ratio": 0.709,
+          "shortest_m": 323.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 96.6
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54211",
+          "name": "Mayflower Sec Sch",
+          "routed_m": 324.3,
+          "snap_distance_m": 3.8,
+          "station": "Mayflower Sec Sch",
+          "straight_line_m": 162.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 230.0,
+          "covered_ratio": 0.709,
+          "destination_snap_connector_m": 3.8,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 16.4,
+          "heat_comfort_m": 230.0,
+          "heat_comfort_ratio": 0.709,
+          "origin_snap_connector_m": 12.6,
+          "routing_type": "shortest_due_to_detour",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 324.3,
+          "shortest_covered_ratio": 0.709,
+          "shortest_m": 324.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 88.4
+      },
+      "postal": "560234",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_oversized_shard_split_count": 0,
+  "geom_oversized_shards_split": [],
+  "geom_shards_touched": [
+    "88652636c1fffff"
+  ],
+  "geometry_postals": 114327,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 1,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 1,
+  "source_bundle": "generated_20260802_endpoint_connector_guard_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 9386,
+    "SCORED": 112913,
+    "SCORED_PARTIAL": 1414
+  },
+  "target_bundle": "generated_20260803_safe_mayflower_560234_targeted"
+}

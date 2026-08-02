@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-08-02T18:15:06.679Z",
+  "url": "http://127.0.0.1:3110/",
+  "input_mode": "keyboard",
+  "expected_state": "no_transit",
+  "transit_mode": "best_transit",
+  "route_mode": "shiokest",
+  "must_include": [],
+  "postal": "567754",
+  "screenshots": [],
+  "score_panel_excerpt": [
+    "Postal 567754",
+    "",
+    "Transit beyond scoring range",
+    "",
+    "No score",
+    "Closest routed transit is 1.8 km",
+    "Current scoring range is 1.2 km",
+    "",
+    "Closest routed transit found is about 1.8 km away; current scoring range is 1.2 km.",
+    "",
+    "Suggest better route",
+    "Clear",
+    "Copy QA JSON",
+    "Details"
+  ],
+  "map_label": "Singapore transit map with MRT stations, LRT stations, and bus stops",
+  "map_summary": "Singapore map with 190 MRT or LRT stations, 613 exits, and 5208 bus stops. Search for a postal code to show route evidence.",
+  "active_transit_mode": "",
+  "active_route_mode": "",
+  "metrics": {
+    "viewportWidth": 390,
+    "viewportHeight": 667,
+    "cardBottom": 394.734375,
+    "viewportBottom": 667,
+    "detailsVisible": true,
+    "overlayClientHeight": 249,
+    "overlayScrollHeight": 249
+  },
+  "checks": {
+    "score_panel_loaded": true,
+    "pending_badge_absent": true,
+    "map_has_text_equivalent": true,
+    "short_mobile_card_bottom_visible": true,
+    "keyboard_search_used": true,
+    "transit_mode_selected": true,
+    "route_mode_selected": true,
+    "required_text_present": true,
+    "no_transit_state_present": true
+  },
+  "ok": true
+}

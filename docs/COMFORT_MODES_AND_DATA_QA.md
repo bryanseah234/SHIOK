@@ -237,6 +237,14 @@ Current implementation:
   `qa/amk_mayflower_active_vs_current_network_20260803.json`; it improves
   `560234`, but blocks wholesale promotion because `560225`, `560700`, and
   `560710` regress under the comparator gate.
+- `qa/amk_mayflower_safe_improvement_postals_20260803.txt` extracts the safe
+  subset from that comparator: only `560234`. The resulting local-only bundle
+  `generated_20260803_safe_mayflower_560234_targeted` patches exactly one
+  postal, validates with 124,032 indexed postals and 114,327 route-segment
+  geometries, and passes the launch-check browser smokes. `560234` improves
+  from 88.4 to 96.6 with Shiokest covered ratio rising from 70.9% to 91.4%.
+  This bundle is intentionally not active until direct deploy plus
+  `web/data-bundle.json` activation.
 
 ## Actual Bus Arrivals
 

@@ -125,6 +125,40 @@ After a new score/export batch is generated and validated:
 
 Do not rely on Git auto-deploy for the first deploy of a brand-new data bundle; the Git build cannot download a bundle that is not published yet.
 
+## Guarded Targeted Refresh
+
+For a candidate targeted report that includes both improvements and regressions,
+do not promote the whole report. First extract the safe subset:
+
+```powershell
+uv run python run.py compare-targeted `
+  --candidate qa\<candidate_report>.json `
+  --output qa\<comparison_report>.json `
+  --safe-postals-output qa\<safe_postals>.txt
+```
+
+Then patch only the safe-postal file:
+
+```powershell
+uv run python scripts\targeted_bundle_refresh.py `
+  --postal-file qa\<safe_postals>.txt `
+  --target-bundle <new_bundle> `
+  --output qa\targeted_bundle_refresh_<new_bundle>.json
+uv run python run.py validate --input web\public\data\<new_bundle>
+.\scripts\launch-check.bat -DataBundle <new_bundle> -SkipPythonTests
+```
+
+`targeted_bundle_refresh.py` only reads a partial report when
+`--from-partial-report` is explicitly supplied. This prevents a safe-list run
+from silently adding unrelated postals from
+`qa/partial_resnap_rescore_sample.json`.
+
+On 2026-08-03, this flow produced local-only bundle
+`generated_20260803_safe_mayflower_560234_targeted`, patching exactly one
+postal: `560234`. Static validation passed, browser smokes passed, and the
+release helper stopped at plan-only. It is not active in `web/data-bundle.json`
+until it is direct-deployed and activated.
+
 As of 2026-08-03, the active production bundle configured in
 `web/data-bundle.json` is
 `generated_20260802_endpoint_connector_guard_targeted`. It is a targeted
