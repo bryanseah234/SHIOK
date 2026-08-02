@@ -1,0 +1,17 @@
+{
+  "commit": "dc35332",
+  "deployment_url": "https://sgshiok-iho87l2ye-theprawnvercel.vercel.app/",
+  "generated_at": "2026-08-02T12:58:39.190295+00:00",
+  "manifest": {
+    "content_type": "application/gzip",
+    "record_count": 124032,
+    "status": 200,
+    "targeted_refresh_postal_count": 216
+  },
+  "production_root": "https://sgshiok.vercel.app/",
+  "status": "ready_verified_after_git_push",
+  "target_bundle": "generated_20260802_endpoint_connector_guard_targeted",
+  "target_bundle_in_js": [
+    "/_next/static/chunks/app/page-813fd0d6ecc55ca9.js"
+  ]
+}
