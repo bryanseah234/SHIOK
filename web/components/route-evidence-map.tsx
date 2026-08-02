@@ -259,11 +259,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-halo",
       type: "circle",
       source: "transit-pois",
-      minzoom: 10.8,
+      minzoom: 10.2,
       filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
         "circle-color": "#ffffff",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.8, 5.8, 17, 9],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.2, 5.8, 17, 9],
         "circle-opacity": 0.92,
       },
     });
@@ -274,11 +274,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 10.8,
+      minzoom: 10.2,
       filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
         "circle-color": "#245b8d",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.8, 3.8, 17, 5.9],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 10.2, 3.8, 17, 5.9],
         "circle-opacity": 0.92,
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 1,
@@ -291,12 +291,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-station-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 11.2,
+      minzoom: 10.8,
       filter: ["==", ["get", "kind"], "mrt_station"],
       layout: {
         "text-field": ["get", "label_text"],
         "text-font": ["Open Sans Regular"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 11.2, 10, 15, 12],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 10.8, 10, 15, 12],
         "text-offset": [0, 1.05],
         "text-anchor": "top",
         "text-max-width": 9,
@@ -307,7 +307,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-color": "#214861",
         "text-halo-color": "#f6faf8",
         "text-halo-width": 1.3,
-        "text-opacity": ["interpolate", ["linear"], ["zoom"], 11.2, 0.72, 13, 0.94],
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 10.8, 0.72, 13, 0.94],
       },
     });
   }
@@ -317,11 +317,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.8,
+      minzoom: 13.2,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#2f5f8f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 14.2, 2.5, 18, 4],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 2.4, 18, 4],
         "circle-opacity": 0.8,
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
@@ -334,7 +334,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 14.8,
+      minzoom: 14.2,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       layout: {
         "text-field": ["get", "label_text"],
@@ -360,12 +360,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.2,
+      minzoom: 12.6,
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
         "circle-color": "#436b5f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 1.7, 16, 2.9, 18, 4.2],
-        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 13.2, 0.5, 16, 0.82],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.6, 1.8, 16, 3.1, 18, 4.4],
+        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 12.6, 0.54, 16, 0.86],
         "circle-stroke-color": "#ffffff",
         "circle-stroke-width": 0.75,
       },
@@ -377,12 +377,12 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-label",
       type: "symbol",
       source: "transit-pois",
-      minzoom: 15.5,
+      minzoom: 15.0,
       filter: ["==", ["get", "kind"], "bus_stop"],
       layout: {
         "text-field": ["get", "label_text"],
         "text-font": ["Open Sans Regular"],
-        "text-size": ["interpolate", ["linear"], ["zoom"], 15.5, 9, 18, 10.5],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 15.0, 9, 18, 10.5],
         "text-offset": [0.55, 0],
         "text-anchor": "left",
         "text-max-width": 8,
@@ -393,7 +393,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-color": "#36594f",
         "text-halo-color": "#f6faf8",
         "text-halo-width": 1.1,
-        "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.5, 0.64, 18, 0.9],
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.0, 0.64, 18, 0.9],
       },
     });
   }
@@ -405,7 +405,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shortest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 6.2,
+        "line-width": 7.2,
         "line-opacity": 0.84,
       },
       layout: {
@@ -427,9 +427,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
           SHELTER_SOURCE_COLOR,
           "#26342f",
         ],
-        "line-width": 3.5,
+        "line-width": 4.2,
         "line-opacity": 0.9,
-        "line-dasharray": [0.55, 1.25],
+        "line-dasharray": [0.5, 1.05],
       },
       layout: {
         "line-cap": "round",
@@ -445,7 +445,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "shiokest-route",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 8.2,
+        "line-width": 9.4,
         "line-opacity": 0.86,
       },
       layout: {
@@ -467,7 +467,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
           SHELTER_SOURCE_COLOR,
           ["get", "color"],
         ],
-        "line-width": 4.8,
+        "line-width": 5.8,
         "line-opacity": 0.96,
       },
       layout: {
@@ -484,7 +484,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#ffffff",
-        "line-width": 5.4,
+        "line-width": 6.4,
         "line-opacity": 0.82,
       },
       layout: {
@@ -501,7 +501,7 @@ function ensureRouteLayers(map: maplibregl.Map) {
       source: "exposure-gaps",
       paint: {
         "line-color": "#c4332b",
-        "line-width": 3.1,
+        "line-width": 3.8,
         "line-opacity": 0.92,
         "line-dasharray": [0.35, 1.1],
       },
