@@ -557,6 +557,15 @@ route effect; no score override has been applied.
   endpoint connector as an exposed `bus_stop_access_connector` edge with
   `confidence=inferred_endpoint_snap`. It does not mark the connector as
   sheltered and does not silently snap the stop without counting the extra walk.
+- 2026-08-03 active-bundle validation triage was regenerated from the
+  `active_safe_mayflower` cached OneMap validation and replay profiles. The
+  current action order is: 44 missing-bus-connector rows (22 strict priority),
+  57 untrusted-bus-route rows, 100 possible overpermissive project paths, 46
+  HDB/bridge connector-review rows, 4 MRT/LRT outliers, 38 access-barrier
+  reviews, and 4 very-short-OneMap-walk reviews. Evidence lives in
+  `qa/onemap_validation_failure_summary_active_safe_mayflower_20260803.json`
+  plus matching GeoJSON priority queues. This is review evidence only; the
+  2,000-postal OneMap launch gate remains failed until the evaluator passes.
 - `qa/onemap_outlier_replay_shorter_profile_100_20260802.json` reruns that
   project-shorter queue with route-source profiles. Of 100 best-route rows, 9
   contain direct-bus fallback, 18 contain inferred HDB edges, 28 contain OSM
