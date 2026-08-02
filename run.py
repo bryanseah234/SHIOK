@@ -2,7 +2,7 @@
 """S.H.I.O.K. task runner (cross-platform replacement for make).
 
 Usage: python run.py <task> [options]
-Tasks: batch-plan | bus-arrivals | bus-connector-diagnostics | check | compare-targeted | ingest | network | network-preflight | network-qa | onemap-validation | onemap-outlier-replay | onemap-outlier-triage | overture-addresses | readiness | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
+Tasks: batch-plan | bus-arrivals | bus-connector-diagnostics | check | compare-targeted | ingest | network | network-preflight | network-qa | onemap-validation | onemap-outlier-replay | onemap-outlier-triage | overture-addresses | readiness | refresh-provenance | route | score | score-batch | postal-universe | geocode-universe | export | export-transit | validate | publish | test | shell
 `publish` ALWAYS runs `validate` first — this gate is hard-coded and must never be removed.
 Stubs below are replaced task-by-task per docs/BUILD_PLAN.md.
 """
@@ -26,6 +26,7 @@ STUBS = {
     "onemap-outlier-triage": "build QA queues from profiled OneMap outlier replays",
     "overture-addresses": "probe Overture Addresses SG postal-universe candidate",
     "readiness": "fast production-readiness report without scoring or deploying",
+    "refresh-provenance": "refresh bundle manifest score provenance without rescoring",
     "route": "igraph dual-weight batch, spawn-safe multiprocessing (T1.2)",
     "score": "apply pipeline/config/weights.yaml (T1.4)",
     "score-batch": "resumable postal scoring batch runner",
@@ -73,6 +74,8 @@ def run_task(name: str, extra: list[str]) -> int:
         return run_module("pipeline.overture_addresses")
     if name == "readiness":
         return run_module("scripts.production_readiness")
+    if name == "refresh-provenance":
+        return run_module("pipeline.export", ["refresh-provenance"])
     if name == "score":
         return run_module("pipeline.scoring_integration")
     if name == "score-batch":

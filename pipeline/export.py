@@ -1291,6 +1291,62 @@ def refresh_transit_manifest(output_dir: Path, transit_report: dict[str, Any]) -
     return True
 
 
+def load_exported_score_records(input_dir: Path) -> list[dict[str, Any]]:
+    score_index = read_artifact_json(input_dir, "scores/index.json")
+    if not isinstance(score_index, dict):
+        raise TypeError("scores/index.json must be an object")
+
+    records: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for score_key in sorted(score_index):
+        rel_path = f"scores/{score_key}.json"
+        payload = read_artifact_json(input_dir, rel_path)
+        if not isinstance(payload, list):
+            raise TypeError(f"{rel_path} must contain a list")
+        for item in payload:
+            if not isinstance(item, dict):
+                raise TypeError(f"{rel_path} record must be an object")
+            postal = str(item.get("postal", ""))
+            if not postal:
+                raise ValueError(f"{rel_path} record missing postal")
+            if postal in seen:
+                raise ValueError(f"duplicate postal across exported score shards: {postal}")
+            seen.add(postal)
+            records.append(item)
+    return sorted(records, key=lambda item: str(item["postal"]))
+
+
+def refresh_score_provenance_manifest(output_dir: Path) -> dict[str, Any]:
+    manifest_path = output_dir / "manifest.json"
+    if not manifest_path.is_file():
+        return {
+            "ok": False,
+            "manifest_updated": False,
+            "manifest_path": str(manifest_path),
+            "errors": ["manifest.json not found"],
+        }
+
+    records = load_exported_score_records(output_dir)
+    score_provenance = score_provenance_summary(records)
+    manifest = read_json(manifest_path)
+    provenance = manifest.setdefault("provenance", {})
+    if not isinstance(provenance, dict):
+        provenance = {}
+        manifest["provenance"] = provenance
+    provenance["source_hashes"] = score_provenance["source_hashes"]
+    provenance["subscore_status"] = score_provenance["subscore_status"]
+    provenance["score_provenance_refreshed_at"] = datetime.now(UTC).isoformat()
+    write_json(manifest_path, manifest)
+    return {
+        "ok": True,
+        "manifest_updated": True,
+        "manifest_path": str(manifest_path),
+        "record_count": len(records),
+        "source_hash_count": len(score_provenance["source_hashes"]),
+        "subscore_status_keys": sorted(score_provenance["subscore_status"]),
+    }
+
+
 def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
     chunks_dir = records_dir / "chunks"
     if not chunks_dir.is_dir():
@@ -1557,6 +1613,9 @@ def main() -> int:
     transit_parser = subparsers.add_parser("export-transit")
     transit_parser.add_argument("--output", type=Path, default=DEFAULT_EXPORT_DIR)
 
+    provenance_parser = subparsers.add_parser("refresh-provenance")
+    provenance_parser.add_argument("--output", type=Path, default=DEFAULT_EXPORT_DIR)
+
     args = parser.parse_args()
     if args.action == "export":
         guard_errors = validate_export_batch_args(
@@ -1614,6 +1673,11 @@ def main() -> int:
         report["manifest_updated"] = refresh_transit_manifest(args.output, report)
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0
+
+    if args.action == "refresh-provenance":
+        report = refresh_score_provenance_manifest(args.output)
+        print(json.dumps(report, indent=2, sort_keys=True))
+        return 0 if report.get("ok") else 1
 
     return 1
 

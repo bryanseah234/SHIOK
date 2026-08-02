@@ -11,6 +11,7 @@ from pipeline.export import (
     geom_record,
     json_size,
     load_score_batch_records,
+    refresh_score_provenance_manifest,
     refresh_transit_manifest,
     route_edge_source_class,
     route_segment_geometries,
@@ -430,6 +431,29 @@ def test_refresh_transit_manifest_updates_only_transit_block(tmp_path: Path):
     assert manifest["data_as_of"] == "2026-08-01T00:00:00+00:00"
     assert manifest["transit"]["source_hashes"] == {"train_station_codes": "a" * 64}
     assert manifest["transit"]["refreshed_at"]
+
+
+def test_refresh_score_provenance_manifest_updates_from_score_shards(tmp_path: Path):
+    export_static_artifacts([sample_record("123456"), sample_record("654321")], output_dir=tmp_path)
+    manifest_path = tmp_path / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["provenance"].pop("source_hashes", None)
+    manifest["provenance"].pop("subscore_status", None)
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    report = refresh_score_provenance_manifest(tmp_path)
+
+    refreshed = json.loads(manifest_path.read_text(encoding="utf-8"))
+    assert report["ok"] is True
+    assert report["manifest_updated"] is True
+    assert report["record_count"] == 2
+    assert report["source_hash_count"] == 1
+    assert refreshed["provenance"]["source_hashes"]["osm_extract"] == "a" * 64
+    assert (
+        refreshed["provenance"]["subscore_status"]["heat"]
+        == "provisional_covered_plus_nparks_shade_proxy_heat_only"
+    )
+    assert refreshed["provenance"]["score_provenance_refreshed_at"]
 
 
 def test_export_splits_large_score_files(tmp_path: Path):
