@@ -1,0 +1,16 @@
+{
+  "bundle": "generated_20260802_onemap_over50_targeted",
+  "cache_dir": "C:\\shiok\\raw\\validation\\onemap_walk_od",
+  "confirm_onemap_collection": true,
+  "delay_sec": 2.0,
+  "dry_run": false,
+  "errors": [],
+  "existing_cache_results": 1986,
+  "generated_at": "2026-08-02T13:26:48.971324+00:00",
+  "http_requests": 14,
+  "ok": true,
+  "queued_requests": 14,
+  "sample_size": 2000,
+  "will_call_onemap": true,
+  "written_cache_results": 14
+}

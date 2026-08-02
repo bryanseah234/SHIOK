@@ -1,0 +1,766 @@
+{
+  "generated_at": "2026-08-02T21:48:18.318396+08:00",
+  "bundle": "generated_20260802_onemap_over25_targeted",
+  "ok": false,
+  "gate_passed": false,
+  "sample_size": 2000,
+  "cached_results": 1999,
+  "missing_cache_results": 0,
+  "invalid_cache_results": 1,
+  "median_abs_pct_delta": 9.602,
+  "p95_abs_pct_delta": 75.69,
+  "thresholds": {
+    "median_abs_pct_delta_max": 10.0,
+    "p95_abs_pct_delta_max": 25.0
+  },
+  "distance_sanity_summary": {
+    "onemap_materially_shorter_than_direct": 16,
+    "onemap_slightly_shorter_than_direct": 26,
+    "plausible": 1957
+  },
+  "route_trust_summary": [
+    {
+      "count": 35,
+      "max_abs_pct_delta": 203.023,
+      "median_abs_pct_delta": 61.329,
+      "over_25_pct_count": 27,
+      "over_50_pct_count": 22,
+      "p95_abs_pct_delta": 193.428,
+      "route_trust": "graph_route_with_endpoint_connector"
+    },
+    {
+      "count": 1568,
+      "max_abs_pct_delta": 807.143,
+      "median_abs_pct_delta": 10.254,
+      "over_25_pct_count": 315,
+      "over_50_pct_count": 164,
+      "p95_abs_pct_delta": 75.95,
+      "route_trust": "graph_routed_bus_stop"
+    },
+    {
+      "count": 396,
+      "max_abs_pct_delta": 593.562,
+      "median_abs_pct_delta": 6.357,
+      "over_25_pct_count": 46,
+      "over_50_pct_count": 24,
+      "p95_abs_pct_delta": 53.892,
+      "route_trust": "graph_routed_mrt_lrt"
+    }
+  ],
+  "direction_summary": [
+    {
+      "count": 942,
+      "direction": "project_longer_than_onemap",
+      "max_abs_pct_delta": 807.143,
+      "median_abs_pct_delta": 9.218,
+      "over_25_pct_count": 208,
+      "over_50_pct_count": 139,
+      "p95_abs_pct_delta": 109.011
+    },
+    {
+      "count": 1057,
+      "direction": "project_shorter_than_onemap",
+      "max_abs_pct_delta": 92.619,
+      "median_abs_pct_delta": 9.949,
+      "over_25_pct_count": 180,
+      "over_50_pct_count": 71,
+      "p95_abs_pct_delta": 58.943
+    }
+  ],
+  "routing_type_summary": [
+    {
+      "count": 35,
+      "max_abs_pct_delta": 203.023,
+      "median_abs_pct_delta": 61.329,
+      "over_25_pct_count": 27,
+      "over_50_pct_count": 22,
+      "p95_abs_pct_delta": 193.428,
+      "routing_type": "sheltered_with_bus_stop_access_connector"
+    },
+    {
+      "count": 1957,
+      "max_abs_pct_delta": 807.143,
+      "median_abs_pct_delta": 9.525,
+      "over_25_pct_count": 361,
+      "over_50_pct_count": 188,
+      "p95_abs_pct_delta": 72.644,
+      "routing_type": "sheltered"
+    },
+    {
+      "count": 7,
+      "max_abs_pct_delta": 9.428,
+      "median_abs_pct_delta": 3.785,
+      "over_25_pct_count": 0,
+      "over_50_pct_count": 0,
+      "p95_abs_pct_delta": 9.209,
+      "routing_type": "shortest_due_to_detour"
+    }
+  ],
+  "transit_type_summary": [
+    {
+      "best_node_type": "bus_stop",
+      "count": 1603,
+      "max_abs_pct_delta": 807.143,
+      "median_abs_pct_delta": 10.459,
+      "over_25_pct_count": 342,
+      "over_50_pct_count": 186,
+      "p95_abs_pct_delta": 78.768
+    },
+    {
+      "best_node_type": "mrt_lrt_exit",
+      "count": 396,
+      "max_abs_pct_delta": 593.562,
+      "median_abs_pct_delta": 6.357,
+      "over_25_pct_count": 46,
+      "over_50_pct_count": 24,
+      "p95_abs_pct_delta": 53.892
+    }
+  ],
+  "top_area_summary": [
+    {
+      "area": "SELETAR",
+      "count": 4,
+      "max_abs_pct_delta": 311.129,
+      "median_abs_pct_delta": 34.754,
+      "over_25_pct_count": 2,
+      "over_50_pct_count": 2,
+      "p95_abs_pct_delta": 273.049
+    },
+    {
+      "area": "DOWNTOWN_CORE",
+      "count": 9,
+      "max_abs_pct_delta": 265.144,
+      "median_abs_pct_delta": 24.68,
+      "over_25_pct_count": 4,
+      "over_50_pct_count": 3,
+      "p95_abs_pct_delta": 187.475
+    },
+    {
+      "area": "YISHUN",
+      "count": 48,
+      "max_abs_pct_delta": 807.143,
+      "median_abs_pct_delta": 8.33,
+      "over_25_pct_count": 14,
+      "over_50_pct_count": 9,
+      "p95_abs_pct_delta": 167.221
+    },
+    {
+      "area": "BOON_LAY",
+      "count": 4,
+      "max_abs_pct_delta": 131.619,
+      "median_abs_pct_delta": 55.543,
+      "over_25_pct_count": 2,
+      "over_50_pct_count": 2,
+      "p95_abs_pct_delta": 126.978
+    },
+    {
+      "area": "TENGAH",
+      "count": 5,
+      "max_abs_pct_delta": 124.341,
+      "median_abs_pct_delta": 52.617,
+      "over_25_pct_count": 4,
+      "over_50_pct_count": 3,
+      "p95_abs_pct_delta": 123.562
+    },
+    {
+      "area": "SEMBAWANG",
+      "count": 42,
+      "max_abs_pct_delta": 189.623,
+      "median_abs_pct_delta": 14.47,
+      "over_25_pct_count": 11,
+      "over_50_pct_count": 6,
+      "p95_abs_pct_delta": 118.649
+    },
+    {
+      "area": "PIONEER",
+      "count": 14,
+      "max_abs_pct_delta": 176.176,
+      "median_abs_pct_delta": 15.224,
+      "over_25_pct_count": 4,
+      "over_50_pct_count": 4,
+      "p95_abs_pct_delta": 108.77
+    },
+    {
+      "area": "GEYLANG",
+      "count": 99,
+      "max_abs_pct_delta": 285.0,
+      "median_abs_pct_delta": 9.67,
+      "over_25_pct_count": 23,
+      "over_50_pct_count": 16,
+      "p95_abs_pct_delta": 107.314
+    },
+    {
+      "area": "LIM_CHU_KANG",
+      "count": 2,
+      "max_abs_pct_delta": 108.941,
+      "median_abs_pct_delta": 86.749,
+      "over_25_pct_count": 2,
+      "over_50_pct_count": 2,
+      "p95_abs_pct_delta": 106.722
+    },
+    {
+      "area": "SENGKANG",
+      "count": 32,
+      "max_abs_pct_delta": 172.606,
+      "median_abs_pct_delta": 12.512,
+      "over_25_pct_count": 6,
+      "over_50_pct_count": 4,
+      "p95_abs_pct_delta": 104.992
+    }
+  ],
+  "invalid_cache_preview": [
+    {
+      "area": "SOUTHERN_ISLANDS",
+      "best_node_name": "Village Hotel",
+      "best_node_type": "bus_stop",
+      "cache_key": "cfdff820886461ec401aead67568de0b1c0b844808e54abeff0cb0f540d5e025",
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_walk_m": 0.0,
+      "postal": "098679",
+      "project_shortest_m": 136.9,
+      "reason": "missing_or_non_positive_distance"
+    }
+  ],
+  "top_outliers": [
+    {
+      "abs_pct_delta": 807.143,
+      "area": "YISHUN",
+      "best_node_name": "Blk 220",
+      "best_node_type": "bus_stop",
+      "cache_key": "8accf678b2a112cdf96e04e9004cfb836bf2fa60b26ee29ca721b470e6019b10",
+      "direct_distance_m": 16.4,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.432728,
+        "lon": 103.835225
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -9.4,
+      "onemap_walk_m": 7.0,
+      "postal": "761220",
+      "project_shortest_m": 63.5,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 807.143,
+      "start": {
+        "lat": 1.432779,
+        "lon": 103.835363
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 593.562,
+      "area": "BUKIT_MERAH",
+      "best_node_name": "TELOK BLANGAH MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "fb1c67341305308796863cbec24f8a1605dbb05778fcd2882cdcc4bff52fb131",
+      "direct_distance_m": 68.4,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.270721,
+        "lon": 103.809884
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": 4.6,
+      "onemap_walk_m": 73.0,
+      "postal": "109031",
+      "project_shortest_m": 506.3,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 593.562,
+      "start": {
+        "lat": 1.270713,
+        "lon": 103.809269
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 376.207,
+      "area": "BEDOK",
+      "best_node_name": "Aft Bedok Sth Ave 3",
+      "best_node_type": "bus_stop",
+      "cache_key": "437f5505b56456d05d57f2d93e55877d36479789682e839d365cf69cdc19af03",
+      "direct_distance_m": 59.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.316164,
+        "lon": 103.944821
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -30.1,
+      "onemap_walk_m": 29.0,
+      "postal": "466581",
+      "project_shortest_m": 138.1,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 376.207,
+      "start": {
+        "lat": 1.315791,
+        "lon": 103.9452
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 362.857,
+      "area": "JURONG_WEST",
+      "best_node_name": "Blk 560A",
+      "best_node_type": "bus_stop",
+      "cache_key": "c7ddcc8313e86fc1173e64b74814da6143935c520220fe9d0877e821b9246818",
+      "direct_distance_m": 34.5,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.353092,
+        "lon": 103.71994
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -13.5,
+      "onemap_walk_m": 21.0,
+      "postal": "641560",
+      "project_shortest_m": 97.2,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 362.857,
+      "start": {
+        "lat": 1.353324,
+        "lon": 103.719734
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 341.368,
+      "area": "TOA_PAYOH",
+      "best_node_name": "Blk 212",
+      "best_node_type": "bus_stop",
+      "cache_key": "ff9c1a94322d804ad2b9a74d9171399d875dfb0898b72c01eb0ffaf979870e8a",
+      "direct_distance_m": 204.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.341638,
+        "lon": 103.874179
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -87.1,
+      "onemap_walk_m": 117.0,
+      "postal": "360213",
+      "project_shortest_m": 516.4,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 341.368,
+      "start": {
+        "lat": 1.342883,
+        "lon": 103.87283
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 311.129,
+      "area": "SELETAR",
+      "best_node_name": "Bef Baker St",
+      "best_node_type": "bus_stop",
+      "cache_key": "91224bd114241ac74efb6ad9ad928a7d2624c06d161656ee768ebbfbf41d129b",
+      "direct_distance_m": 207.3,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.40885,
+        "lon": 103.870953
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -83.3,
+      "onemap_walk_m": 124.0,
+      "postal": "797560",
+      "project_shortest_m": 509.8,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 311.129,
+      "start": {
+        "lat": 1.410696,
+        "lon": 103.870694
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 285.0,
+      "area": "GEYLANG",
+      "best_node_name": "UBI MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "5c15fc7b05d587dba5f7cbde83ad9e69847e0447a4b6f09a82739774e8e52214",
+      "direct_distance_m": 131.5,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.329951,
+        "lon": 103.899877
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -53.5,
+      "onemap_walk_m": 78.0,
+      "postal": "403357",
+      "project_shortest_m": 300.3,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 285.0,
+      "start": {
+        "lat": 1.328805,
+        "lon": 103.899586
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 265.144,
+      "area": "DOWNTOWN_CORE",
+      "best_node_name": "ESPLANADE MRT STATION Exit B",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "ba7aede036254596bc181494de5fd697d2f4967ff4c5deed7d5c61ca41fb5eed",
+      "direct_distance_m": 162.6,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.292927,
+        "lon": 103.856176
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": 45.4,
+      "onemap_walk_m": 208.0,
+      "postal": "189768",
+      "project_shortest_m": 759.5,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 265.144,
+      "start": {
+        "lat": 1.294293,
+        "lon": 103.855655
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 203.023,
+      "area": "YISHUN",
+      "best_node_name": "Blk 469B",
+      "best_node_type": "bus_stop",
+      "cache_key": "acf52a233902119b55ae060358100286c69c2929a1d53f621644c1c1c7c17ae8",
+      "direct_distance_m": 89.9,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.423939,
+        "lon": 103.852066
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -46.9,
+      "onemap_walk_m": 43.0,
+      "postal": "760468",
+      "project_shortest_m": 130.3,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_pct_delta": 203.023,
+      "start": {
+        "lat": 1.424687,
+        "lon": 103.85176
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 202.625,
+      "area": "KALLANG",
+      "best_node_name": "Opp Costa Rhu Condo",
+      "best_node_type": "bus_stop",
+      "cache_key": "d4a5043bd1a8949259e10b261d5acb67ef9e0146391e2b1cad5b971a6c6e27f4",
+      "direct_distance_m": 90.6,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_slightly_shorter_than_direct",
+      "end": {
+        "lat": 1.297607,
+        "lon": 103.867327
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -10.6,
+      "onemap_walk_m": 80.0,
+      "postal": "437436",
+      "project_shortest_m": 242.1,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 202.625,
+      "start": {
+        "lat": 1.297077,
+        "lon": 103.866708
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 202.308,
+      "area": "BEDOK",
+      "best_node_name": "Grosvenor View",
+      "best_node_type": "bus_stop",
+      "cache_key": "c04705e685cdede7eb77350accef235633cc491a4800510a9a4eabaefdb25c35",
+      "direct_distance_m": 68.3,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.327656,
+        "lon": 103.912131
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -29.3,
+      "onemap_walk_m": 39.0,
+      "postal": "417471",
+      "project_shortest_m": 117.9,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_pct_delta": 202.308,
+      "start": {
+        "lat": 1.328267,
+        "lon": 103.912067
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 189.623,
+      "area": "SEMBAWANG",
+      "best_node_name": "Aft Queen's Ave",
+      "best_node_type": "bus_stop",
+      "cache_key": "ff99cc61b65e04f3e9883cdd5d3ec27a19c87903d5945412a83c7dd34d9986a5",
+      "direct_distance_m": 51.1,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.455312,
+        "lon": 103.83099
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": 1.9,
+      "onemap_walk_m": 53.0,
+      "postal": "758588",
+      "project_shortest_m": 153.5,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_pct_delta": 189.623,
+      "start": {
+        "lat": 1.455759,
+        "lon": 103.830882
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 183.333,
+      "area": "PASIR_RIS",
+      "best_node_name": "PASIR RIS MRT STATION Exit A",
+      "best_node_type": "mrt_lrt_exit",
+      "cache_key": "460dd93f9eef4a877dab9eb731472d50b15e41c80b57bc4d4525100a8340f01b",
+      "direct_distance_m": 69.0,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.372842,
+        "lon": 103.949333
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": 45.0,
+      "onemap_walk_m": 114.0,
+      "postal": "519612",
+      "project_shortest_m": 323.0,
+      "route_trust": "graph_routed_mrt_lrt",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 183.333,
+      "start": {
+        "lat": 1.373093,
+        "lon": 103.948765
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 176.176,
+      "area": "PIONEER",
+      "best_node_name": "Opp ESAB",
+      "best_node_type": "bus_stop",
+      "cache_key": "c441c9d478b93d9dd54bf57e3d6088f8ebe778de50845e3cdb95426f172f552c",
+      "direct_distance_m": 76.7,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.324961,
+        "lon": 103.666996
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -42.7,
+      "onemap_walk_m": 34.0,
+      "postal": "629065",
+      "project_shortest_m": 93.9,
+      "route_trust": "graph_route_with_endpoint_connector",
+      "routing_type": "sheltered_with_bus_stop_access_connector",
+      "signed_pct_delta": 176.176,
+      "start": {
+        "lat": 1.325552,
+        "lon": 103.66664
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 172.606,
+      "area": "SENGKANG",
+      "best_node_name": "Opp Blk 461B",
+      "best_node_type": "bus_stop",
+      "cache_key": "475df4a80d0e90d957528b986088e50f57bffdea12ba7274d4a24b5a76e612cf",
+      "direct_distance_m": 200.6,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_slightly_shorter_than_direct",
+      "end": {
+        "lat": 1.395245,
+        "lon": 103.871524
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -35.6,
+      "onemap_walk_m": 165.0,
+      "postal": "799443",
+      "project_shortest_m": 449.8,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 172.606,
+      "start": {
+        "lat": 1.395628,
+        "lon": 103.873287
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 170.0,
+      "area": "YISHUN",
+      "best_node_name": "Blk 477B",
+      "best_node_type": "bus_stop",
+      "cache_key": "f0e11200a9632383b69575919615637479a7a6b54ebfe67165e9c058b151b396",
+      "direct_distance_m": 56.3,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.427487,
+        "lon": 103.852056
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -18.3,
+      "onemap_walk_m": 38.0,
+      "postal": "762477",
+      "project_shortest_m": 102.6,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 170.0,
+      "start": {
+        "lat": 1.427509,
+        "lon": 103.852562
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 162.059,
+      "area": "YISHUN",
+      "best_node_name": "Blk 483B",
+      "best_node_type": "bus_stop",
+      "cache_key": "9cd53ed9de0dc574becb25d3965888a155d5dce84a2dc73d9a150f3d500f9b7b",
+      "direct_distance_m": 82.4,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.431761,
+        "lon": 103.847993
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -48.4,
+      "onemap_walk_m": 34.0,
+      "postal": "763483",
+      "project_shortest_m": 89.1,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 162.059,
+      "start": {
+        "lat": 1.432461,
+        "lon": 103.848235
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 159.108,
+      "area": "TAMPINES",
+      "best_node_name": "The Santorini",
+      "best_node_type": "bus_stop",
+      "cache_key": "fc06e30ec24109b88f55a6cc515b3f596bbbc6b9f8abeef010f5fc2f6b57692e",
+      "direct_distance_m": 160.8,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.352209,
+        "lon": 103.92732
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -3.8,
+      "onemap_walk_m": 157.0,
+      "postal": "528585",
+      "project_shortest_m": 406.8,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 159.108,
+      "start": {
+        "lat": 1.350803,
+        "lon": 103.92698
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 151.429,
+      "area": "PASIR_RIS",
+      "best_node_name": "Opp Loyang Way 6",
+      "best_node_type": "bus_stop",
+      "cache_key": "a69a5eb085e2ba82f0639aadfe3c063a280b10a6621d9532b3be7a45fc7a948b",
+      "direct_distance_m": 72.9,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "onemap_materially_shorter_than_direct",
+      "end": {
+        "lat": 1.384341,
+        "lon": 103.973451
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": -23.9,
+      "onemap_walk_m": 49.0,
+      "postal": "508768",
+      "project_shortest_m": 123.2,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 151.429,
+      "start": {
+        "lat": 1.384464,
+        "lon": 103.972807
+      },
+      "state": "SCORED"
+    },
+    {
+      "abs_pct_delta": 151.356,
+      "area": "GEYLANG",
+      "best_node_name": "Bef Mangis Rd",
+      "best_node_type": "bus_stop",
+      "cache_key": "28f55c8dbfb04b8aa33c52eb5c8f370a45f286f0ba93dba814d59b02dc8d0bc0",
+      "direct_distance_m": 56.0,
+      "direction": "project_longer_than_onemap",
+      "distance_sanity": "plausible",
+      "end": {
+        "lat": 1.313826,
+        "lon": 103.90307
+      },
+      "endpoint_source": "postal_universe_to_transit_poi",
+      "onemap_vs_direct_delta_m": 3.0,
+      "onemap_walk_m": 59.0,
+      "postal": "427835",
+      "project_shortest_m": 148.3,
+      "route_trust": "graph_routed_bus_stop",
+      "routing_type": "sheltered",
+      "signed_pct_delta": 151.356,
+      "start": {
+        "lat": 1.313801,
+        "lon": 103.902567
+      },
+      "state": "SCORED"
+    }
+  ]
+}

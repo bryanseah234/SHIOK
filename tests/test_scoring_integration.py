@@ -51,7 +51,9 @@ PARAMS = {
         "access_connector_max_direct_ratio": 2.5,
         "access_connector_max_extra_m": 100.0,
         "direct_fallback_detour_ratio": 3.0,
+        "direct_fallback_near_stop_detour_ratio": 2.0,
         "direct_fallback_min_extra_m": 100.0,
+        "direct_fallback_scale_min_extra_to_direct": True,
         "direct_fallback_shortcut_ratio": 0.5,
         "direct_fallback_min_missing_m": 50.0,
         "road_centerline_guard_min_m": 50.0,
@@ -513,6 +515,47 @@ def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
             "straight_line_candidate_tolerance_m": 5.0,
             "direct_fallback_detour_ratio": 3.0,
             "direct_fallback_min_extra_m": 100.0,
+        },
+    )
+
+
+def test_bus_route_direct_fallback_scales_extra_for_near_stop_detour():
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Near Stop",
+        station_name="Near Stop",
+        exit_code="54323",
+        graph_node=(95.0, 0.0),
+        straight_line_m=40.0,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(40.0, 0.0),
+    )
+
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate,
+            {"shortest_length_m": 95.0},
+            {
+                "straight_line_candidate_m": 300.0,
+                "direct_fallback_detour_ratio": 3.0,
+                "direct_fallback_near_stop_detour_ratio": 2.0,
+                "direct_fallback_min_extra_m": 100.0,
+                "direct_fallback_scale_min_extra_to_direct": True,
+            },
+        )
+        == "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
+    )
+    assert not bus_route_should_use_direct_fallback(
+        candidate,
+        {"shortest_length_m": 75.0},
+        {
+            "straight_line_candidate_m": 300.0,
+            "direct_fallback_detour_ratio": 3.0,
+            "direct_fallback_near_stop_detour_ratio": 2.0,
+            "direct_fallback_min_extra_m": 100.0,
+            "direct_fallback_scale_min_extra_to_direct": True,
         },
     )
 

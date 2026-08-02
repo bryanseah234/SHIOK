@@ -18,7 +18,9 @@ bus_connectivity:
   access_connector_max_direct_ratio: 2.5
   access_connector_max_extra_m: 100
   direct_fallback_detour_ratio: 3.0
+  direct_fallback_near_stop_detour_ratio: 2.0
   direct_fallback_min_extra_m: 100
+  direct_fallback_scale_min_extra_to_direct: true
   direct_fallback_shortcut_ratio: 0.5
   direct_fallback_min_missing_m: 50
   road_centerline_guard_min_m: 50

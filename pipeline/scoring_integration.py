@@ -801,7 +801,12 @@ def bus_route_direct_fallback_reason(
     if routed_m <= 0:
         return None
     detour_ratio = float(bus_params.get("direct_fallback_detour_ratio", 3.0))
+    near_stop_detour_ratio = bus_params.get("direct_fallback_near_stop_detour_ratio")
+    if near_stop_detour_ratio is not None:
+        detour_ratio = min(detour_ratio, float(near_stop_detour_ratio))
     min_extra_m = float(bus_params.get("direct_fallback_min_extra_m", 100.0))
+    if bool(bus_params.get("direct_fallback_scale_min_extra_to_direct", False)):
+        min_extra_m = min(min_extra_m, direct_m)
     if routed_m >= direct_m * detour_ratio and (routed_m - direct_m) >= min_extra_m:
         return "implausible_graph_route_to_datamall_bus_stop_within_direct_radius"
 
