@@ -1,0 +1,1702 @@
+{
+  "blocked_postals": [
+    "760103",
+    "677768",
+    "579399",
+    "189768",
+    "149457",
+    "408694",
+    "458671",
+    "117311",
+    "117294",
+    "229385",
+    "400306",
+    "239528",
+    "529544",
+    "259771",
+    "259605",
+    "109920",
+    "267879",
+    "119454",
+    "209077",
+    "537408",
+    "259633"
+  ],
+  "blocking_count": 21,
+  "candidate_count": 42,
+  "compared_count": 42,
+  "comparisons": [
+    {
+      "active": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 322.4,
+          "station": "Aft Chong Pang CC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.181,
+        "sheltered_m": 348.5,
+        "state": "SCORED",
+        "total": 46.2
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 68.0,
+          "station": "Aft Chong Pang CC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 68.0,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": -0.181,
+        "sheltered_m": -280.5,
+        "total": 13.8
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "760103"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "66191",
+          "name": "Aft Corfe Pl",
+          "routed_m": 221.9,
+          "station": "Aft Corfe Pl",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 221.9,
+        "state": "SCORED",
+        "total": 57.3
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "66191",
+          "name": "Aft Corfe Pl",
+          "routed_m": 63.0,
+          "station": "Aft Corfe Pl",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 63.0,
+        "state": "SCORED",
+        "total": 57.3
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -158.9,
+        "total": 0.0
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "559038"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 919.6,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 919.6,
+        "state": "SCORED",
+        "total": 14.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 118.5,
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -801.1,
+        "total": 39.8
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "455383"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 837.7,
+          "station": "Bef Kg Kayu Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.56,
+        "sheltered_m": 871.6,
+        "state": "SCORED",
+        "total": 39.1
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 163.8,
+          "station": "Bef Kg Kayu Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.667,
+        "sheltered_m": 163.8,
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "delta": {
+        "covered_ratio": 0.107,
+        "sheltered_m": -707.8,
+        "total": 47.6
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "431007"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 389.8,
+          "station": "The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 389.8,
+        "state": "SCORED",
+        "total": 39.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 173.4,
+          "station": "The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 173.4,
+        "state": "SCORED",
+        "total": 59.4
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -216.4,
+        "total": 20.4
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "768282"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "68031",
+          "name": "Jln Kayu Shophouse",
+          "routed_m": 167.0,
+          "station": "Jln Kayu Shophouse",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 167.0,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "68031",
+          "name": "Jln Kayu Shophouse",
+          "routed_m": 81.1,
+          "station": "Jln Kayu Shophouse",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 81.1,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -85.9,
+        "total": 0.0
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "799452"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "82071",
+          "name": "Opp Tg Katong Girls' Sch",
+          "routed_m": 92.0,
+          "station": "Opp Tg Katong Girls' Sch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 92.0,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "82071",
+          "name": "Opp Tg Katong Girls' Sch",
+          "routed_m": 92.0,
+          "station": "Opp Tg Katong Girls' Sch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 92.0,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "437009"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "13121",
+          "name": "Opp Great World City",
+          "routed_m": 64.0,
+          "station": "Opp Great World City",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.668,
+        "sheltered_m": 64.0,
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "13121",
+          "name": "Opp Great World City",
+          "routed_m": 64.0,
+          "station": "Opp Great World City",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.668,
+        "sheltered_m": 64.0,
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "247733"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "44379",
+          "name": "Opp Blk 219",
+          "routed_m": 506.2,
+          "station": "Opp Blk 219",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.231,
+        "sheltered_m": 547.6,
+        "state": "SCORED",
+        "total": 42.7
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "44379",
+          "name": "Opp Blk 219",
+          "routed_m": 198.4,
+          "station": "Opp Blk 219",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 198.4,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": -0.231,
+        "sheltered_m": -349.2,
+        "total": 17.3
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "677768"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "21259",
+          "name": "Aft Quality Rd",
+          "routed_m": 249.5,
+          "station": "Aft Quality Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 249.5,
+        "state": "SCORED",
+        "total": 59.1
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "21259",
+          "name": "Aft Quality Rd",
+          "routed_m": 118.0,
+          "station": "Aft Quality Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 118.0,
+        "state": "SCORED",
+        "total": 59.1
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -131.5,
+        "total": 0.0
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "618823"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "56021",
+          "name": "Opp Sembawang Hills FC",
+          "routed_m": 146.9,
+          "station": "Opp Sembawang Hills FC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 146.9,
+        "state": "SCORED",
+        "total": 62.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "56021",
+          "name": "Opp Sembawang Hills FC",
+          "routed_m": 105.8,
+          "station": "Opp Sembawang Hills FC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 105.8,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -41.1,
+        "total": -2.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "579399"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 383.6,
+          "station": "Aft Perpetual Succour Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.043,
+        "sheltered_m": 391.6,
+        "state": "SCORED",
+        "total": 40.7
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 182.0,
+          "station": "Aft Perpetual Succour Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.088,
+        "sheltered_m": 190.1,
+        "state": "SCORED",
+        "total": 63.5
+      },
+      "delta": {
+        "covered_ratio": 0.045,
+        "sheltered_m": -201.5,
+        "total": 22.8
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "456103"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 268.5,
+          "station": "Opp Christ The King Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.249,
+        "sheltered_m": 268.5,
+        "state": "SCORED",
+        "total": 51.5
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 100.3,
+          "station": "Opp Christ The King Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.624,
+        "sheltered_m": 100.3,
+        "state": "SCORED",
+        "total": 85.0
+      },
+      "delta": {
+        "covered_ratio": 0.375,
+        "sheltered_m": -168.2,
+        "total": 33.5
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "560405"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 379.4,
+          "station": "Opp Cencon Bldg",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 379.4,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 166.1,
+          "station": "Opp Cencon Bldg",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 166.1,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -213.3,
+        "total": 20.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "348358"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "16041",
+          "name": "Opp Luxe Ville",
+          "routed_m": 89.4,
+          "station": "Opp Luxe Ville",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 89.4,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "16041",
+          "name": "Opp Luxe Ville",
+          "routed_m": 89.4,
+          "station": "Opp Luxe Ville",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 89.4,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "118679"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "28681",
+          "name": "Toh Guan Ctr",
+          "routed_m": 440.5,
+          "station": "Toh Guan Ctr",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 440.5,
+        "state": "SCORED",
+        "total": 57.9
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "28681",
+          "name": "Toh Guan Ctr",
+          "routed_m": 440.5,
+          "station": "Toh Guan Ctr",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 440.5,
+        "state": "SCORED",
+        "total": 57.9
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "608602"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "25459",
+          "name": "Opp Tuas West St",
+          "routed_m": 250.2,
+          "station": "Opp Tuas West St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 250.2,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "25459",
+          "name": "Opp Tuas West St",
+          "routed_m": 250.2,
+          "station": "Opp Tuas West St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 250.2,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "637442"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "54509",
+          "name": "Aft Blk 5000",
+          "routed_m": 359.2,
+          "station": "Aft Blk 5000",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 359.2,
+        "state": "SCORED",
+        "total": 60.3
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "54509",
+          "name": "Aft Blk 5000",
+          "routed_m": 359.2,
+          "station": "Aft Blk 5000",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 359.2,
+        "state": "SCORED",
+        "total": 60.3
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "804360"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "12169",
+          "name": "Pandan Valley",
+          "routed_m": 277.5,
+          "station": "Pandan Valley",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 277.5,
+        "state": "SCORED",
+        "total": 57.7
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "12169",
+          "name": "Pandan Valley",
+          "routed_m": 192.2,
+          "station": "Pandan Valley",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 192.2,
+        "state": "SCORED",
+        "total": 57.7
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -85.3,
+        "total": 0.0
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "598441"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "61069",
+          "name": "Potong Pasir Stn Exit A",
+          "routed_m": 86.8,
+          "station": "Potong Pasir Stn Exit A",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.945,
+        "sheltered_m": 86.8,
+        "state": "SCORED",
+        "total": 95.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "61069",
+          "name": "Potong Pasir Stn Exit A",
+          "routed_m": 86.8,
+          "station": "Potong Pasir Stn Exit A",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.945,
+        "sheltered_m": 86.8,
+        "state": "SCORED",
+        "total": 95.8
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "350101"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "51099",
+          "name": "Catholic JC",
+          "routed_m": 234.2,
+          "station": "Catholic JC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 234.2,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "51099",
+          "name": "Catholic JC",
+          "routed_m": 234.2,
+          "station": "Catholic JC",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 234.2,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 0.0,
+        "total": 0.0
+      },
+      "flags": [
+        "unchanged_or_within_tolerance"
+      ],
+      "postal": "308255"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "ESPLANADE MRT STATION Exit B",
+          "routed_m": 709.3,
+          "station": "ESPLANADE MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 1.0,
+        "sheltered_m": 709.3,
+        "state": "SCORED",
+        "total": 63.8
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "ESPLANADE MRT STATION Exit B",
+          "routed_m": 759.5,
+          "station": "ESPLANADE MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.934,
+        "sheltered_m": 759.5,
+        "state": "SCORED",
+        "total": 58.5
+      },
+      "delta": {
+        "covered_ratio": -0.066,
+        "sheltered_m": 50.2,
+        "total": -5.3
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "189768"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "QUEENSTOWN MRT STATION Exit B",
+          "routed_m": 23.2,
+          "station": "QUEENSTOWN MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 1.0,
+        "sheltered_m": 23.2,
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "QUEENSTOWN MRT STATION Exit B",
+          "routed_m": 314.6,
+          "station": "QUEENSTOWN MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.528,
+        "sheltered_m": 314.6,
+        "state": "SCORED",
+        "total": 81.1
+      },
+      "delta": {
+        "covered_ratio": -0.472,
+        "sheltered_m": 291.4,
+        "total": -18.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "149457"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "MACPHERSON MRT STATION Exit B",
+          "routed_m": 520.7,
+          "station": "MACPHERSON MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.506,
+        "sheltered_m": 520.7,
+        "state": "SCORED",
+        "total": 72.9
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "MACPHERSON MRT STATION Exit B",
+          "routed_m": 576.8,
+          "station": "MACPHERSON MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.456,
+        "sheltered_m": 576.8,
+        "state": "SCORED",
+        "total": 68.0
+      },
+      "delta": {
+        "covered_ratio": -0.05,
+        "sheltered_m": 56.1,
+        "total": -4.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "408694"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit 3",
+          "name": "SIGLAP MRT STATION Exit 3",
+          "routed_m": 198.0,
+          "station": "SIGLAP MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.475,
+        "sheltered_m": 198.0,
+        "state": "SCORED",
+        "total": 79.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit 3",
+          "name": "SIGLAP MRT STATION Exit 3",
+          "routed_m": 232.9,
+          "station": "SIGLAP MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.404,
+        "sheltered_m": 232.9,
+        "state": "SCORED",
+        "total": 76.1
+      },
+      "delta": {
+        "covered_ratio": -0.071,
+        "sheltered_m": 34.9,
+        "total": -2.9
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "458671"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "GARDENS BY THE BAY MRT STATION Exit 1",
+          "routed_m": 106.0,
+          "station": "GARDENS BY THE BAY MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 106.0,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "GARDENS BY THE BAY MRT STATION Exit 1",
+          "routed_m": 222.5,
+          "station": "GARDENS BY THE BAY MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 222.5,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 116.5,
+        "total": 0.0
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "019396"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 670.5,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.228,
+        "sheltered_m": 672.2,
+        "state": "SCORED",
+        "total": 34.9
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 751.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.204,
+        "sheltered_m": 752.9,
+        "state": "SCORED",
+        "total": 29.7
+      },
+      "delta": {
+        "covered_ratio": -0.024,
+        "sheltered_m": 80.7,
+        "total": -5.2
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "117311"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 670.5,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.228,
+        "sheltered_m": 672.2,
+        "state": "SCORED",
+        "total": 34.9
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 729.6,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.21,
+        "sheltered_m": 731.3,
+        "state": "SCORED",
+        "total": 31.1
+      },
+      "delta": {
+        "covered_ratio": -0.018,
+        "sheltered_m": 59.1,
+        "total": -3.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "117294"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "BAKAU LRT STATION Exit B",
+          "routed_m": 919.5,
+          "station": "BAKAU LRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.785,
+        "sheltered_m": 1004.7,
+        "state": "SCORED",
+        "total": 43.4
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "BAKAU LRT STATION Exit B",
+          "routed_m": 925.2,
+          "station": "BAKAU LRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.78,
+        "sheltered_m": 1010.5,
+        "state": "SCORED",
+        "total": 43.0
+      },
+      "delta": {
+        "covered_ratio": -0.005,
+        "sheltered_m": 5.8,
+        "total": -0.4
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "541175"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "SOMERSET MRT STATION Exit B",
+          "routed_m": 435.1,
+          "station": "SOMERSET MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.111,
+        "sheltered_m": 435.1,
+        "state": "SCORED",
+        "total": 42.6
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "SOMERSET MRT STATION Exit B",
+          "routed_m": 465.8,
+          "station": "SOMERSET MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.108,
+        "sheltered_m": 465.8,
+        "state": "SCORED",
+        "total": 40.8
+      },
+      "delta": {
+        "covered_ratio": -0.003,
+        "sheltered_m": 30.7,
+        "total": -1.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "229385"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "UBI MRT STATION Exit A",
+          "routed_m": 462.9,
+          "station": "UBI MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.916,
+        "sheltered_m": 544.0,
+        "state": "SCORED",
+        "total": 91.3
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "UBI MRT STATION Exit A",
+          "routed_m": 507.4,
+          "station": "UBI MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.847,
+        "sheltered_m": 588.6,
+        "state": "SCORED",
+        "total": 86.2
+      },
+      "delta": {
+        "covered_ratio": -0.069,
+        "sheltered_m": 44.6,
+        "total": -5.1
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "400306"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "SOMERSET MRT STATION Exit A",
+          "routed_m": 434.6,
+          "station": "SOMERSET MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.565,
+        "sheltered_m": 434.6,
+        "state": "SCORED",
+        "total": 57.8
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "SOMERSET MRT STATION Exit A",
+          "routed_m": 450.3,
+          "station": "SOMERSET MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.545,
+        "sheltered_m": 450.3,
+        "state": "SCORED",
+        "total": 56.2
+      },
+      "delta": {
+        "covered_ratio": -0.02,
+        "sheltered_m": 15.7,
+        "total": -1.6
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "239528"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TAMPINES MRT STATION Exit A",
+          "routed_m": 413.5,
+          "station": "TAMPINES MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.709,
+        "sheltered_m": 413.5,
+        "state": "SCORED",
+        "total": 85.7
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TAMPINES MRT STATION Exit A",
+          "routed_m": 399.1,
+          "station": "TAMPINES MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.683,
+        "sheltered_m": 399.1,
+        "state": "SCORED",
+        "total": 85.3
+      },
+      "delta": {
+        "covered_ratio": -0.026,
+        "sheltered_m": -14.4,
+        "total": -0.4
+      },
+      "flags": [
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "529544"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "SPRINGLEAF MRT STATION Exit 1",
+          "routed_m": 313.2,
+          "station": "SPRINGLEAF MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.034,
+        "sheltered_m": 313.2,
+        "state": "SCORED",
+        "total": 41.4
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "SPRINGLEAF MRT STATION Exit 1",
+          "routed_m": 351.9,
+          "station": "SPRINGLEAF MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.024,
+        "sheltered_m": 351.9,
+        "state": "SCORED",
+        "total": 41.0
+      },
+      "delta": {
+        "covered_ratio": -0.01,
+        "sheltered_m": 38.7,
+        "total": -0.4
+      },
+      "flags": [
+        "best_node_changed"
+      ],
+      "postal": "788441"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 535.4,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 535.4,
+        "state": "SCORED",
+        "total": 38.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 544.6,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 544.6,
+        "state": "SCORED",
+        "total": 37.4
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": 9.2,
+        "total": -0.6
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259771"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "NAPIER MRT STATION Exit 1",
+          "routed_m": 944.9,
+          "station": "NAPIER MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.047,
+        "sheltered_m": 944.9,
+        "state": "SCORED",
+        "total": 14.3
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "NAPIER MRT STATION Exit 1",
+          "routed_m": 976.8,
+          "station": "NAPIER MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.046,
+        "sheltered_m": 976.8,
+        "state": "SCORED",
+        "total": 13.1
+      },
+      "delta": {
+        "covered_ratio": -0.001,
+        "sheltered_m": 31.9,
+        "total": -1.2
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259605"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TELOK BLANGAH MRT STATION Exit A",
+          "routed_m": 1008.7,
+          "station": "TELOK BLANGAH MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.193,
+        "sheltered_m": 1110.6,
+        "state": "SCORED",
+        "total": 18.5
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TELOK BLANGAH MRT STATION Exit A",
+          "routed_m": 1041.5,
+          "station": "TELOK BLANGAH MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.188,
+        "sheltered_m": 1143.4,
+        "state": "SCORED",
+        "total": 17.2
+      },
+      "delta": {
+        "covered_ratio": -0.005,
+        "sheltered_m": 32.8,
+        "total": -1.3
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "109920"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "HOLLAND VILLAGE MRT STATION Exit B",
+          "routed_m": 950.1,
+          "station": "HOLLAND VILLAGE MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.065,
+        "sheltered_m": 958.7,
+        "state": "SCORED",
+        "total": 16.1
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "HOLLAND VILLAGE MRT STATION Exit B",
+          "routed_m": 998.0,
+          "station": "HOLLAND VILLAGE MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.062,
+        "sheltered_m": 1006.5,
+        "state": "SCORED",
+        "total": 14.3
+      },
+      "delta": {
+        "covered_ratio": -0.003,
+        "sheltered_m": 47.8,
+        "total": -1.8
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "267879"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 195.9,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.384,
+        "sheltered_m": 195.9,
+        "state": "SCORED",
+        "total": 76.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 225.8,
+          "station": "PASIR PANJANG MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.343,
+        "sheltered_m": 225.8,
+        "state": "SCORED",
+        "total": 74.3
+      },
+      "delta": {
+        "covered_ratio": -0.041,
+        "sheltered_m": 29.9,
+        "total": -1.7
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "119454"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "LAVENDER MRT STATION Exit B",
+          "routed_m": 453.9,
+          "station": "LAVENDER MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.506,
+        "sheltered_m": 488.4,
+        "state": "SCORED",
+        "total": 56.4
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "LAVENDER MRT STATION Exit B",
+          "routed_m": 477.5,
+          "station": "LAVENDER MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.461,
+        "sheltered_m": 488.6,
+        "state": "SCORED",
+        "total": 53.4
+      },
+      "delta": {
+        "covered_ratio": -0.045,
+        "sheltered_m": 0.2,
+        "total": -3.0
+      },
+      "flags": [
+        "total_regression",
+        "coverage_regression",
+        "best_node_changed"
+      ],
+      "postal": "209077"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit C",
+          "name": "KOVAN MRT STATION Exit C",
+          "routed_m": 493.7,
+          "station": "KOVAN MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.722,
+        "sheltered_m": 493.7,
+        "state": "SCORED",
+        "total": 63.9
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit C",
+          "name": "KOVAN MRT STATION Exit C",
+          "routed_m": 548.3,
+          "station": "KOVAN MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.632,
+        "sheltered_m": 548.3,
+        "state": "SCORED",
+        "total": 77.5
+      },
+      "delta": {
+        "covered_ratio": -0.09,
+        "sheltered_m": 54.6,
+        "total": 13.6
+      },
+      "flags": [
+        "coverage_regression",
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "537408"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 840.5,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.161,
+        "sheltered_m": 867.5,
+        "state": "SCORED",
+        "total": 24.2
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 875.9,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "type": "mrt_lrt_exit"
+        },
+        "covered_ratio": 0.155,
+        "sheltered_m": 903.0,
+        "state": "SCORED",
+        "total": 22.7
+      },
+      "delta": {
+        "covered_ratio": -0.006,
+        "sheltered_m": 35.5,
+        "total": -1.5
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "259633"
+    }
+  ],
+  "flag_counts": {
+    "best_node_changed": 34,
+    "coverage_improvement": 3,
+    "coverage_regression": 12,
+    "total_improvement": 9,
+    "total_regression": 17,
+    "unchanged_or_within_tolerance": 8
+  },
+  "inputs": {
+    "bundle_dir": "C:\\shiok\\web\\public\\data\\generated_20260803_safe_mayflower_560234_targeted",
+    "candidate": "qa\\targeted_bundle_refresh_recovered_validation_20260803.json",
+    "coverage_tolerance": 0.02,
+    "total_tolerance": 0.5
+  },
+  "ok": false,
+  "promotion_recommendation": "promote_safe_improvements_only",
+  "safe_improvement_count": 6,
+  "safe_improvement_postals": [
+    "455383",
+    "431007",
+    "768282",
+    "456103",
+    "560405",
+    "348358"
+  ],
+  "safe_unchanged_postals": [
+    "437009",
+    "247733",
+    "118679",
+    "608602",
+    "637442",
+    "804360",
+    "350101",
+    "308255"
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "blocked_postals": [],
+  "blocking_count": 0,
+  "candidate_count": 6,
+  "compared_count": 6,
+  "comparisons": [
+    {
+      "active": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 919.6,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 919.6,
+        "state": "SCORED",
+        "total": 14.8
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "station": "Aft Carmen St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 118.5,
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -801.1,
+        "total": 39.8
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "455383"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 837.7,
+          "station": "Bef Kg Kayu Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.56,
+        "sheltered_m": 871.6,
+        "state": "SCORED",
+        "total": 39.1
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 163.8,
+          "station": "Bef Kg Kayu Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.667,
+        "sheltered_m": 163.8,
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "delta": {
+        "covered_ratio": 0.107,
+        "sheltered_m": -707.8,
+        "total": 47.6
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "431007"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 389.8,
+          "station": "The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 389.8,
+        "state": "SCORED",
+        "total": 39.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 173.4,
+          "station": "The Shaughnessy",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 173.4,
+        "state": "SCORED",
+        "total": 59.4
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -216.4,
+        "total": 20.4
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "768282"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 383.6,
+          "station": "Aft Perpetual Succour Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.043,
+        "sheltered_m": 391.6,
+        "state": "SCORED",
+        "total": 40.7
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 182.0,
+          "station": "Aft Perpetual Succour Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.088,
+        "sheltered_m": 190.1,
+        "state": "SCORED",
+        "total": 63.5
+      },
+      "delta": {
+        "covered_ratio": 0.045,
+        "sheltered_m": -201.5,
+        "total": 22.8
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "456103"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 268.5,
+          "station": "Opp Christ The King Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.249,
+        "sheltered_m": 268.5,
+        "state": "SCORED",
+        "total": 51.5
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 100.3,
+          "station": "Opp Christ The King Ch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.624,
+        "sheltered_m": 100.3,
+        "state": "SCORED",
+        "total": 85.0
+      },
+      "delta": {
+        "covered_ratio": 0.375,
+        "sheltered_m": -168.2,
+        "total": 33.5
+      },
+      "flags": [
+        "total_improvement",
+        "coverage_improvement",
+        "best_node_changed"
+      ],
+      "postal": "560405"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 379.4,
+          "station": "Opp Cencon Bldg",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 379.4,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 166.1,
+          "station": "Opp Cencon Bldg",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "sheltered_m": 166.1,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "delta": {
+        "covered_ratio": 0.0,
+        "sheltered_m": -213.3,
+        "total": 20.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "348358"
+    }
+  ],
+  "flag_counts": {
+    "best_node_changed": 6,
+    "coverage_improvement": 3,
+    "total_improvement": 6
+  },
+  "inputs": {
+    "bundle_dir": "C:\\shiok\\web\\public\\data\\generated_20260803_safe_mayflower_560234_targeted",
+    "candidate": "qa\\targeted_bundle_refresh_safe_recovered_validation_20260803.json",
+    "coverage_tolerance": 0.02,
+    "total_tolerance": 0.5
+  },
+  "ok": true,
+  "promotion_recommendation": "safe_to_promote_targeted_records",
+  "safe_improvement_count": 6,
+  "safe_improvement_postals": [
+    "455383",
+    "431007",
+    "768282",
+    "456103",
+    "560405",
+    "348358"
+  ],
+  "safe_unchanged_postals": []
+}

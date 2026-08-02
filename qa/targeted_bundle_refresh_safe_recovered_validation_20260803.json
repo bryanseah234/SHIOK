@@ -1,0 +1,433 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 43.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 16.1,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 16.1,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 118.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 919.6,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 919.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 919.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 14.8
+      },
+      "postal": "455383",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 163.8,
+          "snap_distance_m": 1.6,
+          "station": "Bef Kg Kayu Rd",
+          "straight_line_m": 123.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 109.3,
+          "covered_ratio": 0.667,
+          "destination_snap_connector_m": 1.6,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 22.5,
+          "heat_comfort_m": 109.3,
+          "heat_comfort_ratio": 0.667,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 21.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 163.8,
+          "shortest_covered_ratio": 0.667,
+          "shortest_m": 163.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "area": "KALLANG",
+      "before": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 837.7,
+          "snap_distance_m": 1.6,
+          "station": "Bef Kg Kayu Rd",
+          "straight_line_m": 123.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 488.1,
+          "covered_ratio": 0.56,
+          "detour_pct": 4.0,
+          "heat_comfort_m": 488.1,
+          "heat_comfort_ratio": 0.56,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 871.6,
+          "shortest_covered_ratio": 0.521,
+          "shortest_m": 837.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 39.1
+      },
+      "postal": "431007",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 173.4,
+          "snap_distance_m": 3.4,
+          "station": "The Shaughnessy",
+          "straight_line_m": 120.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 44.6,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 23.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 23.5,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 173.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 173.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 59.4
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 389.8,
+          "snap_distance_m": 3.4,
+          "station": "The Shaughnessy",
+          "straight_line_m": 120.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 389.8,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 389.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 39.0
+      },
+      "postal": "768282",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 182.0,
+          "snap_distance_m": 26.7,
+          "station": "Aft Perpetual Succour Ch",
+          "straight_line_m": 131.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 33.1,
+          "covered_m": 16.8,
+          "covered_ratio": 0.088,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 4.4,
+          "endpoint_snap_connector_m": 22.8,
+          "heat_comfort_m": 16.8,
+          "heat_comfort_ratio": 0.088,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 22.8,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 190.1,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 182.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 63.5
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 383.6,
+          "snap_distance_m": 26.7,
+          "station": "Aft Perpetual Succour Ch",
+          "straight_line_m": 131.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 16.8,
+          "covered_ratio": 0.043,
+          "detour_pct": 2.1,
+          "heat_comfort_m": 16.8,
+          "heat_comfort_ratio": 0.043,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 391.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 383.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.7
+      },
+      "postal": "456103",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 100.3,
+          "snap_distance_m": 5.0,
+          "station": "Opp Christ The King Ch",
+          "straight_line_m": 97.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 35.8,
+          "covered_m": 62.6,
+          "covered_ratio": 0.624,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 1.9,
+          "heat_comfort_m": 62.6,
+          "heat_comfort_ratio": 0.624,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 1.9,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 100.3,
+          "shortest_covered_ratio": 0.624,
+          "shortest_m": 100.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 268.5,
+          "snap_distance_m": 5.0,
+          "station": "Opp Christ The King Ch",
+          "straight_line_m": 97.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 66.8,
+          "covered_ratio": 0.249,
+          "destination_snap_connector_m": 5.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 6.9,
+          "heat_comfort_m": 94.2,
+          "heat_comfort_ratio": 0.351,
+          "origin_snap_connector_m": 1.9,
+          "routing_type": "sheltered",
+          "shade_m": 54.9,
+          "shade_ratio": 0.204,
+          "sheltered_m": 268.5,
+          "shortest_covered_ratio": 0.249,
+          "shortest_m": 268.5,
+          "shortest_shade_ratio": 0.204
+        },
+        "state": "SCORED",
+        "total": 51.5
+      },
+      "postal": "560405",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 166.1,
+          "snap_distance_m": 19.2,
+          "station": "Opp Cencon Bldg",
+          "straight_line_m": 128.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 34.6,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 40.3,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 40.3,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 166.1,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 166.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "TOA_PAYOH",
+      "before": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 379.4,
+          "snap_distance_m": 19.2,
+          "station": "Opp Cencon Bldg",
+          "straight_line_m": 128.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 19.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 59.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 40.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 379.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 379.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "postal": "348358",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_oversized_shard_split_count": 0,
+  "geom_oversized_shards_split": [],
+  "geom_shards_touched": [
+    "886520d927fffff",
+    "886520db25fffff",
+    "8865263453fffff",
+    "896520d9613ffff",
+    "896526ac8d7ffff",
+    "896526acc6bffff"
+  ],
+  "geometry_postals": 114327,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 6,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 6,
+  "source_bundle": "generated_20260803_safe_mayflower_560234_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 9386,
+    "SCORED": 112913,
+    "SCORED_PARTIAL": 1414
+  },
+  "target_bundle": "generated_20260803_safe_recovered_validation_targeted"
+}

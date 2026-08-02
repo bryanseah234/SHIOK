@@ -52,7 +52,21 @@ def load_candidate_records(path: Path) -> list[dict[str, Any]]:
         records = payload
     elif isinstance(payload, dict):
         value = payload.get("records") or payload.get("candidate_records") or payload.get("results")
-        records = value if isinstance(value, list) else []
+        if isinstance(value, list):
+            records = value
+        elif isinstance(payload.get("comparisons"), list):
+            records = []
+            for item in payload["comparisons"]:
+                if not isinstance(item, dict):
+                    continue
+                after = item.get("after")
+                if not isinstance(after, dict):
+                    continue
+                record = dict(after)
+                record.setdefault("postal", item.get("postal"))
+                records.append(record)
+        else:
+            records = []
     else:
         records = []
     return [record for record in records if isinstance(record, dict) and record.get("postal")]

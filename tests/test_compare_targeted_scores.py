@@ -92,3 +92,20 @@ def test_load_candidate_records_accepts_list(tmp_path):
     path.write_text('[{"postal":"123456"},{"bad":true}]', encoding="utf-8")
 
     assert load_candidate_records(path) == [{"postal": "123456"}]
+
+
+def test_load_candidate_records_accepts_targeted_refresh_report(tmp_path):
+    path = tmp_path / "targeted.json"
+    path.write_text(
+        """
+        {
+          "comparisons": [
+            {"postal": "123456", "after": {"state": "SCORED", "total": 72.0}},
+            {"postal": "654321", "after": null}
+          ]
+        }
+        """,
+        encoding="utf-8",
+    )
+
+    assert load_candidate_records(path) == [{"postal": "123456", "state": "SCORED", "total": 72.0}]

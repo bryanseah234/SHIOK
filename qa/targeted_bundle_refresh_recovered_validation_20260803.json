@@ -1,0 +1,2880 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 68.0,
+          "snap_distance_m": 15.3,
+          "station": "Aft Chong Pang CC",
+          "straight_line_m": 28.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 45.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 18.9,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 18.9,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 68.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 68.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": {
+          "exit": "59139",
+          "name": "Aft Chong Pang CC",
+          "routed_m": 322.4,
+          "snap_distance_m": 15.3,
+          "station": "Aft Chong Pang CC",
+          "straight_line_m": 28.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 63.0,
+          "covered_ratio": 0.181,
+          "detour_pct": 8.1,
+          "heat_comfort_m": 63.0,
+          "heat_comfort_ratio": 0.181,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 348.5,
+          "shortest_covered_ratio": 0.072,
+          "shortest_m": 322.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 46.2
+      },
+      "postal": "760103",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "66191",
+          "name": "Aft Corfe Pl",
+          "routed_m": 63.0,
+          "snap_distance_m": 5.6,
+          "station": "Aft Corfe Pl",
+          "straight_line_m": 47.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 9.3,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 14.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 14.6,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 63.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 63.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.3
+      },
+      "area": "SERANGOON",
+      "before": {
+        "best_node": {
+          "exit": "66191",
+          "name": "Aft Corfe Pl",
+          "routed_m": 221.9,
+          "snap_distance_m": 5.6,
+          "station": "Aft Corfe Pl",
+          "straight_line_m": 46.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 221.9,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 221.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.3
+      },
+      "postal": "559038",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 118.5,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 43.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 16.1,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 16.1,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 118.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 54.6
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": {
+          "exit": "83279",
+          "name": "Aft Carmen St",
+          "routed_m": 919.6,
+          "snap_distance_m": 9.6,
+          "station": "Aft Carmen St",
+          "straight_line_m": 45.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 919.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 919.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 14.8
+      },
+      "postal": "455383",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 163.8,
+          "snap_distance_m": 1.6,
+          "station": "Bef Kg Kayu Rd",
+          "straight_line_m": 123.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 109.3,
+          "covered_ratio": 0.667,
+          "destination_snap_connector_m": 1.6,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 22.5,
+          "heat_comfort_m": 109.3,
+          "heat_comfort_ratio": 0.667,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 21.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 163.8,
+          "shortest_covered_ratio": 0.667,
+          "shortest_m": 163.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "area": "KALLANG",
+      "before": {
+        "best_node": {
+          "exit": "91091",
+          "name": "Bef Kg Kayu Rd",
+          "routed_m": 837.7,
+          "snap_distance_m": 1.6,
+          "station": "Bef Kg Kayu Rd",
+          "straight_line_m": 123.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 488.1,
+          "covered_ratio": 0.56,
+          "detour_pct": 4.0,
+          "heat_comfort_m": 488.1,
+          "heat_comfort_ratio": 0.56,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 871.6,
+          "shortest_covered_ratio": 0.521,
+          "shortest_m": 837.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 39.1
+      },
+      "postal": "431007",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 173.4,
+          "snap_distance_m": 3.4,
+          "station": "The Shaughnessy",
+          "straight_line_m": 120.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 44.6,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 23.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 23.5,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 173.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 173.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 59.4
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": {
+          "exit": "59759",
+          "name": "The Shaughnessy",
+          "routed_m": 389.8,
+          "snap_distance_m": 3.4,
+          "station": "The Shaughnessy",
+          "straight_line_m": 120.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 389.8,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 389.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 39.0
+      },
+      "postal": "768282",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "68031",
+          "name": "Jln Kayu Shophouse",
+          "routed_m": 81.1,
+          "snap_distance_m": 11.1,
+          "station": "Jln Kayu Shophouse",
+          "straight_line_m": 70.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 46.3,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 24.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 24.6,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 81.1,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 81.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "SENGKANG",
+      "before": {
+        "best_node": {
+          "exit": "68031",
+          "name": "Jln Kayu Shophouse",
+          "routed_m": 167.0,
+          "snap_distance_m": 11.1,
+          "station": "Jln Kayu Shophouse",
+          "straight_line_m": 70.5,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 11.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 35.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 24.6,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 167.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 167.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "postal": "799452",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "82071",
+          "name": "Opp Tg Katong Girls' Sch",
+          "routed_m": 92.0,
+          "snap_distance_m": 8.2,
+          "station": "Opp Tg Katong Girls' Sch",
+          "straight_line_m": 21.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 8.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 26.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 18.4,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 92.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 92.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "MARINE_PARADE",
+      "before": {
+        "best_node": {
+          "exit": "82071",
+          "name": "Opp Tg Katong Girls' Sch",
+          "routed_m": 92.0,
+          "snap_distance_m": 8.2,
+          "station": "Opp Tg Katong Girls' Sch",
+          "straight_line_m": 21.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 8.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 26.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 18.4,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 92.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 92.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "postal": "437009",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "13121",
+          "name": "Opp Great World City",
+          "routed_m": 64.0,
+          "snap_distance_m": 1.0,
+          "station": "Opp Great World City",
+          "straight_line_m": 24.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 42.8,
+          "covered_ratio": 0.668,
+          "destination_snap_connector_m": 1.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 21.3,
+          "heat_comfort_m": 42.8,
+          "heat_comfort_ratio": 0.668,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 20.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 64.0,
+          "shortest_covered_ratio": 0.668,
+          "shortest_m": 64.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "area": "TANGLIN",
+      "before": {
+        "best_node": {
+          "exit": "13121",
+          "name": "Opp Great World City",
+          "routed_m": 64.0,
+          "snap_distance_m": 1.0,
+          "station": "Opp Great World City",
+          "straight_line_m": 24.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 42.8,
+          "covered_ratio": 0.668,
+          "destination_snap_connector_m": 1.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 21.3,
+          "heat_comfort_m": 42.8,
+          "heat_comfort_ratio": 0.668,
+          "origin_snap_connector_m": 20.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 64.0,
+          "shortest_covered_ratio": 0.668,
+          "shortest_m": 64.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 86.7
+      },
+      "postal": "247733",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "44379",
+          "name": "Opp Blk 219",
+          "routed_m": 198.4,
+          "snap_distance_m": 15.2,
+          "station": "Opp Blk 219",
+          "straight_line_m": 173.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 49.7,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 8.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 8.6,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 198.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 198.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "BUKIT_PANJANG",
+      "before": {
+        "best_node": {
+          "exit": "44379",
+          "name": "Opp Blk 219",
+          "routed_m": 506.2,
+          "snap_distance_m": 15.2,
+          "station": "Opp Blk 219",
+          "straight_line_m": 173.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 126.4,
+          "covered_ratio": 0.231,
+          "detour_pct": 8.2,
+          "heat_comfort_m": 126.4,
+          "heat_comfort_ratio": 0.231,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 547.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 506.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 42.7
+      },
+      "postal": "677768",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "21259",
+          "name": "Aft Quality Rd",
+          "routed_m": 118.0,
+          "snap_distance_m": 17.1,
+          "station": "Aft Quality Rd",
+          "straight_line_m": 106.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 46.1,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 33.7,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 33.7,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 118.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 118.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 59.1
+      },
+      "area": "JURONG_WEST",
+      "before": {
+        "best_node": {
+          "exit": "21259",
+          "name": "Aft Quality Rd",
+          "routed_m": 249.5,
+          "snap_distance_m": 17.1,
+          "station": "Aft Quality Rd",
+          "straight_line_m": 106.6,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 17.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 50.9,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 33.7,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 249.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 249.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 59.1
+      },
+      "postal": "618823",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "56021",
+          "name": "Opp Sembawang Hills FC",
+          "routed_m": 105.8,
+          "snap_distance_m": 12.3,
+          "station": "Opp Sembawang Hills FC",
+          "straight_line_m": 66.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 38.8,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 19.7,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 19.7,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 105.8,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 105.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "56021",
+          "name": "Opp Sembawang Hills FC",
+          "routed_m": 146.9,
+          "snap_distance_m": 12.3,
+          "station": "Opp Sembawang Hills FC",
+          "straight_line_m": 66.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 12.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 32.0,
+          "heat_comfort_m": 19.1,
+          "heat_comfort_ratio": 0.13,
+          "origin_snap_connector_m": 19.7,
+          "routing_type": "sheltered",
+          "shade_m": 38.3,
+          "shade_ratio": 0.26,
+          "sheltered_m": 146.9,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 146.9,
+          "shortest_shade_ratio": 0.26
+        },
+        "state": "SCORED",
+        "total": 62.0
+      },
+      "postal": "579399",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 182.0,
+          "snap_distance_m": 26.7,
+          "station": "Aft Perpetual Succour Ch",
+          "straight_line_m": 131.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 33.1,
+          "covered_m": 16.8,
+          "covered_ratio": 0.088,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 4.4,
+          "endpoint_snap_connector_m": 22.8,
+          "heat_comfort_m": 16.8,
+          "heat_comfort_ratio": 0.088,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 22.8,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 190.1,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 182.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 63.5
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": {
+          "exit": "83099",
+          "name": "Aft Perpetual Succour Ch",
+          "routed_m": 383.6,
+          "snap_distance_m": 26.7,
+          "station": "Aft Perpetual Succour Ch",
+          "straight_line_m": 131.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 16.8,
+          "covered_ratio": 0.043,
+          "detour_pct": 2.1,
+          "heat_comfort_m": 16.8,
+          "heat_comfort_ratio": 0.043,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 391.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 383.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.7
+      },
+      "postal": "456103",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 100.3,
+          "snap_distance_m": 5.0,
+          "station": "Opp Christ The King Ch",
+          "straight_line_m": 97.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 35.8,
+          "covered_m": 62.6,
+          "covered_ratio": 0.624,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 1.9,
+          "heat_comfort_m": 62.6,
+          "heat_comfort_ratio": 0.624,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 1.9,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 100.3,
+          "shortest_covered_ratio": 0.624,
+          "shortest_m": 100.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "54319",
+          "name": "Opp Christ The King Ch",
+          "routed_m": 268.5,
+          "snap_distance_m": 5.0,
+          "station": "Opp Christ The King Ch",
+          "straight_line_m": 97.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 66.8,
+          "covered_ratio": 0.249,
+          "destination_snap_connector_m": 5.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 6.9,
+          "heat_comfort_m": 94.2,
+          "heat_comfort_ratio": 0.351,
+          "origin_snap_connector_m": 1.9,
+          "routing_type": "sheltered",
+          "shade_m": 54.9,
+          "shade_ratio": 0.204,
+          "sheltered_m": 268.5,
+          "shortest_covered_ratio": 0.249,
+          "shortest_m": 268.5,
+          "shortest_shade_ratio": 0.204
+        },
+        "state": "SCORED",
+        "total": 51.5
+      },
+      "postal": "560405",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 166.1,
+          "snap_distance_m": 19.2,
+          "station": "Opp Cencon Bldg",
+          "straight_line_m": 128.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 34.6,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 40.3,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 40.3,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 166.1,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 166.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "TOA_PAYOH",
+      "before": {
+        "best_node": {
+          "exit": "70111",
+          "name": "Opp Cencon Bldg",
+          "routed_m": 379.4,
+          "snap_distance_m": 19.2,
+          "station": "Opp Cencon Bldg",
+          "straight_line_m": 128.4,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 19.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 59.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 40.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 379.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 379.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "postal": "348358",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "16041",
+          "name": "Opp Luxe Ville",
+          "routed_m": 89.4,
+          "snap_distance_m": 10.1,
+          "station": "Opp Luxe Ville",
+          "straight_line_m": 38.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 10.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 29.4,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 19.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 89.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 89.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "QUEENSTOWN",
+      "before": {
+        "best_node": {
+          "exit": "16041",
+          "name": "Opp Luxe Ville",
+          "routed_m": 89.4,
+          "snap_distance_m": 10.1,
+          "station": "Opp Luxe Ville",
+          "straight_line_m": 38.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 10.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 29.4,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 19.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 89.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 89.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "postal": "118679",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "28681",
+          "name": "Toh Guan Ctr",
+          "routed_m": 440.5,
+          "snap_distance_m": 8.3,
+          "station": "Toh Guan Ctr",
+          "straight_line_m": 222.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 8.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 34.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 26.2,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 440.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 440.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.9
+      },
+      "area": "CLEMENTI",
+      "before": {
+        "best_node": {
+          "exit": "28681",
+          "name": "Toh Guan Ctr",
+          "routed_m": 440.5,
+          "snap_distance_m": 8.3,
+          "station": "Toh Guan Ctr",
+          "straight_line_m": 222.8,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 8.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 34.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 26.2,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 440.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 440.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.9
+      },
+      "postal": "608602",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "25459",
+          "name": "Opp Tuas West St",
+          "routed_m": 250.2,
+          "snap_distance_m": 12.0,
+          "station": "Opp Tuas West St",
+          "straight_line_m": 168.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 12.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 55.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 43.6,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 250.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 250.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "TUAS",
+      "before": {
+        "best_node": {
+          "exit": "25459",
+          "name": "Opp Tuas West St",
+          "routed_m": 250.2,
+          "snap_distance_m": 12.0,
+          "station": "Opp Tuas West St",
+          "straight_line_m": 168.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 12.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 55.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 43.6,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 250.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 250.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "postal": "637442",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54509",
+          "name": "Aft Blk 5000",
+          "routed_m": 359.2,
+          "snap_distance_m": 24.2,
+          "station": "Aft Blk 5000",
+          "straight_line_m": 202.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 24.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 34.0,
+          "heat_comfort_m": 30.3,
+          "heat_comfort_ratio": 0.084,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 9.8,
+          "routing_type": "sheltered",
+          "shade_m": 60.6,
+          "shade_ratio": 0.169,
+          "sheltered_m": 359.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 359.2,
+          "shortest_shade_ratio": 0.169
+        },
+        "state": "SCORED",
+        "total": 60.3
+      },
+      "area": "SERANGOON",
+      "before": {
+        "best_node": {
+          "exit": "54509",
+          "name": "Aft Blk 5000",
+          "routed_m": 359.2,
+          "snap_distance_m": 24.2,
+          "station": "Aft Blk 5000",
+          "straight_line_m": 202.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 24.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 34.0,
+          "heat_comfort_m": 30.3,
+          "heat_comfort_ratio": 0.084,
+          "origin_snap_connector_m": 9.8,
+          "routing_type": "sheltered",
+          "shade_m": 60.6,
+          "shade_ratio": 0.169,
+          "sheltered_m": 359.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 359.2,
+          "shortest_shade_ratio": 0.169
+        },
+        "state": "SCORED",
+        "total": 60.3
+      },
+      "postal": "804360",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "12169",
+          "name": "Pandan Valley",
+          "routed_m": 192.2,
+          "snap_distance_m": 3.5,
+          "station": "Pandan Valley",
+          "straight_line_m": 106.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 26.2,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 42.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 42.0,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 192.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 192.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.7
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": {
+          "exit": "12169",
+          "name": "Pandan Valley",
+          "routed_m": 277.5,
+          "snap_distance_m": 3.5,
+          "station": "Pandan Valley",
+          "straight_line_m": 106.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 3.5,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 45.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 42.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 277.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 277.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.7
+      },
+      "postal": "598441",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "61069",
+          "name": "Potong Pasir Stn Exit A",
+          "routed_m": 86.8,
+          "snap_distance_m": 4.5,
+          "station": "Potong Pasir Stn Exit A",
+          "straight_line_m": 35.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 82.0,
+          "covered_ratio": 0.945,
+          "destination_snap_connector_m": 4.5,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 4.8,
+          "heat_comfort_m": 82.0,
+          "heat_comfort_ratio": 0.945,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 0.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 86.8,
+          "shortest_covered_ratio": 0.945,
+          "shortest_m": 86.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 95.8
+      },
+      "area": "TOA_PAYOH",
+      "before": {
+        "best_node": {
+          "exit": "61069",
+          "name": "Potong Pasir Stn Exit A",
+          "routed_m": 86.8,
+          "snap_distance_m": 4.5,
+          "station": "Potong Pasir Stn Exit A",
+          "straight_line_m": 35.9,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 82.0,
+          "covered_ratio": 0.945,
+          "destination_snap_connector_m": 4.5,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 4.8,
+          "heat_comfort_m": 82.0,
+          "heat_comfort_ratio": 0.945,
+          "origin_snap_connector_m": 0.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 86.8,
+          "shortest_covered_ratio": 0.945,
+          "shortest_m": 86.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 95.8
+      },
+      "postal": "350101",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "51099",
+          "name": "Catholic JC",
+          "routed_m": 234.2,
+          "snap_distance_m": 22.2,
+          "station": "Catholic JC",
+          "straight_line_m": 141.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 22.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 65.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 43.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 234.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 234.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "area": "NOVENA",
+      "before": {
+        "best_node": {
+          "exit": "51099",
+          "name": "Catholic JC",
+          "routed_m": 234.2,
+          "snap_distance_m": 22.2,
+          "station": "Catholic JC",
+          "straight_line_m": 141.2,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 22.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 65.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 43.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 234.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 234.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "postal": "308255",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "ESPLANADE MRT STATION Exit B",
+          "routed_m": 759.5,
+          "snap_distance_m": 4.5,
+          "station": "ESPLANADE MRT STATION",
+          "straight_line_m": 161.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 709.3,
+          "covered_ratio": 0.934,
+          "destination_snap_connector_m": 4.5,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 50.2,
+          "heat_comfort_m": 709.3,
+          "heat_comfort_ratio": 0.934,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 45.8,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 759.5,
+          "shortest_covered_ratio": 0.934,
+          "shortest_m": 759.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 58.5
+      },
+      "area": "DOWNTOWN_CORE",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "ESPLANADE MRT STATION Exit B",
+          "routed_m": 709.3,
+          "snap_distance_m": 4.5,
+          "station": "ESPLANADE MRT STATION",
+          "straight_line_m": 161.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 709.3,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 709.3,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 709.3,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 709.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 63.8
+      },
+      "postal": "189768",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "QUEENSTOWN MRT STATION Exit B",
+          "routed_m": 314.6,
+          "snap_distance_m": 1.9,
+          "station": "QUEENSTOWN MRT STATION",
+          "straight_line_m": 78.9,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 166.0,
+          "covered_ratio": 0.528,
+          "destination_snap_connector_m": 1.9,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 46.1,
+          "heat_comfort_m": 166.0,
+          "heat_comfort_ratio": 0.528,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 44.2,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 314.6,
+          "shortest_covered_ratio": 0.528,
+          "shortest_m": 314.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 81.1
+      },
+      "area": "QUEENSTOWN",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "QUEENSTOWN MRT STATION Exit B",
+          "routed_m": 23.2,
+          "snap_distance_m": 1.9,
+          "station": "QUEENSTOWN MRT STATION",
+          "straight_line_m": 65.3,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 23.2,
+          "covered_ratio": 1.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 23.2,
+          "heat_comfort_ratio": 1.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 23.2,
+          "shortest_covered_ratio": 1.0,
+          "shortest_m": 23.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "postal": "149457",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "MACPHERSON MRT STATION Exit B",
+          "routed_m": 576.8,
+          "snap_distance_m": 14.3,
+          "station": "MACPHERSON MRT STATION",
+          "straight_line_m": 224.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 263.3,
+          "covered_ratio": 0.456,
+          "destination_snap_connector_m": 14.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 56.1,
+          "heat_comfort_m": 263.3,
+          "heat_comfort_ratio": 0.456,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 41.8,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 576.8,
+          "shortest_covered_ratio": 0.456,
+          "shortest_m": 576.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 68.0
+      },
+      "area": "GEYLANG",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "MACPHERSON MRT STATION Exit B",
+          "routed_m": 520.7,
+          "snap_distance_m": 14.3,
+          "station": "MACPHERSON MRT STATION",
+          "straight_line_m": 224.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 263.3,
+          "covered_ratio": 0.506,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 263.3,
+          "heat_comfort_ratio": 0.506,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 520.7,
+          "shortest_covered_ratio": 0.506,
+          "shortest_m": 520.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 72.9
+      },
+      "postal": "408694",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit 3",
+          "name": "SIGLAP MRT STATION Exit 3",
+          "routed_m": 232.9,
+          "snap_distance_m": 19.1,
+          "station": "SIGLAP MRT STATION",
+          "straight_line_m": 79.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 94.0,
+          "covered_ratio": 0.404,
+          "destination_snap_connector_m": 19.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 34.9,
+          "heat_comfort_m": 94.0,
+          "heat_comfort_ratio": 0.404,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 15.8,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 232.9,
+          "shortest_covered_ratio": 0.404,
+          "shortest_m": 232.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 76.1
+      },
+      "area": "BEDOK",
+      "before": {
+        "best_node": {
+          "exit": "Exit 3",
+          "name": "SIGLAP MRT STATION Exit 3",
+          "routed_m": 198.0,
+          "snap_distance_m": 19.1,
+          "station": "SIGLAP MRT STATION",
+          "straight_line_m": 79.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 94.0,
+          "covered_ratio": 0.475,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 94.0,
+          "heat_comfort_ratio": 0.475,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 198.0,
+          "shortest_covered_ratio": 0.475,
+          "shortest_m": 198.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 79.0
+      },
+      "postal": "458671",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "GARDENS BY THE BAY MRT STATION Exit 1",
+          "routed_m": 222.5,
+          "snap_distance_m": 11.2,
+          "station": "GARDENS BY THE BAY MRT STATION",
+          "straight_line_m": 154.6,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 11.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 116.5,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 105.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 222.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 222.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "area": "MARINA_SOUTH",
+      "before": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "GARDENS BY THE BAY MRT STATION Exit 1",
+          "routed_m": 106.0,
+          "snap_distance_m": 11.2,
+          "station": "GARDENS BY THE BAY MRT STATION",
+          "straight_line_m": 154.6,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 106.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 106.0,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "postal": "019396",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 751.2,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 582.9,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 153.5,
+          "covered_ratio": 0.204,
+          "destination_snap_connector_m": 5.2,
+          "detour_pct": 0.2,
+          "endpoint_snap_connector_m": 80.8,
+          "heat_comfort_m": 153.5,
+          "heat_comfort_ratio": 0.204,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 75.6,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 752.9,
+          "shortest_covered_ratio": 0.2,
+          "shortest_m": 751.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 29.7
+      },
+      "area": "QUEENSTOWN",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 670.5,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 582.9,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 153.5,
+          "covered_ratio": 0.228,
+          "detour_pct": 0.3,
+          "heat_comfort_m": 153.5,
+          "heat_comfort_ratio": 0.228,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 672.2,
+          "shortest_covered_ratio": 0.224,
+          "shortest_m": 670.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 34.9
+      },
+      "postal": "117311",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 729.6,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 568.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 153.5,
+          "covered_ratio": 0.21,
+          "destination_snap_connector_m": 5.2,
+          "detour_pct": 0.2,
+          "endpoint_snap_connector_m": 59.1,
+          "heat_comfort_m": 153.5,
+          "heat_comfort_ratio": 0.21,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 54.0,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 731.3,
+          "shortest_covered_ratio": 0.206,
+          "shortest_m": 729.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 31.1
+      },
+      "area": "QUEENSTOWN",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 670.5,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 568.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 153.5,
+          "covered_ratio": 0.228,
+          "detour_pct": 0.3,
+          "heat_comfort_m": 153.5,
+          "heat_comfort_ratio": 0.228,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 672.2,
+          "shortest_covered_ratio": 0.224,
+          "shortest_m": 670.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 34.9
+      },
+      "postal": "117294",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "BAKAU LRT STATION Exit B",
+          "routed_m": 925.2,
+          "snap_distance_m": 4.4,
+          "station": "BAKAU LRT STATION",
+          "straight_line_m": 726.6,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 788.5,
+          "covered_ratio": 0.78,
+          "destination_snap_connector_m": 4.4,
+          "detour_pct": 9.2,
+          "endpoint_snap_connector_m": 5.8,
+          "heat_comfort_m": 801.0,
+          "heat_comfort_ratio": 0.793,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 1.4,
+          "routing_type": "sheltered",
+          "shade_m": 25.0,
+          "shade_ratio": 0.025,
+          "sheltered_m": 1010.5,
+          "shortest_covered_ratio": 0.448,
+          "shortest_m": 925.2,
+          "shortest_shade_ratio": 0.027
+        },
+        "state": "SCORED",
+        "total": 43.0
+      },
+      "area": "SENGKANG",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "BAKAU LRT STATION Exit B",
+          "routed_m": 919.5,
+          "snap_distance_m": 4.4,
+          "station": "BAKAU LRT STATION",
+          "straight_line_m": 726.6,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 788.5,
+          "covered_ratio": 0.785,
+          "detour_pct": 9.3,
+          "heat_comfort_m": 801.0,
+          "heat_comfort_ratio": 0.797,
+          "routing_type": "sheltered",
+          "shade_m": 25.0,
+          "shade_ratio": 0.025,
+          "sheltered_m": 1004.7,
+          "shortest_covered_ratio": 0.45,
+          "shortest_m": 919.5,
+          "shortest_shade_ratio": 0.027
+        },
+        "state": "SCORED",
+        "total": 43.4
+      },
+      "postal": "541175",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "SOMERSET MRT STATION Exit B",
+          "routed_m": 465.8,
+          "snap_distance_m": 16.4,
+          "station": "SOMERSET MRT STATION",
+          "straight_line_m": 400.3,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 50.1,
+          "covered_ratio": 0.108,
+          "destination_snap_connector_m": 16.4,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 30.7,
+          "heat_comfort_m": 50.1,
+          "heat_comfort_ratio": 0.108,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 14.3,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 465.8,
+          "shortest_covered_ratio": 0.108,
+          "shortest_m": 465.8,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.8
+      },
+      "area": "NEWTON",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "SOMERSET MRT STATION Exit B",
+          "routed_m": 435.1,
+          "snap_distance_m": 16.4,
+          "station": "SOMERSET MRT STATION",
+          "straight_line_m": 400.3,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 48.3,
+          "covered_ratio": 0.111,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 48.3,
+          "heat_comfort_ratio": 0.111,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 435.1,
+          "shortest_covered_ratio": 0.111,
+          "shortest_m": 435.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 42.6
+      },
+      "postal": "229385",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "UBI MRT STATION Exit A",
+          "routed_m": 507.4,
+          "snap_distance_m": 15.8,
+          "station": "UBI MRT STATION",
+          "straight_line_m": 227.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 498.4,
+          "covered_ratio": 0.847,
+          "destination_snap_connector_m": 15.8,
+          "detour_pct": 16.0,
+          "endpoint_snap_connector_m": 44.6,
+          "heat_comfort_m": 498.4,
+          "heat_comfort_ratio": 0.847,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 28.7,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 588.6,
+          "shortest_covered_ratio": 0.421,
+          "shortest_m": 507.4,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 86.2
+      },
+      "area": "GEYLANG",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "UBI MRT STATION Exit A",
+          "routed_m": 462.9,
+          "snap_distance_m": 15.8,
+          "station": "UBI MRT STATION",
+          "straight_line_m": 227.8,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 498.4,
+          "covered_ratio": 0.916,
+          "detour_pct": 17.5,
+          "heat_comfort_m": 498.4,
+          "heat_comfort_ratio": 0.916,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 544.0,
+          "shortest_covered_ratio": 0.462,
+          "shortest_m": 462.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 91.3
+      },
+      "postal": "400306",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "SOMERSET MRT STATION Exit A",
+          "routed_m": 450.3,
+          "snap_distance_m": 2.0,
+          "station": "SOMERSET MRT STATION",
+          "straight_line_m": 179.7,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 245.5,
+          "covered_ratio": 0.545,
+          "destination_snap_connector_m": 2.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 15.7,
+          "heat_comfort_m": 245.5,
+          "heat_comfort_ratio": 0.545,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 13.7,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 450.3,
+          "shortest_covered_ratio": 0.545,
+          "shortest_m": 450.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 56.2
+      },
+      "area": "RIVER_VALLEY",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "SOMERSET MRT STATION Exit A",
+          "routed_m": 434.6,
+          "snap_distance_m": 2.0,
+          "station": "SOMERSET MRT STATION",
+          "straight_line_m": 179.7,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 245.5,
+          "covered_ratio": 0.565,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 245.5,
+          "heat_comfort_ratio": 0.565,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 434.6,
+          "shortest_covered_ratio": 0.565,
+          "shortest_m": 434.6,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 57.8
+      },
+      "postal": "239528",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TAMPINES MRT STATION Exit A",
+          "routed_m": 399.1,
+          "snap_distance_m": 2.0,
+          "station": "TAMPINES MRT STATION",
+          "straight_line_m": 248.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 272.5,
+          "covered_ratio": 0.683,
+          "destination_snap_connector_m": 2.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 6.4,
+          "heat_comfort_m": 272.5,
+          "heat_comfort_ratio": 0.683,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 4.4,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 399.1,
+          "shortest_covered_ratio": 0.683,
+          "shortest_m": 399.1,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.3
+      },
+      "area": "TAMPINES",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TAMPINES MRT STATION Exit A",
+          "routed_m": 413.5,
+          "snap_distance_m": 2.0,
+          "station": "TAMPINES MRT STATION",
+          "straight_line_m": 248.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 293.2,
+          "covered_ratio": 0.709,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 293.2,
+          "heat_comfort_ratio": 0.709,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 413.5,
+          "shortest_covered_ratio": 0.709,
+          "shortest_m": 413.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 85.7
+      },
+      "postal": "529544",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "SPRINGLEAF MRT STATION Exit 1",
+          "routed_m": 351.9,
+          "snap_distance_m": 2.7,
+          "station": "SPRINGLEAF MRT STATION",
+          "straight_line_m": 277.0,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 8.5,
+          "covered_ratio": 0.024,
+          "destination_snap_connector_m": 2.7,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 38.8,
+          "heat_comfort_m": 8.5,
+          "heat_comfort_ratio": 0.024,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 36.1,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 351.9,
+          "shortest_covered_ratio": 0.024,
+          "shortest_m": 351.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 41.0
+      },
+      "area": "YISHUN",
+      "before": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "SPRINGLEAF MRT STATION Exit 1",
+          "routed_m": 313.2,
+          "snap_distance_m": 2.7,
+          "station": "SPRINGLEAF MRT STATION",
+          "straight_line_m": 277.0,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 10.8,
+          "covered_ratio": 0.034,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 10.8,
+          "heat_comfort_ratio": 0.034,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 313.2,
+          "shortest_covered_ratio": 0.034,
+          "shortest_m": 313.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 41.4
+      },
+      "postal": "788441",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 544.6,
+          "snap_distance_m": 2.3,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "straight_line_m": 426.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 2.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 9.2,
+          "heat_comfort_m": 181.4,
+          "heat_comfort_ratio": 0.333,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 6.9,
+          "routing_type": "sheltered",
+          "shade_m": 362.9,
+          "shade_ratio": 0.666,
+          "sheltered_m": 544.6,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 544.6,
+          "shortest_shade_ratio": 0.666
+        },
+        "state": "SCORED",
+        "total": 37.4
+      },
+      "area": "TANGLIN",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 535.4,
+          "snap_distance_m": 2.3,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "straight_line_m": 426.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 181.4,
+          "heat_comfort_ratio": 0.339,
+          "routing_type": "sheltered",
+          "shade_m": 362.9,
+          "shade_ratio": 0.678,
+          "sheltered_m": 535.4,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 535.4,
+          "shortest_shade_ratio": 0.678
+        },
+        "state": "SCORED",
+        "total": 38.0
+      },
+      "postal": "259771",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "NAPIER MRT STATION Exit 1",
+          "routed_m": 976.8,
+          "snap_distance_m": 7.1,
+          "station": "NAPIER MRT STATION",
+          "straight_line_m": 839.9,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 44.7,
+          "covered_ratio": 0.046,
+          "destination_snap_connector_m": 7.1,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 31.9,
+          "heat_comfort_m": 75.5,
+          "heat_comfort_ratio": 0.077,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 24.8,
+          "routing_type": "sheltered",
+          "shade_m": 61.7,
+          "shade_ratio": 0.063,
+          "sheltered_m": 976.8,
+          "shortest_covered_ratio": 0.046,
+          "shortest_m": 976.8,
+          "shortest_shade_ratio": 0.063
+        },
+        "state": "SCORED",
+        "total": 13.1
+      },
+      "area": "TANGLIN",
+      "before": {
+        "best_node": {
+          "exit": "Exit 1",
+          "name": "NAPIER MRT STATION Exit 1",
+          "routed_m": 944.9,
+          "snap_distance_m": 7.1,
+          "station": "NAPIER MRT STATION",
+          "straight_line_m": 839.9,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 44.7,
+          "covered_ratio": 0.047,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 75.5,
+          "heat_comfort_ratio": 0.08,
+          "routing_type": "sheltered",
+          "shade_m": 61.7,
+          "shade_ratio": 0.065,
+          "sheltered_m": 944.9,
+          "shortest_covered_ratio": 0.047,
+          "shortest_m": 944.9,
+          "shortest_shade_ratio": 0.065
+        },
+        "state": "SCORED",
+        "total": 14.3
+      },
+      "postal": "259605",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TELOK BLANGAH MRT STATION Exit A",
+          "routed_m": 1041.5,
+          "snap_distance_m": 5.8,
+          "station": "TELOK BLANGAH MRT STATION",
+          "straight_line_m": 541.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 214.5,
+          "covered_ratio": 0.188,
+          "destination_snap_connector_m": 5.8,
+          "detour_pct": 9.8,
+          "endpoint_snap_connector_m": 32.8,
+          "heat_comfort_m": 222.6,
+          "heat_comfort_ratio": 0.195,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 27.0,
+          "routing_type": "sheltered",
+          "shade_m": 16.2,
+          "shade_ratio": 0.014,
+          "sheltered_m": 1143.4,
+          "shortest_covered_ratio": 0.023,
+          "shortest_m": 1041.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 17.2
+      },
+      "area": "BUKIT_MERAH",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "TELOK BLANGAH MRT STATION Exit A",
+          "routed_m": 1008.7,
+          "snap_distance_m": 5.8,
+          "station": "TELOK BLANGAH MRT STATION",
+          "straight_line_m": 541.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 214.5,
+          "covered_ratio": 0.193,
+          "detour_pct": 10.1,
+          "heat_comfort_m": 222.6,
+          "heat_comfort_ratio": 0.2,
+          "routing_type": "sheltered",
+          "shade_m": 16.2,
+          "shade_ratio": 0.015,
+          "sheltered_m": 1110.6,
+          "shortest_covered_ratio": 0.023,
+          "shortest_m": 1008.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 18.5
+      },
+      "postal": "109920",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "HOLLAND VILLAGE MRT STATION Exit B",
+          "routed_m": 998.0,
+          "snap_distance_m": 3.2,
+          "station": "HOLLAND VILLAGE MRT STATION",
+          "straight_line_m": 525.6,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 62.4,
+          "covered_ratio": 0.062,
+          "destination_snap_connector_m": 3.2,
+          "detour_pct": 0.9,
+          "endpoint_snap_connector_m": 47.9,
+          "heat_comfort_m": 110.0,
+          "heat_comfort_ratio": 0.109,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 44.6,
+          "routing_type": "sheltered",
+          "shade_m": 95.2,
+          "shade_ratio": 0.095,
+          "sheltered_m": 1006.5,
+          "shortest_covered_ratio": 0.013,
+          "shortest_m": 998.0,
+          "shortest_shade_ratio": 0.095
+        },
+        "state": "SCORED",
+        "total": 14.3
+      },
+      "area": "BUKIT_TIMAH",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "HOLLAND VILLAGE MRT STATION Exit B",
+          "routed_m": 950.1,
+          "snap_distance_m": 3.2,
+          "station": "HOLLAND VILLAGE MRT STATION",
+          "straight_line_m": 521.3,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 62.4,
+          "covered_ratio": 0.065,
+          "detour_pct": 0.9,
+          "heat_comfort_m": 110.0,
+          "heat_comfort_ratio": 0.115,
+          "routing_type": "sheltered",
+          "shade_m": 95.2,
+          "shade_ratio": 0.099,
+          "sheltered_m": 958.7,
+          "shortest_covered_ratio": 0.014,
+          "shortest_m": 950.1,
+          "shortest_shade_ratio": 0.1
+        },
+        "state": "SCORED",
+        "total": 16.1
+      },
+      "postal": "267879",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 225.8,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 136.7,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 77.6,
+          "covered_ratio": 0.343,
+          "destination_snap_connector_m": 5.2,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 29.9,
+          "heat_comfort_m": 85.6,
+          "heat_comfort_ratio": 0.379,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 24.7,
+          "routing_type": "sheltered",
+          "shade_m": 16.1,
+          "shade_ratio": 0.071,
+          "sheltered_m": 225.8,
+          "shortest_covered_ratio": 0.343,
+          "shortest_m": 225.8,
+          "shortest_shade_ratio": 0.071
+        },
+        "state": "SCORED",
+        "total": 74.3
+      },
+      "area": "QUEENSTOWN",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "PASIR PANJANG MRT STATION Exit A",
+          "routed_m": 195.9,
+          "snap_distance_m": 5.2,
+          "station": "PASIR PANJANG MRT STATION",
+          "straight_line_m": 136.5,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 75.2,
+          "covered_ratio": 0.384,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 83.3,
+          "heat_comfort_ratio": 0.425,
+          "routing_type": "sheltered",
+          "shade_m": 16.1,
+          "shade_ratio": 0.082,
+          "sheltered_m": 195.9,
+          "shortest_covered_ratio": 0.384,
+          "shortest_m": 195.9,
+          "shortest_shade_ratio": 0.082
+        },
+        "state": "SCORED",
+        "total": 76.0
+      },
+      "postal": "119454",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "LAVENDER MRT STATION Exit B",
+          "routed_m": 477.5,
+          "snap_distance_m": 2.4,
+          "station": "LAVENDER MRT STATION",
+          "straight_line_m": 395.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 225.0,
+          "covered_ratio": 0.461,
+          "destination_snap_connector_m": 2.4,
+          "detour_pct": 2.3,
+          "endpoint_snap_connector_m": 23.6,
+          "heat_comfort_m": 225.0,
+          "heat_comfort_ratio": 0.461,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 21.2,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 488.6,
+          "shortest_covered_ratio": 0.199,
+          "shortest_m": 477.5,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 53.4
+      },
+      "area": "KALLANG",
+      "before": {
+        "best_node": {
+          "exit": "Exit B",
+          "name": "LAVENDER MRT STATION Exit B",
+          "routed_m": 453.9,
+          "snap_distance_m": 2.4,
+          "station": "LAVENDER MRT STATION",
+          "straight_line_m": 395.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 247.2,
+          "covered_ratio": 0.506,
+          "detour_pct": 7.6,
+          "heat_comfort_m": 247.2,
+          "heat_comfort_ratio": 0.506,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 488.4,
+          "shortest_covered_ratio": 0.195,
+          "shortest_m": 453.9,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 56.4
+      },
+      "postal": "209077",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit C",
+          "name": "KOVAN MRT STATION Exit C",
+          "routed_m": 548.3,
+          "snap_distance_m": 13.3,
+          "station": "KOVAN MRT STATION",
+          "straight_line_m": 380.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 346.7,
+          "covered_ratio": 0.632,
+          "destination_snap_connector_m": 13.3,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 64.2,
+          "heat_comfort_m": 346.7,
+          "heat_comfort_ratio": 0.632,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 50.9,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 548.3,
+          "shortest_covered_ratio": 0.632,
+          "shortest_m": 548.3,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 77.5
+      },
+      "area": "HOUGANG",
+      "before": {
+        "best_node": {
+          "exit": "Exit C",
+          "name": "KOVAN MRT STATION Exit C",
+          "routed_m": 493.7,
+          "snap_distance_m": 13.3,
+          "station": "KOVAN MRT STATION",
+          "straight_line_m": 380.4,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 356.2,
+          "covered_ratio": 0.722,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 356.2,
+          "heat_comfort_ratio": 0.722,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 493.7,
+          "shortest_covered_ratio": 0.722,
+          "shortest_m": 493.7,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 63.9
+      },
+      "postal": "537408",
+      "state_changed": false
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 875.9,
+          "snap_distance_m": 2.3,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "straight_line_m": 544.2,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "bus_stop_access_connector_m": 0.0,
+          "covered_m": 139.9,
+          "covered_ratio": 0.155,
+          "destination_snap_connector_m": 2.3,
+          "detour_pct": 3.1,
+          "endpoint_snap_connector_m": 35.5,
+          "heat_comfort_m": 147.5,
+          "heat_comfort_ratio": 0.163,
+          "mrt_lrt_exit_access_connector_m": 0.0,
+          "origin_snap_connector_m": 33.2,
+          "routing_type": "sheltered",
+          "shade_m": 15.2,
+          "shade_ratio": 0.017,
+          "sheltered_m": 903.0,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 875.9,
+          "shortest_shade_ratio": 0.528
+        },
+        "state": "SCORED",
+        "total": 22.7
+      },
+      "area": "TANGLIN",
+      "before": {
+        "best_node": {
+          "exit": "Exit A",
+          "name": "BOTANIC GARDENS MRT STATION Exit A",
+          "routed_m": 840.5,
+          "snap_distance_m": 2.3,
+          "station": "BOTANIC GARDENS MRT STATION",
+          "straight_line_m": 544.7,
+          "type": "mrt_lrt_exit"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 139.9,
+          "covered_ratio": 0.161,
+          "detour_pct": 3.2,
+          "heat_comfort_m": 147.5,
+          "heat_comfort_ratio": 0.17,
+          "routing_type": "sheltered",
+          "shade_m": 15.2,
+          "shade_ratio": 0.017,
+          "sheltered_m": 867.5,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 840.5,
+          "shortest_shade_ratio": 0.55
+        },
+        "state": "SCORED",
+        "total": 24.2
+      },
+      "postal": "259633",
+      "state_changed": false
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_oversized_shard_split_count": 0,
+  "geom_oversized_shards_split": [],
+  "geom_shards_touched": [
+    "886520ca15fffff",
+    "886520ca69fffff",
+    "886520ca9bfffff",
+    "886520d80bfffff",
+    "886520d815fffff",
+    "886520d82dfffff",
+    "886520d83dfffff",
+    "886520d8e1fffff",
+    "886520d913fffff",
+    "886520d915fffff",
+    "886520d91bfffff",
+    "886520d927fffff",
+    "886520d951fffff",
+    "886520d95bfffff",
+    "886520d9c3fffff",
+    "886520d9cdfffff",
+    "886520d9d7fffff",
+    "886520db07fffff",
+    "886520db25fffff",
+    "886520db37fffff",
+    "8865263453fffff",
+    "8865263617fffff",
+    "8865263661fffff",
+    "88652636bdfffff",
+    "886526ac95fffff",
+    "886526acb9fffff",
+    "886526acc5fffff",
+    "886526add1fffff",
+    "896520cb43bffff",
+    "896520d817bffff",
+    "896520d924fffff",
+    "896520d943bffff",
+    "896520d9607ffff",
+    "896520d9613ffff",
+    "8965263412bffff",
+    "8965263631bffff",
+    "896526365cfffff",
+    "89652636897ffff",
+    "896526ac8d7ffff",
+    "896526ac993ffff",
+    "896526acc6bffff"
+  ],
+  "geometry_postals": 114327,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 42,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 42,
+  "source_bundle": "generated_20260803_safe_mayflower_560234_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 9386,
+    "SCORED": 112913,
+    "SCORED_PARTIAL": 1414
+  },
+  "target_bundle": "generated_20260803_recovered_validation_targeted"
+}
