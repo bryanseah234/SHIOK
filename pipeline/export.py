@@ -27,7 +27,12 @@ from shapely.ops import linemerge
 from pipeline.bus import parse_peak_frequency_minutes
 from pipeline.osm_tags import load_osm_tag_schema
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
-from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
+from pipeline.scoring_integration import (
+    NETWORK_PATH,
+    raw_file_from_manifest,
+    score_postals,
+    scoring_fingerprints as current_scoring_fingerprints,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EXPORT_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated"
@@ -535,6 +540,8 @@ def score_provenance_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
                 subscore_status = {
                     str(key): str(value) for key, value in raw_status.items() if value is not None
                 }
+    if not scoring_fingerprints:
+        scoring_fingerprints = current_scoring_fingerprints()
     return {
         "scoring_fingerprints": dict(sorted(scoring_fingerprints.items())),
         "source_hashes": dict(sorted(source_hashes.items())),

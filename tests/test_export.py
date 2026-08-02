@@ -466,6 +466,44 @@ def test_refresh_score_provenance_manifest_updates_from_score_shards(tmp_path: P
     assert refreshed["provenance"]["score_provenance_refreshed_at"]
 
 
+def test_refresh_score_provenance_manifest_fills_missing_scoring_fingerprints(
+    tmp_path: Path,
+):
+    write_json(tmp_path / "manifest.json", {"provenance": {"record_count": 1}})
+    write_json(tmp_path / "scores" / "index.json", {"TEST_AREA": ["123456"]})
+    write_json(
+        tmp_path / "scores" / "TEST_AREA.json",
+        [
+            {
+                "postal": "123456",
+                "state": "SCORED",
+                "provenance": {
+                    "source_hashes": {"osm_extract": "a" * 64},
+                    "subscore_status": {
+                        "access": "real_routed_shortest_distance",
+                        "bus": "real_static_datamall_connectivity",
+                        "rain": "real_routed_covered_length_ratio",
+                        "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+                        "crossing": "real_traffic_signals_with_grade_separated_exemption",
+                    },
+                },
+            }
+        ],
+    )
+
+    report = refresh_score_provenance_manifest(tmp_path)
+
+    refreshed = json.loads((tmp_path / "manifest.json").read_text(encoding="utf-8"))
+    assert report["scoring_fingerprint_count"] == 5
+    assert set(refreshed["provenance"]["scoring_fingerprints"]) == {
+        "pipeline\\config\\params.yaml",
+        "pipeline\\config\\weights.yaml",
+        "pipeline\\routing.py",
+        "pipeline\\scoring.py",
+        "pipeline\\scoring_integration.py",
+    }
+
+
 def test_export_splits_large_score_files(tmp_path: Path):
     records = [unscored_record(f"1000{i:02d}") for i in range(40)]
 
