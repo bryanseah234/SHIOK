@@ -1,0 +1,23 @@
+# .github/workflows/greetings.yml
+name: Greet New Contributors
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened]
+
+permissions: read-all
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' || github.event.pull_request.user.login != 'dependabot[bot]'
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/first-interaction@v3.1.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          # The action automatically looks for .github/greetings.yml
