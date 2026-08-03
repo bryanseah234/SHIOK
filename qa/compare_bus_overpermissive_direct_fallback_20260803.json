@@ -1,0 +1,418 @@
+{
+  "blocked_postals": [
+    "489929",
+    "465460",
+    "637442",
+    "718898",
+    "436659"
+  ],
+  "blocking_count": 5,
+  "candidate_count": 9,
+  "compared_count": 9,
+  "comparisons": [
+    {
+      "active": {
+        "best_node": {
+          "exit": "85109",
+          "name": "Bef Bedok Rd",
+          "routed_m": 2.3,
+          "station": "Bef Bedok Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 1.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 2.3,
+        "state": "SCORED",
+        "total": 100.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "85101",
+          "name": "Aft Bedok Rd",
+          "routed_m": null,
+          "station": "Aft Bedok Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 116.4,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": 114.1,
+        "total": -45.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "489929"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "84101",
+          "name": "ECO Condo",
+          "routed_m": 13.7,
+          "station": "ECO Condo",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 13.7,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "84109",
+          "name": "Bef Bedok View Sec Sch",
+          "routed_m": null,
+          "station": "Bef Bedok View Sec Sch",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 128.7,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": 115.0,
+        "total": -5.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "465460"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "25459",
+          "name": "Opp Tuas West St",
+          "routed_m": 250.2,
+          "station": "Opp Tuas West St",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 250.2,
+        "state": "SCORED",
+        "total": 60.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "25689",
+          "name": "Aft Tuas West Ave",
+          "routed_m": null,
+          "station": "Aft Tuas West Ave",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 265.8,
+        "state": "SCORED_PARTIAL",
+        "total": 54.1
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": 15.6,
+        "total": -5.9
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "637442"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "54651",
+          "name": "Opp Techplace 2",
+          "routed_m": 280.2,
+          "station": "Opp Techplace 2",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered_with_bus_stop_access_connector",
+        "sheltered_m": 280.2,
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "54659",
+          "name": "Techplace 2",
+          "routed_m": null,
+          "station": "Techplace 2",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 230.1,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -50.1,
+        "total": 15.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_changed"
+      ],
+      "postal": "804651"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "49239",
+          "name": "Opp Nyee Phoe Group",
+          "routed_m": 227.1,
+          "station": "Opp Nyee Phoe Group",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 227.1,
+        "state": "SCORED",
+        "total": 55.0
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "49229",
+          "name": "Long Kuan Hung Crocodile Farm",
+          "routed_m": null,
+          "station": "Long Kuan Hung Crocodile Farm",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 236.0,
+        "state": "SCORED_PARTIAL",
+        "total": 50.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": 8.9,
+        "total": -5.0
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "718898"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "55241",
+          "name": "Aft Yio Chu Kang Rd",
+          "routed_m": 156.3,
+          "station": "Aft Yio Chu Kang Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 156.3,
+        "state": "SCORED",
+        "total": 60.5
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "55241",
+          "name": "Aft Yio Chu Kang Rd",
+          "routed_m": null,
+          "station": "Aft Yio Chu Kang Rd",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 101.1,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -55.2,
+        "total": -5.5
+      },
+      "flags": [
+        "total_regression",
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_route"
+      ],
+      "postal": "789968"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "91041",
+          "name": "KiddiWinkie S/H @ Mountbatten",
+          "routed_m": 221.3,
+          "station": "KiddiWinkie S/H @ Mountbatten",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 221.3,
+        "state": "SCORED",
+        "total": 66.1
+      },
+      "blocking": true,
+      "candidate": {
+        "best_node": {
+          "exit": "92161",
+          "name": "Aft Katong PO",
+          "routed_m": null,
+          "station": "Aft Katong PO",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 57.7,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -163.6,
+        "total": -11.1
+      },
+      "flags": [
+        "total_regression",
+        "best_node_changed"
+      ],
+      "postal": "436659"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "14119",
+          "name": "Opp VivoCity",
+          "routed_m": 343.6,
+          "station": "Opp VivoCity",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.234,
+        "routing_type": "sheltered",
+        "sheltered_m": 343.6,
+        "state": "SCORED",
+        "total": 54.9
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "14119",
+          "name": "Opp VivoCity",
+          "routed_m": null,
+          "station": "Opp VivoCity",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 139.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -204.6,
+        "total": 0.1
+      },
+      "flags": [
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_route"
+      ],
+      "postal": "099281"
+    },
+    {
+      "active": {
+        "best_node": {
+          "exit": "21011",
+          "name": "Aft Jurong Lake",
+          "routed_m": 534.2,
+          "station": "Aft Jurong Lake",
+          "type": "bus_stop"
+        },
+        "covered_ratio": 0.0,
+        "routing_type": "sheltered",
+        "sheltered_m": 534.2,
+        "state": "SCORED",
+        "total": 33.0
+      },
+      "blocking": false,
+      "candidate": {
+        "best_node": {
+          "exit": "21011",
+          "name": "Aft Jurong Lake",
+          "routed_m": null,
+          "station": "Aft Jurong Lake",
+          "type": "bus_stop"
+        },
+        "covered_ratio": null,
+        "routing_type": "direct_bus_fallback_unrouted",
+        "sheltered_m": 265.0,
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "delta": {
+        "covered_ratio": null,
+        "sheltered_m": -269.2,
+        "total": 22.0
+      },
+      "flags": [
+        "total_improvement",
+        "best_node_distance_changed",
+        "honesty_correction_untrusted_bus_route"
+      ],
+      "postal": "619402"
+    }
+  ],
+  "flag_counts": {
+    "best_node_changed": 6,
+    "best_node_distance_changed": 3,
+    "honesty_correction_untrusted_bus_route": 3,
+    "total_improvement": 2,
+    "total_regression": 6
+  },
+  "inputs": {
+    "bundle_dir": "C:\\shiok\\web\\public\\data\\generated_20260803_safe_mayflower_560234_targeted",
+    "candidate": "qa\\targeted_bundle_refresh_bus_overpermissive_direct_fallback_20260803.json",
+    "coverage_tolerance": 0.02,
+    "total_tolerance": 0.5
+  },
+  "ok": false,
+  "promotion_recommendation": "promote_safe_promotable_records_only",
+  "safe_correction_count": 3,
+  "safe_correction_postals": [
+    "789968",
+    "099281",
+    "619402"
+  ],
+  "safe_improvement_count": 2,
+  "safe_improvement_postals": [
+    "804651",
+    "619402"
+  ],
+  "safe_promotable_postals": [
+    "099281",
+    "619402",
+    "789968",
+    "804651"
+  ],
+  "safe_unchanged_postals": []
+}

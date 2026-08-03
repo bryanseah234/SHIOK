@@ -1,0 +1,282 @@
+{
+  "comparisons": [
+    {
+      "after": {
+        "best_node": {
+          "exit": "14119",
+          "name": "Opp VivoCity",
+          "routed_m": null,
+          "snap_distance_m": 6.3,
+          "station": "Opp VivoCity",
+          "straight_line_m": 139.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 139.0,
+          "shortest_m": 139.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "BUKIT_MERAH",
+      "before": {
+        "best_node": {
+          "exit": "14119",
+          "name": "Opp VivoCity",
+          "routed_m": 343.6,
+          "snap_distance_m": 6.3,
+          "station": "Opp VivoCity",
+          "straight_line_m": 139.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 80.4,
+          "covered_ratio": 0.234,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 208.2,
+          "heat_comfort_ratio": 0.606,
+          "routing_type": "sheltered",
+          "shade_m": 255.7,
+          "shade_ratio": 0.744,
+          "sheltered_m": 343.6,
+          "shortest_covered_ratio": 0.234,
+          "shortest_m": 343.6,
+          "shortest_shade_ratio": 0.744
+        },
+        "state": "SCORED",
+        "total": 54.9
+      },
+      "postal": "099281",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "21011",
+          "name": "Aft Jurong Lake",
+          "routed_m": null,
+          "snap_distance_m": 10.0,
+          "station": "Aft Jurong Lake",
+          "straight_line_m": 265.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 265.0,
+          "shortest_m": 265.0
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "JURONG_EAST",
+      "before": {
+        "best_node": {
+          "exit": "21011",
+          "name": "Aft Jurong Lake",
+          "routed_m": 534.2,
+          "snap_distance_m": 10.0,
+          "station": "Aft Jurong Lake",
+          "straight_line_m": 265.0,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 10.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 42.0,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 31.9,
+          "routing_type": "sheltered",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 534.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 534.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 33.0
+      },
+      "postal": "619402",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "55241",
+          "name": "Aft Yio Chu Kang Rd",
+          "routed_m": null,
+          "snap_distance_m": 35.2,
+          "station": "Aft Yio Chu Kang Rd",
+          "straight_line_m": 101.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 101.1,
+          "shortest_m": 101.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "ANG_MO_KIO",
+      "before": {
+        "best_node": {
+          "exit": "55241",
+          "name": "Aft Yio Chu Kang Rd",
+          "routed_m": 156.3,
+          "snap_distance_m": 35.2,
+          "station": "Aft Yio Chu Kang Rd",
+          "straight_line_m": 101.3,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "detour_pct": 0.0,
+          "heat_comfort_m": 5.7,
+          "heat_comfort_ratio": 0.036,
+          "routing_type": "sheltered",
+          "shade_m": 11.3,
+          "shade_ratio": 0.072,
+          "sheltered_m": 156.3,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 156.3,
+          "shortest_shade_ratio": 0.072
+        },
+        "state": "SCORED",
+        "total": 60.5
+      },
+      "postal": "789968",
+      "state_changed": true
+    },
+    {
+      "after": {
+        "best_node": {
+          "exit": "54659",
+          "name": "Techplace 2",
+          "routed_m": null,
+          "snap_distance_m": 14.5,
+          "station": "Techplace 2",
+          "straight_line_m": 230.1,
+          "type": "bus_stop"
+        },
+        "has_route_segments": true,
+        "paths": {
+          "detour_pct": 0.0,
+          "routing_type": "direct_bus_fallback_unrouted",
+          "sheltered_m": 230.1,
+          "shortest_m": 230.1
+        },
+        "state": "SCORED_PARTIAL",
+        "total": 55.0
+      },
+      "area": "SERANGOON",
+      "before": {
+        "best_node": {
+          "exit": "54651",
+          "name": "Opp Techplace 2",
+          "routed_m": 280.2,
+          "snap_distance_m": 3.7,
+          "station": "Opp Techplace 2",
+          "straight_line_m": 156.7,
+          "type": "bus_stop"
+        },
+        "has_route_segments": false,
+        "paths": {
+          "covered_m": 0.0,
+          "covered_ratio": 0.0,
+          "destination_snap_connector_m": 0.0,
+          "detour_pct": 0.0,
+          "endpoint_snap_connector_m": 73.6,
+          "heat_comfort_m": 0.0,
+          "heat_comfort_ratio": 0.0,
+          "origin_snap_connector_m": 73.6,
+          "routing_type": "sheltered_with_bus_stop_access_connector",
+          "shade_m": 0.0,
+          "shade_ratio": 0.0,
+          "sheltered_m": 280.2,
+          "shortest_covered_ratio": 0.0,
+          "shortest_m": 280.2,
+          "shortest_shade_ratio": 0.0
+        },
+        "state": "SCORED",
+        "total": 40.0
+      },
+      "postal": "804651",
+      "state_changed": true
+    }
+  ],
+  "converted_count": 0,
+  "converted_from_no_transit": [],
+  "geom_oversized_shard_split_count": 0,
+  "geom_oversized_shards_split": [],
+  "geom_shards_touched": [
+    "886520ca43fffff",
+    "886520d847fffff",
+    "8865263615fffff",
+    "88652636e3fffff"
+  ],
+  "geometry_postals": 114327,
+  "missing_from_bundle": [],
+  "network": "C:\\shiok\\processed\\network_island.parquet",
+  "ok": true,
+  "patched_count": 4,
+  "postal_universe": "C:\\shiok\\processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+  "selected_count": 4,
+  "source_bundle": "generated_20260803_safe_mayflower_560234_targeted",
+  "state_counts": {
+    "NOT_YET_SCORED": 319,
+    "NO_TRANSIT_IN_RANGE": 9386,
+    "SCORED": 112909,
+    "SCORED_PARTIAL": 1418
+  },
+  "target_bundle": "generated_20260803_safe_bus_overpermissive_direct_fallback_targeted",
+  "targeted_score_provenance": {
+    "full_bundle_covered": false,
+    "postal_count": 4,
+    "scope": "targeted_refresh_records_only",
+    "scoring_fingerprints": {
+      "pipeline\\config\\params.yaml": "734138a06ffdd13ecd17c5e9ad67284f387051861f9ea9e73c9544719d574d6b",
+      "pipeline\\config\\weights.yaml": "5c62ac5f62e91f777a82f0dfa98eafba11ef47500c9f7822a81a31eae7d2cbec",
+      "pipeline\\routing.py": "8fb450690bf9d024b9c43dd02476a7d4e73805cd3b59b6ecbc2022dcc1a69e7c",
+      "pipeline\\scoring.py": "255b4a225a625848e150673b01bccfbc679eea668a254667a9b01c2179bf610c",
+      "pipeline\\scoring_integration.py": "0dd0b9e54d7263aec143f062aeacb71fd1bb7a9576e47adbf383dd3a73d19720"
+    },
+    "source_hashes": {
+      "bus_routes": "a52a1503aa2d68a0a9e59703ea96a9c0e6cff1720e10d0479384c6f97a88f829",
+      "bus_services": "2d2b12b89ed2b2314be7d1ac2738afbdcd2af10a07a7cb6db1fb890d56348e2f",
+      "bus_stops": "0362ab970c661de6b322a3372c9ab980faf49805921891a7a1da260687a16a4a",
+      "covered_linkway": "d943fe2a992ad50c449c40484e0c642da480598b17f6008907c7b253d87b19ee",
+      "leaf_area_index": "26281dbacf4d8707df48d40b83060c65bf81c3f1a39ff81aebaefb8fd628c899",
+      "mrt_lrt_exits": "a7eaa90f30991dc0ac4aa970d704123ce3ec9e60c82b42c32a32e74be7dc0327",
+      "nparks_heritage_road_green_buffers": "87238ae673f898a30b1fcbf5b5527625b4c49c7aa1769567adb92b93b9b685b5",
+      "nparks_heritage_trees": "7f9a1b6413735824704993994b5491c30dcb9d1b746e80a5c17a6f59629d835f",
+      "nparks_nature_ways": "9b4e0e1e9d868cc9bff468e1b3028214707f2a41661bc8f279c61e88094f2d11",
+      "nparks_park_connector_loop": "83c1838bea9ee355d2ba52c2060eb185612dd0e2e3fdb113aff9cdd6e5c27efd",
+      "nparks_tracks": "2df9d9170d716ceefc2e82aa8889a21a27a3a086996bf330a6ab6b21cb1f0627",
+      "osm_extract": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+      "overhead_bridge_underpass": "bfa4a0a08a32c72a1ca35aad30e89f940a59ef6fdc137ddf8135a50760d7d444",
+      "traffic_signals": "942ff2506603f431f0782a3acdc70fec75d4b15c73b54f1a983c804c60d818af"
+    },
+    "subscore_status": {
+      "access": "real_routed_shortest_distance",
+      "bus": "real",
+      "crossing": "real_traffic_signals_with_grade_separated_exemption",
+      "heat": "provisional_covered_plus_nparks_shade_proxy_heat_only",
+      "rain": "real_routed_covered_length_ratio"
+    }
+  }
+}

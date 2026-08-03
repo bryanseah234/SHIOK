@@ -42,7 +42,7 @@
       "flags": [
         "total_regression",
         "best_node_distance_changed",
-        "honesty_correction_untrusted_bus_connector"
+        "honesty_correction_untrusted_bus_route"
       ],
       "postal": "758588"
     },
@@ -84,7 +84,7 @@
       "flags": [
         "total_regression",
         "best_node_distance_changed",
-        "honesty_correction_untrusted_bus_connector"
+        "honesty_correction_untrusted_bus_route"
       ],
       "postal": "760468"
     },
@@ -126,14 +126,14 @@
       "flags": [
         "total_regression",
         "best_node_distance_changed",
-        "honesty_correction_untrusted_bus_connector"
+        "honesty_correction_untrusted_bus_route"
       ],
       "postal": "417471"
     }
   ],
   "flag_counts": {
     "best_node_distance_changed": 3,
-    "honesty_correction_untrusted_bus_connector": 3,
+    "honesty_correction_untrusted_bus_route": 3,
     "total_regression": 3
   },
   "inputs": {

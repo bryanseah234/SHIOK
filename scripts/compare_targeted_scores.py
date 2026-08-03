@@ -10,7 +10,7 @@ from scripts.targeted_bundle_refresh import active_bundle_dir, load_score_index,
 
 SCOREABLE_STATES = {"SCORED", "SCORED_PARTIAL"}
 IMPROVEMENT_FLAGS = {"total_improvement", "coverage_improvement"}
-CORRECTION_FLAGS = {"honesty_correction_untrusted_bus_connector"}
+CORRECTION_FLAGS = {"honesty_correction_untrusted_bus_route"}
 
 
 def normalize_postal(value: Any) -> str:
@@ -113,12 +113,11 @@ def route_type(record: dict[str, Any]) -> str | None:
     return str(value) if value else None
 
 
-def is_untrusted_bus_connector_honesty_correction(
+def is_untrusted_bus_route_honesty_correction(
     active_state: Any,
     candidate_state: Any,
     active_best: dict[str, Any],
     candidate_best: dict[str, Any],
-    active_routing_type: str | None,
     candidate_routing_type: str | None,
 ) -> bool:
     return (
@@ -128,13 +127,6 @@ def is_untrusted_bus_connector_honesty_correction(
         and candidate_best.get("type") == "bus_stop"
         and best_node_identity(active_best) == best_node_identity(candidate_best)
         and candidate_routing_type == "direct_bus_fallback_unrouted"
-        and bool(
-            active_routing_type
-            and (
-                active_routing_type.endswith("_with_bus_stop_access_connector")
-                or active_routing_type.endswith("_with_endpoint_snap_connector")
-            )
-        )
     )
 
 
@@ -202,16 +194,15 @@ def compare_record(
     ):
         flags.append("best_node_distance_changed")
 
-    honesty_correction = is_untrusted_bus_connector_honesty_correction(
+    honesty_correction = is_untrusted_bus_route_honesty_correction(
         active_state,
         candidate_state,
         active_best,
         candidate_best,
-        active_routing_type,
         candidate_routing_type,
     )
     if honesty_correction:
-        flags.append("honesty_correction_untrusted_bus_connector")
+        flags.append("honesty_correction_untrusted_bus_route")
 
     blocking_flags = {
         "missing_active_record",

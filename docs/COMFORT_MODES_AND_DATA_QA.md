@@ -259,13 +259,28 @@ Current implementation:
   segment geometries. The resulting counts would be 112,910 `SCORED`, 1,417
   `SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
   `qa/compare_bus_combined_connector_guard_20260803.json` now classifies all
-  three as `honesty_correction_untrusted_bus_connector`: the total scores drop
+  three as `honesty_correction_untrusted_bus_route`: the total scores drop
   because trusted route distance is removed and replaced with partial direct-bus
   evidence. Launch check passed web tests, build, readiness, and browser smokes.
   Direct production deploy was attempted, but Vercel Hobby returned
   `api-deployments-free-per-day`, so the bundle was not activated; retry after
   the quota window resets by regenerating the bundle and running the release
   command.
+- A wider current-code replay of the top 20 bus-stop outliers where the project
+  route is materially shorter than OneMap wrote
+  `qa/onemap_outlier_replay_bus_shorter_profile_current_20_20260803.json`.
+  Current scoring downgraded 9/20 best routes to direct-bus fallback. A mixed
+  9-postal candidate was intentionally not promotable wholesale; the safe subset
+  was folded together with the earlier connector fixes into
+  `generated_20260803_safe_bus_route_honesty_targeted`. That combined 7-postal
+  candidate patches `099281`, `417471`, `619402`, `758588`, `760468`, `789968`,
+  and `804651`; it validates with 124,032 indexed postals and 114,327 route
+  segment geometries, compares cleanly with no blocked postals, and passes local
+  launch check. Resulting counts would be 112,906 `SCORED`, 1,421
+  `SCORED_PARTIAL`, 9,386 `NO_TRANSIT_IN_RANGE`, and 319 `NOT_YET_SCORED`.
+  It is not deployed because Vercel Hobby quota is still exhausted; after the
+  quota window resets, regenerate this bundle from
+  `qa/safe_bus_route_honesty_combined_20260803.txt` and release it once.
 
 ## Actual Bus Arrivals
 

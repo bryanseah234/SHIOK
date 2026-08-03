@@ -166,8 +166,46 @@ def test_compare_records_allows_bus_connector_honesty_correction():
     assert report["safe_promotable_postals"] == ["760468"]
     comparison = report["comparisons"][0]
     assert "total_regression" in comparison["flags"]
-    assert "honesty_correction_untrusted_bus_connector" in comparison["flags"]
+    assert "honesty_correction_untrusted_bus_route" in comparison["flags"]
     assert comparison["blocking"] is False
+
+
+def test_compare_records_allows_plain_bus_route_honesty_correction():
+    active = {
+        "489929": record(
+            "489929",
+            75.0,
+            0.1,
+            best_type="bus_stop",
+            best_name="Aft Bedok Rd",
+            routed_m=116.4,
+            routing_type="sheltered",
+        )
+    }
+    candidate = [
+        record(
+            "489929",
+            48.0,
+            None,
+            state="SCORED_PARTIAL",
+            best_type="bus_stop",
+            best_name="Aft Bedok Rd",
+            routed_m=None,
+            routing_type="direct_bus_fallback_unrouted",
+        )
+    ]
+
+    report = compare_records(
+        active,
+        candidate,
+        total_tolerance=0.5,
+        coverage_tolerance=0.02,
+    )
+
+    assert report["ok"] is True
+    assert report["safe_correction_postals"] == ["489929"]
+    assert report["safe_promotable_postals"] == ["489929"]
+    assert "honesty_correction_untrusted_bus_route" in report["comparisons"][0]["flags"]
 
 
 def test_compare_records_blocks_non_bus_honesty_shaped_regression():
@@ -204,7 +242,7 @@ def test_compare_records_blocks_non_bus_honesty_shaped_regression():
 
     assert report["ok"] is False
     assert report["blocked_postals"] == ["560234"]
-    assert "honesty_correction_untrusted_bus_connector" not in report["comparisons"][0]["flags"]
+    assert "honesty_correction_untrusted_bus_route" not in report["comparisons"][0]["flags"]
 
 
 def test_load_candidate_records_accepts_list(tmp_path):
