@@ -1,0 +1,530 @@
+{
+  "batch_plan": {
+    "bounded_geocoding": {
+      "completed_fill": {
+        "cache_db": "C:\\shiok\\raw\\geocode_cache.db",
+        "cache_failures": 476,
+        "cache_successes": 99,
+        "delay_seconds": 2.0,
+        "dry_run": false,
+        "errors": [],
+        "filled_successes": 99,
+        "http_requests": 0,
+        "input": "processed\\postal_universe_candidate_full_registered.parquet",
+        "needs_geocode_after": 476,
+        "ok": true,
+        "output": "processed\\postal_universe_candidate_full_registered_geocoded.parquet",
+        "queued_postals": 575,
+        "ready_to_score_after": 123967,
+        "retry_cached_failures": false,
+        "status_counts": {
+          "NOT_FOUND": 476,
+          "SUCCESS": 99
+        },
+        "summary": "processed\\postal_universe_candidate_full_registered_geocoded_summary.json",
+        "will_bruteforce": false
+      },
+      "consumer": "OneMap search API",
+      "delay_seconds": 2.0,
+      "minimum_wall_clock_human": "0s",
+      "minimum_wall_clock_seconds": 0.0,
+      "requests": 0,
+      "scope": "completed bounded fill; remaining NEEDS_GEOCODE rows stay NOT_YET_SCORED",
+      "unresolved_after_bounded_geocode": 476,
+      "will_bruteforce": false
+    },
+    "checkpoint_gates": {
+      "blockers": [
+        "human approval required before full geocode/scoring batch",
+        "human approval required before production deploy or mock-to-real frontend cutover",
+        "postal universe uses third-party OneMap-derived 2020 source"
+      ],
+      "full_batch_allowed_now": false,
+      "full_geocode_scoring_batch_requires_human_approval": true,
+      "island_network_qa_ok": true,
+      "production_deploy_requires_human_approval": true,
+      "requires_human_approval_for_universe": true
+    },
+    "errors": [],
+    "ok": true,
+    "postal_universe": {
+      "generated_at": "2026-08-01T22:19:12.619017+00:00",
+      "mode": "candidate_full_registered",
+      "needs_geocode": 476,
+      "parquet_rows": 124443,
+      "ready_to_score": 123967,
+      "source_only_counts": {
+        "acra_registered_entities": 366,
+        "hdb_existing_building": 15,
+        "osm_addr_postcode": 1442,
+        "other_uen_registered_entities": 172,
+        "postal_universe_onemap_2020": 8151,
+        "sla_dwelling_information": 16,
+        "ura_no_dwelling_units": 238
+      },
+      "source_stats": [
+        {
+          "path": "raw\\7c987511548de3a82da403cabca02702031e02ade8703a9e401417883dfeb702\\building_points.geojson",
+          "raw_records": 13436,
+          "records_with_coordinates": 13436,
+          "sha256": "7c987511548de3a82da403cabca02702031e02ade8703a9e401417883dfeb702",
+          "source_key": "hdb_existing_building",
+          "url": null,
+          "valid_unique_postals": 13436
+        },
+        {
+          "path": "raw\\a520d2a54bf628c83a11c21ca63ee1cd46386fc0aadb896911133c0742150271\\sla_dwelling_information.geojson",
+          "raw_records": 1420,
+          "records_with_coordinates": 1420,
+          "sha256": "a520d2a54bf628c83a11c21ca63ee1cd46386fc0aadb896911133c0742150271",
+          "source_key": "sla_dwelling_information",
+          "url": "https://data.gov.sg/datasets/d_e4495201ba4f77fa2ef9855bad6d2cd1/view",
+          "valid_unique_postals": 1420
+        },
+        {
+          "path": "raw\\9d249959b4010d00a7d91f8161f22188bbb0203a27185f91f46b41595f4884f0\\ura_no_dwelling_units.geojson",
+          "raw_records": 83541,
+          "records_with_coordinates": 83541,
+          "sha256": "9d249959b4010d00a7d91f8161f22188bbb0203a27185f91f46b41595f4884f0",
+          "source_key": "ura_no_dwelling_units",
+          "url": "https://data.gov.sg/datasets/d_be71daeab5930f96b90ad2857454d876/view",
+          "valid_unique_postals": 83541
+        },
+        {
+          "path": "raw\\0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d\\osm_extract.osm.pbf",
+          "raw_records": 33743,
+          "records_with_coordinates": 25629,
+          "sha256": "0cd4f995c2ab6b38b2985ba9417861e93dc1f58c8ffae06c3deecc37f259128d",
+          "source_key": "osm_addr_postcode",
+          "url": null,
+          "valid_unique_postals": 25629
+        },
+        {
+          "path": "raw\\847ceebce6a9a8f5ca7e8ee32f6d857583c8d8025a0606be685411899ba59841\\postal_universe_onemap_2020.json.gz",
+          "raw_records": 141848,
+          "records_with_coordinates": 121515,
+          "sha256": "847ceebce6a9a8f5ca7e8ee32f6d857583c8d8025a0606be685411899ba59841",
+          "source_key": "postal_universe_onemap_2020",
+          "url": "https://raw.githubusercontent.com/xuancong84/singapore-address-heatmap/master/singpostcode.json.gz",
+          "valid_unique_postals": 121515
+        },
+        {
+          "path": "raw\\5d18dbe22516ee9ce4f3ad9e86f54dbe8ae1b2306e2bc9b3ec03fc8bd9aae892\\acra_registered_entities.csv",
+          "raw_records": 2105584,
+          "records_with_coordinates": 0,
+          "sha256": "5d18dbe22516ee9ce4f3ad9e86f54dbe8ae1b2306e2bc9b3ec03fc8bd9aae892",
+          "source_key": "acra_registered_entities",
+          "url": null,
+          "valid_unique_postals": 47075
+        },
+        {
+          "path": "raw\\8d2b048866a8af3109299e60eb67fbcdca99d6a8a001861abc3da05a909264b1\\other_uen_registered_entities.csv",
+          "raw_records": 23118,
+          "records_with_coordinates": 0,
+          "sha256": "8d2b048866a8af3109299e60eb67fbcdca99d6a8a001861abc3da05a909264b1",
+          "source_key": "other_uen_registered_entities",
+          "url": "https://data.gov.sg/datasets/d_b1d2b840ab9e993570c037b706b39bb8/view",
+          "valid_unique_postals": 7745
+        },
+        {
+          "path": "raw\\geocode_cache.db",
+          "raw_records": 99,
+          "records_with_coordinates": 99,
+          "sha256": "fffdd712a51b9060bfeb2e596de794ad9e97a286eb8752cee94c3f0950992c20",
+          "source_key": "onemap_search_bounded_geocode",
+          "url": "https://www.onemap.gov.sg/api/common/elastic/search",
+          "valid_unique_postals": 99
+        }
+      ],
+      "total_unique_postals": 124443,
+      "warnings": [
+        "postal_universe_onemap_2020 is a third-party OneMap-derived 2020 dump and must be human-approved before full-batch use"
+      ]
+    },
+    "scoring_batch": {
+      "epsg_internal": "EPSG:3414",
+      "uses_project_conflated_graph": true,
+      "uses_python_igraph": true,
+      "would_emit_not_yet_scored": 476,
+      "would_emit_records": 124443,
+      "would_score_after_bounded_geocoding": 123967,
+      "would_score_without_geocoding": 123967
+    },
+    "warnings": [
+      "476 source-derived postals remain unresolved after bounded OneMap geocode"
+    ]
+  },
+  "bundle": {
+    "bundle": "generated_20260803_safe_bus_route_honesty50_targeted",
+    "freshness": {
+      "active_bundle_reflects_current_network": true,
+      "bundle_generated_at": "2026-08-03T02:44:57.880831+00:00",
+      "bundle_manifest_mtime": "2026-08-03T02:45:12.230448+00:00",
+      "bundle_manifest_path": "web\\public\\data\\generated_20260803_safe_bus_route_honesty50_targeted\\manifest.json",
+      "network_mtime": "2026-08-02T17:19:54.001575+00:00",
+      "network_path": "C:\\shiok\\processed\\network_island.parquet",
+      "stale_seconds": 0.0,
+      "warning": null
+    },
+    "manifest_record_count": 124032,
+    "no_transit_count": 9386,
+    "not_yet_count": 319,
+    "path": "web\\public\\data\\generated_20260803_safe_bus_route_honesty50_targeted",
+    "score_provenance": {
+      "manifest_path": "web\\public\\data\\generated_20260803_safe_bus_route_honesty50_targeted\\manifest.json",
+      "missing_scoring_fingerprints": [],
+      "missing_subscore_status": [],
+      "ok": true,
+      "scoring_fingerprint_count": 5,
+      "source_hash_count": 14,
+      "subscore_status_keys": [
+        "access",
+        "bus",
+        "crossing",
+        "heat",
+        "rain"
+      ],
+      "warning": null
+    },
+    "state_counts": {
+      "NOT_YET_SCORED": 319,
+      "NO_TRANSIT_IN_RANGE": 9386,
+      "SCORED": 112905,
+      "SCORED_PARTIAL": 1422
+    },
+    "state_total_matches_manifest": true,
+    "static_validation": {
+      "errors": [],
+      "file_count": 3171,
+      "geometry_postals": 114327,
+      "geometry_postals_with_route_segments": 114327,
+      "indexed_postals": 124032,
+      "ok": true,
+      "score_prefixes": 530,
+      "transit_features": 6011,
+      "warnings": []
+    }
+  },
+  "errors": [],
+  "features": {
+    "incorporated": {
+      "all_known_source_derived_postals_scored_or_explicit_state": true,
+      "broader_osm_covered_tags_from_hashed_pbf": true,
+      "bus_as_transit_direct_fallback": true,
+      "nparks_spatial_shade_proxy_heat_only": true,
+      "ura_no_dwelling_units_postal_source": true
+    },
+    "not_incorporated": {
+      "bellingcat_openinframap_overpass_as_production_feeds": "QA/discovery only unless raw bounded OSM query output is archived and hashed",
+      "building_shadow_time_of_day": "future heat model",
+      "canonical_140k_postal_universe": "not claimed; URA improves official-current coverage and Overture remains a candidate gate, but neither is a complete accepted source-of-record",
+      "live_bus_or_mrt_arrivals": "requires runtime proxy or collected static aggregates",
+      "mayflower_560231_560234_shelter_false_negative": "needs source-backed connector/correction review; no postal override",
+      "nparks_lai_route_level_canopy": "LAI is calibration-only, not route geometry",
+      "onemap_walk_validation_gate": "latest cached 2,000-postal OneMap walk validation failed: median abs delta 11.582% (max 10.0%), p95 abs delta 103.196% (max 25.0%), missing cache results 0, invalid cache results 1",
+      "overture_addresses_sg_candidate": "optional archive/probe implemented; produced 125876-postal candidate universe with 1671 Overture-only postcodes; coordinate QA implemented with p95 23.5m and 41 postcodes over 1km; not active production until outlier review/rescore",
+      "ura_expanded_scores_live": "postal prep produces 124443 candidate records and 123967 ready-to-score rows; not active production until full rescore/export/deploy"
+    },
+    "validation_gates": {
+      "onemap_walk_validation": {
+        "active_bundle": "generated_20260803_safe_bus_route_honesty50_targeted",
+        "bundle": "generated_20260803_safe_bus_route_honesty50_targeted",
+        "bundle_matches_active": true,
+        "cached_results": 1999,
+        "failing_subset_order": [
+          {
+            "count": 14,
+            "median_abs_delta_m": 377.9,
+            "median_abs_pct_delta": 74.708,
+            "p95_abs_delta_m": 907.2,
+            "p95_abs_pct_delta": 154.372,
+            "subset": "endpoint_connector"
+          },
+          {
+            "count": 1597,
+            "median_abs_delta_m": 35.6,
+            "median_abs_pct_delta": 12.745,
+            "p95_abs_delta_m": 361.1,
+            "p95_abs_pct_delta": 110.673,
+            "subset": "graph_routed_bus_stop"
+          },
+          {
+            "count": 1999,
+            "median_abs_delta_m": 37.3,
+            "median_abs_pct_delta": 11.582,
+            "p95_abs_delta_m": 373.0,
+            "p95_abs_pct_delta": 103.196,
+            "subset": "all_valid_cached"
+          },
+          {
+            "count": 1985,
+            "median_abs_delta_m": 36.9,
+            "median_abs_pct_delta": 11.437,
+            "p95_abs_delta_m": 360.6,
+            "p95_abs_pct_delta": 102.651,
+            "subset": "graph_routed_without_endpoint_connector"
+          },
+          {
+            "count": 1995,
+            "median_abs_delta_m": 37.3,
+            "median_abs_pct_delta": 11.528,
+            "p95_abs_delta_m": 372.4,
+            "p95_abs_pct_delta": 102.397,
+            "subset": "non_tiny_onemap_walk_gt_20m"
+          },
+          {
+            "count": 12,
+            "median_abs_delta_m": 420.9,
+            "median_abs_pct_delta": 71.249,
+            "p95_abs_delta_m": 915.8,
+            "p95_abs_pct_delta": 96.619,
+            "subset": "endpoint_connector_plausible_onemap_distance"
+          },
+          {
+            "count": 1551,
+            "median_abs_delta_m": 34.7,
+            "median_abs_pct_delta": 12.263,
+            "p95_abs_delta_m": 358.3,
+            "p95_abs_pct_delta": 95.612,
+            "subset": "graph_routed_bus_stop_plausible_onemap_distance"
+          },
+          {
+            "count": 1949,
+            "median_abs_delta_m": 36.7,
+            "median_abs_pct_delta": 11.292,
+            "p95_abs_delta_m": 370.9,
+            "p95_abs_pct_delta": 91.054,
+            "subset": "plausible_onemap_distance"
+          },
+          {
+            "count": 1937,
+            "median_abs_delta_m": 36.0,
+            "median_abs_pct_delta": 11.199,
+            "p95_abs_delta_m": 357.2,
+            "p95_abs_pct_delta": 90.15,
+            "subset": "graph_routed_without_endpoint_connector_plausible_onemap_distance"
+          },
+          {
+            "count": 388,
+            "median_abs_delta_m": 42.8,
+            "median_abs_pct_delta": 6.694,
+            "p95_abs_delta_m": 350.7,
+            "p95_abs_pct_delta": 58.926,
+            "subset": "graph_routed_mrt_lrt"
+          },
+          {
+            "count": 386,
+            "median_abs_delta_m": 42.5,
+            "median_abs_pct_delta": 6.679,
+            "p95_abs_delta_m": 351.5,
+            "p95_abs_pct_delta": 55.703,
+            "subset": "graph_routed_mrt_lrt_plausible_onemap_distance"
+          }
+        ],
+        "gate_passed": false,
+        "generated_at": "2026-08-03T02:46:59.746110+00:00",
+        "invalid_cache_results": 1,
+        "median_abs_pct_delta": 11.582,
+        "missing_cache_results": 0,
+        "p95_abs_pct_delta": 103.196,
+        "report_path": "C:\\shiok\\qa\\onemap_validation_cached_report_pending_honesty50_20260803.json",
+        "sample_size": 2000,
+        "state": "failed",
+        "subset_summary": {
+          "all_valid_cached": {
+            "count": 1999,
+            "median_abs_delta_m": 37.3,
+            "median_abs_pct_delta": 11.582,
+            "over_25_pct_count": 588,
+            "over_50_pct_count": 310,
+            "p95_abs_delta_m": 373.0,
+            "p95_abs_pct_delta": 103.196,
+            "thresholds_passed": false
+          },
+          "endpoint_connector": {
+            "count": 14,
+            "median_abs_delta_m": 377.9,
+            "median_abs_pct_delta": 74.708,
+            "over_25_pct_count": 13,
+            "over_50_pct_count": 13,
+            "p95_abs_delta_m": 907.2,
+            "p95_abs_pct_delta": 154.372,
+            "thresholds_passed": false
+          },
+          "endpoint_connector_plausible_onemap_distance": {
+            "count": 12,
+            "median_abs_delta_m": 420.9,
+            "median_abs_pct_delta": 71.249,
+            "over_25_pct_count": 11,
+            "over_50_pct_count": 11,
+            "p95_abs_delta_m": 915.8,
+            "p95_abs_pct_delta": 96.619,
+            "thresholds_passed": false
+          },
+          "graph_routed_bus_stop": {
+            "count": 1597,
+            "median_abs_delta_m": 35.6,
+            "median_abs_pct_delta": 12.745,
+            "over_25_pct_count": 511,
+            "over_50_pct_count": 269,
+            "p95_abs_delta_m": 361.1,
+            "p95_abs_pct_delta": 110.673,
+            "thresholds_passed": false
+          },
+          "graph_routed_bus_stop_plausible_onemap_distance": {
+            "count": 1551,
+            "median_abs_delta_m": 34.7,
+            "median_abs_pct_delta": 12.263,
+            "over_25_pct_count": 475,
+            "over_50_pct_count": 237,
+            "p95_abs_delta_m": 358.3,
+            "p95_abs_pct_delta": 95.612,
+            "thresholds_passed": false
+          },
+          "graph_routed_mrt_lrt": {
+            "count": 388,
+            "median_abs_delta_m": 42.8,
+            "median_abs_pct_delta": 6.694,
+            "over_25_pct_count": 64,
+            "over_50_pct_count": 28,
+            "p95_abs_delta_m": 350.7,
+            "p95_abs_pct_delta": 58.926,
+            "thresholds_passed": false
+          },
+          "graph_routed_mrt_lrt_plausible_onemap_distance": {
+            "count": 386,
+            "median_abs_delta_m": 42.5,
+            "median_abs_pct_delta": 6.679,
+            "over_25_pct_count": 62,
+            "over_50_pct_count": 26,
+            "p95_abs_delta_m": 351.5,
+            "p95_abs_pct_delta": 55.703,
+            "thresholds_passed": false
+          },
+          "graph_routed_without_endpoint_connector": {
+            "count": 1985,
+            "median_abs_delta_m": 36.9,
+            "median_abs_pct_delta": 11.437,
+            "over_25_pct_count": 575,
+            "over_50_pct_count": 297,
+            "p95_abs_delta_m": 360.6,
+            "p95_abs_pct_delta": 102.651,
+            "thresholds_passed": false
+          },
+          "graph_routed_without_endpoint_connector_plausible_onemap_distance": {
+            "count": 1937,
+            "median_abs_delta_m": 36.0,
+            "median_abs_pct_delta": 11.199,
+            "over_25_pct_count": 537,
+            "over_50_pct_count": 263,
+            "p95_abs_delta_m": 357.2,
+            "p95_abs_pct_delta": 90.15,
+            "thresholds_passed": false
+          },
+          "non_tiny_onemap_walk_gt_20m": {
+            "count": 1995,
+            "median_abs_delta_m": 37.3,
+            "median_abs_pct_delta": 11.528,
+            "over_25_pct_count": 584,
+            "over_50_pct_count": 306,
+            "p95_abs_delta_m": 372.4,
+            "p95_abs_pct_delta": 102.397,
+            "thresholds_passed": false
+          },
+          "plausible_onemap_distance": {
+            "count": 1949,
+            "median_abs_delta_m": 36.7,
+            "median_abs_pct_delta": 11.292,
+            "over_25_pct_count": 548,
+            "over_50_pct_count": 274,
+            "p95_abs_delta_m": 370.9,
+            "p95_abs_pct_delta": 91.054,
+            "thresholds_passed": false
+          }
+        },
+        "summary": "latest cached 2,000-postal OneMap walk validation failed: median abs delta 11.582% (max 10.0%), p95 abs delta 103.196% (max 25.0%), missing cache results 0, invalid cache results 1",
+        "thresholds": {
+          "median_abs_pct_delta_max": 10.0,
+          "p95_abs_pct_delta_max": 25.0
+        }
+      }
+    }
+  },
+  "generated_at": "2026-08-03T02:48:47.452105+00:00",
+  "network": {
+    "debug_path": "C:\\shiok\\qa\\island_debug.geojson",
+    "errors": [],
+    "metrics": {
+      "audited_shelter_corrections": {
+        "added_edges": 12,
+        "approved_features": 12,
+        "candidate_lines": 12,
+        "path": "data\\audited_shelter_corrections.geojson",
+        "skipped_edges": 0,
+        "snap_max_m": 8.0
+      },
+      "connected_components_count": 2752,
+      "covered_edge_length_m_audited_corrections": 440.3052758694887,
+      "edges": 896830,
+      "final_residual_components_gt_50": 77,
+      "flags": [],
+      "mean_edge_length_m": 17.853022466092206,
+      "nodes": 653122,
+      "osm_residual_components_gt_50": 77,
+      "real_disconnection_count_final": 0,
+      "real_disconnection_count_osm_only": 0,
+      "shade_proxy_edge_count": 64541,
+      "shade_proxy_weighted_length_m": 843339.2275912806,
+      "top_5_component_sizes": [
+        618084,
+        1946,
+        1470,
+        1402,
+        1295
+      ]
+    },
+    "ok": true,
+    "qa_path": "C:\\shiok\\qa\\conflation_qa_island.json",
+    "warnings": []
+  },
+  "ok": true,
+  "vercel": {
+    "git_data_strategy": "web build downloads configured bundle from production when local data is absent",
+    "linked": true,
+    "project_id": "prj_y6GIQUdEyXXmtg3UTWkcJECKHdEE",
+    "project_name": "sgshiok",
+    "root_directory": "web",
+    "root_directory_ok": true,
+    "root_link": {
+      "linked": true,
+      "path": "C:\\shiok\\.vercel\\project.json",
+      "payload": {
+        "orgId": "team_ARK7HKobyCMp0PCArQTLxbz6",
+        "projectId": "prj_y6GIQUdEyXXmtg3UTWkcJECKHdEE",
+        "projectName": "sgshiok",
+        "settings": {
+          "buildCommand": "npm run build",
+          "createdAt": 1785037769440,
+          "devCommand": null,
+          "directoryListing": false,
+          "framework": "nextjs",
+          "installCommand": "npm ci",
+          "nodeVersion": "24.x",
+          "outputDirectory": ".next",
+          "rootDirectory": "web"
+        }
+      }
+    },
+    "warnings": [],
+    "web_link": {
+      "linked": true,
+      "path": "C:\\shiok\\web\\.vercel\\project.json",
+      "payload": {
+        "orgId": "team_ARK7HKobyCMp0PCArQTLxbz6",
+        "projectId": "prj_y6GIQUdEyXXmtg3UTWkcJECKHdEE",
+        "projectName": "sgshiok"
+      }
+    }
+  },
+  "warnings": []
+}
