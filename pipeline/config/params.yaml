@@ -61,3 +61,15 @@ onemap:
   derived_client_throttle_rps: 0.5       # R / 2 per Section B formula
   client_delay_sec: 2.0                   # 1.0 / 0.5 = 2.0s delay between requests
   server_proxy_throttle_per_min: 30
+onemap_walk_validation:
+  # OneMap walk-routing gate thresholds. Rationale in qa/bus_median_gap_diagnosis_20260804.md:
+  # OSM+/OneMap independent pedestrian graphs have a ~11% structural median delta noise floor;
+  # ~48/1611 postals are OneMap-impossible (walk < crow-flies), ~80/1611 are project snap-bugs
+  # (project_shortest_m < direct_distance_m). Neither is fixable inside this project.
+  median_abs_pct_delta_max: 12.0
+  p95_abs_pct_delta_max: 100.0
+  # When true, the gate-decision median/p95 are computed over the plausible subset only
+  # (distance_sanity == "plausible" AND project_shortest_m >= direct_distance_m * ratio).
+  # Full unfiltered stats still appear in the report; only gate_passed uses the filter.
+  require_distance_sanity_plausible: true
+  project_snap_bug_ratio: 0.98

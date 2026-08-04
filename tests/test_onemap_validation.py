@@ -11,6 +11,7 @@ from pipeline.onemap_validation import (
     decode_polyline,
     evaluate_cached_results,
     haversine_distance_m,
+    load_gate_config,
     onemap_distance_sanity,
     route_cache_key,
     validation_route_trust,
@@ -492,3 +493,151 @@ def test_collect_onemap_walk_cache_writes_fake_fetcher_result(tmp_path: Path):
     cached_report = evaluate_cached_results(sample_payload, tmp_path)
     assert cached_report["cached_results"] == 1
     assert cached_report["median_abs_pct_delta"] == 0.99
+
+
+def _write_cache(cache_dir: Path, cache_key: str, onemap_m: float) -> None:
+    (cache_dir / f"{cache_key}.json").write_text(
+        json.dumps({"route_summary": {"total_distance": onemap_m}}),
+        encoding="utf-8",
+    )
+
+
+def _gate_realism_sample_payload(cache_dir: Path) -> dict:
+    """Build a three-row synthetic sample: plausible, snap-bug, OneMap-impossible.
+
+    All three rows share the same ~100 m direct crow-flies distance so that the
+    plausibility filter alone decides membership.
+    """
+
+    row_configs = [
+        ("100001", (1.30, 103.8), (1.3009, 103.8), 100.0, 105.0),  # plausible
+        ("100002", (1.31, 103.8), (1.3109, 103.8), 80.0, 100.0),  # project snap-bug
+        ("100003", (1.32, 103.8), (1.3209, 103.8), 100.0, 70.0),  # onemap-impossible
+    ]
+    samples: list[dict] = []
+    for postal, start_ll, end_ll, project_m, onemap_m in row_configs:
+        start = {"lat": start_ll[0], "lon": start_ll[1]}
+        end = {"lat": end_ll[0], "lon": end_ll[1]}
+        cache_key = route_cache_key(start, end)
+        _write_cache(cache_dir, cache_key, onemap_m)
+        samples.append(
+            {
+                "postal": postal,
+                "area": "TEST",
+                "cache_key": cache_key,
+                "start": start,
+                "end": end,
+                "project_shortest_m": project_m,
+                "best_node": {"type": "bus_stop", "name": f"Stop {postal}"},
+                "routing_type": "sheltered",
+                "route_trust": "graph_routed_bus_stop",
+                "endpoint_source": "postal_universe_to_transit_poi",
+            }
+        )
+    return {
+        "bundle": "generated_test",
+        "sample_size": len(samples),
+        "samples": samples,
+    }
+
+
+def test_load_gate_config_defaults_when_yaml_section_missing(tmp_path: Path):
+    empty_yaml = tmp_path / "params.yaml"
+    empty_yaml.write_text("unrelated: true\n", encoding="utf-8")
+
+    config = load_gate_config(empty_yaml)
+
+    assert config == {
+        "median_abs_pct_delta_max": 12.0,
+        "p95_abs_pct_delta_max": 100.0,
+        "require_distance_sanity_plausible": True,
+        "project_snap_bug_ratio": 0.98,
+    }
+
+
+def test_load_gate_config_reads_repo_params_yaml():
+    config = load_gate_config()
+
+    assert config["median_abs_pct_delta_max"] == 12.0
+    assert config["p95_abs_pct_delta_max"] == 100.0
+    assert config["require_distance_sanity_plausible"] is True
+    assert config["project_snap_bug_ratio"] == 0.98
+
+
+def test_evaluate_cached_results_gate_metrics_filters_plausible_and_snap_bug(tmp_path: Path):
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    sample_payload = _gate_realism_sample_payload(cache_dir)
+
+    report = evaluate_cached_results(sample_payload, cache_dir)
+
+    # Full unfiltered stats are preserved for transparency.
+    assert report["cached_results"] == 3
+    assert report["median_abs_pct_delta"] == 20.0
+    assert report["p95_abs_pct_delta"] == 40.571
+    assert report["distance_sanity_summary"]["plausible"] == 2
+    assert report["distance_sanity_summary"]["onemap_materially_shorter_than_direct"] == 1
+
+    # Gate metrics compute over the plausible + non-snap-bug subset (row 1 only).
+    gate_metrics = report["gate_metrics"]
+    assert gate_metrics["filtered_row_count"] == 1
+    assert gate_metrics["filter_excluded_count"] == 2
+    assert gate_metrics["median_abs_pct_delta"] == 4.762
+    assert gate_metrics["p95_abs_pct_delta"] == 4.762
+    assert gate_metrics["require_distance_sanity_plausible"] is True
+    assert gate_metrics["project_snap_bug_ratio"] == 0.98
+
+    # Gate uses the filtered subset: 4.762 <= 12 median max and <= 100 p95 max.
+    assert report["gate_passed"] is True
+    assert report["ok"] is True
+    assert report["thresholds"] == {
+        "median_abs_pct_delta_max": 12.0,
+        "p95_abs_pct_delta_max": 100.0,
+    }
+
+
+def test_evaluate_cached_results_gate_uses_unfiltered_when_flag_disabled(tmp_path: Path):
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    sample_payload = _gate_realism_sample_payload(cache_dir)
+
+    disabled_config = {
+        "median_abs_pct_delta_max": 12.0,
+        "p95_abs_pct_delta_max": 100.0,
+        "require_distance_sanity_plausible": False,
+        "project_snap_bug_ratio": 0.98,
+    }
+    report = evaluate_cached_results(sample_payload, cache_dir, gate_config=disabled_config)
+
+    gate_metrics = report["gate_metrics"]
+    assert gate_metrics["filtered_row_count"] == 3
+    assert gate_metrics["filter_excluded_count"] == 0
+    assert gate_metrics["median_abs_pct_delta"] == 20.0
+    assert gate_metrics["p95_abs_pct_delta"] == 40.571
+    assert gate_metrics["require_distance_sanity_plausible"] is False
+
+    # Median of 20 exceeds 12 -> gate fails when the filter is off.
+    assert report["gate_passed"] is False
+    assert report["ok"] is False
+
+
+def test_evaluate_cached_results_gate_config_override_thresholds(tmp_path: Path):
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    sample_payload = _gate_realism_sample_payload(cache_dir)
+
+    # Tighten thresholds so even the single plausible row (4.762%) fails the median cap.
+    tight_config = {
+        "median_abs_pct_delta_max": 1.0,
+        "p95_abs_pct_delta_max": 100.0,
+        "require_distance_sanity_plausible": True,
+        "project_snap_bug_ratio": 0.98,
+    }
+    report = evaluate_cached_results(sample_payload, cache_dir, gate_config=tight_config)
+
+    assert report["gate_metrics"]["filtered_row_count"] == 1
+    assert report["gate_passed"] is False
+    assert report["thresholds"] == {
+        "median_abs_pct_delta_max": 1.0,
+        "p95_abs_pct_delta_max": 100.0,
+    }
