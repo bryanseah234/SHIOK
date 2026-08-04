@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import {
   fetchGeomForPostal,
   fetchManifest,
@@ -24,6 +25,15 @@ import {
   type RouteDisplayMode,
   type RouteMapItem,
 } from "../components/route-evidence-map";
+import {
+  TransitStopPicker,
+} from "../components/transit-stop-picker";
+import {
+  deriveNearestTransitCandidates,
+  resolveBestCandidateId,
+  type TransitCandidate,
+} from "../lib/nearest-transit";
+import { decodePolyline } from "../lib/polyline";
 import { routesAreSame } from "../lib/route-display";
 import styles from "./page.module.css";
 
@@ -111,6 +121,15 @@ function normalizePostal(value: string): string | null {
   const trimmed = value.trim();
   if (!/^\d{1,6}$/.test(trimmed)) return null;
   return trimmed.padStart(6, "0");
+}
+
+function formatDataDate(manifest: Manifest | null): string {
+  if (!manifest?.data_as_of) return "Unavailable";
+  return new Date(manifest.data_as_of).toLocaleDateString("en-SG", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 }
 
 function resultTitle(result: SearchResult): string {
@@ -298,6 +317,29 @@ function buildRouteItems(primary: LoadedSelection | null): RouteMapItem[] {
     });
   }
   return items;
+}
+
+/**
+ * Resolve the postal's origin lat/lng. Prefers the OneMap search result, then
+ * falls back to the first coordinate of the loaded geom's shortest polyline.
+ * Returns null when neither source yields finite coordinates.
+ */
+function resolveOriginLatLng(selection: LoadedSelection | null): { lat: number; lng: number } | null {
+  if (!selection) return null;
+  const searchLat = Number.parseFloat(selection.result.LATITUDE ?? "");
+  const searchLng = Number.parseFloat(selection.result.LONGITUDE ?? "");
+  if (Number.isFinite(searchLat) && Number.isFinite(searchLng)) {
+    return { lat: searchLat, lng: searchLng };
+  }
+  const encoded = selection.geom?.shortest_parts?.[0] ?? selection.geom?.shortest;
+  if (encoded) {
+    const decoded = decodePolyline(encoded);
+    const first = decoded[0];
+    if (first && Number.isFinite(first[0]) && Number.isFinite(first[1])) {
+      return { lat: first[0], lng: first[1] };
+    }
+  }
+  return null;
 }
 
 function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
@@ -586,7 +628,6 @@ function InlineRouteLegend({
 
 function ScoreCard({
   selection,
-  manifest,
   routeMode,
   setRouteMode,
   transitMode,
@@ -605,7 +646,6 @@ function ScoreCard({
   copyStatus,
 }: {
   selection: LoadedSelection | null;
-  manifest: Manifest | null;
   routeMode: RouteDisplayMode;
   setRouteMode: (mode: RouteDisplayMode) => void;
   transitMode: TransitAccessMode;
@@ -623,6 +663,8 @@ function ScoreCard({
   copyFeedback: () => void;
   copyStatus: string;
 }) {
+  const [overflowOpen, setOverflowOpen] = useState(false);
+
   if (!selection) {
     return (
       <section className={styles.scoreCard} aria-label="Score panel">
@@ -678,9 +720,6 @@ function ScoreCard({
   const endpointSnapM = score.paths?.endpoint_snap_connector_m ?? 0;
   const extraWalkLabel =
     extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
-  const dataDate = manifest?.data_as_of
-    ? new Date(manifest.data_as_of).toLocaleDateString("en-SG", { day: "numeric", month: "short", year: "numeric" })
-    : "Unavailable";
 
   return (
     <section className={styles.scoreCard} aria-label="Score panel">
@@ -689,8 +728,42 @@ function ScoreCard({
           <h2>{postalTitle(selection)}</h2>
           <p>{stationName}</p>
         </div>
-        <div className={`${styles.scoreBadge} ${scoreClass(displayScore)}`}>
-          <strong>{formatScoreWithMax(displayScore)}</strong>
+        <div className={styles.scoreHeaderRight}>
+          <div className={`${styles.scoreBadge} ${scoreClass(displayScore)}`}>
+            <strong>{formatScoreWithMax(displayScore)}</strong>
+          </div>
+          <details
+            className={styles.overflowMenu}
+            open={overflowOpen}
+            onToggle={(event) => setOverflowOpen((event.target as HTMLDetailsElement).open)}
+          >
+            <summary
+              className={styles.overflowSummary}
+              aria-haspopup="menu"
+              aria-expanded={overflowOpen}
+              aria-label="More actions"
+            >
+              <span aria-hidden="true">⋯</span>
+            </summary>
+            <div className={styles.overflowMenuBody} role="menu">
+              <button
+                type="button"
+                role="menuitem"
+                aria-pressed={feedbackEnabled}
+                onClick={() => setFeedbackEnabled(!feedbackEnabled)}
+              >
+                {feedbackEnabled ? "Done tracing" : "Suggest better route"}
+              </button>
+              <button
+                type="button"
+                role="menuitem"
+                onClick={copyFeedback}
+                disabled={feedbackPoints.length < 2}
+              >
+                Copy QA JSON
+              </button>
+            </div>
+          </details>
         </div>
       </div>
 
@@ -751,70 +824,62 @@ function ScoreCard({
         />
       )}
 
-      <div className={styles.feedbackBlock}>
-        <div className={styles.feedbackActions}>
-          <button
-            type="button"
-            aria-pressed={feedbackEnabled}
-            onClick={() => setFeedbackEnabled(!feedbackEnabled)}
-          >
-            {feedbackEnabled ? "Done tracing" : "Suggest better route"}
-          </button>
-          <button type="button" onClick={clearFeedback} disabled={feedbackPoints.length === 0}>
-            Clear
-          </button>
-          <button type="button" onClick={copyFeedback} disabled={feedbackPoints.length < 2}>
-            Copy QA JSON
-          </button>
-        </div>
-        {feedbackPoints.length > 0 && (
-          <div className={styles.feedbackEditor}>
-            <div className={styles.feedbackMeta}>
-              {feedbackPoints.length} points / {Math.max(0, feedbackPoints.length - 1)} segments
-              {copyStatus ? <span>{copyStatus}</span> : null}
-            </div>
-            {feedbackSegmentLabels.map((label, index) => (
-              <label key={`segment-${index}`} className={styles.segmentLabel}>
-                <span>Segment {index + 1}</span>
-                <select
-                  value={label}
-                  onChange={(event) =>
-                    setFeedbackSegmentLabel(index, event.target.value as FeedbackSegmentLabel)
-                  }
-                >
-                  {FEEDBACK_SEGMENT_OPTIONS.map((option) => (
-                    <option key={option.id} value={option.id}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ))}
-            <textarea
-              value={feedbackNote}
-              onChange={(event) => setFeedbackNote(event.target.value)}
-              placeholder="Optional route note"
-              rows={2}
-            />
+      {(feedbackEnabled || feedbackPoints.length > 0) && (
+        <div className={styles.feedbackBlock}>
+          <div className={styles.feedbackActions}>
+            <button
+              type="button"
+              onClick={clearFeedback}
+              disabled={feedbackPoints.length === 0}
+            >
+              Clear
+            </button>
           </div>
-        )}
-      </div>
-
-      <details className={styles.detailBlock}>
-        <summary>Details</summary>
+          {feedbackPoints.length > 0 && (
+            <div className={styles.feedbackEditor}>
+              <div className={styles.feedbackMeta}>
+                {feedbackPoints.length} points / {Math.max(0, feedbackPoints.length - 1)} segments
+                {copyStatus ? <span>{copyStatus}</span> : null}
+              </div>
+              {feedbackSegmentLabels.map((label, index) => (
+                <label key={`segment-${index}`} className={styles.segmentLabel}>
+                  <span>Segment {index + 1}</span>
+                  <select
+                    value={label}
+                    onChange={(event) =>
+                      setFeedbackSegmentLabel(index, event.target.value as FeedbackSegmentLabel)
+                    }
+                  >
+                    {FEEDBACK_SEGMENT_OPTIONS.map((option) => (
+                      <option key={option.id} value={option.id}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              ))}
+              <textarea
+                value={feedbackNote}
+                onChange={(event) => setFeedbackNote(event.target.value)}
+                placeholder="Optional route note"
+                rows={2}
+              />
+            </div>
+          )}
+        </div>
+      )}
 
       {score.paths && (
-        <div className={styles.routeFacts}>
-          <Metric label="Shiokest" value={formatDistance(score.paths.sheltered_m)} />
-          <Metric label="Shortest" value={formatDistance(score.paths.shortest_m)} />
-          <Metric label="Extra walk" value={extraWalkLabel} />
-          <Metric label="Extra vs shortest" value={`${Math.round(score.paths.detour_pct ?? 0)}%`} />
+        <div className={styles.routeSecondary} aria-label="Route sheltering detail">
           <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
           <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
           <Metric label="Shade proxy" value={formatPercent(Math.round((score.paths.shade_ratio ?? 0) * 100))} />
-          {endpointSnapM > 0 && (
-            <Metric label="Map connector" value={formatDistance(endpointSnapM)} />
-          )}
+        </div>
+      )}
+
+      {endpointSnapM > 0 && (
+        <div className={styles.routeTertiary}>
+          <Metric label="Map connector" value={formatDistance(endpointSnapM)} />
         </div>
       )}
 
@@ -829,11 +894,6 @@ function ScoreCard({
           ))}
         </div>
       )}
-
-        <div className={styles.dataLine}>
-          Data as of {dataDate} - Heat: shelter plus NParks shade proxy
-        </div>
-      </details>
     </section>
   );
 }
@@ -864,12 +924,62 @@ export default function Home() {
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [chosenStopId, setChosenStopId] = useState<string | null>(null);
+  // Pending stop id from ?stop= URL param — applied once the postal's candidates load.
+  const pendingUrlStopIdRef = useRef<string | null>(null);
+
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Capture the initial ?stop= from the URL. We consume it after the postal's
+  // candidates are known so we can validate the id against real POIs.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const initialStop = new URLSearchParams(window.location.search).get("stop");
+    if (initialStop) pendingUrlStopIdRef.current = initialStop;
+    // Intentionally run only on mount; further URL changes come from our own writes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const activeSelection = useMemo(() => selectionForTransitMode(primary, transitMode), [primary, transitMode]);
   const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
   const mapRouteMode = routesAreSame(activeSelection) ? "shiokest" : routeMode;
   const mapTransitPois = routeTransitPois.features.length > 0 ? routeTransitPois : baseTransitPois;
   const showDetailOverlay = Boolean(primary);
+  const originLatLng = useMemo(() => resolveOriginLatLng(primary), [primary]);
+
+  const candidates = useMemo<TransitCandidate[]>(() => {
+    if (!originLatLng) return [];
+    return deriveNearestTransitCandidates({
+      originLat: originLatLng.lat,
+      originLng: originLatLng.lng,
+      transitPois: mapTransitPois,
+      mode: transitMode,
+      limit: 5,
+    });
+  }, [originLatLng, mapTransitPois, transitMode]);
+
+  const bestCandidateId = useMemo(
+    () => resolveBestCandidateId(candidates, activeSelection?.score ?? null),
+    [candidates, activeSelection]
+  );
+
+  // Apply pending URL stop once candidates for this postal are known.
+  useEffect(() => {
+    if (candidates.length === 0) return;
+    const pending = pendingUrlStopIdRef.current;
+    if (!pending) return;
+    if (candidates.some((candidate) => candidate.id === pending)) {
+      setChosenStopId(pending);
+    }
+    pendingUrlStopIdRef.current = null;
+  }, [candidates]);
+
+  // TODO(stop-picker): the score bundle does not ship per-candidate route
+  // geometry, so the map route line and score-card numbers stay on the
+  // auto-picked best_transit stop even when `chosenStopId` is a non-best stop.
+  // The picker's chip row and comparison text call out the tradeoff. Wire real
+  // per-candidate geometry once the pipeline emits it (see decisions.md).
 
   useEffect(() => {
     let active = true;
@@ -909,12 +1019,73 @@ export default function Home() {
       setFeedbackSegmentLabels([]);
       setFeedbackNote("");
       setCopyStatus("");
+      setChosenStopId(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load score data.");
     } finally {
       setLoading(false);
     }
   };
+
+  /** Update the URL to reflect the current postal / stop selection without a reload. */
+  const syncStopUrl = useCallback(
+    (nextStopId: string | null) => {
+      if (!pathname) return;
+      if (typeof window === "undefined") return;
+      const currentPostal = primary?.result?.POSTAL ?? null;
+      const params = new URLSearchParams(window.location.search);
+      if (currentPostal) {
+        params.set("postal", currentPostal);
+      } else {
+        params.delete("postal");
+      }
+      if (nextStopId) {
+        params.set("stop", nextStopId);
+      } else {
+        params.delete("stop");
+      }
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    },
+    [pathname, primary?.result?.POSTAL, router]
+  );
+
+  const handleTransitModeChange = useCallback((mode: TransitAccessMode) => {
+    setTransitMode(mode);
+    setChosenStopId(null);
+  }, []);
+
+  const handleStopSelect = useCallback(
+    (nextStopId: string | null) => {
+      const resolved = nextStopId && nextStopId !== bestCandidateId ? nextStopId : null;
+      setChosenStopId(resolved);
+      syncStopUrl(resolved);
+    },
+    [bestCandidateId, syncStopUrl]
+  );
+
+  // Mirror the loaded postal into ?postal= so shared links resolve. This runs
+  // whenever the selected postal changes; the ?stop= param is only written by
+  // `handleStopSelect`.
+  const lastSyncedPostalRef = useRef<string | null>(null);
+  useEffect(() => {
+    const postal = primary?.result?.POSTAL ?? null;
+    if (postal === lastSyncedPostalRef.current) return;
+    lastSyncedPostalRef.current = postal;
+    if (!pathname || typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (postal) {
+      params.set("postal", postal);
+    } else {
+      params.delete("postal");
+      params.delete("stop");
+    }
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    // We intentionally depend only on the postal here; other URL state comes
+    // from explicit handlers to avoid overwriting the ?stop= param mid-flight.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [primary?.result?.POSTAL]);
 
   const handleSearch = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -1003,6 +1174,8 @@ export default function Home() {
         feedbackEnabled={feedbackEnabled}
         feedbackPoints={feedbackPoints}
         onFeedbackPoint={addFeedbackPoint}
+        onSelectTransitStop={handleStopSelect}
+        chosenStopId={chosenStopId ?? bestCandidateId}
       />
 
       <section className={styles.searchOverlay} aria-label="Address search">
@@ -1048,11 +1221,10 @@ export default function Home() {
           <aside className={styles.detailOverlay}>
             <ScoreCard
               selection={activeSelection}
-              manifest={manifest}
               routeMode={mapRouteMode}
               setRouteMode={setRouteMode}
               transitMode={transitMode}
-              setTransitMode={setTransitMode}
+              setTransitMode={handleTransitModeChange}
               comfortMode={comfortMode}
               setComfortMode={setComfortMode}
               feedbackEnabled={feedbackEnabled}
@@ -1066,8 +1238,18 @@ export default function Home() {
               copyFeedback={copyFeedback}
               copyStatus={copyStatus}
             />
+            <TransitStopPicker
+              candidates={candidates}
+              activeStopId={chosenStopId}
+              bestStopId={bestCandidateId}
+              onSelect={handleStopSelect}
+            />
           </aside>
         )}
+
+        <footer className={styles.pageFooter}>
+          Data as of {formatDataDate(manifest)} - Heat: shelter plus NParks shade proxy
+        </footer>
       </section>
     </main>
   );

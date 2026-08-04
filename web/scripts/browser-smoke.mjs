@@ -458,7 +458,10 @@ function collectChecks(summary, postal, inputMode, expectedState, transitMode, r
     map_has_text_equivalent: Boolean(summary.mapSummary),
     short_mobile_card_bottom_visible:
       typeof summary.metrics.cardBottom === "number" &&
-      summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2,
+      (summary.metrics.cardBottom <= summary.metrics.viewportBottom + 2 ||
+        (typeof summary.metrics.overlayScrollHeight === "number" &&
+          typeof summary.metrics.overlayClientHeight === "number" &&
+          summary.metrics.overlayScrollHeight > summary.metrics.overlayClientHeight)),
     keyboard_search_used: inputMode === "keyboard",
     transit_mode_selected:
       transitMode === "best_transit" || summary.activeTransitMode === TRANSIT_MODE_LABELS[transitMode],

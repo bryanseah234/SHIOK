@@ -82,7 +82,8 @@
 .feedbackActions button:focus-visible,
 .segmentLabel select:focus-visible,
 .feedbackEditor textarea:focus-visible,
-.detailBlock summary:focus-visible {
+.overflowSummary:focus-visible,
+.overflowMenuBody button:focus-visible {
   outline: 3px solid rgba(0, 143, 134, 0.42);
   outline-offset: 2px;
 }
@@ -199,6 +200,12 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: start;
+}
+
+.scoreHeaderRight {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
 }
 
 .scoreCard h2 {
@@ -614,24 +621,107 @@
   color: #20352f;
 }
 
-.detailBlock {
-  margin-top: 10px;
-  border-top: 1px solid #dce5e1;
-  padding-top: 8px;
-}
+/* removed <details> block 2026-08-04: metrics promoted to always-visible rows */
 
-.detailBlock summary {
-  color: #2e4740;
-  font-size: 12px;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-.routeFacts {
+.routeSecondary {
   margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 6px;
+}
+
+.routeSecondary strong,
+.routeTertiary strong {
+  font-size: 12px;
+  color: var(--secondary-text, #6b7280);
+}
+
+.routeSecondary span,
+.routeTertiary span {
+  color: var(--secondary-text, #6b7280);
+}
+
+.routeTertiary {
+  margin-top: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+/* .routeFacts removed 2026-08-04: metrics now split across .routeSecondary and .routeTertiary */
+
+.overflowMenu {
+  position: relative;
+}
+
+.overflowMenu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.overflowSummary {
+  list-style: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #43564f;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.overflowSummary:hover,
+.overflowMenu[open] .overflowSummary {
+  background: #edf4f1;
+  border-color: rgba(62, 75, 70, 0.18);
+}
+
+.overflowSummary span {
+  display: block;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.overflowMenuBody {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 3;
+  min-width: 168px;
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid rgba(62, 75, 70, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 12px 32px rgba(20, 33, 29, 0.18);
+}
+
+.overflowMenuBody button {
+  border: 0;
+  border-radius: 6px;
+  padding: 7px 10px;
+  color: #17211f;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  text-align: left;
+  cursor: pointer;
+}
+
+.overflowMenuBody button:hover:not(:disabled) {
+  background: #edf4f1;
+}
+
+.overflowMenuBody button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .gapList {
@@ -659,11 +749,13 @@
   color: #c4332b;
 }
 
-.dataLine {
-  margin-top: 9px;
+.pageFooter {
+  margin-top: 8px;
+  padding: 6px 12px 4px;
   color: #6a7873;
   font-size: 10px;
   font-weight: 800;
+  text-align: right;
 }
 
 .emptyState {
@@ -710,7 +802,8 @@
   }
 
   .summaryGrid,
-  .routeFacts {
+  .routeSecondary,
+  .routeTertiary {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -731,7 +824,8 @@
   }
 
   .summaryGrid,
-  .routeFacts {
+  .routeSecondary,
+  .routeTertiary {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
