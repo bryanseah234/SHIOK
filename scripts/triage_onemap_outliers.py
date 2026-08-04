@@ -33,6 +33,7 @@ FALLBACK_REASONS = {
     "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius",
     "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius",
     "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius",
+    "route_shorter_than_crow_flies_direct",
 }
 MRT_LRT_NAME_MARKERS = (" MRT ", " LRT ", "MRT STATION", "LRT STATION")
 SHORT_ONEMAP_WALK_REVIEW_M = 20.0

@@ -494,14 +494,20 @@ def test_bus_route_should_use_direct_fallback_for_implausible_graph_detour():
         )
         == "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
     )
-    assert not bus_route_should_use_direct_fallback(
-        candidate,
-        {"shortest_length_m": 45.0},
-        {
-            "straight_line_candidate_m": 300.0,
-            "direct_fallback_shortcut_ratio": 0.5,
-            "direct_fallback_min_missing_m": 50.0,
-        },
+    # 45m routed vs 60m direct = 75% ratio: past the shortcut check (50%) but the
+    # crow-flies snap-bug guard (0.98) still catches it because any routed walk
+    # shorter than the direct line is geometrically impossible.
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate,
+            {"shortest_length_m": 45.0},
+            {
+                "straight_line_candidate_m": 300.0,
+                "direct_fallback_shortcut_ratio": 0.5,
+                "direct_fallback_min_missing_m": 50.0,
+            },
+        )
+        == "route_shorter_than_crow_flies_direct"
     )
 
     boundary_candidate = CandidateNode(
@@ -602,6 +608,157 @@ def test_bus_route_direct_fallback_allows_bounded_near_stop_detour():
         )
         is None
     )
+
+
+def test_bus_route_direct_fallback_catches_snap_bug_shorter_than_crow_flies():
+    """
+    Snap-bug guard: any routed walk shorter than the crow-flies direct distance
+    (with a 2% coordinate-rounding tolerance) must fall back to direct-bus. See
+    qa/bus_median_gap_diagnosis_20260804.md - 80/1611 bus_stop samples in the
+    honesty55 bundle report project_shortest_m < direct_distance_m, which is
+    geometrically impossible. Endpoint connectors snapping origin+destination
+    to the same or adjacent graph nodes collapse the walk to near-zero.
+    """
+    # Postal 489929 shape: direct=109.2m, project_shortest=2.3m
+    # ~2% of direct - caught by both existing shortcut check and new guard;
+    # existing shortcut fires first for backward-compat with reason strings.
+    candidate_489929 = CandidateNode(
+        node_type="bus_stop",
+        name="Bef Bedok Rd",
+        station_name="Bef Bedok Rd",
+        exit_code="83179",
+        graph_node=(109.2, 0.0),
+        straight_line_m=109.2,
+        snap_distance_m=1.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(109.2, 0.0),
+    )
+    assert bus_route_should_use_direct_fallback(
+        candidate_489929,
+        {"shortest_length_m": 2.3},
+        PARAMS["bus_connectivity"],
+    )
+
+    # Postal 465460 shape: direct=101.4m, project_shortest=13.7m
+    # ~14% of direct - also caught by existing shortcut check.
+    candidate_465460 = CandidateNode(
+        node_type="bus_stop",
+        name="Bus Stop 465460",
+        station_name="Bus Stop 465460",
+        exit_code="00000",
+        graph_node=(101.4, 0.0),
+        straight_line_m=101.4,
+        snap_distance_m=1.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(101.4, 0.0),
+    )
+    assert bus_route_should_use_direct_fallback(
+        candidate_465460,
+        {"shortest_length_m": 13.7},
+        PARAMS["bus_connectivity"],
+    )
+
+    # Postal 141037 shape: direct=23.7m, project_shortest=21.8m
+    # ~92% of direct - slips past the 50% shortcut check but the 0.98 crow-flies
+    # rule catches it. This is the residual snap-bug cohort the new guard
+    # explicitly targets.
+    candidate_141037 = CandidateNode(
+        node_type="bus_stop",
+        name="Bus Stop 141037",
+        station_name="Bus Stop 141037",
+        exit_code="00000",
+        graph_node=(23.7, 0.0),
+        straight_line_m=23.7,
+        snap_distance_m=1.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(23.7, 0.0),
+    )
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate_141037,
+            {"shortest_length_m": 21.8},
+            PARAMS["bus_connectivity"],
+        )
+        == "route_shorter_than_crow_flies_direct"
+    )
+    assert bus_route_should_use_direct_fallback(
+        candidate_141037,
+        {"shortest_length_m": 21.8},
+        PARAMS["bus_connectivity"],
+    )
+
+    # Boundary case: direct=100m, project_shortest=99m (99% of direct - 1% under)
+    # sits inside the 2% coordinate-rounding tolerance, so the guard MUST NOT
+    # fire. This protects against downgrading routes that are only marginally
+    # shorter than the crow-flies line due to rounding artefacts.
+    candidate_boundary = CandidateNode(
+        node_type="bus_stop",
+        name="Boundary Stop",
+        station_name="Boundary Stop",
+        exit_code="00000",
+        graph_node=(100.0, 0.0),
+        straight_line_m=100.0,
+        snap_distance_m=1.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(100.0, 0.0),
+    )
+    assert (
+        bus_route_direct_fallback_reason(
+            candidate_boundary,
+            {"shortest_length_m": 99.0},
+            PARAMS["bus_connectivity"],
+        )
+        is None
+    )
+    assert not bus_route_should_use_direct_fallback(
+        candidate_boundary,
+        {"shortest_length_m": 99.0},
+        PARAMS["bus_connectivity"],
+    )
+
+
+def test_direct_bus_fallback_reports_crow_flies_distance_for_snap_bug():
+    """
+    When the snap-bug guard fires, the score record must report the crow-flies
+    direct distance (~109m for the 489929 shape) rather than the impossible
+    project_shortest_m (~2m). Rain/heat/crossing subscores are pending so the
+    published state is SCORED_PARTIAL, matching existing direct-bus-fallback
+    semantics.
+    """
+    from shapely.geometry import Point
+
+    candidate = CandidateNode(
+        node_type="bus_stop",
+        name="Bef Bedok Rd",
+        station_name="Bef Bedok Rd",
+        exit_code="83179",
+        graph_node=(109.2, 0.0),
+        straight_line_m=109.2,
+        snap_distance_m=1.0,
+        service_headways_min={("10", 1): 8.0},
+        expected_wait_min=8.0,
+        point_xy=(109.2, 0.0),
+    )
+    postal_point = Point(0.0, 0.0)
+
+    fallback_scores = direct_bus_fallback_candidate_scores(
+        [candidate],
+        postal_point,
+        PARAMS,
+        WEIGHTS,
+    )
+
+    assert len(fallback_scores) == 1
+    score = fallback_scores[0]
+    assert score["paths"]["shortest_m"] == round(109.2, 1)
+    assert score["paths"]["routing_type"] == "direct_bus_fallback_unrouted"
+    assert score["subscores"]["rain"] is None
+    assert score["subscores"]["heat"] is None
+    assert score["subscores"]["crossing"] is None
 
 
 def test_bus_access_connector_appends_exposed_endpoint_to_plausible_graph_route():

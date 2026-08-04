@@ -853,6 +853,19 @@ def bus_route_direct_fallback_reason(
     if routed_m <= direct_m * shortcut_ratio and (direct_m - routed_m) >= min_missing_m:
         return "implausibly_short_graph_route_to_datamall_bus_stop_within_direct_radius"
 
+    # Snap-bug guard: any routed walk shorter than the crow-flies direct distance
+    # (allowing a small tolerance for coordinate rounding) violates the triangle
+    # inequality and is geometrically impossible. Endpoint connectors sometimes
+    # snap the postal origin and the transit graph node to the same or adjacent
+    # nodes, collapsing the walk to near-zero even when the postal is dozens of
+    # metres from the bus stop. See qa/bus_median_gap_diagnosis_20260804.md for
+    # the 80/1611 sample cohort in the honesty55 bundle.
+    route_shorter_tolerance = float(
+        bus_params.get("route_shorter_than_direct_tolerance_ratio", 0.98)
+    )
+    if routed_m < direct_m * route_shorter_tolerance:
+        return "route_shorter_than_crow_flies_direct"
+
     return None
 
 
