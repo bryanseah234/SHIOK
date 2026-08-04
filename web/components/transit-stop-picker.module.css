@@ -1,0 +1,138 @@
+.pickerShell {
+  margin-top: 10px;
+  border: 1px solid rgba(62, 75, 70, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 42px rgba(20, 33, 29, 0.16);
+  backdrop-filter: blur(14px);
+  padding: 8px 10px;
+  display: grid;
+  gap: 6px;
+}
+
+.pickerHeader {
+  color: #43564f;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(67, 86, 79, 0.42) transparent;
+}
+
+.chipRow::-webkit-scrollbar {
+  height: 5px;
+}
+
+.chipRow::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(67, 86, 79, 0.35);
+}
+
+.chip,
+.chipReset {
+  flex: 0 0 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid #cbd7d1;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #243a34;
+  background: #f6faf8;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.chip:hover,
+.chipReset:hover {
+  background: #edf4f1;
+}
+
+.chip:focus-visible,
+.chipReset:focus-visible {
+  outline: 3px solid rgba(0, 143, 134, 0.42);
+  outline-offset: 2px;
+}
+
+.chip[data-kind="bus_stop"] .chipKind {
+  color: #436b5f;
+}
+
+.chip[data-kind="mrt_exit"] .chipKind {
+  color: #245b8d;
+}
+
+.chipKind {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.chipName {
+  overflow: hidden;
+  max-width: 140px;
+  text-overflow: ellipsis;
+  color: #17211f;
+}
+
+.chipDistance {
+  color: #61716b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.chipActive {
+  color: #ffffff;
+  background: #008f86;
+  border-color: #007a72;
+  box-shadow: 0 0 0 2px rgba(0, 143, 134, 0.24);
+}
+
+.chipActive .chipName,
+.chipActive .chipDistance,
+.chipActive .chipKind {
+  color: #ffffff;
+}
+
+.chipReset {
+  color: #17211f;
+  background: #ffffff;
+  border-color: #17211f;
+  border-style: dashed;
+}
+
+.chipReset:hover {
+  background: #f0f5f2;
+}
+
+.comparisonText {
+  margin: 0;
+  color: #7d5a17;
+  background: #fff6df;
+  border: 1px solid #f0d693;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.emptyNote {
+  margin: 0;
+  color: #61716b;
+  font-size: 11px;
+}

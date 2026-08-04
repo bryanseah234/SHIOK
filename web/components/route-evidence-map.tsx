@@ -131,6 +131,25 @@ const TRANSIT_POI_LAYER_IDS = [
   "bus-stop-dot",
   "bus-stop-label",
 ] as const;
+/** Invisible larger circles under the visual dots for accessible tap targets. */
+const TRANSIT_POI_HIT_LAYER_IDS = [
+  "mrt-station-hit",
+  "mrt-exit-hit",
+  "bus-stop-hit",
+] as const;
+/** Highlight ring layers rendered around the currently chosen POI. */
+const TRANSIT_POI_ACTIVE_RING_LAYER_IDS = [
+  "mrt-station-active-ring",
+  "mrt-exit-active-ring",
+  "bus-stop-active-ring",
+] as const;
+/** All layers we query on map click when detecting a stop selection. */
+const TRANSIT_POI_CLICK_LAYER_IDS = [
+  ...TRANSIT_POI_HIT_LAYER_IDS,
+  "mrt-station-dot",
+  "mrt-exit-dot",
+  "bus-stop-dot",
+] as const;
 const FEEDBACK_LAYER_IDS = [
   "feedback-route-casing",
   "feedback-route-line",
@@ -240,7 +259,9 @@ function moveLayerToTop(map: maplibregl.Map, layerId: string) {
 }
 
 function raiseInteractivePointLayers(map: maplibregl.Map) {
+  for (const layerId of TRANSIT_POI_HIT_LAYER_IDS) moveLayerToTop(map, layerId);
   for (const layerId of TRANSIT_POI_LAYER_IDS) moveLayerToTop(map, layerId);
+  for (const layerId of TRANSIT_POI_ACTIVE_RING_LAYER_IDS) moveLayerToTop(map, layerId);
   for (const layerId of FEEDBACK_LAYER_IDS) moveLayerToTop(map, layerId);
 }
 
@@ -265,6 +286,22 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "circle-color": "#ffffff",
         "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 5.8, 17, 9],
         "circle-opacity": 0.92,
+      },
+    });
+  }
+
+  // Invisible larger hit target for accessible tap on MRT stations (~40% larger).
+  if (!map.getLayer("mrt-station-hit")) {
+    map.addLayer({
+      id: "mrt-station-hit",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 9.8,
+      filter: ["==", ["get", "kind"], "mrt_station"],
+      paint: {
+        "circle-color": "#000000",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 12, 17, 14],
+        "circle-opacity": 0,
       },
     });
   }
@@ -329,6 +366,21 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
+  if (!map.getLayer("mrt-exit-hit")) {
+    map.addLayer({
+      id: "mrt-exit-hit",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 13.2,
+      filter: ["==", ["get", "kind"], "mrt_exit"],
+      paint: {
+        "circle-color": "#000000",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 8, 18, 12],
+        "circle-opacity": 0,
+      },
+    });
+  }
+
   if (!map.getLayer("mrt-exit-label")) {
     map.addLayer({
       id: "mrt-exit-label",
@@ -372,6 +424,21 @@ function ensureRouteLayers(map: maplibregl.Map) {
     });
   }
 
+  if (!map.getLayer("bus-stop-hit")) {
+    map.addLayer({
+      id: "bus-stop-hit",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 12.0,
+      filter: ["==", ["get", "kind"], "bus_stop"],
+      paint: {
+        "circle-color": "#000000",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.0, 7, 16, 10, 18, 13],
+        "circle-opacity": 0,
+      },
+    });
+  }
+
   if (!map.getLayer("bus-stop-label")) {
     map.addLayer({
       id: "bus-stop-label",
@@ -394,6 +461,59 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-halo-color": "#f6faf8",
         "text-halo-width": 1.1,
         "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.0, 0.64, 18, 0.9],
+      },
+    });
+  }
+
+  // Active-stop highlight rings. Filter starts as "match nothing"; the effect
+  // that owns the chosenStopId prop updates the filter at runtime.
+  if (!map.getLayer("mrt-station-active-ring")) {
+    map.addLayer({
+      id: "mrt-station-active-ring",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 9.8,
+      filter: ["all", ["==", ["get", "kind"], "mrt_station"], ["==", ["get", "id"], "__none__"]],
+      paint: {
+        "circle-color": "rgba(0,0,0,0)",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 8.4, 17, 12],
+        "circle-stroke-color": "#f5a623",
+        "circle-stroke-width": 2.4,
+        "circle-stroke-opacity": 0.94,
+      },
+    });
+  }
+
+  if (!map.getLayer("mrt-exit-active-ring")) {
+    map.addLayer({
+      id: "mrt-exit-active-ring",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 13.2,
+      filter: ["all", ["==", ["get", "kind"], "mrt_exit"], ["==", ["get", "id"], "__none__"]],
+      paint: {
+        "circle-color": "rgba(0,0,0,0)",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 4.4, 18, 6.5],
+        "circle-stroke-color": "#f5a623",
+        "circle-stroke-width": 2.2,
+        "circle-stroke-opacity": 0.94,
+      },
+    });
+  }
+
+  if (!map.getLayer("bus-stop-active-ring")) {
+    map.addLayer({
+      id: "bus-stop-active-ring",
+      type: "circle",
+      source: "transit-pois",
+      minzoom: 12.0,
+      filter: ["all", ["==", ["get", "kind"], "bus_stop"], ["==", ["get", "id"], "__none__"]],
+      paint: {
+        "circle-color": "rgba(0,0,0,0)",
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.0, 4, 16, 6, 18, 8.4],
+        "circle-stroke-color": "#f5a623",
+        "circle-stroke-width": 2.2,
+        "circle-stroke-opacity": 0.94,
       },
     });
   }
@@ -617,8 +737,11 @@ function pointCoordinates(event: maplibregl.MapLayerMouseEvent): LngLat | null {
 function bindPoiInteractions(map: maplibregl.Map, Popup: PopupConstructor) {
   for (const layerId of [
     "mrt-station-dot",
+    "mrt-station-hit",
     "mrt-exit-dot",
+    "mrt-exit-hit",
     "bus-stop-dot",
+    "bus-stop-hit",
   ]) {
     map.on("mouseenter", layerId, () => {
       map.getCanvas().style.cursor = "pointer";
@@ -803,6 +926,8 @@ export function RouteEvidenceMap({
   feedbackEnabled = false,
   feedbackPoints = [],
   onFeedbackPoint,
+  onSelectTransitStop,
+  chosenStopId = null,
 }: {
   routes: RouteMapItem[];
   mode: RouteDisplayMode;
@@ -810,6 +935,10 @@ export function RouteEvidenceMap({
   feedbackEnabled?: boolean;
   feedbackPoints?: FeedbackPoint[];
   onFeedbackPoint?: (point: FeedbackPoint) => void;
+  /** Optional handler wired to click / tap on a transit POI (bus stop or MRT exit). */
+  onSelectTransitStop?: (stopId: string) => void;
+  /** POI id of the currently highlighted stop; enables the active ring layer. */
+  chosenStopId?: string | null;
 }) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
@@ -903,17 +1032,41 @@ export function RouteEvidenceMap({
     }
   }, [loaded, routeData.bounds, routeFitKey]);
 
+  const onSelectTransitStopRef = useRef(onSelectTransitStop);
+  useEffect(() => {
+    onSelectTransitStopRef.current = onSelectTransitStop;
+  }, [onSelectTransitStop]);
+
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !loaded) return;
 
     map.getCanvas().style.cursor = feedbackEnabled ? "crosshair" : "";
     const handleClick = (event: maplibregl.MapMouseEvent) => {
-      if (!feedbackEnabled || !onFeedbackPoint) return;
-      onFeedbackPoint({
-        lng: Number(event.lngLat.lng.toFixed(7)),
-        lat: Number(event.lngLat.lat.toFixed(7)),
+      if (feedbackEnabled) {
+        if (onFeedbackPoint) {
+          onFeedbackPoint({
+            lng: Number(event.lngLat.lng.toFixed(7)),
+            lat: Number(event.lngLat.lat.toFixed(7)),
+          });
+        }
+        return;
+      }
+      const selectHandler = onSelectTransitStopRef.current;
+      if (!selectHandler) return;
+      const clickLayers = TRANSIT_POI_CLICK_LAYER_IDS.filter((layerId) =>
+        map.getLayer(layerId)
+      );
+      if (clickLayers.length === 0) return;
+      const features = map.queryRenderedFeatures(event.point, { layers: clickLayers });
+      const hit = features.find((feature) => {
+        const rawId = feature.properties?.id;
+        return typeof rawId === "string" && rawId.length > 0;
       });
+      const stopId = hit?.properties?.id;
+      if (typeof stopId === "string" && stopId.length > 0) {
+        selectHandler(stopId);
+      }
     };
 
     map.on("click", handleClick);
@@ -924,6 +1077,28 @@ export function RouteEvidenceMap({
       }
     };
   }, [feedbackEnabled, loaded, onFeedbackPoint]);
+
+  // Keep the highlight-ring layers filtered to the currently chosen stop id.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !loaded) return;
+    const idToken = typeof chosenStopId === "string" && chosenStopId.length > 0
+      ? chosenStopId
+      : "__none__";
+    for (const layerId of TRANSIT_POI_ACTIVE_RING_LAYER_IDS) {
+      if (!map.getLayer(layerId)) continue;
+      const kind = layerId.startsWith("mrt-station")
+        ? "mrt_station"
+        : layerId.startsWith("mrt-exit")
+          ? "mrt_exit"
+          : "bus_stop";
+      map.setFilter(layerId, [
+        "all",
+        ["==", ["get", "kind"], kind],
+        ["==", ["get", "id"], idToken],
+      ]);
+    }
+  }, [chosenStopId, loaded]);
 
   return (
     <div className={styles.mapShell}>
