@@ -62,7 +62,3 @@ Thumbs.db
 !.env.sample
 !.sourcery.yml
 !.deepsource.toml
-skills/
-skills-lock.json
-docs/
-templates/
