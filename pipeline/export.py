@@ -460,6 +460,43 @@ def geom_record(record: dict[str, Any]) -> dict[str, Any] | None:
             option_output[str(key)] = option_geom
         if option_output:
             output["route_options"] = option_output
+
+    # Per-candidate geometry for the point-to-point transit stop picker. The
+    # score record's `candidates` array carries a `geometry_ref` string of the
+    # form `"<postal>_<node_id>"`; the geom shard's `candidates` map is keyed
+    # by `node_id` so the UI can resolve `geometry_ref` -> `postal geom` +
+    # `candidates[node_id]` with a single lookup.
+    candidate_geometries = record.get("_candidate_geometries")
+    candidate_summaries_raw = record.get("candidates")
+    if isinstance(candidate_geometries, dict):
+        exposure_gap_by_candidate: dict[str, list[dict[str, Any]]] = {}
+        if isinstance(candidate_summaries_raw, list):
+            for summary in candidate_summaries_raw:
+                if not isinstance(summary, dict):
+                    continue
+                node_id = summary.get("node_id")
+                if not isinstance(node_id, str):
+                    continue
+                # Candidate summaries in the score record intentionally omit
+                # per-route exposure gaps to keep the payload small; the geom
+                # shard reconstructs them from the retained edge geometry via
+                # geom_payload_record's fallback path.
+                exposure_gap_by_candidate.setdefault(node_id, [])
+        candidate_output: dict[str, Any] = {}
+        for node_id, geometry_payload in sorted(candidate_geometries.items()):
+            if not isinstance(geometry_payload, dict):
+                continue
+            candidate_geom = geom_payload_record(
+                str(record["postal"]),
+                geometry_payload,
+                exposure_gap_by_candidate.get(str(node_id), []),
+            )
+            if candidate_geom is None:
+                continue
+            candidate_geom.pop("postal", None)
+            candidate_output[str(node_id)] = candidate_geom
+        if candidate_output:
+            output["candidates"] = candidate_output
     return output
 
 
@@ -770,6 +807,31 @@ def export_static_artifacts(
             "index": "scores/index.json",
             "prefix_index": "scores/prefix-index.json",
             "prefix_length": 3,
+            # Additive to the pre-picker record shape. Readers that predate
+            # this manifest key must treat missing `candidates` as [].
+            "record_shape": {
+                "required": [
+                    "postal",
+                    "state",
+                    "total",
+                    "subscores",
+                    "best_node",
+                    "paths",
+                    "exposure_gaps",
+                    "data_as_of",
+                    "provenance",
+                ],
+                "optional": [
+                    "candidates",
+                    "route_options",
+                ],
+                "candidates": {
+                    "cap": 5,
+                    "sort_key": "direct_distance_m_ascending",
+                    "geometry_ref_format": "<postal>_<node_id>",
+                    "node_id_prefixes": ["bus:", "mrt:"],
+                },
+            },
         },
         "geom": {
             "index": "geom/index.json",
@@ -778,6 +840,12 @@ def export_static_artifacts(
             "promoted_resolution": geom_max_promotion_resolution,
             "promotion_mode": "recursive_h3",
             "promotion_threshold_bytes": geom_promotion_threshold_bytes,
+            # Additive per-candidate geometry map on each geom entry, keyed by
+            # score-record `candidates[].node_id`. Absent when the postal has
+            # no scored non-best candidates.
+            "record_shape": {
+                "candidates_map": "geom.<cell>.json[postal].candidates[<node_id>]",
+            },
         },
         "transit": {
             "pois": transit_report["path"],

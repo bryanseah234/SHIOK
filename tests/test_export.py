@@ -270,6 +270,190 @@ def test_geom_record_emits_multiline_route_parts_for_fallback_rendering():
     assert len(output["shortest_parts"]) == 2
 
 
+def sample_record_with_candidates(postal: str = "560234") -> dict:
+    record = sample_record(postal)
+    record["candidates"] = [
+        {
+            "node_id": "bus:66361",
+            "node_name": "Aft Ang Mo Kio Int",
+            "node_type": "bus_stop",
+            "direct_distance_m": 129.4,
+            "paths": {
+                "shortest_m": 155.2,
+                "sheltered_m": 189.7,
+                "covered_ratio": 0.72,
+                "detour_pct": 22.0,
+                "shade_ratio": 0.15,
+            },
+            "geometry_ref": f"{postal}_bus:66361",
+            "route_trust": "graph_routed_bus_stop",
+            "routing_type": "sheltered",
+            "state": "SCORED",
+        },
+        {
+            "node_id": "mrt:21491",
+            "node_name": "Yishun A",
+            "node_type": "mrt_lrt_exit",
+            "direct_distance_m": 245.0,
+            "paths": {
+                "shortest_m": 280.0,
+                "sheltered_m": 310.0,
+                "covered_ratio": 0.55,
+                "detour_pct": 10.7,
+                "shade_ratio": 0.2,
+            },
+            "geometry_ref": f"{postal}_mrt:21491",
+            "route_trust": "graph_routed_mrt_lrt_exit",
+            "routing_type": "sheltered",
+            "state": "SCORED",
+        },
+    ]
+    record["_candidate_geometries"] = {
+        "bus:66361": {
+            "shortest": LineString([(28000.0, 35000.0), (28150.0, 35060.0)]),
+            "sheltered": LineString([(28000.0, 35000.0), (28160.0, 35090.0)]),
+            "shortest_path_edges": [
+                {
+                    "length_m": 155.2,
+                    "is_covered": False,
+                    "geometry": LineString([(28000.0, 35000.0), (28150.0, 35060.0)]),
+                }
+            ],
+            "sheltered_path_edges": [
+                {
+                    "length_m": 189.7,
+                    "is_covered": True,
+                    "geometry": LineString([(28000.0, 35000.0), (28160.0, 35090.0)]),
+                }
+            ],
+            "exposure_gap_edges": [],
+        },
+        "mrt:21491": {
+            "shortest": LineString([(28000.0, 35000.0), (28250.0, 35080.0)]),
+            "sheltered": LineString([(28000.0, 35000.0), (28260.0, 35110.0)]),
+            "shortest_path_edges": [
+                {
+                    "length_m": 280.0,
+                    "is_covered": False,
+                    "geometry": LineString([(28000.0, 35000.0), (28250.0, 35080.0)]),
+                }
+            ],
+            "sheltered_path_edges": [
+                {
+                    "length_m": 310.0,
+                    "is_covered": True,
+                    "geometry": LineString([(28000.0, 35000.0), (28260.0, 35110.0)]),
+                }
+            ],
+            "exposure_gap_edges": [],
+        },
+    }
+    return record
+
+
+def test_public_score_record_preserves_candidates_field_and_strips_private_geometry_maps():
+    from pipeline.export import public_score_record
+
+    record = sample_record_with_candidates("560234")
+
+    public = public_score_record(record)
+
+    assert public["candidates"] == record["candidates"]
+    # Private geometry maps are stripped by the underscore-key rule.
+    assert "_candidate_geometries" not in public
+    assert "_geometry" not in public
+    assert "_geometry_options" not in public
+
+
+def test_geom_record_emits_candidate_geometry_map_keyed_by_node_id():
+    record = sample_record_with_candidates("560234")
+
+    output = geom_record(record)
+
+    assert output is not None
+    assert "candidates" in output
+    assert set(output["candidates"]) == {"bus:66361", "mrt:21491"}
+    for node_id in ("bus:66361", "mrt:21491"):
+        candidate_geom = output["candidates"][node_id]
+        assert candidate_geom["shortest"]
+        assert candidate_geom["sheltered"]
+        assert "postal" not in candidate_geom
+
+
+def test_export_static_artifacts_writes_candidates_into_score_and_geom_shards(tmp_path: Path):
+    export_static_artifacts([sample_record_with_candidates("560234")], output_dir=tmp_path)
+    ok, validation = validate_static_artifacts(tmp_path)
+    assert ok, validation
+
+    scores = list((tmp_path / "scores").glob("TEST_AREA*.json"))
+    assert len(scores) == 1
+    payload = json.loads(scores[0].read_text(encoding="utf-8"))
+    assert len(payload) == 1
+    score = payload[0]
+    assert score["postal"] == "560234"
+    assert len(score["candidates"]) == 2
+    assert score["candidates"][0]["node_id"] == "bus:66361"
+    assert score["candidates"][0]["geometry_ref"] == "560234_bus:66361"
+    # `_candidate_geometries` must never leak into the exported score shard.
+    assert "_candidate_geometries" not in score
+
+    postal_index = json.loads((tmp_path / "geom" / "postal-index.json").read_text())
+    shard = postal_index["560234"]
+    geom_payload = json.loads((tmp_path / "geom" / "h3" / f"{shard}.json").read_text())
+    entry = next(record for record in geom_payload if record["postal"] == "560234")
+    assert set(entry["candidates"]) == {"bus:66361", "mrt:21491"}
+    assert entry["candidates"]["bus:66361"]["shortest"]
+    assert "postal" not in entry["candidates"]["bus:66361"]
+
+
+def test_refresh_score_provenance_manifest_preserves_candidates_field(tmp_path: Path):
+    export_static_artifacts([sample_record_with_candidates("560234")], output_dir=tmp_path)
+    scores_dir = tmp_path / "scores"
+    shard_path = next(scores_dir.glob("TEST_AREA*.json"))
+    before = json.loads(shard_path.read_text(encoding="utf-8"))
+    assert before[0]["candidates"]
+
+    report = refresh_score_provenance_manifest(tmp_path)
+
+    after = json.loads(shard_path.read_text(encoding="utf-8"))
+    assert report["ok"] is True
+    # Score records are untouched by refresh-provenance; candidates survive verbatim.
+    assert after == before
+
+
+def test_load_score_batch_records_roundtrips_records_without_candidates(tmp_path: Path):
+    # Backward compat: a chunk emitted before the picker rescore has no
+    # `candidates` field. Exporter must accept it and pass it through
+    # unchanged.
+    chunks_dir = tmp_path / "chunks"
+    chunks_dir.mkdir()
+    legacy_record = {
+        "postal": "560234",
+        "state": "SCORED",
+        "total": 60.0,
+        "subscores": {
+            "access": 100.0,
+            "bus": 90.0,
+            "rain": 70.0,
+            "heat": 70.0,
+            "crossing": 100.0,
+        },
+        "best_node": {"type": "bus_stop", "name": "Legacy", "routed_m": 200.0},
+        "paths": {"shortest_m": 200.0, "sheltered_m": 220.0, "detour_pct": 10.0},
+        "exposure_gaps": [],
+        "data_as_of": "2026-07-27T00:00:00+00:00",
+        "provenance": {"reason": "legacy"},
+    }
+    (chunks_dir / "chunk_00001_560234_560234.json").write_text(
+        json.dumps([legacy_record]), encoding="utf-8"
+    )
+
+    loaded = load_score_batch_records(tmp_path)
+
+    assert loaded == [legacy_record]
+    assert "candidates" not in loaded[0]
+
+
 def test_station_code_rows_from_xls_bytes_parses_official_schema(monkeypatch):
     class FakeSheet:
         nrows = 3

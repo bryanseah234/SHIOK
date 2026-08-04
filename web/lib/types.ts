@@ -45,6 +45,44 @@ export interface ExposureGap {
   };
 }
 
+/**
+ * Compact per-route summary carried on each ranked transit candidate.
+ * All fields are optional because a candidate emitted via the direct-bus
+ * fallback path has no routed geometry — only a straight-line direct
+ * distance and a bus wait — so `shortest_m`/`sheltered_m`/`covered_ratio`
+ * can legitimately be null.
+ */
+export interface CandidatePaths {
+  shortest_m: number | null;
+  sheltered_m: number | null;
+  covered_ratio: number | null;
+  detour_pct: number | null;
+  shade_ratio: number | null;
+}
+
+/**
+ * One entry in `ScoreRecord.candidates` — a routed transit stop that the
+ * point-to-point picker can promote to the "active" pick and recompute the
+ * score card + map line against.
+ *
+ * `geometry_ref` is a `"<postal>_<node_id>"` lookup key into the geom
+ * shard's per-candidate map (see `PostalGeom.candidates`). It is null when
+ * the pipeline could not retain per-candidate geometry (e.g. the candidate
+ * came from the direct-bus straight-line fallback).
+ */
+export interface TransitCandidate {
+  /** Stable POI id (e.g. "bus:66361", "mrt:21491"). */
+  node_id: string;
+  node_name: string;
+  node_type: string;
+  direct_distance_m: number | null;
+  paths: CandidatePaths;
+  geometry_ref: string | null;
+  route_trust: string;
+  routing_type: string | null;
+  state: ScoreState;
+}
+
 export interface ScoreRecord {
   postal: string;
   state: ScoreState;
@@ -54,6 +92,14 @@ export interface ScoreRecord {
   paths: Paths | null;
   exposure_gaps: ExposureGap[] | null;
   route_options?: Partial<Record<TransitAccessMode, RouteOption>>;
+  /**
+   * Optional list of the top-N nearest ranked transit candidates (sorted by
+   * `direct_distance_m` ascending; capped at 5). Emitted only for scored
+   * records that have at least one candidate with a stable POI id. Score
+   * records generated before this field was added omit it entirely; readers
+   * must default to an empty list.
+   */
+  candidates?: TransitCandidate[];
   data_as_of: string | null;
   provenance: string | Record<string, unknown>;
 }
@@ -98,6 +144,13 @@ export interface PostalGeom {
     sheltered?: RouteSegment[];
   };
   route_options?: Partial<Record<TransitAccessMode, PostalRouteGeomOption>>;
+  /**
+   * Per-candidate route geometry keyed by `TransitCandidate.node_id`. The
+   * key here matches the `node_id` suffix of `TransitCandidate.geometry_ref`
+   * (which is `"<postal>_<node_id>"`). Absent when the postal has no
+   * scored non-best candidates retained.
+   */
+  candidates?: Record<string, PostalRouteGeomOption>;
 }
 
 export interface PostalRouteGeomOption {

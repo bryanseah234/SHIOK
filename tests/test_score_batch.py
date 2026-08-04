@@ -214,6 +214,21 @@ def test_json_safe_score_record_serializes_shapely_geometries():
                 }
             ],
         },
+        "_candidate_geometries": {
+            "bus:66361": {
+                "shortest": LineString([(0, 0), (3, 0)]),
+                "sheltered": LineString([(0, 0), (3, 1)]),
+                "shortest_path_edges": [
+                    {
+                        "length_m": 3.0,
+                        "is_covered": False,
+                        "geometry": LineString([(0, 0), (3, 0)]),
+                    }
+                ],
+                "sheltered_path_edges": [],
+                "exposure_gap_edges": [],
+            }
+        },
     }
 
     safe = json_safe_score_record(record)
@@ -223,3 +238,8 @@ def test_json_safe_score_record_serializes_shapely_geometries():
     assert safe["_geometry"]["shortest_path_edges"][0]["geometry"] == "LINESTRING (0 0, 1 1)"
     assert safe["_geometry"]["sheltered_path_edges"][0]["geometry"] == "LINESTRING (0 0, 2 2)"
     assert safe["_geometry"]["exposure_gap_edges"][0]["geometry"] == "LINESTRING (0 0, 1 0)"
+    assert safe["_candidate_geometries"]["bus:66361"]["shortest"] == "LINESTRING (0 0, 3 0)"
+    assert (
+        safe["_candidate_geometries"]["bus:66361"]["shortest_path_edges"][0]["geometry"]
+        == "LINESTRING (0 0, 3 0)"
+    )

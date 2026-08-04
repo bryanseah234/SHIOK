@@ -20,6 +20,9 @@ from pipeline.scoring_integration import (
     load_scoring_context,
     score_postal_gdf,
 )
+from pipeline.scoring_integration import (
+    json_safe_score_record as _shared_json_safe_score_record,
+)
 
 DEFAULT_OUTPUT_DIR = PROCESSED_DIR / "score_batches"
 DEFAULT_ISLAND_NETWORK_PATH = PROCESSED_DIR / "network_island.parquet"
@@ -71,45 +74,16 @@ def json_safe_geometry(value: Any) -> Any:
 
 
 def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
-    safe = dict(record)
-    geometry_payload = safe.get("_geometry")
-    if not isinstance(geometry_payload, dict):
-        return safe
+    """Serialize shapely geometry inside a score record.
 
-    safe_geometry = dict(geometry_payload)
-    safe_geometry["shortest"] = json_safe_geometry(safe_geometry.get("shortest"))
-    safe_geometry["sheltered"] = json_safe_geometry(safe_geometry.get("sheltered"))
-    for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
-        edges = []
-        for edge in safe_geometry.get(edges_key, []):
-            if not isinstance(edge, dict):
-                continue
-            safe_edge = dict(edge)
-            safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
-            edges.append(safe_edge)
-        safe_geometry[edges_key] = edges
-    safe["_geometry"] = safe_geometry
-    geometry_options = safe.get("_geometry_options")
-    if isinstance(geometry_options, dict):
-        safe_options: dict[str, Any] = {}
-        for key, option_geometry in geometry_options.items():
-            if not isinstance(option_geometry, dict):
-                continue
-            option_safe = dict(option_geometry)
-            option_safe["shortest"] = json_safe_geometry(option_safe.get("shortest"))
-            option_safe["sheltered"] = json_safe_geometry(option_safe.get("sheltered"))
-            for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
-                edges = []
-                for edge in option_safe.get(edges_key, []):
-                    if not isinstance(edge, dict):
-                        continue
-                    safe_edge = dict(edge)
-                    safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
-                    edges.append(safe_edge)
-                option_safe[edges_key] = edges
-            safe_options[str(key)] = option_safe
-        safe["_geometry_options"] = safe_options
-    return safe
+    Delegates to the shared implementation in ``pipeline.scoring_integration``
+    so ``_geometry``, ``_geometry_options`` and ``_candidate_geometries`` all
+    stay in sync when the record schema evolves. Local reimplementation
+    remains a thin wrapper so callers importing ``json_safe_score_record``
+    from ``pipeline.score_batch`` (the multiprocessing chunk emitter) keep
+    working.
+    """
+    return _shared_json_safe_score_record(record)
 
 
 def source_list(value: Any) -> list[str]:

@@ -15,6 +15,7 @@ from pipeline.scoring_integration import (
     annotate_no_transit_reason,
     assemble_score_record,
     build_bus_stop_access_connector_route,
+    build_candidate_summaries,
     build_mrt_lrt_exit_access_connector_route,
     build_provenance,
     bus_access_connector_is_plausible,
@@ -23,10 +24,13 @@ from pipeline.scoring_integration import (
     bus_route_should_use_direct_fallback,
     bus_route_trust_rejection_reason,
     candidate_debug_rows,
+    candidate_node_id,
+    candidate_route_trust,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
     nearest_graph_node_in_components,
+    public_candidate_summary,
     score_candidate_route,
     score_postal_row,
     select_bus_stop_candidates,
@@ -1813,6 +1817,368 @@ def test_candidate_debug_rows_serializes_ranked_candidate_details():
             "expected_wait_min": 3.0,
         }
     ]
+
+
+def _bus_candidate(
+    *,
+    name: str,
+    exit_code: str,
+    straight_line_m: float,
+    graph_node: tuple[float, float] = (0.0, 0.0),
+    expected_wait_min: float | None = 5.0,
+) -> CandidateNode:
+    return CandidateNode(
+        node_type="bus_stop",
+        name=name,
+        station_name=name,
+        exit_code=exit_code,
+        graph_node=graph_node,
+        straight_line_m=straight_line_m,
+        snap_distance_m=5.0,
+        service_headways_min={("10", 1): 6.0} if expected_wait_min is not None else {},
+        expected_wait_min=expected_wait_min,
+        point_xy=graph_node,
+        object_id=exit_code,
+    )
+
+
+def _mrt_candidate(
+    *,
+    station: str,
+    exit_code: str,
+    object_id: str,
+    straight_line_m: float,
+    graph_node: tuple[float, float] = (0.0, 0.0),
+) -> CandidateNode:
+    return CandidateNode(
+        node_type="mrt_lrt_exit",
+        name=f"{station} {exit_code}",
+        station_name=station,
+        exit_code=exit_code,
+        graph_node=graph_node,
+        straight_line_m=straight_line_m,
+        snap_distance_m=5.0,
+        point_xy=graph_node,
+        object_id=object_id,
+    )
+
+
+def _scored_candidate(
+    candidate: CandidateNode,
+    *,
+    total: float,
+    shortest_m: float,
+    sheltered_m: float | None = None,
+    routing_type: str = "sheltered",
+    covered_ratio: float = 0.5,
+    shade_ratio: float = 0.2,
+    detour_pct: float | None = None,
+    bus_stop_access_connector_m: float = 0.0,
+    mrt_lrt_exit_access_connector_m: float = 0.0,
+    subscores: dict[str, float | None] | None = None,
+    include_geometry: bool = False,
+) -> dict:
+    if sheltered_m is None:
+        sheltered_m = shortest_m
+    if detour_pct is None:
+        detour_pct = ((sheltered_m / shortest_m) - 1.0) * 100.0 if shortest_m > 0 else 0.0
+    if subscores is None:
+        subscores = {"access": 100.0, "bus": 90.0, "rain": 70.0, "heat": 70.0, "crossing": 100.0}
+    node_type = candidate.node_type
+    exit_code = candidate.exit_code
+    score: dict = {
+        "candidate": candidate,
+        "node_set_eligible": True,
+        "total": total,
+        "subscores": subscores,
+        "best_node": {
+            "type": node_type,
+            "name": candidate.name,
+            "station": candidate.station_name,
+            "exit": exit_code,
+            "routed_m": round(shortest_m, 1),
+            "straight_line_m": round(candidate.straight_line_m, 1),
+            "snap_distance_m": round(candidate.snap_distance_m, 1),
+        },
+        "paths": {
+            "shortest_m": round(shortest_m, 1),
+            "sheltered_m": round(sheltered_m, 1),
+            "detour_pct": round(detour_pct, 1),
+            "routing_type": routing_type,
+            "covered_ratio": covered_ratio,
+            "shade_ratio": shade_ratio,
+            "bus_stop_access_connector_m": bus_stop_access_connector_m,
+            "mrt_lrt_exit_access_connector_m": mrt_lrt_exit_access_connector_m,
+        },
+        "exposure_gaps": [],
+        "crossing_count": 0,
+    }
+    if include_geometry:
+        score["_geometry"] = {
+            "shortest": LineString([(0.0, 0.0), (1.0, 1.0)]),
+            "sheltered": LineString([(0.0, 0.0), (1.0, 1.0)]),
+            "shortest_path_edges": [],
+            "sheltered_path_edges": [],
+            "exposure_gap_edges": [],
+        }
+    return score
+
+
+def test_candidate_node_id_uses_stable_poi_prefixes():
+    bus = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=100.0)
+    mrt = _mrt_candidate(station="Yishun", exit_code="A", object_id="21491", straight_line_m=250.0)
+    unknown = CandidateNode(
+        node_type="mrt_lrt_exit",
+        name="Ghost",
+        station_name="Ghost",
+        exit_code="",
+        graph_node=(0.0, 0.0),
+        straight_line_m=999.0,
+        snap_distance_m=5.0,
+        object_id="",
+    )
+
+    assert candidate_node_id(bus) == "bus:66361"
+    assert candidate_node_id(mrt) == "mrt:21491"
+    assert candidate_node_id(unknown) == ""
+
+
+def test_candidate_route_trust_reflects_routing_type_and_connectors():
+    bus = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=100.0)
+    mrt = _mrt_candidate(station="Yishun", exit_code="A", object_id="21491", straight_line_m=250.0)
+
+    assert candidate_route_trust(bus, {"routing_type": "sheltered"}) == "graph_routed_bus_stop"
+    assert (
+        candidate_route_trust(
+            bus, {"routing_type": "sheltered", "bus_stop_access_connector_m": 40.0}
+        )
+        == "graph_routed_bus_stop_with_access_connector"
+    )
+    assert (
+        candidate_route_trust(bus, {"routing_type": "direct_bus_fallback_unrouted"})
+        == "direct_bus_fallback_unrouted"
+    )
+    assert candidate_route_trust(mrt, {"routing_type": "sheltered"}) == "graph_routed_mrt_lrt_exit"
+    assert (
+        candidate_route_trust(
+            mrt,
+            {"routing_type": "sheltered", "mrt_lrt_exit_access_connector_m": 60.0},
+        )
+        == "graph_routed_mrt_lrt_exit_with_access_connector"
+    )
+
+
+def test_public_candidate_summary_carries_direct_distance_and_paths():
+    candidate = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=129.4)
+    score = _scored_candidate(
+        candidate,
+        total=72.5,
+        shortest_m=155.2,
+        sheltered_m=189.7,
+        routing_type="sheltered",
+        covered_ratio=0.72,
+        shade_ratio=0.15,
+        detour_pct=22.0,
+    )
+
+    summary = public_candidate_summary(score, "560234")
+
+    assert summary == {
+        "node_id": "bus:66361",
+        "node_name": "Bus 66361",
+        "node_type": "bus_stop",
+        "direct_distance_m": 129.4,
+        "paths": {
+            "shortest_m": 155.2,
+            "sheltered_m": 189.7,
+            "covered_ratio": 0.72,
+            "detour_pct": 22.0,
+            "shade_ratio": 0.15,
+        },
+        "geometry_ref": None,
+        "route_trust": "graph_routed_bus_stop",
+        "routing_type": "sheltered",
+        "state": "SCORED",
+    }
+
+
+def test_public_candidate_summary_sets_state_partial_when_subscores_pending():
+    candidate = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=200.0)
+    score = _scored_candidate(
+        candidate,
+        total=50.0,
+        shortest_m=250.0,
+        subscores={"access": 100.0, "bus": None, "rain": None, "heat": None, "crossing": None},
+    )
+
+    summary = public_candidate_summary(score, "560234")
+
+    assert summary is not None
+    assert summary["state"] == "SCORED_PARTIAL"
+
+
+def test_public_candidate_summary_returns_none_without_node_id():
+    candidate = CandidateNode(
+        node_type="mrt_lrt_exit",
+        name="Ghost Exit",
+        station_name="Ghost",
+        exit_code="",
+        graph_node=(0.0, 0.0),
+        straight_line_m=250.0,
+        snap_distance_m=5.0,
+        object_id="",
+    )
+    score = _scored_candidate(candidate, total=50.0, shortest_m=250.0)
+
+    assert public_candidate_summary(score, "560234") is None
+
+
+def test_public_candidate_summary_sets_geometry_ref_when_geometry_retained():
+    candidate = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=150.0)
+    score = _scored_candidate(candidate, total=70.0, shortest_m=180.0, include_geometry=True)
+
+    summary = public_candidate_summary(score, "560234")
+
+    assert summary is not None
+    assert summary["geometry_ref"] == "560234_bus:66361"
+
+
+def test_build_candidate_summaries_sorts_by_direct_distance_ascending_and_caps_at_five():
+    candidates = [
+        _bus_candidate(name=f"Bus {code}", exit_code=code, straight_line_m=distance)
+        for code, distance in [
+            ("11111", 300.0),
+            ("22222", 90.0),
+            ("33333", 210.0),
+            ("44444", 150.0),
+            ("55555", 400.0),
+            ("66666", 50.0),
+            ("77777", 500.0),
+            ("88888", 250.0),
+        ]
+    ]
+    scores = [
+        _scored_candidate(candidate, total=60.0, shortest_m=candidate.straight_line_m + 20.0)
+        for candidate in candidates
+    ]
+
+    summaries = build_candidate_summaries(scores, "560234")
+
+    assert len(summaries) == 5
+    assert [entry["node_id"] for entry in summaries] == [
+        "bus:66666",
+        "bus:22222",
+        "bus:44444",
+        "bus:33333",
+        "bus:88888",
+    ]
+    assert [entry["direct_distance_m"] for entry in summaries] == [50.0, 90.0, 150.0, 210.0, 250.0]
+
+
+def test_build_candidate_summaries_deduplicates_by_node_id_keeping_nearest():
+    candidate = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=200.0)
+    fallback_replica = _bus_candidate(name="Bus 66361", exit_code="66361", straight_line_m=150.0)
+    scores = [
+        _scored_candidate(candidate, total=60.0, shortest_m=220.0),
+        _scored_candidate(
+            fallback_replica,
+            total=40.0,
+            shortest_m=150.0,
+            routing_type="direct_bus_fallback_unrouted",
+        ),
+    ]
+
+    summaries = build_candidate_summaries(scores, "560234")
+
+    assert len(summaries) == 1
+    assert summaries[0]["node_id"] == "bus:66361"
+    assert summaries[0]["direct_distance_m"] == 150.0
+    assert summaries[0]["route_trust"] == "direct_bus_fallback_unrouted"
+
+
+def test_assemble_score_record_emits_top_five_candidates_sorted_by_direct_distance():
+    scores = [
+        _scored_candidate(
+            _bus_candidate(name=f"Bus {code}", exit_code=code, straight_line_m=distance),
+            total=60.0,
+            shortest_m=distance + 20.0,
+        )
+        for code, distance in [
+            ("11111", 300.0),
+            ("22222", 90.0),
+            ("33333", 210.0),
+            ("44444", 150.0),
+            ("55555", 400.0),
+            ("66666", 50.0),
+            ("77777", 500.0),
+        ]
+    ]
+
+    record = assemble_score_record("560234", scores, None, {})
+
+    assert "candidates" in record
+    assert len(record["candidates"]) == 5
+    assert [entry["direct_distance_m"] for entry in record["candidates"]] == [
+        50.0,
+        90.0,
+        150.0,
+        210.0,
+        300.0,
+    ]
+    # best_node and top-level paths remain unchanged so existing readers still work.
+    assert record["best_node"]["type"] == "bus_stop"
+    assert record["paths"]["shortest_m"] > 0
+
+
+def test_assemble_score_record_omits_candidates_for_no_transit_records():
+    record = assemble_score_record("560234", [], None, {"reason": "test"})
+
+    assert record["state"] == "NO_TRANSIT_IN_RANGE"
+    assert "candidates" not in record
+
+
+def test_assemble_score_record_populates_candidate_geometries_when_included():
+    scores = [
+        _scored_candidate(
+            _bus_candidate(name="Near", exit_code="66666", straight_line_m=50.0),
+            total=80.0,
+            shortest_m=70.0,
+            include_geometry=True,
+        ),
+        _scored_candidate(
+            _bus_candidate(name="Far", exit_code="11111", straight_line_m=300.0),
+            total=60.0,
+            shortest_m=320.0,
+            include_geometry=True,
+        ),
+    ]
+
+    record = assemble_score_record("560234", scores, None, {})
+
+    assert set(record["_candidate_geometries"]) == {"bus:66666", "bus:11111"}
+    # Score record carries a corresponding geometry_ref pointing back at the shard entry.
+    refs = {entry["node_id"]: entry["geometry_ref"] for entry in record["candidates"]}
+    assert refs == {
+        "bus:66666": "560234_bus:66666",
+        "bus:11111": "560234_bus:11111",
+    }
+
+
+def test_json_safe_score_record_serializes_candidate_geometries():
+    scores = [
+        _scored_candidate(
+            _bus_candidate(name="Near", exit_code="66666", straight_line_m=50.0),
+            total=80.0,
+            shortest_m=70.0,
+            include_geometry=True,
+        ),
+    ]
+    record = assemble_score_record("560234", scores, None, {})
+
+    safe = json_safe_score_record(record)
+
+    assert isinstance(safe["_candidate_geometries"]["bus:66666"]["shortest"], str)
+    assert safe["_candidate_geometries"]["bus:66666"]["shortest"].startswith("LINESTRING")
 
 
 def test_load_postal_universe_points_filters_ready_rows_and_preserves_requested_order(

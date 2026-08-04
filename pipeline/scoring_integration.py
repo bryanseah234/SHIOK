@@ -6,6 +6,7 @@ import argparse
 import copy
 import hashlib
 import json
+import math
 import sqlite3
 from collections import Counter
 from dataclasses import dataclass
@@ -91,6 +92,13 @@ class CandidateNode:
     service_headways_min: dict[tuple[str, int], float] | None = None
     expected_wait_min: float | None = None
     point_xy: tuple[float, float] | None = None
+    # Stable identifier that lines up with the transit POI feature id used by the
+    # web app (see pipeline/export.py:build_transit_poi_collection). For bus stops
+    # this is the DataMall BusStopCode (same as `exit_code`); for MRT/LRT exits it
+    # is the source OBJECTID (a stable integer per exit in the SLA feed). Emitted
+    # verbatim as the score-record candidate `node_id` prefix payload so the UI
+    # can join candidates to POIs without re-guessing.
+    object_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -327,6 +335,15 @@ def select_mrt_exit_candidates(
             graph_node, snap_distance = nearest_graph_node(row.geometry, nodes, node_xy)
             exit_code = str(row.get("EXIT_CODE", "")).strip()
             name = f"{station_name} {exit_code}".strip()
+            object_id_raw = row.get("OBJECTID")
+            if isinstance(object_id_raw, float) and object_id_raw.is_integer():
+                object_id = str(int(object_id_raw))
+            elif object_id_raw is None or (
+                isinstance(object_id_raw, float) and pd.isna(object_id_raw)
+            ):
+                object_id = ""
+            else:
+                object_id = str(object_id_raw).strip()
             candidates.append(
                 CandidateNode(
                     node_type="mrt_lrt_exit",
@@ -337,6 +354,7 @@ def select_mrt_exit_candidates(
                     straight_line_m=float(row.geometry.distance(postal_point)),
                     snap_distance_m=snap_distance,
                     point_xy=(float(row.geometry.x), float(row.geometry.y)),
+                    object_id=object_id,
                 )
             )
     return candidates
@@ -377,6 +395,7 @@ def select_bus_stop_candidates(
                 service_headways_min=stop.service_headways_min,
                 expected_wait_min=expected_wait,
                 point_xy=stop.point_xy,
+                object_id=str(stop.bus_stop_code or "").strip(),
             )
         )
 
@@ -1500,6 +1519,196 @@ def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+# Path A rationale (Stage 1 of the point-to-point picker rescore):
+#
+# `score_postal_row` already routes to every mrt/bus candidate in the transit
+# node set and stores the per-candidate route (including geometry when
+# `include_geometry=True`) inside `candidate_scores`. Historically we discarded
+# all but the winners of `best_transit` / `mrt_lrt` / `bus` before emitting the
+# score record, which is why the picker chips could only show haversine
+# distances. This stage keeps that scoring pass untouched and adds an additive
+# `candidates` array (plus optional per-candidate geometry) to the score record
+# so Stage 2 can rescore and re-release; the picker in `web/components/
+# transit-stop-picker.tsx` will then have real routed data for every chip
+# without needing a second server-side pass.
+
+
+CANDIDATE_LIMIT = 5
+
+
+def candidate_node_id(candidate: CandidateNode) -> str:
+    """Stable POI id that lines up with the transit POI feature id.
+
+    Mirrors `build_transit_poi_collection` in pipeline/export.py:
+      - bus stops are keyed by DataMall BusStopCode (`bus:<code>`)
+      - mrt/lrt exits are keyed by SLA OBJECTID (`mrt:<object_id>`)
+    Returns an empty string when the underlying identifier is missing, in
+    which case the candidate is excluded from the published candidates array
+    (there is no stable way for the UI to join it back to a POI).
+    """
+    identifier = str(candidate.object_id or "").strip()
+    if not identifier and candidate.node_type == "bus_stop":
+        identifier = str(candidate.exit_code or "").strip()
+    if not identifier:
+        return ""
+    if candidate.node_type == "bus_stop":
+        return f"bus:{identifier}"
+    if candidate.node_type == "mrt_lrt_exit":
+        return f"mrt:{identifier}"
+    return f"{candidate.node_type}:{identifier}"
+
+
+def candidate_route_trust(
+    candidate: CandidateNode,
+    paths: dict[str, Any],
+) -> str:
+    """Human-legible trust tag for a single candidate route.
+
+    Encoded from `paths.routing_type` plus the connector-length signals already
+    written into `paths` by `route_with_endpoint_snap_connectors`. Kept as a
+    single string so the UI can pattern-match without walking the entire route
+    payload.
+    """
+    routing_type = str(paths.get("routing_type") or "")
+    if routing_type == "direct_bus_fallback_unrouted":
+        return "direct_bus_fallback_unrouted"
+    bus_connector_m = float(paths.get("bus_stop_access_connector_m") or 0.0)
+    mrt_connector_m = float(paths.get("mrt_lrt_exit_access_connector_m") or 0.0)
+    if candidate.node_type == "bus_stop":
+        if bus_connector_m > 0.0:
+            return "graph_routed_bus_stop_with_access_connector"
+        return "graph_routed_bus_stop"
+    if candidate.node_type == "mrt_lrt_exit":
+        if mrt_connector_m > 0.0:
+            return "graph_routed_mrt_lrt_exit_with_access_connector"
+        return "graph_routed_mrt_lrt_exit"
+    return "graph_routed"
+
+
+def _round_optional(value: Any, digits: int) -> float | None:
+    if value is None:
+        return None
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return None
+    if math.isnan(numeric):
+        return None
+    return round(numeric, digits)
+
+
+def public_candidate_summary(
+    candidate_score: dict[str, Any],
+    postal: str,
+) -> dict[str, Any] | None:
+    """Serialize one scored candidate to the public score-record schema.
+
+    Returns None when the candidate cannot be given a stable id (missing
+    OBJECTID / BusStopCode) — those cases fall back to the existing
+    best_node/paths in the record, which is the pre-picker behaviour.
+    """
+    candidate = candidate_score.get("candidate")
+    if not isinstance(candidate, CandidateNode):
+        return None
+    node_id = candidate_node_id(candidate)
+    if not node_id:
+        return None
+    raw_paths = candidate_score.get("paths")
+    paths = raw_paths if isinstance(raw_paths, dict) else {}
+    raw_subscores = candidate_score.get("subscores")
+    subscores = raw_subscores if isinstance(raw_subscores, dict) else {}
+    has_pending_subscores = any(value is None for value in subscores.values())
+    state = "SCORED_PARTIAL" if has_pending_subscores else "SCORED"
+    geometry_ref = (
+        f"{postal}_{node_id}" if isinstance(candidate_score.get("_geometry"), dict) else None
+    )
+    summary_paths: dict[str, Any] = {
+        "shortest_m": _round_optional(paths.get("shortest_m"), 1),
+        "sheltered_m": _round_optional(paths.get("sheltered_m"), 1),
+        "covered_ratio": _round_optional(paths.get("covered_ratio"), 3),
+        "detour_pct": _round_optional(paths.get("detour_pct"), 1),
+        "shade_ratio": _round_optional(paths.get("shade_ratio"), 3),
+    }
+    return {
+        "node_id": node_id,
+        "node_name": candidate.name,
+        "node_type": candidate.node_type,
+        "direct_distance_m": _round_optional(candidate.straight_line_m, 1),
+        "paths": summary_paths,
+        "geometry_ref": geometry_ref,
+        "route_trust": candidate_route_trust(candidate, paths),
+        "routing_type": str(paths.get("routing_type")) if paths.get("routing_type") else None,
+        "state": state,
+    }
+
+
+def build_candidate_summaries(
+    candidate_scores: list[dict[str, Any]],
+    postal: str,
+    limit: int = CANDIDATE_LIMIT,
+) -> list[dict[str, Any]]:
+    """Top-N candidate summaries sorted by direct distance ascending.
+
+    Deduplicates by `node_id`, keeping the candidate with the smaller direct
+    distance if the same POI shows up twice (can happen when a bus stop and a
+    direct-fallback replica coexist in `candidate_scores`).
+    """
+    summaries_by_id: dict[str, dict[str, Any]] = {}
+    for candidate_score in candidate_scores:
+        summary = public_candidate_summary(candidate_score, postal)
+        if summary is None:
+            continue
+        node_id = summary["node_id"]
+        existing = summaries_by_id.get(node_id)
+        if existing is None:
+            summaries_by_id[node_id] = summary
+            continue
+        current_distance = existing.get("direct_distance_m")
+        new_distance = summary.get("direct_distance_m")
+        if new_distance is not None and (
+            current_distance is None or new_distance < current_distance
+        ):
+            summaries_by_id[node_id] = summary
+    summaries = sorted(
+        summaries_by_id.values(),
+        key=lambda item: (
+            (
+                float("inf")
+                if item.get("direct_distance_m") is None
+                else float(item["direct_distance_m"])
+            ),
+            str(item.get("node_id") or ""),
+        ),
+    )
+    return summaries[: max(0, int(limit))]
+
+
+def build_candidate_geometry_map(
+    candidate_scores: list[dict[str, Any]],
+    candidate_summaries: list[dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Slice `_geometry` off the winning candidate scores keyed by node_id.
+
+    Only candidates present in `candidate_summaries` (i.e. the top-N by direct
+    distance) contribute geometry, to keep the geom shard from doubling in
+    size when a postal has many transit options within range.
+    """
+    wanted_ids = {summary["node_id"] for summary in candidate_summaries}
+    geometry_by_id: dict[str, dict[str, Any]] = {}
+    for candidate_score in candidate_scores:
+        candidate = candidate_score.get("candidate")
+        if not isinstance(candidate, CandidateNode):
+            continue
+        node_id = candidate_node_id(candidate)
+        if not node_id or node_id not in wanted_ids:
+            continue
+        geometry_payload = candidate_score.get("_geometry")
+        if not isinstance(geometry_payload, dict):
+            continue
+        geometry_by_id.setdefault(node_id, geometry_payload)
+    return geometry_by_id
+
+
 def candidate_debug_rows(candidate_scores: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for rank, candidate_score in enumerate(
@@ -1759,6 +1968,9 @@ def assemble_score_record(
         "data_as_of": data_as_of,
         "provenance": provenance,
     }
+    candidate_summaries = build_candidate_summaries(scored_candidates, postal)
+    if candidate_summaries:
+        record["candidates"] = candidate_summaries
     if "_geometry" in best:
         record["_geometry"] = best["_geometry"]
     geometry_options = {
@@ -1772,6 +1984,9 @@ def assemble_score_record(
     }
     if geometry_options:
         record["_geometry_options"] = geometry_options
+    candidate_geometry_map = build_candidate_geometry_map(scored_candidates, candidate_summaries)
+    if candidate_geometry_map:
+        record["_candidate_geometries"] = candidate_geometry_map
     skipped_count = len(scored_candidates) - len(eligible_candidates)
     if skipped_count and eligible_candidates:
         ranked_debug = candidate_debug_rows(scored_candidates)
@@ -1835,13 +2050,31 @@ def json_safe_geometry(value: Any) -> Any:
 def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
     safe = dict(record)
     geometry_payload = safe.get("_geometry")
-    if not isinstance(geometry_payload, dict):
-        return safe
+    if isinstance(geometry_payload, dict):
+        safe["_geometry"] = _json_safe_geometry_payload(geometry_payload)
+    geometry_options = safe.get("_geometry_options")
+    if isinstance(geometry_options, dict):
+        safe_options: dict[str, Any] = {}
+        for key, option_geometry in geometry_options.items():
+            if not isinstance(option_geometry, dict):
+                continue
+            safe_options[str(key)] = _json_safe_geometry_payload(option_geometry)
+        safe["_geometry_options"] = safe_options
+    candidate_geometries = safe.get("_candidate_geometries")
+    if isinstance(candidate_geometries, dict):
+        safe_candidates: dict[str, Any] = {}
+        for key, candidate_geometry in candidate_geometries.items():
+            if not isinstance(candidate_geometry, dict):
+                continue
+            safe_candidates[str(key)] = _json_safe_geometry_payload(candidate_geometry)
+        safe["_candidate_geometries"] = safe_candidates
+    return safe
 
-    safe_geometry = dict(geometry_payload)
+
+def _json_safe_geometry_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    safe_geometry = dict(payload)
     safe_geometry["shortest"] = json_safe_geometry(safe_geometry.get("shortest"))
     safe_geometry["sheltered"] = json_safe_geometry(safe_geometry.get("sheltered"))
-
     for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
         path_edges = safe_geometry.get(edges_key)
         if not isinstance(path_edges, list):
@@ -1855,33 +2088,7 @@ def json_safe_score_record(record: dict[str, Any]) -> dict[str, Any]:
             safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
             safe_edges.append(safe_edge)
         safe_geometry[edges_key] = safe_edges
-
-    safe["_geometry"] = safe_geometry
-    geometry_options = safe.get("_geometry_options")
-    if isinstance(geometry_options, dict):
-        safe_options = {}
-        for key, option_geometry in geometry_options.items():
-            if not isinstance(option_geometry, dict):
-                continue
-            option_safe = dict(option_geometry)
-            option_safe["shortest"] = json_safe_geometry(option_safe.get("shortest"))
-            option_safe["sheltered"] = json_safe_geometry(option_safe.get("sheltered"))
-            for edges_key in ["shortest_path_edges", "sheltered_path_edges", "exposure_gap_edges"]:
-                path_edges = option_safe.get(edges_key)
-                if not isinstance(path_edges, list):
-                    continue
-                option_safe_edges: list[Any] = []
-                for edge in path_edges:
-                    if not isinstance(edge, dict):
-                        option_safe_edges.append(edge)
-                        continue
-                    safe_edge = dict(edge)
-                    safe_edge["geometry"] = json_safe_geometry(safe_edge.get("geometry"))
-                    option_safe_edges.append(safe_edge)
-                option_safe[edges_key] = option_safe_edges
-            safe_options[str(key)] = option_safe
-        safe["_geometry_options"] = safe_options
-    return safe
+    return safe_geometry
 
 
 def add_private_origin(record: dict[str, Any], postal_point: Any) -> dict[str, Any]:
