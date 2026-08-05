@@ -1,0 +1,219 @@
+{
+  "total_scored_partial_new_bundle": 42821,
+  "total_scored_new_bundle": 71319,
+  "total_no_transit_new_bundle": 9827,
+  "total_not_yet_new_bundle": 476,
+  "total_records_new_bundle": 124443,
+  "regression_from_honesty55": {
+    "honesty55_scored_now_partial": 40788,
+    "honesty55_partial_still_partial": 1459,
+    "honesty55_no_transit_now_partial": 153,
+    "honesty55_not_yet_now_partial": 0,
+    "new_postals_from_universe_expansion_partial": 421
+  },
+  "by_route_trust": {
+    "direct_bus_fallback_unrouted": 98488,
+    "graph_routed_bus_stop": 43268,
+    "graph_routed_mrt_lrt_exit": 29537,
+    "graph_routed_bus_stop_with_access_connector": 2474,
+    "graph_routed_mrt_lrt_exit_with_access_connector": 898
+  },
+  "by_best_transit_routing_type": {
+    "direct_bus_fallback_unrouted": 42821
+  },
+  "by_fallback_reason_top": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 36852,
+    "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius": 3728,
+    "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius": 958,
+    "dominant_unrouted_bus_endpoint_and_access_connectors": 575,
+    "low_trust_bus_stop_road_centerline_route": 491,
+    "large_unrouted_bus_stop_access_connector": 212,
+    "dominant_unrouted_bus_endpoint_snap": 5
+  },
+  "by_fallback_reason_count_key": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 40460,
+    "dominant_unrouted_bus_endpoint_and_access_connectors": 2486,
+    "low_trust_bus_stop_road_centerline_route": 1867,
+    "large_unrouted_bus_stop_access_connector": 1020,
+    "dominant_unrouted_bus_endpoint_snap": 39
+  },
+  "regression_only_by_fallback_reason_top": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 35800,
+    "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius": 3684,
+    "dominant_unrouted_bus_endpoint_and_access_connectors": 570,
+    "low_trust_bus_stop_road_centerline_route": 484,
+    "large_unrouted_bus_stop_access_connector": 210,
+    "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius": 35,
+    "dominant_unrouted_bus_endpoint_snap": 5
+  },
+  "regression_only_by_fallback_reason_count_key": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": 39372,
+    "dominant_unrouted_bus_endpoint_and_access_connectors": 2453,
+    "low_trust_bus_stop_road_centerline_route": 1848,
+    "large_unrouted_bus_stop_access_connector": 1006,
+    "dominant_unrouted_bus_endpoint_snap": 39
+  },
+  "root_cause_verdict": "H2: pre-existing implausible-graph-route cases exposed by full-universe rescore (old guards dominate, not the new snap-bug guard) | 42821 SCORED_PARTIAL; reasons: route_shorter=0, implausible=36852, multiple_implausible=3728, none_in_prov=0; regression cohort reasons: shorter=0, implausible=35800, multiple=3684",
+  "sample_postals_by_reason": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": [
+      "018940",
+      "018951",
+      "048942",
+      "049034",
+      "049371",
+      "049380",
+      "049384",
+      "049388",
+      "049392",
+      "049396"
+    ],
+    "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius": [
+      "018990",
+      "080000",
+      "098886",
+      "109685",
+      "109689",
+      "109693",
+      "109697",
+      "109701",
+      "109705",
+      "110009"
+    ],
+    "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius": [
+      "089370",
+      "090012",
+      "090109",
+      "098585",
+      "098732",
+      "098736",
+      "098740",
+      "098748",
+      "108933",
+      "109765"
+    ],
+    "dominant_unrouted_bus_endpoint_and_access_connectors": [
+      "103104",
+      "118940",
+      "128128",
+      "128132",
+      "128635",
+      "138944",
+      "267398",
+      "276651",
+      "276839",
+      "276863"
+    ],
+    "large_unrouted_bus_stop_access_connector": [
+      "117828",
+      "127416",
+      "127420",
+      "127835",
+      "127883",
+      "129955",
+      "299807",
+      "319057",
+      "388988",
+      "389588"
+    ],
+    "low_trust_bus_stop_road_centerline_route": [
+      "117836",
+      "117840",
+      "126981",
+      "127428",
+      "127475",
+      "128083",
+      "128087",
+      "138756",
+      "159361",
+      "162127"
+    ],
+    "dominant_unrouted_bus_endpoint_snap": [
+      "437764",
+      "690410",
+      "790484",
+      "729348",
+      "638017"
+    ]
+  },
+  "regression_sample_postals_by_reason": {
+    "implausible_graph_route_to_datamall_bus_stop_within_direct_radius": [
+      "018940",
+      "018951",
+      "048942",
+      "049034",
+      "049371",
+      "049380",
+      "049384",
+      "049388",
+      "049392",
+      "049396"
+    ],
+    "multiple_implausible_graph_routes_to_datamall_bus_stops_within_direct_radius": [
+      "089370",
+      "090012",
+      "090109",
+      "098585",
+      "098732",
+      "098736",
+      "098740",
+      "098748",
+      "108933",
+      "109765"
+    ],
+    "dominant_unrouted_bus_endpoint_and_access_connectors": [
+      "103104",
+      "118940",
+      "128128",
+      "128132",
+      "128635",
+      "138944",
+      "267398",
+      "276651",
+      "276839",
+      "276863"
+    ],
+    "no_graph_routed_transit_candidate_but_datamall_bus_stop_within_direct_radius": [
+      "109685",
+      "109701",
+      "248263",
+      "277113",
+      "299069",
+      "359833",
+      "408969",
+      "669590",
+      "307465",
+      "319773"
+    ],
+    "large_unrouted_bus_stop_access_connector": [
+      "117828",
+      "127416",
+      "127420",
+      "127835",
+      "127883",
+      "129955",
+      "299807",
+      "319057",
+      "388988",
+      "389588"
+    ],
+    "low_trust_bus_stop_road_centerline_route": [
+      "117836",
+      "117840",
+      "126981",
+      "127428",
+      "127475",
+      "128083",
+      "128087",
+      "138756",
+      "159361",
+      "162127"
+    ],
+    "dominant_unrouted_bus_endpoint_snap": [
+      "437764",
+      "690410",
+      "790484",
+      "729348",
+      "638017"
+    ]
+  }
+}
