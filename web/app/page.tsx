@@ -177,6 +177,37 @@ function formatPercent(value: number | null): string {
   return typeof value === "number" ? `${value}%` : "Unavailable";
 }
 
+/**
+ * Inline comparison between the currently-viewed route and its alternate,
+ * spoken in percentage-points of shelter coverage.
+ *
+ * Returns null when:
+ *   - Shiokest and Shortest are the same route (nothing to compare)
+ *   - the score is a direct-bus fallback (routes are not comparable)
+ *   - either coverage % is unknown
+ *   - the delta is under 5pp (avoids clutter for tiny differences)
+ */
+function buildRouteCompareNote(params: {
+  routeMode: RouteDisplayMode;
+  sameRoute: boolean;
+  directBusFallback: boolean;
+  shiokestPct: number | null;
+  shortestPct: number | null;
+}): string | null {
+  const { routeMode, sameRoute, directBusFallback, shiokestPct, shortestPct } = params;
+  if (sameRoute || directBusFallback) return null;
+  if (shiokestPct === null || shortestPct === null) return null;
+  const viewedIsShortest = routeMode === "shortest";
+  const viewedPct = viewedIsShortest ? shortestPct : shiokestPct;
+  const otherPct = viewedIsShortest ? shiokestPct : shortestPct;
+  const otherLabel = viewedIsShortest ? "Shiokest" : "Shortest";
+  const delta = otherPct - viewedPct;
+  const magnitude = Math.abs(delta);
+  if (magnitude < 5) return null;
+  const direction = delta > 0 ? "more" : "less";
+  return `${otherLabel} is ${otherPct}% sheltered (${magnitude}pp ${direction} shelter)`;
+}
+
 function transitModeLabel(mode: TransitAccessMode): string {
   if (mode === "mrt_lrt") return "MRT/LRT";
   if (mode === "bus") return "bus";
@@ -720,6 +751,24 @@ function ScoreCard({
   const endpointSnapM = score.paths?.endpoint_snap_connector_m ?? 0;
   const extraWalkLabel =
     extraWalkM === null ? "Unavailable" : sameRoute || extraWalkM === 0 ? "0 m" : `+${Math.round(extraWalkM)} m`;
+  const compareNote = buildRouteCompareNote({
+    routeMode,
+    sameRoute,
+    directBusFallback,
+    shiokestPct: coveredRatio,
+    shortestPct: shortestCoveredRatio,
+  });
+  const shadeProxyPct =
+    score.paths && typeof score.paths.shade_ratio === "number"
+      ? Math.round(score.paths.shade_ratio * 100)
+      : null;
+  const routeDetailItems: Array<{ label: string; value: string }> = [];
+  if (shadeProxyPct !== null) {
+    routeDetailItems.push({ label: "Shade proxy", value: `${shadeProxyPct}%` });
+  }
+  if (endpointSnapM > 0) {
+    routeDetailItems.push({ label: "Map connector", value: formatDistance(endpointSnapM) });
+  }
 
   return (
     <section className={styles.scoreCard} aria-label="Score panel">
@@ -791,6 +840,11 @@ function ScoreCard({
             <Metric label="Sheltered" value={formatPercent(selectedCoverage)} />
             <Metric label="Extra walk" value={extraWalkLabel} />
           </div>
+          {compareNote && (
+            <p className={styles.compareNote} aria-label="Route comparison">
+              {compareNote}
+            </p>
+          )}
         </>
       )}
 
@@ -869,17 +923,13 @@ function ScoreCard({
         </div>
       )}
 
-      {score.paths && (
-        <div className={styles.routeSecondary} aria-label="Route sheltering detail">
-          <Metric label="Shiokest sheltered" value={formatPercent(coveredRatio)} />
-          <Metric label="Shortest sheltered" value={formatPercent(shortestCoveredRatio)} />
-          <Metric label="Shade proxy" value={formatPercent(Math.round((score.paths.shade_ratio ?? 0) * 100))} />
-        </div>
-      )}
-
-      {endpointSnapM > 0 && (
-        <div className={styles.routeTertiary}>
-          <Metric label="Map connector" value={formatDistance(endpointSnapM)} />
+      {score.paths && routeDetailItems.length > 0 && (
+        <div className={styles.routeDetails} aria-label="Route details">
+          {routeDetailItems.map((item) => (
+            <span key={item.label}>
+              {item.label} <strong>{item.value}</strong>
+            </span>
+          ))}
         </div>
       )}
 
