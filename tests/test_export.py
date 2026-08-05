@@ -696,12 +696,29 @@ def test_export_splits_large_score_files(tmp_path: Path):
 
 
 def test_export_merges_promoted_geom_shards_with_duplicate_child_id(tmp_path: Path, monkeypatch):
+    # Under the drift-consistent grouping introduced with the picker-fix
+    # release, records are first placed into a max-resolution cell and rolled
+    # up via cell_to_parent, so two records with the same "shared-child"
+    # deep cell always end up in the same res-8 parent — no cross-parent
+    # merging is possible any more. This test now verifies the payoff: even
+    # when the outer lat/lon grouping would have split records across res-8
+    # parents (as the fake mock does at resolution 8), the records still land
+    # in one shard lineage rooted at the max-resolution cell's true ancestor.
+    parent_map = {
+        "shared-child": "shared-parent",
+        "shared-parent": "shared-parent",
+    }
+
     def fake_latlng_to_cell(lat: float, _lon: float, resolution: int) -> str:
         if resolution == 8:
             return "parent-a" if lat < 1.31 else "parent-b"
         return "shared-child"
 
+    def fake_cell_to_parent(cell: str, resolution: int) -> str:
+        return parent_map.get(cell, cell)
+
     monkeypatch.setattr("pipeline.export.h3.latlng_to_cell", fake_latlng_to_cell)
+    monkeypatch.setattr("pipeline.export.h3.cell_to_parent", fake_cell_to_parent)
     records = [
         sample_record("123456"),
         sample_record("123457"),
@@ -722,9 +739,14 @@ def test_export_merges_promoted_geom_shards_with_duplicate_child_id(tmp_path: Pa
     ok, validation = validate_static_artifacts(tmp_path)
 
     assert ok, validation
-    assert report["geom_shard_count"] == 2
+    # All four records share the same max-resolution cell "shared-child" and
+    # therefore climb to the same res-8 ancestor "shared-parent" under
+    # cell_to_parent — regardless of what the outer res-8 lat/lon grouping
+    # returned. At the max promotion resolution, sized_record_shards splits by
+    # record count because the threshold only fits one record per shard.
+    assert report["geom_shard_count"] == 4
     geom_records = []
-    for path in sorted((tmp_path / "geom" / "h3").glob("shared-child_PART_*.json")):
+    for path in sorted((tmp_path / "geom" / "h3").glob("shared-parent_PART_*.json")):
         geom_records.extend(json.loads(path.read_text()))
     assert sorted(record["postal"] for record in geom_records) == [
         "123456",
@@ -735,6 +757,18 @@ def test_export_merges_promoted_geom_shards_with_duplicate_child_id(tmp_path: Pa
 
 
 def test_export_recursively_promotes_large_geom_shards(tmp_path: Path, monkeypatch):
+    ancestor_chain = ["deep-a", "still-too-large", "parent-cell"]
+    ancestor_chain_b = ["deep-b", "still-too-large", "parent-cell"]
+
+    def resolve_ancestor(cell: str, resolution: int) -> str:
+        # chain positions: 0->res10, 1->res9, 2->res8
+        target_pos = 10 - resolution
+        if cell in ancestor_chain:
+            return ancestor_chain[target_pos]
+        if cell in ancestor_chain_b:
+            return ancestor_chain_b[target_pos]
+        return cell
+
     def fake_latlng_to_cell(lat: float, _lon: float, resolution: int) -> str:
         if resolution == 8:
             return "parent-cell"
@@ -743,6 +777,7 @@ def test_export_recursively_promotes_large_geom_shards(tmp_path: Path, monkeypat
         return "deep-a" if lat < 1.31 else "deep-b"
 
     monkeypatch.setattr("pipeline.export.h3.latlng_to_cell", fake_latlng_to_cell)
+    monkeypatch.setattr("pipeline.export.h3.cell_to_parent", resolve_ancestor)
     records = [sample_record("123456"), sample_record("654321")]
     records[0]["_origin"]["lat"] = 1.30
     records[1]["_origin"]["lat"] = 1.32

@@ -673,6 +673,7 @@ def geom_record_shards(
     max_bytes: int,
     resolution: int,
     max_resolution: int,
+    cell_by_postal: dict[str, str] | None = None,
 ) -> list[tuple[str, list[dict[str, Any]]]]:
     records = sorted(records, key=lambda item: str(item["postal"]))
     if json_size(records) <= max_bytes:
@@ -681,10 +682,20 @@ def geom_record_shards(
     if resolution >= max_resolution:
         return sized_record_shards(shard_id, records, max_bytes)
 
+    # h3.latlng_to_cell can disagree with cell_to_parent for points near cell
+    # boundaries (the same lat/lon may map to res-N cell X and res-(N+1) cell
+    # Y where cell_to_parent(Y, N) != X). Using a precomputed max-resolution
+    # cell per record and climbing up with cell_to_parent gives a consistent
+    # hierarchical placement regardless of boundary drift, so a res-9 shard
+    # cannot pull records from more than one res-8 parent's recursion.
     children: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in records:
-        lat, lon = geom_origin_by_postal[str(item["postal"])]
-        child = h3.latlng_to_cell(lat, lon, resolution + 1)
+        postal_key = str(item["postal"])
+        if cell_by_postal is not None and postal_key in cell_by_postal:
+            child = h3.cell_to_parent(cell_by_postal[postal_key], resolution + 1)
+        else:
+            lat, lon = geom_origin_by_postal[postal_key]
+            child = h3.latlng_to_cell(lat, lon, resolution + 1)
         children[child].append(item)
 
     shards: list[tuple[str, list[dict[str, Any]]]] = []
@@ -697,6 +708,7 @@ def geom_record_shards(
                 max_bytes,
                 resolution + 1,
                 max_resolution,
+                cell_by_postal,
             )
         )
     return shards
@@ -745,6 +757,13 @@ def export_static_artifacts(
     geom_postal_index: dict[str, str] = {}
     geom_by_cell: dict[str, list[dict[str, Any]]] = defaultdict(list)
     geom_origin_by_postal: dict[str, tuple[float, float]] = {}
+    # Precompute each record's cell at the maximum promotion resolution so the
+    # sharding recursion can climb up via cell_to_parent instead of calling
+    # h3.latlng_to_cell at every level. This eliminates a subtle h3 boundary
+    # drift where the same lat/lon can land in adjacent cells at different
+    # resolutions (breaking the parent-child invariant) and caused merged,
+    # oversized geom shards on the URA-expanded 124k-record full-batch export.
+    geom_cell_by_postal: dict[str, str] = {}
     for record in records:
         origin = record.get("_origin")
         geometry_record = geom_record(record)
@@ -752,9 +771,11 @@ def export_static_artifacts(
             continue
         lat = float(origin["lat"])
         lon = float(origin["lon"])
-        cell = h3.latlng_to_cell(lat, lon, 8)
+        max_res_cell = h3.latlng_to_cell(lat, lon, geom_max_promotion_resolution)
+        cell = h3.cell_to_parent(max_res_cell, 8)
         geom_by_cell[cell].append(geometry_record)
         geom_origin_by_postal[str(record["postal"])] = (lat, lon)
+        geom_cell_by_postal[str(record["postal"])] = max_res_cell
 
     geom_shard_records: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for cell, cell_records in sorted(geom_by_cell.items()):
@@ -765,6 +786,7 @@ def export_static_artifacts(
             geom_promotion_threshold_bytes,
             8,
             geom_max_promotion_resolution,
+            geom_cell_by_postal,
         )
         shard_ids = [shard for shard, _records in shards]
         geom_index[cell] = [] if shard_ids == [cell] else sorted(shard_ids)
