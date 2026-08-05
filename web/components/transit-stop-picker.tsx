@@ -145,9 +145,18 @@ export function TransitStopPicker({
             >
               <span className={styles.chipKind}>{chipKindLabel(candidate.kind)}</span>
               <span className={styles.chipName}>{candidate.name}</span>
-              <span className={styles.chipDistance}>
-                {formatMeters(candidate.straight_line_m)}
-              </span>
+              {/*
+                The primary score card already announces the active stop's routed
+                distance in its headline row, so we hide the chip's straight-line
+                distance while a chip is active to reduce duplication. Non-active
+                chips still surface their distance so users can compare picks.
+                Distance stays discoverable via the title tooltip for a11y.
+              */}
+              {!isActive && (
+                <span className={styles.chipDistance}>
+                  {formatMeters(candidate.straight_line_m)}
+                </span>
+              )}
             </button>
           );
         })}

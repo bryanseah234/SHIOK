@@ -320,6 +320,62 @@ describe("TransitStopPicker component", () => {
     expect(activeMarkers).toHaveLength(1);
   });
 
+  it("hides the straight-line distance span on the currently-active chip", () => {
+    // Rationale: the primary score card already displays the routed distance
+    // for the active stop in its headline row, so we drop the chip's
+    // straight-line distance to avoid two distance readings side by side.
+    // Non-active chips still show their distance so users can compare.
+    // Distance stays available via the button title attribute for a11y.
+    const html = renderPicker({
+      candidates,
+      activeStopId: "bus:66411",
+      bestStopId,
+      onSelect: () => {},
+    });
+    const activeChipMatch = html.match(
+      /<button[^>]*data-chip-id="bus:66411"[^>]*>[\s\S]*?<\/button>/
+    );
+    expect(activeChipMatch).not.toBeNull();
+    // The active chip must not carry a chipDistance span.
+    expect(activeChipMatch![0]).not.toMatch(/chipDistance/);
+    // Sanity: some inactive chip in the same picker still shows its distance.
+    const distanceMatches = html.match(/chipDistance/g) ?? [];
+    expect(distanceMatches.length).toBeGreaterThan(0);
+  });
+
+  it("keeps the straight-line distance span on every chip when the auto-picked best is active", () => {
+    // activeStopId === null falls back to bestStopId, so the best chip is
+    // "active" for render. In that case we still hide distance on the best.
+    const html = renderPicker({
+      candidates,
+      activeStopId: null,
+      bestStopId,
+      onSelect: () => {},
+    });
+    // 5 chips total: 4 non-active with distance, 1 active (best) without.
+    const distanceMatches = html.match(/chipDistance/g) ?? [];
+    expect(distanceMatches).toHaveLength(candidates.length - 1);
+    // The best chip has no chipDistance.
+    const bestChipMatch = html.match(
+      new RegExp(`<button[^>]*data-chip-id="${bestStopId}"[^>]*>[\\s\\S]*?<\\/button>`)
+    );
+    expect(bestChipMatch).not.toBeNull();
+    expect(bestChipMatch![0]).not.toMatch(/chipDistance/);
+  });
+
+  it("keeps the distance available via the chip title tooltip for screen readers", () => {
+    const html = renderPicker({
+      candidates,
+      activeStopId: "bus:66411",
+      bestStopId,
+      onSelect: () => {},
+    });
+    // Every chip should still have a title with its distance in it, active or not.
+    for (const candidate of candidates) {
+      expect(html).toContain(`title="${candidate.name} (~`);
+    }
+  });
+
   it("returns null when there are no candidates", () => {
     const html = renderPicker({
       candidates: [],
