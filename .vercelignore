@@ -17,5 +17,5 @@ web/.next/
 web/.vercel/
 web/node_modules/
 web/public/data/generated_*/
-!web/public/data/generated_20260803_safe_mayflower_560234_targeted/
-!web/public/data/generated_20260803_safe_mayflower_560234_targeted/**
+!web/public/data/generated_20260804_safe_bus_route_honesty55_targeted/
+!web/public/data/generated_20260804_safe_bus_route_honesty55_targeted/**
