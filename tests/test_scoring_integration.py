@@ -2493,43 +2493,49 @@ def test_repick_best_transit_flips_legacy_fallback_record_to_routed_mrt():
     assert result["_geometry_options"]["best_transit"]["shortest"] == "line-mrt"
 
 
-def test_repick_best_transit_keeps_current_when_bus_scored_beats_mrt():
-    # When both mrt_lrt and bus are SCORED, higher total wins. A SCORED bus at
-    # 45 must beat a SCORED MRT at 38.
-    higher_bus = {
+def test_repick_best_transit_leaves_already_scored_record_untouched():
+    # When the chunk's best_transit is already SCORED, the repick shim must not
+    # touch it — we cannot reconstruct node_set_eligible from the assembled
+    # record, so a lower-scoring MRT chosen by the old picker over an
+    # ineligible bus (bus beyond routed_max_m) must stay in place. See
+    # test_repick_best_transit_keeps_ineligible_bus_out_of_best_transit for the
+    # concrete ineligible-bus scenario.
+    higher_bus_ineligible = {
         "state": "SCORED",
-        "total": 45.0,
-        "subscores": {"access": 90.0, "bus": 50.0, "rain": 25.0, "heat": 30.0, "crossing": 60.0},
-        "best_node": {"type": "bus_stop", "name": "Routed Bus"},
-        "paths": {"shortest_m": 220.0, "routing_type": "sheltered"},
-        "exposure_gaps": [],
-    }
-    lower_mrt = {
-        "state": "SCORED",
-        "total": 38.0,
-        "subscores": {"access": 80.0, "bus": 0.0, "rain": 20.0, "heat": 30.0, "crossing": 60.0},
-        "best_node": {"type": "mrt_lrt_exit", "name": "MRT Exit"},
+        "total": 69.5,
+        "subscores": {"access": 90.0, "bus": 80.0, "rain": 25.0, "heat": 30.0, "crossing": 60.0},
+        "best_node": {"type": "bus_stop", "name": "Distant Bus"},
         "paths": {"shortest_m": 480.0, "routing_type": "sheltered"},
         "exposure_gaps": [],
     }
-    record = {
-        "postal": "111111",
+    routed_mrt = {
         "state": "SCORED",
-        "total": 45.0,
-        "subscores": higher_bus["subscores"],
-        "best_node": higher_bus["best_node"],
-        "paths": higher_bus["paths"],
+        "total": 34.9,
+        "subscores": {"access": 80.0, "bus": 0.0, "rain": 20.0, "heat": 30.0, "crossing": 60.0},
+        "best_node": {"type": "mrt_lrt_exit", "name": "MRT Exit"},
+        "paths": {"shortest_m": 380.0, "routing_type": "shortest_due_to_detour"},
+        "exposure_gaps": [],
+    }
+    record = {
+        "postal": "426691",
+        "state": "SCORED",
+        "total": 34.9,
+        "subscores": routed_mrt["subscores"],
+        "best_node": routed_mrt["best_node"],
+        "paths": routed_mrt["paths"],
         "exposure_gaps": [],
         "route_options": {
-            "best_transit": higher_bus,
-            "mrt_lrt": lower_mrt,
-            "bus": higher_bus,
+            # Old picker chose MRT even though bus.total > mrt.total, because
+            # the bus was node_set_eligible=False (beyond bus routed_max_m).
+            "best_transit": routed_mrt,
+            "mrt_lrt": routed_mrt,
+            "bus": higher_bus_ineligible,
         },
     }
     result = repick_best_transit_from_route_options(record)
     assert result["state"] == "SCORED"
-    assert result["total"] == 45.0
-    assert result["best_node"]["type"] == "bus_stop"
+    assert result["total"] == 34.9
+    assert result["best_node"]["type"] == "mrt_lrt_exit"
 
 
 def test_repick_best_transit_no_op_for_no_transit_or_not_yet_scored():

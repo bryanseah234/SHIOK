@@ -1531,17 +1531,22 @@ def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
 def repick_best_transit_from_route_options(record: dict[str, Any]) -> dict[str, Any]:
     """Re-elect ``best_transit`` on an already-assembled score record.
 
-    Existing chunk records were assembled with the older ``candidate_sort_key``
-    that ranked purely by ``total`` desc, so a direct-bus-fallback candidate
+    Chunk records were assembled under the older ``candidate_sort_key`` that
+    ranked purely by ``total`` desc, so a direct-bus-fallback candidate
     (SCORED_PARTIAL, honesty floor 55) could beat a routed MRT (SCORED ~38).
-    The chunk still retains full ``route_options.mrt_lrt`` and
-    ``route_options.bus`` payloads (both are ``public_route_option`` dicts with
-    ``state`` / ``total`` / ``subscores`` / ``paths``) plus per-option geometry
-    under ``_geometry_options``. This helper applies the new state-preferring
-    ``candidate_sort_key`` across those two payloads and rewrites the top-level
-    record + ``route_options.best_transit`` + ``_geometry`` when the winner
-    changes. Records with ``state`` in ``{NO_TRANSIT_IN_RANGE, NOT_YET_SCORED}``
-    are returned unchanged.
+    This helper performs the narrow promotion the owner authorized in
+    docs/decisions.md 2026-08-05: when the current ``best_transit`` is
+    SCORED_PARTIAL (always a bus fallback under the current pipeline) and
+    ``route_options.mrt_lrt`` is SCORED, promote the record's ``best_transit``
+    to the MRT option.
+
+    Same-state (``best_transit`` already SCORED) records are left untouched.
+    We deliberately avoid re-ranking against ``route_options.bus`` here because
+    that field holds the top-total bus regardless of ``node_set_eligible``
+    (buses beyond the routed_max_m cap); reconstructing eligibility from an
+    assembled record is not possible without re-running the scoring pass.
+    Under the current pipeline, MRT candidates are always node-set eligible so
+    the promotion is safe.
 
     Rationale: docs/decisions.md 2026-08-05,
     qa/scored_partial_regression_diagnosis_20260805.json.
@@ -1549,39 +1554,28 @@ def repick_best_transit_from_route_options(record: dict[str, Any]) -> dict[str, 
     state = record.get("state")
     if state in {NO_TRANSIT_IN_RANGE, NOT_YET_SCORED}:
         return record
+    if state != "SCORED_PARTIAL":
+        # Already routed / SCORED, or NO_TRANSIT / NOT_YET; nothing to promote.
+        return record
     route_options = record.get("route_options")
     if not isinstance(route_options, dict):
         return record
-
-    candidates: list[tuple[str, dict[str, Any]]] = []
-    for key in ("mrt_lrt", "bus"):
-        option = route_options.get(key)
-        if not isinstance(option, dict):
-            continue
-        if option.get("state") not in {"SCORED", "SCORED_PARTIAL"}:
-            continue
-        try:
-            _ = candidate_sort_key(option)
-        except (KeyError, TypeError, ValueError):
-            continue
-        candidates.append((key, option))
-    if not candidates:
+    mrt_option = route_options.get("mrt_lrt")
+    if not isinstance(mrt_option, dict) or mrt_option.get("state") != "SCORED":
         return record
 
-    new_key, new_best = max(candidates, key=lambda kv: candidate_sort_key(kv[1]))
-
-    record["state"] = new_best["state"]
-    record["total"] = new_best["total"]
-    record["subscores"] = new_best["subscores"]
-    record["best_node"] = new_best["best_node"]
-    record["paths"] = new_best["paths"]
-    record["exposure_gaps"] = new_best["exposure_gaps"]
-    route_options["best_transit"] = new_best
+    record["state"] = mrt_option["state"]
+    record["total"] = mrt_option["total"]
+    record["subscores"] = mrt_option["subscores"]
+    record["best_node"] = mrt_option["best_node"]
+    record["paths"] = mrt_option["paths"]
+    record["exposure_gaps"] = mrt_option["exposure_gaps"]
+    route_options["best_transit"] = mrt_option
 
     geometry_options = record.get("_geometry_options")
-    if isinstance(geometry_options, dict) and new_key in geometry_options:
-        record["_geometry"] = geometry_options[new_key]
-        geometry_options["best_transit"] = geometry_options[new_key]
+    if isinstance(geometry_options, dict) and "mrt_lrt" in geometry_options:
+        record["_geometry"] = geometry_options["mrt_lrt"]
+        geometry_options["best_transit"] = geometry_options["mrt_lrt"]
     return record
 
 
