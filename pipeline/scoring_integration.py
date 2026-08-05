@@ -1495,10 +1495,19 @@ def build_bus_stop_access_connector_route(
     return min(plausible, key=lambda route: float(route["shortest_length_m"]))
 
 
-def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[float, float, float]:
+def candidate_sort_key(candidate_score: dict[str, Any]) -> tuple[int, float, float, float]:
+    # Primary key: state (SCORED > SCORED_PARTIAL). A fully-scored routed candidate
+    # (all subscores non-null) beats a partial fallback candidate regardless of the
+    # comfort total. The direct-bus-fallback honesty floor of 55 used to beat
+    # routed MRT candidates (~38) here, hiding the honest routed alternative as
+    # best_transit for ~34% of the postal universe. Rationale and diagnosis:
+    # docs/decisions.md 2026-08-05, qa/scored_partial_regression_diagnosis_20260805.json.
+    subscores = candidate_score.get("subscores") or {}
+    is_fully_scored = not any(value is None for value in subscores.values())
     return (
+        1 if is_fully_scored else 0,
         float(candidate_score["total"]),
-        float(candidate_score["subscores"].get("rain") or 0.0),
+        float(subscores.get("rain") or 0.0),
         -float(candidate_score["paths"]["shortest_m"]),
     )
 
@@ -1517,6 +1526,63 @@ def public_route_option(candidate_score: dict[str, Any]) -> dict[str, Any]:
         "paths": candidate_score["paths"],
         "exposure_gaps": candidate_score["exposure_gaps"],
     }
+
+
+def repick_best_transit_from_route_options(record: dict[str, Any]) -> dict[str, Any]:
+    """Re-elect ``best_transit`` on an already-assembled score record.
+
+    Existing chunk records were assembled with the older ``candidate_sort_key``
+    that ranked purely by ``total`` desc, so a direct-bus-fallback candidate
+    (SCORED_PARTIAL, honesty floor 55) could beat a routed MRT (SCORED ~38).
+    The chunk still retains full ``route_options.mrt_lrt`` and
+    ``route_options.bus`` payloads (both are ``public_route_option`` dicts with
+    ``state`` / ``total`` / ``subscores`` / ``paths``) plus per-option geometry
+    under ``_geometry_options``. This helper applies the new state-preferring
+    ``candidate_sort_key`` across those two payloads and rewrites the top-level
+    record + ``route_options.best_transit`` + ``_geometry`` when the winner
+    changes. Records with ``state`` in ``{NO_TRANSIT_IN_RANGE, NOT_YET_SCORED}``
+    are returned unchanged.
+
+    Rationale: docs/decisions.md 2026-08-05,
+    qa/scored_partial_regression_diagnosis_20260805.json.
+    """
+    state = record.get("state")
+    if state in {NO_TRANSIT_IN_RANGE, NOT_YET_SCORED}:
+        return record
+    route_options = record.get("route_options")
+    if not isinstance(route_options, dict):
+        return record
+
+    candidates: list[tuple[str, dict[str, Any]]] = []
+    for key in ("mrt_lrt", "bus"):
+        option = route_options.get(key)
+        if not isinstance(option, dict):
+            continue
+        if option.get("state") not in {"SCORED", "SCORED_PARTIAL"}:
+            continue
+        try:
+            _ = candidate_sort_key(option)
+        except (KeyError, TypeError, ValueError):
+            continue
+        candidates.append((key, option))
+    if not candidates:
+        return record
+
+    new_key, new_best = max(candidates, key=lambda kv: candidate_sort_key(kv[1]))
+
+    record["state"] = new_best["state"]
+    record["total"] = new_best["total"]
+    record["subscores"] = new_best["subscores"]
+    record["best_node"] = new_best["best_node"]
+    record["paths"] = new_best["paths"]
+    record["exposure_gaps"] = new_best["exposure_gaps"]
+    route_options["best_transit"] = new_best
+
+    geometry_options = record.get("_geometry_options")
+    if isinstance(geometry_options, dict) and new_key in geometry_options:
+        record["_geometry"] = geometry_options[new_key]
+        geometry_options["best_transit"] = geometry_options[new_key]
+    return record
 
 
 # Path A rationale (Stage 1 of the point-to-point picker rescore):

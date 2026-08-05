@@ -27,7 +27,12 @@ from shapely.ops import linemerge
 from pipeline.bus import parse_peak_frequency_minutes
 from pipeline.osm_tags import load_osm_tag_schema
 from pipeline.scoring import NO_TRANSIT_IN_RANGE, NOT_YET_SCORED
-from pipeline.scoring_integration import NETWORK_PATH, raw_file_from_manifest, score_postals
+from pipeline.scoring_integration import (
+    NETWORK_PATH,
+    raw_file_from_manifest,
+    repick_best_transit_from_route_options,
+    score_postals,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_EXPORT_DIR = PROJECT_ROOT / "web" / "public" / "data" / "generated"
@@ -1449,6 +1454,11 @@ def load_score_batch_records(records_dir: Path) -> list[dict[str, Any]]:
             if postal in seen:
                 raise ValueError(f"duplicate postal across score batch chunks: {postal}")
             seen.add(postal)
+            # Apply the state-preferring best_transit picker to legacy chunks that
+            # were assembled under the older score-only sort key. See
+            # `pipeline/scoring_integration.py:candidate_sort_key` and
+            # docs/decisions.md 2026-08-05 for rationale.
+            repick_best_transit_from_route_options(item)
             records.append(item)
     return sorted(records, key=lambda item: str(item["postal"]))
 

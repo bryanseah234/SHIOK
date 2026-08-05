@@ -26,11 +26,13 @@ from pipeline.scoring_integration import (
     candidate_debug_rows,
     candidate_node_id,
     candidate_route_trust,
+    candidate_sort_key,
     direct_bus_fallback_candidate_scores,
     json_safe_score_record,
     load_postal_universe_points,
     nearest_graph_node_in_components,
     public_candidate_summary,
+    repick_best_transit_from_route_options,
     score_candidate_route,
     score_postal_row,
     select_bus_stop_candidates,
@@ -2293,3 +2295,289 @@ def test_json_safe_score_record_serializes_private_geometry_payload():
     assert safe["_geometry"]["shortest_path_edges"][0]["geometry"] == "LINESTRING (0 0, 1 0)"
     assert safe["_geometry"]["sheltered_path_edges"][0]["geometry"] == "LINESTRING (0 0, 0 1)"
     assert safe["_geometry"]["exposure_gap_edges"][0]["geometry"] == "LINESTRING (1 1, 2 2)"
+
+
+# ---------------------------------------------------------------------------
+# best_transit picker policy: prefer SCORED (routed) over SCORED_PARTIAL
+# (direct-bus fallback). Rationale: docs/decisions.md 2026-08-05,
+# qa/scored_partial_regression_diagnosis_20260805.json.
+# ---------------------------------------------------------------------------
+
+
+def _synthetic_fallback_bus_candidate_score(total: float = 55.0) -> dict:
+    """A direct-bus-fallback shape produced by ``direct_bus_fallback_candidate_scores``."""
+    return {
+        "candidate": CandidateNode(
+            node_type="bus_stop",
+            name="Fallback Bus",
+            station_name="Fallback Bus",
+            exit_code="10001",
+            graph_node=(147.0, 0.0),
+            straight_line_m=147.0,
+            snap_distance_m=1.0,
+            point_xy=(147.0, 0.0),
+            object_id="10001",
+        ),
+        "node_set_eligible": True,
+        "total": total,
+        "subscores": {
+            "access": 100.0,
+            "bus": 40.0,
+            "rain": None,
+            "heat": None,
+            "crossing": None,
+        },
+        "best_node": {
+            "type": "bus_stop",
+            "name": "Fallback Bus",
+            "routed_m": None,
+            "station": "Fallback Bus",
+            "exit": "10001",
+            "straight_line_m": 147.0,
+            "snap_distance_m": 1.0,
+        },
+        "paths": {
+            "shortest_m": 147.0,
+            "sheltered_m": 147.0,
+            "detour_pct": 0.0,
+            "routing_type": "direct_bus_fallback_unrouted",
+        },
+        "exposure_gaps": [],
+        "crossing_count": None,
+    }
+
+
+def _synthetic_routed_mrt_candidate_score(total: float = 38.0) -> dict:
+    """A routed MRT/LRT candidate with every subscore fully populated."""
+    return {
+        "candidate": CandidateNode(
+            node_type="mrt_lrt_exit",
+            name="Bayfront Exit E",
+            station_name="Bayfront",
+            exit_code="Exit E",
+            graph_node=(542.0, 0.0),
+            straight_line_m=288.0,
+            snap_distance_m=2.0,
+            point_xy=(288.0, 0.0),
+            object_id="21677",
+        ),
+        "node_set_eligible": True,
+        "total": total,
+        "subscores": {
+            "access": 90.0,
+            "bus": 0.0,
+            "rain": 25.0,
+            "heat": 30.0,
+            "crossing": 60.0,
+        },
+        "best_node": {
+            "type": "mrt_lrt_exit",
+            "name": "Bayfront Exit E",
+            "routed_m": 542.0,
+            "station": "Bayfront",
+            "exit": "Exit E",
+            "straight_line_m": 288.0,
+            "snap_distance_m": 2.0,
+        },
+        "paths": {
+            "shortest_m": 542.0,
+            "sheltered_m": 460.0,
+            "detour_pct": 88.0,
+            "routing_type": "sheltered",
+        },
+        "exposure_gaps": [],
+        "crossing_count": 1,
+    }
+
+
+def test_candidate_sort_key_prefers_scored_over_scored_partial_fallback():
+    fallback = _synthetic_fallback_bus_candidate_score(total=55.0)
+    routed = _synthetic_routed_mrt_candidate_score(total=38.0)
+    # `max` must pick the routed SCORED candidate even though the fallback has a
+    # higher `total`. Historical behavior (score-only sort key) would have
+    # picked the fallback.
+    assert max([fallback, routed], key=candidate_sort_key) is routed
+    # State is derived from subscores containing any None:
+    assert candidate_sort_key(fallback)[0] == 0
+    assert candidate_sort_key(routed)[0] == 1
+
+
+def test_candidate_sort_key_same_state_prefers_higher_total():
+    lower = _synthetic_routed_mrt_candidate_score(total=32.0)
+    higher = _synthetic_routed_mrt_candidate_score(total=45.0)
+    # Both SCORED (all subscores filled), so higher total wins.
+    assert max([lower, higher], key=candidate_sort_key) is higher
+
+
+def test_candidate_sort_key_same_partial_state_prefers_higher_total():
+    lower = _synthetic_fallback_bus_candidate_score(total=40.0)
+    higher = _synthetic_fallback_bus_candidate_score(total=55.0)
+    # Both SCORED_PARTIAL, so higher total wins.
+    assert max([lower, higher], key=candidate_sort_key) is higher
+
+
+def test_assemble_score_record_prefers_routed_mrt_over_direct_bus_fallback():
+    # Simulates postal 018940 (Marina Bay): routed MRT at 542m (SCORED 38) plus
+    # a direct-bus fallback at 147m (SCORED_PARTIAL 55). Under the new picker,
+    # best_transit must be the MRT, not the fallback.
+    fallback = _synthetic_fallback_bus_candidate_score(total=55.0)
+    routed = _synthetic_routed_mrt_candidate_score(total=38.0)
+    record = assemble_score_record("018940", [fallback, routed], None, {})
+    assert record["state"] == "SCORED"
+    assert record["total"] == 38.0
+    assert record["best_node"]["type"] == "mrt_lrt_exit"
+    assert record["paths"]["routing_type"] == "sheltered"
+    assert record["route_options"]["best_transit"]["state"] == "SCORED"
+    assert record["route_options"]["mrt_lrt"]["state"] == "SCORED"
+    assert record["route_options"]["bus"]["state"] == "SCORED_PARTIAL"
+
+
+def test_repick_best_transit_flips_legacy_fallback_record_to_routed_mrt():
+    # Legacy chunk shape: `route_options.best_transit` still carries the old
+    # picker's fallback winner but `route_options.mrt_lrt` shows a routed MRT.
+    fallback_option = {
+        "state": "SCORED_PARTIAL",
+        "total": 55.0,
+        "subscores": {
+            "access": 100.0,
+            "bus": 40.0,
+            "rain": None,
+            "heat": None,
+            "crossing": None,
+        },
+        "best_node": {"type": "bus_stop", "name": "Fallback Bus", "routed_m": None},
+        "paths": {"shortest_m": 147.0, "routing_type": "direct_bus_fallback_unrouted"},
+        "exposure_gaps": [],
+    }
+    routed_mrt_option = {
+        "state": "SCORED",
+        "total": 37.8,
+        "subscores": {
+            "access": 90.0,
+            "bus": 0.0,
+            "rain": 25.0,
+            "heat": 30.0,
+            "crossing": 60.0,
+        },
+        "best_node": {"type": "mrt_lrt_exit", "name": "Bayfront Exit E", "routed_m": 542.0},
+        "paths": {"shortest_m": 542.0, "routing_type": "sheltered"},
+        "exposure_gaps": [],
+    }
+    record = {
+        "postal": "018940",
+        "state": "SCORED_PARTIAL",
+        "total": 55.0,
+        "subscores": fallback_option["subscores"],
+        "best_node": fallback_option["best_node"],
+        "paths": fallback_option["paths"],
+        "exposure_gaps": [],
+        "route_options": {
+            "best_transit": fallback_option,
+            "mrt_lrt": routed_mrt_option,
+            "bus": fallback_option,
+        },
+        "_geometry": {"shortest": "line-bus"},
+        "_geometry_options": {
+            "best_transit": {"shortest": "line-bus"},
+            "mrt_lrt": {"shortest": "line-mrt"},
+            "bus": {"shortest": "line-bus"},
+        },
+    }
+    result = repick_best_transit_from_route_options(record)
+    assert result["state"] == "SCORED"
+    assert result["total"] == 37.8
+    assert result["best_node"]["type"] == "mrt_lrt_exit"
+    assert result["paths"]["routing_type"] == "sheltered"
+    assert result["route_options"]["best_transit"]["state"] == "SCORED"
+    assert result["_geometry"]["shortest"] == "line-mrt"
+    assert result["_geometry_options"]["best_transit"]["shortest"] == "line-mrt"
+
+
+def test_repick_best_transit_keeps_current_when_bus_scored_beats_mrt():
+    # When both mrt_lrt and bus are SCORED, higher total wins. A SCORED bus at
+    # 45 must beat a SCORED MRT at 38.
+    higher_bus = {
+        "state": "SCORED",
+        "total": 45.0,
+        "subscores": {"access": 90.0, "bus": 50.0, "rain": 25.0, "heat": 30.0, "crossing": 60.0},
+        "best_node": {"type": "bus_stop", "name": "Routed Bus"},
+        "paths": {"shortest_m": 220.0, "routing_type": "sheltered"},
+        "exposure_gaps": [],
+    }
+    lower_mrt = {
+        "state": "SCORED",
+        "total": 38.0,
+        "subscores": {"access": 80.0, "bus": 0.0, "rain": 20.0, "heat": 30.0, "crossing": 60.0},
+        "best_node": {"type": "mrt_lrt_exit", "name": "MRT Exit"},
+        "paths": {"shortest_m": 480.0, "routing_type": "sheltered"},
+        "exposure_gaps": [],
+    }
+    record = {
+        "postal": "111111",
+        "state": "SCORED",
+        "total": 45.0,
+        "subscores": higher_bus["subscores"],
+        "best_node": higher_bus["best_node"],
+        "paths": higher_bus["paths"],
+        "exposure_gaps": [],
+        "route_options": {
+            "best_transit": higher_bus,
+            "mrt_lrt": lower_mrt,
+            "bus": higher_bus,
+        },
+    }
+    result = repick_best_transit_from_route_options(record)
+    assert result["state"] == "SCORED"
+    assert result["total"] == 45.0
+    assert result["best_node"]["type"] == "bus_stop"
+
+
+def test_repick_best_transit_no_op_for_no_transit_or_not_yet_scored():
+    # Records not in a scored state must be returned untouched.
+    for state in ("NO_TRANSIT_IN_RANGE", "NOT_YET_SCORED"):
+        record = {"postal": "222222", "state": state, "total": None}
+        result = repick_best_transit_from_route_options(record)
+        assert result["state"] == state
+        assert result["total"] is None
+
+
+def test_repick_best_transit_no_op_when_only_bus_partial_and_mrt_absent():
+    # A pure-industrial-style postal where MRT is NO_TRANSIT_IN_RANGE and the
+    # only bus option is the fallback keeps the SCORED_PARTIAL fallback (no
+    # honest routed alternative exists to promote).
+    fallback = {
+        "state": "SCORED_PARTIAL",
+        "total": 55.0,
+        "subscores": {
+            "access": 100.0,
+            "bus": 40.0,
+            "rain": None,
+            "heat": None,
+            "crossing": None,
+        },
+        "best_node": {"type": "bus_stop", "name": "Fallback Bus"},
+        "paths": {"shortest_m": 200.0, "routing_type": "direct_bus_fallback_unrouted"},
+        "exposure_gaps": [],
+    }
+    mrt_empty = {
+        "state": "NO_TRANSIT_IN_RANGE",
+        "total": None,
+        "subscores": None,
+        "best_node": {"type": "mrt_lrt_exit", "name": "No route found"},
+        "paths": None,
+        "exposure_gaps": None,
+    }
+    record = {
+        "postal": "333333",
+        "state": "SCORED_PARTIAL",
+        "total": 55.0,
+        "subscores": fallback["subscores"],
+        "best_node": fallback["best_node"],
+        "paths": fallback["paths"],
+        "exposure_gaps": [],
+        "route_options": {"best_transit": fallback, "mrt_lrt": mrt_empty, "bus": fallback},
+    }
+    result = repick_best_transit_from_route_options(record)
+    assert result["state"] == "SCORED_PARTIAL"
+    assert result["total"] == 55.0
+    assert result["best_node"]["type"] == "bus_stop"
