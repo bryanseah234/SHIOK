@@ -21,7 +21,7 @@ describe("generated data bundle", () => {
     const geomPostalIndex = readJson<Record<string, string>>("geom/postal-index.json");
 
     expect(manifest.provenance).toEqual(
-      expect.objectContaining({ record_count: 124032 })
+      expect.objectContaining({ record_count: 124443 })
     );
     expect(Object.keys(scoreIndex).length).toBeGreaterThan(50);
     expect(Object.keys(geomPostalIndex).length).toBe(
