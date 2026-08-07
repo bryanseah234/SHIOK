@@ -32,6 +32,7 @@ import {
   type TransitCandidate,
 } from "../lib/nearest-transit";
 import { decodePolyline, encodePolyline } from "../lib/polyline";
+import { scoreLiveRoute } from "../lib/live-route-scoring";
 import { routesAreSame } from "../lib/route-display";
 import styles from "./page.module.css";
 
@@ -336,14 +337,74 @@ function selectionForChosenStop(
   chosenStopId: string | null,
   candidates: TransitCandidate[],
   mapTransitPois: TransitPoiCollection,
-  originLatLng: { lat: number; lng: number } | null
+  originLatLng: { lat: number; lng: number } | null,
+  liveRouteCache?: Record<string, LoadedSelection>
 ): LoadedSelection | null {
   if (!baseSelection || !chosenStopId) return baseSelection;
 
+  // 1. If we already have a live OneMap-snapped & shelter-scored route for this stop, return it!
+  if (liveRouteCache && liveRouteCache[chosenStopId]) {
+    return liveRouteCache[chosenStopId];
+  }
+
+  // 2. If pre-computed candidate geometry exists in the shard, use it!
   const candGeomOption = baseSelection.geom?.candidates?.[chosenStopId];
   const candScore = baseSelection.score?.candidates?.find(
     (c) => c.node_id === chosenStopId
   );
+  if (candGeomOption && baseSelection.geom) {
+    const adaptedGeom = optionGeomToPostalGeom(baseSelection.geom.postal, candGeomOption);
+    const matchedCandidate = candidates.find((c) => c.id === chosenStopId);
+    const poiFeature = mapTransitPois.features.find(
+      (f) => f.properties?.id === chosenStopId
+    );
+    const stopName =
+      poiFeature?.properties?.name ?? matchedCandidate?.name ?? chosenStopId;
+    const stopKind =
+      poiFeature?.properties?.kind ?? matchedCandidate?.kind ?? "transit";
+    const stopCode = poiFeature?.properties?.code ?? matchedCandidate?.code;
+    const stopStation =
+      poiFeature?.properties?.station ?? matchedCandidate?.station;
+    const stopExit = poiFeature?.properties?.exit ?? matchedCandidate?.exit;
+    const shortestM = candScore?.paths?.shortest_m ?? matchedCandidate?.straight_line_m ?? 0;
+    const shelteredM = candScore?.paths?.sheltered_m ?? shortestM;
+    const coveredRatio =
+      candScore?.paths?.covered_ratio ??
+      (candScore?.paths?.sheltered_m && candScore?.paths?.shortest_m
+        ? candScore.paths.sheltered_m / candScore.paths.shortest_m
+        : 0);
+
+    const adaptedScore: ScoreRecord | null = baseSelection.score
+      ? {
+          ...baseSelection.score,
+          best_node: {
+            type: stopKind === "mrt_exit" ? "mrt_lrt_exit" : "bus_stop",
+            name: stopName,
+            routed_m: shortestM,
+            exit: stopCode || stopExit,
+            station: stopStation,
+            straight_line_m: matchedCandidate?.straight_line_m ?? shortestM,
+          },
+          paths: {
+            ...baseSelection.score.paths,
+            shortest_m: shortestM,
+            sheltered_m: shelteredM,
+            detour_pct: candScore?.paths?.detour_pct ?? 0,
+            routing_type: candScore?.routing_type ?? "precomputed_candidate",
+            covered_ratio: coveredRatio !== null ? coveredRatio : 0,
+            covered_m: Math.round(shelteredM * (coveredRatio !== null ? coveredRatio : 0)),
+          },
+        }
+      : null;
+
+    return {
+      result: baseSelection.result,
+      score: adaptedScore,
+      geom: adaptedGeom,
+    };
+  }
+
+  // 3. Fallback: Score dynamically using local shelter evidence while OneMap loads in background
   const matchedCandidate = candidates.find((c) => c.id === chosenStopId);
   const poiFeature = mapTransitPois.features.find(
     (f) => f.properties?.id === chosenStopId
@@ -359,100 +420,42 @@ function selectionForChosenStop(
       ? coords[1]
       : matchedCandidate?.coordinates[1];
 
-  let adaptedGeom: PostalGeom | null = baseSelection.geom;
-  if (candGeomOption && baseSelection.geom) {
-    adaptedGeom = optionGeomToPostalGeom(baseSelection.geom.postal, candGeomOption);
-  } else if (
+  if (
     originLatLng &&
     stopLat !== undefined &&
-    stopLng !== undefined &&
-    baseSelection.geom
+    stopLng !== undefined
   ) {
-    const encodedLine = encodePolyline([
-      [originLatLng.lat, originLatLng.lng],
-      [stopLat, stopLng],
-    ]);
-    const distM = Math.round(
-      haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng)
-    );
-    adaptedGeom = {
-      postal: baseSelection.geom.postal,
-      shortest: encodedLine,
-      sheltered: encodedLine,
-      exposure_gaps: [],
-      route_segments: {
-        shortest: [
-          {
-            geom: encodedLine,
-            len_m: distM,
-            is_covered: false,
-            source_class: "direct_unrouted_transit",
-          },
-        ],
-        sheltered: [
-          {
-            geom: encodedLine,
-            len_m: distM,
-            is_covered: false,
-            source_class: "direct_unrouted_transit",
-          },
-        ],
-      },
+    const targetStop = {
+      id: chosenStopId,
+      name: poiFeature?.properties?.name ?? matchedCandidate?.name ?? chosenStopId,
+      kind: (poiFeature?.properties?.kind ?? matchedCandidate?.kind ?? "bus_stop") as "bus_stop" | "mrt_exit",
+      coordinates: [stopLng, stopLat] as [number, number],
+      code: poiFeature?.properties?.code ?? matchedCandidate?.code,
+      station: poiFeature?.properties?.station ?? matchedCandidate?.station,
+      exit: poiFeature?.properties?.exit ?? matchedCandidate?.exit,
+      straight_line_m: haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng),
+    };
+
+    const directScored = scoreLiveRoute({
+      postal: baseSelection.result.POSTAL,
+      originCoords: originLatLng,
+      targetStop,
+      routeCoordinates: [
+        [originLatLng.lat, originLatLng.lng],
+        [stopLat, stopLng],
+      ],
+      baseScore: baseSelection.score,
+      baseGeom: baseSelection.geom,
+    });
+
+    return {
+      result: baseSelection.result,
+      score: directScored.score,
+      geom: directScored.geom,
     };
   }
 
-  const stopName =
-    poiFeature?.properties?.name ?? matchedCandidate?.name ?? chosenStopId;
-  const stopKind =
-    poiFeature?.properties?.kind ?? matchedCandidate?.kind ?? "transit";
-  const stopCode = poiFeature?.properties?.code ?? matchedCandidate?.code;
-  const stopStation =
-    poiFeature?.properties?.station ?? matchedCandidate?.station;
-  const stopExit = poiFeature?.properties?.exit ?? matchedCandidate?.exit;
-  const directM =
-    originLatLng && stopLat !== undefined && stopLng !== undefined
-      ? Math.round(
-          haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng)
-        )
-      : matchedCandidate?.straight_line_m ?? 0;
-
-  let adaptedScore: ScoreRecord | null = baseSelection.score;
-  if (baseSelection.score) {
-    const shortestM = candScore?.paths?.shortest_m ?? directM;
-    const shelteredM = candScore?.paths?.sheltered_m ?? directM;
-    const coveredRatio =
-      candScore?.paths?.covered_ratio ??
-      (candScore?.paths?.sheltered_m && candScore?.paths?.shortest_m
-        ? candScore.paths.sheltered_m / candScore.paths.shortest_m
-        : 0);
-
-    adaptedScore = {
-      ...baseSelection.score,
-      best_node: {
-        type: stopKind === "mrt_exit" ? "mrt_lrt_exit" : "bus_stop",
-        name: stopName,
-        routed_m: shortestM,
-        exit: stopCode || stopExit,
-        station: stopStation,
-        straight_line_m: directM,
-      },
-      paths: {
-        ...baseSelection.score.paths,
-        shortest_m: shortestM,
-        sheltered_m: shelteredM,
-        detour_pct: candScore?.paths?.detour_pct ?? 0,
-        routing_type: candScore?.routing_type ?? "direct_transit_selection",
-        covered_ratio: coveredRatio !== null ? coveredRatio : 0,
-        covered_m: Math.round(shelteredM * (coveredRatio !== null ? coveredRatio : 0)),
-      },
-    };
-  }
-
-  return {
-    result: baseSelection.result,
-    score: adaptedScore,
-    geom: adaptedGeom,
-  };
+  return baseSelection;
 }
 
 
@@ -1116,11 +1119,17 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [chosenStopId, setChosenStopId] = useState<string | null>(null);
+  const [liveRouteCache, setLiveRouteCache] = useState<Record<string, LoadedSelection>>({});
   // Pending stop id from ?stop= URL param — applied once the postal's candidates load.
   const pendingUrlStopIdRef = useRef<string | null>(null);
 
   const router = useRouter();
   const pathname = usePathname();
+
+  // Reset live route cache on postal change
+  useEffect(() => {
+    setLiveRouteCache({});
+  }, [primary?.result?.POSTAL]);
 
   // Capture the initial ?stop= from the URL. We consume it after the postal's
   // candidates are known so we can validate the id against real POIs.
@@ -1156,6 +1165,70 @@ export default function Home() {
     [candidates, transitSelection]
   );
 
+  // Background fetch to snap arbitrary clicked stops onto real OneMap sidewalks and shelter-segment them
+  useEffect(() => {
+    if (!chosenStopId || !transitSelection || !originLatLng) return;
+    const hasPrecomputed = Boolean(transitSelection.geom?.candidates?.[chosenStopId]);
+    if (hasPrecomputed || liveRouteCache[chosenStopId]) return;
+
+    const cand = candidates.find((c) => c.id === chosenStopId);
+    const poi = mapTransitPois.features.find((f) => f.properties?.id === chosenStopId);
+    const coords = poi?.geometry?.coordinates;
+    const stopLng = Array.isArray(coords) && typeof coords[0] === "number" ? coords[0] : cand?.coordinates[0];
+    const stopLat = Array.isArray(coords) && typeof coords[1] === "number" ? coords[1] : cand?.coordinates[1];
+
+    if (stopLat === undefined || stopLng === undefined) return;
+
+    let active = true;
+    const url = `/api/onemap-route?startLat=${originLatLng.lat}&startLng=${originLatLng.lng}&endLat=${stopLat}&endLng=${stopLng}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!active || !data.ok || !data.route_geometry) return;
+        const decoded = decodePolyline(data.route_geometry);
+        if (decoded.length < 2) return;
+
+        const targetStop = {
+          id: chosenStopId,
+          name: poi?.properties?.name ?? cand?.name ?? chosenStopId,
+          kind: (poi?.properties?.kind ?? cand?.kind ?? "bus_stop") as "bus_stop" | "mrt_exit",
+          coordinates: [stopLng, stopLat] as [number, number],
+          code: poi?.properties?.code ?? cand?.code,
+          station: poi?.properties?.station ?? cand?.station,
+          exit: poi?.properties?.exit ?? cand?.exit,
+          straight_line_m: haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng),
+        };
+
+        const liveScored = scoreLiveRoute({
+          postal: transitSelection.result.POSTAL,
+          originCoords: originLatLng,
+          targetStop,
+          routeCoordinates: decoded,
+          baseScore: transitSelection.score,
+          baseGeom: transitSelection.geom,
+        });
+
+        const liveSelection: LoadedSelection = {
+          result: transitSelection.result,
+          score: liveScored.score,
+          geom: liveScored.geom,
+        };
+
+        setLiveRouteCache((prev) => ({
+          ...prev,
+          [chosenStopId]: liveSelection,
+        }));
+      })
+      .catch((err) => {
+        console.warn("OneMap live route fetch failed; keeping direct fallback:", err);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [chosenStopId, transitSelection, originLatLng, candidates, mapTransitPois, liveRouteCache]);
+
   const activeSelection = useMemo(
     () =>
       selectionForChosenStop(
@@ -1163,9 +1236,10 @@ export default function Home() {
         chosenStopId,
         candidates,
         mapTransitPois,
-        originLatLng
+        originLatLng,
+        liveRouteCache
       ),
-    [transitSelection, chosenStopId, candidates, mapTransitPois, originLatLng]
+    [transitSelection, chosenStopId, candidates, mapTransitPois, originLatLng, liveRouteCache]
   );
 
   const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
