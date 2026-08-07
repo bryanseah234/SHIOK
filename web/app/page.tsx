@@ -801,7 +801,6 @@ function ScoreCard({
   setFeedbackNote,
   copyFeedback,
   copyStatus,
-  weather = null,
   isCustomStopSelected = false,
   onResetChosenStop,
 }: {
@@ -822,7 +821,6 @@ function ScoreCard({
   setFeedbackNote: (note: string) => void;
   copyFeedback: () => void;
   copyStatus: string;
-  weather?: LiveWeatherData | null;
   isCustomStopSelected?: boolean;
   onResetChosenStop?: () => void;
 }) {
@@ -1448,7 +1446,6 @@ export default function Home() {
               setFeedbackNote={setFeedbackNote}
               copyFeedback={copyFeedback}
               copyStatus={copyStatus}
-              weather={weather}
               isCustomStopSelected={Boolean(chosenStopId && chosenStopId !== bestCandidateId)}
               onResetChosenStop={() => setChosenStopId(null)}
             />
