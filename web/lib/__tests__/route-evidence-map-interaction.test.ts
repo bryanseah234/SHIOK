@@ -18,7 +18,8 @@ describe("route evidence map interactions", () => {
     expect(source).toContain('"line-width": 6.8');
     expect(source).toContain('"line-width": 4.8');
     expect(source).toContain('minzoom: 9.8');
-    expect(source).toContain('minzoom: 12.0');
+    expect(source).toContain('minzoom: 11.5');
+    expect(source).toContain('TRANSIT_POI_HOT_PINK');
   });
 
   it("pre-fetches manifest on mount and wires interactive click-to-route in page.tsx", () => {

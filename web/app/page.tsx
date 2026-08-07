@@ -26,9 +26,6 @@ import {
   type RouteMapItem,
 } from "../components/route-evidence-map";
 import {
-  TransitStopPicker,
-} from "../components/transit-stop-picker";
-import {
   deriveNearestTransitCandidates,
   haversineMeters,
   resolveBestCandidateId,
@@ -1448,12 +1445,6 @@ export default function Home() {
               copyStatus={copyStatus}
               isCustomStopSelected={Boolean(chosenStopId && chosenStopId !== bestCandidateId)}
               onResetChosenStop={() => setChosenStopId(null)}
-            />
-            <TransitStopPicker
-              candidates={candidates}
-              activeStopId={chosenStopId}
-              bestStopId={bestCandidateId}
-              onSelect={handleStopSelect}
             />
           </aside>
         )}

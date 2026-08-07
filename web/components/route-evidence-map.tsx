@@ -122,6 +122,7 @@ const SOURCE_IDS = [
   "feedback-points",
 ] as const;
 const EMPTY_TRANSIT_POIS: TransitPoiCollection = { type: "FeatureCollection", features: [] };
+const TRANSIT_POI_HOT_PINK = "#ff2d75";
 const TRANSIT_POI_LAYER_IDS = [
   "mrt-station-halo",
   "mrt-station-dot",
@@ -314,11 +315,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       minzoom: 9.8,
       filter: ["==", ["get", "kind"], "mrt_station"],
       paint: {
-        "circle-color": "#245b8d",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 3.8, 17, 5.9],
-        "circle-opacity": 0.92,
+        "circle-color": TRANSIT_POI_HOT_PINK,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 5, 17, 7.5],
+        "circle-opacity": 0.95,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 1,
+        "circle-stroke-width": 2,
       },
     });
   }
@@ -341,9 +342,9 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-optional": true,
       },
       paint: {
-        "text-color": "#214861",
-        "text-halo-color": "#f6faf8",
-        "text-halo-width": 1.3,
+        "text-color": "#9d174d",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.5,
         "text-opacity": ["interpolate", ["linear"], ["zoom"], 10.8, 0.72, 13, 0.94],
       },
     });
@@ -354,14 +355,14 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.2,
+      minzoom: 11.5,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
-        "circle-color": "#2f5f8f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 2.4, 18, 4],
-        "circle-opacity": 0.8,
+        "circle-color": TRANSIT_POI_HOT_PINK,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 5, 15, 7, 18, 9],
+        "circle-opacity": 1.0,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 0.75,
+        "circle-stroke-width": 2,
       },
     });
   }
@@ -371,11 +372,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-hit",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.2,
+      minzoom: 11.5,
       filter: ["==", ["get", "kind"], "mrt_exit"],
       paint: {
         "circle-color": "#000000",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 8, 18, 12],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 13, 18, 18],
         "circle-opacity": 0,
       },
     });
@@ -399,10 +400,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-optional": true,
       },
       paint: {
-        "text-color": "#2f5f8f",
-        "text-halo-color": "#f6faf8",
-        "text-halo-width": 1.2,
-        "text-opacity": 0.88,
+        "text-color": "#9d174d",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.5,
+        "text-opacity": 0.92,
       },
     });
   }
@@ -412,14 +413,14 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-dot",
       type: "circle",
       source: "transit-pois",
-      minzoom: 12.0,
+      minzoom: 11.5,
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
-        "circle-color": "#436b5f",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.0, 1.9, 16, 3.3, 18, 4.6],
-        "circle-opacity": ["interpolate", ["linear"], ["zoom"], 12.0, 0.6, 16, 0.9],
+        "circle-color": TRANSIT_POI_HOT_PINK,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 5, 15, 7, 18, 9],
+        "circle-opacity": 1.0,
         "circle-stroke-color": "#ffffff",
-        "circle-stroke-width": 0.75,
+        "circle-stroke-width": 2,
       },
     });
   }
@@ -429,11 +430,11 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-hit",
       type: "circle",
       source: "transit-pois",
-      minzoom: 12.0,
+      minzoom: 11.5,
       filter: ["==", ["get", "kind"], "bus_stop"],
       paint: {
         "circle-color": "#000000",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.0, 7, 16, 10, 18, 13],
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 13, 18, 18],
         "circle-opacity": 0,
       },
     });
@@ -457,10 +458,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
         "text-optional": true,
       },
       paint: {
-        "text-color": "#36594f",
-        "text-halo-color": "#f6faf8",
-        "text-halo-width": 1.1,
-        "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.0, 0.64, 18, 0.9],
+        "text-color": "#9d174d",
+        "text-halo-color": "#ffffff",
+        "text-halo-width": 1.5,
+        "text-opacity": ["interpolate", ["linear"], ["zoom"], 15.0, 0.7, 18, 0.95],
       },
     });
   }
@@ -476,10 +477,10 @@ function ensureRouteLayers(map: maplibregl.Map) {
       filter: ["all", ["==", ["get", "kind"], "mrt_station"], ["==", ["get", "id"], "__none__"]],
       paint: {
         "circle-color": "rgba(0,0,0,0)",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 8.4, 17, 12],
-        "circle-stroke-color": "#f5a623",
-        "circle-stroke-width": 2.4,
-        "circle-stroke-opacity": 0.94,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 9.8, 9, 17, 13],
+        "circle-stroke-color": "#ffb703",
+        "circle-stroke-width": 3.5,
+        "circle-stroke-opacity": 1.0,
       },
     });
   }
@@ -489,14 +490,14 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "mrt-exit-active-ring",
       type: "circle",
       source: "transit-pois",
-      minzoom: 13.2,
+      minzoom: 11.5,
       filter: ["all", ["==", ["get", "kind"], "mrt_exit"], ["==", ["get", "id"], "__none__"]],
       paint: {
         "circle-color": "rgba(0,0,0,0)",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 13.2, 4.4, 18, 6.5],
-        "circle-stroke-color": "#f5a623",
-        "circle-stroke-width": 2.2,
-        "circle-stroke-opacity": 0.94,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 9, 15, 12.5, 18, 16],
+        "circle-stroke-color": "#ffb703",
+        "circle-stroke-width": 3.5,
+        "circle-stroke-opacity": 1.0,
       },
     });
   }
@@ -506,14 +507,14 @@ function ensureRouteLayers(map: maplibregl.Map) {
       id: "bus-stop-active-ring",
       type: "circle",
       source: "transit-pois",
-      minzoom: 12.0,
+      minzoom: 11.5,
       filter: ["all", ["==", ["get", "kind"], "bus_stop"], ["==", ["get", "id"], "__none__"]],
       paint: {
         "circle-color": "rgba(0,0,0,0)",
-        "circle-radius": ["interpolate", ["linear"], ["zoom"], 12.0, 4, 16, 6, 18, 8.4],
-        "circle-stroke-color": "#f5a623",
-        "circle-stroke-width": 2.2,
-        "circle-stroke-opacity": 0.94,
+        "circle-radius": ["interpolate", ["linear"], ["zoom"], 11.5, 9, 15, 12.5, 18, 16],
+        "circle-stroke-color": "#ffb703",
+        "circle-stroke-width": 3.5,
+        "circle-stroke-opacity": 1.0,
       },
     });
   }
