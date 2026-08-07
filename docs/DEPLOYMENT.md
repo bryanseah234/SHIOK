@@ -94,7 +94,7 @@ including `web/data-bundle.json`, still trigger a real build.
 
 Only the `sgshiok` Vercel project should be connected to this GitHub repo. On
 2026-08-01, the older `shiok` Vercel project was disconnected from
-`bryanseah234/sgSHIOK2026` because it was still creating duplicate failed commit
+`hongyime/sgSHIOK2026` because it was still creating duplicate failed commit
 statuses and burning Hobby deploy quota.
 
 ## Why This Exists
