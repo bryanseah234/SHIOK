@@ -832,3 +832,34 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+.customStopBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 4px 8px;
+  background: rgba(245, 166, 35, 0.12);
+  border: 1px solid rgba(245, 166, 35, 0.35);
+  border-radius: 6px;
+  font-size: 11px;
+  color: #925400;
+}
+
+.resetCustomStopBtn {
+  background: #ffffff;
+  border: 1px solid rgba(146, 84, 0, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #925400;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.resetCustomStopBtn:hover {
+  background: #925400;
+  color: #ffffff;
+}

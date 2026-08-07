@@ -30,10 +30,11 @@ import {
 } from "../components/transit-stop-picker";
 import {
   deriveNearestTransitCandidates,
+  haversineMeters,
   resolveBestCandidateId,
   type TransitCandidate,
 } from "../lib/nearest-transit";
-import { decodePolyline } from "../lib/polyline";
+import { decodePolyline, encodePolyline } from "../lib/polyline";
 import { routesAreSame } from "../lib/route-display";
 import styles from "./page.module.css";
 
@@ -332,6 +333,131 @@ function selectionForTransitMode(
     geom: routeOptionGeom(selection.geom, mode),
   };
 }
+
+function selectionForChosenStop(
+  baseSelection: LoadedSelection | null,
+  chosenStopId: string | null,
+  candidates: TransitCandidate[],
+  mapTransitPois: TransitPoiCollection,
+  originLatLng: { lat: number; lng: number } | null
+): LoadedSelection | null {
+  if (!baseSelection || !chosenStopId) return baseSelection;
+
+  const candGeomOption = baseSelection.geom?.candidates?.[chosenStopId];
+  const candScore = baseSelection.score?.candidates?.find(
+    (c) => c.node_id === chosenStopId
+  );
+  const matchedCandidate = candidates.find((c) => c.id === chosenStopId);
+  const poiFeature = mapTransitPois.features.find(
+    (f) => f.properties?.id === chosenStopId
+  );
+
+  const coords = poiFeature?.geometry?.coordinates;
+  const stopLng =
+    Array.isArray(coords) && typeof coords[0] === "number"
+      ? coords[0]
+      : matchedCandidate?.coordinates[0];
+  const stopLat =
+    Array.isArray(coords) && typeof coords[1] === "number"
+      ? coords[1]
+      : matchedCandidate?.coordinates[1];
+
+  let adaptedGeom: PostalGeom | null = baseSelection.geom;
+  if (candGeomOption && baseSelection.geom) {
+    adaptedGeom = optionGeomToPostalGeom(baseSelection.geom.postal, candGeomOption);
+  } else if (
+    originLatLng &&
+    stopLat !== undefined &&
+    stopLng !== undefined &&
+    baseSelection.geom
+  ) {
+    const encodedLine = encodePolyline([
+      [originLatLng.lat, originLatLng.lng],
+      [stopLat, stopLng],
+    ]);
+    const distM = Math.round(
+      haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng)
+    );
+    adaptedGeom = {
+      postal: baseSelection.geom.postal,
+      shortest: encodedLine,
+      sheltered: encodedLine,
+      exposure_gaps: [],
+      route_segments: {
+        shortest: [
+          {
+            geom: encodedLine,
+            len_m: distM,
+            is_covered: false,
+            source_class: "direct_unrouted_transit",
+          },
+        ],
+        sheltered: [
+          {
+            geom: encodedLine,
+            len_m: distM,
+            is_covered: false,
+            source_class: "direct_unrouted_transit",
+          },
+        ],
+      },
+    };
+  }
+
+  const stopName =
+    poiFeature?.properties?.name ?? matchedCandidate?.name ?? chosenStopId;
+  const stopKind =
+    poiFeature?.properties?.kind ?? matchedCandidate?.kind ?? "transit";
+  const stopCode = poiFeature?.properties?.code ?? matchedCandidate?.code;
+  const stopStation =
+    poiFeature?.properties?.station ?? matchedCandidate?.station;
+  const stopExit = poiFeature?.properties?.exit ?? matchedCandidate?.exit;
+  const directM =
+    originLatLng && stopLat !== undefined && stopLng !== undefined
+      ? Math.round(
+          haversineMeters(originLatLng.lat, originLatLng.lng, stopLat, stopLng)
+        )
+      : matchedCandidate?.straight_line_m ?? 0;
+
+  let adaptedScore: ScoreRecord | null = baseSelection.score;
+  if (baseSelection.score) {
+    const shortestM = candScore?.paths?.shortest_m ?? directM;
+    const shelteredM = candScore?.paths?.sheltered_m ?? directM;
+    const coveredRatio =
+      candScore?.paths?.covered_ratio ??
+      (candScore?.paths?.sheltered_m && candScore?.paths?.shortest_m
+        ? candScore.paths.sheltered_m / candScore.paths.shortest_m
+        : 0);
+
+    adaptedScore = {
+      ...baseSelection.score,
+      best_node: {
+        type: stopKind === "mrt_exit" ? "mrt_lrt_exit" : "bus_stop",
+        name: stopName,
+        routed_m: shortestM,
+        exit: stopCode || stopExit,
+        station: stopStation,
+        straight_line_m: directM,
+      },
+      paths: {
+        ...baseSelection.score.paths,
+        shortest_m: shortestM,
+        sheltered_m: shelteredM,
+        detour_pct: candScore?.paths?.detour_pct ?? 0,
+        routing_type: candScore?.routing_type ?? "direct_transit_selection",
+        covered_ratio: coveredRatio !== null ? coveredRatio : 0,
+        covered_m: Math.round(shelteredM * (coveredRatio !== null ? coveredRatio : 0)),
+      },
+    };
+  }
+
+  return {
+    result: baseSelection.result,
+    score: adaptedScore,
+    geom: adaptedGeom,
+  };
+}
+
 
 function postalTitle(selection: LoadedSelection): string {
   return `Postal ${selection.result.POSTAL}`;
@@ -675,6 +801,9 @@ function ScoreCard({
   setFeedbackNote,
   copyFeedback,
   copyStatus,
+  weather = null,
+  isCustomStopSelected = false,
+  onResetChosenStop,
 }: {
   selection: LoadedSelection | null;
   routeMode: RouteDisplayMode;
@@ -693,6 +822,9 @@ function ScoreCard({
   setFeedbackNote: (note: string) => void;
   copyFeedback: () => void;
   copyStatus: string;
+  weather?: LiveWeatherData | null;
+  isCustomStopSelected?: boolean;
+  onResetChosenStop?: () => void;
 }) {
   const [overflowOpen, setOverflowOpen] = useState(false);
 
@@ -776,6 +908,20 @@ function ScoreCard({
         <div>
           <h2>{postalTitle(selection)}</h2>
           <p>{stationName}</p>
+          {isCustomStopSelected && (
+            <div className={styles.customStopBar}>
+              <span>Viewing selected stop</span>
+              {onResetChosenStop && (
+                <button
+                  type="button"
+                  className={styles.resetCustomStopBtn}
+                  onClick={onResetChosenStop}
+                >
+                  ↺ Best route
+                </button>
+              )}
+            </div>
+          )}
         </div>
         <div className={styles.scoreHeaderRight}>
           <div className={`${styles.scoreBadge} ${scoreClass(displayScore)}`}>
@@ -991,12 +1137,8 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const activeSelection = useMemo(() => selectionForTransitMode(primary, transitMode), [primary, transitMode]);
-  const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
-  const mapRouteMode = routesAreSame(activeSelection) ? "shiokest" : routeMode;
-  const mapTransitPois = routeTransitPois.features.length > 0 ? routeTransitPois : baseTransitPois;
-  const showDetailOverlay = Boolean(primary);
   const originLatLng = useMemo(() => resolveOriginLatLng(primary), [primary]);
+  const mapTransitPois = routeTransitPois.features.length > 0 ? routeTransitPois : baseTransitPois;
 
   const candidates = useMemo<TransitCandidate[]>(() => {
     if (!originLatLng) return [];
@@ -1009,10 +1151,31 @@ export default function Home() {
     });
   }, [originLatLng, mapTransitPois, transitMode]);
 
-  const bestCandidateId = useMemo(
-    () => resolveBestCandidateId(candidates, activeSelection?.score ?? null),
-    [candidates, activeSelection]
+  const transitSelection = useMemo(
+    () => selectionForTransitMode(primary, transitMode),
+    [primary, transitMode]
   );
+
+  const bestCandidateId = useMemo(
+    () => resolveBestCandidateId(candidates, transitSelection?.score ?? null),
+    [candidates, transitSelection]
+  );
+
+  const activeSelection = useMemo(
+    () =>
+      selectionForChosenStop(
+        transitSelection,
+        chosenStopId,
+        candidates,
+        mapTransitPois,
+        originLatLng
+      ),
+    [transitSelection, chosenStopId, candidates, mapTransitPois, originLatLng]
+  );
+
+  const mapRoutes = useMemo(() => buildRouteItems(activeSelection), [activeSelection]);
+  const mapRouteMode = routesAreSame(activeSelection) ? "shiokest" : routeMode;
+  const showDetailOverlay = Boolean(primary);
 
   // Apply pending URL stop once candidates for this postal are known.
   useEffect(() => {
@@ -1025,16 +1188,14 @@ export default function Home() {
     pendingUrlStopIdRef.current = null;
   }, [candidates]);
 
-  // TODO(stop-picker): the score bundle does not ship per-candidate route
-  // geometry, so the map route line and score-card numbers stay on the
-  // auto-picked best_transit stop even when `chosenStopId` is a non-best stop.
-  // The picker's chip row and comparison text call out the tradeoff. Wire real
-  // per-candidate geometry once the pipeline emits it (see decisions.md).
-
+  // Pre-fetch transit POIs and manifest on initial mount so metadata/date is immediately visible.
   useEffect(() => {
     let active = true;
     void fetchTransitPois().then((pois) => {
       if (active) setBaseTransitPois(pois);
+    });
+    void fetchManifest().then((loaded) => {
+      if (active) setManifest(loaded);
     });
     return () => {
       active = false;
@@ -1287,6 +1448,9 @@ export default function Home() {
               setFeedbackNote={setFeedbackNote}
               copyFeedback={copyFeedback}
               copyStatus={copyStatus}
+              weather={weather}
+              isCustomStopSelected={Boolean(chosenStopId && chosenStopId !== bestCandidateId)}
+              onResetChosenStop={() => setChosenStopId(null)}
             />
             <TransitStopPicker
               candidates={candidates}

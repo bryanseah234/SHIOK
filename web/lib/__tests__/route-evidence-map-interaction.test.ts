@@ -20,4 +20,17 @@ describe("route evidence map interactions", () => {
     expect(source).toContain('minzoom: 9.8');
     expect(source).toContain('minzoom: 12.0');
   });
+
+  it("pre-fetches manifest on mount and wires interactive click-to-route in page.tsx", () => {
+    const pageSource = readFileSync(join(__dirname, "../../app/page.tsx"), "utf-8");
+
+    // Cold-load manifest prefetch
+    expect(pageSource).toContain("void fetchManifest().then");
+
+    // Dynamic stop routing
+    expect(pageSource).toContain("selectionForChosenStop");
+    expect(pageSource).toContain("isCustomStopSelected");
+    expect(pageSource).toContain("onResetChosenStop");
+    expect(pageSource).toContain("resetCustomStopBtn");
+  });
 });
