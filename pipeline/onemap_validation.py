@@ -1066,33 +1066,20 @@ def evaluate_cached_results(
     }
     gate_metric_median = gate_median if require_plausible else median
     gate_metric_p95 = gate_p95 if require_plausible else p95
-    if require_plausible:
-        # When the filter is on, missing/invalid cache entries represent OneMap-side
-        # data-collection or impossibility issues (e.g., Sentosa 0m walk, uncached
-        # postals) that fall into the same category as the plausibility filter itself
-        # -- OneMap cannot provide a meaningful answer, so they should not count against
-        # the gate. See qa/bus_median_gap_diagnosis_20260804.md for the noise-floor
-        # rationale that motivates this behavior.
-        gate_passed = (
-            gate_metric_median is not None
-            and gate_metric_p95 is not None
-            and gate_metric_median <= median_max
-            and gate_metric_p95 <= p95_max
-        )
-    else:
-        gate_passed = (
-            len(results) == int(sample_payload.get("sample_size", 0))
-            and not invalid
-            and gate_metric_median is not None
-            and gate_metric_p95 is not None
-            and gate_metric_median <= median_max
-            and gate_metric_p95 <= p95_max
-        )
+    sample_size = int(sample_payload.get("sample_size", 0))
+    complete_cache_coverage = len(results) == sample_size and not missing and not invalid
+    gate_passed = (
+        complete_cache_coverage
+        and gate_metric_median is not None
+        and gate_metric_p95 is not None
+        and gate_metric_median <= median_max
+        and gate_metric_p95 <= p95_max
+    )
     report = {
         "ok": gate_passed,
         "generated_at": datetime.now(UTC).isoformat(),
         "bundle": sample_payload.get("bundle"),
-        "sample_size": sample_payload.get("sample_size"),
+        "sample_size": sample_size,
         "cache_dir": str(cache_dir),
         "cached_results": len(results),
         "missing_cache_results": len(missing),
@@ -1108,6 +1095,7 @@ def evaluate_cached_results(
             "p95_abs_pct_delta_max": p95_max,
         },
         "gate_metrics": gate_metrics,
+        "complete_cache_coverage": complete_cache_coverage,
         "gate_passed": gate_passed,
         "subset_summary": validation_subset_summary(results),
         "distance_sanity_summary": dict(sorted(distance_sanity_counts.items())),

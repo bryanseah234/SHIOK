@@ -307,6 +307,7 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
     report = evaluate_cached_results(sample_payload, cache_dir)
 
     assert report["gate_passed"] is False
+    assert report["complete_cache_coverage"] is False
     assert report["cached_results"] == 1
     assert report["missing_cache_results"] == 1
     assert report["median_abs_pct_delta"] == 5.0
@@ -418,6 +419,25 @@ def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):
         }
     ]
     assert report["top_outliers_preview"][0]["best_node_name"] == "Test Stop"
+
+
+def test_evaluate_cached_results_missing_cache_blocks_filtered_gate(tmp_path: Path):
+    cache_dir = tmp_path / "cache"
+    cache_dir.mkdir()
+    sample_payload = _gate_realism_sample_payload(cache_dir)
+    missing_sample = dict(sample_payload["samples"][0])
+    missing_sample["postal"] = "999999"
+    missing_sample["cache_key"] = "missing-cache-entry"
+    sample_payload["samples"].append(missing_sample)
+    sample_payload["sample_size"] = len(sample_payload["samples"])
+
+    report = evaluate_cached_results(sample_payload, cache_dir)
+
+    assert report["gate_metrics"]["median_abs_pct_delta"] == 4.762
+    assert report["missing_cache_results"] == 1
+    assert report["complete_cache_coverage"] is False
+    assert report["gate_passed"] is False
+    assert report["ok"] is False
 
 
 def test_haversine_distance_and_onemap_distance_sanity():
