@@ -1,0 +1,49 @@
+{
+  "active_bundle": "generated_20260805_prefer_scored_routed",
+  "canonical_production_url": "https://sgshiok.vercel.app/",
+  "commits": {
+    "release_readiness": "2227c15",
+    "nanoid_override": "268934b"
+  },
+  "deployed_head": "268934b1b73ac49272468ba7204e8345dae453ee",
+  "deployment": {
+    "id": "dpl_5chs6xRPanvB46hLLHZySGbENHEq",
+    "url": "https://sgshiok-95mckm6nv-theprawnvercel.vercel.app"
+  },
+  "evidence": {
+    "blocking_onemap_sample": "onemap_validation_sample_2000_prefer_scored_routed_20260808.json",
+    "blocking_onemap_collect": "onemap_validation_collect_prefer_scored_routed_20260808.json",
+    "blocking_onemap_report": "onemap_validation_cached_report_prefer_scored_routed_20260808.json",
+    "targeted_onemap_sample": "onemap_validation_sample_targeted_prefer_scored_routed_20260808.json",
+    "targeted_onemap_collect": "onemap_validation_collect_targeted_prefer_scored_routed_20260808.json",
+    "targeted_onemap_report": "onemap_validation_cached_report_targeted_prefer_scored_routed_20260808.json",
+    "owner_waived_readiness": "readiness_prefer_scored_routed_20260808_owner_waived.json",
+    "launch_check_readiness": "readiness_launch_check_20260808_151803.json",
+    "launch_scored_smoke": "browser_smoke_launch_multi_20260808_151803.json",
+    "launch_mrt_smoke": "browser_smoke_mayflower_mrt_560231_20260808_151803.json",
+    "launch_compare_smoke": "browser_smoke_route_compare_560109_20260808_151803.json",
+    "launch_no_transit_smoke": "browser_smoke_no_transit_567754_20260808_151803.json",
+    "launch_not_yet_scored_smoke": "browser_smoke_not_yet_scored_000104_20260808_151803.json",
+    "production_scored_smoke": "browser_smoke_prod_multi_20260808_after_release.json"
+  },
+  "onemap_validation": {
+    "blocking_sample_size": 2000,
+    "cached_results": 1999,
+    "missing_cache_results": 1,
+    "median_abs_pct_delta": 15.018,
+    "median_abs_pct_delta_threshold": 12.0,
+    "p95_abs_pct_delta": 78.882,
+    "p95_abs_pct_delta_threshold": 100.0,
+    "gate_passed": false,
+    "owner_waived_for_release": true
+  },
+  "production_manifest_verified": {
+    "record_count": 124443,
+    "state_counts": {
+      "SCORED": 95157,
+      "SCORED_PARTIAL": 18983,
+      "NO_TRANSIT_IN_RANGE": 9827,
+      "NOT_YET_SCORED": 476
+    }
+  }
+}

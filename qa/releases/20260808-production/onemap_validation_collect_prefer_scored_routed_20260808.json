@@ -1,0 +1,18 @@
+{
+  "bundle": "generated_20260805_prefer_scored_routed",
+  "cache_dir": "C:\\shiok\\raw\\validation\\onemap_walk_od",
+  "confirm_onemap_collection": true,
+  "delay_sec": 2.0,
+  "dry_run": false,
+  "errors": [
+    "098035: OneMap HTTP 404"
+  ],
+  "existing_cache_results": 28,
+  "generated_at": "2026-08-08T05:00:24.671500+00:00",
+  "http_requests": 1972,
+  "ok": false,
+  "queued_requests": 1972,
+  "sample_size": 2000,
+  "will_call_onemap": true,
+  "written_cache_results": 1971
+}
