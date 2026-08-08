@@ -114,7 +114,19 @@ if (-not (Test-Path $SamplePath)) {
     }
 }
 
+$completedBatchIndexes = @(
+    Get-ChildItem -Path $RunDir -Filter "collect_batch_*.json" -ErrorAction SilentlyContinue |
+        ForEach-Object {
+            if ($_.BaseName -match "^collect_batch_(\d+)$") {
+                [int]$Matches[1]
+            }
+        }
+)
 $batchIndex = 0
+if ($completedBatchIndexes.Count -gt 0) {
+    $batchIndex = ($completedBatchIndexes | Measure-Object -Maximum).Maximum
+}
+
 while ($true) {
     if ($MaxBatches -gt 0 -and $batchIndex -ge $MaxBatches) {
         Write-Status -Phase "paused" -BatchIndex $batchIndex -Message "Reached MaxBatches=$MaxBatches"
@@ -150,7 +162,7 @@ while ($true) {
     if ($IncludeResults) {
         $evalCmd += "--include-results"
     }
-    [void](Invoke-Logged -Name "evaluate-batch-$batchIndex" -Command $evalCmd -LogPath $evalLog)
+    [void](Invoke-Logged -Name "evaluate-batch-$batchIndex" -Command $evalCmd -LogPath $evalLog -DiscardStdout)
     Copy-Item -Force -Path $evalPath -Destination $LatestReportPath
     $evalReport = Get-Content $evalPath -Raw | ConvertFrom-Json
 
