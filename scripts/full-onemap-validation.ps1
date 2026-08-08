@@ -70,7 +70,8 @@ function Invoke-Logged {
     param(
         [string]$Name,
         [string[]]$Command,
-        [string]$LogPath
+        [string]$LogPath,
+        [switch]$DiscardStdout
     )
 
     $header = "[$((Get-Date).ToString("o"))] START $Name`n$($Command -join " ")"
@@ -80,7 +81,12 @@ function Invoke-Logged {
     if ($Command.Count -gt 1) {
         $cmdArgs = $Command[1..($Command.Count - 1)]
     }
-    & $exe @cmdArgs *>&1 | Tee-Object -FilePath $LogPath -Append | Out-Null
+    if ($DiscardStdout) {
+        & $exe @cmdArgs 1>$null 2>>$LogPath
+    }
+    else {
+        & $exe @cmdArgs *>&1 | Tee-Object -FilePath $LogPath -Append | Out-Null
+    }
     $exit = $LASTEXITCODE
     Add-Content -Path $LogPath -Value "[$((Get-Date).ToString("o"))] EXIT $Name code=$exit"
     Write-Output $exit
@@ -101,7 +107,7 @@ if (-not (Test-Path $SamplePath)) {
         "--onemap-delay-sec", "$DelaySec",
         "--output", $SamplePath
     )
-    $planExit = Invoke-Logged -Name "plan-full-sample" -Command $planCmd -LogPath $planLog
+    $planExit = Invoke-Logged -Name "plan-full-sample" -Command $planCmd -LogPath $planLog -DiscardStdout
     if ($planExit -ne 0) {
         Write-Status -Phase "failed" -Message "Full OneMap sample planning failed; see $planLog"
         exit $planExit
