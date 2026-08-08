@@ -57,8 +57,8 @@ jobs:
       - name: Auto-merge Dependabot PR (after build passes)
         if: github.event_name == 'workflow_run' && steps.check-build.outputs.build_ok == 'true' && steps.get-pr.outputs.pr_url != ''
         run: |
-          gh pr merge --admin --squash "$PR_URL" || {
-            echo "Auto-merge failed; leaving PR open for manual triage."
+          gh pr merge --auto --squash "$PR_URL" || {
+            echo "Auto-merge could not be enabled; leaving PR open for manual triage."
             exit 0
           }
         env:

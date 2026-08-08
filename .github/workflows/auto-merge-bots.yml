@@ -38,9 +38,8 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
 
   # ── Triggered after Build Check completes ──────────────────────────────────
-  # If the build passed, force-merge the bot PR now that we know it's safe.
-  # This handles repos where branch protection / required checks aren't
-  # configured (--auto would never fire without required checks set up).
+  # If the build passed, enable auto-merge. This intentionally avoids --admin
+  # so bot PRs cannot bypass branch protection or review requirements.
   auto-merge-after-build:
     runs-on: ubuntu-latest
     permissions:
@@ -68,8 +67,8 @@ jobs:
       - name: Merge bot PR (build passed)
         if: steps.find-pr.outputs.pr_url != ''
         run: |
-          gh pr merge --admin --squash "$PR_URL" || {
-            echo "Auto-merge failed; leaving PR open for manual triage."
+          gh pr merge --auto --squash "$PR_URL" || {
+            echo "Auto-merge could not be enabled; leaving PR open for manual triage."
             exit 0
           }
         env:
@@ -90,7 +89,7 @@ jobs:
             gh pr list --author "$login" --state open --json number --jq '.[].number' \
             | while IFS= read -r pr; do
                 echo "Merging PR #$pr from $login"
-                gh pr merge --admin --squash "#$pr" || echo "Skip #$pr"
+                gh pr merge --auto --squash "#$pr" || echo "Skip #$pr"
               done
           done
         env:
