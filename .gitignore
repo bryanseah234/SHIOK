@@ -9,6 +9,20 @@ processed/
 qa/*.png
 qa/*_debug.geojson
 qa/*_only.geojson
+qa/*.log
+qa/auto_release_*.json
+qa/browser_smoke_*.json
+qa/check_*.mjs
+qa/endpoint_results.json
+qa/inspect_*.mjs
+qa/launch_check_*/
+qa/onemap_full_validation_*/
+qa/onemap_validation_*.json
+qa/postal_*.json
+qa/readiness_*.json
+qa/release_*.log
+qa/verify_picker_*.json
+qa/verify_*.py
 tmp/
 
 # generated artifacts (deployed via `vercel deploy`, not git)
