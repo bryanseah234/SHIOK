@@ -1,10 +1,11 @@
 /**
- * Live client-side shelter segmentation and dynamic SHIOK scoring.
+ * Live client-side shelter segmentation for preview route evidence.
  *
  * Takes a pedestrian walking route (e.g. from OneMap API or direct path),
  * tests sub-segments against local shelter evidence (LTA linkways, HDB void decks,
- * overhead bridges), and produces full multi-color RouteSegments and calibrated
- * ScoreRecord metrics.
+ * overhead bridges), and produces multi-color RouteSegments. It deliberately
+ * does not produce authoritative SHIOK scores; only the offline pipeline can do
+ * that with locked weights and full provenance.
  */
 
 import { haversineMeters, type TransitCandidate } from "./nearest-transit";
@@ -15,7 +16,6 @@ import type {
   PostalGeom,
   RouteSegment,
   ScoreRecord,
-  Subscores,
 } from "./types";
 
 export interface ShelterFeature {
@@ -148,7 +148,7 @@ function findMatchingShelter(
 
 /**
  * Segment a walking route polyline into colored sheltered / exposed RouteSegments
- * and compute real-time scores.
+ * for preview-only route evidence.
  */
 export function scoreLiveRoute(options: LiveRouteOptions): {
   geom: PostalGeom;
@@ -278,56 +278,6 @@ export function scoreLiveRoute(options: LiveRouteOptions): {
   const roundedShelteredM = Math.round(totalShelteredM);
   const coveredRatio = roundedTotalM > 0 ? roundedShelteredM / roundedTotalM : 0;
 
-  // Derive calibrated subscores matching SHIOK Index formulas
-  // 1. Access Score: full at <= 400m, 40 at 800m, 0 at 1200m
-  let accessScore = 0;
-  if (roundedTotalM <= 400) {
-    accessScore = 100;
-  } else if (roundedTotalM <= 800) {
-    const ratio = (roundedTotalM - 400) / (800 - 400);
-    accessScore = 100 - ratio * (100 - 40);
-  } else if (roundedTotalM <= 1200) {
-    const ratio = (roundedTotalM - 800) / (1200 - 800);
-    accessScore = 40 - ratio * 40;
-  } else {
-    accessScore = 0;
-  }
-
-  // 2. Rain Shelter Score
-  const rainScore = Math.min(100, Math.max(0, coveredRatio * 100));
-
-  // 3. Heat Comfort Score (shelter + tree shade proxy)
-  const baseShadeRatio = baseScore?.paths?.shade_ratio ?? 0.12;
-  const heatScore = Math.min(
-    100,
-    Math.max(0, (coveredRatio + baseShadeRatio * (1 - coveredRatio)) * 100)
-  );
-
-  // 4. Bus connectivity / MRT access
-  const busScore = baseScore?.subscores?.bus ?? (targetStop.kind === "bus_stop" ? 85 : 90);
-
-  // 5. Crossing friction
-  const crossingScore = Math.max(0, 100 - exposureGaps.length * 15);
-
-  // Weighted composite total (Access: 35%, Rain: 35%, Heat: 15%, Crossing: 15%)
-  const compositeTotal =
-    roundedTotalM > 1200
-      ? 0
-      : Math.round(
-          accessScore * 0.35 +
-            rainScore * 0.35 +
-            heatScore * 0.15 +
-            crossingScore * 0.15
-        );
-
-  const subscores: Subscores = {
-    access: Math.round(accessScore),
-    bus: busScore ? Math.round(busScore) : null,
-    rain: Math.round(rainScore),
-    heat: Math.round(heatScore),
-    crossing: Math.round(crossingScore),
-  };
-
   const isMrt = targetStop.kind === "mrt_exit";
   const bestNode = {
     type: isMrt ? "mrt_lrt_exit" : "bus_stop",
@@ -341,9 +291,9 @@ export function scoreLiveRoute(options: LiveRouteOptions): {
 
   const scoreRecord: ScoreRecord = {
     postal,
-    state: roundedTotalM > 1200 ? "NO_TRANSIT_IN_RANGE" : "SCORED",
-    total: roundedTotalM > 1200 ? null : compositeTotal,
-    subscores,
+    state: "NOT_YET_SCORED",
+    total: null,
+    subscores: null,
     best_node: bestNode,
     paths: {
       shortest_m: roundedTotalM,
@@ -351,18 +301,17 @@ export function scoreLiveRoute(options: LiveRouteOptions): {
       detour_pct: 0,
       covered_m: roundedShelteredM,
       covered_ratio: Number(coveredRatio.toFixed(3)),
-      shade_m: Math.round(roundedTotalM * baseShadeRatio),
-      shade_ratio: baseShadeRatio,
-      heat_comfort_m: Math.round(roundedShelteredM + roundedTotalM * baseShadeRatio),
-      heat_comfort_ratio: Number(
-        (coveredRatio + baseShadeRatio * (1 - coveredRatio)).toFixed(3)
-      ),
-      routing_type: "live_onemap_snapped",
+      routing_type: "live_onemap_preview",
     },
     exposure_gaps: exposureGaps,
     candidates: baseScore?.candidates ?? [],
     data_as_of: baseScore?.data_as_of ?? null,
-    provenance: "live_onemap_shelter_snapped",
+    provenance: {
+      source: "live_onemap_preview",
+      authoritative_score: false,
+      reason:
+        "Clicked transit POI has route evidence only; SHIOK scores come from the offline pipeline bundle.",
+    },
   };
 
   const postalGeom: PostalGeom = {

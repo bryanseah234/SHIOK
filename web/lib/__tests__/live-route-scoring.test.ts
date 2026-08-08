@@ -6,7 +6,7 @@ import {
 import { encodePolyline, type LatLng } from "../polyline";
 import type { PostalGeom, ScoreRecord } from "../types";
 
-describe("live route scoring and shelter segmentation", () => {
+describe("live route preview segmentation", () => {
   const sampleShelterPoints: LatLng[] = [
     [1.3501, 103.8501],
     [1.3505, 103.8505],
@@ -72,7 +72,7 @@ describe("live route scoring and shelter segmentation", () => {
     expect(evidence[0].sourceClass).toBe("lta_covered_linkway");
   });
 
-  it("scores live route along known shelter evidence with high covered ratio", () => {
+  it("segments live route along known shelter evidence without fabricating a score", () => {
     const routeCoords: LatLng[] = [
       [1.3501, 103.8501],
       [1.3503, 103.8503],
@@ -94,14 +94,23 @@ describe("live route scoring and shelter segmentation", () => {
       baseGeom: sampleGeom,
     });
 
-    expect(result.score.state).toBe("SCORED");
+    expect(result.score.state).toBe("NOT_YET_SCORED");
+    expect(result.score.total).toBeNull();
+    expect(result.score.subscores).toBeNull();
+    expect(result.score.total).not.toBe(sampleScore.total);
+    expect(result.score.subscores).not.toEqual(sampleScore.subscores);
     expect(result.score.paths?.shortest_m).toBeGreaterThan(0);
     expect(result.score.paths?.covered_ratio).toBeGreaterThan(0.5);
+    expect(result.score.paths?.routing_type).toBe("live_onemap_preview");
+    expect(result.score.provenance).toMatchObject({
+      source: "live_onemap_preview",
+      authoritative_score: false,
+    });
     expect(result.geom.route_segments?.sheltered?.length).toBeGreaterThan(0);
     expect(result.geom.shortest).toBeTruthy();
   });
 
-  it("scores exposed route far from shelter as exposed with exposure gaps", () => {
+  it("segments exposed route far from shelter as exposed with exposure gaps", () => {
     const exposedCoords: LatLng[] = [
       [1.3700, 103.8700],
       [1.3720, 103.8720],
@@ -122,9 +131,9 @@ describe("live route scoring and shelter segmentation", () => {
       baseGeom: sampleGeom,
     });
 
-    expect(result.score.state).toBe("SCORED");
+    expect(result.score.state).toBe("NOT_YET_SCORED");
     expect(result.score.paths?.covered_ratio).toBe(0);
     expect(result.geom.exposure_gaps.length).toBeGreaterThan(0);
-    expect(result.score.subscores?.rain).toBe(0);
+    expect(result.score.subscores).toBeNull();
   });
 });

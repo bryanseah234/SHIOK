@@ -153,6 +153,11 @@ def test_build_readiness_report_accepts_minimal_valid_current_state(tmp_path: Pa
     )
 
     assert ok, report
+    assert report["ok"] is True
+    assert report["release_gate_passed"] is False
+    assert report["release_gate_status"] == "blocked"
+    assert report["release_gate_summary"]["checks"]["infrastructure_readiness"] is True
+    assert report["release_gate_summary"]["checks"]["onemap_validation_same_bundle_fresh"] is False
     assert report["bundle"]["manifest_record_count"] == 1
     assert report["bundle"]["state_total_matches_manifest"] is True
     assert report["bundle"]["score_provenance"]["ok"] is True
@@ -273,6 +278,10 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
     )
 
     assert ok, report
+    assert report["release_gate_passed"] is False
+    assert report["release_gate_status"] == "blocked"
+    assert report["release_gate_summary"]["active_bundle"] == "generated_test"
+    assert report["release_gate_summary"]["checks"]["onemap_validation_same_bundle_fresh"] is False
     gate = report["features"]["validation_gates"]["onemap_walk_validation"]
     assert gate["state"] == "failed_stale_bundle"
     assert gate["bundle_matches_active"] is False
@@ -291,6 +300,84 @@ def test_build_readiness_report_summarizes_failed_onemap_gate(tmp_path: Path):
         report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
     )
     assert "11.458%" in report["features"]["not_incorporated"]["onemap_walk_validation_gate"]
+
+
+def test_build_readiness_report_blocks_stale_same_bundle_onemap_report(tmp_path: Path):
+    web_dir = tmp_path / "web"
+    bundle_dir = web_dir / "public" / "data" / "generated_test"
+    export_static_artifacts([sample_record("123456")], output_dir=bundle_dir)
+    write_json(web_dir / "data-bundle.json", {"bundle": "generated_test"})
+    write_json(
+        tmp_path / ".vercel" / "project.json",
+        {
+            "projectId": "prj_test",
+            "projectName": "sgshiok",
+            "settings": {"rootDirectory": "web"},
+        },
+    )
+
+    summary_path = tmp_path / "processed" / "postal_universe_candidate_full_registered_summary.json"
+    universe_path = tmp_path / "processed" / "postal_universe_candidate_full_registered.parquet"
+    write_json(
+        summary_path,
+        {
+            "mode": "candidate_full_registered",
+            "total_unique_postals": 1,
+            "ready_to_score": 1,
+            "needs_geocode": 0,
+            "source_stats": [],
+            "source_only_counts": {},
+            "warnings": [],
+        },
+    )
+    write_universe(universe_path, rows=1)
+    params_path = tmp_path / "params.yaml"
+    params_path.write_text("onemap:\n  client_delay_sec: 2.0\n", encoding="utf-8")
+    qa_path = tmp_path / "qa" / "conflation_qa_island.json"
+    debug_path = tmp_path / "qa" / "island_debug.geojson"
+    write_production_island_qa(qa_path)
+    debug_path.write_text('{"type":"FeatureCollection","features":[]}', encoding="utf-8")
+    write_json(
+        tmp_path / "qa" / "onemap_validation_cached_report_generated_test_old.json",
+        {
+            "bundle": "generated_test",
+            "gate_passed": True,
+            "sample_size": 2000,
+            "cached_results": 2000,
+            "missing_cache_results": 0,
+            "invalid_cache_results": 0,
+            "median_abs_pct_delta": 5.0,
+            "p95_abs_pct_delta": 20.0,
+            "thresholds": {
+                "median_abs_pct_delta_max": 12.0,
+                "p95_abs_pct_delta_max": 100.0,
+            },
+            "generated_at": "2020-01-01T00:00:00+00:00",
+        },
+    )
+
+    ok, report = build_readiness_report(
+        project_root=tmp_path,
+        web_dir=web_dir,
+        bundle_dir=bundle_dir,
+        summary_path=summary_path,
+        universe_path=universe_path,
+        params_path=params_path,
+        qa_path=qa_path,
+        debug_path=debug_path,
+        network_path=tmp_path / "unused_network.parquet",
+        postal_universe_path=universe_path,
+    )
+
+    assert ok, report
+    gate = report["release_gate_summary"]["onemap_validation"]
+    assert gate["state"] == "passed_stale_report"
+    assert gate["bundle_matches_active"] is True
+    assert gate["fresh_for_active_bundle"] is False
+    assert gate["gate_passed"] is True
+    assert gate["same_bundle_fresh_gate_passed"] is False
+    assert report["release_gate_passed"] is False
+    assert report["release_gate_status"] == "blocked"
 
 
 def test_build_readiness_report_warns_when_bundle_predates_network(tmp_path: Path):

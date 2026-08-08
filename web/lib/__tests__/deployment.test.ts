@@ -86,10 +86,10 @@ describe("deployment packaging", () => {
     expect(script).toContain("port_adjusted");
     expect(script).toContain("Stop-ProcessTree");
     expect(script).toContain("Stop-NewListenerOnPort");
-    expect(script).toContain("--expected-state no_transit");
-    expect(script).toContain("--expected-state not_yet_scored");
-    expect(script).toContain("--transit-mode mrt_lrt");
-    expect(script).toContain("--route-mode both");
+    expect(script).toContain('"--expected-state", "no_transit"');
+    expect(script).toContain('"--expected-state", "not_yet_scored"');
+    expect(script).toContain('"--transit-mode", "mrt_lrt"');
+    expect(script).toContain('"--route-mode", "both"');
     expect(script).toContain("Release plan only");
     expect(script).not.toContain("deploy-production");
     expect(script).not.toContain("vercel deploy");

@@ -6,6 +6,7 @@ import pandas as pd
 
 from pipeline.export import export_static_artifacts
 from pipeline.onemap_validation import (
+    build_targeted_risk_validation_sample,
     build_validation_sample,
     collect_onemap_walk_cache,
     decode_polyline,
@@ -180,6 +181,91 @@ def test_build_validation_sample_reads_gzipped_bundle_artifacts(tmp_path: Path):
     assert sample_payload["eligible_records"] == 1
     assert sample_payload["skipped_endpoint_records"] == 0
     assert sample_payload["samples"][0]["endpoint_source"] == "postal_universe_to_transit_poi"
+
+
+def test_build_targeted_risk_validation_sample_prioritizes_bus_connectors_and_partials(
+    tmp_path: Path,
+):
+    bus_record = sample_record("123456")
+    bus_record["state"] = "SCORED_PARTIAL"
+    bus_record["total"] = None
+    bus_record["subscores"] = None
+    bus_record["best_node"] = {
+        "type": "bus_stop",
+        "exit": "54321",
+        "name": "Risk Stop",
+        "routed_m": 75.0,
+    }
+    bus_record["paths"]["shortest_m"] = 75.0
+    bus_record["paths"]["sheltered_m"] = 75.0
+    bus_record["paths"]["routing_type"] = "sheltered_with_bus_stop_access_connector"
+    mrt_record = sample_record("123457")
+    bundle_dir = tmp_path / "bundle"
+    export_static_artifacts([bus_record, mrt_record], output_dir=bundle_dir)
+    (bundle_dir / "transit").mkdir(exist_ok=True)
+    (bundle_dir / "transit" / "pois.json").write_text(
+        json.dumps(
+            {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {"type": "Point", "coordinates": [103.812345, 1.323456]},
+                        "properties": {
+                            "kind": "bus_stop",
+                            "code": "54321",
+                            "name": "Risk Stop",
+                        },
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    universe_path = tmp_path / "universe.parquet"
+    pd.DataFrame(
+        [
+            {
+                "postal_code": "123456",
+                "lat": 1.312345,
+                "lon": 103.801234,
+                "status": "READY_TO_SCORE",
+            },
+            {
+                "postal_code": "123457",
+                "lat": 1.312346,
+                "lon": 103.801235,
+                "status": "READY_TO_SCORE",
+            },
+        ]
+    ).to_parquet(universe_path, index=False)
+    prior_report = tmp_path / "prior.json"
+    prior_report.write_text(
+        json.dumps({"results": [{"postal": "123456", "abs_pct_delta": 55.0}]}),
+        encoding="utf-8",
+    )
+
+    payload = build_targeted_risk_validation_sample(
+        bundle_dir=bundle_dir,
+        postal_universe_path=universe_path,
+        sample_size=10,
+        prior_report_path=prior_report,
+    )
+
+    assert payload["ok"] is True
+    assert payload["sample_kind"] == "targeted_high_risk"
+    assert payload["sample_size"] == 1
+    sample = payload["samples"][0]
+    assert sample["postal"] == "123456"
+    assert sample["risk_score"] > 10
+    assert set(sample["risk_flags"]) >= {
+        "bus_route",
+        "endpoint_connector",
+        "scored_partial",
+        "very_short_route",
+        "prior_delta_over_50_pct",
+    }
+    assert payload["risk_flag_counts"]["bus_route"] == 1
 
 
 def test_evaluate_cached_results_reports_missing_and_thresholds(tmp_path: Path):

@@ -86,6 +86,37 @@ def file_mtime_iso(path: Path) -> str | None:
     return datetime.fromtimestamp(path.stat().st_mtime, UTC).isoformat()
 
 
+def parse_iso_datetime(value: Any) -> datetime | None:
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=UTC)
+    return parsed.astimezone(UTC)
+
+
+def bundle_validation_floor(bundle_dir: Path) -> dict[str, Any]:
+    manifest_path = bundle_dir / "manifest.json"
+    manifest_payload = read_json(manifest_path) if manifest_path.is_file() else {}
+    generated_at = parse_iso_datetime(manifest_payload.get("generated_at"))
+    mtime = (
+        datetime.fromtimestamp(manifest_path.stat().st_mtime, UTC)
+        if manifest_path.is_file()
+        else None
+    )
+    candidates = [item for item in [generated_at, mtime] if item is not None]
+    floor = max(candidates) if candidates else None
+    return {
+        "manifest_path": str(manifest_path),
+        "bundle_generated_at": manifest_payload.get("generated_at"),
+        "manifest_mtime": file_mtime_iso(manifest_path),
+        "fresh_after": floor.isoformat() if floor else None,
+    }
+
+
 def bundle_network_freshness(bundle_dir: Path, network_path: Path) -> dict[str, Any]:
     manifest_path = bundle_dir / "manifest.json"
     manifest_payload = read_json(manifest_path) if manifest_path.is_file() else {}
@@ -181,6 +212,24 @@ def latest_json_report(qa_dir: Path, pattern: str) -> Path | None:
     return max(reports, key=lambda path: (path.stat().st_mtime, path.name))
 
 
+def latest_json_reports(qa_dir: Path, pattern: str) -> list[Path]:
+    return sorted(
+        [path for path in qa_dir.glob(pattern) if path.is_file()],
+        key=lambda path: (path.stat().st_mtime, path.name),
+        reverse=True,
+    )
+
+
+def is_blocking_onemap_report(report: dict[str, Any]) -> bool:
+    sample_size = report.get("sample_size")
+    sample_kind = report.get("sample_kind")
+    return (
+        isinstance(sample_size, int)
+        and sample_size >= 2000
+        and sample_kind in (None, "blocking_stratified")
+    )
+
+
 def onemap_subset_status(report: dict[str, Any]) -> dict[str, Any]:
     raw_subsets = report.get("subset_summary")
     if not isinstance(raw_subsets, dict):
@@ -219,12 +268,32 @@ def onemap_validation_status(
     qa_dir: Path,
     *,
     active_bundle: str | None = None,
+    bundle_dir: Path | None = None,
 ) -> dict[str, Any]:
-    report_path = latest_json_report(qa_dir, "onemap_validation_cached_report*.json")
+    report_paths = latest_json_reports(qa_dir, "onemap_validation_cached_report*.json")
+    report_path = None
+    readable_reports: list[tuple[Path, dict[str, Any]]] = []
+    for candidate_path in report_paths:
+        try:
+            candidate = read_json(candidate_path)
+        except (OSError, TypeError, json.JSONDecodeError):
+            continue
+        if is_blocking_onemap_report(candidate):
+            readable_reports.append((candidate_path, candidate))
+    latest_any_path = readable_reports[0][0] if readable_reports else None
+    if active_bundle:
+        for candidate_path, candidate in readable_reports:
+            if candidate.get("bundle") == active_bundle:
+                report_path = candidate_path
+                break
+    report_path = report_path or latest_any_path
     if report_path is None:
         return {
             "state": "not_collected",
             "report_path": None,
+            "gate_passed": False,
+            "bundle_matches_active": None,
+            "fresh_for_active_bundle": False,
             "summary": (
                 "sample planner, guarded collector, and cache evaluator implemented; "
                 "the 2,000-postal OneMap walk comparison has not been collected yet"
@@ -245,6 +314,14 @@ def onemap_validation_status(
     bundle_matches_active: bool | None = None
     if active_bundle and isinstance(report_bundle, str):
         bundle_matches_active = report_bundle == active_bundle
+    freshness = bundle_validation_floor(bundle_dir) if bundle_dir else {}
+    report_generated_at = parse_iso_datetime(report.get("generated_at"))
+    fresh_after = parse_iso_datetime(freshness.get("fresh_after"))
+    fresh_for_active_bundle = (
+        bool(bundle_matches_active)
+        and report_generated_at is not None
+        and (fresh_after is None or report_generated_at >= fresh_after)
+    )
 
     thresholds = report.get("thresholds", {})
     subset_status = onemap_subset_status(report)
@@ -254,16 +331,26 @@ def onemap_validation_status(
         thresholds.get("median_abs_pct_delta_max") if isinstance(thresholds, dict) else None
     )
     p95_max = thresholds.get("p95_abs_pct_delta_max") if isinstance(thresholds, dict) else None
+    same_bundle_fresh_gate_passed = bool(gate_passed and fresh_for_active_bundle)
     result_state = "passed" if gate_passed else "failed"
     state = result_state
     if bundle_matches_active is False:
         state = f"{result_state}_stale_bundle"
+    elif bundle_matches_active and not fresh_for_active_bundle:
+        state = f"{result_state}_stale_report"
 
     if bundle_matches_active is False:
         summary = (
             "latest cached 2,000-postal OneMap walk validation is for bundle "
             f"{report_bundle}, not active bundle {active_bundle}; rerun validation before "
             f"using it as active-bundle launch evidence. That cached validation {result_state}: "
+            f"median abs delta {median}%"
+        )
+    elif bundle_matches_active and not fresh_for_active_bundle:
+        summary = (
+            "latest cached 2,000-postal OneMap walk validation is for the active bundle "
+            f"{active_bundle}, but it is stale for the current manifest; rerun validation before "
+            f"using it as launch evidence. That cached validation {result_state}: "
             f"median abs delta {median}%"
         )
     else:
@@ -288,6 +375,8 @@ def onemap_validation_status(
         "bundle": report_bundle,
         "active_bundle": active_bundle,
         "bundle_matches_active": bundle_matches_active,
+        "fresh_for_active_bundle": fresh_for_active_bundle,
+        "same_bundle_fresh_gate_passed": same_bundle_fresh_gate_passed,
         "gate_passed": gate_passed,
         "sample_size": report.get("sample_size"),
         "cached_results": report.get("cached_results"),
@@ -299,6 +388,8 @@ def onemap_validation_status(
         "subset_summary": subset_status["subset_summary"],
         "failing_subset_order": subset_status["failing_subset_order"],
         "generated_at": report.get("generated_at"),
+        "freshness": freshness,
+        "latest_any_report_path": str(latest_any_path) if latest_any_path else None,
     }
 
 
@@ -306,8 +397,13 @@ def readiness_features(
     qa_dir: Path = QA_DIR,
     *,
     active_bundle: str | None = None,
+    bundle_dir: Path | None = None,
 ) -> dict[str, Any]:
-    onemap_status = onemap_validation_status(qa_dir, active_bundle=active_bundle)
+    onemap_status = onemap_validation_status(
+        qa_dir,
+        active_bundle=active_bundle,
+        bundle_dir=bundle_dir,
+    )
     return {
         "incorporated": {
             "nparks_spatial_shade_proxy_heat_only": True,
@@ -360,6 +456,8 @@ def build_readiness_report(
     debug_path: Path | None = None,
     network_path: Path = DEFAULT_NETWORK,
     postal_universe_path: Path = DEFAULT_UNIVERSE,
+    waive_onemap_validation: bool = False,
+    owner_approval_note: str = "",
 ) -> tuple[bool, dict[str, Any]]:
     bundle_dir = bundle_dir or active_bundle_dir()
     qa_path = qa_path or project_root / "qa" / "conflation_qa_island.json"
@@ -392,6 +490,11 @@ def build_readiness_report(
     vercel = vercel_readiness(project_root, web_dir)
     freshness = bundle_network_freshness(bundle_dir, network_path)
     score_provenance = bundle_score_provenance_status(bundle_dir)
+    onemap_status = onemap_validation_status(
+        project_root / "qa",
+        active_bundle=str(bundle_state.get("bundle") or ""),
+        bundle_dir=bundle_dir,
+    )
 
     errors: list[str] = []
     warnings: list[str] = []
@@ -411,9 +514,69 @@ def build_readiness_report(
         warnings.append(str(freshness["warning"]))
     if score_provenance["warning"]:
         warnings.append(str(score_provenance["warning"]))
+    onemap_gate_passed = bool(onemap_status.get("same_bundle_fresh_gate_passed"))
+    onemap_gate_waived = bool(waive_onemap_validation and not onemap_gate_passed)
+    if onemap_gate_waived:
+        onemap_status = {
+            **onemap_status,
+            "waived": True,
+            "waiver_reason": owner_approval_note
+            or "owner approved release despite failed OneMap validation gate",
+        }
+
+    if not onemap_gate_passed:
+        warnings.append(str(onemap_status.get("summary")))
+
+    release_gate_checks = {
+        "static_artifact_validation": bool(validation.get("ok")),
+        "state_counts_match_manifest": state_total_matches_manifest,
+        "scoring_fingerprints": bool(score_provenance.get("ok")),
+        "onemap_validation_same_bundle_fresh": onemap_gate_passed,
+        "onemap_validation_waived": onemap_gate_waived,
+        "vercel_root_directory": bool(vercel.get("root_directory_ok")),
+        "infrastructure_readiness": not errors,
+    }
+    owner_approvals = ["production_deploy"]
+    blocking_checks = {
+        key: value
+        for key, value in release_gate_checks.items()
+        if key
+        not in {
+            "onemap_validation_same_bundle_fresh",
+            "onemap_validation_waived",
+        }
+    }
+    preapproval_gate_passed = all(blocking_checks.values()) and (
+        onemap_gate_passed or onemap_gate_waived
+    )
+    release_gate_passed = preapproval_gate_passed and not owner_approvals
+    if not preapproval_gate_passed:
+        release_gate_status = "blocked"
+    elif owner_approvals:
+        release_gate_status = "waiting_on_owner_approval"
+    else:
+        release_gate_status = "passed"
 
     report: dict[str, Any] = {
         "ok": not errors,
+        "release_gate_passed": release_gate_passed,
+        "release_gate_status": release_gate_status,
+        "release_gate_summary": {
+            "active_bundle": bundle_state.get("bundle"),
+            "manifest_path": freshness.get("bundle_manifest_path"),
+            "state_counts": bundle_state.get("state_counts"),
+            "static_artifact_validation": {
+                "ok": validation.get("ok"),
+                "errors": validation.get("errors", []),
+                "warnings": validation.get("warnings", []),
+            },
+            "scoring_fingerprint_status": score_provenance,
+            "onemap_validation": onemap_status,
+            "vercel_root_directory": vercel.get("root_directory"),
+            "checks": release_gate_checks,
+            "unresolved_warnings": warnings,
+            "required_owner_approvals": owner_approvals,
+        },
         "generated_at": datetime.now(UTC).isoformat(),
         "bundle": {
             **bundle_state,
@@ -456,6 +619,7 @@ def build_readiness_report(
         "features": readiness_features(
             project_root / "qa",
             active_bundle=str(bundle_state.get("bundle") or ""),
+            bundle_dir=bundle_dir,
         ),
         "errors": errors,
         "warnings": warnings,
@@ -474,6 +638,12 @@ def main() -> int:
     parser.add_argument("--params", type=Path, default=PARAMS_PATH)
     parser.add_argument("--qa", type=Path, default=None)
     parser.add_argument("--debug", type=Path, default=None)
+    parser.add_argument(
+        "--waive-onemap-validation",
+        action="store_true",
+        help="Record an owner waiver for a failed fresh same-bundle OneMap gate.",
+    )
+    parser.add_argument("--owner-approval-note", default="")
     args = parser.parse_args()
 
     ok, report = build_readiness_report(
@@ -484,6 +654,8 @@ def main() -> int:
         params_path=args.params,
         qa_path=args.qa,
         debug_path=args.debug,
+        waive_onemap_validation=args.waive_onemap_validation,
+        owner_approval_note=args.owner_approval_note,
     )
     print(json.dumps(report, indent=2, sort_keys=True))
     return 0 if ok else 1

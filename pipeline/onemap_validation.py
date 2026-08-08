@@ -272,8 +272,13 @@ def score_shard_paths(bundle_dir: Path) -> list[Path]:
 
 
 def iter_score_candidates(
-    bundle_dir: Path, *, route_mode: str, geom_postal_index: dict[str, str]
+    bundle_dir: Path,
+    *,
+    route_mode: str,
+    geom_postal_index: dict[str, str],
+    include_states: set[str] | None = None,
 ) -> Iterable[dict[str, Any]]:
+    include_states = include_states or {"SCORED"}
     for path in score_shard_paths(bundle_dir):
         area = area_from_score_shard(path)
         records = read_json(path)
@@ -291,8 +296,9 @@ def iter_score_candidates(
                 ):
                     route_record = route_options[route_mode]
             paths = route_record.get("paths")
+            state = str(route_record.get("state", record.get("state")) or "")
             if (
-                record.get("state") != "SCORED"
+                state not in include_states
                 or not isinstance(paths, dict)
                 or postal not in geom_postal_index
             ):
@@ -307,7 +313,7 @@ def iter_score_candidates(
             yield {
                 "postal": postal,
                 "area": area,
-                "state": route_record.get("state", record.get("state")),
+                "state": state,
                 "total": route_record.get("total", record.get("total")),
                 "best_node": {
                     "type": best_node.get("type"),
@@ -322,6 +328,53 @@ def iter_score_candidates(
                     routing_type=routing_type,
                 ),
             }
+
+
+def endpoint_validation_samples(
+    *,
+    bundle_dir: Path,
+    postal_universe_path: Path,
+    route_mode: str,
+    include_states: set[str] | None = None,
+) -> tuple[
+    dict[str, list[dict[str, Any]]],
+    dict[str, list[dict[str, Any]]],
+    dict[str, Any],
+]:
+    geom_index = read_json(bundle_dir / "geom" / "postal-index.json")
+    if not isinstance(geom_index, dict):
+        raise TypeError("geom/postal-index.json must contain a JSON object")
+    origin_index = load_postal_origin_index(postal_universe_path)
+    transit_index = load_transit_poi_index(bundle_dir)
+
+    buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for candidate in iter_score_candidates(
+        bundle_dir,
+        route_mode=route_mode,
+        geom_postal_index=geom_index,
+        include_states=include_states,
+    ):
+        buckets[str(candidate["area"])].append(candidate)
+
+    endpoint_buckets: dict[str, list[dict[str, Any]]] = {}
+    for area in sorted(buckets):
+        endpoint_buckets[area] = attach_endpoints(
+            bundle_dir,
+            buckets[area],
+            route_mode=route_mode,
+            geom_postal_index=geom_index,
+            origin_index=origin_index,
+            transit_index=transit_index,
+        )
+    endpoint_buckets = {area: samples for area, samples in endpoint_buckets.items() if samples}
+    return (
+        buckets,
+        endpoint_buckets,
+        {
+            "origin_index_size": len(origin_index),
+            "transit_index_size": len(transit_index),
+        },
+    )
 
 
 def validation_route_trust(*, node_type: str, routing_type: str) -> str:
@@ -489,32 +542,14 @@ def build_validation_sample(
     route_mode: str = "best_transit",
     onemap_delay_sec: float = DEFAULT_ONEMAP_DELAY_SEC,
 ) -> dict[str, Any]:
-    geom_index = read_json(bundle_dir / "geom" / "postal-index.json")
-    if not isinstance(geom_index, dict):
-        raise TypeError("geom/postal-index.json must contain a JSON object")
-    origin_index = load_postal_origin_index(postal_universe_path)
-    transit_index = load_transit_poi_index(bundle_dir)
-
-    buckets: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for candidate in iter_score_candidates(
-        bundle_dir, route_mode=route_mode, geom_postal_index=geom_index
-    ):
-        buckets[str(candidate["area"])].append(candidate)
+    buckets, endpoint_buckets, indexes = endpoint_validation_samples(
+        bundle_dir=bundle_dir,
+        postal_universe_path=postal_universe_path,
+        route_mode=route_mode,
+    )
 
     for area, items in buckets.items():
         items.sort(key=lambda item: stable_rank(seed, area, str(item["postal"])))
-
-    endpoint_buckets: dict[str, list[dict[str, Any]]] = {}
-    for area in sorted(buckets):
-        endpoint_buckets[area] = attach_endpoints(
-            bundle_dir,
-            buckets[area],
-            route_mode=route_mode,
-            geom_postal_index=geom_index,
-            origin_index=origin_index,
-            transit_index=transit_index,
-        )
-    endpoint_buckets = {area: samples for area, samples in endpoint_buckets.items() if samples}
 
     quotas = allocate_area_quotas(endpoint_buckets, sample_size)
     samples = [
@@ -536,8 +571,8 @@ def build_validation_sample(
         "raw_candidate_records": raw_candidate_records,
         "skipped_endpoint_records": raw_candidate_records - eligible_records,
         "area_count": len(endpoint_buckets),
-        "origin_index_size": len(origin_index),
-        "transit_index_size": len(transit_index),
+        "origin_index_size": indexes["origin_index_size"],
+        "transit_index_size": indexes["transit_index_size"],
         "area_quotas": quotas,
         "will_call_onemap": False,
         "onemap_delay_sec": onemap_delay_sec,
@@ -547,6 +582,137 @@ def build_validation_sample(
             "median_abs_pct_delta_max": float(gate_config["median_abs_pct_delta_max"]),
             "p95_abs_pct_delta_max": float(gate_config["p95_abs_pct_delta_max"]),
         },
+        "cache_dir": str(DEFAULT_CACHE_DIR.relative_to(PROJECT_ROOT)),
+        "samples": samples,
+    }
+
+
+def load_prior_outlier_index(path: Path | None) -> dict[str, dict[str, Any]]:
+    if path is None or not path.is_file():
+        return {}
+    payload = read_json(path)
+    rows: list[Any] = []
+    if isinstance(payload, dict):
+        for key in ("results", "top_outliers_preview", "results_preview"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                rows.extend(value)
+    index: dict[str, dict[str, Any]] = {}
+    for row in rows:
+        if not isinstance(row, dict):
+            continue
+        postal = str(row.get("postal", "")).zfill(6)
+        if not postal.replace("0", "") and postal != "000000":
+            continue
+        current = index.get(postal)
+        row_delta = row.get("abs_pct_delta")
+        current_delta = current.get("abs_pct_delta") if isinstance(current, dict) else None
+        if not isinstance(row_delta, int | float):
+            continue
+        if not isinstance(current_delta, int | float) or float(row_delta) > float(current_delta):
+            index[postal] = row
+    return index
+
+
+def targeted_risk_score(
+    sample: dict[str, Any], prior_outliers: dict[str, dict[str, Any]]
+) -> tuple[int, list[str]]:
+    score = 0
+    flags: list[str] = []
+    best_node_raw = sample.get("best_node")
+    best_node = best_node_raw if isinstance(best_node_raw, dict) else {}
+    if best_node.get("type") == "bus_stop":
+        score += 5
+        flags.append("bus_route")
+    if sample.get("route_trust") == "graph_route_with_endpoint_connector":
+        score += 4
+        flags.append("endpoint_connector")
+    if sample.get("route_trust") == "partial_unrouted_bus_fallback":
+        score += 6
+        flags.append("direct_bus_fallback_unrouted")
+    if sample.get("state") == "SCORED_PARTIAL":
+        score += 5
+        flags.append("scored_partial")
+    project_m = sample.get("project_shortest_m")
+    if isinstance(project_m, int | float):
+        if float(project_m) <= 80:
+            score += 3
+            flags.append("very_short_route")
+        elif float(project_m) <= 150:
+            score += 1
+            flags.append("short_route")
+    prior = prior_outliers.get(str(sample.get("postal", "")).zfill(6))
+    prior_delta = prior.get("abs_pct_delta") if prior else None
+    if isinstance(prior_delta, int | float):
+        if float(prior_delta) > 50:
+            score += 4
+            flags.append("prior_delta_over_50_pct")
+        elif float(prior_delta) > 25:
+            score += 2
+            flags.append("prior_delta_over_25_pct")
+        sample["prior_abs_pct_delta"] = round(float(prior_delta), 3)
+    return score, flags
+
+
+def build_targeted_risk_validation_sample(
+    *,
+    bundle_dir: Path,
+    postal_universe_path: Path = DEFAULT_POSTAL_UNIVERSE,
+    sample_size: int = 500,
+    seed: str = "shiok-onemap-validation-targeted-v1",
+    route_mode: str = "best_transit",
+    onemap_delay_sec: float = DEFAULT_ONEMAP_DELAY_SEC,
+    prior_report_path: Path | None = None,
+) -> dict[str, Any]:
+    buckets, endpoint_buckets, indexes = endpoint_validation_samples(
+        bundle_dir=bundle_dir,
+        postal_universe_path=postal_universe_path,
+        route_mode=route_mode,
+        include_states={"SCORED", "SCORED_PARTIAL"},
+    )
+    prior_outliers = load_prior_outlier_index(prior_report_path)
+    candidates = [sample for area in sorted(endpoint_buckets) for sample in endpoint_buckets[area]]
+    scored_samples: list[dict[str, Any]] = []
+    for sample in candidates:
+        risk_score, risk_flags = targeted_risk_score(sample, prior_outliers)
+        if risk_score <= 0:
+            continue
+        scored_samples.append(
+            {
+                **sample,
+                "risk_score": risk_score,
+                "risk_flags": risk_flags,
+            }
+        )
+    scored_samples.sort(
+        key=lambda item: (
+            -int(item["risk_score"]),
+            stable_rank(seed, str(item.get("area")), str(item.get("postal"))),
+        )
+    )
+    samples = scored_samples[: max(0, sample_size)]
+    projected_seconds = len(samples) * onemap_delay_sec
+    return {
+        "ok": len(samples) > 0,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "bundle": bundle_dir.name,
+        "sample_kind": "targeted_high_risk",
+        "route_mode": route_mode,
+        "sample_size_requested": sample_size,
+        "sample_size": len(samples),
+        "eligible_records": sum(len(items) for items in endpoint_buckets.values()),
+        "raw_candidate_records": sum(len(items) for items in buckets.values()),
+        "risk_candidate_records": len(scored_samples),
+        "origin_index_size": indexes["origin_index_size"],
+        "transit_index_size": indexes["transit_index_size"],
+        "prior_report_path": str(prior_report_path) if prior_report_path else None,
+        "risk_flag_counts": dict(
+            sorted(Counter(flag for sample in samples for flag in sample["risk_flags"]).items())
+        ),
+        "will_call_onemap": False,
+        "onemap_delay_sec": onemap_delay_sec,
+        "projected_wall_clock_seconds": round(projected_seconds, 1),
+        "projected_wall_clock_minutes": round(projected_seconds / 60, 1),
         "cache_dir": str(DEFAULT_CACHE_DIR.relative_to(PROJECT_ROOT)),
         "samples": samples,
     }
@@ -1130,6 +1296,20 @@ def main() -> int:
     plan.add_argument("--onemap-delay-sec", type=float, default=DEFAULT_ONEMAP_DELAY_SEC)
     plan.add_argument("--output", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
 
+    targeted = subparsers.add_parser("plan-targeted")
+    targeted.add_argument("--bundle-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
+    targeted.add_argument("--postal-universe", type=Path, default=DEFAULT_POSTAL_UNIVERSE)
+    targeted.add_argument("--sample-size", type=int, default=500)
+    targeted.add_argument("--seed", default="shiok-onemap-validation-targeted-v1")
+    targeted.add_argument("--route-mode", default="best_transit")
+    targeted.add_argument("--onemap-delay-sec", type=float, default=DEFAULT_ONEMAP_DELAY_SEC)
+    targeted.add_argument("--prior-report", type=Path, default=None)
+    targeted.add_argument(
+        "--output",
+        type=Path,
+        default=PROJECT_ROOT / "qa" / "onemap_validation_sample_targeted.json",
+    )
+
     evaluate = subparsers.add_parser("evaluate")
     evaluate.add_argument("--sample", type=Path, default=DEFAULT_SAMPLE_OUTPUT)
     evaluate.add_argument("--cache-dir", type=Path, default=DEFAULT_CACHE_DIR)
@@ -1158,6 +1338,20 @@ def main() -> int:
             seed=args.seed,
             route_mode=args.route_mode,
             onemap_delay_sec=args.onemap_delay_sec,
+        )
+        write_json(args.output, payload)
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0 if payload["ok"] else 1
+
+    if args.action == "plan-targeted":
+        payload = build_targeted_risk_validation_sample(
+            bundle_dir=args.bundle_dir,
+            postal_universe_path=args.postal_universe,
+            sample_size=args.sample_size,
+            seed=args.seed,
+            route_mode=args.route_mode,
+            onemap_delay_sec=args.onemap_delay_sec,
+            prior_report_path=args.prior_report,
         )
         write_json(args.output, payload)
         print(json.dumps(payload, indent=2, sort_keys=True))

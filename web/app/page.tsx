@@ -253,6 +253,9 @@ function noTransitTitle(score: ScoreRecord, transitMode: TransitAccessMode): str
 }
 
 function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): string | null {
+  if (score.paths?.routing_type === "live_onemap_preview") {
+    return "Preview only: this clicked stop has route evidence, but it is not an authoritative SHIOK score until the offline scoring pipeline includes it.";
+  }
   if (score.state === "SCORED_PARTIAL") {
     return "Partial score: nearby bus service is counted, but exact walking-route shelter is still pending.";
   }
@@ -271,7 +274,7 @@ function scoreStateNote(score: ScoreRecord, transitMode: TransitAccessMode): str
     return `No ${transitModeLabel(transitMode)} walk was found within the current scoring range.`;
   }
   if (score.state === "NOT_YET_SCORED") {
-    return "This postal is in the source universe, but it still needs usable location evidence.";
+    return "This postal is in the source universe, but it still needs pipeline scoring evidence.";
   }
   return null;
 }
@@ -342,7 +345,7 @@ function selectionForChosenStop(
 ): LoadedSelection | null {
   if (!baseSelection || !chosenStopId) return baseSelection;
 
-  // 1. If we already have a live OneMap-snapped & shelter-scored route for this stop, return it!
+  // 1. If we already have a live OneMap-snapped preview route for this stop, return it.
   if (liveRouteCache && liveRouteCache[chosenStopId]) {
     return liveRouteCache[chosenStopId];
   }
@@ -404,7 +407,7 @@ function selectionForChosenStop(
     };
   }
 
-  // 3. Fallback: Score dynamically using local shelter evidence while OneMap loads in background
+  // 3. Fallback: show route evidence only while OneMap loads in background.
   const matchedCandidate = candidates.find((c) => c.id === chosenStopId);
   const poiFeature = mapTransitPois.features.find(
     (f) => f.properties?.id === chosenStopId
@@ -500,6 +503,9 @@ function resolveOriginLatLng(selection: LoadedSelection | null): { lat: number; 
 }
 
 function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): string[] {
+  if (score.paths?.routing_type === "live_onemap_preview") {
+    return ["Route evidence preview", "Not scored in the current bundle"];
+  }
   if (score.state === "NO_TRANSIT_IN_RANGE") {
     const label = transitModeLabel(transitMode);
     const reason = provenanceReason(score, transitMode);
@@ -514,7 +520,7 @@ function scoreReasons(score: ScoreRecord, transitMode: TransitAccessMode): strin
       ? [`Closest routed ${label} is ${formatDistance(nearestM)}`, "Current scoring range is 1.2 km"]
       : [`No ${label} walk within scoring range`, "Nearby transit may still exist outside the current threshold"];
   }
-  if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs usable location evidence"];
+  if (score.state === "NOT_YET_SCORED") return ["Not scored in this bundle", "Needs pipeline scoring evidence"];
   if (score.paths?.routing_type === "direct_bus_fallback_unrouted") {
     return ["Nearby bus stop with service data", "Walking-route shelter not verified yet"];
   }
@@ -592,6 +598,10 @@ function modeStatus(mode: ComfortMode): string {
   if (mode === "balanced") return "Balanced scoring with scheduled buses";
   if (mode.startsWith("rain")) return "Rain gives shelter more weight";
   return "Sunny mode gives heat comfort more weight";
+}
+
+function isPreviewRoute(score: ScoreRecord): boolean {
+  return score.paths?.routing_type === "live_onemap_preview";
 }
 
 function buildFeedbackPayload({
@@ -741,17 +751,19 @@ function ComfortModeControl({
 function InlineRouteLegend({
   sameRoute,
   directBusFallback,
+  previewRoute = false,
 }: {
   sameRoute: boolean;
   directBusFallback: boolean;
+  previewRoute?: boolean;
 }) {
   return (
     <div className={styles.inlineLegend} aria-label="Map legend">
       <span>
-        <i className={directBusFallback ? styles.directBusLine : styles.shiokestLine} />
-        {directBusFallback ? "Direct bus estimate" : "Shiokest"}
+        <i className={directBusFallback || previewRoute ? styles.directBusLine : styles.shiokestLine} />
+        {directBusFallback ? "Direct bus estimate" : previewRoute ? "Preview route" : "Shiokest"}
       </span>
-      {!directBusFallback && (
+      {!directBusFallback && !previewRoute && (
         <>
           <span>
             <i className={styles.shortestLine} />
@@ -852,6 +864,7 @@ function ScoreCard({
 
   const sameRoute = routesAreSame(selection);
   const directBusFallback = score.paths?.routing_type === "direct_bus_fallback_unrouted";
+  const previewRoute = isPreviewRoute(score);
   const extraWalkM =
     score.paths && typeof score.paths.shortest_m === "number" && typeof score.paths.sheltered_m === "number"
       ? Math.max(0, score.paths.sheltered_m - score.paths.shortest_m)
@@ -864,11 +877,15 @@ function ScoreCard({
   const selectedCoverage = routeMode === "shortest" && !sameRoute ? shortestCoveredRatio : coveredRatio;
   const selectedRouteLabel = directBusFallback
     ? "Direct bus estimate"
+    : previewRoute
+      ? "Preview walk"
     : routeMode === "shortest" && !sameRoute
       ? "Shortest walk"
       : "Shiokest walk";
   const stationName =
-    score.state === "NO_TRANSIT_IN_RANGE"
+    previewRoute
+      ? toProperCase(score.best_node?.name ?? "Selected transit stop")
+      : score.state === "NO_TRANSIT_IN_RANGE"
       ? noTransitTitle(score, transitMode)
       : score.state === "NOT_YET_SCORED"
         ? "Location Evidence Missing"
@@ -908,7 +925,7 @@ function ScoreCard({
           <p>{stationName}</p>
           {isCustomStopSelected && (
             <div className={styles.customStopBar}>
-              <span>Viewing selected stop</span>
+              <span>{previewRoute ? "Preview route evidence only" : "Viewing selected stop"}</span>
               {onResetChosenStop && (
                 <button
                   type="button"
@@ -962,7 +979,13 @@ function ScoreCard({
 
       <TransitModeControl score={score} mode={transitMode} setMode={setTransitMode} />
 
-      {score.paths && <InlineRouteLegend sameRoute={sameRoute} directBusFallback={directBusFallback} />}
+      {score.paths && (
+        <InlineRouteLegend
+          sameRoute={sameRoute}
+          directBusFallback={directBusFallback}
+          previewRoute={previewRoute}
+        />
+      )}
       {sourceBreakdown.length > 0 && (
         <div className={styles.sourceStrip} aria-label="Route source evidence">
           {sourceBreakdown.map((item) => (
@@ -972,7 +995,7 @@ function ScoreCard({
           ))}
         </div>
       )}
-      {score.paths && (
+      {score.paths && !previewRoute && (
         <>
           <div className={styles.modeRow}>
             <ComfortModeControl mode={comfortMode} setMode={setComfortMode} />
@@ -990,6 +1013,14 @@ function ScoreCard({
             </p>
           )}
         </>
+      )}
+
+      {score.paths && previewRoute && (
+        <div className={styles.summaryGrid}>
+          <Metric label="Preview walk" value={formatDistance(selectedDistance)} />
+          <Metric label="Sheltered evidence" value={formatPercent(selectedCoverage)} />
+          <Metric label="Score status" value="Not scored" />
+        </div>
       )}
 
       <div className={styles.reasonList} aria-label="Score reasons">
@@ -1012,7 +1043,7 @@ function ScoreCard({
         </div>
       )}
 
-      {score.paths && !directBusFallback && (
+      {score.paths && !directBusFallback && !previewRoute && (
         <RouteModeControl
           mode={routeMode}
           setMode={setRouteMode}
@@ -1165,7 +1196,7 @@ export default function Home() {
     [candidates, transitSelection]
   );
 
-  // Background fetch to snap arbitrary clicked stops onto real OneMap sidewalks and shelter-segment them
+  // Background fetch to snap arbitrary clicked stops onto real OneMap sidewalks for preview evidence.
   useEffect(() => {
     if (!chosenStopId || !transitSelection || !originLatLng) return;
     const hasPrecomputed = Boolean(transitSelection.geom?.candidates?.[chosenStopId]);
@@ -1518,7 +1549,7 @@ export default function Home() {
               copyFeedback={copyFeedback}
               copyStatus={copyStatus}
               isCustomStopSelected={Boolean(chosenStopId && chosenStopId !== bestCandidateId)}
-              onResetChosenStop={() => setChosenStopId(null)}
+              onResetChosenStop={() => handleStopSelect(null)}
             />
           </aside>
         )}
