@@ -676,6 +676,89 @@ def test_collect_onemap_walk_cache_can_cache_terminal_http_errors(tmp_path: Path
     assert cached_report["invalid_cache_results"] == 1
 
 
+def test_collect_onemap_walk_cache_retries_retryable_http_error_cache(tmp_path: Path):
+    start = {"lat": 1.3, "lon": 103.8}
+    end = {"lat": 1.301, "lon": 103.801}
+    cache_key = route_cache_key(start, end)
+    sample_payload = {
+        "bundle": "generated_test",
+        "sample_size": 1,
+        "samples": [
+            {
+                "postal": "123456",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 100.0,
+                "start": start,
+                "end": end,
+            }
+        ],
+    }
+    (tmp_path / f"{cache_key}.json").write_text(
+        json.dumps({"error": {"type": "http_status", "status_code": 502}}),
+        encoding="utf-8",
+    )
+
+    retryable_report = evaluate_cached_results(sample_payload, tmp_path)
+    assert retryable_report["retryable_cache_results"] == 1
+    assert retryable_report["complete_cache_coverage"] is False
+    assert retryable_report["gate_passed"] is False
+
+    ok, collect_report = collect_onemap_walk_cache(
+        sample_payload,
+        cache_dir=tmp_path,
+        delay_sec=0,
+        confirm_onemap_collection=True,
+        cache_errors=True,
+        fetcher=lambda _sample: {"route_summary": {"total_distance": 101.0}},
+    )
+
+    assert ok, collect_report
+    assert collect_report["existing_cache_results"] == 0
+    assert collect_report["queued_requests"] == 1
+    assert collect_report["written_cache_results"] == 1
+    repaired_report = evaluate_cached_results(sample_payload, tmp_path)
+    assert repaired_report["retryable_cache_results"] == 0
+    assert repaired_report["cached_results"] == 1
+
+
+def test_collect_onemap_walk_cache_does_not_cache_fresh_5xx_errors(tmp_path: Path):
+    start = {"lat": 1.3, "lon": 103.8}
+    end = {"lat": 1.301, "lon": 103.801}
+    cache_key = route_cache_key(start, end)
+    sample_payload = {
+        "bundle": "generated_test",
+        "samples": [
+            {
+                "postal": "123456",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 100.0,
+                "start": start,
+                "end": end,
+            }
+        ],
+    }
+
+    def fetcher(_sample: dict) -> dict:
+        request = httpx.Request("GET", "https://example.test/route")
+        response = httpx.Response(502, request=request)
+        raise httpx.HTTPStatusError("bad gateway", request=request, response=response)
+
+    ok, report = collect_onemap_walk_cache(
+        sample_payload,
+        cache_dir=tmp_path,
+        delay_sec=0,
+        confirm_onemap_collection=True,
+        cache_errors=True,
+        fetcher=fetcher,
+    )
+
+    assert not ok
+    assert report["written_error_cache_results"] == 0
+    assert not (tmp_path / f"{cache_key}.json").exists()
+
+
 def _write_cache(cache_dir: Path, cache_key: str, onemap_m: float) -> None:
     (cache_dir / f"{cache_key}.json").write_text(
         json.dumps({"route_summary": {"total_distance": onemap_m}}),

@@ -741,6 +741,30 @@ def extract_onemap_distance_m(payload: Any) -> float | None:
     return None
 
 
+def cached_onemap_error_status(payload: Any) -> int | None:
+    if not isinstance(payload, dict):
+        return None
+    error = payload.get("error")
+    if not isinstance(error, dict):
+        return None
+    if error.get("type") != "http_status":
+        return None
+    status_code = error.get("status_code")
+    if isinstance(status_code, int) and not isinstance(status_code, bool):
+        return status_code
+    return None
+
+
+def is_retryable_onemap_error_status(status_code: int | None) -> bool:
+    return status_code == 429 or (status_code is not None and status_code >= 500)
+
+
+def is_retryable_onemap_cache(path: Path) -> bool:
+    if not path.is_file():
+        return False
+    return is_retryable_onemap_error_status(cached_onemap_error_status(read_json(path)))
+
+
 def percentile(values: list[float], pct: float) -> float | None:
     if not values:
         return None
@@ -959,6 +983,7 @@ def evaluate_cached_results(
     results: list[dict[str, Any]] = []
     missing: list[str] = []
     invalid: list[dict[str, Any]] = []
+    retryable: list[dict[str, Any]] = []
     for sample in sample_payload.get("samples", []):
         if not isinstance(sample, dict):
             continue
@@ -967,7 +992,20 @@ def evaluate_cached_results(
         if not cache_path.is_file():
             missing.append(str(sample.get("postal", "")))
             continue
-        onemap_m = extract_onemap_distance_m(read_json(cache_path))
+        cache_payload = read_json(cache_path)
+        retryable_status = cached_onemap_error_status(cache_payload)
+        if is_retryable_onemap_error_status(retryable_status):
+            retryable.append(
+                {
+                    "postal": sample.get("postal"),
+                    "area": sample.get("area"),
+                    "cache_key": cache_key,
+                    "status_code": retryable_status,
+                    "reason": "retryable_onemap_http_error",
+                }
+            )
+            continue
+        onemap_m = extract_onemap_distance_m(cache_payload)
         project_m = sample.get("project_shortest_m")
         raw_best_node = sample.get("best_node")
         best_node: dict[str, Any] = raw_best_node if isinstance(raw_best_node, dict) else {}
@@ -1067,7 +1105,9 @@ def evaluate_cached_results(
     gate_metric_median = gate_median if require_plausible else median
     gate_metric_p95 = gate_p95 if require_plausible else p95
     sample_size = int(sample_payload.get("sample_size", 0))
-    complete_cache_coverage = len(results) == sample_size and not missing and not invalid
+    complete_cache_coverage = (
+        len(results) == sample_size and not missing and not invalid and not retryable
+    )
     gate_passed = (
         complete_cache_coverage
         and gate_metric_median is not None
@@ -1084,8 +1124,10 @@ def evaluate_cached_results(
         "cached_results": len(results),
         "missing_cache_results": len(missing),
         "invalid_cache_results": len(invalid),
+        "retryable_cache_results": len(retryable),
         "missing_cache_postals_preview": missing[:20],
         "invalid_cache_preview": invalid[:20],
+        "retryable_cache_preview": retryable[:20],
         "median_abs_pct_delta": round(median, 3) if median is not None else None,
         "p95_abs_pct_delta": round(p95, 3) if p95 is not None else None,
         "median_abs_delta_m": round(median_m, 1) if median_m is not None else None,
@@ -1179,12 +1221,16 @@ def collect_onemap_walk_cache(
 ) -> tuple[bool, dict[str, Any]]:
     samples = [item for item in sample_payload.get("samples", []) if isinstance(item, dict)]
     existing = [
-        sample for sample in samples if (cache_dir / f"{sample.get('cache_key')}.json").is_file()
+        sample
+        for sample in samples
+        if (cache_dir / f"{sample.get('cache_key')}.json").is_file()
+        and not is_retryable_onemap_cache(cache_dir / f"{sample.get('cache_key')}.json")
     ]
     pending = [
         sample
         for sample in samples
         if not (cache_dir / f"{sample.get('cache_key')}.json").is_file()
+        or is_retryable_onemap_cache(cache_dir / f"{sample.get('cache_key')}.json")
     ]
     if limit is not None:
         pending = pending[: max(0, int(limit))]
@@ -1270,7 +1316,7 @@ def collect_onemap_walk_cache(
                 )
                 if exc.response.status_code == 429:
                     time.sleep(max(60.0, delay_sec * 5.0))
-                elif cache_errors and cache_key:
+                elif cache_errors and cache_key and 400 <= exc.response.status_code < 500:
                     cache_payload = {
                         "source": "onemap_walk_route_validation",
                         "fetched_at": datetime.now(UTC).isoformat(),
