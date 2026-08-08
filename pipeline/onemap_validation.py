@@ -1186,6 +1186,7 @@ def collect_onemap_walk_cache(
     dry_run: bool = False,
     confirm_onemap_collection: bool = False,
     cache_errors: bool = False,
+    progress_output: Path | None = None,
     fetcher: FetchRoute | None = None,
 ) -> tuple[bool, dict[str, Any]]:
     samples = [item for item in sample_payload.get("samples", []) if isinstance(item, dict)]
@@ -1217,15 +1218,23 @@ def collect_onemap_walk_cache(
         "errors": [],
         "will_call_onemap": bool(pending and not dry_run and confirm_onemap_collection),
     }
+    if progress_output is not None:
+        write_json(progress_output, report)
     if delay_sec < 0:
         report["ok"] = False
         report["errors"].append("delay_sec must be >= 0")
+        if progress_output is not None:
+            write_json(progress_output, report)
         return False, report
     if not dry_run and not confirm_onemap_collection:
         report["ok"] = False
         report["errors"].append("OneMap validation collection requires --confirm-onemap-collection")
+        if progress_output is not None:
+            write_json(progress_output, report)
         return False, report
     if dry_run or not pending:
+        if progress_output is not None:
+            write_json(progress_output, report)
         return True, report
 
     cache_dir.mkdir(parents=True, exist_ok=True)
@@ -1241,6 +1250,8 @@ def collect_onemap_walk_cache(
 
         for sample in pending:
             cache_key = str(sample.get("cache_key", ""))
+            report["current_postal"] = sample.get("postal")
+            report["current_cache_key"] = cache_key
             if not cache_key:
                 report["errors"].append(f"sample missing cache_key: {sample.get('postal')}")
                 continue
@@ -1294,6 +1305,10 @@ def collect_onemap_walk_cache(
                 report["errors"].append(f"{sample.get('postal')}: {exc}")
             finally:
                 report["http_requests"] += 1
+                report["pending_remaining"] = max(0, len(pending) - int(report["http_requests"]))
+                report["last_progress_at"] = datetime.now(UTC).isoformat()
+                if progress_output is not None:
+                    write_json(progress_output, report)
                 if delay_sec > 0:
                     time.sleep(delay_sec)
     finally:
@@ -1301,6 +1316,8 @@ def collect_onemap_walk_cache(
             client.close()
 
     report["ok"] = not report["errors"]
+    if progress_output is not None:
+        write_json(progress_output, report)
     return bool(report["ok"]), report
 
 
@@ -1349,6 +1366,11 @@ def main() -> int:
     collect.add_argument("--limit", type=int)
     collect.add_argument("--dry-run", action="store_true")
     collect.add_argument("--confirm-onemap-collection", action="store_true")
+    collect.add_argument(
+        "--progress-output",
+        type=Path,
+        help="Write resumable collection progress after each OneMap request.",
+    )
     collect.add_argument(
         "--cache-errors",
         action="store_true",
@@ -1408,6 +1430,7 @@ def main() -> int:
             dry_run=bool(args.dry_run),
             confirm_onemap_collection=bool(args.confirm_onemap_collection),
             cache_errors=bool(args.cache_errors),
+            progress_output=args.progress_output,
         )
         write_json(args.output, payload)
         print(json.dumps(payload, indent=2, sort_keys=True))

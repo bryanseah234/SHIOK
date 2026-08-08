@@ -149,11 +149,13 @@ while ($true) {
     $batchLabel = "{0:00000}" -f $batchIndex
     $collectPath = Join-Path $RunDir "collect_batch_$batchLabel.json"
     $collectLog = Join-Path $RunDir "collect_batch_$batchLabel.log"
+    $collectProgressPath = Join-Path $RunDir "collect_progress_batch_$batchLabel.json"
     $collectCmd = @(
         "uv", "run", "python", "run.py", "onemap-validation", "collect",
         "--sample", $SamplePath,
         "--cache-dir", $CacheDir,
         "--output", $collectPath,
+        "--progress-output", $collectProgressPath,
         "--delay-sec", "$DelaySec",
         "--limit", "$BatchSize",
         "--confirm-onemap-collection",

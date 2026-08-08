@@ -582,6 +582,40 @@ def test_collect_onemap_walk_cache_writes_fake_fetcher_result(tmp_path: Path):
     assert cached_report["median_abs_pct_delta"] == 0.99
 
 
+def test_collect_onemap_walk_cache_writes_incremental_progress(tmp_path: Path):
+    samples = []
+    for index in range(2):
+        start = {"lat": 1.3, "lon": 103.8 + index / 10000}
+        end = {"lat": 1.301, "lon": 103.801 + index / 10000}
+        samples.append(
+            {
+                "postal": f"12345{index}",
+                "area": "TEST",
+                "cache_key": route_cache_key(start, end),
+                "project_shortest_m": 100.0,
+                "start": start,
+                "end": end,
+            }
+        )
+    progress_output = tmp_path / "progress.json"
+
+    ok, report = collect_onemap_walk_cache(
+        {"bundle": "generated_test", "samples": samples},
+        cache_dir=tmp_path / "cache",
+        delay_sec=0,
+        confirm_onemap_collection=True,
+        progress_output=progress_output,
+        fetcher=lambda _sample: {"route_summary": {"total_distance": 101.0}},
+    )
+
+    assert ok, report
+    progress = json.loads(progress_output.read_text(encoding="utf-8"))
+    assert progress["http_requests"] == 2
+    assert progress["pending_remaining"] == 0
+    assert progress["current_postal"] == "123451"
+    assert progress["last_progress_at"]
+
+
 def test_collect_onemap_walk_cache_can_cache_terminal_http_errors(tmp_path: Path):
     start = {"lat": 1.3, "lon": 103.8}
     end = {"lat": 1.301, "lon": 103.801}

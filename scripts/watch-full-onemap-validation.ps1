@@ -104,6 +104,32 @@ function Latest-CacheWrite {
     return $latest.LastWriteTime
 }
 
+function Latest-CollectProgress {
+    $latest = Get-ChildItem $RunDir -Filter "collect_progress_batch_*.json" -ErrorAction SilentlyContinue |
+        Sort-Object LastWriteTime -Descending |
+        Select-Object -First 1
+    if ($null -eq $latest) {
+        return $null
+    }
+    try {
+        $payload = Get-Content $latest.FullName -Raw | ConvertFrom-Json
+        return [ordered]@{
+            path = $latest.FullName
+            last_write_time = $latest.LastWriteTime.ToString("o")
+            batch_http_requests = $payload.http_requests
+            batch_queued_requests = $payload.queued_requests
+            batch_pending_remaining = $payload.pending_remaining
+            current_postal = $payload.current_postal
+            last_progress_at = $payload.last_progress_at
+            errors_count = @($payload.errors).Count
+        }
+    }
+    catch {
+        Write-WatchLog "collect progress read failed: $($_.Exception.Message)"
+        return $null
+    }
+}
+
 $restartCount = 0
 $loop = 0
 Write-WatchLog "watchdog started run_id=$RunId poll_seconds=$PollSeconds stale_minutes=$StaleMinutes"
@@ -114,6 +140,7 @@ while ($true) {
     $phase = if ($null -eq $status) { "missing_status" } else { [string]$status.phase }
     $runnerProcesses = @(Get-RunnerProcesses)
     $latestCacheWrite = Latest-CacheWrite
+    $collectProgress = Latest-CollectProgress
     $cacheAgeMinutes = $null
     if ($null -ne $latestCacheWrite) {
         $cacheAgeMinutes = ((Get-Date) - $latestCacheWrite).TotalMinutes
@@ -128,6 +155,7 @@ while ($true) {
         restart_count = $restartCount
         latest_cache_write = if ($null -eq $latestCacheWrite) { $null } else { $latestCacheWrite.ToString("o") }
         cache_age_minutes = if ($null -eq $cacheAgeMinutes) { $null } else { [math]::Round($cacheAgeMinutes, 2) }
+        collect_progress = $collectProgress
         status_path = $StatusPath
         watch_log = $WatchLog
     }
