@@ -1185,6 +1185,7 @@ def collect_onemap_walk_cache(
     limit: int | None = None,
     dry_run: bool = False,
     confirm_onemap_collection: bool = False,
+    cache_errors: bool = False,
     fetcher: FetchRoute | None = None,
 ) -> tuple[bool, dict[str, Any]]:
     samples = [item for item in sample_payload.get("samples", []) if isinstance(item, dict)]
@@ -1212,6 +1213,7 @@ def collect_onemap_walk_cache(
         "queued_requests": len(pending),
         "http_requests": 0,
         "written_cache_results": 0,
+        "written_error_cache_results": 0,
         "errors": [],
         "will_call_onemap": bool(pending and not dry_run and confirm_onemap_collection),
     }
@@ -1269,6 +1271,25 @@ def collect_onemap_walk_cache(
                 )
                 if exc.response.status_code == 429:
                     time.sleep(max(60.0, delay_sec * 5.0))
+                elif cache_errors and cache_key:
+                    cache_payload = {
+                        "source": "onemap_walk_route_validation",
+                        "fetched_at": datetime.now(UTC).isoformat(),
+                        "sample": {
+                            "postal": sample.get("postal"),
+                            "area": sample.get("area"),
+                            "project_shortest_m": sample.get("project_shortest_m"),
+                            "start": sample.get("start"),
+                            "end": sample.get("end"),
+                        },
+                        "error": {
+                            "type": "http_status",
+                            "status_code": exc.response.status_code,
+                            "message": str(exc),
+                        },
+                    }
+                    write_json(cache_dir / f"{cache_key}.json", cache_payload)
+                    report["written_error_cache_results"] += 1
             except (httpx.HTTPError, TypeError, ValueError, RuntimeError) as exc:
                 report["errors"].append(f"{sample.get('postal')}: {exc}")
             finally:
@@ -1328,6 +1349,11 @@ def main() -> int:
     collect.add_argument("--limit", type=int)
     collect.add_argument("--dry-run", action="store_true")
     collect.add_argument("--confirm-onemap-collection", action="store_true")
+    collect.add_argument(
+        "--cache-errors",
+        action="store_true",
+        help="Cache terminal OneMap HTTP errors so resumed full validation can progress.",
+    )
 
     args = parser.parse_args()
     if args.action == "plan":
@@ -1381,6 +1407,7 @@ def main() -> int:
             limit=args.limit,
             dry_run=bool(args.dry_run),
             confirm_onemap_collection=bool(args.confirm_onemap_collection),
+            cache_errors=bool(args.cache_errors),
         )
         write_json(args.output, payload)
         print(json.dumps(payload, indent=2, sort_keys=True))

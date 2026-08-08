@@ -27,6 +27,8 @@ __pycache__/
 node_modules/
 .next/
 out/
+web/public/sw.js
+web/tsconfig.tsbuildinfo
 
 # vercel project link
 .vercel/

@@ -2,6 +2,7 @@ import json
 import gzip
 from pathlib import Path
 
+import httpx
 import pandas as pd
 
 from pipeline.export import export_static_artifacts
@@ -579,6 +580,46 @@ def test_collect_onemap_walk_cache_writes_fake_fetcher_result(tmp_path: Path):
     cached_report = evaluate_cached_results(sample_payload, tmp_path)
     assert cached_report["cached_results"] == 1
     assert cached_report["median_abs_pct_delta"] == 0.99
+
+
+def test_collect_onemap_walk_cache_can_cache_terminal_http_errors(tmp_path: Path):
+    start = {"lat": 1.3, "lon": 103.8}
+    end = {"lat": 1.301, "lon": 103.801}
+    cache_key = route_cache_key(start, end)
+    sample_payload = {
+        "bundle": "generated_test",
+        "samples": [
+            {
+                "postal": "123456",
+                "area": "TEST",
+                "cache_key": cache_key,
+                "project_shortest_m": 100.0,
+                "start": start,
+                "end": end,
+            }
+        ],
+    }
+
+    def fetcher(_sample: dict) -> dict:
+        request = httpx.Request("GET", "https://example.test/route")
+        response = httpx.Response(404, request=request)
+        raise httpx.HTTPStatusError("not found", request=request, response=response)
+
+    ok, report = collect_onemap_walk_cache(
+        sample_payload,
+        cache_dir=tmp_path,
+        delay_sec=0,
+        confirm_onemap_collection=True,
+        cache_errors=True,
+        fetcher=fetcher,
+    )
+
+    assert not ok
+    assert report["written_error_cache_results"] == 1
+    cached_payload = json.loads((tmp_path / f"{cache_key}.json").read_text(encoding="utf-8"))
+    assert cached_payload["error"]["status_code"] == 404
+    cached_report = evaluate_cached_results(sample_payload, tmp_path)
+    assert cached_report["invalid_cache_results"] == 1
 
 
 def _write_cache(cache_dir: Path, cache_key: str, onemap_m: float) -> None:
